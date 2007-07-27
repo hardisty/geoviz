@@ -1,0 +1,196 @@
+string,string,int,int,double,double,double,double
+NAME,STATE,MEDIANRENT,POP2000,PER_80_90,PER_90_00,MALE8090,WHITE8090
+Ferry,Washington,197,7260,8.3,15.3,-0.003,-1.133
+Stevens,Washington,231,40066,6.8,29.5,-0.136,-0.852
+Okanogan,Washington,222,39564,8.8,18.6,0.213,-4.836
+Pend Oreille,Washington,237,11732,3.9,31.6,-0.668,-0.16
+Boundary,Idaho,217,9871,14.3,18.5,1.327,-2.541
+Whatcom,Washington,361,166814,19.8,30.5,-0.014,-1.251
+Bonner,Idaho,251,36835,10.2,38.4,-0.125,-0.381
+Skagit,Washington,341,102979,24,29.4,0.262,-2.097
+San Juan,Washington,384,14077,28,40.3,-0.235,-0.497
+Chelan,Washington,306,66616,16,27.5,0.202,-4.479
+Clallam,Washington,308,64525,9.3,14.3,-0.105,-1.246
+Snohomish,Washington,467,606024,37.9,30.1,0.15,-2.345
+Island,Washington,397,71558,36.7,18.9,0.198,-1.766
+Douglas,Washington,338,32603,18.3,24.4,0.276,-4.376
+Jefferson,Washington,312,25953,26.2,28.8,-0.4,-0.172
+Shoshone,Idaho,169,13771,-27.5,-1.1,-1.164,-0.526
+Spokane,Washington,288,417939,5.7,15.7,0.136,-0.825
+Kootenai,Idaho,296,108685,16.8,55.7,-0.145,-0.221
+Grant,Washington,244,74698,12.9,36.4,0.085,-4.241
+Lincoln,Washington,198,10184,-7.7,14.9,-0.068,-0.398
+Kitsap,Washington,380,231969,28.9,22.3,-0.24,-2.224
+King,Washington,457,1737034,18.7,15.2,-0.026,-3.543
+Mason,Washington,298,49405,23,28.9,0.075,-1.462
+Kittitas,Washington,260,33362,7.4,24.8,0.1,-1.336
+Grays Harbor,Washington,253,67194,-3.2,4.7,-0.142,-1.312
+Benewah,Idaho,172,9171,-4.3,15.5,-0.373,-2.104
+Pierce,Washington,374,700820,20.7,19.6,-0.449,-2.646
+Adams,Washington,218,16428,2.5,20.8,1.24,-18.571
+Whitman,Washington,303,40740,-3.3,5.1,-0.165,-1.811
+Thurston,Washington,382,207355,29.8,28.6,-0.317,-2.491
+Latah,Idaho,264,34935,6.5,14.1,-0.843,-1.412
+Yakima,Washington,270,222581,9.5,17.9,0.184,-9.032
+Clearwater,Idaho,194,8930,-18.1,5,0.576,-0.903
+Pacific,Washington,240,20984,9.5,11.1,-0.327,-2.66
+Lewis,Washington,276,68600,5.9,15.6,-0.028,-0.716
+Franklin,Washington,234,49347,7,31.7,0.455,-13.894
+Benton,Washington,283,142475,2.8,26.6,-1.213,-2.853
+Garfield,Washington,191,2397,-8.9,6.6,-1.425,-0.468
+Idaho,Idaho,188,15511,-6.7,12.5,-0.264,-1.218
+Nez Perce,Idaho,249,37410,1.6,10.8,-0.325,-1.003
+Columbia,Washington,214,4064,-0.8,1,0.206,-0.77
+Walla Walla,Washington,259,55180,2.1,13.9,0.075,-3.496
+Lewis,Idaho,164,3747,-14.6,6.6,-0.37,0.262
+Asotin,Washington,257,20551,4.6,16.7,-0.417,-0.827
+Skamania,Washington,264,9872,4.7,19.1,-0.487,-1.522
+Cowlitz,Washington,296,92948,3.2,13.2,-0.06,-1.14
+Wahkiakum,Washington,221,3824,-13.2,14.9,-0.177,-0.275
+Clatsop,Oregon,288,35630,2.5,7,0.252,-0.028
+Columbia,Oregon,280,43560,5.4,16,0.172,-0.739
+Clark,Washington,378,345238,23.8,45,-0.153,-1.553
+Klickitat,Washington,249,19161,5,15.3,-0.005,-2.03
+Umatilla,Oregon,252,70548,0.7,19.1,1.079,-4.345
+Wallowa,Oregon,220,7226,-5,4.6,-0.585,-0.501
+Morrow,Oregon,247,10995,1.4,44.2,-0.834,-6.037
+Union,Oregon,243,24530,-1.4,3.9,-0.488,-0.885
+Gilliam,Oregon,221,1915,-16.5,11.5,-0.413,2.443
+Tillamook,Oregon,277,24262,1.9,12.5,-0.562,-0.597
+Washington,Oregon,429,445342,26.7,42.9,-0.206,-3.097
+Sherman,Oregon,214,1934,-11.7,0.8,0.745,-1.48
+Multnomah,Oregon,347,660486,3.8,13.1,0.444,-2.614
+Hood River,Oregon,316,20411,6.7,20.8,0.118,-0.686
+Wasco,Oregon,275,23791,-0.2,9.7,-0.861,-3.332
+Lemhi,Idaho,196,7806,-7.5,13.1,-0.572,-0.673
+Clackamas,Oregon,404,338391,15.3,21.4,-0.191,-1.143
+Yamhill,Oregon,328,84992,18.5,29.7,1.135,-1.146
+Marion,Oregon,335,284834,11.6,24.7,0.374,-2.934
+Adams,Idaho,180,3476,-2.8,6.8,0.954,-0.999
+Valley,Idaho,265,7651,9,25.2,-0.577,-0.553
+Baker,Oregon,209,16741,-5.1,9.3,-0.234,-0.487
+Polk,Oregon,300,62380,9.6,25.9,-0.299,-2.195
+Wheeler,Oregon,167,1547,-7.7,10.8,-0.843,-0.342
+Lincoln,Oregon,317,44479,10.3,14.4,-0.928,-1.212
+Grant,Oregon,240,7935,-4.3,1,-0.2,-0.443
+Custer,Idaho,219,4342,22.1,5.1,0.453,-0.942
+Washington,Idaho,183,9977,-2.9,16.7,-0.6,-4.74
+Jefferson,Oregon,264,19009,17.9,39,-0.632,-3.41
+Linn,Oregon,293,103069,1.9,13,-0.171,-0.681
+Fremont,Idaho,192,11819,1.1,8.1,-0.047,-3.176
+Benton,Oregon,330,78153,3.8,10.4,-0.309,-2.951
+Clark,Idaho,189,1022,-4.5,34.1,1.473,-6.328
+Crook,Oregon,263,19182,7.8,35.9,0.647,-1.373
+Gem,Idaho,192,15181,-1.1,28.2,0.241,-1.475
+Malheur,Oregon,227,31615,-3.2,21.4,-0.502,-4.424
+Deschutes,Oregon,364,115367,20.6,53.9,-0.172,-0.325
+Boise,Idaho,201,6670,17,90.1,0.809,-0.722
+Lane,Oregon,360,322959,2.8,14.2,-0.749,-0.774
+Butte,Idaho,158,2899,-12.7,-0.7,-1.175,-0.148
+Payette,Idaho,208,20578,4.5,25.2,0.005,-3.174
+Elmore,Idaho,242,29130,-1.7,37.4,-1.836,0.722
+Jefferson,Idaho,221,19155,8.1,15.8,-0.164,-0.787
+Harney,Oregon,205,7609,-15.1,7.8,-1.163,-0.888
+Blaine,Idaho,410,18991,37.7,40.1,0.605,-1.238
+Teton,Idaho,229,5999,18.7,74.4,1.332,-0.468
+Douglas,Oregon,281,100399,1,6.1,-0.434,-0.601
+Madison,Idaho,239,27467,21.5,16,1.872,-1.426
+Canyon,Idaho,232,131441,7.5,45.9,0.27,-2.552
+Camas,Idaho,171,991,-11.1,36.3,0.803,-0.963
+Ada,Idaho,340,300904,18.9,46.2,-0.015,-0.481
+Owyhee,Idaho,172,10644,1.5,26.8,-0.577,-4.233
+Bonneville,Idaho,293,82522,9.4,14.3,-0.257,-1.232
+Bingham,Idaho,207,41735,3,11,-0.087,-3.087
+Klamath,Oregon,260,63775,-2.4,10.5,-0.24,-1.925
+Lake,Oregon,238,7422,-4.6,3.3,-0.533,-2.276
+Coos,Oregon,265,62779,-5.9,4.2,-0.427,-0.49
+Lincoln,Idaho,171,4044,-3.7,22.2,-0.695,2.532
+Gooding,Idaho,180,14155,-2,21.7,-0.924,-1.006
+Minidoka,Idaho,184,20174,-1.8,4.2,-0.034,-2.648
+Power,Idaho,190,7538,3.5,6.4,0.025,-5.527
+Caribou,Idaho,190,7304,-19.9,4.9,-0.43,-0.685
+Bannock,Idaho,237,75565,0.9,14.4,-0.269,-0.713
+Jackson,Oregon,346,181269,10.5,23.8,-0.806,-0.942
+Curry,Oregon,316,21137,13.7,9.4,-0.369,-0.726
+Twin Falls,Idaho,235,64284,1.2,20,-0.244,-0.317
+Jerome,Idaho,189,18342,2,21.2,-0.033,-2.227
+Josephine,Oregon,319,75726,6.4,20.9,-0.24,-0.948
+Cassia,Idaho,193,21416,0.5,9.6,0.192,-1.547
+Bear Lake,Idaho,175,6411,-12.2,5.4,-0.316,0.046
+Oneida,Idaho,201,4125,7.2,18.1,-0.407,-0.734
+Franklin,Idaho,192,11329,3.8,22.7,-0.319,-0.747
+Siskiyou,California,270,44301,9.6,1.8,-0.896,0.078
+Del Norte,California,341,27507,28.8,17.3,3.913,-1.705
+Humboldt,Nevada,361,16106,36.1,25.4,-0.612,1.145
+Elko,Nevada,359,45291,94.2,35.1,0.681,1.004
+Modoc,California,225,9449,12.4,-2.4,1.539,-2.444
+Washoe,Nevada,429,339486,31.5,33.3,0.353,-3.953
+Humboldt,California,344,126518,9.8,6.2,-0.412,-1.117
+Trinity,California,292,13022,10.2,-0.3,-0.074,-1.604
+Shasta,California,358,163256,27.1,11,-0.148,-1.824
+Lassen,California,296,33828,27.4,22.6,4.722,-1.608
+Lander,Nevada,277,5794,53.7,-7.5,-2.263,-0.668
+Eureka,Nevada,293,1651,29.1,6.7,0.699,0.308
+Pershing,Nevada,299,6693,27.2,54.4,-1.52,-3.356
+Tehama,California,288,56039,27.6,12.9,-0.338,-3.599
+Plumas,California,272,20824,13.8,5.5,-0.94,-0.648
+Butte,California,369,203171,26.6,11.6,0.229,-2.464
+White Pine,Nevada,285,9181,13.4,-0.9,4.058,-2.01
+Churchill,Nevada,377,23982,28.9,33.7,-0.073,-1.573
+Mendocino,California,384,86265,20.4,7.4,0.196,-2.724
+Glenn,California,278,26453,16.1,6.7,-0.205,-3.135
+Sierra,California,280,3555,8,7.1,-1.102,-1.902
+Lyon,Nevada,313,34501,47.1,72.5,0.534,-1.832
+Yuba,California,312,60219,17.1,3.4,-0.466,-6.163
+Storey,Nevada,343,3399,68.1,34.6,-1.546,-1.059
+Lake,California,351,58309,39.2,15.2,0.069,-1.755
+Nevada,California,489,92033,52,17.2,0.079,-0.41
+Colusa,California,272,18804,27.2,15.5,1.056,-3.951
+Placer,California,496,248399,47.4,43.8,0.158,-0.304
+Sutter,California,321,78930,23.3,22.5,-0.146,-5.22
+Carson City,Nevada,406,52457,26.3,29.7,0.26,-1.006
+Nye,Nevada,304,32485,96.5,82.7,-0.203,-0.799
+Douglas,Nevada,539,41259,42.3,49.3,-0.572,-1.931
+Mineral,Nevada,328,5071,4.1,-21.7,0.327,0.146
+El Dorado,California,478,156299,46.8,24.1,-0.226,-1.482
+Yolo,California,459,168660,24.4,19.5,-0.298,-6.104
+Alpine,California,349,1208,1.5,8.5,-0.773,-12.542
+Napa,California,561,124279,11.7,12.2,0.434,-2.691
+Sonoma,California,576,458614,29.5,18.1,0.594,-2.182
+Sacramento,California,462,1223499,32.9,17.5,0.181,-5.639
+Mono,California,450,12853,16.1,29.1,-0.189,-0.505
+Amador,California,411,35100,55.5,16.8,5.316,-5.795
+Lincoln,Nevada,180,4165,1.2,10.3,2.401,-0.067
+Calaveras,California,384,40554,54.5,26.7,-0.388,-0.488
+Esmeralda,Nevada,248,971,73,-27.8,2.502,-6.566
+Tuolumne,California,392,54501,42.8,12.5,2.214,-4.01
+Marin,California,763,247289,3.4,7.5,0.454,-3.895
+San Joaquin,California,417,563598,38.4,17.3,1.145,-2.536
+Solano,California,521,394542,44.7,15.9,0.525,-7.288
+Contra Costa,California,613,948816,22.4,18.1,0.186,-5.43
+Stanislaus,California,417,446997,39.3,20.6,0.347,-7.594
+Alameda,California,570,1443741,15.7,12.9,0.673,-7.446
+Mariposa,California,311,17130,28.8,19.8,-0.519,-1.463
+San Francisco,California,613,776733,6.6,7.3,0.31,-4.624
+Madera,California,333,123109,39.6,39.8,-0.067,-3.662
+San Mateo,California,711,707161,10.6,8.9,0.622,-6.193
+Merced,California,358,210554,32.6,18,0.303,-10.149
+Fresno,California,363,799407,29.7,19.8,0.398,-10.353
+Santa Clara,California,715,1682585,15.6,12.4,1.185,-9.67
+Inyo,California,317,17945,2.2,-1.8,-0.65,-2.605
+Santa Cruz,California,651,255602,22.1,11.3,0.769,-3.602
+San Benito,California,491,53234,46.8,45.1,0.647,1.105
+Monterey,California,566,401762,22.5,13,0.726,-5.045
+Clark,Nevada,461,1375765,60.1,85.5,0.292,-3.145
+Tulare,California,324,368021,26.9,18,0.377,-7.612
+Kings,California,335,129461,37.6,27.6,3.344,-9.149
+Kern,California,365,661645,34.8,21.7,0.591,-7.11
+San Bernardino,California,489,1709434,58.5,20.5,0.572,-9.412
+San Luis Obispo,California,510,246681,39.7,13.6,0.635,-1.159
+Ventura,California,695,753197,26.4,12.6,0.676,-1.348
+Riverside,California,502,1545387,76.5,32,1.275,-5.698
+Santa Barbara,California,606,399347,23.7,8,0.977,-5.693
+Orange,California,728,2846289,24.7,18.1,1.024,-7.776
+San Diego,California,564,2813833,34.2,12.6,0.065,-6.367
+Los Angeles,California,570,9519338,18.5,7.4,1.094,-11.043
+Imperial,California,313,142361,18.7,30.2,-0.245,11.473

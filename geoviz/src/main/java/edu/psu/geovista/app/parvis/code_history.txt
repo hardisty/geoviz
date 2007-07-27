@@ -1,0 +1,18 @@
+Notes on the Parvis classes
+
+The first check-in is the complete source code and 
+*.gif files as downloaded from
+http://home.subnet.at/flo/mv/parvis/
+on 28 July 00, all classes and images authored by Flo Ledermann (flo@subnet.at).
+Files with the extension .nbattrs and .form were not checked in. 
+
+Subsequent modifications were done as noted in the CVS.
+
+To quote Flo from http://home.subnet.at/flo/mv/parvis/developer.html
+
+"If you like parvis and you want to improve it, just go ahead!
+Parvis is open source, and as long as you leave the GPL intact and
+release all your code under the GPL, you are authorized to do
+whatever you want with the code."
+
+The GPL should be present in the same directory as this note.

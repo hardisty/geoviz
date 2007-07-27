@@ -1,0 +1,436 @@
+/*
+ * GTGeoMap.java
+ *
+ * Created on April 18, 2005, 2:51 PM
+ */
+
+package edu.psu.geovista.app.map;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Polygon;
+import edu.psu.geovista.classification.Classifier;
+import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.geotools.feature.GeoMapBivarPalette;
+import edu.psu.geovista.geotools.feature.IndexedClassificationFunction;
+import edu.psu.geovista.geotools.map.LayerWrapper;
+import edu.psu.geovista.geotools.map.MapWrapper;
+import edu.psu.geovista.geotools.style.DefaultStyles;
+import edu.psu.geovista.geotools.style.PolygonStyleEditor;
+import edu.psu.geovista.geotools.style.StyleEvent;
+import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
+import edu.psu.geovista.ui.event.DataSetEvent;
+import edu.psu.geovista.ui.event.DataSetListener;
+import edu.psu.geovista.ui.event.IndicationEvent;
+import edu.psu.geovista.ui.event.IndicationListener;
+import edu.psu.geovista.ui.event.SelectionEvent;
+import edu.psu.geovista.ui.event.SelectionListener;
+import edu.psu.geovista.visclass.VisualClassifier;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.PathIterator;
+import java.net.URL;
+import java.util.ArrayList;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.event.EventListenerList;
+import org.geotools.feature.AttributeType;
+import org.geotools.feature.AttributeTypeFactory;
+import org.geotools.feature.Feature;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureCollections;
+import org.geotools.feature.FeatureType;
+import org.geotools.feature.FeatureTypeFactory;
+import org.geotools.filter.Expression;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.SLDParser;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyleFactory;
+
+/**
+ *
+ * @author jfc173
+ */
+public class GTGeoMap extends JPanel implements 
+        ActionListener, IndicationListener, SelectionListener, DataSetListener{
+    
+    transient protected VisualClassifier visClassOne;
+    transient protected VisualClassifier visClassTwo;   
+    transient protected BivariateColorSchemeVisualizer biViz; 
+    transient protected JPanel legendPanel = new JPanel();
+    private MapWrapper theMap;
+    private LayerWrapper layer;
+    private PolygonStyleEditor editor;
+    private Style style;
+//    private PolygonSymbolizer sym;
+    private GeometryFactory geomFac = new GeometryFactory(); 
+    private EventListenerList ell = new EventListenerList();
+    private Object[] attributeData, numericData;
+    
+    /** Creates a new instance of GTGeoMap */
+    public GTGeoMap(){
+        init();
+    }
+    
+    private void init(){
+
+        JPanel vcPanel = new JPanel();
+        vcPanel.setLayout(new BoxLayout(vcPanel, BoxLayout.Y_AXIS));
+        visClassOne = new VisualClassifier();
+        visClassTwo = new VisualClassifier();
+        visClassOne.setAlignmentX(Component.LEFT_ALIGNMENT);
+        visClassTwo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        visClassOne.setVariableChooserMode(
+            ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
+        visClassTwo.setVariableChooserMode(
+            ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
+        visClassOne.setOrientationInParentIsX(true);
+        visClassTwo.setOrientationInParentIsX(false);
+
+
+        vcPanel.add(visClassTwo);
+        vcPanel.add(visClassOne);
+
+        legendPanel = new JPanel();
+        legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.X_AXIS));
+        biViz = new BivariateColorSchemeVisualizer();
+        legendPanel.add(vcPanel);
+        legendPanel.add(Box.createRigidArea(new Dimension(4, 2)));
+        legendPanel.add(biViz);    
+        
+        this.setLayout(new BorderLayout());
+        this.add(legendPanel, BorderLayout.NORTH);
+        theMap = new MapWrapper();
+        this.add(theMap, BorderLayout.CENTER);
+        
+        layer = new LayerWrapper();
+        editor = new PolygonStyleEditor();
+        layer.setBaseStyleEditor(editor);
+        theMap.addLayerWrapper(layer);
+        style = DefaultStyles.getDefaultPolygonStyle();
+//        sym = (PolygonSymbolizer) style.getFeatureTypeStyles()[0].getRules()[0].getSymbolizers()[0];
+        StyleFactory factory = StyleFactory.createStyleFactory();
+        ((PolygonSymbolizer) style.getFeatureTypeStyles()[0].getRules()[0].getSymbolizers()[0]).setFill(factory.getDefaultFill());
+        editor.setStyle(style);
+        theMap.addIndicationListener(this);
+        theMap.addSelectionListener(this);
+        visClassOne.addActionListener(this);
+        visClassTwo.addActionListener(this);
+        this.addIndicationListener(biViz);
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        //change a bivariate color palette.
+        System.out.println("The source is:  " + e.getSource().toString());
+        System.out.println("The command is: " + e.getActionCommand());
+        if (e.getActionCommand() != VisualClassifier.COMMAND_BEAN_REGISTERED){
+            GeoMapBivarPalette expr = new GeoMapBivarPalette();
+            Color[] xColors = visClassOne.getColors();
+            Color[] yColors = visClassTwo.getColors();
+            biViz.setXSymbolizer(visClassOne.getColorerLinear());
+            biViz.setYSymbolizer(visClassTwo.getColorerLinear());
+            expr.setXColors(xColors);
+            expr.setYColors(yColors);
+            IndexedClassificationFunction icf1 = new IndexedClassificationFunction();
+            IndexedClassificationFunction icf2 = new IndexedClassificationFunction();
+            int numClasses1 = xColors.length;
+            int numClasses2 = yColors.length;
+            icf1.setNumClasses(numClasses1);
+            icf2.setNumClasses(numClasses2);
+            Classifier classifier1 = visClassOne.getClassPick().getClasser();
+            Classifier classifier2 = visClassTwo.getClassPick().getClasser();
+            int var1 = visClassOne.getCurrVariableIndex();
+            int var2 = visClassTwo.getCurrVariableIndex();
+            double[] data1 = null;
+            double[] data2 = null;
+            if (numericData[var1] instanceof int[]){
+                data1 = new double[((int[]) numericData[var1]).length];
+                for (int i = 0; i < data1.length; i++){
+                    data1[i] = ((int[]) numericData[var1])[i];
+                }
+            } else if (numericData[var1] instanceof double[]){
+                data1 = (double[]) numericData[var1];
+            } else {
+                System.out.println("then what kind of data are you? " + numericData[var1].getClass().getName());
+            }
+            if (numericData[var2] instanceof int[]){
+                data2 = new double[((int[]) numericData[var2]).length];
+                for (int i = 0; i < data1.length; i++){
+                    data2[i] = ((int[]) numericData[var2])[i];
+                }
+            } else if (numericData[var2] instanceof double[]){
+                data2 = (double[]) numericData[var2];
+            } else {
+                System.out.println("then what kind of data are you? " + numericData[var2].getClass().getName());
+            }
+            icf1.setClassifier(classifier1, data1);
+            icf2.setClassifier(classifier2, data2);
+            
+            expr.setArgs(new Expression[]{icf1, icf2});
+            ((PolygonSymbolizer) style.getFeatureTypeStyles()[0].getRules()[0].getSymbolizers()[0]).getFill().setColor(expr);
+            System.out.println("I've made the color expression: ");
+            System.out.println(expr.toString());
+            layer.setStyle(new StyleEvent(this, this, style));
+        }
+    }
+    
+    public void indicationChanged(IndicationEvent e){
+        if (e.getSource() == theMap){
+            fireIndicationChanged(e.getIndication());
+        } else {
+            theMap.indicationChanged(e);
+        }
+    }
+    
+    public void selectionChanged(SelectionEvent e){
+        if (e.getSource() == theMap){
+            fireSelectionChanged(e.getSelection());
+        } else {
+            theMap.selectionChanged(e);
+        }
+    }
+    
+    public void setData(FeatureCollection fc){
+        layer.setFeatureCollection(fc);
+    }   
+    
+    public void dataSetChanged(DataSetEvent e) {
+        //Convert DataSetForApps to FeatureCollection
+        Object[] dsfa = e.getDataSet();
+        visClassOne.setData(dsfa);
+        visClassTwo.setData(dsfa);
+        numericData = e.getDataSetForApps().getDataSetNumeric();
+        String[] columnNames = (String[]) dsfa[0];
+        attributeData = new Object[columnNames.length];
+        for (int i = 1; i <= columnNames.length; i++){
+            attributeData[i-1] = dsfa[i];
+        }
+        //Create the schema.
+        try{
+            FeatureCollection collection = FeatureCollections.newCollection();
+            AttributeType[] attTypes = new AttributeType[columnNames.length + 1];
+            attTypes[0] = AttributeTypeFactory.newAttributeType("geom", MultiPolygon.class);
+            for (int i = 0; i < columnNames.length; i++){
+//                System.out.println("attributeData[i] is a " + attributeData[i].getClass().getName());
+                Class c;
+                if (attributeData[i] instanceof double[]){
+//                    System.out.println("It's a double.");
+                    c = Double.class;
+                } else if (attributeData[i] instanceof float[]){
+//                    System.out.println("It's a float.");
+                    c = Float.class;
+                } else if (attributeData[i] instanceof int[]){
+//                    System.out.println("It's an int.");
+                    c = Integer.class;                   
+                } else if (attributeData[i] instanceof long[]){
+//                    System.out.println("It's a long.");
+                    c = Long.class;                     
+                } else {
+                    c = String.class;
+                }
+//                System.out.println("Column " + columnNames[i] + " is of class " + c.getName());
+                attTypes[i+1] = AttributeTypeFactory.newAttributeType(columnNames[i], c);
+            }
+            FeatureType ftype = FeatureTypeFactory.newFeatureType(attTypes, "Feature");
+            Shape[] shapes = (Shape[]) dsfa[columnNames.length+1];
+            //Loop through the shapes to create the features.
+            for (int q = 0; q < shapes.length; q++){
+                //With dataSetForApps, I should always get a polygon shape (for now....)
+                Shape next = shapes[q];
+                PathIterator path = next.getPathIterator(null);
+                double[] dblarray = new double[6];
+                int segmentType = path.currentSegment(dblarray);
+                ArrayList coords = new ArrayList();
+                ArrayList polygons = new ArrayList();
+                Coordinate start = new Coordinate(dblarray[0], dblarray[1]);
+                coords.add(start);
+//                System.out.println("Feature " + q + " starts at (" + dblarray[0] + ", " + dblarray[1] + ")");
+                boolean areWeThereYet = false;
+                while (!(areWeThereYet)){
+                    path.next();
+                    if (path.isDone()){
+//                        System.out.println("Feature " + q + " is officially done.");
+                        areWeThereYet = true;
+                        coords.add(start);
+                        break;
+                    }
+                    segmentType = path.currentSegment(dblarray);
+                    if (segmentType == PathIterator.SEG_LINETO){
+                        coords.add(new Coordinate(dblarray[0], dblarray[1]));
+//                        System.out.println("Next coordinates are (" + dblarray[0] + ", " + dblarray[1] + ")");
+                    } else if (segmentType == PathIterator.SEG_CLOSE){
+                        //coords.add(start);
+//                        System.out.println("I closed a polygon for feature " + q);
+                    } else if (segmentType == PathIterator.SEG_MOVETO){
+//                        System.out.println("Finished a polygon by closing to (" + start.x + ", " + start.y + ")");
+                        coords.add(start);
+                        Polygon p = convertCoordsToPolygon(coords);
+                        if (p != null){
+                            polygons.add(p);
+                        }
+                        coords.clear();
+                        start = new Coordinate(dblarray[0], dblarray[1]);
+//                        System.out.println("Started a new polygon in a multi-polygon geometry for feature " + q + " at (" + start.x + ", " + start.y + ")");
+                    } else {
+                        System.out.println("What kind of line segment do I have anyway? " + segmentType);
+                    }
+
+                }
+                Polygon p = convertCoordsToPolygon(coords);
+                if (p != null){
+                    polygons.add(p);
+                }
+                Polygon[] polyArray = new Polygon[polygons.size()];
+                for (int i = 0; i < polygons.size(); i++){
+                    polyArray[i] = (Polygon) polygons.get(i);
+                }
+                MultiPolygon multi = geomFac.createMultiPolygon(polyArray);
+                //Have the geometry information.  Now get the attributes.
+                Object[] featureData = new Object[columnNames.length + 1];
+                featureData[0] = multi;
+                for (int i = 0; i < columnNames.length; i++){
+                    if (attributeData[i] instanceof double[]){
+                        featureData[i+1] = new Double(((double[]) attributeData[i])[q]);
+                    } else if (attributeData[i] instanceof float[]){
+                        featureData[i+1] = new Float(((float[]) attributeData[i])[q]);
+                    } else if (attributeData[i] instanceof int[]){
+                        featureData[i+1] = new Integer(((int[]) attributeData[i])[q]);                  
+                    } else if (attributeData[i] instanceof long[]){
+                        featureData[i+1] = new Long(((long[]) attributeData[i])[q]);                  
+                    } else {
+                        featureData[i+1] = ((String[]) attributeData[i])[q];
+                    }                    
+                }
+                Feature nextFeature = ftype.create(featureData, "Feature." + (q+1));
+                collection.add(nextFeature);
+            }        
+            setData(collection);
+        }
+        catch(Exception exc){
+            System.out.println("GTGeoMap received an exception while converting a DataSetForApps to a FeatureCollection.");
+            System.out.println(exc.getMessage());
+            exc.printStackTrace();
+        }
+    }
+    
+    private Polygon convertCoordsToPolygon(ArrayList coords){
+        Coordinate[] coordArray = new Coordinate[coords.size()];        
+        for (int i = 0; i < coords.size(); i++){
+            coordArray[i] = (Coordinate) coords.get(i);
+        }
+        Polygon poly = null;
+        LinearRing ring = null;
+        try{
+            ring = geomFac.createLinearRing(coordArray);
+            poly = geomFac.createPolygon(ring, null);
+        } catch (IllegalArgumentException iae){
+            System.out.println("Illegal argument exception while creating the linear ring: ");
+            System.out.println(iae.getMessage());
+            if (coords.size() < 6){
+                System.out.println("Removed that ring.");
+                poly = null;
+            } else {
+                System.out.println("Closed the ring by adding the 0th coordinate to the end: (" + coordArray[0].x + ", " + coordArray[0].y + ")");
+                Coordinate[] newArray = new Coordinate[coordArray.length + 1];
+                for (int i = 0; i < coordArray.length; i++){
+                    newArray[i] = coordArray[i];                
+                }
+                newArray[newArray.length - 1] = newArray[0];
+                ring = geomFac.createLinearRing(newArray);
+                poly = geomFac.createPolygon(ring, null);
+            }
+        }
+        return poly;
+    } 
+
+   /**
+     * adds an SelectionListener
+     */
+    public void addSelectionListener (SelectionListener l) {
+            ell.add(SelectionListener.class, l);
+    }
+    /**
+     * removes an SelectionListener from the component
+     */
+    public void removeSelectionListener (SelectionListener l) {
+            ell.remove(SelectionListener.class, l);
+    }
+    /**
+     * Notify all listeners that have registered interest for
+     * notification on this event type. The event instance
+     * is lazily created using the parameters passed into
+     * the fire method.
+     * @see EventListenerList
+     */
+    private void fireSelectionChanged (int[] newSelection) {
+//        System.out.print("the selection is: ");
+//        for (int i = 0; i < newSelection.length; i++){
+//            System.out.print(newSelection[i] + ", ");
+//        }
+//        System.out.println("");
+      // Guaranteed to return a non-null array
+          Object[] listeners = ell.getListenerList();
+          SelectionEvent e = null;
+      // Process the listeners last to first, notifying
+      // those that are interested in this event
+          for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == SelectionListener.class) {
+              // Lazily create the event:
+              if (e == null) {
+                e = new SelectionEvent(this, newSelection);
+              }
+                ((SelectionListener)listeners[i + 1]).selectionChanged(e);
+            }
+          }//next i
+
+    }  
+  
+  /**
+   * adds an IndicationListener
+   */
+  public void addIndicationListener(IndicationListener l) {
+    ell.add(IndicationListener.class, l);
+  }
+
+  /**
+   * removes an IndicationListener from the component
+   */
+  public void removeIndicationListener(IndicationListener l) {
+    ell.remove(IndicationListener.class, l);
+  }
+
+  /**
+   * Notify all listeners that have registered interest for
+   * notification on this event type. The event instance
+   * is lazily created using the parameters passed into
+   * the fire method.
+   * @see EventListenerList
+   */
+  private void fireIndicationChanged(int newIndication) {
+    // Guaranteed to return a non-null array
+    Object[] listeners = ell.getListenerList();
+    IndicationEvent e = null;
+//    System.out.println("the indication is " + newIndication);
+    // Process the listeners last to first, notifying
+    // those that are interested in this event
+    for (int i = listeners.length - 2; i >= 0; i -= 2) {
+      if (listeners[i] == IndicationListener.class) {
+        // Lazily create the event:
+        if (e == null) {
+          e = new IndicationEvent(this, newIndication);
+        }
+
+        ( (IndicationListener) listeners[i + 1]).indicationChanged(e);
+      }
+    } //next i
+  }      
+    
+}

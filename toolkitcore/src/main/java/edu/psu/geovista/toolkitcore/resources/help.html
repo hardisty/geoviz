@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body,td,th {
+	color: #000000;
+}
+-->
+</style></head>
+
+<body bgcolor="#FFFFFF" link="#3333FF" vlink="#333366" alink="#0000CC">
+<p align="left"><a name="_top"></a><img src="WebPagePics/splash.jpg" width="655" height="478" align="middle"></p>
+<p align="center">Disclaimer: This file is intended to give the user a brief understanding of the basic functionality found within the GeoViz ToolKit. It is not a troubleshooting help file. If you are in need of technical assistance contact <a href="mailto:hardisf@gwm.sc.edu">Frank Hardisty</a> at the University of South Carolina. </p>
+<h3><a name="Overview"></a>Overview: </h3>
+<p>The GeoViz Toolkit was developed from work conducted at the GeoVista Center at The Pennsylvania State University. To find out more about this program go to <a href="http://www.geovistastudio.psu.edu/jsp/index.jsp">GeoVista Studio </a>. These tools were developed for the visualization of multidimensional, geographic data. The GeoViz Toolkit is an application version of GeoVista Studio in which a sample of these components were adapted to a more “user-friendly” environment. This toolkit was developed by Frank Hardisty, Aaron Myers, and Ke Liao at the University of South Carolina. In the GeoViz Toolkit, all of the components are coordinated with each other. For example, if you select a different set of variables in one component then that change will be reflected in all of the other components being used. The color scheme, however, is not coordinated between the different components. </p>
+<p><a href="#_top">Top of Page </a></p>
+<h3><a name="Interface"></a>GeoViz Toolkit Interface: </h3>
+<p align="left"><img width="474" height="413" src="WebPagePics/Interface2.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="File"></a>File: </h3>
+<p>This menu allows the user to load a few pre-defined data sets, save the current user-defined component layout, and then open that saved layout. The default setting has a Star Plot, a GeoMap, Variable Picker, and Selection Animator. Under the file menu the user is allowed to load predefined U.S. Data, South Carolina Data, and U.S. Population Cartogram. In theory, the load shapefile feature would allow one to load any shapefile with associated data, but this will most likely not function with all data sets. The user can also save a component layout view and the reopen it later with the Save Layout and Load Layout Features. </p>
+<p align="left"><img src="WebPagePics/removetools5.jpg" width="603" height="316"></p>
+<p align="left"><a href="#_top">Top of Page</a></p>
+<h3><a name="Add"></a>Add Tools: </h3>
+<p>This allows the user to select from a list of tools, which ones to add to the Current Layout. </p>
+<p align="left"><img width="520" height="256" src="WebPagePics/addtool4.jpg"></p>
+<p align="left"><a href="#_top">Top of Page</a></p>
+<h3><a name="Remove"></a>Remove Tools: </h3>
+<p>This menu allows the user to select which active tools to remove from the current layout. </p>
+<p align="left"><img src="WebPagePics/removetools5.jpg" width="603" height="316"></p>
+<p align="left"><a href="#_top">Top of Page</a></p>
+<h3><a name="Startup"></a>Start-up Interface: </h3>
+<p align="left"><img width="761" height="279" src="WebPagePics/startup6.jpg"></p>
+<p align="left"><a href="#_top">Top of Page</a></p>
+<h2>Components: </h2>
+<h3><a name="GeoMap"></a>GeoMap(Bivariate): </h3>
+<p>This is a geographic map of the area defined by the selected data set. This map displays how two variables relate to each other over geographic space. To change the color of variables simply double-click on the color bar under each of the variable names. You can also change the number of divisions by moving the slider up or down. By clicking on the variable name a drop down menu allows you to switch to the other variables in the data set. </p>
+<p align="left"><img width="696" height="414" src="WebPagePics/geomap7.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="LinkGraph"></a>Link Graph: </h3>
+<p>The Link Graph is a way of visualizing how closely observations are related to each other based on selected variables. By clicking on the observation name, other related observations will be shown. Moving the top slider will zoom, rotate, or move the locality the view window. By moving the slider on the right and bottom, will re-orient the view. The variable button allows the user to redefine the selected variables. </p>
+<p align="left"><img width="744" height="389" src="WebPagePics/linkgraph8.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="VariableP1"></a>Variable Picker for Link Graph: </h3>
+<p>Functionality same a main Variable Picker, must hit ‘Close' after sending selection to continue working. </p>
+<p align="left"><img src="WebPagePics/variablepicker9.jpg" width="133" height="315"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="SublinkGraph"></a>Subspace Link Graph: </h3>
+<p>The Subspace Link Graph displays visually how the variables are related to each other. The functionality of the view window is similar to that of the link Graph mentioned above. One difference is the send selection button. By selecting the different variable from the view window it is possible to send that selection to show in the other active components. </p>
+<p align="left"><img width="521" height="264" src="WebPagePics/sublink10.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="PCP"></a>Main Panel (Parallel Coordinate Plot): </h3>
+<p>Main Panel (Parallel Coordinate Plot (PCP) allows for the visualization of highly multivariate data. Each selected variable is plotted as a vertical axis and each observation is shown as a line connected to each of these axes. This orientation allows for an inspection of how each observation changes from one variable to another, and to compare how the observations are related among the different variables. The scale selection button allows the user to set the maximum and minimum values for the axes. For example, you can make them show their respective max and min, conform all variables to the same scale, etc. </p>
+<p align="left"><img width="718" height="321" src="WebPagePics/pcp11.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="Table"></a>Table Browser: </h3>
+<p>This simply allows the user to view the table associated with the current data set. </p>
+<p align="left"><img width="351" height="277" src="WebPagePics/table12.jpg"></p>
+<p>&nbsp;</p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="UniGeoMap"></a>Univariate GeoMap: </h3>
+<p>Similarly to the Bivariate Map, this map shows how a single variable is changes across geographic space. The variable and color scheme selection is identical to that found in the Bivariate GeoMap. The functionality of the components are also the same. </p>
+<p align="left"><img width="558" height="288" src="WebPagePics/unimap13.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="Sonic"></a>Sonic Classifier: </h3>
+<p>The sonic classifier allows for data exploration utilizing the sense of sound. The variable is associated with the note on the classifier scale. There is a predefined set of sounds. </p>
+<p align="left"><img width="431" height="312" src="WebPagePics/sonic14.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<p align="center"></p>
+<h3><a name="StarPlot1"></a>Star Plot: </h3>
+<p>The Star Plot is a method of displaying multivariate data, in such a way that it become easier to analyze. Each star represents a single observation (i.e. States or Armories), with their associate values displayed upon each axis or spoke. The magnitude of each variable is consistent with the length of the star upon each of its spokes. Star plots are most useful comparing similar and dissimilar observations. (Source) </p>
+<p align="left"><img width="385" height="275" src="WebPagePics/starplot15.jpg"></p>
+<p align="center">&nbsp;</p>
+<h4>Example: </h4>
+<p align="left"><img width="653" height="390" src="WebPagePics/starplot16.jpg"></p>
+<p>From this figure, we can see the observation is for New York State. Also, the variables associated with this observation are American Indian (AMERINDIAN), Percent Black Population (BLACK), Percent Female Population (FEMALE), and Percent of Population between the ages of 5 and 17 (AGES 5 TO 17), etc. Since New York is focuses in the lower pane, it is also highlighted in green in the upper pane. Now, in the upper pane, we can compare New York with several other states to find which ones are similar and which ones are not. </p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="Indication"></a>Indication Animator: </h3>
+<p>The selection animator is one of the default setting upon opening the toolkit. After hitting the start button, the selection animator will work through the data potentially showing patterns. </p>
+<p align="left"><img width="628" height="279" src="WebPagePics/inidcation17.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="Selection"></a>Selection Animator: </h3>
+<p>This tool allows the user to view the data based on all the different variables. It moves through the different variable and show clustered subsets of the each variable. </p>
+<p align="left"><img width="610" height="392" src="WebPagePics/selection18.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="Condition"></a>Condition Manager: </h3>
+<p>The condition manager allows the user to set conditions on which the variables will be displayed. This allows for additional way of view that dataset. </p>
+<p align="left"><img width="600" height="273" src="WebPagePics/condition19.jpg"></p>
+<p><a href="#_top">Top of Page</a></p>
+<h3><a name="VariableP2"></a>Variable Picker: </h3>
+<p>The Variable Picker automatically detects the variables for the data set. The User can change the selection by clicking on the desired variable, if multiple variables are desired the Control Key must be held while making the additional selections. Once all of the desired variables are chosen, then the User simply hits the send selection button to apply that selection to all of the components. </p>
+<p align="left"><img width="398" height="279" src="WebPagePics/variablepicker20.jpg"></p>
+<p align="center"><img width="738" height="507" src="WebPagePics/VariablePicker21.jpg"></p>
+<p align="left"><a href="#_top">Top of Page</a></p>
+</body>
+</html>

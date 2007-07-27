@@ -1,0 +1,11 @@
+[PropertyInfo]
+blinker,edu.sc.geoviz.cartogram.WaitPanel.WaiterThread,false,false, , ,false,<default>
+goingUp,boolean,false,false, , ,false,<default>
+interval,int,false,false, , ,false,<default>
+message,javax.swing.JLabel,false,false, , ,false,<default>
+whichCircle,int,false,false, , ,false,<default>
+[IconNames]
+
+
+
+
