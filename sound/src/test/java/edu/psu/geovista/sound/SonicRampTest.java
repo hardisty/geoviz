@@ -16,9 +16,6 @@ package edu.psu.geovista.sound;
 
 import junit.framework.*;
 import java.awt.*;
-import javax.swing.*;
-import edu.psu.geovista.app.spacefill.*;
-import edu.psu.geovista.symbolization.*;
 
 
 public class SonicRampTest extends TestCase {

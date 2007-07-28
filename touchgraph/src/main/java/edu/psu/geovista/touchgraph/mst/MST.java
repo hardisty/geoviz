@@ -8,11 +8,6 @@ import java.io.FileOutputStream;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import edu.psu.geovista.app.map.GeoMap;
 import edu.psu.geovista.ui.event.SelectionEvent;
 
@@ -72,12 +67,12 @@ public class MST {
 		
 		System.out.println("all done!");
 		
-		XStream xstream = new XStream(new DomDriver()); // does not require XPP3 library
-		String eString = xstream.toXML(nums);
-		System.out.println(eString);
-		JPanel pan = new JPanel();
-		String panString = xstream.toXML(pan);
-		System.out.println(panString);
+		//XStream xstream = new XStream(new DomDriver()); // does not require XPP3 library
+		//String eString = xstream.toXML(nums);
+		//System.out.println(eString);
+		//JPanel pan = new JPanel();
+		//String panString = xstream.toXML(pan);
+		//System.out.println(panString);
 		
 		
 		
