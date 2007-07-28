@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="animation/src/main/java"/>
+	<classpathentry kind="src" path="coordination/src/main/resources"/>
+	<classpathentry kind="src" path="common/src/main/resources"/>
+	<classpathentry kind="src" path="colorbrewer/src/main/resources"/>
+	<classpathentry kind="src" path="symbolization/src/main/resources"/>
+	<classpathentry kind="src" path="satscan/src/main/resources"/>
+	<classpathentry kind="src" path="geoviz/src/main/resources"/>
 	<classpathentry kind="src" path="cartogram/src/main/java"/>
 	<classpathentry kind="src" path="collaboration/src/main/java"/>
 	<classpathentry kind="src" path="colorbrewer/src/main/java"/>
