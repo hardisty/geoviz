@@ -70,8 +70,8 @@ import edu.psu.geovista.app.spreadsheet.VariableTransformer;
 import edu.psu.geovista.app.touchgraph.LinkGraph;
 import edu.psu.geovista.app.touchgraph.PCAViz;
 import edu.psu.geovista.app.touchgraph.SubspaceLinkGraph;
-import edu.psu.geovista.cartogram.GeoMapCartogram;
 
+import edu.psu.geovista.cartogram.GeoMapCartogram;
 import edu.psu.geovista.data.condition.ConditionManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.geog.DataSetModifiedBroadcaster;

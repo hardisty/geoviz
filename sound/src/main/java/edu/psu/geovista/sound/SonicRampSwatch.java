@@ -44,8 +44,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
-//import javax.swing.colorchooser.*;
 public class SonicRampSwatch extends JPanel implements MouseListener,
     ChangeListener {
     public transient static boolean OFF = false;

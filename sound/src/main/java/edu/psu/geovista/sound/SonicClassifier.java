@@ -16,7 +16,6 @@
 
 package edu.psu.geovista.sound;
 
-//import edu.psu.geovista.ui.panel.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -57,9 +56,7 @@ import edu.psu.geovista.ui.event.DataSetListener;
 import edu.psu.geovista.ui.event.IndicationEvent;
 import edu.psu.geovista.ui.event.IndicationListener;
 
-//import javax.swing.colorchooser.*;
 
-//public class SonicClassifier extends JPanel implements ActionListener  {
 public class SonicClassifier extends JPanel implements ActionListener, ComponentListener,
                                                         PalletListener, IndicationListener,
                                                         DataSetListener{

@@ -1,9 +1,9 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class CartogramMatrix
+ Java source file for the class CartogramAndScatterplotMatrix
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: CartogramMatrix.java,v 1.1 2005/03/19 00:48:39 hardisty Exp $
+ $Id: CartogramAndScatterplotMatrix.java,v 1.1 2005/03/19 00:48:39 hardisty Exp $
  $Date: 2005/03/19 00:48:39 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -17,48 +17,28 @@
  License along with this library; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
-package edu.psu.geovista.app.matrix;
+package edu.psu.geovista.cartogram;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-
-import edu.psu.geovista.cartogram.CartogramMatrixElement;
-import edu.psu.geovista.toolkitcore.data.GeoDataGeneralizedStates;
-
+import edu.psu.geovista.app.matrix.BiPlotMatrix;
+import edu.psu.geovista.app.scatterplot.ScatterPlot;
 
 /**
  *
  * @author Frank Hardisty
  * @version $Revision: 1.1 $
  */
-public class CartogramMatrix
+public class CartogramAndScatterplotMatrix
     extends BiPlotMatrix
-    //implements DataSetListener, DataSetModifiedListener,
-    //IndicationListener, SubspaceListener,
-    //ColorArrayListener
+
 {
 
-  public CartogramMatrix() {
+  public CartogramAndScatterplotMatrix() {
     super();
-    this.setElementClass1(CartogramMatrixElement.class);
+    this.setElementClass1(ScatterPlot.class);
     this.setElementClass2(CartogramMatrixElement.class);
 
   }
-  public static void main(String[] args) {
 
-    GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
-
-    CartogramMatrix gui = new CartogramMatrix();
-    gui.setPreferredSize(new Dimension(500,500));
-    JFrame app = new JFrame("Cartogram Matrix");
-    app.getContentPane().add(gui);
-    gui.setDataSet(stateData.getDataForApps());
-    app.pack();
-    app.setVisible(true);
-
-    app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  }
 
 
 } //end class

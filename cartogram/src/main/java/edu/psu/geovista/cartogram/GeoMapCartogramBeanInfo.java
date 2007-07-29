@@ -28,6 +28,7 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 
+
 public class GeoMapCartogramBeanInfo
     extends SimpleBeanInfo {
   static Class beanClass = GeoMapCartogram.class;
