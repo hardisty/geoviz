@@ -18,7 +18,6 @@
 	<classpathentry kind="src" path="rjava/src/main/java"/>
 	<classpathentry kind="src" path="satscan/src/main/java"/>
 	<classpathentry kind="src" path="sound/src/main/java"/>
-	<classpathentry kind="src" path="sound/src/test/java"/>
 	<classpathentry kind="src" path="symbolization/src/main/java"/>
 	<classpathentry kind="src" path="texture/src/main/java"/>
 	<classpathentry kind="src" path="toolkitcore/src/main/java"/>
