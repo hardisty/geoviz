@@ -684,7 +684,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// components are organized by dimension of analysis
 		// then by commonality of usage
 
-		// data handling compononents
+		// data handling components
 		addToolToMenu(VariablePicker.class);
 		addToolToMenu(SpreadSheetBean.class);
 		addToolToMenu(VariableTransformer.class);
