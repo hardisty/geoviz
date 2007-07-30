@@ -1304,7 +1304,35 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	 * @param e
 	 */
 	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		if(this.mode == MapCanvas.MODE_ZOOM_OUT){
 
+			int width = this.getWidth();
+			int height = this.getHeight();
+			//width = width - (int)(width*.8);
+			//height = height - (int)(height*.8);
+			
+			this.zoomOut(0,0,width,height);
+		} else if (this.mode == MapCanvas.MODE_SELECT){
+			if (e.isShiftDown()){
+			this.makeSelectionShift(x, x+3, y, y+3);
+			} else {
+			this.makeSelection(x, x+3, y, y+3);
+			}
+		} else if(this.mode == MapCanvas.MODE_ZOOM_IN){
+			this.zoomIn(x, x, y, y);
+		} else if (mode == MapCanvas.MODE_PAN) {
+			Cursor grabCur = cursors.getCursor(GeoCursors.CURSOR_GRAB);
+
+			if (this.getCursor() != grabCur) {
+				this.setCursor(grabCur);
+				this.repaint();
+			}
+		}
+		
+		
+		
 	} // end method
 
 	private void makeSelection(int x1, int x2, int y1, int y2) {
@@ -1499,6 +1527,11 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		}
 
 		if (exLabels != null && this.exLabels.isVisible()) {
+			Font currFont = g2.getFont();
+			Font biggerFont = new Font("Ariel",Font.PLAIN,currFont.getSize()+2);
+			g2.setFont(biggerFont);
+			Stroke biggerStroke = new BasicStroke(3f);
+			g2.setStroke(biggerStroke);
 			exLabels.paint(g2, getBounds());
 		}
 	}
