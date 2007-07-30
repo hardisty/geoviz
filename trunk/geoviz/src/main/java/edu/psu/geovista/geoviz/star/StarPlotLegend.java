@@ -211,7 +211,7 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (midPanel == null) {
+		if (midPanel == null || this.connectorLines == null) {
 			return;
 		}
 		Graphics2D g2 = (Graphics2D) g.create();

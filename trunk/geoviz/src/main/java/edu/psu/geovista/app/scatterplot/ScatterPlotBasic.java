@@ -690,6 +690,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 				selectHeight);
 		Graphics2D g2d = (Graphics2D) g;
 		this.drawSelectRectangle(g2d, rec);
+		if (exLabels != null && this.exLabels.isVisible()) {
+			exLabels.paint(g2, getBounds());
+		}
 
 	}
 
@@ -770,8 +773,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		int x = exsint[i];
 		int y = whyint[i];
 		
-		int pointDrawX = x - (pointSize/2);
-		int pointDrawY = y - (pointSize/2);
+		int pointDrawX = x - (pointSize/2)+1;
+		int pointDrawY = y - (pointSize/2)+1;
 		
 		Stroke tempStroke = g2.getStroke();
 		
@@ -1664,7 +1667,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			public void actionPerformed(ActionEvent e) {
 				try {
 					actionButton_actionPerformed(e);
-				} catch (Exception exception) {
+				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 		});

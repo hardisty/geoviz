@@ -7,6 +7,7 @@
  *****************************************************************************/
 package edu.psu.geovista.ui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -131,7 +132,8 @@ public class ExcentricLabels extends MouseAdapter implements Comparator,
             graphics.draw(line);
             graphics.setPaintMode();
         }
-        graphics.setColor(Color.RED);
+        graphics.setStroke(new BasicStroke(2f));
+        graphics.setColor(new Color(255,0,0,128));
         graphics.draw(cursorBounds);
     }
 

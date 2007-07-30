@@ -211,7 +211,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	 * expensive operation, so this method should be called by a RenderThread.
 	 */
 	private void paintDrawingBuff() {
-		if (this.drawingBuff == null) {
+		if (this.drawingBuff == null || this.dataSet == null) {
 			return;
 		}
 		Graphics g = this.drawingBuff.getGraphics();
