@@ -52,9 +52,9 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	transient private double[] histogramArray;
 	transient private double[] accumulativeFrequency;
 	transient private double[] dataX;
-	transient private int histNumber = DEFAULT_HIST_NUM;
+	 private int histNumber = DEFAULT_HIST_NUM;
 	transient private double barWidth;
-	transient private boolean axisOn = true;
+	private boolean axisOn = true;
 	transient private boolean accFrequency = false;
 	transient private int plotOriginX;
 	transient private int plotOriginY;
@@ -75,16 +75,16 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	transient private double[] selectionArray; //the count of seleced observation in each histogram bin.
 	transient private Color background;
 	transient private Color foreground;
-        transient private Color histFillColor = Color.gray;
+         private Color histFillColor = Color.gray;
 	transient private JPopupMenu popup;
 	transient private JDialog dialog1;
 	transient private JDialog dialog2;
-	transient private JTextField histNumberField = new JTextField(16);
-	transient private JTextField yAxisMinField = new JTextField(16);
-	transient private JTextField yAxisMaxField = new JTextField(16);
-	transient private JTextField xAxisMinField = new JTextField(16);
-	transient private JTextField xAxisMaxField = new JTextField(16);
-	transient private EventListenerList listenerListAction = new EventListenerList();
+	 private JTextField histNumberField = new JTextField(16);
+	 private JTextField yAxisMinField = new JTextField(16);
+	 private JTextField yAxisMaxField = new JTextField(16);
+	 private JTextField xAxisMinField = new JTextField(16);
+	 private JTextField xAxisMaxField = new JTextField(16);
+	 private EventListenerList listenerListAction = new EventListenerList();
 	protected final static Logger logger = Logger.getLogger(Histogram.class.getName());
     public Histogram() {
     	Dimension size = new Dimension(300,200);

@@ -418,7 +418,7 @@ public class ConditionManager extends JPanel implements ChangeListener, ListSele
 
 	private double[] getMinMaxValues(double[] dataArray){
 		double[] minMaxValues = new double[2];
-		if (dataArray[0] != Double.NaN){
+		if (!Double.isNaN(dataArray[0])){
 			minMaxValues[0] = dataArray[0];
 			minMaxValues[1] = dataArray[0];
 		}else {
@@ -426,10 +426,10 @@ public class ConditionManager extends JPanel implements ChangeListener, ListSele
 			minMaxValues[1] = 0;
 		}
 		for (int i = 1; i<dataArray.length; i++){
-			if (minMaxValues[0] > dataArray[i] && dataArray[i] != Double.NaN){
+			if (minMaxValues[0] > dataArray[i] && !Double.isNaN(dataArray[i])){
 				minMaxValues[0] = dataArray[i];
 			}
-			if (minMaxValues[1] < dataArray[i] && dataArray[i] != Double.NaN){
+			if (minMaxValues[1] < dataArray[i] && !Double.isNaN(dataArray[i])){
 				minMaxValues[1] = dataArray[i];
 			}
 		}

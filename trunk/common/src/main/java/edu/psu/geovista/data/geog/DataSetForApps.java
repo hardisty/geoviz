@@ -599,6 +599,7 @@ public class DataSetForApps implements TableModel {
 	public DataSetForApps appendDataSet(DataSetForApps newData) {
 		DataSetForApps returnDataSetForApps = null;
 		if (this.dataObjectOriginal == null) {
+			returnDataSetForApps = new DataSetForApps();
 			returnDataSetForApps.init(newData.getDataObjectOriginal());
 			return returnDataSetForApps;
 		}
@@ -659,6 +660,7 @@ public class DataSetForApps implements TableModel {
 	public DataSetForApps prependDataSet(DataSetForApps newData) {
 		DataSetForApps returnDataSetForApps = null;
 		if (this.dataObjectOriginal == null) {
+			returnDataSetForApps = new DataSetForApps();
 			returnDataSetForApps.init(newData.getDataObjectOriginal());
 			return returnDataSetForApps;
 		}

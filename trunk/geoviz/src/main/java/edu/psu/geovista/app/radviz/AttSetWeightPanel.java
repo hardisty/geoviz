@@ -143,7 +143,7 @@ public class AttSetWeightPanel extends JPanel implements ActionListener, ChangeL
         else { //done adjusting
             double help = (double)source.getValue();
             help /= WT_MAX;
-            if (help != weight) {
+            if (! (Math.abs(help - weight) < .0000001 )) {
                 weight = help;
                 weightText.setValue(new Double(weight)); //update weight value
             }
@@ -162,7 +162,7 @@ public class AttSetWeightPanel extends JPanel implements ActionListener, ChangeL
             if (weightSlider != null && value != null) {
                 int helpInt = Math.round((float)(value.doubleValue() * 100));
                 double help = ((double)helpInt) / WT_MAX;
-                if (help != weight) weight = help;
+                if (! (Math.abs(help - weight) < .0000001 )) weight = help;
                 if (helpInt != weightSlider.getValue()) weightSlider.setValue(helpInt);
             }
         }

@@ -76,7 +76,7 @@ public class StarPlotRenderer implements Glyph {
 	private static Stroke spikeStrokeNoFill = new BasicStroke(2f);
 	private static Stroke outlineStroke = new BasicStroke(0.8f);
 
-	public static Color defaultOutlineColor = Color.black;
+	public static final Color defaultOutlineColor = Color.black;
 
 	private boolean fill = true;
 

@@ -64,13 +64,13 @@ public class RangeSliderLegend extends JPanel
 		protected Color labelPanelColor;
 		protected Color fontColor;
 		protected int numberOfSliders = 0;
-		transient protected EventListenerList listenerList = new EventListenerList();
+		 protected EventListenerList listenerList = new EventListenerList();
 
 		public Object data;
 
 
 		private static final String DEFAULT_TITLE	= "No Title";
-		private transient String tabTitle										= DEFAULT_TITLE;
+		private  String tabTitle										= DEFAULT_TITLE;
 
 
 		//	===========================	CONSTRUCTORS	============================= //

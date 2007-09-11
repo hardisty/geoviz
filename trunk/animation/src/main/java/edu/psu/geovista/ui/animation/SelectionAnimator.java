@@ -60,23 +60,23 @@ public class SelectionAnimator
     DataSetListener,
     SubspaceListener,
     ClassificationListener {
-  private transient Timer ticker;
+  private  Timer ticker;
   private transient int currClassIndex;
-  private transient Vector selections;
+  private  Vector selections;
   private transient JButton startStopButton;
   private transient JButton clearSelectionButton;
   private transient boolean going = false;
-  private transient int speed; //in milliseconds
+  private int speed; //in milliseconds
   private transient DataSetForApps data;
   private transient int maxClass = 0;
-  private transient ClassifierPicker classPick;
+  private  ClassifierPicker classPick;
   private transient int[] classes;
   private transient ClassedObs[] obs;
   private transient int[] subspace;
   private transient int subspaceIndex;
   private transient JSlider timeSlider;
   private transient JCheckBox subspaceBox;
-  private transient boolean usingSubspace;
+  private boolean usingSubspace;
   private transient int[] tempArray;
   final static Logger logger = Logger.getLogger(SelectionAnimator.class.getName());
   /**

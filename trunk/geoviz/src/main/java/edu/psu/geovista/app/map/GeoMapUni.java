@@ -77,12 +77,12 @@ public class GeoMapUni
   public static final int VARIABLE_CHOOSER_MODE_ACTIVE = 0;
   public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
   public static final int VARIABLE_CHOOSER_MODE_HIDDEN = 2;
-  transient private MapCanvas mapCan;
-  transient private VisualClassifier visClassOne;
+  private MapCanvas mapCan;
+  private VisualClassifier visClassOne;
   //transient private VisualClassifier visClassTwo;
   transient private JToolBar mapTools;
-  transient private JPanel topContent;
-  transient private GeoCursors cursors;
+  private JPanel topContent;
+  private GeoCursors cursors;
   private JPanel vcPanel = new JPanel();
   transient private DataSetForApps dataSet;
   public GeoMapUni() {

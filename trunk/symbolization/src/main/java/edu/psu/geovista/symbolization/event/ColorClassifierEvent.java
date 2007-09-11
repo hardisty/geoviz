@@ -39,7 +39,7 @@ public class ColorClassifierEvent extends EventObject {
 private transient ColorSymbolClassification colorClasser;
 public static final int SOURCE_ORIENTATION_X = 0;
 public static final int SOURCE_ORIENTATION_Y = 1;
-private transient int orientation;
+private  int orientation;
 
 /**
 * The constructor is the same as that for EventObject, except that the

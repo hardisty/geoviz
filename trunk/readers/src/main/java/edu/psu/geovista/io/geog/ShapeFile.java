@@ -379,7 +379,6 @@ public class ShapeFile {
 
 	public String toString() {
 		String res = "header: " + fileHeader.toString() + ", data = ";
-		for(int i = 0; i < data.size(); res += data.elementAt(i++).toString());
 		return res;
 	}
 }

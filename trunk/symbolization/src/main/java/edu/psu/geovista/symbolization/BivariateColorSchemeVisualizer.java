@@ -51,8 +51,8 @@ public class BivariateColorSchemeVisualizer extends JPanel implements
     private ColorSymbolizer ySymbolizer;
     private TexturePanel[] swatches;
     private Dimension gap;
-    private transient boolean usingDefaultX = true;
-    private transient boolean usingDefaultY = true;
+    private  boolean usingDefaultX = true;
+    private  boolean usingDefaultY = true;
 
     private transient TexturePaint texPaint;
 

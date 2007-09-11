@@ -29,9 +29,15 @@
 package edu.psu.geovista.db.dbase;
 
 /* ------------------ Import classes (packages) ------------------- */
-import java.io.*;
-
-import java.util.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Vector;
 import java.util.logging.Logger;
 
 
@@ -184,7 +190,7 @@ public class DBaseFile {
                                                                 : (1900 + dateBytes[0])),
                                                                dateBytes[1] - 1,
                                                                dateBytes[2]);
-
+        logger.finest(lastModified.toString());
         numRecords = gdis.readIntLE(); //num records is the length of the individual arrays
         byteCount = byteCount + 4;
 
@@ -473,6 +479,7 @@ public class DBaseFile {
 
             @SuppressWarnings("unused")
 			DBaseFile dbaseFile = new DBaseFile(stringFileName, outputFileName);
+            logger.finest(dbaseFile.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

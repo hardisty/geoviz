@@ -33,8 +33,8 @@ import javax.swing.event.EventListenerList;
  */
 public class ListeningInterfaceGUI extends JPanel implements ActionListener {
 
-  private transient BeanConnectionGUI[] connectionBoxen;
-  private transient JPanel boxenPanel;
+  private BeanConnectionGUI[] connectionBoxen;
+  private JPanel boxenPanel;
   /**
    *
   */

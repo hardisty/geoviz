@@ -64,11 +64,11 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		MouseListener, MouseMotionListener, MatrixElement,
 		ExcentricLabelClient, IndicationListener {
 
-	public static double AXISSPACEPORTION = 1.0 / 6.0;
+	public static final double AXISSPACEPORTION = 1.0 / 6.0;
 	public static final String COMMAND_POINT_SELECTED = "cmdSel";
 	public static final String COMMAND_DATARANGE_SET = "cmdset";
-	protected static int RADIUS = 3; // Glyph size
-	transient protected int pointSize = RADIUS;
+	protected final static int RADIUS = 3; // Glyph size
+	 protected int pointSize = RADIUS;
 	transient protected int plotOriginX;
 	transient protected int plotOriginY;
 	transient protected int plotEndX;
@@ -81,23 +81,23 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	transient protected double[] dataY;
 	transient protected int[] exsint;
 	transient protected int[] whyint;
-	transient protected String[] attributeArrays;
-	transient protected String[] observNames;
+	 protected String[] attributeArrays;
+	 protected String[] observNames;
 	transient protected String attributeX;
 	transient protected String attributeY;
 	transient protected boolean axisOn;
 	transient protected Dimension size;
 	transient protected Color background;
-	transient protected Color foreground;
-	transient protected Color selectionColor = Color.blue;
-	transient protected Color indicationColor = Color.RED;
-	protected transient boolean selOriginalColorMode = true;
+	 protected Color foreground;
+	 protected Color selectionColor = Color.blue;
+	 protected Color indicationColor = Color.RED;
+	protected  boolean selOriginalColorMode = true;
 	transient protected Color[] multipleSelectionColors;
 
 	transient protected DataArray dataArrayX;
 	transient protected DataArray dataArrayY;
-	transient protected double[] xAxisExtents = new double[2];
-	transient protected double[] yAxisExtents = new double[2];
+	 protected double[] xAxisExtents = new double[2];
+	 protected double[] yAxisExtents = new double[2];
 	transient protected int selectX = 0;
 	transient protected int selectY = 0;
 	transient protected int selectWidth = 0;
@@ -111,16 +111,16 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	transient protected int[] conditionArray;
 	transient protected int mouseX1, mouseX2, mouseY1, mouseY2;
 	protected transient JPopupMenu popup;
-	transient protected JTextField xAxisMinField = new JTextField(16);
-	transient protected JTextField xAxisMaxField = new JTextField(16);
-	transient protected JTextField yAxisMinField = new JTextField(16);
-	transient protected JTextField yAxisMaxField = new JTextField(16);
-	transient protected EventListenerList listenerListAction = new EventListenerList();
+	 protected JTextField xAxisMinField = new JTextField(16);
+	 protected JTextField xAxisMaxField = new JTextField(16);
+	 protected JTextField yAxisMinField = new JTextField(16);
+	 protected JTextField yAxisMaxField = new JTextField(16);
+	 protected EventListenerList listenerListAction = new EventListenerList();
 
 	// stuff added for colors
 	transient protected Color[] pointColors;
 	transient protected BivariateColorSymbolClassification bivarColorClasser = new BivariateColorSymbolClassificationSimple();
-	transient protected Histogram histogram = new Histogram();
+	 protected Histogram histogram = new Histogram();
 	transient protected ExcentricLabels exLabels; // For paint label of
 	// observation data while
 	// indication rectangle is
@@ -136,7 +136,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	transient protected JFrame dlgSP;
 
 	// added by ywkim for moransI regression line
-	transient protected boolean plotLine = true;
+	protected boolean plotLine = true;
 	transient protected double slope;
 	transient protected double intercept;
 	transient protected double correlation;
@@ -144,7 +144,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	transient protected double yStartPosition;
 	transient protected double yEndPosition;
 	// regression for selected observations
-	transient protected boolean plotLineForSelections = true;
+	protected boolean plotLineForSelections = true;
 	transient protected double slopeForSelections;
 	transient protected double interceptForSelections;
 	transient protected double correlationForSelections;
@@ -1879,7 +1879,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 **************************************************************************/
 
 	protected Class regressionClass;
-	protected static String regressionClassName = LinearRegression.class
+	protected String regressionClassName = LinearRegression.class
 			.getName();
 	protected Regression regressionInterface;
 
@@ -1890,7 +1890,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	}
 
 	public void setRegressionClassName(String classname) {
-		ScatterPlotBasic.regressionClassName = classname;
+		this.regressionClassName = classname;
 	}
 
 	public void setRegressionClass(Class clazz) {
@@ -1905,8 +1905,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			boolean allData) {
 
 		try {
-			setRegressionClass((ScatterPlotBasic.regressionClassName != null) ? Class
-					.forName(ScatterPlotBasic.regressionClassName)
+			setRegressionClass((this.regressionClassName != null) ? Class
+					.forName(this.regressionClassName)
 					: null);
 		} catch (Exception e) {
 			e.printStackTrace();

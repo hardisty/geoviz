@@ -59,7 +59,7 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	transient private GeoCursors cursors;
 
 	private Color selectionColor;
-	transient private Histogram histogram = new Histogram();
+	private Histogram histogram = new Histogram();
 
 	public MapMatrixElement() {
 		super();

@@ -137,13 +137,13 @@ public class StatUtil
 	 * - Pentium III 800 MHz
 	 * running Microsoft Windows 2000
 	 * ************************************* */
-	private static final double X_MIN = Double.MIN_VALUE;
+	//private static final double X_MIN = Double.MIN_VALUE;
 	private static final double X_INF = Double.MAX_VALUE;
 	private static final double X_NEG = -9.38241396824444;
 	private static final double X_SMALL = 1.110223024625156663E-16;
 	private static final double X_BIG = 9.194E0;
 	private static final double X_HUGE = 1.0D / (2.0D * Math.sqrt(X_SMALL));
-	private static final double X_MAX = Math.min(X_INF, (1 / (Math.sqrt(Math.PI) * X_MIN)));
+	//private static final double X_MAX = Math.min(X_INF, (1 / (Math.sqrt(Math.PI) * X_MIN)));
 
 	private static double calerf(double X, int jint)
 	{
@@ -233,8 +233,7 @@ public class StatUtil
 		else
 		{
 			result = 0.0D;
-			if( Y >= X_BIG && (jint != 2 || Y >= X_MAX));
-			else if(Y >= X_BIG && Y >= X_HUGE) result = PI_SQRT / Y;
+		if(Y >= X_BIG && Y >= X_HUGE) result = PI_SQRT / Y;
 			else
 			{
 				Y_SQ = 1.0D / (Y * Y);

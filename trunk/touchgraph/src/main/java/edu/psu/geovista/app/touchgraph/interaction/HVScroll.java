@@ -187,7 +187,7 @@ public class HVScroll implements GraphListener {
     }
 
     class DScrollbar extends JScrollBar {
-        transient private double doubleValue;
+        private double doubleValue;
 
         DScrollbar(int orient, int val, int vis, int min, int max){
             super(orient, val, vis, min, max);

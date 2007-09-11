@@ -23,16 +23,21 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.geom.NoninvertibleTransformException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -50,6 +55,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jump.feature.Feature;
+import com.vividsolutions.jump.feature.FeatureCollection;
+import com.vividsolutions.jump.io.DriverProperties;
+import com.vividsolutions.jump.io.IllegalParametersException;
+import com.vividsolutions.jump.io.ShapefileReader;
+import com.vividsolutions.jump.java2D.Java2DConverter;
+import com.vividsolutions.jump.java2D.Viewport;
 
 import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.coordinator.CoordinationUtils;
@@ -650,6 +664,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			}
 
 		}
+
 	}
 
 	// end component event handling
@@ -738,7 +753,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		this.menuAddTool.addSeparator();
 
 		// other...
-		//addToolToMenu(GeoJabber.class);
+		// addToolToMenu(GeoJabber.class);
 
 	}
 
@@ -818,12 +833,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public static void main(String[] args) {
-		
+
 		Logger logger = Logger.getLogger("edu.psu.geovista");
 		Logger mapLogger = Logger
 				.getLogger("edu.psu.geovista.app.map.MapCanvas");
-		//logger.setLevel(Level.FINEST);
-		//mapLogger.setLevel(Level.FINEST);
+		// logger.setLevel(Level.FINEST);
+		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();
 		// mng.addLogger(logger);
 		// mng.addLogger(mapLogger);
@@ -882,7 +897,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// 741\\charlie\\richlex_zone63_diss2.shp";
 		// fileName = "C:\\temp\\states48.shp";
 		// fileName = "C:\\temp\\county\\county.shp";
-
 		if (args.length >= 2) {
 			String arg2 = args[1];
 
@@ -891,15 +905,48 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			}
 		}
 
-
-
 		GeoVizToolkit app = new GeoVizToolkit(fileName, useProj, useAux);
-
-
 
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
+
+		String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
+		ShapefileReader reader = new ShapefileReader();
+		DriverProperties dp = new DriverProperties(fileName2);
+		FeatureCollection featColl = null;
+
+		try {
+			featColl = reader.read(dp);
+		} catch (IllegalParametersException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		List<Feature> featList = featColl.getFeatures();
+
+		for (Feature feat : featList) {
+
+			Geometry geom = (Geometry) feat.getAttribute(0);
+			System.out.println(geom.getClass().getName());
+
+			Java2DConverter converter = new Java2DConverter(new Viewport(app
+					.getGlassPane()));
+			try {
+				Shape shp = converter.toShape(geom);
+				Graphics g = app.desktop.getGraphics();
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setColor(Color.yellow);
+				g2.fill(shp);
+			} catch (NoninvertibleTransformException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 	}
 

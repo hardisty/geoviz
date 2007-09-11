@@ -38,7 +38,7 @@ public class BivariateColorSymbolClassificationSimple implements BivariateColorS
     transient int[] classesX;
     transient int[] classesY;
 
-    public static int DEFAULT_NUM_CLASSES = 3;
+    public static final int DEFAULT_NUM_CLASSES = 3;
 
     public ColorSymbolizer getXColorSymbolizer(){
      return colorerX;

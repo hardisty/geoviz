@@ -46,25 +46,25 @@ public class TextureCache
     extends Component {
 
   private transient TexturePaint[] textures;
-  private transient URL[] urls;
+  private  URL[] urls;
 
-  public static int TEXTURE_BARK = 0;
-  public static int TEXTURE_BRICK = 1;
-  public static int TEXTURE_BURLAP = 2;
-  public static int TEXTURE_INFO = 3;
-  public static int TEXTURE_GROUND = 4;
-  public static int TEXTURE_RED_GROUND = 5;
-  public static int TEXTURE_GREEN_GROUND = 6;
-  public static int TEXTURE_BLUE_GROUND = 7;
-  private static int numTextures = 8;
+  public static final int TEXTURE_BARK = 0;
+  public static final int TEXTURE_BRICK = 1;
+  public static final int TEXTURE_BURLAP = 2;
+  public static final int TEXTURE_INFO = 3;
+  public static final int TEXTURE_GROUND = 4;
+  public static final int TEXTURE_RED_GROUND = 5;
+  public static final int TEXTURE_GREEN_GROUND = 6;
+  public static final int TEXTURE_BLUE_GROUND = 7;
+  private static final int numTextures = 8;
 
-  private static URL urlBark = TextureCache.class.getResource("resources/bark.gif");
-  private static URL urlBrick = TextureCache.class.getResource("resources/brick.gif");
-  private static URL urlBurlap = TextureCache.class.getResource("resources/burlap.gif");
-  private static URL urlGround = TextureCache.class.getResource("resources/ground.gif");
-  private static URL urlRedGround = TextureCache.class.getResource("resources/redGround.gif");
-  private static URL urlGreenGround = TextureCache.class.getResource("resources/greenGround.gif");
-  private static URL urlBlueGround = TextureCache.class.getResource("resources/blueGround.gif");
+  private static final URL urlBark = TextureCache.class.getResource("resources/bark.gif");
+  private static final URL urlBrick = TextureCache.class.getResource("resources/brick.gif");
+  private static final URL urlBurlap = TextureCache.class.getResource("resources/burlap.gif");
+  private static final URL urlGround = TextureCache.class.getResource("resources/ground.gif");
+  private static final URL urlRedGround = TextureCache.class.getResource("resources/redGround.gif");
+  private static final URL urlGreenGround = TextureCache.class.getResource("resources/greenGround.gif");
+  private static final URL urlBlueGround = TextureCache.class.getResource("resources/blueGround.gif");
 
   /**
    * null ctr

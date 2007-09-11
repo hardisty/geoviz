@@ -26,12 +26,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.geom.NoninvertibleTransformException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,6 +50,15 @@ import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jump.feature.Feature;
+import com.vividsolutions.jump.feature.FeatureCollection;
+import com.vividsolutions.jump.io.DriverProperties;
+import com.vividsolutions.jump.io.IllegalParametersException;
+import com.vividsolutions.jump.io.ShapefileReader;
+import com.vividsolutions.jump.java2D.Java2DConverter;
+import com.vividsolutions.jump.java2D.Viewport;
 
 import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.classification.ClassifierPicker;
@@ -836,7 +848,52 @@ public class GeoMap extends JPanel
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
 		GeoData48States stateData = new GeoData48States();
-		coord.addBean(map2);
+		
+		String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
+		ShapefileReader reader = new ShapefileReader();
+		DriverProperties dp = new DriverProperties(fileName2);
+		FeatureCollection featColl = null;
+
+		try {
+			featColl = reader.read(dp);
+		} catch (IllegalParametersException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		List<Feature> featList = featColl.getFeatures();
+		
+		for (Feature feat : featList) {
+
+			Geometry geom = (Geometry) feat.getAttribute(0);
+			System.out.println(geom.getClass().getName());
+
+			Java2DConverter converter = new Java2DConverter(new Viewport(app
+					.getGlassPane()));
+			try {
+				Shape shp = converter.toShape(geom);
+				System.out.println(shp);
+
+			} catch (NoninvertibleTransformException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
+
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//coord.addBean(map2);
 		coord.addBean(shpToShape);
 
 		if (useResource) {

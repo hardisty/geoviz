@@ -54,10 +54,10 @@ public class SpreadSheetBean extends JPanel
                              SelectionListener, DataSetListener, TableModelListener{
     public static final boolean DEBUG=false;
     static final long serialVersionUID = 2262286688943155764L;
-    private  transient SSTable table; //
+    private  SSTable table; //
     private  transient boolean scffo=false; //selection change fired from outsite(beans);
-    private transient DescriptiveStats stats;
-    private DataSetForApps dataSet;
+    private  DescriptiveStats stats;
+    private transient DataSetForApps dataSet;
 
     public SpreadSheetBean() {
 

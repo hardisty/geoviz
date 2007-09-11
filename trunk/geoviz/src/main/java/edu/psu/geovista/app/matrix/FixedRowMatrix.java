@@ -49,7 +49,7 @@ public class FixedRowMatrix extends AbstractMatrix implements
 		ListSelectionListener {
 
 	private static final int DEFAULT_NUM_GRAPHES = 4;
-	protected transient EventListenerList listenerList = new EventListenerList();
+	protected EventListenerList listenerList = new EventListenerList();
 	private SPTagButton[] columnButton;
 	private JComboBox attCombo;
 	private int yIdx = 0;

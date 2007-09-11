@@ -55,12 +55,12 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 	public static final int VARIABLE_CHOOSER_MODE_ACTIVE = 0;
 	public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
 	public static final int VARIABLE_CHOOSER_MODE_HIDDEN = 2;
-	transient private ScatterPlot scatterPlot;
-	transient private int[] displayIndices = new int[2];
-	transient private VisualClassifier visClassOne;
-	transient private VisualClassifier visClassTwo;
-	transient private JPanel topContent;
-	transient private BivariateColorSchemeVisualizer biViz;
+	 private ScatterPlot scatterPlot;
+	 private int[] displayIndices = new int[2];
+	 private VisualClassifier visClassOne;
+	 private VisualClassifier visClassTwo;
+	 private JPanel topContent;
+	 private BivariateColorSchemeVisualizer biViz;
 	transient private Color backgroundColor;
 	transient private int[] selections;
 	transient private Color[] multipleSelectionColors;

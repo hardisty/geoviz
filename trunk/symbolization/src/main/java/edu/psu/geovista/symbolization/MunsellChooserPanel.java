@@ -39,7 +39,7 @@ public class MunsellChooserPanel extends AbstractColorChooserPanel {
   transient Dimension gap;
   transient Color[] colors;
  transient  MunsellSwatch[] swatches;
-  transient JPanel holderPanel;
+   JPanel holderPanel;
 
   public MunsellChooserPanel() {
     super();

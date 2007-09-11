@@ -46,11 +46,11 @@ public class VariableSequenceAnimator extends JPanel implements ActionListener,
                                                           ChangeListener,
                                                           DataSetListener
                                                        {
-  private transient Timer ticker;
+  private Timer ticker;
 
   private transient JButton startStopButton;
   private transient boolean going = false;
-  private transient int speed; //in milliseconds
+  private  int speed; //in milliseconds
   private transient DataSetForApps data;
 
   private transient ClassedObs[] obs;

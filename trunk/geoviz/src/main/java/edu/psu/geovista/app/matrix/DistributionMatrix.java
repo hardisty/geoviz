@@ -48,7 +48,7 @@ public class DistributionMatrix extends AbstractMatrix
 
 
 	private String[] variableNames;
-	protected transient EventListenerList listenerList = new EventListenerList();
+	protected EventListenerList listenerList = new EventListenerList();
 	private SPTagButton[] columnButton;
 	private String[] varTags;
 	private Vector[] dataVector;

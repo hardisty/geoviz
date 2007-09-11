@@ -46,11 +46,11 @@ public class FoldupPanel extends JPanel implements ActionListener {
 	protected final static Logger logger = Logger.getLogger(FoldupPanel.class.getName());
 	transient boolean folded = false;
 	transient ThumbPanel thumb;
-	transient JPanel contentPanel;
-	transient JPanel spaceHolder;
+	 JPanel contentPanel;
+	 JPanel spaceHolder;
 	transient Dimension tempPreferredSize;
 	private static Dimension foldedPreferredSize = new Dimension(600, 8);
-	transient boolean initFinished;
+	 boolean initFinished;
 
 	/**
 	 * null ctr

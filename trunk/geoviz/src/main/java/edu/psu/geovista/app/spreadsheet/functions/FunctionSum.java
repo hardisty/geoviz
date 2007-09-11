@@ -46,7 +46,7 @@ public  class FunctionSum extends Function {
           }
           else if(fr.getType() ==SelectionRange.SINGLE_ROW) {
              int x=(int)range[0].getX() ;
-              for (int y=sy;x<=ey;y++){
+              for (int y=sy;y<=ey;y++){
                   Cell cell=((Cell)tb.getValueAtIndex(x,y));
                   float v=Formula.processCellValue(cell.getValue()).floatValue();
                   sum=sum+v;

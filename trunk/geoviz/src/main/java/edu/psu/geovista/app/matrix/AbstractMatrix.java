@@ -102,13 +102,13 @@ public abstract class AbstractMatrix
     protected transient SPGridBagConstraints c;
     protected static ImageIcon leftRightArrow;
     protected static ImageIcon topDownArrow;
-    protected static Insets nullInsets;
+    protected static final Insets nullInsets = new Insets(0, 0, 0, 0);;
     private transient Vector indicListeners;
 	protected String[] varTags;
 	protected SPTagButton[] columnButton;
 	protected SPTagButton[] rowButton;
 	protected JButton configButton;
-    protected abstract void createMatrix();
+    protected abstract void createMatrix();  
 
     public AbstractMatrix() {
         this.setPreferredSize(new Dimension(300, 300));
@@ -974,7 +974,7 @@ public abstract class AbstractMatrix
      * @param oos
      * @exception IOException
      */
-    protected void writeObject(ObjectOutputStream oos) throws IOException {
+    private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 
@@ -983,14 +983,14 @@ public abstract class AbstractMatrix
      * @param ois
      * @exception ClassNotFoundException, IOException
      */
-    protected void readObject(ObjectInputStream ois) throws
+    private void readObject(ObjectInputStream ois) throws
         ClassNotFoundException,
         IOException {
         ois.defaultReadObject();
     }
 
     //Set up arrow figure for the first row and column buttons.
-    static {
+    static  {
         try {
             Class cl = UniPlotMatrix.class;
             URL urlGifH = cl.getResource("arrow_h32.gif");
@@ -998,7 +998,7 @@ public abstract class AbstractMatrix
             leftRightArrow = new ImageIcon(urlGifH);
             topDownArrow = new ImageIcon(urlGifV);
             // Just do this create once
-            nullInsets = new Insets(0, 0, 0, 0);
+            
         }
         catch (Exception ex) {
             ex.printStackTrace();

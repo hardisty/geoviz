@@ -11,7 +11,6 @@
 package edu.psu.geovista.ui.dataloader.common;
 
 import java.awt.Container;
-import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -31,29 +30,10 @@ public class MultipleFileSource extends JPanel
 
     public MultipleFileSource(String[] loaderNames) {
 
-         this.setFileSrcNames(loaderNames);
+         //this.setFileSrcNames(loaderNames);
     }
 
-    public void setFileSrcNames(String[] fileSrcNames) {
-        if(fileSrcNames==null){
-            new NullPointerException(this.getClass().getName() +" is passed a null argument");
-        }
-        if(fileSrcNames.length <=0)return;
 
-        this.fileSrcNames=fileSrcNames;
-        this.removeAll() ;
-        this.setLayout(new GridLayout(fileSrcNames.length,1));
-        for (int i=0;i<fileSrcNames.length ;i++){
-            String name=fileSrcNames[i];
-            SingleFileSource fl = (SingleFileSource) fileSrcs.get(name);
-            if(fl==null ){
-                fl = new SingleFileSource(name);
-                fl.addPropertyChangeListener(this);
-                fileSrcs.put(name,fl);
-                this.add(fl);
-            }
-        }
-    }
     private  SingleFileSource getFileloader(String name){
         return (SingleFileSource) this.fileSrcs.get(name);
     }

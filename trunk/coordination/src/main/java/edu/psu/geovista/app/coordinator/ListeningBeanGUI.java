@@ -37,8 +37,8 @@ import javax.swing.event.EventListenerList;
  *  with an event type in a firing bean.
  */
 public class ListeningBeanGUI extends JPanel implements ActionListener {
-  private transient ListeningInterfaceGUI[] listenGUI;
-  private transient JPanel listenersGUIPanel;
+  private ListeningInterfaceGUI[] listenGUI;
+  private JPanel listenersGUIPanel;
   /**
    *
   */

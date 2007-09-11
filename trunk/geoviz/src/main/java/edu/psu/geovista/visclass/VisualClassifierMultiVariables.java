@@ -82,7 +82,7 @@ public class VisualClassifierMultiVariables extends JPanel implements ActionList
     private int nClasses;
     private boolean update;
     private boolean interpolate;
-    private transient boolean setupFinished;
+    private boolean setupFinished;
 
     private transient JCheckBox updateBox;
     private transient JCheckBox interpolateBox;
@@ -200,7 +200,7 @@ public class VisualClassifierMultiVariables extends JPanel implements ActionList
 		this.classLabel = classLabel; //To do, need to generalize it to any training labels.
 		String[] classLabels = new String[this.nClasses];;
 		if (this.setUpTrainingData == null){
-			//this.setUpTrainingData = new TrainingData();
+			this.setUpTrainingData = new TrainingData();
 			this.setUpTrainingData.setNumberOfClasses(this.nClasses);
 			this.setUpTrainingData.setDataObject(this.dataObject);
 		}
@@ -487,7 +487,9 @@ public class VisualClassifierMultiVariables extends JPanel implements ActionList
 					public void actionPerformed (ActionEvent e) {
 						try {
 							km_para_actionPerformed(e);
-						} catch (Exception exception) {}
+						} catch (Exception ex) {
+							logger.throwing(this.getClass().getName(), "detail_button", ex);
+						}
 					}
 			});
 			}
@@ -514,7 +516,9 @@ public class VisualClassifierMultiVariables extends JPanel implements ActionList
 					public void actionPerformed (ActionEvent e) {
 						try {
 							ml_para_actionPerformed(e);
-						} catch (Exception exception) {}
+						} catch (Exception ex) {
+							logger.throwing(this.getClass().getName(), "detail_button", ex);
+						}
 					}
 			});
 			}

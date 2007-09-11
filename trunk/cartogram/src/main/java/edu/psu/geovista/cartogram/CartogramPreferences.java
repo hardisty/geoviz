@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 import javax.swing.BorderFactory;
@@ -50,6 +51,7 @@ import javax.swing.event.ChangeListener;
 
 public class CartogramPreferences extends JFrame implements ActionListener,
         ChangeListener {
+	protected final static Logger logger = Logger.getLogger(CartogramPreferences.class.getName());
     JLabel stepLabel;
     JTextField inputFileNameTextField;
     JButton inputFileNameButton;
@@ -318,6 +320,7 @@ public class CartogramPreferences extends JFrame implements ActionListener,
         @SuppressWarnings("unused")
 		Preferences gvPrefs = Preferences.userNodeForPackage(
                 CartogramPreferences.class);
+        logger.finest(gvPrefs.toString());
         TransformsMain trans = new TransformsMain(false);
         CartogramGUI pan = new CartogramGUI();
         CartogramPreferences app = new CartogramPreferences("Preferences",

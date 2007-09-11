@@ -68,7 +68,7 @@ public class CategoryRecords extends JPanel implements ChangeListener,  Selectio
   private int numObvs;
   private Vector oneRecord = new Vector(4);//One record for selection, but with display of selection (# of selected obvs) instead of real selection.
   private Vector categoryRecords = new Vector(); //records for selection or classification events.
-	transient private EventListenerList listenerList = new EventListenerList();
+private EventListenerList listenerList = new EventListenerList();
 
   public CategoryRecords()
   {
@@ -387,11 +387,7 @@ public class CategoryRecords extends JPanel implements ChangeListener,  Selectio
     }
 
     private void setUpSelectionColumn(TableColumn selectionColumn){
-		final JButton selButton = new JButton("") {
-            public void setText(String s) {
-                s = "selection";
-            }
-        };
+		final JButton selButton = new JButton("selection");
 
 		selButton.setBackground(Color.white);
         selButton.setBorderPainted(false);

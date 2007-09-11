@@ -38,7 +38,7 @@ public class Distribution2DMatrix extends AbstractMatrix implements  ListSelecti
 
 
 	private String[] variableNames;
-	protected transient EventListenerList listenerList = new EventListenerList();
+	protected EventListenerList listenerList = new EventListenerList();
 	private Vector[] dataVector;
 	private MultiClassDistributions2D distributions[];
 	private Color[] classColors;

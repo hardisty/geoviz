@@ -4,7 +4,8 @@
 
 package com.jhlabs.image;
 
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.Kernel;
 
 /**
  * A filter which applies Gaussian blur to an image. This is a subclass of ConvolveFilter
@@ -16,8 +17,7 @@ public class GaussianFilter extends ConvolveFilter {
 	static final long serialVersionUID = 5377089073023183684L;
 
 	protected float radius;
-	protected Kernel kernel;
-	
+		
 	/**
 	 * Construct a Gaussian filter
 	 */

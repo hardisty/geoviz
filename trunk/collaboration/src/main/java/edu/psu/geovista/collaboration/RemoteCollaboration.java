@@ -72,9 +72,9 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	Rectangle2D spatialExtent;
 	int[] subspace;
 
-	public static int DEFAULT_PORT = 3232;
+	public static final int DEFAULT_PORT = 3232;
 
-	public static String USER_NAME = "Frank";
+	public static final String USER_NAME = "Frank";
 	final static Logger logger = Logger.getLogger(RemoteCollaboration.class.getName());
 	static boolean DEBUG = true;
 

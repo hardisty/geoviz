@@ -39,9 +39,9 @@ public class AttSelectPanel extends JPanel implements ActionListener {
     
     private int[] selection = new int[0];
     
-    protected transient EventListenerList ell = new EventListenerList();
-    protected transient HashMap attIdxMap = new HashMap();
-    protected transient JTable table = new JTable();
+    protected EventListenerList ell = new EventListenerList();
+    protected HashMap attIdxMap = new HashMap();
+    protected JTable table = new JTable();
 
     /**
      * Default constructor

@@ -69,7 +69,7 @@ public class TGException extends Exception {
 
 
     /** An int containing an exception type identifier (ID). */
-    transient protected int id = -1;
+    protected int id = -1;
 
     /** The embedded Exception if tunnelling.
       * @serial The embedded exception if tunnelling, or null.

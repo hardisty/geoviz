@@ -70,15 +70,15 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
   private static final int NUM_DATA_COLUMNS = 3; //for use with pixelOrder
   public static final String COMMAND_SELECTION = "cmdSel";
   public static final String COMMAND_COLOR_CLASSFICIATION = "colorClass";
-  transient private AffineTransform xform;
+   private AffineTransform xform;
   transient private int[] pixelColors; //reflected in pixelBuff
   transient private int[] pixelColorsOriginal; //reflected in pixelBuff
   transient private String[] observationNames;
   transient private double[][] pixelOrder; // row, column //reflected in pixelBuff
   transient private int[][] pixelIndex; //reflected in pixelBuff
-  transient private int[] selectedObservations;
+  private int[] selectedObservations;
   transient private int[] conditioning;
-  transient private int[] selectedObservationsOld;
+   private int[] selectedObservationsOld;
   transient private int mouseX1;
   transient private int mouseX2;
   transient private int mouseY1;
@@ -108,7 +108,7 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
   private Shape[] drawingShapes;
   private boolean useDrawingShapes;
 
-  private transient int borderThickness = 1;
+  private int borderThickness = 1;
 
   public SpaceFillCanvas() {
     this.indication = Integer.MIN_VALUE;

@@ -68,7 +68,7 @@ public class Divseqtrapezoid {
     for(int i = 0; i < vclass; i ++){
       for(int j = 0; j < hclass; j ++){
         //if the number of classes is odd
-        if(k != (double)(n/2.0)){
+        if((k % 2) == 1){
           //for the column at the center, assign gray color
           if(j == (int)(k - 1)){
             this.labcolor[i][j].a = 0;

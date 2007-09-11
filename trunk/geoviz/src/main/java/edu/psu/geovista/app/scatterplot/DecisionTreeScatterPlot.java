@@ -54,10 +54,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		ComponentListener, MouseListener, MouseMotionListener, MatrixElement,
 		Serializable, ExcentricLabelClient {
 
-	public static double AXISSPACEPORTION = 1.0 / 6.0;
+	public static final double AXISSPACEPORTION = 1.0 / 6.0;
 	public static final String COMMAND_POINT_SELECTED = "cmdSel";
 	public static final String COMMAND_DATARANGE_SET = "cmdset";
-	private static int RADIUS = 3; // Glyph size
+	private static final int RADIUS = 3; // Glyph size
 	transient private int plotOriginX;
 	transient private int plotOriginY;
 	transient private int plotEndX;
@@ -71,41 +71,41 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	transient private double[] dataY;
 	transient private int[] exsint;
 	transient private int[] whyint;
-	transient private String[] variableNames;
-	transient private String[] observNames;
+	private String[] variableNames;
+	 private String[] observNames;
 	transient private String attributeX;
 	transient private String attributeY;
 	transient private boolean axisOn;
 	transient private Color background;
-	transient private Color foreground;
-	transient private Color selectionColor = Color.blue;
+ private Color foreground;
+	 private Color selectionColor = Color.blue;
 	transient private Color[] multipleSelectionColors;
 	transient private Color[] colorArrayForObs;
 	transient private DataArray dataArrayX;
 	transient private DataArray dataArrayY;
-	transient private double[] xAxisExtents = new double[2];
-	transient private double[] yAxisExtents = new double[2];
+	 private double[] xAxisExtents = new double[2];
+	 private double[] yAxisExtents = new double[2];
 	// private MaxMinCoordinateValue MMexs;
 	// private MaxMinCoordinateValue MMwhy;
 	transient private int selectX = 0;
 	transient private int selectY = 0;
 	transient private int selectWidth = 0;
 	transient private int selectHeight = 0;
-	transient private Vector selRecords = new Vector();// retiring
+	 private Vector selRecords = new Vector();// retiring
 	transient private int[] selections;
 	transient private int[] conditionArray;
 	transient private int mouseX1, mouseX2, mouseY1, mouseY2;
-	transient private JPopupMenu popup;
-	transient private JTextField xAxisMinField = new JTextField(16);
-	transient private JTextField xAxisMaxField = new JTextField(16);
-	transient private JTextField yAxisMinField = new JTextField(16);
-	transient private JTextField yAxisMaxField = new JTextField(16);
-	transient private EventListenerList listenerListAction = new EventListenerList();
+	 private JPopupMenu popup;
+	 private JTextField xAxisMinField = new JTextField(16);
+	 private JTextField xAxisMaxField = new JTextField(16);
+	 private JTextField yAxisMinField = new JTextField(16);
+	 private JTextField yAxisMaxField = new JTextField(16);
+	 private EventListenerList listenerListAction = new EventListenerList();
 
 	// stuff added for colors
 	transient private Color[] pointColors;
 	transient private BivariateColorSymbolClassification bivarColorClasser = new BivariateColorSymbolClassificationSimple();
-	transient private Histogram histogram = new Histogram();
+	 private Histogram histogram = new Histogram();
 	transient private ExcentricLabels exLabels;
 	transient private BoundaryClassifier xClasser = null;
 	transient private BoundaryClassifier yClasser = null;
@@ -121,8 +121,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	transient double yBarDistance;
 	transient double xBarDistance;
 	transient Vector treeVector;
-	transient Vector xDecision = new Vector();
-	transient Vector yDecision = new Vector();
+	 Vector xDecision = new Vector();
+	 Vector yDecision = new Vector();
 	transient int[] xDecisionInt;
 	transient int[] yDecisionInt;
 	transient boolean selOriginalColorMode;

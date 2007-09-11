@@ -90,11 +90,11 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	private transient double[] data;
 	private transient int[] classificationIndex;
 
-	transient private int nClasses;
-	transient private boolean update;
-	transient private boolean interpolate;
-	transient private boolean setupFinished;
-	transient private boolean variableChooserActive = true;
+	 private int nClasses;
+	 private boolean update;
+	 private boolean interpolate;
+	 private boolean setupFinished;
+	 private boolean variableChooserActive = true;
 
 	private transient JCheckBox updateBox;
 	private transient JCheckBox interpolateBox;
