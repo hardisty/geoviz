@@ -4,9 +4,13 @@
 
 package com.jhlabs.image;
 
-import java.awt.*;
-import java.awt.image.*;
-import java.awt.geom.*;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.Kernel;
 
 /**
  * A filter which applies a convolution kernel to an image.
@@ -16,9 +20,9 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
 
 	static final long serialVersionUID = 2239251672685254626L;
 	
-	public static int ZERO_EDGES = 0;
-	public static int CLAMP_EDGES = 1;
-	public static int WRAP_EDGES = 2;
+	public static final int ZERO_EDGES = 0;
+	public static final int CLAMP_EDGES = 1;
+	public static final int WRAP_EDGES = 2;
 
 	protected Kernel kernel = null;
 	public boolean alpha = true;

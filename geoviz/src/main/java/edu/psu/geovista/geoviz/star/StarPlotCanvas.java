@@ -66,7 +66,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	private transient Image drawingBuff;
 	private transient Rectangle[] plotLocations;
 	private transient DataSetForApps dataSet;
-	private transient int indication = -1;
+	private  int indication = -1;
 	private transient int plotWidth;
 	private transient int plotHeight;
 	private transient int nRows;

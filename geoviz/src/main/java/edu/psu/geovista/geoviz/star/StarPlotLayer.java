@@ -57,7 +57,7 @@ public class StarPlotLayer
   private transient HashMap obsHashMap;
   //private static boolean DEBUG = false;
 
-  public static int MAX_N_VARS = 6;
+  public static final int MAX_N_VARS = 6;
 
   public StarPlotLayer() {
 

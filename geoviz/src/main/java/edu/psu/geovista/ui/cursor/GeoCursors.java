@@ -30,31 +30,31 @@ import javax.swing.ImageIcon;
  */
 public class GeoCursors extends Component {
 
-    private transient Cursor[] cursors;
-    private transient URL[] urls;
+    private  Cursor[] cursors;
+    private  URL[] urls;
 
-    public static int CURSOR_PAN = 0;
-    public static int CURSOR_ZOOM_OUT = 1;
-    public static int CURSOR_ZOOM_IN = 2;
-    public static int CURSOR_INFO = 3;
-    public static int CURSOR_ARROW_PAN = 4;
-    public static int CURSOR_GRAB = 5;
-    public static int CURSOR_ARROW_ZOOM_IN = 6;
-    public static int CURSOR_ARROW_ZOOM_OUT = 7;
-    public static int CURSOR_ARROW_SELECT = 8;
-    private static int numCursors = 9;
+    public static final int CURSOR_PAN = 0;
+    public static final int CURSOR_ZOOM_OUT = 1;
+    public static final int CURSOR_ZOOM_IN = 2;
+    public static final int CURSOR_INFO = 3;
+    public static final int CURSOR_ARROW_PAN = 4;
+    public static final int CURSOR_GRAB = 5;
+    public static final int CURSOR_ARROW_ZOOM_IN = 6;
+    public static final int CURSOR_ARROW_ZOOM_OUT = 7;
+    public static final int CURSOR_ARROW_SELECT = 8;
+    private static final int numCursors = 9;
 
-    private static URL urlPan = GeoCursors.class.getResource("resources/pan.gif");
-    //private static URL urlZoomIn = GeoCursors.class.getResource("resources/zoomIn.gif");
-    //private static URL urlZoomOut = GeoCursors.class.getResource("resources/zoomOut.gif");
-    private static URL urlGrab = GeoCursors.class.getResource("resources/grab.gif");
-    private static URL urlArrowZoomIn = GeoCursors.class.getResource("resources/arrowZoomIn.gif");
-    private static URL urlArrowZoomOut = GeoCursors.class.getResource("resources/arrowZoomOut.gif");
-    private static URL urlArrowSelect = GeoCursors.class.getResource("resources/arrowSelect.gif");
-    private static URL urlArrowPan = GeoCursors.class.getResource("resources/arrowPan.gif");
+    private static final URL urlPan = GeoCursors.class.getResource("resources/pan.gif");
+    //private static final URL urlZoomIn = GeoCursors.class.getResource("resources/zoomIn.gif");
+    //private static final URL urlZoomOut = GeoCursors.class.getResource("resources/zoomOut.gif");
+    private static final URL urlGrab = GeoCursors.class.getResource("resources/grab.gif");
+    private static final URL urlArrowZoomIn = GeoCursors.class.getResource("resources/arrowZoomIn.gif");
+    private static final URL urlArrowZoomOut = GeoCursors.class.getResource("resources/arrowZoomOut.gif");
+    private static final URL urlArrowSelect = GeoCursors.class.getResource("resources/arrowSelect.gif");
+    private static final URL urlArrowPan = GeoCursors.class.getResource("resources/arrowPan.gif");
 
-    private static Point ptHand = new Point(16,16);
-    private static Point ptArrow = new Point(10,8);
+    private static final Point ptHand = new Point(16,16);
+    private static final Point ptArrow = new Point(10,8);
   /**
   * null ctr
   */

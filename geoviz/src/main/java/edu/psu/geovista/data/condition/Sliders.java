@@ -94,7 +94,9 @@ public class Sliders extends JPanel implements ChangeListener, ComponentListener
 					// This gets the source or originator of the event
 					try {
 						slider_actionPerformed(e);
-						} catch (Exception exception) {}
+						} catch (Exception ex) {
+							logger.throwing(Sliders.class.getName(), "init", ex);
+						}
 					}
 				});
 			this.add((RangeSlider) sliderVector.get(i));

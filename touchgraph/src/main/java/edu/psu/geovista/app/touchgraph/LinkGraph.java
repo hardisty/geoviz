@@ -126,9 +126,9 @@ public class LinkGraph extends JPanel implements DataSetListener,
                                                PaletteListener,
                                                TableModelListener{
 	protected final static Logger logger = Logger.getLogger(LinkGraph.class.getName());
-    transient public String zoomLabel = "Zoom"; // label for zoom menu item
-    transient public String rotateLabel = "Rotate"; // label for rotate menu item
-    transient public String localityLabel = "Locality"; // label for locality menu item
+     public String zoomLabel = "Zoom"; // label for zoom menu item
+     public String rotateLabel = "Rotate"; // label for rotate menu item
+     public String localityLabel = "Locality"; // label for locality menu item
     transient public HVScroll hvScroll;
     transient public ZoomScroll zoomScroll;
 
@@ -136,16 +136,16 @@ public class LinkGraph extends JPanel implements DataSetListener,
     transient public RotateScroll rotateScroll;
     transient public LocalityScroll localityScroll;
     public transient JPopupMenu glPopup;
-    public transient Hashtable scrollBarHash; //= new Hashtable();
-    protected transient TGPanel tgPanel;
-    protected transient TGLensSet tgLensSet;
+    public  Hashtable scrollBarHash; //= new Hashtable();
+    protected  TGPanel tgPanel;
+    protected  TGLensSet tgLensSet;
     protected transient TGUIManager tgUIManager;
-    private transient Color defaultColor = Color.lightGray;
+    private  Color defaultColor = Color.lightGray;
 
     //these next are for interactively setting the variables to plot
     protected transient JList attList;
     protected transient int[] plottedAttributes;
-    private transient JFrame dummyFrame = new JFrame();
+    private  JFrame dummyFrame = new JFrame();
     private transient JDialog dialog = null;
     private transient JScrollPane dialogPane = null;
 

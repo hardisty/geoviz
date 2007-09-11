@@ -65,9 +65,9 @@ public class AffineTransformModifier {
           transX = target.getX();
           transY = target.getY();
           //which ever is not the scale factor, we need to move to the middle of that one.
-          if (sX == sY) {
+          if ( Math.abs(sY - sX) < .0000001 ) {
           //do nothing, i.e. no nudge factor necassary
-          } else if (sFactor == sX) {
+          } else if ( Math.abs(sFactor - sX) < .0000001 ) {
             double newHeight = sFactor * (double)source.getHeight();
             double halfTargetHeight = (double)target.getHeight() / 2;
             double halfNewHeight = newHeight /2;
@@ -133,7 +133,7 @@ public class AffineTransformModifier {
           //transX = target.getX();// - source.getX();
           //transY = target.getY();// - source.getY();
           //which ever is not the scale factor, we need to move to the middle of that one.
-          if (sFactor == sX) {
+          if (! (Math.abs(sX - sFactor) < .0000001 )) {
             double newHeight = sFactor * (double)source.getHeight();
             double halfTargetHeight = (double)target.getHeight() / 2;
             double halfNewHeight = newHeight /2;

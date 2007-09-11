@@ -95,30 +95,30 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		IndicationListener, DataSetListener, SpatialExtentListener,
 		ExcentricLabelClient {
 	public final static int MODE_SELECT = 0; // default mode
-	public static int MODE_ZOOM_IN = 1;
-	public static int MODE_ZOOM_OUT = 2;
-	public static int MODE_PAN = 3;
-	public static int MODE_EXCENTRIC = 4;
-	public static int MODE_FISHEYE = 5;
-	public static int MODE_MAGNIFYING = 6;
-	transient private int mouseX1;
+	public static final int MODE_ZOOM_IN = 1;
+	public static final int MODE_ZOOM_OUT = 2;
+	public static final int MODE_PAN = 3;
+	public static final int MODE_EXCENTRIC = 4;
+	public static final int MODE_FISHEYE = 5;
+	public static final int MODE_MAGNIFYING = 6;
+	private int mouseX1;
 	transient private int mouseX2;
 	transient private int mouseY1;
 	transient private int mouseY2;
 	private transient DataSetForApps dataSet;
 
-	private transient Vector shapeLayers;
-	private transient int indication = Integer.MIN_VALUE;
+	private Vector shapeLayers;
+	private int indication = Integer.MIN_VALUE;
 	private transient int activeLayer;
 	private transient ShapeTransformer transformer;
 
 	private transient int[] selectedObservations;
 	private transient Color[] objectColors;
 	private transient String[] variableNames;
-	protected transient int currColorColumnX = -1; // jin: the index of
+	protected int currColorColumnX = -1; // jin: the index of
 													// variable for 1st visual
 													// classification
-	protected transient int currColorColumnY = -1; // jin: the index of
+	protected int currColorColumnY = -1; // jin: the index of
 													// variable for 2nd visual
 													// classification
 
@@ -130,15 +130,15 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	private transient Rectangle2D savedSrc = null;
 	private transient Image drawingBuff;
-	private transient AffineTransform imagePanningXForm = new AffineTransform();
+	private AffineTransform imagePanningXForm = new AffineTransform();
 	protected transient ExcentricLabels exLabels;
-	private transient String tipText = "";
+	private String tipText = "";
 	private transient Font tipFont;
-	private transient boolean drawTip = true;
+	private boolean drawTip = true;
 	private transient boolean drawBox = false;
 	private transient int mode;
-	private transient GeoCursors cursors = new GeoCursors();
-	private transient float[] dash = new float[] { 5f, 7f, 5f };
+	private GeoCursors cursors = new GeoCursors();
+	private float[] dash = new float[] { 5f, 7f, 5f };
 	private transient BasicStroke dashStroke = new BasicStroke((float) 2.0,
 			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, (float) 10.0, dash,
 			0);
@@ -261,7 +261,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		for (Enumeration e = this.shapeLayers.elements(); e.hasMoreElements();) {
 			LayerShape shapeLayer = (LayerShape) e.nextElement();
 			Shape[] originalShapes = shapeLayer.getOriginalSpatialData();
-			Shape[] returnShapes = null;
+			Shape[] returnShapes = originalShapes;//just for now, to make findbugs happy
 			this.transformer.setXForm(xForm);
 			if (shapeLayer instanceof LayerPolygon) {
 				returnShapes = this.transformer.makeTransformedShapes(
@@ -437,8 +437,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			logger.finest(p.x + ","+p.y);
 			 }
 			// end print centroids
-			Shape[] returnShapes = null;
+
 			Shape[] preTransformShapes = ls.getOriginalSpatialData();
+			Shape[] returnShapes = preTransformShapes;//just for now, to make findbugs happy
 			if (ls instanceof LayerPolygon || ls instanceof LayerLine) {
 
 				returnShapes = this.transformer.makeTransformedShapes(
@@ -708,7 +709,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		if (auxData == null) {
 			return;
 		}
-		LayerShape ls = null;
+		LayerShape ls = new LayerPolygon();
 		int layerType = auxData.getSpatialType();
 
 		if (layerType == DataSetForApps.SPATIAL_TYPE_POLYGON) {
@@ -724,7 +725,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			Shape[] pointShapesOriginal = lp.pointsToShapes(auxData
 					.getPoint2DData());
 			ls.setOriginalSpatialData(pointShapesOriginal);
-			ls = lp;
+			
 		} else {
 			System.err
 					.println("unexpected layer type ecountered in MapCanvas.setAuxiliarySpatialData");
@@ -1421,9 +1422,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			//maybe we could eliminate the use of the extra buffer?
 			//we could use the panel itself as one drawing surface
 			//and the drawingBuff as the other. 
-			BufferedImage blurBuff = new BufferedImage(this.drawingBuff
-					.getWidth(this), this.drawingBuff.getHeight(this),
-					BufferedImage.TYPE_INT_ARGB);
+			
+			//OK, new theory. Grabbing bufferedimages this often is causing problems
+			//so we cache. 
+			BufferedImage blurBuff = new BufferedImage(this.drawingBuff	.getWidth(this), this.drawingBuff.getHeight(this),BufferedImage.TYPE_INT_ARGB);
 			//VolatileImage blurBuff= this.getGraphicsConfiguration().createCompatibleVolatileImage(this.drawingBuff.getWidth(this), this.drawingBuff.getHeight(this));
 			blurBuff.getGraphics().drawImage(this.drawingBuff, 0, 0, this);
 			filter.filter(blurBuff, blurBuff);

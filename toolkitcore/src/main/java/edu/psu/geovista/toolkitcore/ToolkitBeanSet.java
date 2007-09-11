@@ -21,6 +21,7 @@ package edu.psu.geovista.toolkitcore;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
@@ -36,6 +37,7 @@ import javax.swing.JMenuItem;
 
 
 public class ToolkitBeanSet {
+	final static Logger logger = Logger.getLogger(ToolkitBeanSet.class.getName());
   public ToolkitBeanSet() {
     this.beanSet = new HashSet();
   }
@@ -59,8 +61,7 @@ public class ToolkitBeanSet {
 	try {
 		super.clone();
 	} catch (CloneNotSupportedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		logger.throwing(ToolkitBeanSet.class.getName(), "clone()", e);
 	}  
     ToolkitBeanSet beanSet = new ToolkitBeanSet();
     Iterator it = this.beanSet.iterator();

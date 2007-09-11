@@ -34,7 +34,7 @@ import edu.psu.geovista.data.geog.DataSetForApps;
  */
 public class DataSetEvent extends EventObject {
 
-  private transient Object[] dataSet;
+  private Object[] dataSet;
   private transient DataSetForApps dataSetForApps;
 
   /**

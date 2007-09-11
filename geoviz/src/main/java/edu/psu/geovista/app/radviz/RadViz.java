@@ -120,7 +120,7 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
     private List classLabels = null;
     private String colorCodeAtt = CLR_CODE_ATT_DEFAULT, colorScheme = OriginalColor.SET1;
     
-    protected static transient OriginalColor origClr = new OriginalColor();
+    protected static final OriginalColor origClr = new OriginalColor();
     
     protected static transient AffineTransform radvizTransform;
     protected transient AttSelectPanel attSelPanel = null;
@@ -131,29 +131,24 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
     protected transient boolean panModeOn = false, showClassLegend = false;
     protected transient BufferedImage ri = null; 
     protected transient ButtonGroup zoomBtnGroup = null;
-    protected transient Cursor defaultCursor = this.getCursor();
-    //protected transient Cursor panCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-      //  (new ImageIcon(this.getClass().getResource("resources/harrow32.gif"))).getImage(), 
-        //new Point(16, 16), "PanCursor");
-    //protected transient Cursor noPanCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-      //  (new ImageIcon(this.getClass().getResource("resources/hnodrop32.gif"))).getImage(), 
-        //new Point(16, 16), "PanCursor");
-    protected transient Cursor handCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-    protected transient Dimension toolTipSize = new Dimension();
-    protected transient double lastSetWtOldWt, zoomScale = 1.0;
+    protected  Cursor defaultCursor = this.getCursor();
+   
+    protected Cursor handCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+    protected Dimension toolTipSize = new Dimension();
+    protected double lastSetWtOldWt, zoomScale = 1.0;
     protected transient double offsetX = 0.0, offsetY = 0.0;
     protected transient double startX, startY;
-    protected transient double[] attWeightsBkup = new double[0], diff = new double[0];
-    protected transient double[] endWts = new double[0];
-    protected transient double[] sx = new double[0], sy = new double[0];
-    protected transient double[] ux = new double[0], uy = new double[0]; 
-    protected transient double[][] data = new double[0][0];
-    protected transient EventListenerList listenerList = new EventListenerList();
-    protected transient GeneralPath draggingPath = new GeneralPath();
-    //protected transient GeneralPath radvizBox = new GeneralPath();
-    protected transient Ellipse2D radvizBox = new Ellipse2D.Double();
+    protected double[] attWeightsBkup = new double[0], diff = new double[0];
+    protected double[] endWts = new double[0];
+    protected double[] sx = new double[0], sy = new double[0];
+    protected double[] ux = new double[0], uy = new double[0]; 
+    protected double[][] data = new double[0][0];
+    protected  EventListenerList listenerList = new EventListenerList();
+    protected  GeneralPath draggingPath = new GeneralPath();
+
+    protected Ellipse2D radvizBox = new Ellipse2D.Double();
     protected transient GrandTourPanel gtPanel = null;
-    protected transient int animationType = -1, radius = 0;
+    protected  int animationType = -1, radius = 0;
     protected transient int currFrameId, dstAttIdx, srcAttIdx, gtCurrAtt, gtCurrRound;
     protected transient int draggingLastX, draggingLastY;
     protected transient int draggingFirstX, draggingFirstY;
@@ -166,12 +161,12 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
     protected transient JMenuItem gtAnimationItem = null, panItem = null, recenterItem = null;
     protected transient JRadioButtonMenuItem noZoomItem = null;
     protected transient RadvizColorSettingsGUI colorSettingsPanel = null;
-    protected transient Rectangle2D attDraggingIcon = new Rectangle2D.Double();
-    protected transient Rectangle2D legendBox = new Rectangle2D.Double();
-    protected transient Rectangle2D[] visibleAttLblBnds = new Rectangle2D[0];
+    protected  Rectangle2D attDraggingIcon = new Rectangle2D.Double();
+    protected  Rectangle2D legendBox = new Rectangle2D.Double();
+    protected  Rectangle2D[] visibleAttLblBnds = new Rectangle2D[0];
     protected transient String indication_text;
-    protected transient Timer timer = new Timer(1000, this);
-    protected transient Vector missingData = new Vector();
+    protected  Timer timer = new Timer(1000, this);
+    protected Vector missingData = new Vector();
     
     
     /**

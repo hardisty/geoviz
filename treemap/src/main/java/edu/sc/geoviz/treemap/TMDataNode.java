@@ -250,7 +250,7 @@ public class TMDataNode
         return true;
       }
       if (updater != null) {
-          if (this.value == Double.NaN) {
+          if (Double.isNaN(this.value)) {
               if (parent != null) {
                   parent.removeChild(this);
               }

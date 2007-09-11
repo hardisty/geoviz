@@ -46,8 +46,8 @@ import javax.swing.event.ChangeListener;
 
 public class SonicRampSwatch extends JPanel implements MouseListener,
     ChangeListener {
-    public transient static boolean OFF = false;
-    public transient static boolean ON = true;
+    public transient final static boolean OFF = false;
+    public transient final static boolean ON = true;
     private boolean anchored;
     private Color swatchColor;
     private transient SonicRampPicker parent;

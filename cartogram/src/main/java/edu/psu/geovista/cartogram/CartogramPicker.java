@@ -48,7 +48,7 @@ public class CartogramPicker
   TransformsMain trans;
   JButton showPrefs;
   JProgressBar pBar;
-  protected transient JComboBox variableCombo;
+  protected  JComboBox variableCombo;
   JButton sendShapes;
   //private ActionListener parent;
 

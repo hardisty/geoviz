@@ -62,12 +62,12 @@ public class BivariateGraphFrame extends JPanel implements  DataSetListener, Act
       transient private String elementClassName;
       transient private Class elementClass;
       transient private MatrixElement bivariateGraph;
-      transient private int[] displayIndices = new int[2];
-      transient private VisualClassifier visClassOne;
-      transient private VisualClassifier visClassTwo;
+      private int[] displayIndices = new int[2];
+      private VisualClassifier visClassOne;
+      private VisualClassifier visClassTwo;
       transient private JToolBar mapTools;
-      transient private JPanel topContent;
-      transient private BivariateColorSchemeVisualizer biViz;
+      private JPanel topContent;
+      private BivariateColorSchemeVisualizer biViz;
       transient private Color backgroundColor;
       transient private int[] selections;
       transient private Color[] multipleSelectionColors;

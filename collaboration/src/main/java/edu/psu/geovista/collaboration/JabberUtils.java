@@ -27,16 +27,16 @@ import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.DefaultPacketExtension;
 
 public abstract class JabberUtils {
-	public static String SELECTION_ELEMENT_NAME = "Selection";
-	public static String SUBSPACE_ELEMENT_NAME = "Subspace";
-	public static String SPATIAL_EXTENT_ELEMENT_NAME = "SpatialExtent";
-	public static String MESSAGE_ELEMENT_NAME = "MessageElement";
-	public static String DEFAULT_NAMESPACE = "geoviz";
-	public static String LENGTH_STRING = "length";
-	public static String MESSAGE_BODY_STRING = "MessageBody";
-	public static int STATE_LEADER = 2;// don't apply packets
-	public static int STATE_FOLLOWER = 1;// automatically apply packets
-	public static int STATE_NEITHER = 0;// default.
+	public static final String SELECTION_ELEMENT_NAME = "Selection";
+	public static final String SUBSPACE_ELEMENT_NAME = "Subspace";
+	public static final String SPATIAL_EXTENT_ELEMENT_NAME = "SpatialExtent";
+	public static final String MESSAGE_ELEMENT_NAME = "MessageElement";
+	public static final String DEFAULT_NAMESPACE = "geoviz";
+	public static final String LENGTH_STRING = "length";
+	public static final String MESSAGE_BODY_STRING = "MessageBody";
+	public static final int STATE_LEADER = 2;// don't apply packets
+	public static final int STATE_FOLLOWER = 1;// automatically apply packets
+	public static final int STATE_NEITHER = 0;// default.
 
 	public static boolean login(XMPPConnection conn, String username,
 			String password) {

@@ -35,7 +35,7 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 public class WholeNumberField extends JTextField implements FocusListener, KeyListener{
-    transient private NumberFormat integerFormatter;
+    private NumberFormat integerFormatter;
     public static final String COMMAND_NEW_VAL = "newVal";
 
     public WholeNumberField(int value, int columns) {

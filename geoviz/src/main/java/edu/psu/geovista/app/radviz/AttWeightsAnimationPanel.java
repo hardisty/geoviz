@@ -142,7 +142,8 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
                 if (startWeightSlider != null && value != null) {
                     int helpInt = Math.round((float)(value.doubleValue() * 100));
                     double help = ((double)helpInt) / WT_MAX;
-                    if (help != startWeights[start_curr]) startWeights[start_curr] = help;
+                    
+                    if (! (Math.abs(help - startWeights[start_curr]) < .0000001 )) startWeights[start_curr] = help;
                     if (helpInt != startWeightSlider.getValue()) startWeightSlider.setValue(helpInt);
                 }
             }
@@ -154,7 +155,7 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
                 if (endWeightSlider != null && value != null) {
                     int helpInt = Math.round((float)(value.doubleValue() * 100));
                     double help = ((double)helpInt) / WT_MAX;
-                    if (help != endWeights[end_curr]) endWeights[end_curr] = help;
+                    if (!(Math.abs(help - endWeights[end_curr]) < .0000001) ) endWeights[end_curr] = help;
                     if (helpInt != endWeightSlider.getValue()) endWeightSlider.setValue(helpInt);
                 }
             }
@@ -184,7 +185,7 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
             else { //done adjusting
                 double help = (double)source.getValue();
                 help /= WT_MAX;
-                if (help != startWeights[start_curr]) {
+                if (! (Math.abs(help - startWeights[start_curr]) < .0000001 )) {
                     startWeights[start_curr] = help;
                     startWeightText.setValue(new Double(startWeights[start_curr])); //update weight value
                 }
@@ -200,7 +201,8 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
             else { //done adjusting
                 double help = (double)source.getValue();
                 help /= WT_MAX;
-                if (help != endWeights[end_curr]) {
+                
+                if (!(Math.abs(help - endWeights[end_curr]) < .0000001) ){
                     endWeights[end_curr] = help;
                     endWeightText.setValue(new Double(endWeights[end_curr])); //update weight value
                 }

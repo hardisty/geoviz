@@ -358,7 +358,7 @@ public class RangeSlider extends JPanel
 		if (s == null) {
 			return;
 		}
-		if (this.title != s || title == RangeSlider.DEFAULT_TITLE) {
+		if (!this.title.equals(s) || title.equals(RangeSlider.DEFAULT_TITLE)) {
 			title = s;
 			this.titleChanged = true;
 			if (divideResults == false && this.rangesChanged == false) {
@@ -666,10 +666,10 @@ public class RangeSlider extends JPanel
 	 */
 	public void setRangeTitle (Object[] rangeTitle) {
 		logger.finest("set range and title...");
-		logger.finest((String)rangeTitle[0]);
 		if (rangeTitle == null){
 			return;
 		}
+		logger.finest((String)rangeTitle[0]);
 		this.ranges = (double[])rangeTitle[1];
 		logger.finest("ranges "+ranges[0]);
 		if (title != (String)rangeTitle[0]) {

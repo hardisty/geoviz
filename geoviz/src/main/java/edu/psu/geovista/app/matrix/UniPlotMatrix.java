@@ -46,7 +46,7 @@ public class UniPlotMatrix extends AbstractMatrix
 
 	private String elementClassName;
 	private String[] attributesArray;
-	protected transient EventListenerList listenerList = new EventListenerList();
+	protected EventListenerList listenerList = new EventListenerList();
 	private ImageIcon matrixIcon = new ImageIcon(this.getClass().getResource("resources/matrixicon16.gif"));
 
     /**

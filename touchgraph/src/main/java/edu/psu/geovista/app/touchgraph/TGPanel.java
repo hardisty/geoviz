@@ -97,7 +97,7 @@ public class TGPanel extends JPanel {
 
   // static variables for use within the package
 
-    public static Color BACK_COLOR = Color.white;
+    public Color BACK_COLOR = Color.white;
 
   // ....
 
@@ -120,8 +120,8 @@ public class TGPanel extends JPanel {
     transient Dimension offscreensize;
     transient Graphics offgraphics;
 
-    private transient Vector graphListeners;
-    private transient Vector paintListeners;
+    private  Vector graphListeners;
+    private  Vector paintListeners;
     transient TGLensSet tgLensSet;  // Converts between a nodes visual position (drawx, drawy),
                           // and its absolute position (x,y).
     transient AdjustOriginLens adjustOriginLens;
@@ -254,13 +254,14 @@ public class TGPanel extends JPanel {
      * @see com.touchgraph.graphlayout.Node
      */
     public Node addNode( String label ) throws TGException {
-        String id;
+        String id = "";
         if ( findNode(label) != null ) {
             id = label;
         } else {
             int i;
-            for( i = 1; findNode( label +"-"+ i ) != null; i++ );
-            id = label + "-" + i; // if label is a valid XML Name, then so is ID.
+            for( i = 1; findNode( label +"-"+ i ) != null; i++ ){
+            	id = label + "-" + i; // if label is a valid XML Name, then so is ID.
+            }
         }
         return addNode(id,label);
     }

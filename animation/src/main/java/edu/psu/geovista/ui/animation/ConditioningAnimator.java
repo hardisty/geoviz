@@ -56,7 +56,7 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
                                                           DataSetListener,
                                                           SubspaceListener
                                                        {
-  private transient Timer ticker;
+  private  Timer ticker;
   private transient int currClassIndex;
   private transient int lowCondIndex;
   private transient int highCondIndex;
@@ -64,7 +64,7 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
 
   private transient JButton startStopButton;
   private transient boolean going = false;
-  private transient int speed; //in milliseconds
+  private  int speed; //in milliseconds
   private transient DataSetForApps data;
   private transient ClassedObs[] obs;
   private transient int[] subspace;
@@ -76,7 +76,7 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
 
   private transient JRadioButton subspaceButton;
   private transient JRadioButton oneVarButton;
-  private transient boolean usingSubspace;
+  private  boolean usingSubspace;
   
   final static Logger logger = Logger.getLogger(ConditioningAnimator.class.getName());
   /**

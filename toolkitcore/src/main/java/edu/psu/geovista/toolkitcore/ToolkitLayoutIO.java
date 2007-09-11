@@ -29,7 +29,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,16 +40,11 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
-import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -61,7 +55,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.psu.geovista.app.coordinator.CoordinationManager;
@@ -70,11 +63,11 @@ import edu.psu.geovista.io.util.MyFileFilter;
 
 public class ToolkitLayoutIO {
 	protected final static Logger logger = Logger.getLogger(ToolkitLayoutIO.class.getName());
-	public static int ACTION_OPEN = 0;
-	public static int ACTION_SAVE = 1;
+	public static final int ACTION_OPEN = 0;
+	public static final int ACTION_SAVE = 1;
 
-	public static int FILE_TYPE_LAYOUT = 0;
-	public static int FILE_TYPE_SHAPEFILE = 1;
+	public static final int FILE_TYPE_LAYOUT = 0;
+	public static final int FILE_TYPE_SHAPEFILE = 1;
 
 	private static String LAYOUT_DIR = "LastGoodLayoutDirectory";
 	private static String SHAPEFILE_DIR = "LastGoodFileDirectory";
@@ -385,6 +378,8 @@ public class ToolkitLayoutIO {
 	}
 	private static final float COMPRESSION_QUALITY = 0.95F;
 
+	
+	/*
 	public static void saveCommentedImage(Component c) {
 
 		BufferedImage buff = new BufferedImage(c.getWidth(), c.getHeight(),
@@ -404,7 +399,7 @@ public class ToolkitLayoutIO {
 		Document doc = ToolkitLayoutIO.readDocument(inStream);
 		// Get core JPEG writer.
 		Iterator writers = ImageIO.getImageWritersByFormatName("jpeg");
-		ImageWriter writer = null;
+		ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
 		while (writers.hasNext()) {
 			writer = (ImageWriter) writers.next();
 			if (writer.getClass().getName().startsWith(
@@ -522,14 +517,14 @@ public class ToolkitLayoutIO {
 		}
 
 	}
-
+*/
 	public static String openCommentedImage(String fileName) {
 
 		fileName = "C:\\test.jpg";
 
 		// Get core JPEG reader.
 		Iterator readers = ImageIO.getImageReadersByFormatName("jpeg");
-		ImageReader reader = null;
+		ImageReader reader = ImageIO.getImageReadersByFormatName("jpeg").next();
 		while (readers.hasNext()) {
 			reader = (ImageReader) readers.next();
 			if (reader.getClass().getName().startsWith("com.sun.imageio")) {
@@ -634,7 +629,7 @@ public class ToolkitLayoutIO {
 		app.add(pan);
 		app.pack();
 		app.setVisible(true);
-		ToolkitLayoutIO.saveCommentedImage(app);
+		//ToolkitLayoutIO.saveCommentedImage(app);
 		logger.finest(ToolkitLayoutIO.openCommentedImage(""));
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

@@ -79,7 +79,7 @@ public class Node {
     public static final Font SMALL_TAG_FONT = new Font("Courier",Font.PLAIN,9);
 
    // Variables that store default values for colors + fonts + node type
-    public static Color BACK_FIXED_COLOR        = Color.red;
+    public Color BACK_FIXED_COLOR        = Color.red;
     public static Color BACK_SELECT_COLOR       = new Color(255, 224, 0);
     public static Color BACK_DEFAULT_COLOR      = new Color(208, 96, 0);
     public static Color BACK_HILIGHT_COLOR      = Color.decode("#ffb200"); // altheim: new

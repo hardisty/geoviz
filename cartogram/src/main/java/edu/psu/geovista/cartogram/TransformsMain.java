@@ -111,9 +111,9 @@ public class TransformsMain {
 	private double blurWidthFactor = 1.2; // Must be > 1. it is the factor by which sigma increased upon an unsuccessful pass. Originally named SIGMAFAC
         private int arrayLength;
 
-        public static int DEFAULT_MAXNSQUARELOG = 10;
-        public static double DEFAULT_BLURWIDTH = 0.1;
-        public static double DEFAULT_BLURWIDTHFACTOR= 1.2;
+        public static final int DEFAULT_MAXNSQUARELOG = 10;
+        public static final double DEFAULT_BLURWIDTH = 0.1;
+        public static final double DEFAULT_BLURWIDTHFACTOR= 1.2;
 
         private static final String CART2PS = "";// Cartogram image - open file for WRITE oldname "./cart.ps";
         private static final String MAP2PS = ""; // Map image. Open file for WRITE oldname "./map.ps"

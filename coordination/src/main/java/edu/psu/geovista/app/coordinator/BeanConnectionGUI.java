@@ -31,7 +31,7 @@ public class BeanConnectionGUI extends JPanel implements ItemListener {
   private transient ListeningBean lBean;
   private transient FiringMethod meth; //contains reference to parent FiringBean
   private transient CoordinationManager cm;
-  private transient JCheckBox cBox;
+  private JCheckBox cBox;
 
   /**
    *
@@ -64,4 +64,12 @@ public class BeanConnectionGUI extends JPanel implements ItemListener {
       cm.reconnectBeans(this.meth,this.lBean);
     }
   }
+
+public JCheckBox getCBox() {
+	return cBox;
+}
+
+public void setCBox(JCheckBox box) {
+	cBox = box;
+}
 }

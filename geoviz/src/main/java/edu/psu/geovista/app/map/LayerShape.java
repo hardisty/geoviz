@@ -53,9 +53,9 @@ import edu.psu.geovista.ui.Fisheyes;
  */
 public abstract class LayerShape {
 
-	public static String COMMAND_SELECTION = "cmdSel";
-	protected static int STATUS_NOT_SELECTED = 0; // default
-	protected static int STATUS_SELECTED = 1;
+	public static final String COMMAND_SELECTION = "cmdSel";
+	protected static final int STATUS_NOT_SELECTED = 0; // default
+	protected static final int STATUS_SELECTED = 1;
 	public static final int LAYER_TYPE_POINT = 0;
 	public static final int LAYER_TYPE_LINE = 1;
 	public static final int LAYER_TYPE_POLYGON = 2;

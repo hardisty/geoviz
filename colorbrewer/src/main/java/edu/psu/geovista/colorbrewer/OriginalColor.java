@@ -1005,7 +1005,7 @@ public class OriginalColor {
       for(int i = 0; i < (2*numberofClasses - 1); i ++){
         for(int j = 0; j < 3; j ++){
           //for even number of slots
-          if(i == 2*Math.ceil(((double)i/2.0))){
+        	if((i % 2) == 1){
             //get the correct colors into correct slots (no calculation needed, just moving them)
             color[i][j] = schemeforInterpolation[i/2][j];
           }
@@ -1031,7 +1031,7 @@ public class OriginalColor {
       //use the interim file to interpolate
       for(int i = 0; i < (2*numberofClasses - 1); i ++){
         for(int j = 0; j < 3; j ++){
-          if(i == 2*Math.ceil(((double)i/2.0))){
+          if((i % 2) == 0){
             color[i][j] = interim[i/2][j];
           }
           else{
@@ -1114,7 +1114,7 @@ public class OriginalColor {
     //if the numberofClasses is greater than the maxlengthRecommended
     else{
       //if the numberofClasses is odd
-      if(numberofClasses != 2*Math.ceil(((double)numberofClasses/2.0))){
+    	if((numberofClasses % 2) == 1){
         //do an odd manipulation
         numberofClasses = (numberofClasses + 1)/2;
 
@@ -1153,7 +1153,7 @@ public class OriginalColor {
     //if the numberofClasses is greater than the maxlengthRecommended
     else{
       //if the numberofClasses is odd
-      if(numberofClasses != 2*Math.ceil(((double)numberofClasses/2.0))){
+      if((numberofClasses % 2) == 1){
         //do an odd manipulation
         numberofClasses = (numberofClasses + 1)/2;
         //make a recursive search
@@ -1180,7 +1180,7 @@ public class OriginalColor {
     //if the numberofClasses is greater than the maxlengthRecommended,
     else{
       //if the numberofClasses is odd
-      if(numberofClasses != 2*Math.ceil(((double)numberofClasses/2.0))){
+    	if((numberofClasses % 2) == 1){
         //do an odd manipulation
         numberofClasses = (numberofClasses + 1)/2;
 

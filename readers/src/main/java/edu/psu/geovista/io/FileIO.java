@@ -33,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
@@ -92,7 +93,7 @@ public final class FileIO {
 	private int compressed;		// the type of file compression
 	private boolean pipe = false; // the file is a pipe
 	private int lineno;			// current line number
-
+	protected final static Logger logger = Logger.getLogger(FileIO.class.getName());
 	/**
 	 * returns a input reader associated with this file I/O.
 	 *
@@ -245,6 +246,7 @@ public final class FileIO {
 			this.compressed = NO_ZIP; // no compression with a pipe.
 			buf.setLength(0);
 			filemode = buf.append(filemode.substring(0, idx)).append(filemode.substring(idx+1)).toString(); // remove p from mode
+			logger.finest(filemode);
 		}
 
 		/* -------- if filename starts with '|' use piped command --------- */
@@ -255,7 +257,7 @@ public final class FileIO {
 		}
 
 		if (filename!=null){
-			filename.trim();	// to remove white space from both ends.
+			filename = filename.trim();	// to remove white space from both ends.
 			if (!this.pipe)			// this is faster than if(this.pipe==false)
 				this.compressed = checkCompressionType(filename);
 

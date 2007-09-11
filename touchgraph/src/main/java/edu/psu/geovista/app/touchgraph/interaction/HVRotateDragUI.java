@@ -187,7 +187,7 @@ public class HVRotateDragUI extends TGAbstractDragUI implements TGPaintListener 
 
 
         g.fillOval((int)drawCenter.x-60, (int) drawCenter.y-60, 120,120);
-        g.setColor(TGPanel.BACK_COLOR);
+        g.setColor(this.tgPanel.BACK_COLOR);
         g.fillOval((int)drawCenter.x-58, (int) drawCenter.y-58, 116,116);
 
     }

@@ -33,10 +33,10 @@ public class DataSetModifiedEvent
 
   private transient Object[] dataSet;
   private transient double[] newData;
-  private transient int eventType;
-  public static int TYPE_MODIFIED = 0;
-  public static int TYPE_REDUCED = 1;
-  public static int TYPE_EXTENDED = 2;
+  private  int eventType;
+  public static final int TYPE_MODIFIED = 0;
+  public static final int TYPE_REDUCED = 1;
+  public static final int TYPE_EXTENDED = 2;
 
   /**
    * The constructor is the same as that for EventObject, except that the

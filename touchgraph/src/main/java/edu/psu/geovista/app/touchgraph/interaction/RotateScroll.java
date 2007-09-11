@@ -112,7 +112,7 @@ public class RotateScroll implements GraphListener {
     }
 
     class DScrollBar extends JScrollBar {
-        private transient double doubleValue;
+        private double doubleValue;
 
         DScrollBar(int orient, int val, int vis, int min, int max){
             super(orient, val, vis, min, max);

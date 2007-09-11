@@ -41,7 +41,7 @@ public class LeaderFollowerGUI extends JPanel implements ActionListener {
 	JRadioButton radioFollower;
 	JRadioButton radioNeither;
 	int state;
-	public static String STATE_PROPTERTY_NAME = "State";
+	public static final String STATE_PROPTERTY_NAME = "State";
 	protected final static Logger logger = Logger.getLogger(LeaderFollowerGUI.class.getName());
 	public LeaderFollowerGUI() {
 		init();

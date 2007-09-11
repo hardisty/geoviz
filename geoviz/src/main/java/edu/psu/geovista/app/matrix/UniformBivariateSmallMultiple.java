@@ -46,7 +46,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		ListSelectionListener {
 
 	private static final int DEFAULT_NUM_ROW_VARIABLES = 3;
-	protected transient EventListenerList listenerList = new EventListenerList();
+	protected EventListenerList listenerList = new EventListenerList();
 	private SPTagButton[] columnButton;
 	private JList rowAttList;
 	private static Insets nullInsets;

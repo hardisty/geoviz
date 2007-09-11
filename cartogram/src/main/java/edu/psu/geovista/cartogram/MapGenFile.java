@@ -613,6 +613,7 @@ public class MapGenFile {
       if (trans == null) {
         trans = new TransformsMain(genFileName, datFileName,
                                    polygonFileName); //tranforms all the data, reading from the temp files
+        logger.finest(trans.toString());
       }
       else {
         trans.setGenFileName(genFileName);

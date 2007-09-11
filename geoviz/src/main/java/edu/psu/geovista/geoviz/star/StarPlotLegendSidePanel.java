@@ -50,8 +50,8 @@ import javax.swing.border.LineBorder;
 public class StarPlotLegendSidePanel extends JPanel implements
 		ComponentListener, MouseListener, MouseMotionListener {
 
-	public static float ALIGNMENT_LEFT = 0;
-	public static float ALIGNMENT_RIGHT = 1;
+	public static final float ALIGNMENT_LEFT = 0;
+	public static final float ALIGNMENT_RIGHT = 1;
 	private float alignment;
 	JLabel[] labels;
 	JPanel labelHolder;

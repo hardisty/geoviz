@@ -58,7 +58,7 @@ public class CustomizedMultiSlider extends JPanel implements MouseListener, Mous
   transient protected JTextField changeBoundaryField;
   protected double changedThumbValue;
   protected int idxOfChangedThumb;
-  transient protected EventListenerList listenerListAction = new EventListenerList();
+   protected EventListenerList listenerListAction = new EventListenerList();
   protected final static Logger logger = Logger.getLogger(CustomizedMultiSlider.class.getName());
   public CustomizedMultiSlider() {
     this.sizeOfPanel = new Dimension(WIDTH, HEIGHT);
@@ -449,7 +449,9 @@ public class CustomizedMultiSlider extends JPanel implements MouseListener, Mous
                 try {
                   actionButton_actionPerformed(e);
                 }
-                catch (Exception exception) {}
+                catch (Exception ex) {
+                	logger.throwing(this.getClass().getName(), "showChangeBoundarydlg", ex);
+                }
               }
             });
             resetButton = new JButton("Cancel");

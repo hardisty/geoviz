@@ -32,7 +32,7 @@ public class BivariateColorSymbolClassificationOneColor implements BivariateColo
 
     private Color oneColor;
 
-    public static int DEFAULT_NUM_CLASSES = 1;
+    public static final int DEFAULT_NUM_CLASSES = 1;
 
     public BivariateColorSymbolClassificationOneColor() {
       //defaults

@@ -59,8 +59,8 @@ public class StarPlotLegendMidPanel extends JPanel implements
 	int plotWidth;
 	int plotHeight;
 	float penWidth;
-	public static int BUFFER = 5;
-	public static int TEXT_HEIGHT = 20;
+	public static final int BUFFER = 5;
+	public static final int TEXT_HEIGHT = 20;
 	JLabel obsLabel;
 	String obsName;
 	final static Logger logger = Logger.getLogger(StarPlotLegend.class.getName());

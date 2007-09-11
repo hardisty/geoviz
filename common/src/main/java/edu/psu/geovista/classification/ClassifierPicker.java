@@ -60,7 +60,7 @@ public class ClassifierPicker
   public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
   public static final int VARIABLE_CHOOSER_MODE_HIDDEN = 2;
   private int nClasses;
-  transient private boolean update;
+  private boolean update;
   transient private JSlider classSlider;
   transient protected JComboBox classifCombo;
   protected transient JComboBox variableCombo;
@@ -79,9 +79,9 @@ public class ClassifierPicker
     this.addComponentListener(this);
     this.classers = new DescribedClassifier[5];
     
-    this.classers[0] = new ClassifierQuantiles();
-    this.classers[1] = new ClassifierModifiedQuantiles();
-    this.classers[2] = new ClassifierEqualIntervals();
+    this.classers[1] = new ClassifierQuantiles();
+    this.classers[2] = new ClassifierModifiedQuantiles();
+    this.classers[0] = new ClassifierEqualIntervals();
     this.classers[3] = new ClassifierStdDev();
     this.classers[4] = new ClassifierRawQuantiles();
 
@@ -424,7 +424,7 @@ public void setData(Object[] dataIn) {
       Object[] newData = null;
       DataSetForApps newDataSet = new DataSetForApps(newData);
       this.dataSet = newDataSet;
-      String[] newVarNames = (String[])newData[0];
+      String[] newVarNames = newDataSet.getAttributeNamesOriginal();
       for(int i = 0; i < newVarNames.length; i++){
         this.variableCombo.addItem(newVarNames[i]);
       }

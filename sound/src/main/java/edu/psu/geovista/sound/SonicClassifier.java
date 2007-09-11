@@ -47,8 +47,6 @@ import edu.psu.geovista.common.color.Pallet;
 import edu.psu.geovista.common.event.PalletEvent;
 import edu.psu.geovista.common.event.PalletListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
-import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import edu.psu.geovista.ui.event.ColorArrayEvent;
 import edu.psu.geovista.ui.event.ColorArrayListener;
 import edu.psu.geovista.ui.event.DataSetEvent;
@@ -71,10 +69,10 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
     private transient int[] classificationIndex;
 
 
-    transient private int nClasses;
-    transient private boolean update;
-    transient private boolean interpolate;
-    transient private boolean setupFinished;
+     private int nClasses;
+     private boolean update;
+     private boolean interpolate;
+     private boolean setupFinished;
 
     private transient JCheckBox updateBox;
     private transient JCheckBox interpolateBox;
@@ -241,7 +239,7 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
                 SonicClassifier.this.makeColors();
 
                 SonicClassifier.this.fireActionPerformed(SonicClassifier.COMMAND_COLORS_CHANGED);
-                SonicClassifier.this.fireColorClassifierPerformed();
+                
                 SonicClassifier.this.fireColorArrayChanged();
 
             } else if (e.getStateChange() == ItemEvent.DESELECTED){
@@ -255,7 +253,7 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
                  SonicClassifier.this.findDataColors();
                 SonicClassifier.this.makeColors();
                 SonicClassifier.this.fireActionPerformed(SonicClassifier.COMMAND_COLORS_CHANGED);
-                SonicClassifier.this.fireColorClassifierPerformed();
+               
                 SonicClassifier.this.fireColorArrayChanged();
 
             } else if (e.getStateChange() == ItemEvent.DESELECTED){
@@ -264,7 +262,7 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
                  SonicClassifier.this.findDataColors();
                 SonicClassifier.this.makeColors();
                 SonicClassifier.this.fireActionPerformed(SonicClassifier.COMMAND_COLORS_CHANGED);
-                SonicClassifier.this.fireColorClassifierPerformed();
+               
                 SonicClassifier.this.fireColorArrayChanged();
             }
           }
@@ -285,7 +283,7 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
                  SonicClassifier.this.findDataColors();
                   SonicClassifier.this.makeColors();
                   SonicClassifier.this.fireActionPerformed(SonicClassifier.COMMAND_COLORS_CHANGED);
-                  SonicClassifier.this.fireColorClassifierPerformed();
+                  
                   SonicClassifier.this.fireColorArrayChanged();
                 }
             //}
@@ -379,7 +377,7 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
                  this.findDataColors();
         this.makeColors();
         this.fireActionPerformed(SonicClassifier.COMMAND_COLORS_CHANGED);
-        this.fireColorClassifierPerformed();
+       
         SonicClassifier.this.fireColorArrayChanged();
       } else if (command == ClassifierPicker.COMMAND_CLASSES_CHANGED) {
         int nClasses = this.classPick.getNClasses();
@@ -389,7 +387,7 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
         this.findDataColors();
         this.makeColors();
         this.fireActionPerformed(SonicClassifier.COMMAND_COLORS_CHANGED);
-        this.fireColorClassifierPerformed();
+     
         SonicClassifier.this.fireColorArrayChanged();
       } else if (command == ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED) {
 
@@ -399,8 +397,8 @@ public class SonicClassifier extends JPanel implements ActionListener, Component
         this.fireColorArrayChanged();
       } else if (command == ClassifierPicker.COMMAND_SELECTED_CLASSIFIER_CHANGED) {
         //this.colorClasser.setColorer(this.colorerLinear);
-
-        fireColorClassifierPerformed();
+ 
+      
         // hack alertXXX combine these next two lines
                  SonicClassifier.this.findDataColors();
         SonicClassifier.this.fireColorArrayChanged();
@@ -503,56 +501,7 @@ private void fireColorArrayChanged() {
         }
     } //next i
 }
-//}
-//    /**
-//     * implements ColorClassifierListener
-//     */
-//	public void addColorClassifierListener (ColorClassifierListener l) {
-//		listenerList.add(ColorClassifierListener.class, l);
-//                this.fireColorClassifierPerformed();//so that if any class registers
-//                //it gets an event
-//	}
-//
-//    /**
-//     * removes an ColorClassifierListener from the component
-//     */
-//	public void removeColorClassifierListener (ColorClassifierListener l) {
-//		listenerList.remove(ColorClassifierListener.class, l);
-//	}
-    /**
-     * Notify all listeners that have registered interest for
-     * notification on this event type. The event instance
-     * is lazily created using the parameters passed into
-     * the fire method.
-     * @see EventListenerList
-     */
-        private void fireColorClassifierPerformed () {
-          int nono = 0;
-          if (nono == 0){
-            return;
-          }
-          if (update) {
-              // Guaranteed to return a non-null array
-                      Object[] listeners = listenerList.getListenerList();
-                      ColorClassifierEvent e = null;
-              // Process the listeners last to first, notifying
-              // those that are interested in this event
-                        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-                                if (listeners[i] == ColorClassifierListener.class) {
-                       // Lazily create the event:
-                                        if (e == null) {
-                                          ///e = new ColorClassifierEvent(this,this.getColorSymbolClassification());
-                                        }
-                                        if (this.orientationInParentIsX == true){
-                                          e.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_X);
-                                        }else {
-                                          e.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_Y);
-                                        }
-                                        ((ColorClassifierListener)listeners[i + 1]).colorClassifierChanged(e);
-                                }
-                        }//next i
-          }//end if
-        }
+
     /**
      * implements ActionListener
      */

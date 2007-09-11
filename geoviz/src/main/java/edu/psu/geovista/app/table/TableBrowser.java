@@ -53,7 +53,7 @@ public class TableBrowser extends JPanel
     private MxmTableModel tableModel;
     private JScrollPane struc ;
     private Object[] columnName;
-protected transient EventListenerList listenerList = new EventListenerList();
+protected  EventListenerList listenerList = new EventListenerList();
 
 // initialization of the table browser
 public TableBrowser()

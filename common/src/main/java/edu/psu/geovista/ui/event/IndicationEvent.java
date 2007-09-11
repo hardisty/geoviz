@@ -30,10 +30,10 @@ import java.util.EventObject;
  */
 public class IndicationEvent extends EventObject {
 
-  private transient int indication;
-  private transient int xClass = -1;
-  private transient int yClass = -1;
-  private transient int highLevelIndication = -1;
+  private  int indication;
+  private  int xClass = -1;
+  private  int yClass = -1;
+  private  int highLevelIndication = -1;
 
 
   /**

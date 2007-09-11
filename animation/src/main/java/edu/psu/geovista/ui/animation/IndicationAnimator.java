@@ -61,18 +61,18 @@ public class IndicationAnimator
     DataSetListener,
     SubspaceListener,
     ClassificationListener {
-  private transient Timer ticker;
+  private  Timer ticker;
   private transient int currObs;
   private transient JButton startStopButton;
   private transient boolean going = false;
-  private transient int fps; 
+  private  int fps; 
   private transient int delay;//in milliseconds
   static final int FPS_MIN = 0;
   static final int FPS_MAX = 30;
   static final int FPS_INIT = 15;    //initial frames per second
   private transient DataSetForApps data;
   private transient int maxIndication = 0;
-  private transient ClassifierPicker classPick;
+  private  ClassifierPicker classPick;
   private transient int[] classes;
   private transient double[] values;
   private transient ClassedObs[] obs;
@@ -80,7 +80,7 @@ public class IndicationAnimator
   private transient int subspaceIndex;
   private transient JSlider timeSlider;
   private transient JCheckBox subspaceBox;
-  private transient boolean usingSubspace;
+  private boolean usingSubspace;
   private transient String[] varNames;
   final static Logger logger = Logger.getLogger(IndicationAnimator.class.getName());
   /**

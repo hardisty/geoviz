@@ -43,10 +43,10 @@ import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationOneColor
 public class BiPlotMatrix extends AbstractMatrix implements
 		ListSelectionListener {
 
-	private transient Color foreground = Color.white;
-	protected transient EventListenerList listenerList = new EventListenerList();
-	private transient Class[] elementClasses = new Class[2];
-	private transient String[] elementClassNames = new String[2];
+	private Color foreground = Color.white;
+	protected EventListenerList listenerList = new EventListenerList();
+	private Class[] elementClasses = new Class[2];
+	private String[] elementClassNames = new String[2];
 	private transient BivariateColorSymbolClassificationOneColor bivarOneColor;
 	protected ImageIcon matrixIcon = new ImageIcon(BiPlotMatrix.class.getResource(
 			"resources/matrixicon16.gif"));
