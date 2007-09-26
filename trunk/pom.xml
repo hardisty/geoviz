@@ -1,0 +1,27 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.psu.geovista</groupId>
+  <artifactId>studio-modules</artifactId>
+  <packaging>pom</packaging>
+  <name>GeoVISTA Studio libraries</name>
+  <version>2.0</version>
+  <modules>
+    <module>common</module>
+    <module>animation</module>
+    <module>readers</module>
+    <module>symbolization</module>
+    <module>coordination</module>
+    <module>colorbrewer</module>
+  </modules>
+    <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
