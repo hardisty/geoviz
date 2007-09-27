@@ -26,15 +26,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Shape;
 import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.geom.NoninvertibleTransformException;
 import java.net.URL;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,15 +48,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jump.feature.Feature;
-import com.vividsolutions.jump.feature.FeatureCollection;
-import com.vividsolutions.jump.io.DriverProperties;
-import com.vividsolutions.jump.io.IllegalParametersException;
-import com.vividsolutions.jump.io.ShapefileReader;
-import com.vividsolutions.jump.java2D.Java2DConverter;
-import com.vividsolutions.jump.java2D.Viewport;
-
 import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.classification.ClassifierPicker;
 import edu.psu.geovista.data.geog.DataSetForApps;
@@ -73,7 +61,7 @@ import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
-import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
+
 import edu.psu.geovista.ui.Fisheyes;
 import edu.psu.geovista.ui.cursor.GeoCursors;
 import edu.psu.geovista.ui.event.AuxiliaryDataSetEvent;
@@ -848,7 +836,7 @@ public class GeoMap extends JPanel
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
 		GeoData48States stateData = new GeoData48States();
-		
+		/*
 		String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
 		ShapefileReader reader = new ShapefileReader();
 		DriverProperties dp = new DriverProperties(fileName2);
@@ -886,7 +874,7 @@ public class GeoMap extends JPanel
 		}
 		
 		
-		
+		*/
 		
 		
 		
@@ -925,8 +913,8 @@ public class GeoMap extends JPanel
 		// shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 		ShapeFileToShape shpToShape2 = new ShapeFileToShape();
-		GeoDataSCarolina SCData = new GeoDataSCarolina();
-		shpToShape2.setInputDataSet(SCData.getDataSet());
+
+
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
 		ShapeFileToShape shpToShape3 = new ShapeFileToShape();
