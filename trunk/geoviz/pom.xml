@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.psu.geovista</groupId>
   <artifactId>geoviz</artifactId>
@@ -24,6 +23,28 @@
        <artifactId>readers</artifactId>
        <version>${project.version}</version>
     </dependency>
+  <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>symbolization</artifactId>
+       <version>${project.version}</version>
+    </dependency>
+      <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>image_blur</artifactId>
+       <version>${project.version}</version>
+    </dependency>
+          <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>colorbrewer</artifactId>
+       <version>${project.version}</version>
+    </dependency>
+    
+    
+    <dependency>
+    <groupId>colt</groupId>
+    <artifactId>colt</artifactId>
+    <version>1.2.0</version>
+</dependency>
   </dependencies>
     <build>
        <plugins>
