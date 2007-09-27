@@ -23,15 +23,8 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 /**
- *  This class accepts an arbitrary number of objects, and performs a
- *  default coordination based on their method signatures.
- *
- *  Objects with methods starting with addFooListener(FooListener l)
- *  and removeFooListener(FooListener l) are considered
- *  to be trying to broadcast events of type Foo.
- *  Objects that implement interfaces of type FooListener will be added to
- *  the broadcasting classes ListenerList, except for events in the "disallowedPackages"
- *  listed in the FiringBean class (currently java.awt.event and javax.swing. ).
+ *  Utility functions for the coordinator package. 
+ *  
  */
 public final class CoordinationUtils {
   /*

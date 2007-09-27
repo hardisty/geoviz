@@ -15,10 +15,15 @@ package edu.psu.geovista.app.coordinator;
 
 import java.lang.reflect.Method;
 import java.util.Vector;
-import java.util.logging.Logger;
 
 
 /**
+ * This class represents a particular method which is used by firing.
+ * 
+ * A particular FiringBean will have one to many FiringMethod instances.
+ * 
+ * @see FiringBean
+ * @author Frank Hardisty
  */
 public class FiringMethod implements Comparable {
   private int position = -1; //position in parent array of FiringMethods held by FiringBean
@@ -30,7 +35,6 @@ public class FiringMethod implements Comparable {
   transient private FiringBean fBean;
   private ListeningBean[] listeners;
   private Class listeningInterface;
-  protected final static Logger logger = Logger.getLogger(FiringMethod.class.getName());
 
   /**
   */
@@ -64,8 +68,8 @@ public class FiringMethod implements Comparable {
     //listenerInterface.for
     //Object[] args = new Object[1];
     //listenerInterface[] args = new listenerInterface.class[1];
-    logger.finest("I'm gonna register you.... right now!!!");
-    logger.finest(interf.getName());
+    //System.out.println("I'm gonna register you.... right now!!!");
+    //System.out.println(interf.getName());
     //args[0] = lBean;
     try {
       Object[] args = new Object[1];
@@ -97,7 +101,7 @@ public class FiringMethod implements Comparable {
 
     //first, if this bean is the same as the owning bean, don't add it
     if (newBean.getPosition() == this.getParentBeanPosition()) {
-      logger.finest("FiringMethod.addListeningBean, found self"); 
+      System.out.println("FiringMethod.addListeningBean, found self");
 
       return;
     }

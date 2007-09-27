@@ -30,11 +30,14 @@ import javax.swing.event.EventListenerList;
  *  incoming or outgoing coordinated connections for this bean. The original
  *  design calls for a ListeningBeanGUI to hold a reference to one of
  *  these per type of method the bean can listen for.
+ *  
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 public class ListeningInterfaceGUI extends JPanel implements ActionListener {
 
-  private BeanConnectionGUI[] connectionBoxen;
-  private JPanel boxenPanel;
+  private transient BeanConnectionGUI[] connectionBoxen;
+  private transient JPanel boxenPanel;
   /**
    *
   */

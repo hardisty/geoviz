@@ -17,21 +17,25 @@ import java.awt.Image;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 
 /**
-
+ * This class represents the event broadcasting role of an object being managed 
+ * by a coordination manager.
+ * 
+ * A particular object will be represented as both a FiringBean and as a ListeningBean.
+ * 
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 public class FiringBean {
   //these packages are primarily for within bean communication, not
   //between bean communication. Thus, we do not allow them as default listeners.
   //if some lucky maintainer of this class wishes to add a package to this
   //array, feel free!
-	protected final static Logger logger = Logger.getLogger(FiringBean.class.getName());	
   private static String[] disallowedPackages = {
     "java.awt.event", "javax.swing.event", "java.beans"
   };
@@ -117,7 +121,7 @@ public class FiringBean {
     name = name.substring(periodPlace + 1);
 
 
-    logger.finest(name);
+    //System.out.println(name);
     this.setBeanName(name);
 
     Method[] meths = findFireMethods(originalBean.getClass());
@@ -137,9 +141,9 @@ public class FiringBean {
       String methName = aName.substring(3, aName.length());
 
 
-      logger.finest("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-      logger.finest("Adding firing method: " + methName);
-      logger.finest("package = " + meths[i].getParameterTypes()[0].getPackage().getName());
+      //System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      //System.out.println("Adding firing method: " + methName);
+      //System.out.println("package = " + meths[i].getParameterTypes()[0].getPackage().getName());
       newMeth.setMethodName(methName);
       newMeth.setParentBean(originalBean);
       newMeth.setFiringBean(this);

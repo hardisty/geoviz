@@ -7,12 +7,10 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 /**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2002</p>
- * <p>Company: </p>
- * @author unascribed
- * @version 1.0
+ * Specifies location of icons.
+ * 
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 
 public class CoordinationManagerBeanInfo extends SimpleBeanInfo {

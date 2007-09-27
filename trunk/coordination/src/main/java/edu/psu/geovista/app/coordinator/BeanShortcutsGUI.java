@@ -29,21 +29,26 @@ import javax.swing.event.EventListenerList;
 
 
 /**
+ * 
  *  This class provides shortcut buttons to connect or disconnect all of the
  *  incoming or outgoing coordinated connections for this bean. The original
  *  design calls for a CoordinationManagerGUI to hold a reference to one of
  *  these per coordinated bean, and to listen for GUI events.
+ * 
+ *  
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 public class BeanShortcutsGUI extends JPanel implements ActionListener {
-  static public final String EVENT_INCOMING_ON = "incomingOn";
-  static public final String EVENT_INCOMING_OFF = "incomingOff";
-  static public final String EVENT_OUTGOING_ON = "outgoingOn";
-  static public final String EVENT_OUTGOING_OFF = "outgoingOff";
-  private JButton incomingOn;
-  private JButton incomingOff;
-  private JButton outgoingOn;
-  private JButton outgoingOff;
-  private JPanel buttonsPanel;
+  static public String EVENT_INCOMING_ON = "incomingOn";
+  static public String EVENT_INCOMING_OFF = "incomingOff";
+  static public String EVENT_OUTGOING_ON = "outgoingOn";
+  static public String EVENT_OUTGOING_OFF = "outgoingOff";
+  private transient JButton incomingOn;
+  private transient JButton incomingOff;
+  private transient JButton outgoingOn;
+  private transient JButton outgoingOff;
+  private transient JPanel buttonsPanel;
 
   /**
    *

@@ -35,10 +35,13 @@ import javax.swing.event.EventListenerList;
  *  these per coordinated bean, and for this class to have one
  *  ListeningInterfaceGUI per interface in the listening bean that is matched
  *  with an event type in a firing bean.
+ *  
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 public class ListeningBeanGUI extends JPanel implements ActionListener {
-  private ListeningInterfaceGUI[] listenGUI;
-  private JPanel listenersGUIPanel;
+  private transient ListeningInterfaceGUI[] listenGUI;
+  private transient JPanel listenersGUIPanel;
   /**
    *
   */

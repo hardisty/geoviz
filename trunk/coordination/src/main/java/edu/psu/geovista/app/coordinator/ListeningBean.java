@@ -17,14 +17,13 @@ import java.awt.Image;
 
 
 /**
- *  This class accepts an arbitrary number of objects, and performs a
- *  default coordination based on their method signatures.
- *
- *  Objects with methods starting with addFooListener(FooListener l),
- *  removeFooListener(FooListener l), and fireFooChanged(Object obj) are considered
- *  to be tried to broadcast events of type Foo.
- *  Objects that implement interfaces of type FooListener will be added to
- *  the broadcasting classes ListenerList.
+ * This class represents the event receiving role of an object being managed 
+ * by a coordination manager.
+ * 
+ * A particular object will be represented as both a FiringBean and as a ListeningBean.
+ * 
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 public class ListeningBean {
   public static final int STATUS_LISTENING = 0;
