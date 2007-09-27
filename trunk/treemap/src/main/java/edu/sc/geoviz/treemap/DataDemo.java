@@ -47,9 +47,6 @@ import javax.swing.border.Border;
 import treemap.TMView;
 import treemap.TreeMap;
 
-import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.data.sample.GeoData48States;
-
 
 
 /**
@@ -76,6 +73,7 @@ public class DataDemo {
      * Display a demo TreeMap.
      */
     public static void main(String[] args) {
+    	/*
       root = new TMDataNode(0d, "root");
       root.setIsLeaf(false);
           GeoData48States stateData = new GeoData48States();
@@ -113,6 +111,8 @@ public class DataDemo {
         confFrame.addConfView(confView);
         confFrame.pack();
         confFrame.setVisible(true);
+        
+        */
     }
 
 
