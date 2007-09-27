@@ -26,12 +26,15 @@ import javax.swing.JPanel;
  *  user and an instance of CoordinationManager concerning the status of
  *  one FiringBean -> ListeningBean connection for one type of coordinated
  *  event. It has a JCheckBox.
+ *  
+ * @see CoordinationManager
+ * @author Frank Hardisty
  */
 public class BeanConnectionGUI extends JPanel implements ItemListener {
   private transient ListeningBean lBean;
   private transient FiringMethod meth; //contains reference to parent FiringBean
   private transient CoordinationManager cm;
-  private JCheckBox cBox;
+  private transient JCheckBox cBox;
 
   /**
    *
@@ -64,12 +67,4 @@ public class BeanConnectionGUI extends JPanel implements ItemListener {
       cm.reconnectBeans(this.meth,this.lBean);
     }
   }
-
-public JCheckBox getCBox() {
-	return cBox;
-}
-
-public void setCBox(JCheckBox box) {
-	cBox = box;
-}
 }

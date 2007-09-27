@@ -17,7 +17,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,16 +26,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 
-//this class maintains the GUI
-//it examines beans on the way in and out to make changes to itself
-//CoordinationManager maintains the state of the beans and their connections
-//it gets messages from the GUI if the user requests changes to the connections
+/**this class maintains the GUI
+* it examines beans on the way in and out to make changes to itself
+* CoordinationManager maintains the state of the beans and their connections
+* it gets messages from the GUI if the user requests changes to the connections
+*/
+
 public class CoordinationManagerGUI extends JScrollPane implements ActionListener{
   private transient CoordinationManager cm;
   transient private JPanel boxHolder;
   transient private JPanel shortcutsHolder;
   transient private JPanel allHolder;
-  protected final static Logger logger = Logger.getLogger(CoordinationManagerGUI.class.getName());
+
   //private
   public CoordinationManagerGUI() {
     super();
@@ -119,13 +120,13 @@ public class CoordinationManagerGUI extends JScrollPane implements ActionListene
   public void actionPerformed(ActionEvent e){
     String cmd = e.getActionCommand();
     if (cmd == BeanShortcutsGUI.EVENT_INCOMING_ON){
-      logger.finest(BeanShortcutsGUI.EVENT_INCOMING_ON);
+      System.out.println(BeanShortcutsGUI.EVENT_INCOMING_ON);
     } else if (cmd == BeanShortcutsGUI.EVENT_INCOMING_OFF){
-      logger.finest(BeanShortcutsGUI.EVENT_INCOMING_OFF);
+      System.out.println(BeanShortcutsGUI.EVENT_INCOMING_OFF);
     } else if(cmd == BeanShortcutsGUI.EVENT_OUTGOING_ON){
-      logger.finest(BeanShortcutsGUI.EVENT_OUTGOING_ON);
+      System.out.println(BeanShortcutsGUI.EVENT_OUTGOING_ON);
     } else if(cmd == BeanShortcutsGUI.EVENT_OUTGOING_OFF){
-      logger.finest(BeanShortcutsGUI.EVENT_OUTGOING_OFF);
+      System.out.println(BeanShortcutsGUI.EVENT_OUTGOING_OFF);
     }
   }
 

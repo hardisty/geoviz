@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 
 /**
+ *  This is the normal entry point into the coordination package.
+ * 
  *  This class accepts an arbitrary number of objects, and performs a
  *  default coordination based on their method signatures.
  *
