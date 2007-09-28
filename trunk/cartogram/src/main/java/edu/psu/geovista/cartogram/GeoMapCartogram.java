@@ -37,7 +37,7 @@ import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.map.GeoMapUni;
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.toolkitcore.data.GeoDataGeneralizedStates;
+import edu.psu.geovista.data.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;
 

@@ -43,9 +43,9 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import edu.psu.geovista.app.map.GeoMapUni;
+import edu.psu.geovista.data.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.db.dbase.DBaseFile;
 import edu.psu.geovista.io.util.MyFileFilter;
-import edu.psu.geovista.toolkitcore.data.GeoDataGeneralizedStates;
 import edu.psu.geovista.visclass.VisualClassifier;
 
 
