@@ -42,9 +42,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.EventListenerList;
 
 import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionListener;
-import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
@@ -61,7 +59,6 @@ import org.jivesoftware.smackx.filetransfer.FileTransferManager;
 import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
 import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
-
 
 import edu.psu.geovista.ui.event.SelectionEvent;
 import edu.psu.geovista.ui.event.SelectionListener;
@@ -180,9 +177,10 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 		gvPrefs.put("LastGoodPassword", password);
 		conn = JabberUtils.openConnection(serverName);
 		
-		// boolean loginOK = SmackTester.login(conn, userName, password);
+
 		boolean loginOK = JabberUtils.login(conn, userName, password);
-		conn.getRoster().setSubscriptionMode(Roster.SubscriptionMode.accept_all);
+		//XXX following line can be reactivate when Smack lib gets update to 3.x
+		//conn.getRoster().setSubscriptionMode(Roster.SubscriptionMode.accept_all);
 		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
 
 			logger.finest(this.userName + " login OK = " + loginOK);
@@ -313,10 +311,11 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 	private void findFriend() {
 		Roster rost = conn.getRoster();
 		
-		Object[] entries = (Object[]) rost.getEntries().toArray();
-
-		for (int i = 0; i < entries.length; i++){
-			RosterEntry entry = (RosterEntry)entries[i];
+		//Object[] entries = (Object[]) rost.getEntries().toArray()
+		Iterator it  = rost.getEntries();
+		
+		for (int i = 0; i < rost.getEntryCount(); i++){
+			RosterEntry entry = (RosterEntry)it.next();
 			String friendName = entry.getUser();
 			logger.finest(" friend = " + friendName);
 			friend = entry;
@@ -325,6 +324,7 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 	}
 
 	private void makeChat() {
+		/* until smack lib gets updated
 		ChatManager chatmanager = conn.getChatManager();
 		chat = chatmanager.createChat(friend.getUser()+"@satchmo", new MessageListener(){
 
@@ -337,6 +337,7 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 		if (logger.isLoggable(Level.FINEST)){
 			logger.finest("I'm " + this.userName + ", starting new chat with " + chat.getParticipant());
 		}
+		*/
 	}
 
 	private void sendExtension(PacketExtension ext) {
@@ -388,7 +389,7 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 			makeChat();
 		}
 		try {
-			Message newMessage = new Message(this.friend.getName(),Message.Type.normal);
+			Message newMessage = new Message(this.friend.getName(),Message.Type.NORMAL);
 			newMessage.setBody(msg);
 			//message.setProperty("favoriteColor", "red");
 			if (logger.isLoggable(Level.FINEST)){
