@@ -25,7 +25,6 @@ import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.data.shapefile.ShapeFileToShape;
-import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
 
 public class GeoMapMain
     extends JFrame {
@@ -103,8 +102,8 @@ public class GeoMapMain
     //shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
     //map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
     ShapeFileToShape shpToShape2 = new ShapeFileToShape();
-    GeoDataSCarolina SCData = new GeoDataSCarolina();
-    shpToShape2.setInputDataSet(SCData.getDataSet());
+
+
     //map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
     ShapeFileToShape shpToShape3 = new ShapeFileToShape();
