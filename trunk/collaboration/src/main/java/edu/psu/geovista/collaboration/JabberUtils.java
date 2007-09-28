@@ -42,7 +42,8 @@ public abstract class JabberUtils {
 			String password) {
 
 		try {
-			conn.connect();
+			//XXX until smack lib gets updated..
+			//conn.connect();
 			conn.login(username, password);
 
 		} catch (XMPPException e) {
@@ -59,7 +60,12 @@ public abstract class JabberUtils {
 	public static XMPPConnection openConnection(String serverName) {
 		XMPPConnection conn1 = null;
 		// Create a connection to the named server.
-		conn1 = new XMPPConnection(serverName);
+		try {
+			conn1 = new XMPPConnection(serverName);
+		} catch (XMPPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return conn1;
 	}
 

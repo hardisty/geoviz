@@ -912,6 +912,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setMinimumSize(new Dimension(800, 600));
 
 		String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
+		fileName2 = "C:\\data\\grants\\esda 07\\oe_data\\race1_00.shp";
 		ShapefileReader reader = new ShapefileReader();
 		DriverProperties dp = new DriverProperties(fileName2);
 		FeatureCollection featColl = null;
@@ -931,7 +932,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		for (Feature feat : featList) {
 
 			Geometry geom = (Geometry) feat.getAttribute(0);
-			System.out.println(geom.getClass().getName());
+			//System.out.println(geom.getClass().getName());
 
 			Java2DConverter converter = new Java2DConverter(new Viewport(app
 					.getGlassPane()));

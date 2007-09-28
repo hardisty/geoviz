@@ -19,10 +19,9 @@
        <artifactId>common</artifactId>
        <version>${project.version}</version>
     </dependency>
-
-        <dependency>
+    <dependency>
        <groupId>edu.psu.geovista</groupId>
-       <artifactId>readers</artifactId>
+       <artifactId>symbolization</artifactId>
        <version>${project.version}</version>
     </dependency>
   </dependencies>

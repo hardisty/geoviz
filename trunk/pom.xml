@@ -7,11 +7,15 @@
   <version>2.0</version>
   <modules>
     <module>common</module>
+    <module>coordination</module>
+    <module>collaboration</module>
+    <module>colorbrewer</module>
     <module>animation</module>
     <module>readers</module>
     <module>symbolization</module>
-    <module>coordination</module>
-    <module>colorbrewer</module>
+    <module>geoviz</module>
+    
+    
   </modules>
     <reporting>
     <plugins>
