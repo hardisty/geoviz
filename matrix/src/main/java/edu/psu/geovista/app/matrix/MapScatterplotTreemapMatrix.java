@@ -23,7 +23,7 @@ package edu.psu.geovista.app.matrix;
 
 import edu.psu.geovista.app.map.MapMatrixElement;
 import edu.psu.geovista.app.scatterplot.ScatterPlot;
-import edu.sc.geoviz.treemap.TreeMapMatrixElement;
+import edu.psu.geovista.treemap.TreeMapMatrixElement;
 
 /**
  *

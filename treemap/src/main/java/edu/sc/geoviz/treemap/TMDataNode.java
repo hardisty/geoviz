@@ -120,7 +120,7 @@ public class TMDataNode
      *
      * @param child    the TMDataNode to add as a child
      */
-    protected void addChild(TMDataNode child) {
+    public void addChild(TMDataNode child) {
         children.put(child.getName(), child);
         this.isLeaf = false;//fah xxx is this safe?
         if(this.checkingThread == null){

@@ -19,7 +19,7 @@
  License along with this library; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
-package edu.sc.geoviz.treemap;
+package edu.psu.geovista.treemap;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -46,6 +46,9 @@ import edu.psu.geovista.ui.event.IndicationEvent;
 import edu.psu.geovista.ui.event.IndicationListener;
 import edu.psu.geovista.ui.event.SubspaceEvent;
 import edu.psu.geovista.ui.event.SubspaceListener;
+import edu.sc.geoviz.treemap.TMDataDraw;
+import edu.sc.geoviz.treemap.TMDataNode;
+import edu.sc.geoviz.treemap.TMDataSize;
 
 /**
  * Paints an array of TreeMapCanvas. Responds to and broadcasts DataSetChanged,

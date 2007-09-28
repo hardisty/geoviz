@@ -47,12 +47,12 @@ import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
 import edu.psu.geovista.data.DescriptiveStatistics;
 import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.data.shapefile.ShapeFileToShape;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
-import edu.psu.geovista.toolkitcore.data.GeoDataGeneralizedStates;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;
 import edu.psu.geovista.ui.event.IndicationEvent;
@@ -243,7 +243,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 		CoordinationManager coord = new CoordinationManager();
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
-		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
+		GeoData48States stateData = new GeoData48States();
 		//coord.addBean(map2);
 		coord.addBean(shpToShape);
 

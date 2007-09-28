@@ -14,7 +14,7 @@
  */
 
 
-package edu.sc.geoviz.treemap;
+package edu.psu.geovista.treemap;
 
 import java.awt.Color;
 import java.awt.Graphics;

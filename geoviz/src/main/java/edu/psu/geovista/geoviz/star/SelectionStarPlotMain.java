@@ -30,7 +30,6 @@ import javax.swing.border.LineBorder;
 
 import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.map.GeoMap;
-import edu.psu.geovista.app.touchgraph.LinkGraph;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
@@ -76,11 +75,11 @@ public class SelectionStarPlotMain {
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
 		GeoMap map = new GeoMap();
-		LinkGraph lg = new LinkGraph();
+
 
 		app.getContentPane().add(map);
 		coord.addBean(map);
-		coord.addBean(lg);
+
 		coord.addBean(content);
 		coord.addBean(shpProj);
 
