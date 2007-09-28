@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.toolkitcore.data.GeoDataGeneralizedStates;
+import edu.psu.geovista.data.sample.GeoDataGeneralizedStates;
 
 
 /*
