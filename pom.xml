@@ -13,6 +13,7 @@
     <module>animation</module>
     <module>readers</module>
     <module>symbolization</module>
+    <module>image_blur</module>    
     <module>geoviz</module>
     
     
