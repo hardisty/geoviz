@@ -10,17 +10,17 @@ import java.util.ResourceBundle;
  * @version 1.2
  */
 
-public class Edge {
+public class MSTEdge {
 	private int start;
 
 	private int end;
 
-	private int weight;
+	private double weight;
 
 	/**
 	 * Default constructor, init weight to +infinity
 	 */
-	public Edge() {
+	public MSTEdge() {
 		this.weight = Integer.MAX_VALUE;
 	}
 
@@ -34,7 +34,7 @@ public class Edge {
 	 * @param The
 	 *            weight
 	 */
-	public Edge(int start, int end, int weight) {
+	public MSTEdge(int start, int end, double weight) {
 		this.start = start;
 		this.end = end;
 		this.weight = weight;
@@ -45,7 +45,7 @@ public class Edge {
 	 * 
 	 * @return The weight
 	 */
-	public int getWeight() {
+	public double getWeight() {
 		return this.weight;
 	}
 
