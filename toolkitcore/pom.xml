@@ -19,8 +19,7 @@
     <artifactId>jdom</artifactId>
     <version>b9</version>
 </dependency>
-
-        <dependency>
+    <dependency>
        <groupId>edu.psu.geovista</groupId>
        <artifactId>geoviz</artifactId>
        <version>${project.version}</version>
@@ -43,6 +42,16 @@
             <dependency>
        <groupId>edu.psu.geovista</groupId>
        <artifactId>cartogram</artifactId>
+       <version>${project.version}</version>
+    </dependency>
+                <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>satscan</artifactId>
+       <version>${project.version}</version>
+    </dependency>
+                <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>animation</artifactId>
        <version>${project.version}</version>
     </dependency>
   </dependencies>
