@@ -14,5 +14,10 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+        <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>geoviz</artifactId>
+       <version>${project.version}</version>
+    </dependency>
   </dependencies>
 </project>

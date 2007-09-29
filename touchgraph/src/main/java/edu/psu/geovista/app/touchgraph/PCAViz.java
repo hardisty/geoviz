@@ -23,7 +23,7 @@ import cern.jet.math.Functions;
 
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
-import edu.psu.geovista.toolkitcore.VariablePicker;
+import edu.psu.geovista.ui.VariablePicker;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;
 import edu.psu.geovista.ui.event.IndicationEvent;

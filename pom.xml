@@ -13,10 +13,12 @@
     <module>animation</module>
     <module>readers</module>
     <module>symbolization</module>
+    <module>treemap</module>
     <module>image_blur</module>    
     <module>geoviz</module>
-    
-    
+    <module>matrix</module>    
+    <module>cartogram</module>
+    <module>sound</module>
   </modules>
     <reporting>
     <plugins>

@@ -21,8 +21,8 @@ import edu.psu.geovista.app.touchgraph.graphelements.VisibleLocality;
 import edu.psu.geovista.app.touchgraph.mst.NDimensionalMST;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
-import edu.psu.geovista.datamining.data.spatial.SpatialEdge;
 import edu.psu.geovista.symbolization.ColorInterpolator;
+import edu.psu.geovista.touchgraph.mst.MSTEdge;
 import edu.psu.geovista.ui.event.ColorArrayEvent;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;
@@ -147,13 +147,13 @@ public class SubspaceLinkGraph extends LinkGraph implements DataSetListener,
 
         //SpatialEdge[] mstEdges = nDMST.getMST();
         //gvEdges = new Edge[data.getNumObservations() - 1]; // has to be, for MST
-        SpatialEdge[] mstEdges = nDMST.getMST();
+        MSTEdge[] mstEdges = nDMST.getMST();
         gvEdges = new Edge[mstEdges.length];
 
         for (int i = 0; i < mstEdges.length; i++) {
-            Node from = gvNodes[mstEdges[i].getOrigin().getId()];
-            Node to = gvNodes[mstEdges[i].getDestination().getId()];
-            double length = mstEdges[i].getDistance();
+            Node from = gvNodes[mstEdges[i].getStart()];
+            Node to = gvNodes[mstEdges[i].getEnd()];
+            double length = mstEdges[i].getWeight();
 
             int dist = (int) (length * 1000d);
 

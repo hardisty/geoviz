@@ -3,5 +3,5 @@
   </bean><bean index="1" xLocation="138" yLocation="1" width="400" height="400" uniqueName="StarPlot">edu.psu.geovista.geoviz.star.StarPlot
   </bean><bean index="2" xLocation="559" yLocation="17" width="463" height="397" uniqueName="StarPlotMap">edu.psu.geovista.geoviz.star.StarPlotMap
   </bean><bean index="3" xLocation="-1" yLocation="437" width="377" height="127" uniqueName="IndicationAnimator">edu.psu.geovista.ui.animation.IndicationAnimator
-  </bean><bean index="4" xLocation="0" yLocation="-1" width="133" height="418" uniqueName="VariablePicker">edu.psu.geovista.toolkitcore.VariablePicker
+  </bean><bean index="4" xLocation="0" yLocation="-1" width="133" height="418" uniqueName="VariablePicker">edu.psu.geovista.ui.VariablePicker
   </bean></GeoVizTool_BeansLayout>
