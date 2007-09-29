@@ -3,7 +3,7 @@ package edu.psu.geovista.touchgraph.mst.gui;
 import java.awt.*;
 import javax.swing.JPanel;
 
-import edu.psu.geovista.touchgraph.mst.Edge;
+import edu.psu.geovista.touchgraph.mst.MSTEdge;
 
 import java.util.*;
 
@@ -45,7 +45,7 @@ public class DrawPanel extends JPanel {
    */
   public void setUp(){
     for(int i = 0; i < mst.size(); i++){
-      Edge temp = (Edge)mst.get(i);
+      MSTEdge temp = (MSTEdge)mst.get(i);
       if(vertexes[temp.getStart()][0] == 0){
         vertexes[temp.getStart()][0] = temp.getStart();
         vertexes[temp.getStart()][1] = currentX;
@@ -82,7 +82,7 @@ public class DrawPanel extends JPanel {
       }
     }
     for(int i = 0; i < mst.size(); i++){
-      Edge temp = (Edge)mst.get(i);
+      MSTEdge temp = (MSTEdge)mst.get(i);
       g.drawLine(vertexes[temp.getStart()][1]+10, vertexes[temp.getStart()][2]+10, vertexes[temp.getEnd()][1]+10, vertexes[temp.getEnd()][2]+10);
     }
   }

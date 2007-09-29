@@ -33,7 +33,7 @@ public class PriorityQue {
 	 * @param The
 	 *            edge to insert
 	 */
-	public void insertItem(Edge item) {
+	public void insertItem(MSTEdge item) {
 		this.que.add(item);
 	}
 
@@ -51,12 +51,12 @@ public class PriorityQue {
 	 * 
 	 * @return The edge with the lowest weight
 	 */
-	public Edge removeMin() {
+	public MSTEdge removeMin() {
 		
-		Edge temp = new Edge();
+		MSTEdge temp = new MSTEdge();
 		int index = 0;
 		for (int i = 0; i < this.que.size(); i++) {
-			Edge tmp1 = (Edge) this.que.elementAt(i);
+			MSTEdge tmp1 = (MSTEdge) this.que.elementAt(i);
 			if (temp.getWeight() > tmp1.getWeight()) {
 				temp = tmp1;
 				index = i;

@@ -11,7 +11,7 @@ import java.util.Vector;
 
 /**
  * Title: Minimum Spanning Tree Description: Uses Kruskal's algorithm to
- * calculate a MST from a graph. Copyright: Copyright (c) 2002 Company:
+ * calculate a MST from a graph. Copyright: Copyright (c) 2002 Company: 
  * 
  * @author Markus Svensson
  * @version 1.2
@@ -87,27 +87,31 @@ public class MinimumSpanningTree {
 	 * 
 	 * @return The MST as a two-dimensional array.
 	 */
-	public void kruskal() {
-		for (int i = 0; i < this.edges.length; i++) {
-			this.que.insertItem(new Edge(this.edges[i][0], this.edges[i][1], this.edges[i][2]));
+	public static ArrayList<MSTEdge> kruskal(int[] fromEdge, int[] toEdge, double[] weights, int numVertices) {
+		int[] cluster = new int[numVertices];
+		double totalWeight = 0;
+		ArrayList<MSTEdge> mst = null;
+		PriorityQue que = new PriorityQue(numVertices);
+		for (int i = 0; i < fromEdge.length; i++) {
+			que.insertItem(new MSTEdge(fromEdge[i], toEdge[i], weights[i]));
 		}
 
-		while (this.mst.size() < this.numOfVertices - 1) {
-			Edge current = this.que.removeMin();
-			int pos1 = this.cluster[current.getEnd() - 1];
-			int pos2 = this.cluster[current.getStart() - 1];
+		while (mst.size() < numVertices - 1) {
+			MSTEdge current = que.removeMin();
+			int pos1 = cluster[current.getEnd() - 1];
+			int pos2 = cluster[current.getStart() - 1];
 
 			if (pos1 != pos2) {
-				this.mst.add(current);
-				this.totalWeight += current.getWeight();
-				for (int k = 0; k < this.cluster.length; k++) {
-					if (this.cluster[k] == pos1) {
-						this.cluster[k] = pos2;
+				mst.add(current);
+				totalWeight += current.getWeight();
+				for (int k = 0; k < cluster.length; k++) {
+					if (cluster[k] == pos1) {
+						cluster[k] = pos2;
 					}
 				}
 			}
 		}
-
+		return mst;
 	}
 
 	/**
@@ -123,7 +127,7 @@ public class MinimumSpanningTree {
 		returnString = (res.getString("Processed_File")
 				+ this.file.getAbsolutePath() + res.getString("Possible_Tree"));
 		for (int i = 0; i < this.mst.size(); i++) {
-			Edge temp = (Edge) this.mst.get(i);
+			MSTEdge temp = (MSTEdge) this.mst.get(i);
 			returnString = returnString + (temp.toString(res));
 		}
 		returnString = (returnString
