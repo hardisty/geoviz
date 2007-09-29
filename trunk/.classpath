@@ -28,12 +28,11 @@
 	<classpathentry kind="src" path="touchgraph/src/main/java"/>
 	<classpathentry kind="src" path="treemap/src/main/java"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
-	<classpathentry kind="lib" path="lib/datamining_all.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
-	<classpathentry kind="lib" path="lib/jts-1.8.jar"/>
 	<classpathentry kind="lib" path="C:/java_projects/geoviz_gcode/trunk/lib/smackx-2.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/java_projects/geoviz_gcode/trunk/lib/smack-2.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jts-1.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
