@@ -376,12 +376,12 @@ public class ToolkitLayoutIO {
 		c.paint(g);
 		ToolkitLayoutIO.sendImageToClipboard(buff);
 	}
-	private static final float COMPRESSION_QUALITY = 0.95F;
+
 
 	
 	/*
 	public static void saveCommentedImage(Component c) {
-
+float COMPRESSION_QUALITY = 0.95F;
 		BufferedImage buff = new BufferedImage(c.getWidth(), c.getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics g = buff.getGraphics();

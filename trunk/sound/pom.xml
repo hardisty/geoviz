@@ -17,6 +17,11 @@
        <artifactId>symbolization</artifactId>
        <version>${project.version}</version>
     </dependency>
+     <dependency>
+       <groupId>edu.psu.geovista</groupId>
+       <artifactId>geoviz</artifactId>
+       <version>${project.version}</version>
+    </dependency>   
   </dependencies>
     <build>
        <plugins>

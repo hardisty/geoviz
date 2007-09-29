@@ -183,7 +183,7 @@ public class Controller extends Thread {
 		} else {
 			for (int i = 0; i < this.args.length; i++) {
 				MinimumSpanningTree mst = new MinimumSpanningTree(this.args[i]);
-				mst.kruskal();
+				mst.kruskal(null, null, null, i);
 				@SuppressWarnings("unused")
 				String result = mst.printMST(this.res);
 				//this.gui.appendOutPutText(result);
@@ -227,7 +227,7 @@ public class Controller extends Thread {
 				this.gui.setStatusText(this.res.getString("Processing_Status"));
 				for (int i = 0; i < this.fileArray.length; i++) {
 					this.mst = new MinimumSpanningTree(this.fileArray[i]);
-					this.mst.kruskal();
+					this.mst.kruskal(null, null, null, i);
 					String result = this.mst.printMST(this.res);
 					this.gui.appendOutPutText(result);
 					this.fileName = this.fileArray[i].getAbsolutePath();

@@ -23,21 +23,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.geom.NoninvertibleTransformException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -55,15 +50,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jump.feature.Feature;
-import com.vividsolutions.jump.feature.FeatureCollection;
-import com.vividsolutions.jump.io.DriverProperties;
-import com.vividsolutions.jump.io.IllegalParametersException;
-import com.vividsolutions.jump.io.ShapefileReader;
-import com.vividsolutions.jump.java2D.Java2DConverter;
-import com.vividsolutions.jump.java2D.Viewport;
 
 import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.coordinator.CoordinationUtils;
@@ -84,7 +70,6 @@ import edu.psu.geovista.app.spreadsheet.VariableTransformer;
 import edu.psu.geovista.app.touchgraph.LinkGraph;
 import edu.psu.geovista.app.touchgraph.PCAViz;
 import edu.psu.geovista.app.touchgraph.SubspaceLinkGraph;
-
 import edu.psu.geovista.cartogram.GeoMapCartogram;
 import edu.psu.geovista.data.condition.ConditionManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
@@ -101,6 +86,7 @@ import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
 import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolinaCities;
+import edu.psu.geovista.ui.VariablePicker;
 import edu.psu.geovista.ui.animation.IndicationAnimator;
 import edu.psu.geovista.ui.animation.SelectionAnimator;
 import edu.psu.geovista.ui.event.DataSetEvent;
@@ -910,7 +896,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
-
+		
+/*     until we get jts in maven
 		String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
 		fileName2 = "C:\\data\\grants\\esda 07\\oe_data\\race1_00.shp";
 		ShapefileReader reader = new ShapefileReader();
@@ -948,7 +935,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			}
 
 		}
-
+*/
 	}
 
 }

@@ -27,6 +27,8 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
+import edu.psu.geovista.ui.VariablePicker;
+
 
 public class VariablePickerBeanInfo
     extends SimpleBeanInfo {
