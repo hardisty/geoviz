@@ -21,7 +21,7 @@
 
 
 
-package edu.psu.geovista.rjava;
+package edu.psu.geovista.data.geog;
 
 
 import java.util.logging.Level;
@@ -29,7 +29,6 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.ui.event.AuxiliaryDataSetEvent;
 import edu.psu.geovista.ui.event.AuxiliaryDataSetListener;
 import edu.psu.geovista.ui.event.DataSetEvent;

@@ -19,6 +19,9 @@
     <module>matrix</module>    
     <module>cartogram</module>
     <module>sound</module>
+    <module>touchgraph</module>
+    <module>toolkitcore</module>
+    
   </modules>
     <reporting>
     <plugins>

@@ -734,10 +734,7 @@ public class LinkGraph extends JPanel implements DataSetListener,
     }
 
     public void subspaceChanged(SubspaceEvent e) {
-      //total hack
-      if (e.getSource() instanceof edu.psu.geovista.app.matrix.AbstractMatrix){
-        return;
-      }
+
       if(this.data == null){
     	  return;
       }
