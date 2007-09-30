@@ -12,7 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-package edu.psu.geovista.ui.animation;
+package edu.psu.geovista.animation;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

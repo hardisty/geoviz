@@ -1,18 +1,18 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ConditioningAnimatorBeanInfo
+ Java source file for the class SelectionAnimatorBeanInfo
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: ConditioningAnimatorBeanInfo.java,v 1.1 2003/05/12 18:21:11 hardisty Exp $
+ $Id: SelectionAnimatorBeanInfo.java,v 1.1 2003/05/12 18:21:11 hardisty Exp $
  $Date: 2003/05/12 18:21:11 $
  Reference:        Document no:
  ___                ___
  -------------------------------------------------------------------  *
  */
 
-package edu.psu.geovista.ui.animation;
+package edu.psu.geovista.animation;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -20,14 +20,14 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
-public class ConditioningAnimatorBeanInfo extends SimpleBeanInfo {
-  static Class beanClass = ConditioningAnimator.class;
-  static String iconColor16x16Filename = "resources/ConditioningAnimatorIcon16.gif";
-  static String iconColor32x32Filename = "resources/ConditioningAnimatorIcon32.gif";
+public class SelectionAnimatorBeanInfo extends SimpleBeanInfo {
+  static Class beanClass = SelectionAnimator.class;
+  static String iconColor16x16Filename = "resources/SelectionAnimatorIcon16.gif";
+  static String iconColor32x32Filename = "resources/SelectionAnimatorIcon32.gif";
   static String iconMono16x16Filename;
   static String iconMono32x32Filename;
 
-  public ConditioningAnimatorBeanInfo() {
+  public SelectionAnimatorBeanInfo() {
   }
 
   public PropertyDescriptor[] getPropertyDescriptors() {

@@ -11,7 +11,7 @@
  ___                ___
  -------------------------------------------------------------------  *
  */
-package edu.psu.geovista.ui.animation;
+package edu.psu.geovista.animation;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

@@ -51,6 +51,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import edu.psu.geovista.animation.IndicationAnimator;
+import edu.psu.geovista.animation.SelectionAnimator;
 import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.coordinator.CoordinationUtils;
 import edu.psu.geovista.app.coordinator.FiringBean;
@@ -87,8 +89,6 @@ import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolinaCities;
 import edu.psu.geovista.ui.VariablePicker;
-import edu.psu.geovista.ui.animation.IndicationAnimator;
-import edu.psu.geovista.ui.animation.SelectionAnimator;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;
 

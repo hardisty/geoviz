@@ -1,17 +1,17 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class SelectionAnimator
+ Java source file for the class IndicationAnimator
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: SelectionAnimator.java,v 1.3 2005/02/19 02:44:41 hardisty Exp $
- $Date: 2005/02/19 02:44:41 $
+ $Id: IndicationAnimator.java,v 1.5 2005/03/28 14:57:01 hardisty Exp $
+ $Date: 2005/03/28 14:57:01 $
  Reference:        Document no:
  ___                ___
  -------------------------------------------------------------------  *
  */
-package edu.psu.geovista.ui.animation;
+package edu.psu.geovista.animation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,17 +42,19 @@ import edu.psu.geovista.ui.event.ClassificationEvent;
 import edu.psu.geovista.ui.event.ClassificationListener;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
+import edu.psu.geovista.ui.event.DimensionEvent;
+import edu.psu.geovista.ui.event.DimensionListener;
+import edu.psu.geovista.ui.event.IndicationEvent;
+import edu.psu.geovista.ui.event.IndicationListener;
 import edu.psu.geovista.ui.event.SubspaceEvent;
 import edu.psu.geovista.ui.event.SubspaceListener;
 
 /**
- * SelectionAnimator is used to send out indication signals that
+ * IndicationAnimator is used to send out indication signals that
  * corrispond to current classifications.
  *
  */
-public class SelectionAnimator
+public class IndicationAnimator
     extends JPanel
     implements ActionListener,
     ChangeListener,
@@ -61,32 +62,35 @@ public class SelectionAnimator
     SubspaceListener,
     ClassificationListener {
   private  Timer ticker;
-  private transient int currClassIndex;
-  private  Vector selections;
+  private transient int currObs;
   private transient JButton startStopButton;
-  private transient JButton clearSelectionButton;
   private transient boolean going = false;
-  private int speed; //in milliseconds
+  private  int fps; 
+  private transient int delay;//in milliseconds
+  static final int FPS_MIN = 0;
+  static final int FPS_MAX = 30;
+  static final int FPS_INIT = 15;    //initial frames per second
   private transient DataSetForApps data;
-  private transient int maxClass = 0;
+  private transient int maxIndication = 0;
   private  ClassifierPicker classPick;
   private transient int[] classes;
+  private transient double[] values;
   private transient ClassedObs[] obs;
   private transient int[] subspace;
   private transient int subspaceIndex;
   private transient JSlider timeSlider;
   private transient JCheckBox subspaceBox;
   private boolean usingSubspace;
-  private transient int[] tempArray;
-  final static Logger logger = Logger.getLogger(SelectionAnimator.class.getName());
+  private transient String[] varNames;
+  final static Logger logger = Logger.getLogger(IndicationAnimator.class.getName());
   /**
    * null ctr
    */
-  public SelectionAnimator() {
-    this.usingSubspace = true;
-    speed = 250;
-    this.selections = new Vector();
-    ticker = new Timer(speed, this);
+  public IndicationAnimator() {
+    usingSubspace = true;
+    fps = FPS_INIT;
+
+    ticker = new Timer(fps, this);
 
     this.add(this.makeTopPanel());
 
@@ -94,6 +98,7 @@ public class SelectionAnimator
     classPick.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
     this.add(classPick);
     classPick.addClassificationListener(this);
+    classPick.addActionListener(this);
     classPick.setBorder(new LineBorder(Color.white));
     this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
@@ -104,61 +109,63 @@ public class SelectionAnimator
     startStopButton = new JButton("Start");
     topPanel.add(startStopButton);
     startStopButton.addActionListener(this);
-
     this.subspaceBox = new JCheckBox("Subspace?", true);
     this.subspaceBox.addActionListener(this);
     topPanel.add(subspaceBox);
-    timeSlider = new JSlider(1, 10, 5);
+    timeSlider = new JSlider(FPS_MIN, FPS_MAX, FPS_INIT);
+    timeSlider.setMajorTickSpacing(20);
+    timeSlider.setPaintLabels(true);
     topPanel.add(timeSlider);
     timeSlider.addChangeListener(this);
-
-    clearSelectionButton = new JButton("Clear Selection");
-    topPanel.add(clearSelectionButton);
-    clearSelectionButton.addActionListener(this);
-
     return topPanel;
   }
 
   public void stateChanged(ChangeEvent e) {
+	  JSlider source = (JSlider)e.getSource();
     if (e.getSource() == this.timeSlider &&
-        !this.timeSlider.getValueIsAdjusting()) {
-      this.speed = this.timeSlider.getValue() * 50;
-      this.ticker.setDelay(speed);
+        !source.getValueIsAdjusting()) {
+        int fps = (int)source.getValue();
+        if (fps == 0) {
+            //if (!frozen) stopAnimation();
+        } else{
+
+        	delay = 1000 / fps;
+        	ticker.setDelay(delay);
+        }
+    	if(logger.isLoggable(Level.FINEST)){
+    		logger.finest("delay = " + delay);
+    	}
     }
   }
 
-  private void iterateSelections() { //main loop
+  private void iterateObs() { //main loop
+    int whichObs = this.obs[currObs].index;
+    this.fireIndicationChanged(whichObs);
 
-		if (logger.isLoggable(Level.FINEST)){
-			logger.finest("speed = " + speed);
-			logger.finest("index = " + obs[currClassIndex].index);			
-		}
+	if (logger.isLoggable(Level.FINEST)&& currObs == 0){
+		logger.finest("zero obs index = " + obs[currObs].index + ", value = " + obs[currObs].value);
+	}
 
-
-    if (currClassIndex <= this.maxClass && this.selections.size()>this.currClassIndex ) { //go up one
-      int[] whichClass = (int[])this.selections.get(this.currClassIndex);
-      this.fireSelectionChanged(whichClass);
-
-      this.ticker.setDelay(this.speed);
-      currClassIndex++;
+    if (currObs < this.maxIndication) { //go up one
+    	this.ticker.setDelay(delay);
+    	currObs++;
     }
-    else { //go back to zero
-      this.ticker.setDelay(this.speed * 10);
-
-      currClassIndex = 0; //reset
+    else {
+      this.ticker.setDelay(this.delay * 10);
       if (this.usingSubspace) {
+    		if (logger.isLoggable(Level.FINEST)){
+    			logger.finest("new var!!!");
+    		}
+
         this.iterateSubspace();
       }
+      currObs = 0; //reset
     }
   }
 
   public void actionPerformed(ActionEvent e) {
-    if (this.data == null) {
-      //without data, we don't do anything
-      return;
-    }
     if (e.getSource() == this.ticker) {
-      this.iterateSelections();
+      this.iterateObs();
     }
     else if (e.getSource() == this.startStopButton) {
       if (going) {
@@ -175,9 +182,14 @@ public class SelectionAnimator
     else if (e.getSource() == this.subspaceBox) {
       this.usingSubspace = this.subspaceBox.isSelected();
     }
-    else if (e.getSource() == this.clearSelectionButton) {
-      this.fireSelectionChanged(new int[0]);
+    else if (e.getSource() == this.classPick &&
+             e.getActionCommand().equals(ClassifierPicker.
+                                         COMMAND_SELECTED_VARIABLE_CHANGED)) {
+      //xxx hack for demo
+      this.subspaceIndex = this.classPick.getCurrVariableIndex();
+
     }
+
   }
 
   private void reclassObs() {
@@ -185,57 +197,26 @@ public class SelectionAnimator
       return;
     }
     Arrays.sort(obs);
-    this.selections.removeAllElements();
-
-    maxClass = obs[obs.length - 1].classed;
-    int classCounter = 0;
-    int prevClass = -1;
-    for (int i = 0; i < obs.length; i++) {
-      int currClass = obs[i].classed;
-      if (currClass != prevClass) {
-        //new class
-        classCounter = 0;
-        prevClass = currClass;
-        tempArray[classCounter] = obs[i].index;
-      }
-      else {
-        classCounter++;
-        tempArray[classCounter] = obs[i].index;
-
-      }
-      //peek ahead for either last obs or change in class
-      if ( (i == obs.length - 1) || (obs[i + 1].classed != currClass)) {
-        int[] thisClass = new int[classCounter + 1];
-        //copy temp array into thisClass;
-        for (int j = 0; j <= classCounter; j++) {
-          thisClass[j] = tempArray[j];
-        }
-        //put thisClass into vector
-        this.selections.add(thisClass);
-
-      }
-    }
   }
 
   private void iterateSubspace() {
-	 
 
-    if (this.subspaceIndex + 1 >= subspace.length) {
+    if (this.subspaceIndex >= subspace.length - 1) {
       this.subspaceIndex = 0;
     }
     else {
       this.subspaceIndex++;
     }
-
-    int currVar = subspace[this.subspaceIndex]; //
+    int currVar = subspace[this.subspaceIndex];
 	if (logger.isLoggable(Level.FINEST)){
-		logger.finest("subspace.length = " + subspace.length);
+		logger.finest("iterating subspace");
 		logger.finest("subspaceIndex = " + subspaceIndex);
 		logger.finest("currVar = " + currVar);
-
 	}
-
     this.classPick.setCurrVariableIndex(currVar);
+    String varName = this.varNames[currVar];
+    DimensionEvent dimEvent = new DimensionEvent(this, currVar, varName);
+    this.fireDimensionChanged(dimEvent);
   }
 
   public void subspaceChanged(SubspaceEvent e) {
@@ -244,11 +225,11 @@ public class SelectionAnimator
   }
 
   public void dataSetChanged(DataSetEvent e) {
-
     this.data = e.getDataSetForApps();
-
-    this.classPick.setDataSet(e.getDataSetForApps());
-    tempArray = new int[data.getNumObservations()];
+    this.maxIndication = this.data.getNumObservations() - 1;
+    this.classPick.removeActionListener(this);
+    this.classPick.setDataSet(this.data);
+    this.classPick.addActionListener(this);
 
     this.obs = new ClassedObs[this.data.getNumObservations()];
     for (int i = 0; i < this.obs.length; i++) {
@@ -257,33 +238,47 @@ public class SelectionAnimator
     }
     this.classPick.fireClassificationChanged();
     this.subspace = new int[data.getNumberNumericAttributes()];
+    this.varNames = data.getAttributeNamesNumeric();
     for (int i = 0; i < subspace.length; i++) {
-      subspace[i] = i;// + 1; //oh, the agony
+      subspace[i] = i; //oh, the agony
     }
   }
 
   public void classificationChanged(ClassificationEvent e) {
     this.classes = e.getClassification();
-    for (int i = 0; i < this.obs.length; i++) {
-      int index = this.obs[i].index;
-      this.obs[i].classed = this.classes[index];
+    if (e.getSource() == this.classPick) {
+      values = this.data.getNumericDataAsDouble(this.classPick.
+                                                getCurrVariableIndex());
+      for (int i = 0; i < this.obs.length; i++) {
+        int index = this.obs[i].index;
+        this.obs[i].classed = this.classes[index];
+        double aVal = this.values[index];
+        this.obs[i].value = aVal;
+      }
+    }
+    else {
+      for (int i = 0; i < this.obs.length; i++) {
+        int index = this.obs[i].index;
+        this.obs[i].classed = this.classes[index];
+        this.obs[i].value = this.classes[index];
+      }
     }
 
     this.reclassObs();
   }
 
   /**
-   * adds an SelectionListener
+   * adds an DimensionListener
    */
-  public void addSelectionListener(SelectionListener l) {
-    listenerList.add(SelectionListener.class, l);
+  public void addDimensionListener(DimensionListener l) {
+    listenerList.add(DimensionListener.class, l);
   }
 
   /**
-   * removes an SelectionListener from the component
+   * removes an DimensionListener from the component
    */
-  public void removeSelectionListener(SelectionListener l) {
-    listenerList.remove(SelectionListener.class, l);
+  public void removeDimensionListener(DimensionListener l) {
+    listenerList.remove(DimensionListener.class, l);
   }
 
   /**
@@ -293,21 +288,58 @@ public class SelectionAnimator
    * the fire method.
    * @see EventListenerList
    */
-  private void fireSelectionChanged(int[] newSelection) {
+  private void fireDimensionChanged(DimensionEvent e) {
     // Guaranteed to return a non-null array
     Object[] listeners = listenerList.getListenerList();
-    SelectionEvent e = null;
 
     // Process the listeners last to first, notifying
     // those that are interested in this event
     for (int i = listeners.length - 2; i >= 0; i -= 2) {
-      if (listeners[i] == SelectionListener.class) {
+      if (listeners[i] == DimensionListener.class) {
+
+        ( (DimensionListener) listeners[i + 1]).dimensionChanged(e);
+      }
+    }
+
+    //next i
+  }
+
+  /**
+   * adds an IndicationListener
+   */
+  public void addIndicationListener(IndicationListener l) {
+    listenerList.add(IndicationListener.class, l);
+  }
+
+  /**
+   * removes an IndicationListener from the component
+   */
+  public void removeIndicationListener(IndicationListener l) {
+    listenerList.remove(IndicationListener.class, l);
+  }
+
+  /**
+   * Notify all listeners that have registered interest for
+   * notification on this event type. The event instance
+   * is lazily created using the parameters passed into
+   * the fire method.
+   * @see EventListenerList
+   */
+  private void fireIndicationChanged(int newIndication) {
+    // Guaranteed to return a non-null array
+    Object[] listeners = listenerList.getListenerList();
+    IndicationEvent e = null;
+
+    // Process the listeners last to first, notifying
+    // those that are interested in this event
+    for (int i = listeners.length - 2; i >= 0; i -= 2) {
+      if (listeners[i] == IndicationListener.class) {
         // Lazily create the event:
         if (e == null) {
-          e = new SelectionEvent(this, newSelection);
+          e = new IndicationEvent(this, newIndication);
         }
 
-        ( (SelectionListener) listeners[i + 1]).selectionChanged(e);
+        ( (IndicationListener) listeners[i + 1]).indicationChanged(e);
       }
     }
 
@@ -315,7 +347,7 @@ public class SelectionAnimator
   }
 
   public static void main(String[] args) {
-    SelectionAnimator inAnim = new SelectionAnimator();
+    IndicationAnimator inAnim = new IndicationAnimator();
 
 
     JFrame app = new JFrame();
@@ -335,27 +367,28 @@ public class SelectionAnimator
       implements Comparable {
     int index;
     int classed;
+    double value;
 
-    //we compare by classed
+    //we compare by value
     public int compareTo(Object o) {
       ClassedObs e = (ClassedObs) o;
       int val = 0;
-      if (Double.isNaN(e.classed)) {
-        if (Double.isNaN(this.classed)) {
+      if (Double.isNaN(e.value)) {
+        if (Double.isNaN(this.value)) {
           return 0;
         }
         else {
           return 1;
         }
-      } //end if the other classed is NaN
+      } //end if the other value is NaN
 
-      if (Double.isNaN(this.classed)) {
+      if (Double.isNaN(this.value)) {
         val = -1; //everything is bigger than NaN
       }
-      else if (this.classed < e.classed) {
+      else if (this.value < e.value) {
         val = -1;
       }
-      else if (this.classed > e.classed) {
+      else if (this.value > e.value) {
         val = 1;
       }
 
