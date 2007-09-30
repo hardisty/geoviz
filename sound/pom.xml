@@ -5,13 +5,13 @@
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>sound</name>
+    <!-- Inherits only JUnit and 1.5 compilation plugins from parent POM -->
+   <parent>
+    <groupId>edu.psu.geovista</groupId>
+    <artifactId>studio-modules</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
        <groupId>edu.psu.geovista</groupId>
        <artifactId>symbolization</artifactId>
@@ -23,16 +23,4 @@
        <version>${project.version}</version>
     </dependency>   
   </dependencies>
-    <build>
-       <plugins>
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-compiler-plugin</artifactId>
-               <configuration>
-                   <source>1.5</source>
-                   <target>1.5</target>
-               </configuration>
-           </plugin>
-        </plugins>
-</build>
 </project>
