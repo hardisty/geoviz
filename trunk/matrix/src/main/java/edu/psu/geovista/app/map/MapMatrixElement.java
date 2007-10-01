@@ -38,9 +38,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.matrix.MatrixElement;
 import edu.psu.geovista.app.scatterplot.Histogram;
+import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.ui.cursor.GeoCursors;

@@ -32,7 +32,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.app.coordinator.CoordinationUtils;
+import edu.psu.geovista.coordination.CoordinationUtils;
 
 /*
  * this is a set of objects that each bean coordinated in a GeoVizToolkit is

@@ -48,8 +48,8 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;

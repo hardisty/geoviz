@@ -28,8 +28,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.map.GeoMap;
+import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
