@@ -28,8 +28,8 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
-import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.map.GeoMap;
+import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;

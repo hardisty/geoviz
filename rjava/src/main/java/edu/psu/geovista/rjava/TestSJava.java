@@ -10,9 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.map.GeoMap;
 import edu.psu.geovista.app.parvis.gui.ParallelPlot;
+import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.ui.event.DataSetEvent;
 import edu.psu.geovista.ui.event.DataSetListener;

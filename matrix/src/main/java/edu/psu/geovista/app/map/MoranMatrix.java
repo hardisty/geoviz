@@ -33,10 +33,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.app.coordinator.CoordinationManager;
 import edu.psu.geovista.app.scatterplot.SingleScatterPlot;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
+import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.DescriptiveStatistics;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;

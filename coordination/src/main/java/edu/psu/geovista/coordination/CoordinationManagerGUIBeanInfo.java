@@ -1,4 +1,4 @@
-package edu.psu.geovista.app.coordinator;
+package edu.psu.geovista.coordination;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -7,20 +7,17 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 /**
- * Specifies location of icons.
- * 
- * @see CoordinationManager
- * @author Frank Hardisty
+ * Specifies icon locations.
  */
 
-public class CoordinationManagerBeanInfo extends SimpleBeanInfo {
-  static Class beanClass = CoordinationManager.class;
-  static String iconColor16x16Filename = "resources/CoordinationManager16.gif";
-  static String iconColor32x32Filename = "resources/CoordinationManager32.gif";
+public class CoordinationManagerGUIBeanInfo extends SimpleBeanInfo {
+  static Class beanClass = CoordinationManagerGUI.class;
+  static String iconColor16x16Filename = "resources/CoordinationManagerGUI16.gif";
+  static String iconColor32x32Filename = "resources/CoordinationManagerGUI32.gif";
   static String iconMono16x16Filename;
   static String iconMono32x32Filename;
 
-  public CoordinationManagerBeanInfo() {
+  public CoordinationManagerGUIBeanInfo() {
   }
   public PropertyDescriptor[] getPropertyDescriptors() {
     PropertyDescriptor[] pds = new PropertyDescriptor[] { };
