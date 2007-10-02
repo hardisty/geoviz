@@ -1,4 +1,4 @@
-package org.geotools.dbffile;
+package edu.psu.geovista.jts.io.dbffile;
 
 
 /** a utlity class to format numbers into strings.
