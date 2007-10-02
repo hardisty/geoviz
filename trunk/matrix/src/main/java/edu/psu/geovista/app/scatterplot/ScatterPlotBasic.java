@@ -51,10 +51,10 @@ import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.matrix.MatrixElement;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.data.DescriptiveStatistics;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.ui.ExcentricLabelClient;

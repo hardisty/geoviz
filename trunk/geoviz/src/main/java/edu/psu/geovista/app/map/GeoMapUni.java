@@ -42,6 +42,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import edu.psu.geovista.common.classification.ClassifierPicker;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.IndicationEvent;
@@ -52,7 +53,6 @@ import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SpatialExtentEvent;
 import edu.psu.geovista.common.event.SpatialExtentListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.ColorSymbolClassification;

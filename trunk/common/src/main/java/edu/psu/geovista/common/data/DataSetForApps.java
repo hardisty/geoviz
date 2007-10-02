@@ -20,7 +20,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.data.geog;
+package edu.psu.geovista.common.data;
 
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
@@ -50,7 +50,7 @@ import javax.swing.table.TableModel;
  * 
  * Spatial data in the n+1 (or higher) place will be interpreted as follows:
  * java.awt.geom.GeneralPath => SPATIAL_TYPE_POLYGON
- * edu.psu.geovista.data.geog.GeneralPathLine => SPATIAL_TYPE_LINE
+ * edu.psu.geovista.common.data.GeneralPathLine => SPATIAL_TYPE_LINE
  * java.awt.geom.Point2D => SPATIAL_TYPE_POINT Then the spatial data type will
  * be correctly set, and the spatial data will then be accessible through the
  * getShapeData() etc. methods. Spatial data in the n+1 (or higher) place that

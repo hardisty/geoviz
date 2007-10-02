@@ -24,8 +24,8 @@ package edu.psu.geovista.app.matrix;
 
 import javax.swing.JFrame;
 
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 
 /**

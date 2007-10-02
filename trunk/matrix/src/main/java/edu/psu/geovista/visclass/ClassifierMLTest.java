@@ -15,7 +15,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import edu.psu.geovista.app.matrix.UniPlotMatrix;
-import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.common.data.DataSetForApps;
 
 public class ClassifierMLTest {
 

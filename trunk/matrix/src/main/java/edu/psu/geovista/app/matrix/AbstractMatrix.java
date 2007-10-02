@@ -38,6 +38,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionListener;
 
 import edu.psu.geovista.common.classification.Classifier;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ColorArrayEvent;
 import edu.psu.geovista.common.event.ColorArrayListener;
 import edu.psu.geovista.common.event.ConditioningEvent;
@@ -50,7 +51,6 @@ import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.ColorSymbolClassificationSimple;

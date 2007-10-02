@@ -23,7 +23,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.io.geog.ShapeFile;
 import edu.psu.geovista.io.geog.ShapeFileHeader;
 import edu.psu.geovista.io.geog.ShapeFileRecordPolygon;

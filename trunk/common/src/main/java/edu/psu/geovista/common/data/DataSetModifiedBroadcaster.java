@@ -22,7 +22,7 @@
 
 
 
-package edu.psu.geovista.data.geog;
+package edu.psu.geovista.common.data;
 
 
 import java.util.logging.Logger;

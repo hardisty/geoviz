@@ -42,6 +42,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import edu.psu.geovista.app.scatterplot.SingleScatterPlot;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.IndicationEvent;
@@ -54,7 +55,6 @@ import edu.psu.geovista.common.event.SpatialExtentEvent;
 import edu.psu.geovista.common.event.SpatialExtentListener;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.DescriptiveStatistics;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
