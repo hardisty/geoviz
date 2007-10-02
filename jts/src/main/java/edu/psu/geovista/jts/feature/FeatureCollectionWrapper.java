@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.feature;
+package edu.psu.geovista.jts.feature;
 
 import java.util.*;
 

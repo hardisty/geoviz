@@ -35,7 +35,7 @@ package edu.psu.geovista.jts.io;
 
 import org.xml.sax.Attributes;
 
-import com.vividsolutions.jump.feature.AttributeType;
+import edu.psu.geovista.jts.feature.AttributeType;
 
 
 /**

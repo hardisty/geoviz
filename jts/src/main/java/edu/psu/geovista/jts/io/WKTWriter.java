@@ -37,8 +37,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
 
-import com.vividsolutions.jump.feature.Feature;
-import com.vividsolutions.jump.feature.FeatureCollection;
+import edu.psu.geovista.jts.feature.Feature;
+import edu.psu.geovista.jts.feature.FeatureCollection;
 
 
 /**

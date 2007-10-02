@@ -38,7 +38,7 @@
 
 package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.feature.FeatureCollection;
+import edu.psu.geovista.jts.feature.FeatureCollection;
 
 
 /**

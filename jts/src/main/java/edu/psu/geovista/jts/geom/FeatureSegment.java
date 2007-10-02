@@ -35,7 +35,8 @@ package edu.psu.geovista.jts.geom;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jump.feature.Feature;
+
+import edu.psu.geovista.jts.feature.Feature;
 
 import java.util.*;
 /**

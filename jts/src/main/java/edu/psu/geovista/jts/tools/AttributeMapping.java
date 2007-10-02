@@ -36,7 +36,8 @@ package edu.psu.geovista.jts.tools;
 import java.util.*;
 
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jump.feature.*;
+
+import edu.psu.geovista.jts.feature.*;
 
 
 public class AttributeMapping {

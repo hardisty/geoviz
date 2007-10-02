@@ -29,7 +29,7 @@
  * (250)385-6040
  * www.vividsolutions.com
  */
-package com.vividsolutions.jump.feature;
+package edu.psu.geovista.jts.feature;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -43,7 +43,7 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Whether an attribute on a feature is a string, geometry, integer, etc.
  *
- * @see com.vividsolutions.jump.feature.FeatureSchema
+ * @see edu.psu.geovista.jts.feature.FeatureSchema
  */
 public class AttributeType implements Serializable {
     private static final long serialVersionUID = -8443945292593638566L;
