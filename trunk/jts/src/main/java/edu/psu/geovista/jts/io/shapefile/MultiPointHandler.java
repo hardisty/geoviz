@@ -4,7 +4,7 @@
  * Created on July 17, 2002, 4:13 PM
  */
 
-package org.geotools.shapefile;
+package edu.psu.geovista.jts.io.shapefile;
 
 import java.io.IOException;
 
