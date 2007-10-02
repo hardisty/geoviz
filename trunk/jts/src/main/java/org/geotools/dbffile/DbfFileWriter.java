@@ -3,7 +3,6 @@ package org.geotools.dbffile;
 import java.io.*;
 import java.util.*;
 
-import org.geotools.misc.FormatedString;
 
 import edu.psu.geovista.jts.io.EndianDataOutputStream;
 
