@@ -25,7 +25,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JToolBar;
 
 import edu.psu.geovista.app.matrix.MatrixElement;
-import edu.psu.geovista.classification.Classifier;
+import edu.psu.geovista.common.classification.Classifier;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;

@@ -27,7 +27,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;

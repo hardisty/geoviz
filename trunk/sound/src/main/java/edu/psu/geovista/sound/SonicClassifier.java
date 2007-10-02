@@ -41,8 +41,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.classification.Classifier;
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.Classifier;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.color.Pallet;
 import edu.psu.geovista.common.event.PalletEvent;
 import edu.psu.geovista.common.event.PalletListener;

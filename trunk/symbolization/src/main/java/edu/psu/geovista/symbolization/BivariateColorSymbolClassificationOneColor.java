@@ -18,8 +18,8 @@ package edu.psu.geovista.symbolization;
 
 import java.awt.Color;
 
-import edu.psu.geovista.classification.Classifier;
-import edu.psu.geovista.classification.ClassifierEqualIntervals;
+import edu.psu.geovista.common.classification.Classifier;
+import edu.psu.geovista.common.classification.ClassifierEqualIntervals;
 
 public class BivariateColorSymbolClassificationOneColor implements BivariateColorSymbolClassification {
 

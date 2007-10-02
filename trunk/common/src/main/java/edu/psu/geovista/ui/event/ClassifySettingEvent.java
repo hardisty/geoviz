@@ -13,7 +13,7 @@ package edu.psu.geovista.ui.event;
 
 import java.util.EventObject;
 
-import edu.psu.geovista.classification.setting.ClassifySetting;
+import edu.psu.geovista.common.classification.setting.ClassifySetting;
 
 public class ClassifySettingEvent extends EventObject {
      ClassifySetting  setting;

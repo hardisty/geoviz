@@ -30,7 +30,7 @@ import javax.swing.event.EventListenerList;
 import edu.psu.geovista.app.map.MapCanvas;
 import edu.psu.geovista.app.map.MapMatrixElement;
 import edu.psu.geovista.app.scatterplot.ScatterPlot;
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;

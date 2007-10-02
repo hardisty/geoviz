@@ -41,7 +41,7 @@ import javax.swing.JToolBar;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
