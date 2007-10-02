@@ -30,58 +30,19 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.coordsys;
+package edu.psu.geovista.jts.coordsys;
 
-/**
-
- * @author $Author: dkim $
- * @version  $Revision: 1.2 $
- *
- * <pre>
- * $Id: Planar.java,v 1.2 2003/11/05 05:22:17 dkim Exp $
- * $Date: 2003/11/05 05:22:17 $
- *
- * $Log: Planar.java,v $
- * Revision 1.2  2003/11/05 05:22:17  dkim
- * Added global header; cleaned up Javadoc.
- *
- * Revision 1.1  2003/09/15 20:26:11  jaquino
- * Reprojection
- *
- * Revision 1.2  2003/07/25 17:01:04  gkostadinov
- * Moved classses reponsible for performing the basic projection to a new
- * package -- base.
- *
- * Revision 1.1  2003/07/24 23:14:44  gkostadinov
- * adding base projection classes
- *
- * Revision 1.1  2003/06/20 18:34:31  gkostadinov
- * Entering the source code into the CVS.
- *
- * </pre>
- */
+import edu.psu.geovista.jts.util.Blackboard;
 
 /** 
- * A base class for planar coordinate systems.
+ * Utility class.
  */
-public class Planar {
-
-  public double x, y, z;
-
-  public Planar() {
-    x = 0;
-    y = 0;
-    z = 0;
-  }
-
-  public Planar(double _x, double _y) {
-    x = _x;
-    y = _y;
-    z = 0;
-  }
-
-  public String toString() {
-    return x + ", " + y;
-  }
+public class CoordinateSystemSupport {
+    private static final String ENABLED_KEY = CoordinateSystemSupport.class.getName() + " - ENABLED";
+    public static boolean isEnabled(Blackboard blackboard) {
+        return blackboard.get(ENABLED_KEY, false);        
+    }
+    public static void setEnabled(boolean enabled, Blackboard blackboard) {
+        blackboard.put(ENABLED_KEY, enabled);
+    }
 }
-

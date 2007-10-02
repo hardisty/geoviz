@@ -32,7 +32,7 @@
 
 package edu.psu.geovista.jts.coordsys.impl;
 
-import com.vividsolutions.jump.coordsys.*;
+import edu.psu.geovista.jts.coordsys.*;
 
 
 /**

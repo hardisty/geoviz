@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.coordsys;
+package edu.psu.geovista.jts.coordsys;
 
 import java.io.Serializable;
 

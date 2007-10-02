@@ -30,19 +30,51 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.coordsys;
+package edu.psu.geovista.jts.coordsys;
 
-import edu.psu.geovista.jts.util.Blackboard;
+/**
+ *
+ * @author $Author: dkim $
+ * @version  $Revision: 1.2 $
+ *
+ * <pre>
+ *  $Id: Projection.java,v 1.2 2003/11/05 05:23:40 dkim Exp $
+ *  $Date: 2003/11/05 05:23:40 $
+ *
+ *  $Log: Projection.java,v $
+ *  Revision 1.2  2003/11/05 05:23:40  dkim
+ *  Added global header; cleaned up Javadoc.
+ *
+ *  Revision 1.1  2003/09/15 20:26:11  jaquino
+ *  Reprojection
+ *
+ *  Revision 1.2  2003/07/25 17:01:04  gkostadinov
+ *  Moved classses reponsible for performing the basic projection to a new
+ *  package -- base.
+ *
+ *  Revision 1.1  2003/07/24 23:14:44  gkostadinov
+ *  adding base projection classes
+ *
+ *  Revision 1.1  2003/06/20 18:34:31  gkostadinov
+ *  Entering the source code into the CVS.
+ * 
+ * </pre>
+ *
+ */
 
 /** 
- * Utility class.
+ * This is the abstract base class for all projections.
  */
-public class CoordinateSystemSupport {
-    private static final String ENABLED_KEY = CoordinateSystemSupport.class.getName() + " - ENABLED";
-    public static boolean isEnabled(Blackboard blackboard) {
-        return blackboard.get(ENABLED_KEY, false);        
-    }
-    public static void setEnabled(boolean enabled, Blackboard blackboard) {
-        blackboard.put(ENABLED_KEY, enabled);
-    }
+public abstract class Projection {
+
+  protected Spheroid currentSpheroid;
+
+  public void setSpheroid(Spheroid s) {
+    currentSpheroid = s;
+  }
+
+  public abstract Planar asPlanar(Geographic q0, Planar p);
+
+  public abstract Geographic asGeographic(Planar p, Geographic q);
+
 }

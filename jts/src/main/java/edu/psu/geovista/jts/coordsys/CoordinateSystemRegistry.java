@@ -29,7 +29,7 @@
  * (250)385-6040
  * www.vividsolutions.com
  */
-package com.vividsolutions.jump.coordsys;
+package edu.psu.geovista.jts.coordsys;
 
 import java.util.Collection;
 import java.util.Collections;
