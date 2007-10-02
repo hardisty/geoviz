@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.java2D;
+package edu.psu.geovista.jts.java2D;
 
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
