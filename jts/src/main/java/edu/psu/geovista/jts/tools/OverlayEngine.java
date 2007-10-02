@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.tools;
+package edu.psu.geovista.jts.tools;
 
 import java.util.Iterator;
 import java.util.List;
