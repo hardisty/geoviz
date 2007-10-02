@@ -33,7 +33,7 @@
 
 package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.JUMPException;
+import edu.psu.geovista.jts.JUMPException;
 
 
 /**
