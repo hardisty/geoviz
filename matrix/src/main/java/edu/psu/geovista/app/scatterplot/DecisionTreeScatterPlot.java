@@ -42,10 +42,10 @@ import edu.psu.geovista.app.matrix.MatrixElement;
 import edu.psu.geovista.common.classification.BoundaryClassifier;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.ui.ExcentricLabelClient;
+import edu.psu.geovista.common.ui.ExcentricLabels;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import edu.psu.geovista.ui.ExcentricLabelClient;
-import edu.psu.geovista.ui.ExcentricLabels;
 
 /**
  * put your documentation comment here

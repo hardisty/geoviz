@@ -12,7 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-package edu.psu.geovista.ui.panel;
+package edu.psu.geovista.common.ui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

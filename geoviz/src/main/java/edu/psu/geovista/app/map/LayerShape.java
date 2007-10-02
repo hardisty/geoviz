@@ -41,9 +41,9 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.psu.geovista.common.ui.Fisheyes;
 import edu.psu.geovista.symbolization.ColorInterpolator;
 import edu.psu.geovista.symbolization.glyph.Glyph;
-import edu.psu.geovista.ui.Fisheyes;
 
 /**
  * Layer and its subclasses are responsible for rendering spatial data, using

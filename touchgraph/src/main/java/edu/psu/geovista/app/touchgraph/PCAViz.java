@@ -28,8 +28,8 @@ import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
+import edu.psu.geovista.common.ui.VariablePicker;
 import edu.psu.geovista.data.sample.GeoData48States;
-import edu.psu.geovista.ui.VariablePicker;
 
 /**
  * 

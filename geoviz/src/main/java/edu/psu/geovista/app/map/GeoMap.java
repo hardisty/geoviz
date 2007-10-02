@@ -66,6 +66,9 @@ import edu.psu.geovista.common.event.SpatialExtentEvent;
 import edu.psu.geovista.common.event.SpatialExtentListener;
 import edu.psu.geovista.common.event.VariableSelectionEvent;
 import edu.psu.geovista.common.event.VariableSelectionListener;
+import edu.psu.geovista.common.ui.Fisheyes;
+import edu.psu.geovista.common.ui.slider.MultiSlider;
+import edu.psu.geovista.common.ui.slider.RangeSlider;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
@@ -78,10 +81,7 @@ import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 
-import edu.psu.geovista.ui.Fisheyes;
 import edu.psu.geovista.ui.cursor.GeoCursors;
-import edu.psu.geovista.ui.slider.MultiSlider;
-import edu.psu.geovista.ui.slider.RangeSlider;
 import edu.psu.geovista.visclass.VisualClassifier;
 
 /**

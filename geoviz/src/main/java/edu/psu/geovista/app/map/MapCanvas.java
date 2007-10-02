@@ -67,6 +67,9 @@ import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SpatialExtentEvent;
 import edu.psu.geovista.common.event.SpatialExtentListener;
+import edu.psu.geovista.common.ui.ExcentricLabelClient;
+import edu.psu.geovista.common.ui.ExcentricLabels;
+import edu.psu.geovista.common.ui.Fisheyes;
 import edu.psu.geovista.data.condition.ConditionManager;
 import edu.psu.geovista.data.transform.ShapeAffineTransform;
 import edu.psu.geovista.data.transform.ShapeTransformer;
@@ -75,9 +78,6 @@ import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 import edu.psu.geovista.symbolization.glyph.GlyphEvent;
-import edu.psu.geovista.ui.ExcentricLabelClient;
-import edu.psu.geovista.ui.ExcentricLabels;
-import edu.psu.geovista.ui.Fisheyes;
 import edu.psu.geovista.ui.cursor.GeoCursors;
 
 /**

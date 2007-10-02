@@ -55,10 +55,10 @@ import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.ui.ExcentricLabelClient;
+import edu.psu.geovista.common.ui.ExcentricLabels;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import edu.psu.geovista.ui.ExcentricLabelClient;
-import edu.psu.geovista.ui.ExcentricLabels;
 
 public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		MouseListener, MouseMotionListener, MatrixElement,
