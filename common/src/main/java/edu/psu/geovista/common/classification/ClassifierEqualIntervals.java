@@ -16,7 +16,7 @@
 
 package edu.psu.geovista.common.classification;
 
-import edu.psu.geovista.data.DescriptiveStatistics;
+import edu.psu.geovista.common.data.DescriptiveStatistics;
 
 
 public class ClassifierEqualIntervals implements DescribedClassifier, BoundaryClassifier  {

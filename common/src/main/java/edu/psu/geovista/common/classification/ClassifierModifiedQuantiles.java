@@ -11,7 +11,7 @@ package edu.psu.geovista.common.classification;
 
 import java.util.logging.Logger;
 
-import edu.psu.geovista.data.ArraySort2D;
+import edu.psu.geovista.common.data.ArraySort2D;
 
 public class ClassifierModifiedQuantiles implements DescribedClassifier, BoundaryClassifier {
 	protected final static Logger logger = Logger.getLogger(ClassifierModifiedQuantiles.class.getName());

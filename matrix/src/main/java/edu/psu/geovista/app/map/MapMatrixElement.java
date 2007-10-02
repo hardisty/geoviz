@@ -212,8 +212,8 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 		double[] extent = histogram.getXAxisExtents();
 
 		extent = new double[2];
-		extent[0] = edu.psu.geovista.data.DescriptiveStatistics.min(dataX);
-		extent[1] = edu.psu.geovista.data.DescriptiveStatistics.max(dataX);
+		extent[0] = edu.psu.geovista.common.data.DescriptiveStatistics.min(dataX);
+		extent[1] = edu.psu.geovista.common.data.DescriptiveStatistics.max(dataX);
 		this.xAxisExtents = extent;
 
 	}

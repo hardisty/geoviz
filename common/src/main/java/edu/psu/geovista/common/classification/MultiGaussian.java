@@ -12,7 +12,7 @@ package edu.psu.geovista.common.classification;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.data.StatisticsVectors;
+import edu.psu.geovista.common.data.StatisticsVectors;
 
 public class MultiGaussian
 {

@@ -12,7 +12,7 @@ package edu.psu.geovista.common.classification;
 import java.util.Vector;
 
 import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.data.StatisticsVectors;
+import edu.psu.geovista.common.data.StatisticsVectors;
 
 public class ClusterMixtureModels {
 

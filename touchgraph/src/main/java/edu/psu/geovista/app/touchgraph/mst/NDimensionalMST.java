@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.data.DescriptiveStatistics;
+import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.touchgraph.mst.MSTEdge;
 import edu.psu.geovista.touchgraph.mst.MinimumSpanningTree;
 
@@ -478,11 +478,11 @@ public class NDimensionalMST {
 	} // end distance
 
 	public static double[] normalize(double[] data) {
-		double range = edu.psu.geovista.data.DescriptiveStatistics
+		double range = edu.psu.geovista.common.data.DescriptiveStatistics
 				.rangeIgnoreNaN(data);
-		double min = edu.psu.geovista.data.DescriptiveStatistics
+		double min = edu.psu.geovista.common.data.DescriptiveStatistics
 				.minIgnoreNaN(data);
-		double mean = edu.psu.geovista.data.DescriptiveStatistics
+		double mean = edu.psu.geovista.common.data.DescriptiveStatistics
 				.meanIgnoreNaN(data);
 
 		double ratio = 1d / range;
