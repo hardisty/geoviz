@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.geotools.misc.FormatedString;
 
-import com.vividsolutions.jump.io.EndianDataOutputStream;
+import edu.psu.geovista.jts.io.EndianDataOutputStream;
 
 
 

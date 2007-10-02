@@ -5,7 +5,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Vector;
 
-import com.vividsolutions.jump.io.EndianDataInputStream;
+import edu.psu.geovista.jts.io.EndianDataInputStream;
 
 /**
  *

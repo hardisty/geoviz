@@ -1,4 +1,4 @@
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
 
 import com.vividsolutions.jts.geom.*;
 

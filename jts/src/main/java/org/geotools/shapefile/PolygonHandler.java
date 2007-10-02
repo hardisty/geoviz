@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import com.vividsolutions.jts.algorithm.CGAlgorithms;
 import com.vividsolutions.jts.algorithm.RobustCGAlgorithms;
 import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jump.io.EndianDataInputStream;
-import com.vividsolutions.jump.io.EndianDataOutputStream;
+
+import edu.psu.geovista.jts.io.EndianDataInputStream;
+import edu.psu.geovista.jts.io.EndianDataOutputStream;
 
 /**
  * Wrapper for a Shapefile polygon.

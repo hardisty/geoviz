@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-import com.vividsolutions.jump.io.EndianDataInputStream;
+import edu.psu.geovista.jts.io.EndianDataInputStream;
 
 
 /**

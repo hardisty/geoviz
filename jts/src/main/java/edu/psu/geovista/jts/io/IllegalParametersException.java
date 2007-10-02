@@ -1,8 +1,8 @@
 
 /*
- * JUMPReader.java
+ * IllegleParametersException.java
  *
- * Created on June 3, 2002, 1:53 PM
+ * Created on June 3, 2002, 1:55 PM
  */
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
@@ -36,20 +36,24 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.feature.FeatureCollection;
 
 /**
- * Interface for JUMPReader classes. Note: This is the old I/O API. Developers
- * writing new I/O classes are encouraged to use the new API
- * (com.vividsolutions.jump.io.datasource).
+ * Simple class to report missing/bad {@link DriverProperties} problems.
  */
-public interface JUMPReader {
-    
-	/**
-	 * Read the specified file using the filename given by the "File" property
-	 * and any other parameters.
-	 */
-    FeatureCollection read(DriverProperties dp) throws Exception;
+public class IllegalParametersException extends java.lang.Exception {
+    /**
+     * Creates new <code>IllegleParametersException</code> without detail message.
+     */
+    public IllegalParametersException() {
+    }
+
+    /**
+     * Constructs an <code>IllegleParametersException</code> with the specified detail message.
+     * @param msg the detail message.
+     */
+    public IllegalParametersException(String msg) {
+        super(msg);
+    }
 }

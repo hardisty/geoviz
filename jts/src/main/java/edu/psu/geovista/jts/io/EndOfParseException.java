@@ -1,8 +1,8 @@
 
 /*
- * JUMPWriter.java
+ * EndOfParseException.java
  *
- * Created on June 4, 2002, 10:59 AM
+ * Created on June 3, 2002, 11:38 AM
  */
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
@@ -36,20 +36,27 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.feature.FeatureCollection;
+import org.xml.sax.SAXException;
 
 
 /**
- * Interface for JUMPWriter classes. Note: This is the old I/O API. Developers writing new
- * I/O classes are encouraged to use the new API (com.vividsolutions.jump.io.datasource).
- */
-public interface JUMPWriter {
+ * This is a fake exception class so the {@link GMLReader} can abort a read mid-stream via the standard SAX error handing methods.
+*/
+public class EndOfParseException extends SAXException {
     /**
-    *  Write the specified file (dp property 'OutputFile' or 'DefaultValue') with any other
-    *  specific parameters.
-    */
-    void write(FeatureCollection featureCollection, DriverProperties dp)
-        throws IllegalParametersException, Exception;
+     * Creates new <code>EndOfParseException</code> without detail message.
+     */
+    public EndOfParseException() {
+        super(""); // for some unknown reason, there is no zero parameter constructor (java doc says there is)
+    }
+
+    /**
+     * Constructs an <code>EndOfParseException</code> with the specified detail message.
+     * @param msg the detail message.
+     */
+    public EndOfParseException(String msg) {
+        super(msg);
+    }
 }
