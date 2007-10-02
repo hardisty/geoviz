@@ -30,11 +30,11 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.psu.geovista.common.event.ConditioningEvent;
+import edu.psu.geovista.common.event.ConditioningListener;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.ui.event.ConditioningEvent;
-import edu.psu.geovista.ui.event.ConditioningListener;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
 
 public class ConditionManager extends JPanel implements ChangeListener, ListSelectionListener,
 		DataSetListener{

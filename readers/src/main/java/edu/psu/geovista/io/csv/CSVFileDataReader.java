@@ -24,9 +24,9 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
 
 public class CSVFileDataReader {
 

@@ -39,11 +39,11 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.io.FileIO;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
 
 /**
  * ConditioningAnimator is used to send out indication signals that corrispond

@@ -54,6 +54,12 @@ import javax.swing.event.TableModelListener;
 import edu.psu.geovista.common.classification.Classifier;
 import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.color.Palette;
+import edu.psu.geovista.common.event.ColorArrayEvent;
+import edu.psu.geovista.common.event.ColorArrayListener;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
+import edu.psu.geovista.common.event.DataSetModifiedEvent;
+import edu.psu.geovista.common.event.DataSetModifiedListener;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
@@ -64,12 +70,6 @@ import edu.psu.geovista.symbolization.ColorSymbolizer;
 import edu.psu.geovista.symbolization.ColorSymbolizerLinear;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
-import edu.psu.geovista.ui.event.ColorArrayEvent;
-import edu.psu.geovista.ui.event.ColorArrayListener;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.DataSetModifiedEvent;
-import edu.psu.geovista.ui.event.DataSetModifiedListener;
 
 // import javax.swing.colorchooser.*;
 

@@ -6,9 +6,9 @@ import java.util.Vector;
 
 import javax.swing.JToolBar;
 
+import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
-import edu.psu.geovista.ui.event.IndicationListener;
 
 public interface MatrixElement {
 

@@ -37,17 +37,17 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.common.classification.ClassifierPicker;
+import edu.psu.geovista.common.event.ClassificationEvent;
+import edu.psu.geovista.common.event.ClassificationListener;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
+import edu.psu.geovista.common.event.DimensionEvent;
+import edu.psu.geovista.common.event.DimensionListener;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.event.SubspaceEvent;
+import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.ui.event.ClassificationEvent;
-import edu.psu.geovista.ui.event.ClassificationListener;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.DimensionEvent;
-import edu.psu.geovista.ui.event.DimensionListener;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.IndicationListener;
-import edu.psu.geovista.ui.event.SubspaceEvent;
-import edu.psu.geovista.ui.event.SubspaceListener;
 
 /**
  * IndicationAnimator is used to send out indication signals that

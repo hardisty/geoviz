@@ -36,10 +36,10 @@ import javax.swing.JProgressBar;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.map.GeoMapUni;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoDataGeneralizedStates;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
 
 
 

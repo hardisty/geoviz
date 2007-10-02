@@ -53,18 +53,18 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import edu.psu.geovista.colorbrewer.OriginalColor;
+import edu.psu.geovista.common.event.ClassificationResultEvent;
+import edu.psu.geovista.common.event.ClassificationResultListener;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SelectionListener;
+import edu.psu.geovista.common.event.SubspaceEvent;
+import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.io.csv.CSVFileDataReader;
-import edu.psu.geovista.ui.event.ClassificationResultEvent;
-import edu.psu.geovista.ui.event.ClassificationResultListener;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.IndicationListener;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
-import edu.psu.geovista.ui.event.SubspaceEvent;
-import edu.psu.geovista.ui.event.SubspaceListener;
 
 
 /**

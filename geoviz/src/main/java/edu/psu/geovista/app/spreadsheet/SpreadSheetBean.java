@@ -42,12 +42,12 @@ import edu.psu.geovista.app.spreadsheet.table.SSTableModel;
 import edu.psu.geovista.app.spreadsheet.tools.ToolManager;
 import edu.psu.geovista.app.spreadsheet.util.ColumnSelector;
 import edu.psu.geovista.app.spreadsheet.util.Debug;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.geoviz.descriptive.DescriptiveStats;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
 
 public class SpreadSheetBean extends JPanel
                              implements java.io.Serializable,ChangeListener,

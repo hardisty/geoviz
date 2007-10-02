@@ -44,15 +44,15 @@ import javax.swing.event.EventListenerList;
 import edu.psu.geovista.common.classification.Classifier;
 import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.color.Pallet;
+import edu.psu.geovista.common.event.ColorArrayEvent;
+import edu.psu.geovista.common.event.ColorArrayListener;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.PalletEvent;
 import edu.psu.geovista.common.event.PalletListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.ui.event.ColorArrayEvent;
-import edu.psu.geovista.ui.event.ColorArrayListener;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.IndicationListener;
 
 
 public class SonicClassifier extends JPanel implements ActionListener, ComponentListener,

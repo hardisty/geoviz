@@ -27,12 +27,12 @@ import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.map.Projection;
 import edu.psu.geovista.app.map.ProjectionEquidistantConic;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.geog.GeneralPathLine;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.sample.GeoDataWestCoast;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
 
 /**
  * This class, when passed a ShapeFile, will project it using it's current

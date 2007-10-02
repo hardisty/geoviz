@@ -29,13 +29,13 @@ import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
 import edu.psu.geovista.app.map.GeoMap;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.data.shapefile.ShapeFileToShape;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SubspaceEvent;
 
 /**
  * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n =
