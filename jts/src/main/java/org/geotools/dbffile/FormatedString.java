@@ -1,4 +1,4 @@
-package org.geotools.misc;
+package org.geotools.dbffile;
 
 
 /** a utlity class to format numbers into strings.
