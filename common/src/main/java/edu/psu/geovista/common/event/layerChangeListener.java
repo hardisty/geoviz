@@ -14,7 +14,7 @@
 *
  ------------------------------------------------------------------------------*/
 
-package edu.psu.geovista.app.map;
+package edu.psu.geovista.common.event;
 
 import java.util.EventListener;
 
