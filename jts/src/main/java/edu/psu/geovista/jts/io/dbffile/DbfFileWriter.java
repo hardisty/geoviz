@@ -1,4 +1,4 @@
-package org.geotools.dbffile;
+package edu.psu.geovista.jts.io.dbffile;
 
 import java.io.*;
 import java.util.*;
