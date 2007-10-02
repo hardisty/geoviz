@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import edu.psu.geovista.ui.slider.MultiSlider;
+import edu.psu.geovista.common.ui.slider.MultiSlider;
 
 /**
  * <p>Title: </p>

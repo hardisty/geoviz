@@ -31,7 +31,7 @@ import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
-import edu.psu.geovista.ui.ExcentricLabelClient;
+import edu.psu.geovista.common.ui.ExcentricLabelClient;
 
 
 /**

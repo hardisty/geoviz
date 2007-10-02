@@ -24,7 +24,7 @@
 /* --------------------------- Package ---------------------------- */
 
 
-package	edu.psu.geovista.ui.slider;
+package	edu.psu.geovista.common.ui.slider;
 
 
 /* ------------------------- Import files ------------------------- */

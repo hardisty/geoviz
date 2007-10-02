@@ -13,7 +13,7 @@
 
  */
 
-package edu.psu.geovista.data.smoother;
+package edu.psu.geovista.common.data;
 
 import javax.swing.JDialog;
 /**

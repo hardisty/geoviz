@@ -22,7 +22,7 @@
 
 package edu.psu.geovista.visclass;
 
-// import edu.psu.geovista.ui.panel.*;
+// import edu.psu.geovista.common.ui.panel.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;

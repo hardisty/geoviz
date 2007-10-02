@@ -67,7 +67,7 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 		this.setBorder(BorderFactory.createLineBorder(Color.gray));
 
 		// super.exLabels = null;
-		// super.fisheyes = new edu.psu.geovista.ui.Fisheyes();
+		// super.fisheyes = new edu.psu.geovista.common.ui.Fisheyes();
 		super.setMode(MapCanvas.MODE_SELECT);
 	}
 
