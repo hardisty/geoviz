@@ -40,7 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.geotools.shapefile.Shapefile;
 
 import com.vividsolutions.jts.algorithm.CGAlgorithms;
 import com.vividsolutions.jts.algorithm.RobustCGAlgorithms;
@@ -63,6 +62,7 @@ import edu.psu.geovista.jts.feature.FeatureSchema;
 import edu.psu.geovista.jts.io.dbffile.DbfFieldDef;
 import edu.psu.geovista.jts.io.dbffile.DbfFile;
 import edu.psu.geovista.jts.io.dbffile.DbfFileWriter;
+import edu.psu.geovista.jts.io.shapefile.Shapefile;
 
 
 /**

@@ -1,4 +1,4 @@
-package org.geotools.shapefile;
+package edu.psu.geovista.jts.io.shapefile;
 
 import java.io.IOException;
 import java.lang.reflect.Array;

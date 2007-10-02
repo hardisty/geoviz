@@ -1,4 +1,4 @@
-package org.geotools.shapefile;
+package edu.psu.geovista.jts.io.shapefile;
 
 /**
  * Thrown when an attempt is made to load a shapefile

@@ -40,7 +40,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.geotools.shapefile.Shapefile;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
@@ -53,6 +52,7 @@ import edu.psu.geovista.jts.feature.FeatureCollection;
 import edu.psu.geovista.jts.feature.FeatureDataset;
 import edu.psu.geovista.jts.feature.FeatureSchema;
 import edu.psu.geovista.jts.io.dbffile.DbfFile;
+import edu.psu.geovista.jts.io.shapefile.Shapefile;
 
 /**
  * ShapefileReader is a {@link JUMPReader} specialized to read Shapefiles.

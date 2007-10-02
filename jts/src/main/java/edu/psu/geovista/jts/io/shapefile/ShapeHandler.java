@@ -1,4 +1,4 @@
-package org.geotools.shapefile;
+package edu.psu.geovista.jts.io.shapefile;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
