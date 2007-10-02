@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.task;
+package edu.psu.geovista.jts.task;
 
 
 /**

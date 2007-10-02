@@ -29,7 +29,7 @@
  * (250)385-6040
  * www.vividsolutions.com
  */
-package com.vividsolutions.jump.task;
+package edu.psu.geovista.jts.task;
 
 public class TaskMonitorFilter extends DummyTaskMonitor {
     public TaskMonitorFilter(TaskMonitor taskMonitor) {

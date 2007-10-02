@@ -39,7 +39,8 @@ import java.util.List;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.precision.EnhancedPrecisionOp;
 import com.vividsolutions.jump.feature.*;
-import com.vividsolutions.jump.task.TaskMonitor;
+
+import edu.psu.geovista.jts.task.TaskMonitor;
 
 
 /**
