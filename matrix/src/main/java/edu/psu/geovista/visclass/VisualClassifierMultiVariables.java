@@ -39,11 +39,11 @@ import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.category.ErrorMatrixPane;
-import edu.psu.geovista.classification.Classifier;
-import edu.psu.geovista.classification.ClassifierKMParameters;
-import edu.psu.geovista.classification.ClassifierKMeans;
-import edu.psu.geovista.classification.ClassifierMLParameters;
-import edu.psu.geovista.classification.ClusterMixtureModels;
+import edu.psu.geovista.common.classification.Classifier;
+import edu.psu.geovista.common.classification.ClassifierKMParameters;
+import edu.psu.geovista.common.classification.ClassifierKMeans;
+import edu.psu.geovista.common.classification.ClassifierMLParameters;
+import edu.psu.geovista.common.classification.ClusterMixtureModels;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.geog.TrainingData;
 import edu.psu.geovista.io.util.MyFileFilter;

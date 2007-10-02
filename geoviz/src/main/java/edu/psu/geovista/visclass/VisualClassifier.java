@@ -51,8 +51,8 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.classification.Classifier;
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.Classifier;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.color.Palette;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;

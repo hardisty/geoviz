@@ -37,7 +37,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.ui.event.ClassificationEvent;
 import edu.psu.geovista.ui.event.ClassificationListener;

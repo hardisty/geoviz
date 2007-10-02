@@ -37,7 +37,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.classification.Classifier;
+import edu.psu.geovista.common.classification.Classifier;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;

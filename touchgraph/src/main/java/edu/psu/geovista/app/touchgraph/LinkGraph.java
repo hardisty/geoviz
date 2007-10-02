@@ -89,7 +89,7 @@ import edu.psu.geovista.app.touchgraph.interaction.RotateScroll;
 import edu.psu.geovista.app.touchgraph.interaction.TGUIManager;
 import edu.psu.geovista.app.touchgraph.interaction.ZoomScroll;
 import edu.psu.geovista.app.touchgraph.mst.NDimensionalMST;
-import edu.psu.geovista.classification.ClassifierPicker;
+import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
