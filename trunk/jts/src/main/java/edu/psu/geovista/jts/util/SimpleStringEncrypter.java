@@ -1,4 +1,4 @@
-package com.vividsolutions.jump.util;
+package edu.psu.geovista.jts.util;
 
 /**
  * Provides a simple encyrption/decryption mechanism for ASCII string values.

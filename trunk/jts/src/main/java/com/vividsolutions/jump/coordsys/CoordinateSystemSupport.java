@@ -32,7 +32,7 @@
 
 package com.vividsolutions.jump.coordsys;
 
-import com.vividsolutions.jump.util.Blackboard;
+import edu.psu.geovista.jts.util.Blackboard;
 
 /** 
  * Utility class.

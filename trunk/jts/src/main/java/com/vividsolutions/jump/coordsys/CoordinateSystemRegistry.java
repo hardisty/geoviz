@@ -36,7 +36,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import com.vividsolutions.jump.coordsys.impl.PredefinedCoordinateSystems;
-import com.vividsolutions.jump.util.Blackboard;
+
+import edu.psu.geovista.jts.util.Blackboard;
 
 /**
  * Implements a registry for {@link CoordinateSystem}s.

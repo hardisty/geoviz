@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.util;
+package edu.psu.geovista.jts.util;
 
 import java.io.Serializable;
 import java.util.HashMap;
