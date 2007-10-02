@@ -31,48 +31,23 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.task;
-
-import java.io.PrintStream;
-
-import edu.psu.geovista.jts.util.StringUtil;
+package edu.psu.geovista.jts.task;
 
 
 /**
- * A TaskMonitor that reports its output to a PrintStream.
- * User can control the level of output reported, as well as whether timing
- * information is logged as well.
+ * Implementation of TaskMonitor that does nothing.
+ * Can be used for Tasks that do not need to report on their status
+ * (for instance, tasks run only in batch mode).
  */
-public class PrintStreamTaskMonitor implements TaskMonitor {
-    private PrintStream stream;
-    boolean isLoggingSubtasks = false;
-
-    public PrintStreamTaskMonitor(PrintStream stream) {
-        this.stream = stream;
-    }
-
-    public PrintStreamTaskMonitor() {
-        stream = System.out;
-    }
-
-    public void setLoggingSubtasks(boolean isLoggingSubtasks) {
-        this.isLoggingSubtasks = isLoggingSubtasks;
+public class DummyTaskMonitor implements TaskMonitor {
+    public DummyTaskMonitor() {
     }
 
     public void report(String description) {
-        stream.println(description);
-    }
-
-    public void report(Exception exception) {
-        stream.println(StringUtil.stackTrace(exception));
     }
 
     public void report(int subtasksDone, int totalSubtasks,
         String subtaskDescription) {
-        if (isLoggingSubtasks) {
-            stream.println(subtasksDone + " / " + totalSubtasks + " " +
-                subtaskDescription);
-        }
     }
 
     public void allowCancellationRequests() {
@@ -80,5 +55,8 @@ public class PrintStreamTaskMonitor implements TaskMonitor {
 
     public boolean isCancelRequested() {
         return false;
+    }
+
+    public void report(Exception exception) {
     }
 }
