@@ -38,10 +38,11 @@ import java.util.Date;
 import java.util.Iterator;
 
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jump.feature.AttributeType;
-import com.vividsolutions.jump.feature.Feature;
-import com.vividsolutions.jump.feature.FeatureCollection;
-import com.vividsolutions.jump.feature.FeatureSchema;
+
+import edu.psu.geovista.jts.feature.AttributeType;
+import edu.psu.geovista.jts.feature.Feature;
+import edu.psu.geovista.jts.feature.FeatureCollection;
+import edu.psu.geovista.jts.feature.FeatureSchema;
 
 
 /**

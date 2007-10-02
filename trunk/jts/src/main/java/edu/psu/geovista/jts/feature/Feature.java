@@ -29,7 +29,7 @@
  * (250)385-6040
  * www.vividsolutions.com
  */
-package com.vividsolutions.jump.feature;
+package edu.psu.geovista.jts.feature;
 
 import com.vividsolutions.jts.geom.Geometry;
 

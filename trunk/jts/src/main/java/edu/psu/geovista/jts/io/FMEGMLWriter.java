@@ -39,7 +39,7 @@ package edu.psu.geovista.jts.io;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.vividsolutions.jump.feature.*;
+import edu.psu.geovista.jts.feature.*;
 
 
 /**

@@ -1,6 +1,6 @@
 package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.feature.*;
+import edu.psu.geovista.jts.feature.*;
 
 /**
  * Base class for FeatureInputStreamReaders.

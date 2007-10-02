@@ -1,6 +1,6 @@
 package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.feature.*;
+import edu.psu.geovista.jts.feature.*;
 
 /**
  * A stream of features from an external source, which

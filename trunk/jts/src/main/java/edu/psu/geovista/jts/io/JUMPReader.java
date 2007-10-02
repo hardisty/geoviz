@@ -38,7 +38,7 @@
 
 package edu.psu.geovista.jts.io;
 
-import com.vividsolutions.jump.feature.FeatureCollection;
+import edu.psu.geovista.jts.feature.FeatureCollection;
 
 /**
  * Interface for JUMPReader classes. Note: This is the old I/O API. Developers

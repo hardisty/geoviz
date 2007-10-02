@@ -37,7 +37,8 @@ import java.io.*;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jump.feature.*;
+
+import edu.psu.geovista.jts.feature.*;
 
 
 /**

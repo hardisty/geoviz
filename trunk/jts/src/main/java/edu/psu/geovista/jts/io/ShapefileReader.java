@@ -46,12 +46,13 @@ import org.geotools.shapefile.Shapefile;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jump.feature.AttributeType;
-import com.vividsolutions.jump.feature.BasicFeature;
-import com.vividsolutions.jump.feature.Feature;
-import com.vividsolutions.jump.feature.FeatureCollection;
-import com.vividsolutions.jump.feature.FeatureDataset;
-import com.vividsolutions.jump.feature.FeatureSchema;
+
+import edu.psu.geovista.jts.feature.AttributeType;
+import edu.psu.geovista.jts.feature.BasicFeature;
+import edu.psu.geovista.jts.feature.Feature;
+import edu.psu.geovista.jts.feature.FeatureCollection;
+import edu.psu.geovista.jts.feature.FeatureDataset;
+import edu.psu.geovista.jts.feature.FeatureSchema;
 
 /**
  * ShapefileReader is a {@link JUMPReader} specialized to read Shapefiles.
