@@ -46,8 +46,9 @@ import java.util.Iterator;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jump.geom.CoordUtil;
-import com.vividsolutions.jump.geom.EnvelopeUtil;
+
+import edu.psu.geovista.jts.geom.CoordUtil;
+import edu.psu.geovista.jts.geom.EnvelopeUtil;
 
 /**
  * Controls the area on the model being viewed by a LayerViewPanel.

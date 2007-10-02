@@ -33,7 +33,7 @@
  *     (250)385-6040
  *     www.vividsolutions.com
  */
-package com.vividsolutions.jump.geom;
+package edu.psu.geovista.jts.geom;
 
 /**
  * Indicates that a {@link HCoordinate} has been computed which is
