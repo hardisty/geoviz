@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.coordsys.impl;
+package edu.psu.geovista.jts.coordsys.impl;
 
 import com.vividsolutions.jts.util.Assert;
 import com.vividsolutions.jump.coordsys.*;

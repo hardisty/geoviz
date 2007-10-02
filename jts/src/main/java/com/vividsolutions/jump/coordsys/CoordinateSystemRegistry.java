@@ -35,8 +35,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-import com.vividsolutions.jump.coordsys.impl.PredefinedCoordinateSystems;
 
+import edu.psu.geovista.jts.coordsys.impl.PredefinedCoordinateSystems;
 import edu.psu.geovista.jts.util.Blackboard;
 
 /**

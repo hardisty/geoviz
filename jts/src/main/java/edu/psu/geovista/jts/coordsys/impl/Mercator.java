@@ -31,7 +31,7 @@
  */
 
 
-package com.vividsolutions.jump.coordsys.impl;
+package edu.psu.geovista.jts.coordsys.impl;
 
 import com.vividsolutions.jump.coordsys.*;
 import com.vividsolutions.jump.coordsys.Geographic;
