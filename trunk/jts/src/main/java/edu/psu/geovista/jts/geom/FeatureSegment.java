@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.geom;
+package edu.psu.geovista.jts.geom;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;

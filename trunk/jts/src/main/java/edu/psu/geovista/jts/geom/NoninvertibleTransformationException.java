@@ -1,4 +1,4 @@
-package com.vividsolutions.jump.geom;
+package edu.psu.geovista.jts.geom;
 
 /**
  * Indicates that an {@link AffineTransformation}

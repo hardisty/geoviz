@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.geom;
+package edu.psu.geovista.jts.geom;
 
 import java.awt.geom.Point2D;
 import java.util.Collection;
