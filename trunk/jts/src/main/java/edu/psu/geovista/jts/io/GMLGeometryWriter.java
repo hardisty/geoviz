@@ -29,7 +29,7 @@
  * (250)385-6040
  * www.vividsolutions.com
  */
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
 
 import java.io.IOException;
 import java.io.Writer;

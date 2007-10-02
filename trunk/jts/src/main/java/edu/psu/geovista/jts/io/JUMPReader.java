@@ -1,8 +1,8 @@
 
 /*
- * EndOfParseException.java
+ * JUMPReader.java
  *
- * Created on June 3, 2002, 11:38 AM
+ * Created on June 3, 2002, 1:53 PM
  */
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
@@ -36,27 +36,20 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
 
-import org.xml.sax.SAXException;
-
+import com.vividsolutions.jump.feature.FeatureCollection;
 
 /**
- * This is a fake exception class so the {@link GMLReader} can abort a read mid-stream via the standard SAX error handing methods.
-*/
-public class EndOfParseException extends SAXException {
-    /**
-     * Creates new <code>EndOfParseException</code> without detail message.
-     */
-    public EndOfParseException() {
-        super(""); // for some unknown reason, there is no zero parameter constructor (java doc says there is)
-    }
-
-    /**
-     * Constructs an <code>EndOfParseException</code> with the specified detail message.
-     * @param msg the detail message.
-     */
-    public EndOfParseException(String msg) {
-        super(msg);
-    }
+ * Interface for JUMPReader classes. Note: This is the old I/O API. Developers
+ * writing new I/O classes are encouraged to use the new API
+ * (com.vividsolutions.jump.io.datasource).
+ */
+public interface JUMPReader {
+    
+	/**
+	 * Read the specified file using the filename given by the "File" property
+	 * and any other parameters.
+	 */
+    FeatureCollection read(DriverProperties dp) throws Exception;
 }

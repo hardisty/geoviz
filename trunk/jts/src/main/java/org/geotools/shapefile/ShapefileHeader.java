@@ -10,8 +10,9 @@ import java.io.IOException;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jump.io.EndianDataInputStream;
-import com.vividsolutions.jump.io.EndianDataOutputStream;
+
+import edu.psu.geovista.jts.io.EndianDataInputStream;
+import edu.psu.geovista.jts.io.EndianDataOutputStream;
 
 /**
  *

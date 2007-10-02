@@ -1,8 +1,8 @@
 
 /*
- * IllegleParametersException.java
+ * JUMPWriter.java
  *
- * Created on June 3, 2002, 1:55 PM
+ * Created on June 4, 2002, 10:59 AM
  */
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
@@ -36,24 +36,20 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
+
+import com.vividsolutions.jump.feature.FeatureCollection;
 
 
 /**
- * Simple class to report missing/bad {@link DriverProperties} problems.
+ * Interface for JUMPWriter classes. Note: This is the old I/O API. Developers writing new
+ * I/O classes are encouraged to use the new API (com.vividsolutions.jump.io.datasource).
  */
-public class IllegalParametersException extends java.lang.Exception {
+public interface JUMPWriter {
     /**
-     * Creates new <code>IllegleParametersException</code> without detail message.
-     */
-    public IllegalParametersException() {
-    }
-
-    /**
-     * Constructs an <code>IllegleParametersException</code> with the specified detail message.
-     * @param msg the detail message.
-     */
-    public IllegalParametersException(String msg) {
-        super(msg);
-    }
+    *  Write the specified file (dp property 'OutputFile' or 'DefaultValue') with any other
+    *  specific parameters.
+    */
+    void write(FeatureCollection featureCollection, DriverProperties dp)
+        throws IllegalParametersException, Exception;
 }

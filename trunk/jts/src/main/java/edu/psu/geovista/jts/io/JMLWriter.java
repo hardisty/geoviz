@@ -36,7 +36,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.io;
+package edu.psu.geovista.jts.io;
 
 import com.vividsolutions.jump.feature.FeatureCollection;
 
