@@ -17,15 +17,15 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.touchgraph.graphelements.VisibleLocality;
+import edu.psu.geovista.common.event.ColorArrayEvent;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SubspaceEvent;
+import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.data.DescriptiveStatistics;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.symbolization.ColorInterpolator;
-import edu.psu.geovista.ui.event.ColorArrayEvent;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SubspaceEvent;
-import edu.psu.geovista.ui.event.SubspaceListener;
 
 
 /** GLPanel contains code for adding scrollbars and interfaces to the TGPanel

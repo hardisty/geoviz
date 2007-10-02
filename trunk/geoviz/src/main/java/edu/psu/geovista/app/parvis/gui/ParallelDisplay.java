@@ -27,11 +27,11 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.parvis.model.ParallelSpaceModel;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.ui.ExcentricLabelClient;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.IndicationListener;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
 
 
 /**

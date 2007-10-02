@@ -70,6 +70,8 @@ import edu.psu.geovista.app.touchgraph.LinkGraph;
 import edu.psu.geovista.app.touchgraph.PCAViz;
 import edu.psu.geovista.app.touchgraph.SubspaceLinkGraph;
 import edu.psu.geovista.cartogram.GeoMapCartogram;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.coordination.CoordinationUtils;
 import edu.psu.geovista.coordination.FiringBean;
@@ -89,8 +91,6 @@ import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolinaCities;
 import edu.psu.geovista.ui.VariablePicker;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.

@@ -29,16 +29,16 @@ import java.util.logging.Level;
 import javax.swing.JPanel;
 
 import edu.psu.geovista.app.map.GeoMap;
+import edu.psu.geovista.common.event.ColorArrayEvent;
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetModifiedEvent;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.SubspaceEvent;
+import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 import edu.psu.geovista.symbolization.glyph.GlyphEvent;
 import edu.psu.geovista.symbolization.glyph.GlyphListener;
-import edu.psu.geovista.ui.event.ColorArrayEvent;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetModifiedEvent;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.SubspaceEvent;
-import edu.psu.geovista.ui.event.SubspaceListener;
 import edu.psu.geovista.visclass.VisualClassifier;
 
 /**

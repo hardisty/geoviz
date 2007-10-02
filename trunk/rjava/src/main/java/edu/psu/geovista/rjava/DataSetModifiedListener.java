@@ -26,7 +26,7 @@ package edu.psu.geovista.rjava;
 
 import java.util.EventListener;
 
-import edu.psu.geovista.ui.event.DataSetModifiedEvent;
+import edu.psu.geovista.common.event.DataSetModifiedEvent;
 
 
 /**

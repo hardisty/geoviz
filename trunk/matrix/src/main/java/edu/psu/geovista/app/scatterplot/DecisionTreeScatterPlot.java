@@ -40,12 +40,12 @@ import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.matrix.MatrixElement;
 import edu.psu.geovista.common.classification.BoundaryClassifier;
+import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.ui.ExcentricLabelClient;
 import edu.psu.geovista.ui.ExcentricLabels;
-import edu.psu.geovista.ui.event.IndicationListener;
 
 /**
  * put your documentation comment here

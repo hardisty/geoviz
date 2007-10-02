@@ -39,10 +39,10 @@ import edu.psu.geovista.common.color.BivariatePalette;
 import edu.psu.geovista.common.color.Palette;
 import edu.psu.geovista.common.event.BivariatePaletteEvent;
 import edu.psu.geovista.common.event.BivariatePaletteListener;
+import edu.psu.geovista.common.event.ClassNumberEvent;
+import edu.psu.geovista.common.event.ClassNumberListener;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
-import edu.psu.geovista.ui.event.ClassNumberEvent;
-import edu.psu.geovista.ui.event.ClassNumberListener;
 
 /**
  GeoVISTA Center (Penn State, Dept. of Geography)

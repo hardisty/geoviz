@@ -72,10 +72,10 @@ import edu.psu.geovista.app.touchgraph.graphelements.TGForEachNode;
 import edu.psu.geovista.app.touchgraph.graphelements.VisibleLocality;
 import edu.psu.geovista.app.touchgraph.interaction.GLEditUI;
 import edu.psu.geovista.app.touchgraph.interaction.TGAbstractClickUI;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.IndicationListener;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SelectionListener;
 
 /** TGPanel contains code for drawing the graph, and storing which nodes
   * are selected, and which ones the mouse is over.

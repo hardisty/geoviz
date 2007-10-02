@@ -60,12 +60,12 @@ import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
 import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
 
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
-import edu.psu.geovista.ui.event.SpatialExtentEvent;
-import edu.psu.geovista.ui.event.SpatialExtentListener;
-import edu.psu.geovista.ui.event.SubspaceEvent;
-import edu.psu.geovista.ui.event.SubspaceListener;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SelectionListener;
+import edu.psu.geovista.common.event.SpatialExtentEvent;
+import edu.psu.geovista.common.event.SpatialExtentListener;
+import edu.psu.geovista.common.event.SubspaceEvent;
+import edu.psu.geovista.common.event.SubspaceListener;
 
 public class  GeoJabber extends JPanel implements SelectionListener,
 		SpatialExtentListener, SubspaceListener, ActionListener,

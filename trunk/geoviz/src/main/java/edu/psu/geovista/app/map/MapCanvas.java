@@ -58,6 +58,14 @@ import javax.swing.event.EventListenerList;
 
 import com.jhlabs.image.BoxBlurFilter;
 
+import edu.psu.geovista.common.event.DataSetEvent;
+import edu.psu.geovista.common.event.DataSetListener;
+import edu.psu.geovista.common.event.IndicationEvent;
+import edu.psu.geovista.common.event.IndicationListener;
+import edu.psu.geovista.common.event.SelectionEvent;
+import edu.psu.geovista.common.event.SelectionListener;
+import edu.psu.geovista.common.event.SpatialExtentEvent;
+import edu.psu.geovista.common.event.SpatialExtentListener;
 import edu.psu.geovista.data.condition.ConditionManager;
 import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.transform.ShapeAffineTransform;
@@ -71,14 +79,6 @@ import edu.psu.geovista.ui.ExcentricLabelClient;
 import edu.psu.geovista.ui.ExcentricLabels;
 import edu.psu.geovista.ui.Fisheyes;
 import edu.psu.geovista.ui.cursor.GeoCursors;
-import edu.psu.geovista.ui.event.DataSetEvent;
-import edu.psu.geovista.ui.event.DataSetListener;
-import edu.psu.geovista.ui.event.IndicationEvent;
-import edu.psu.geovista.ui.event.IndicationListener;
-import edu.psu.geovista.ui.event.SelectionEvent;
-import edu.psu.geovista.ui.event.SelectionListener;
-import edu.psu.geovista.ui.event.SpatialExtentEvent;
-import edu.psu.geovista.ui.event.SpatialExtentListener;
 
 /**
  * This class handles the rendering of layer-independent objects like tooltips
