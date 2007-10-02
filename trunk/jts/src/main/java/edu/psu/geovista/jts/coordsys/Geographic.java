@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.coordsys;
+package edu.psu.geovista.jts.coordsys;
 
 /**
  * This class is a base for geographic coordinate systems.

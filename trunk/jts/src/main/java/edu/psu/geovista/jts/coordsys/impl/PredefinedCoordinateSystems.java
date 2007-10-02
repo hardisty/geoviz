@@ -34,9 +34,9 @@ package edu.psu.geovista.jts.coordsys.impl;
 
 import com.vividsolutions.jts.util.Assert;
 
-import com.vividsolutions.jump.coordsys.CoordinateSystem;
-import com.vividsolutions.jump.coordsys.Radius;
-import com.vividsolutions.jump.coordsys.Spheroid;
+import edu.psu.geovista.jts.coordsys.CoordinateSystem;
+import edu.psu.geovista.jts.coordsys.Radius;
+import edu.psu.geovista.jts.coordsys.Spheroid;
 
 /**
  * Provides a number of named coordinate systems.

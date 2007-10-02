@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.coordsys;
+package edu.psu.geovista.jts.coordsys;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateFilter;

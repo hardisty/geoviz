@@ -35,7 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jump.coordsys.CoordinateSystem;
+
+import edu.psu.geovista.jts.coordsys.CoordinateSystem;
 /**
  * Metadata for a FeatureCollection: attribute names and types.
  * @see FeatureCollection
