@@ -43,9 +43,9 @@ import java.util.prefs.Preferences;
 import javax.swing.JProgressBar;
 
 import edu.psu.geovista.app.scatterplot.LinearRegression;
+import edu.psu.geovista.common.data.DataSetForApps;
+import edu.psu.geovista.common.data.GeneralPathLine;
 import edu.psu.geovista.data.DescriptiveStatistics;
-import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.data.geog.GeneralPathLine;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.io.geog.ShapeFile;

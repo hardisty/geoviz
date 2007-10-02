@@ -40,7 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import edu.psu.geovista.app.map.GeoMapUni;
-import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.data.shapefile.ShapeFileToShape;

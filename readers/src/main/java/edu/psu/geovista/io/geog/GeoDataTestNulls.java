@@ -31,7 +31,7 @@ import java.io.InputStream;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.io.csv.GeogCSVReader;
 
 /**

@@ -33,10 +33,10 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
+import edu.psu.geovista.common.data.DataSetForApps;
+import edu.psu.geovista.common.data.GeneralPathLine;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
-import edu.psu.geovista.data.geog.GeneralPathLine;
 import edu.psu.geovista.db.dbase.DBaseFieldDescriptor;
 import edu.psu.geovista.db.dbase.DBaseFile;
 import edu.psu.geovista.io.csv.GeogCSVReader;

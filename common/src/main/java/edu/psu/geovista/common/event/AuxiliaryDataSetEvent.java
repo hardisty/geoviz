@@ -23,7 +23,7 @@
 
 package edu.psu.geovista.common.event;
 
-import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.common.data.DataSetForApps;
 
 
 /**

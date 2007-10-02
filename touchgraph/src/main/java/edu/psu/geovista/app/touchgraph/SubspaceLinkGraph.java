@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.psu.geovista.app.touchgraph.graphelements.VisibleLocality;
 import edu.psu.geovista.app.touchgraph.mst.NDimensionalMST;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ColorArrayEvent;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
@@ -26,7 +27,6 @@ import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.symbolization.ColorInterpolator;
 import edu.psu.geovista.touchgraph.mst.MSTEdge;

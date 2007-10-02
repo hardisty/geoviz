@@ -33,6 +33,7 @@ import javax.swing.event.EventListenerList;
 
 import treemap.TMView;
 
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ClassificationEvent;
 import edu.psu.geovista.common.event.ColorArrayEvent;
 import edu.psu.geovista.common.event.ColorArrayListener;
@@ -45,7 +46,6 @@ import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.data.DescriptiveStatistics;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.sc.geoviz.treemap.TMDataDraw;
 import edu.sc.geoviz.treemap.TMDataNode;
 import edu.sc.geoviz.treemap.TMDataSize;

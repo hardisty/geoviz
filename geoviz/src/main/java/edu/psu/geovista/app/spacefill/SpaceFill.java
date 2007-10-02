@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ConditioningEvent;
 import edu.psu.geovista.common.event.ConditioningListener;
 import edu.psu.geovista.common.event.DataSetEvent;
@@ -41,7 +42,6 @@ import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.ui.panel.FoldupPanel;
 import edu.psu.geovista.visclass.VisualClassifier;

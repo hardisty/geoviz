@@ -13,7 +13,7 @@
  */
 
 
-package edu.psu.geovista.data.geog;
+package edu.psu.geovista.common.data;
 
 import java.awt.Shape;
 

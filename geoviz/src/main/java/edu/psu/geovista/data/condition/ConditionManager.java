@@ -30,11 +30,11 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ConditioningEvent;
 import edu.psu.geovista.common.event.ConditioningListener;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
 
 public class ConditionManager extends JPanel implements ChangeListener, ListSelectionListener,
 		DataSetListener{
@@ -68,7 +68,7 @@ public class ConditionManager extends JPanel implements ChangeListener, ListSele
 	private JLabel varMin = new JLabel();
 	private JLabel varMax = new JLabel();
 	private EventListenerList listenerListAction = new EventListenerList();
-        private edu.psu.geovista.data.geog.DataSetForApps dataObjTransfer;
+        private edu.psu.geovista.common.data.DataSetForApps dataObjTransfer;
     public ConditionManager() {
         super();
 		this.setLayout(new BorderLayout());

@@ -13,7 +13,7 @@ import edu.psu.geovista.app.matrix.DistributionMatrix;
 import edu.psu.geovista.common.classification.ClassifierMLClassify;
 import edu.psu.geovista.common.classification.MultiGaussian;
 import edu.psu.geovista.common.classification.MultiGaussianModel;
-import edu.psu.geovista.data.geog.DataSetForApps;
+import edu.psu.geovista.common.data.DataSetForApps;
 
 public class ClassifierMaximumLikelihood
 {
@@ -81,7 +81,7 @@ public class ClassifierMaximumLikelihood
     this.classify.setClassificationModel(this.multiGaussian);
     this.classify.setDataSet(data);
 
-//          edu.psu.geovista.data.geog.DataSetForApps dataObjTransfer = new edu.psu.geovista.data.geog.DataSetForApps();
+//          edu.psu.geovista.common.data.DataSetForApps dataObjTransfer = new edu.psu.geovista.common.data.DataSetForApps();
 //          dataObjTransfer.setDataObject(data);
 //          this.dataObject = dataObjTransfer.getDataSetNumericAndSpatial();
 //          this.attributesDisplay = dataObjTransfer.getAttributeNamesNumeric();

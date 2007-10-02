@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.data.DescriptiveStatistics;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.touchgraph.mst.MSTEdge;
 import edu.psu.geovista.touchgraph.mst.MinimumSpanningTree;
 

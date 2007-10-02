@@ -58,6 +58,7 @@ import javax.swing.event.EventListenerList;
 
 import com.jhlabs.image.BoxBlurFilter;
 
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.IndicationEvent;
@@ -67,7 +68,6 @@ import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SpatialExtentEvent;
 import edu.psu.geovista.common.event.SpatialExtentListener;
 import edu.psu.geovista.data.condition.ConditionManager;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.transform.ShapeAffineTransform;
 import edu.psu.geovista.data.transform.ShapeTransformer;
 import edu.psu.geovista.symbolization.AffineTransformModifier;

@@ -28,9 +28,9 @@ import java.util.Vector;
 import javax.swing.JToolBar;
 
 import edu.psu.geovista.app.matrix.MatrixElement;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.IndicationListener;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 
 /**

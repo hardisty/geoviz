@@ -49,6 +49,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import edu.psu.geovista.common.classification.ClassifierPicker;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.AuxiliaryDataSetEvent;
 import edu.psu.geovista.common.event.AuxiliaryDataSetListener;
 import edu.psu.geovista.common.event.ColorArrayEvent;
@@ -66,7 +67,6 @@ import edu.psu.geovista.common.event.SpatialExtentListener;
 import edu.psu.geovista.common.event.VariableSelectionEvent;
 import edu.psu.geovista.common.event.VariableSelectionListener;
 import edu.psu.geovista.coordination.CoordinationManager;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;

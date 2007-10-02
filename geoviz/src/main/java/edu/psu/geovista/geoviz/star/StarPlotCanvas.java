@@ -42,12 +42,12 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.app.spacefill.FillOrder;
+import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.data.geog.DataSetForApps;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 import edu.psu.geovista.symbolization.glyph.GlyphEvent;
 import edu.psu.geovista.symbolization.glyph.GlyphListener;
