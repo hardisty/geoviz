@@ -36,7 +36,8 @@ package com.vividsolutions.jump.geom;
 import java.util.*;
 
 import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jump.util.CoordinateArrays;
+
+import edu.psu.geovista.jts.util.CoordinateArrays;
 
 
 /**

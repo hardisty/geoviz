@@ -39,7 +39,8 @@ import java.util.Iterator;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jump.util.MathUtil;
+
+import edu.psu.geovista.jts.util.MathUtil;
 
 
 /**

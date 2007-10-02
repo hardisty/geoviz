@@ -34,7 +34,8 @@
 package com.vividsolutions.jump.geom;
 
 import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jump.util.MathUtil;
+
+import edu.psu.geovista.jts.util.MathUtil;
 
 
 /**

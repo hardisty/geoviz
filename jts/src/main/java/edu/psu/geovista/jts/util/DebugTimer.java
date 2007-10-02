@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package com.vividsolutions.jump.util;
+package edu.psu.geovista.jts.util;
 
 import com.vividsolutions.jts.util.Stopwatch;
 

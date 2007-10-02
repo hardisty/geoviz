@@ -1,4 +1,3 @@
-
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
  * for visualizing and manipulating spatial features with geometry and attributes.
@@ -30,29 +29,24 @@
  * (250)385-6040
  * www.vividsolutions.com
  */
-
-package com.vividsolutions.jump.util;
-
+package edu.psu.geovista.jts.util;
 
 /**
- * A Counter used for example in Maps to count the number of times
- * an item occurs.
+ * Simply a chunk of code that can be passed around. Facilitates 
+ * Smalltalk-like programming. Also useful as a "lexical closure"
+ * i.e. a chunk of code with variables having long lifetimes.
+ * <p>
+ * Typically only one of the #yield methods needs to be implemented.
+ * Which one depends on the context.
  */
-public class Counter {
-    private int value = 0;
-
-    public Counter() {
+public abstract class Block {
+    public Object yield(Object arg1, Object arg2) {
+        throw new UnsupportedOperationException();
     }
-
-    public Counter(int value) {
-        this.value = value;
+    public Object yield(Object arg) {
+        throw new UnsupportedOperationException();            
     }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void increment() {
-        value++;
-    }
+    public Object yield() {
+        throw new UnsupportedOperationException();            
+    }    
 }

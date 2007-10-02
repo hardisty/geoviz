@@ -35,7 +35,7 @@ package com.vividsolutions.jump.task;
 
 import java.io.PrintStream;
 
-import com.vividsolutions.jump.util.StringUtil;
+import edu.psu.geovista.jts.util.StringUtil;
 
 
 /**

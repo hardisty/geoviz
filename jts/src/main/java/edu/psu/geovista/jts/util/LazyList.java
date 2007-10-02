@@ -1,4 +1,4 @@
-package com.vividsolutions.jump.util;
+package edu.psu.geovista.jts.util;
 
 import java.util.Collection;
 import java.util.List;
