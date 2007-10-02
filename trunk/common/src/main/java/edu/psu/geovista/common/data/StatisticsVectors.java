@@ -1,4 +1,4 @@
-package edu.psu.geovista.data;
+package edu.psu.geovista.common.data;
 
 import java.util.logging.Logger;
 

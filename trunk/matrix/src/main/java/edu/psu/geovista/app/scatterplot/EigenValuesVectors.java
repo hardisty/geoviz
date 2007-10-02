@@ -15,7 +15,7 @@ import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.EigenvalueDecomposition;
 
-import edu.psu.geovista.data.StatisticsVectors;
+import edu.psu.geovista.common.data.StatisticsVectors;
 
 public class EigenValuesVectors {
 

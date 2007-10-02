@@ -18,7 +18,7 @@ import java.awt.geom.Ellipse2D;
 
 import javax.swing.BorderFactory;
 
-import edu.psu.geovista.data.StatisticsVectors;
+import edu.psu.geovista.common.data.StatisticsVectors;
 
 public class ScatterPlotWithDistContour extends ScatterPlot {
 

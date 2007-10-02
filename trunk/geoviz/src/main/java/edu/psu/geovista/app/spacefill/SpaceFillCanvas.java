@@ -45,12 +45,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
+import edu.psu.geovista.common.data.ArraySort2D;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
-import edu.psu.geovista.data.ArraySort2D;
 import edu.psu.geovista.symbolization.AffineTransformModifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.ColorSymbolClassification;

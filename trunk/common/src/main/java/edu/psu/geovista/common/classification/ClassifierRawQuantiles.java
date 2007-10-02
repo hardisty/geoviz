@@ -16,7 +16,7 @@
 
 package edu.psu.geovista.common.classification;
 
-import edu.psu.geovista.data.ArraySort2D;
+import edu.psu.geovista.common.data.ArraySort2D;
 
 
 public class ClassifierRawQuantiles implements DescribedClassifier, BoundaryClassifier  {

@@ -27,12 +27,12 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 
 import edu.psu.geovista.common.data.DataSetForApps;
+import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.data.DescriptiveStatistics;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 
 /**
