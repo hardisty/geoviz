@@ -26,7 +26,7 @@ import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.data.sample.GeoData48States;
+import edu.psu.geovista.geoviz.sample.GeoData48States;
 
 public class VariableTransformer extends JPanel implements DataSetListener,
 		ActionListener, ListSelectionListener, TableModelListener {
