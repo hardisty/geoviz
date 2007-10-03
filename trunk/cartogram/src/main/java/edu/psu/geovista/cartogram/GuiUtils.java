@@ -42,7 +42,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-import edu.psu.geovista.db.dbase.DBaseFile;
+import edu.psu.geovista.geoviz.dbase.DBaseFile;
 import edu.psu.geovista.geoviz.map.GeoMapUni;
 import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.io.util.MyFileFilter;
