@@ -24,9 +24,9 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.io.geog.ShapeFile;
-import edu.psu.geovista.io.geog.ShapeFileHeader;
-import edu.psu.geovista.io.geog.ShapeFileRecordPolygon;
+import edu.psu.geovista.readers.geog.ShapeFile;
+import edu.psu.geovista.readers.geog.ShapeFileHeader;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
 
 /**
  * Takes a file name and a set of shapes, and writes out a shapefile.
@@ -37,7 +37,7 @@ import edu.psu.geovista.io.geog.ShapeFileRecordPolygon;
 public class ShapeFileDataWriter {
 	protected final static Logger logger = Logger.getLogger(ShapeFileDataWriter.class.getName());
   public static void writeShapefile(GeneralPath[] paths, String fileName) {
-      /** see edu.psu.geovista.io.geog.ShapeFileWriter**/
+      /** see edu.psu.geovista.readers.geog.ShapeFileWriter**/
       String baseName = fileName.substring(0, fileName.length() - 4);
       ShapeFile shapeFile = new ShapeFile();
       ShapeFileHeader header = new ShapeFileHeader();

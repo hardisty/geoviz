@@ -42,17 +42,17 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JProgressBar;
 
-import edu.psu.geovista.app.scatterplot.LinearRegression;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.data.GeneralPathLine;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
-import edu.psu.geovista.io.geog.ShapeFile;
-import edu.psu.geovista.io.geog.ShapeFileHeader;
-import edu.psu.geovista.io.geog.ShapeFileRecordPoint;
-import edu.psu.geovista.io.geog.ShapeFileRecordPolyLine;
-import edu.psu.geovista.io.geog.ShapeFileRecordPolygon;
+import edu.psu.geovista.matrix.scatterplot.LinearRegression;
+import edu.psu.geovista.readers.geog.ShapeFile;
+import edu.psu.geovista.readers.geog.ShapeFileHeader;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPoint;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPolyLine;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
 
 /*
  *
@@ -382,7 +382,7 @@ public class MapGenFile {
    */
   public static void writeShapefile(GeneralPath[] paths, String fileName,
                                     int shapeType) {
-    /** see edu.psu.geovista.io.geog.ShapeFileWriter**/
+    /** see edu.psu.geovista.readers.geog.ShapeFileWriter**/
     String baseName = fileName.substring(0, fileName.length() - 4);
     ShapeFile shapeFile = new ShapeFile();
     ShapeFileHeader header = new ShapeFileHeader();

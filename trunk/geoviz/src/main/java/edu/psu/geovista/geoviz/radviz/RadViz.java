@@ -64,7 +64,7 @@ import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
-import edu.psu.geovista.io.csv.CSVFileDataReader;
+import edu.psu.geovista.readers.csv.CSVFileDataReader;
 
 
 /**

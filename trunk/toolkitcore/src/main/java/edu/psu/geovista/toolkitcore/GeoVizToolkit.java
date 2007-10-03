@@ -53,16 +53,6 @@ import javax.swing.JOptionPane;
 
 import edu.psu.geovista.animation.IndicationAnimator;
 import edu.psu.geovista.animation.SelectionAnimator;
-import edu.psu.geovista.app.map.MoranMap;
-import edu.psu.geovista.app.matrix.MapAndScatterplotMatrix;
-import edu.psu.geovista.app.matrix.MapMatrix;
-import edu.psu.geovista.app.matrix.MapScatterplotTreemapMatrix;
-import edu.psu.geovista.app.matrix.TreemapAndScatterplotMatrix;
-import edu.psu.geovista.app.scatterplot.SingleHistogram;
-import edu.psu.geovista.app.scatterplot.SingleScatterPlot;
-import edu.psu.geovista.app.touchgraph.LinkGraph;
-import edu.psu.geovista.app.touchgraph.PCAViz;
-import edu.psu.geovista.app.touchgraph.SubspaceLinkGraph;
 import edu.psu.geovista.cartogram.GeoMapCartogram;
 import edu.psu.geovista.common.data.DataSetBroadcaster;
 import edu.psu.geovista.common.data.DataSetForApps;
@@ -85,12 +75,22 @@ import edu.psu.geovista.geoviz.spreadsheet.SpreadSheetBean;
 import edu.psu.geovista.geoviz.spreadsheet.VariableTransformer;
 import edu.psu.geovista.geoviz.star.StarPlot;
 import edu.psu.geovista.geoviz.star.StarPlotMap;
+import edu.psu.geovista.matrix.MapAndScatterplotMatrix;
+import edu.psu.geovista.matrix.MapMatrix;
+import edu.psu.geovista.matrix.MapScatterplotTreemapMatrix;
+import edu.psu.geovista.matrix.TreemapAndScatterplotMatrix;
+import edu.psu.geovista.matrix.map.MoranMap;
+import edu.psu.geovista.matrix.scatterplot.SingleHistogram;
+import edu.psu.geovista.matrix.scatterplot.SingleScatterPlot;
 import edu.psu.geovista.satscan.SaTScan;
 import edu.psu.geovista.sound.SonicClassifier;
 import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
 import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolinaCities;
+import edu.psu.geovista.touchgraph.LinkGraph;
+import edu.psu.geovista.touchgraph.PCAViz;
+import edu.psu.geovista.touchgraph.SubspaceLinkGraph;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.

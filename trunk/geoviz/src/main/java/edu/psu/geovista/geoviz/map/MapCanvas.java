@@ -56,7 +56,6 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import com.jhlabs.image.BoxBlurFilter;
 
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
@@ -74,6 +73,7 @@ import edu.psu.geovista.geoviz.condition.ConditionManager;
 import edu.psu.geovista.geoviz.transform.ShapeAffineTransform;
 import edu.psu.geovista.geoviz.transform.ShapeTransformer;
 import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
+import edu.psu.geovista.image_blur.image.BoxBlurFilter;
 import edu.psu.geovista.symbolization.AffineTransformModifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;

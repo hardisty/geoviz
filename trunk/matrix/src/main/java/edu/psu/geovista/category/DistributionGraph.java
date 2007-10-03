@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
-import edu.psu.geovista.app.scatterplot.DataArray;
 import edu.psu.geovista.common.data.ArraySort2D;
+import edu.psu.geovista.matrix.scatterplot.DataArray;
 
 public class DistributionGraph extends JPanel implements ComponentListener
 {
