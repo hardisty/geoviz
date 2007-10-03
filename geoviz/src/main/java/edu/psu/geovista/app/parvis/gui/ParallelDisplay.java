@@ -80,7 +80,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener, Indic
     public boolean deepRepaint = true;
 
     static {
-        UIManager.put("edu.psu.geovista.app.parvis.gui.ParallelDisplayUI", "edu.psu.geovista.app.parvis.gui.BasicParallelDisplayUI");
+        UIManager.put("edu.psu.geovista.geoviz.parvis.gui.ParallelDisplayUI", "edu.psu.geovista.geoviz.parvis.gui.BasicParallelDisplayUI");
     }
     /**
      * Creates a new ParallelDisplay.
@@ -376,7 +376,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener, Indic
      */
     public String getUIClassID(){
         logger.finest("retrieving classID");
-        return "edu.psu.geovista.app.parvis.gui.ParallelDisplayUI";
+        return "edu.psu.geovista.geoviz.parvis.gui.ParallelDisplayUI";
     }
 
     /**
