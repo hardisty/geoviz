@@ -46,7 +46,7 @@ import javax.swing.table.TableColumnModel;
 import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.geoviz.map.GeoMapUni;
-import edu.psu.geovista.visclass.VisualClassifier;
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 
 
 /*

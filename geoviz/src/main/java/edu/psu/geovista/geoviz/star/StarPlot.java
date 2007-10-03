@@ -40,7 +40,7 @@ import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
-import edu.psu.geovista.visclass.VisualClassifier;
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 
 /**
  * Paints an array of StarPlot. Responds to and broadcasts DataSetChanged,

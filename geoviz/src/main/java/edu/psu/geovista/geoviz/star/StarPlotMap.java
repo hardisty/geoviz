@@ -36,10 +36,10 @@ import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.geoviz.map.GeoMap;
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 import edu.psu.geovista.symbolization.glyph.GlyphEvent;
 import edu.psu.geovista.symbolization.glyph.GlyphListener;
-import edu.psu.geovista.visclass.VisualClassifier;
 
 /**
  * Paints an array of StarPlotMap. Responds to and broadcasts DataSetChanged,

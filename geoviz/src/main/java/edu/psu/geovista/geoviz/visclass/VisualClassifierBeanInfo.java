@@ -1,4 +1,4 @@
-package edu.psu.geovista.visclass;
+package edu.psu.geovista.geoviz.visclass;
 
 import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;

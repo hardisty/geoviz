@@ -104,9 +104,9 @@ import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.symbolization.ColorInterpolator;
 import edu.psu.geovista.touchgraph.mst.MSTEdge;
-import edu.psu.geovista.visclass.VisualClassifier;
 
 
 /** GLPanel contains code for adding scrollbars and interfaces to the TGPanel
