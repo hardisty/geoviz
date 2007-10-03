@@ -316,7 +316,7 @@ public class BiPlotMatrix extends AbstractMatrix implements
 										.getClass()
 										.getName()
 										.equals(
-												"edu.psu.geovista.app.scatterplot.ScatterPlot"))) {
+												"edu.psu.geovista.geoviz.scatterplot.ScatterPlot"))) {
 							boolean reverseColor = false;
 							if (i > j) {
 								reverseColor = true;

@@ -42,6 +42,8 @@ import edu.psu.geovista.app.matrix.MatrixElement;
 import edu.psu.geovista.app.scatterplot.Histogram;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.coordination.CoordinationManager;
+import edu.psu.geovista.geoviz.map.GeoMap;
+import edu.psu.geovista.geoviz.map.MapCanvas;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.ui.cursor.GeoCursors;
 

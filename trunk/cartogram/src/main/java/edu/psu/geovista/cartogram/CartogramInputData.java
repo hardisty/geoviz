@@ -31,7 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.psu.geovista.app.map.GeoMapUni;
+import edu.psu.geovista.geoviz.map.GeoMapUni;
 
 //
 

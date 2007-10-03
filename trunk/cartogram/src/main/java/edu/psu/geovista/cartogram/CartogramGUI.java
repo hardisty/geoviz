@@ -44,12 +44,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-import edu.psu.geovista.app.map.GeoMapUni;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.data.shapefile.ShapeFileToShape;
+import edu.psu.geovista.geoviz.map.GeoMapUni;
 
 //import org.davekeen.gis.shapefile.GeoESRIWriter;
 

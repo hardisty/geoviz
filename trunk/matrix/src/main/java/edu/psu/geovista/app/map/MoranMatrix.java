@@ -51,6 +51,8 @@ import edu.psu.geovista.data.sample.GeoData48States;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
 import edu.psu.geovista.data.shapefile.ShapeFileToShape;
+import edu.psu.geovista.geoviz.map.GeoMapUni;
+import edu.psu.geovista.geoviz.map.SpatialWeights;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 

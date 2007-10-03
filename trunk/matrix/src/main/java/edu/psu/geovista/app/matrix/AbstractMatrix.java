@@ -349,7 +349,7 @@ public abstract class AbstractMatrix
             MatrixElement otherElement = element[k];
             String className = otherElement.getClass().getName();
 
-            if (className.equals("edu.psu.geovista.app.scatterplot.ScatterPlot")) {
+            if (className.equals("edu.psu.geovista.geoviz.scatterplot.ScatterPlot")) {
 				row =k/this.plotNumber;
 				column = k%this.plotNumber;
 				if (row > column){
@@ -821,7 +821,7 @@ public abstract class AbstractMatrix
         for (int k = 0; k < this.element.length; k++) {
             MatrixElement otherElement = element[k];
             String className = otherElement.getClass().getName();
-            if (className.equals("edu.psu.geovista.app.scatterplot.ScatterPlot")) {
+            if (className.equals("edu.psu.geovista.geoviz.scatterplot.ScatterPlot")) {
                 //otherElement.setBivarColorClasser(biColor2);
 				row =k/this.plotNumber;
 				column = k%this.plotNumber;
