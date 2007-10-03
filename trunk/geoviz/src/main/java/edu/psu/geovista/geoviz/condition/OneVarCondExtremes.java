@@ -1,14 +1,21 @@
-package edu.psu.geovista.data.condition;
+package edu.psu.geovista.geoviz.condition;
 
+/**
+ * Title:
+ * Description:
+ * Copyright:    Copyright (c) 2001
+ * Company:
+ * @author
+ * @version 1.0
+ */
 
-public class OneVarCondition {
+public class OneVarCondExtremes {
 
 	double[] dataArray;
 	double[] conditionRanges;
 	int[] conditionResults;
 
-    /**Construct the application*/
-    public OneVarCondition() {
+    public OneVarCondExtremes() {
     }
 
 	public void setDataArray (double[] dataArray){
@@ -28,10 +35,10 @@ public class OneVarCondition {
 	private void setConditionResults(){
 		    this.conditionResults = new int[dataArray.length];
 		    for (int i=0; i<dataArray.length; i++){
-			    if ((dataArray[i] < conditionRanges[0]) || (dataArray[i] > conditionRanges[1])){
-					conditionResults[i] = -1;
-	    		} else {
+			    if ((dataArray[i] <= conditionRanges[0]) || (dataArray[i] >= conditionRanges[1])){
 					conditionResults[i] = 0;
+	    		} else {
+					conditionResults[i] = -1;
 		    	}
 			}
 	}
