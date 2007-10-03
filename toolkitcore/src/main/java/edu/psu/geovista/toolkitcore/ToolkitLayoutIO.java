@@ -59,7 +59,7 @@ import org.w3c.dom.NodeList;
 
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.coordination.FiringBean;
-import edu.psu.geovista.io.util.MyFileFilter;
+import edu.psu.geovista.readers.util.MyFileFilter;
 
 public class ToolkitLayoutIO {
 	protected final static Logger logger = Logger.getLogger(ToolkitLayoutIO.class.getName());

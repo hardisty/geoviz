@@ -19,8 +19,8 @@
  -------------------------------------------------------------------   */
 package edu.psu.geovista.cartogram;
 
-import edu.psu.geovista.app.matrix.BiPlotMatrix;
-import edu.psu.geovista.app.scatterplot.ScatterPlot;
+import edu.psu.geovista.matrix.BiPlotMatrix;
+import edu.psu.geovista.matrix.scatterplot.ScatterPlot;
 
 /**
  *

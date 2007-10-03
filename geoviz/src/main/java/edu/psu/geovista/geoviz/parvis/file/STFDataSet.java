@@ -18,7 +18,7 @@ import java.util.Vector;
 import edu.psu.geovista.geoviz.parvis.gui.ProgressEvent;
 import edu.psu.geovista.geoviz.parvis.gui.ProgressListener;
 import edu.psu.geovista.geoviz.parvis.model.SimpleParallelSpaceModel;
-import edu.psu.geovista.io.FileIO;
+import edu.psu.geovista.readers.FileIO;
 
 /**
  * A Simple file parser for reading STF (Simple Table Fomrat) files from URLs.

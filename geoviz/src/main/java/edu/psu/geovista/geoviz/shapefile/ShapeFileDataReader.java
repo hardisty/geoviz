@@ -39,12 +39,12 @@ import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.geoviz.dbase.DBaseFieldDescriptor;
 import edu.psu.geovista.geoviz.dbase.DBaseFile;
-import edu.psu.geovista.io.csv.GeogCSVReader;
-import edu.psu.geovista.io.geog.AttributeDescriptionFile;
-import edu.psu.geovista.io.geog.ShapeFile;
-import edu.psu.geovista.io.geog.ShapeFileRecordPoint;
-import edu.psu.geovista.io.geog.ShapeFileRecordPolyLine;
-import edu.psu.geovista.io.geog.ShapeFileRecordPolygon;
+import edu.psu.geovista.readers.csv.GeogCSVReader;
+import edu.psu.geovista.readers.geog.AttributeDescriptionFile;
+import edu.psu.geovista.readers.geog.ShapeFile;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPoint;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPolyLine;
+import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
 
 /**
  * Takes a file name and returns an Object[] with:

@@ -46,7 +46,7 @@ import edu.psu.geovista.geoviz.dbase.DBaseFile;
 import edu.psu.geovista.geoviz.map.GeoMapUni;
 import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.geoviz.visclass.VisualClassifier;
-import edu.psu.geovista.io.util.MyFileFilter;
+import edu.psu.geovista.readers.util.MyFileFilter;
 
 
 //import org.davekeen.gis.shapefile.GeoESRIWriter;

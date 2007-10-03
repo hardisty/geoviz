@@ -28,9 +28,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import edu.psu.geovista.app.scatterplot.DataArray;
 import edu.psu.geovista.common.data.ArraySort2D;
 import edu.psu.geovista.common.data.StatisticsVectors;
+import edu.psu.geovista.matrix.scatterplot.DataArray;
 
 public class MultiClassDistributions extends JPanel implements MouseListener, ComponentListener
 {
