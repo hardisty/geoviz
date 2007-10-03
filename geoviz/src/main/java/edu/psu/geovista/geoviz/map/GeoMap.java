@@ -74,6 +74,7 @@ import edu.psu.geovista.geoviz.sample.GeoData48States;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
+import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
@@ -81,7 +82,6 @@ import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 
-import edu.psu.geovista.ui.cursor.GeoCursors;
 import edu.psu.geovista.visclass.VisualClassifier;
 
 /**

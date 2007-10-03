@@ -53,12 +53,12 @@ import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SpatialExtentEvent;
 import edu.psu.geovista.common.event.SpatialExtentListener;
+import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
-import edu.psu.geovista.ui.cursor.GeoCursors;
 import edu.psu.geovista.visclass.VisualClassifier;
 
 /**

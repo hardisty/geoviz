@@ -73,12 +73,12 @@ import edu.psu.geovista.common.ui.Fisheyes;
 import edu.psu.geovista.geoviz.condition.ConditionManager;
 import edu.psu.geovista.geoviz.transform.ShapeAffineTransform;
 import edu.psu.geovista.geoviz.transform.ShapeTransformer;
+import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.AffineTransformModifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 import edu.psu.geovista.symbolization.glyph.GlyphEvent;
-import edu.psu.geovista.ui.cursor.GeoCursors;
 
 /**
  * This class handles the rendering of layer-independent objects like tooltips
