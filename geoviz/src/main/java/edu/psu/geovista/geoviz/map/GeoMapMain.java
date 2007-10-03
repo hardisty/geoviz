@@ -21,10 +21,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 import edu.psu.geovista.coordination.CoordinationManager;
-import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
-import edu.psu.geovista.data.shapefile.ShapeFileProjection;
-import edu.psu.geovista.data.shapefile.ShapeFileToShape;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
+import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
+import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
+import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
 
 public class GeoMapMain
     extends JFrame {

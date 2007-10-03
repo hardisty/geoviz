@@ -24,7 +24,7 @@ import javax.swing.event.EventListenerList;
 
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.data.GeoDataSource;
-import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
+import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.io.csv.GeogCSVReader;
 import edu.psu.geovista.io.geog.ShapeFile;
 

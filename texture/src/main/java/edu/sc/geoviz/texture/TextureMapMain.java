@@ -30,10 +30,10 @@ import javax.swing.JFrame;
 
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.coordination.CoordinationManager;
-import edu.psu.geovista.data.shapefile.ShapeFileProjection;
-import edu.psu.geovista.data.shapefile.ShapeFileToShape;
 import edu.psu.geovista.geoviz.map.GeoMap;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
+import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
+import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
 
 
 public class TextureMapMain
