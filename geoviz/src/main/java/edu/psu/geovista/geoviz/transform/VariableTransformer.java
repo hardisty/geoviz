@@ -13,7 +13,7 @@
  */
 
 
-package edu.psu.geovista.data.transform;
+package edu.psu.geovista.geoviz.transform;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

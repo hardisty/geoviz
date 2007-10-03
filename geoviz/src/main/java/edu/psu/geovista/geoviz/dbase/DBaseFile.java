@@ -26,7 +26,7 @@
 
 ------------------------------------------------------------------- */
 /* --------------------------- Package ---------------------------- */
-package edu.psu.geovista.db.dbase;
+package edu.psu.geovista.geoviz.dbase;
 
 /* ------------------ Import classes (packages) ------------------- */
 import java.io.EOFException;
