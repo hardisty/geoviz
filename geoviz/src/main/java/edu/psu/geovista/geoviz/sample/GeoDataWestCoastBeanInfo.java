@@ -1,4 +1,4 @@
-package edu.psu.geovista.data.sample;
+package edu.psu.geovista.geoviz.sample;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

@@ -26,7 +26,7 @@ import javax.swing.JFrame;
 
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.data.sample.GeoData48States;
+import edu.psu.geovista.geoviz.sample.GeoData48States;
 
 /**
  * Special treemap that knows how to handle quantitative data. Responds to and

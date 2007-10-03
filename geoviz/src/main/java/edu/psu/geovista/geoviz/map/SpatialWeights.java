@@ -27,7 +27,7 @@ import java.awt.geom.Area;
 import java.util.Vector;
 
 import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.data.sample.GeoData48States;
+import edu.psu.geovista.geoviz.sample.GeoData48States;
 
 /**
  * Calculates spatial weights using only sun's awt classes
