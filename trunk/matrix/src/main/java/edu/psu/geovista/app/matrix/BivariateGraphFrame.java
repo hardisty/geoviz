@@ -44,13 +44,13 @@ import edu.psu.geovista.common.event.VariableSelectionListener;
 import edu.psu.geovista.common.ui.Fisheyes;
 import edu.psu.geovista.geoviz.map.MapCanvas;
 import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
-import edu.psu.geovista.visclass.VisualClassifier;
 
 
 public class BivariateGraphFrame extends JPanel implements  DataSetListener, ActionListener,

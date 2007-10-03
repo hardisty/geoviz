@@ -4,6 +4,8 @@ import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
+
 /**
  * <p>Title: </p>
  * <p>Description: </p>

@@ -40,8 +40,8 @@ import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.geoviz.parvis.file.STFDataSet;
+import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.io.FileIO;
-import edu.psu.geovista.visclass.VisualClassifier;
 
 
 /**
