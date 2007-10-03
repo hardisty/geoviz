@@ -1,4 +1,4 @@
-package edu.psu.geovista.data.condition;
+package edu.psu.geovista.geoviz.condition;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
