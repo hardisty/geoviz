@@ -13,7 +13,7 @@
  */
 
 
-package edu.psu.geovista.data.shapefile;
+package edu.psu.geovista.geoviz.shapefile;
 
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
