@@ -30,6 +30,7 @@ import javax.swing.JToolBar;
 
 import edu.psu.geovista.app.matrix.MatrixElement;
 import edu.psu.geovista.common.data.DataSetForApps;
+import edu.psu.geovista.geoviz.spacefill.SpaceFillCanvas;
 
 public class SpaceFillMatrixElement extends SpaceFillCanvas
                                                   implements MatrixElement {

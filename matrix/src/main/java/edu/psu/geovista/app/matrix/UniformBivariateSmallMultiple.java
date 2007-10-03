@@ -410,7 +410,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 				}
 			}
 			for (int i = 0; i < this.rowVarNumber; i++) {
-				if (element[c + i * plotNumber].getClass().getName().equals("edu.psu.geovista.app.scatterplot.ScatterPlot")) {
+				if (element[c + i * plotNumber].getClass().getName().equals("edu.psu.geovista.geoviz.scatterplot.ScatterPlot")) {
 					element[c + i * plotNumber].setXAxisExtents(xAxisExtents);
 				}
 			}

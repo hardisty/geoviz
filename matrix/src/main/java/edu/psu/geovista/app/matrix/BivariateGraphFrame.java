@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.app.map.MapCanvas;
 import edu.psu.geovista.app.map.MapMatrixElement;
 import edu.psu.geovista.app.scatterplot.ScatterPlot;
 import edu.psu.geovista.common.classification.ClassifierPicker;
@@ -43,6 +42,7 @@ import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.common.event.VariableSelectionEvent;
 import edu.psu.geovista.common.event.VariableSelectionListener;
 import edu.psu.geovista.common.ui.Fisheyes;
+import edu.psu.geovista.geoviz.map.MapCanvas;
 import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
@@ -202,7 +202,7 @@ public class BivariateGraphFrame extends JPanel implements  DataSetListener, Act
         this.add((Component)this.bivariateGraph, BorderLayout.CENTER);
         this.bivariateGraph.setBackground(Color.white);
         //note the not (!) at the beginning of the next condition
-        if (!this.bivariateGraph.getClass().getName().equals("edu.psu.geovista.app.map.MapMatrixElement")){
+        if (!this.bivariateGraph.getClass().getName().equals("edu.psu.geovista.geoviz.map.MapMatrixElement")){
           makeToolbar();
           mapTools.setAlignmentX(Component.LEFT_ALIGNMENT);
           topContent.add(mapTools);

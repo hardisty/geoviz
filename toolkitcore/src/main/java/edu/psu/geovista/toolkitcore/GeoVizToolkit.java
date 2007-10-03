@@ -53,19 +53,13 @@ import javax.swing.JOptionPane;
 
 import edu.psu.geovista.animation.IndicationAnimator;
 import edu.psu.geovista.animation.SelectionAnimator;
-import edu.psu.geovista.app.map.GeoMap;
-import edu.psu.geovista.app.map.GeoMapUni;
 import edu.psu.geovista.app.map.MoranMap;
 import edu.psu.geovista.app.matrix.MapAndScatterplotMatrix;
 import edu.psu.geovista.app.matrix.MapMatrix;
 import edu.psu.geovista.app.matrix.MapScatterplotTreemapMatrix;
 import edu.psu.geovista.app.matrix.TreemapAndScatterplotMatrix;
-import edu.psu.geovista.app.parvis.gui.ParallelPlot;
-import edu.psu.geovista.app.radviz.RadViz;
 import edu.psu.geovista.app.scatterplot.SingleHistogram;
 import edu.psu.geovista.app.scatterplot.SingleScatterPlot;
-import edu.psu.geovista.app.spreadsheet.SpreadSheetBean;
-import edu.psu.geovista.app.spreadsheet.VariableTransformer;
 import edu.psu.geovista.app.touchgraph.LinkGraph;
 import edu.psu.geovista.app.touchgraph.PCAViz;
 import edu.psu.geovista.app.touchgraph.SubspaceLinkGraph;
@@ -83,6 +77,12 @@ import edu.psu.geovista.data.condition.ConditionManager;
 import edu.psu.geovista.data.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.data.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.data.shapefile.ShapeFileProjection;
+import edu.psu.geovista.geoviz.map.GeoMap;
+import edu.psu.geovista.geoviz.map.GeoMapUni;
+import edu.psu.geovista.geoviz.parvis.gui.ParallelPlot;
+import edu.psu.geovista.geoviz.radviz.RadViz;
+import edu.psu.geovista.geoviz.spreadsheet.SpreadSheetBean;
+import edu.psu.geovista.geoviz.spreadsheet.VariableTransformer;
 import edu.psu.geovista.geoviz.star.StarPlot;
 import edu.psu.geovista.geoviz.star.StarPlotMap;
 import edu.psu.geovista.satscan.SaTScan;
@@ -822,7 +822,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		Logger logger = Logger.getLogger("edu.psu.geovista");
 		Logger mapLogger = Logger
-				.getLogger("edu.psu.geovista.app.map.MapCanvas");
+				.getLogger("edu.psu.geovista.geoviz.map.MapCanvas");
 		// logger.setLevel(Level.FINEST);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();

@@ -43,7 +43,7 @@ public class ScatterPlotWithDistContour extends ScatterPlot {
 	 * Set up data and axis for drawing the scatter plot.
 	 */
 	protected void initialize() {
-		setRegressionClassName("edu.psu.geovista.app.scatterplot.LinearRegression");
+		setRegressionClassName("edu.psu.geovista.geoviz.scatterplot.LinearRegression");
 		this.dataArrayX = new DataArray(dataX);
 		this.dataArrayY = new DataArray(dataY);
 		this.conditionArray = new int[dataX.length];
