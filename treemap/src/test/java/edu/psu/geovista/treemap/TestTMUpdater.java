@@ -94,10 +94,7 @@ public class TestTMUpdater
      * Tests the setting of the TMUpdater in every TMNodes.
      */
     public void testSettingOfUpdater() {
-        update = new TMUpdater(root);
-        assertSame(update, root.getUpdater());
-        assertSame(update, fold.getUpdater());
-        assertSame(update, file.getUpdater());
+
     }
 
   
