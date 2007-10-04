@@ -24,7 +24,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package treemap;
+package edu.psu.geovista.treemap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
