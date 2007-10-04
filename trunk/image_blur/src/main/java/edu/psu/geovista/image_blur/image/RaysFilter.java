@@ -4,10 +4,11 @@
 
 package edu.psu.geovista.image_blur.image;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-import edu.psu.geovista.image_blur.composite.*;
+import edu.psu.geovista.image_blur.MiscComposite;
 
 public class RaysFilter extends MotionBlurOp {
 
