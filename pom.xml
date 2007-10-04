@@ -13,7 +13,7 @@
     <module>animation</module>
     <module>readers</module>
     <module>symbolization</module>
-    <module>edu.psu.geovista.matrix.treemap.tm</module>
+    <module>treemap</module>
     <module>image_blur</module>    
     <module>geoviz</module>
     <module>rjava</module>
