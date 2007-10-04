@@ -24,7 +24,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package treemap;
+package edu.psu.geovista.treemap;
 
 import java.util.Enumeration;
 import java.util.Vector;
@@ -32,6 +32,8 @@ import java.util.Vector;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import edu.psu.geovista.treemap.tm.TMNode;
+import edu.psu.geovista.treemap.tm.TMUpdater;
 
 /**
  * The TestTMUpdater is a JUnit test class
@@ -46,7 +48,7 @@ public class TestTMUpdater
     private TestNode          root   = null;
     private TestNode          fold   = null;
     private TestNode          file   = null;
-    private TMUpdaterConcrete update = null;
+    private TMUpdater update = null;
 
         
   /* --- Constructor --- */
@@ -92,7 +94,7 @@ public class TestTMUpdater
      * Tests the setting of the TMUpdater in every TMNodes.
      */
     public void testSettingOfUpdater() {
-        update = new TMUpdaterConcrete(root);
+        update = new TMUpdater(root);
         assertSame(update, root.getUpdater());
         assertSame(update, fold.getUpdater());
         assertSame(update, file.getUpdater());
