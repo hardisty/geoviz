@@ -23,7 +23,7 @@ public class ToolManager {
     private SSTable table;
     private JPanel toolBar;
     final public static String RESOURCES="resources/";
-    final public static String MODEL_ROOT="edu/psu/geovista/app/spreadsheet/";
+    final public static String MODEL_ROOT="edu/psu/geovista/geoviz/spreadsheet/";
     final public static String IMAGES=MODEL_ROOT+RESOURCES+"images/";
 
      final private ImageIcon saveIcon = getImageIcon("save.gif");
