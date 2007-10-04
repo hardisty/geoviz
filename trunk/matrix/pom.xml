@@ -35,7 +35,7 @@
     </dependency>
             <dependency>
        <groupId>edu.psu.geovista</groupId>
-       <artifactId>edu.psu.geovista.matrix.treemap.tm</artifactId>
+       <artifactId>treemap</artifactId>
        <version>${project.version}</version>
     </dependency>
   </dependencies>
