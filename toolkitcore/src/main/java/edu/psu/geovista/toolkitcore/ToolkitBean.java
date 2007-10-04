@@ -35,7 +35,7 @@ import javax.swing.event.EventListenerList;
 import edu.psu.geovista.coordination.CoordinationUtils;
 
 /*
- * this is a set of objects that each bean coordinated in a GeoVizToolkit is
+ * This is a set of objects that each bean coordinated in a GeoVizToolkit is
  * expected to have
  * 
  * 
