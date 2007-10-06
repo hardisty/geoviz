@@ -51,8 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.animation.IndicationAnimator;
-import edu.psu.geovista.animation.SelectionAnimator;
 import edu.psu.geovista.cartogram.GeoMapCartogram;
 import edu.psu.geovista.common.data.DataSetBroadcaster;
 import edu.psu.geovista.common.data.DataSetForApps;
@@ -91,6 +89,8 @@ import edu.psu.geovista.toolkitcore.data.GeoDataSCarolinaCities;
 import edu.psu.geovista.touchgraph.LinkGraph;
 import edu.psu.geovista.touchgraph.PCAViz;
 import edu.psu.geovista.touchgraph.SubspaceLinkGraph;
+import geovista.animation.IndicationAnimator;
+import geovista.animation.SelectionAnimator;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
