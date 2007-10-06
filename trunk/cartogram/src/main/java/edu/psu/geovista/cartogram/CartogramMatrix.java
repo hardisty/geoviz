@@ -24,7 +24,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
-import edu.psu.geovista.matrix.BiPlotMatrix;
+import geovista.matrix.BiPlotMatrix;
 
 
 /**

@@ -90,7 +90,7 @@
             <fileset dir="touchgraph/src/main/java" excludes="**/*.launch, **/*.java"/>
         </copy>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="edu.psu.geovista.matrix.treemap.tm/src/main/java" excludes="**/*.launch, **/*.java"/>
+            <fileset dir="geovista.matrix.treemap.tm/src/main/java" excludes="**/*.launch, **/*.java"/>
         </copy>
     </target>
     <target name="clean">
@@ -190,7 +190,7 @@
             <classpath refid="geoviz_g.classpath"/>
         </javac>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
-            <src path="edu.psu.geovista.matrix.treemap.tm/src/main/java"/>
+            <src path="geovista.matrix.treemap.tm/src/main/java"/>
             <classpath refid="geoviz_g.classpath"/>
         </javac>
     </target>

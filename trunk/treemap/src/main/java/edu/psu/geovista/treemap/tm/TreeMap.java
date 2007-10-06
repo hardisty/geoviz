@@ -30,7 +30,7 @@ package edu.psu.geovista.treemap.tm;
 
 /**
  * The TreeMap class implements a tree map representation for data.
- * For information about edu.psu.geovista.matrix.treemap.tm, see 
+ * For information about geovista.matrix.treemap.tm, see 
  * <A HREF="http://www.cs.umd.edu/hcil/treemaps/">Schneiderman 1992</A>
  * <P>
  * A TreeMap is build from hierarchical data, given as a tree
@@ -85,21 +85,21 @@ public class TreeMap {
   /* --- View --- */
 
     /**
-     * Returns a view of the edu.psu.geovista.matrix.treemap.tm with the
+     * Returns a view of the geovista.matrix.treemap.tm with the
      * given renderers.
      *
      * @param cSize         the object computing the size;
      *                      could not be <CODE>null</CODE>
      * @param cDraw         the object computing the drawing;
      *                      could not be <CODE>null</CODE>
-     * @return              the desired view of the edu.psu.geovista.matrix.treemap.tm
+     * @return              the desired view of the geovista.matrix.treemap.tm
      */
     public TMView getView(TMComputeSize cSize, TMComputeDraw cDraw) {
         if (cSize == null) {
-            throw new TMExceptionNullParameter("Impossible to build a edu.psu.geovista.matrix.treemap.tm"
+            throw new TMExceptionNullParameter("Impossible to build a geovista.matrix.treemap.tm"
                                           + "view with a null TMComputeSize.");
         } else if (cDraw == null) {
-            throw new TMExceptionNullParameter("Impossible to build a edu.psu.geovista.matrix.treemap.tm"
+            throw new TMExceptionNullParameter("Impossible to build a geovista.matrix.treemap.tm"
                                           + "view with a null TMComputeDraw.");
         }
         return new TMView(updater, cSize, cDraw);

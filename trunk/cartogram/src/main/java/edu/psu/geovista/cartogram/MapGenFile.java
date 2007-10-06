@@ -47,12 +47,12 @@ import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.data.GeneralPathLine;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
-import edu.psu.geovista.matrix.scatterplot.LinearRegression;
 import edu.psu.geovista.readers.geog.ShapeFile;
 import edu.psu.geovista.readers.geog.ShapeFileHeader;
 import edu.psu.geovista.readers.geog.ShapeFileRecordPoint;
 import edu.psu.geovista.readers.geog.ShapeFileRecordPolyLine;
 import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
+import geovista.matrix.scatterplot.LinearRegression;
 
 /*
  *

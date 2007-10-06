@@ -29,10 +29,10 @@ package edu.psu.geovista.treemap.tm;
 
 /**
  * The TMModelUpdater interface represents the object that 
- * a TMModelNode should call to notify the edu.psu.geovista.matrix.treemap.tm that something
+ * a TMModelNode should call to notify the geovista.matrix.treemap.tm that something
  * has changed : size, state,  numers of childs, ...
  * A TMModelNode gets a reference to a TMModelUpdater object in the building
- * of the edu.psu.geovista.matrix.treemap.tm, by the setUpdater() method.
+ * of the geovista.matrix.treemap.tm, by the setUpdater() method.
  * A TMModelNode should call the corresponding update method when
  * something has changed.
  *

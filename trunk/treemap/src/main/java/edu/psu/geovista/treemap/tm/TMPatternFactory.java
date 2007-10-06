@@ -66,7 +66,7 @@ import javax.swing.JPanel;
  *   <IL> PATTERN_DARK_GRAY 
  * </UL>
  * <P>
- * Launch "java edu.psu.geovista.matrix.treemap.tm.TMPatternFactory" to see the differents patterns.
+ * Launch "java geovista.matrix.treemap.tm.TMPatternFactory" to see the differents patterns.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @version 2.5

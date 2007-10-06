@@ -57,13 +57,13 @@ import javax.swing.event.ChangeListener;
 /**
  * The TMAlgorithm abstract class represent the algorithm
  * of the TreeMap. It should be subclassed by every class
- * that want to implement a particular edu.psu.geovista.matrix.treemap.tm (classic edu.psu.geovista.matrix.treemap.tm,
- * squarified edu.psu.geovista.matrix.treemap.tm, ...).
+ * that want to implement a particular geovista.matrix.treemap.tm (classic geovista.matrix.treemap.tm,
+ * squarified geovista.matrix.treemap.tm, ...).
  * <P>
  * A subclass can also override the drawNode() method
  * to have a customized drawing of a node.
  * <P>
- * And now with cushion edu.psu.geovista.matrix.treemap.tm, thanks to Jarke J. van Wijk :-)
+ * And now with cushion geovista.matrix.treemap.tm, thanks to Jarke J. van Wijk :-)
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @author Vesselin Markovsky [markovsky@semantec.bg]
@@ -244,7 +244,7 @@ public abstract class TMAlgorithm
   /* --- Drawing --- */
 
     /**
-     * Starts the process of drawing the edu.psu.geovista.matrix.treemap.tm.
+     * Starts the process of drawing the geovista.matrix.treemap.tm.
      *
      * @param g       the graphic context
      * @param root    the root
@@ -399,7 +399,7 @@ public abstract class TMAlgorithm
 
     /**
      * The TMBorderConf class implements a configuration view
-     * for the edu.psu.geovista.matrix.treemap.tm algorithms.
+     * for the geovista.matrix.treemap.tm algorithms.
      * It keeps also the cushion parameters.
      * It display a JSlider to configure the border size, thus
      * putting the algorithm into nested.

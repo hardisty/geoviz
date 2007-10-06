@@ -76,7 +76,7 @@ public interface TMModelNode {
      * Called by the TMModelUpdater constructor. 
      * Gives to this model of nodes a reference to a TMModelUpdater object.
      * This node should use this reference
-     * to notify edu.psu.geovista.matrix.treemap.tm that something has changed.
+     * to notify geovista.matrix.treemap.tm that something has changed.
      * See the differents update methods of the TMModelUpdater interface.
      * <P>
      * As this method is called by the constructor

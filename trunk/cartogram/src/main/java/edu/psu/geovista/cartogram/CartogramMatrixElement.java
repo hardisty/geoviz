@@ -29,9 +29,9 @@ import javax.swing.JProgressBar;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
-import edu.psu.geovista.matrix.map.MapMatrixElement;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.matrix.map.MapMatrixElement;
 
 /*
  *

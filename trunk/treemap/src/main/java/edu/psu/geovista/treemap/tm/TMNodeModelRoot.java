@@ -98,7 +98,7 @@ class TMNodeModelRoot {
   /* --- Zooming --- */
 
     /**
-     * Zooms the edu.psu.geovista.matrix.treemap.tm of one level in the direction of the node
+     * Zooms the geovista.matrix.treemap.tm of one level in the direction of the node
      * at the given coordinates.
      *
      * @param x    the x coord
