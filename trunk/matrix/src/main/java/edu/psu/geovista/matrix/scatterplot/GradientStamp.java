@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import edu.psu.geovista.image_blur.image.BoxBlurFilter;
+import geovista.image_blur.image.BoxBlurFilter;
 
 /**
  * 
