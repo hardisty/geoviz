@@ -1,4 +1,4 @@
-package edu.psu.geovista.category;
+package geovista.category;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

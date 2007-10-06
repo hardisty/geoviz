@@ -1,4 +1,4 @@
-package edu.psu.geovista.category;
+package geovista.category;
 
 /**
  * <p>Title: Error Matrix</p>

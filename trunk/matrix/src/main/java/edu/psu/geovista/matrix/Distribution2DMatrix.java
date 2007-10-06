@@ -31,7 +31,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.category.MultiClassDistributions2D;
+import geovista.category.MultiClassDistributions2D;
 
 public class Distribution2DMatrix extends AbstractMatrix implements  ListSelectionListener
 {
