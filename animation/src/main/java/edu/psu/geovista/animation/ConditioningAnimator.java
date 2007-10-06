@@ -46,42 +46,77 @@ import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * ConditioningAnimator is used to send out indication signals that
  * corrispond to current classifications.
- *
  */
 public class ConditioningAnimator extends JPanel implements ActionListener,
                                                           ChangeListener,
                                                           DataSetListener,
                                                           SubspaceListener
                                                        {
+  
+  /** The ticker. */
   private  Timer ticker;
+  
+  /** The curr class index. */
   private transient int currClassIndex;
+  
+  /** The low cond index. */
   private transient int lowCondIndex;
+  
+  /** The high cond index. */
   private transient int highCondIndex;
+  
+  /** The curr conditioning. */
   private transient int[] currConditioning;
 
+  /** The start stop button. */
   private transient JButton startStopButton;
+  
+  /** The going. */
   private transient boolean going = false;
+  
+  /** The speed. */
   private  int speed; //in milliseconds
+  
+  /** The data. */
   private transient DataSetForApps data;
+  
+  /** The obs. */
   private transient ClassedObs[] obs;
+  
+  /** The subspace. */
   private transient int[] subspace;
+  
+  /** The subspace index. */
   private transient int subspaceIndex;
+  
+  /** The time slider. */
   private transient JSlider timeSlider;
 
+  /** The var combo. */
   private transient JComboBox varCombo;
+  
+  /** The var combo is adjusting. */
   private transient boolean varComboIsAdjusting;
 
+  /** The subspace button. */
   private transient JRadioButton subspaceButton;
+  
+  /** The one var button. */
   private transient JRadioButton oneVarButton;
+  
+  /** The using subspace. */
   private  boolean usingSubspace;
   
+  /** The Constant logger. */
   final static Logger logger = Logger.getLogger(ConditioningAnimator.class.getName());
+  
   /**
-  * null ctr
-  */
+   * null ctr.
+   */
   public ConditioningAnimator() {
     this.usingSubspace = true;
     speed = 250;
@@ -93,6 +128,12 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
   }
+  
+  /**
+   * Make top panel.
+   * 
+   * @return the j panel
+   */
   private JPanel makeTopPanel(){
     JPanel topPanel = new JPanel();
     startStopButton = new JButton("Start");
@@ -127,12 +168,20 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     timeSlider.addChangeListener(this);
     return  topPanel;
   }
+  
+  /* (non-Javadoc)
+   * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+   */
   public void stateChanged(ChangeEvent e){
     if (e.getSource() == this.timeSlider && !this.timeSlider.getValueIsAdjusting()){
       this.speed = this.timeSlider.getValue() * 50;
       this.ticker.setDelay(speed);
     }
   }
+  
+  /**
+   * Iterate conditionings.
+   */
   private void iterateConditionings(){//main loop
 
     if (this.highCondIndex < this.data.getNumObservations()-1) { //go up one
@@ -162,6 +211,10 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
       }
     }
   }
+  
+  /* (non-Javadoc)
+   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+   */
   public void actionPerformed(ActionEvent e) {
     if (this.data == null){
       //without data, we don't do anything
@@ -194,6 +247,11 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
   }
 
 
+  /**
+   * Iterate subspace.
+   * 
+   * @return the int
+   */
   private int iterateSubspace(){
 	if (logger.isLoggable(Level.FINEST)){
 		logger.finest("iterating subspace");
@@ -212,6 +270,12 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     return currVar;
 
   }
+  
+  /**
+   * Instantiate current variable.
+   * 
+   * @param currVar the curr var
+   */
   private void instantiateCurrentVariable(int currVar){
 
     double[] values = this.data.getNumericDataAsDouble(currVar);
@@ -221,6 +285,10 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     }
     Arrays.sort(obs);
   }
+  
+  /**
+   * Condition out lower range.
+   */
   private void conditionOutLowerRange(){
 
     for (int i = 0; i < this.currConditioning.length; i++){
@@ -236,6 +304,10 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     this.highCondIndex = fifth -1;
 
   }
+  
+  /* (non-Javadoc)
+   * @see edu.psu.geovista.common.event.SubspaceListener#subspaceChanged(edu.psu.geovista.common.event.SubspaceEvent)
+   */
   public void subspaceChanged (SubspaceEvent e){
     this.subspace = e.getSubspace();
     this.subspaceIndex = 0;
@@ -247,6 +319,10 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     this.varComboIsAdjusting = false;
 
   }
+  
+  /* (non-Javadoc)
+   * @see edu.psu.geovista.common.event.DataSetListener#dataSetChanged(edu.psu.geovista.common.event.DataSetEvent)
+   */
   public void dataSetChanged(DataSetEvent e) {
     this.data = e.getDataSetForApps();
     this.currConditioning =new int[data.getNumObservations()];
@@ -274,14 +350,18 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
 
 
   /**
-  * adds an ConditioningListener
-  */
+   * adds an ConditioningListener.
+   * 
+   * @param l the l
+   */
   public void addConditioningListener(ConditioningListener l) {
     listenerList.add(ConditioningListener.class, l);
   }
 
   /**
-   * removes an ConditioningListener from the component
+   * removes an ConditioningListener from the component.
+   * 
+   * @param l the l
    */
   public void removeConditioningListener(ConditioningListener l) {
     listenerList.remove(ConditioningListener.class, l);
@@ -292,6 +372,9 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
    * notification on this event type. The event instance
    * is lazily created using the parameters passed into
    * the fire method.
+   * 
+   * @param newConditioning the new conditioning
+   * 
    * @see EventListenerList
    */
   private void fireConditioningChanged(int[] newConditioning) {
@@ -315,6 +398,11 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     //next i
   }
 
+  /**
+   * The main method.
+   * 
+   * @param args the arguments
+   */
   public static void main(String[] args) {
     ConditioningAnimator inAnim = new ConditioningAnimator();
 
@@ -331,12 +419,21 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
     app.setVisible(true);
   }
 
+  /**
+   * The Class ClassedObs.
+   */
   private class ClassedObs implements Comparable {
+    
+    /** The index. */
     int index;
 
+    /** The value. */
     double value;
 
     //we compare by value
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
     public int compareTo(Object o) {
       ClassedObs e = (ClassedObs) o;
       int val = 0;
