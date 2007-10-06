@@ -49,7 +49,7 @@ public class DemoModel {
     private static int             count   = 1;    // to have unique view name
 
     private static TMFileModelNode model   = null; // the model of the demo tree
-    private static TreeMap         treeMap = null; // the edu.psu.geovista.matrix.treemap.tm builded
+    private static TreeMap         treeMap = null; // the geovista.matrix.treemap.tm builded
     private static String          name    = null; // name for this demo
 
     /**
@@ -66,7 +66,7 @@ public class DemoModel {
 
         File rootFile = new File(pathRoot);
         try {
-            System.out.println("Starting the edu.psu.geovista.matrix.treemap.tm from " + 
+            System.out.println("Starting the geovista.matrix.treemap.tm from " + 
                                 rootFile.getCanonicalPath());
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class DemoModel {
         } 
 
         if (! rootFile.exists()) {
-            System.out.println("Can't start edu.psu.geovista.matrix.treemap.tm : " + rootFile.getName() + 
+            System.out.println("Can't start geovista.matrix.treemap.tm : " + rootFile.getName() + 
                                " does not exist.");
             return;
         }
@@ -82,7 +82,7 @@ public class DemoModel {
 
         model = new TMFileModelNode(rootFile);
         if (model == null) {
-            System.err.println("Error : can't start edu.psu.geovista.matrix.treemap.tm from " + 
+            System.err.println("Error : can't start geovista.matrix.treemap.tm from " + 
                                 rootFile.getAbsolutePath());
             return;
         }

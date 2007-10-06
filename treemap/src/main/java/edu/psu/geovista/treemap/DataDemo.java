@@ -51,13 +51,13 @@ import edu.psu.geovista.treemap.tm.TreeMap;
 
 
 /**
- * The DataDemo class implements a demo for Treemap. It display a edu.psu.geovista.matrix.treemap.tm
+ * The DataDemo class implements a demo for Treemap. It display a geovista.matrix.treemap.tm
  * view of a demo tree, and a configuration frame.
  * The demo tree is build from a file tree, passed in parameter.
- * DataDemo use TMDataNode as TMNode, draw and size algorithm in the edu.psu.geovista.matrix.treemap.tm.demo
+ * DataDemo use TMDataNode as TMNode, draw and size algorithm in the geovista.matrix.treemap.tm.demo
  * package. DataDemo could take an argument, the path from which
  * start the representing of files.
- * If no arguments is given, the edu.psu.geovista.matrix.treemap.tm start from the root.
+ * If no arguments is given, the geovista.matrix.treemap.tm start from the root.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @version 2.5
@@ -67,7 +67,7 @@ public class DataDemo {
     private static int        count   = 1;    // to have unique view name
 
     private static TMDataNode root    = null; // the root of the demo tree
-    private static TreeMap    treeMap = null; // the edu.psu.geovista.matrix.treemap.tm builded
+    private static TreeMap    treeMap = null; // the geovista.matrix.treemap.tm builded
 
 
     /**
@@ -138,7 +138,7 @@ public class DataDemo {
 
     /**
      * The ConfFrame class implements a configuration frame
-     * containing ConfView for edu.psu.geovista.matrix.treemap.tm's views.
+     * containing ConfView for geovista.matrix.treemap.tm's views.
      */
     class ConfFrame
         extends JFrame {
@@ -185,7 +185,7 @@ public class DataDemo {
 
     /**
      * The ConfView class implements a configuration view
-     * for a edu.psu.geovista.matrix.treemap.tm view.
+     * for a geovista.matrix.treemap.tm view.
      */
     class ConfView
         extends JPanel {

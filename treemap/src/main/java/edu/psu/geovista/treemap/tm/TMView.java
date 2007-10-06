@@ -54,14 +54,14 @@ public class TMView
     extends    JPanel
     implements Observer {
 
-    /* Used to set the display on a classic edu.psu.geovista.matrix.treemap.tm **/
+    /* Used to set the display on a classic geovista.matrix.treemap.tm **/
     public static final String CLASSIC = "CLASSIC";
 
-    /* Used to set the display on a squarified edu.psu.geovista.matrix.treemap.tm **/
+    /* Used to set the display on a squarified geovista.matrix.treemap.tm **/
     public static final String SQUARIFIED = "SQUARIFIED";
 
 
-    private TMNodeModelRoot root        = null; // the root model of the edu.psu.geovista.matrix.treemap.tm
+    private TMNodeModelRoot root        = null; // the root model of the geovista.matrix.treemap.tm
     private TMAlgorithm     drawer      = null; // the drawing algorithm
     private Hashtable       store       = null; // the algortihms store
     private TMStatusView    statusView  = null; // the status view
@@ -100,7 +100,7 @@ public class TMView
 
         this.statusView = new TMStatusView();
         initView = statusView.getView();
-        banner = new JLabel("Building edu.psu.geovista.matrix.treemap.tm view...");
+        banner = new JLabel("Building geovista.matrix.treemap.tm view...");
         banner.setHorizontalAlignment(JLabel.CENTER);
         banner.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         add(banner, BorderLayout.NORTH);
@@ -155,10 +155,10 @@ public class TMView
     }
 
 
-  /* --- Changing edu.psu.geovista.matrix.treemap.tm algorithm --- */
+  /* --- Changing geovista.matrix.treemap.tm algorithm --- */
 
     /**
-     * Adds a edu.psu.geovista.matrix.treemap.tm algorithm to this view.
+     * Adds a geovista.matrix.treemap.tm algorithm to this view.
      * The algorithm is a subclass of TMAlgorithm,
      * and is caracterized by a name.
      * It is this name that should be passed as parameter
@@ -183,7 +183,7 @@ public class TMView
     }
 
     /**
-     * Sets the algorithm of the edu.psu.geovista.matrix.treemap.tm.
+     * Sets the algorithm of the geovista.matrix.treemap.tm.
      * The name given should be one of the TMView constant
      * or a name already registered with addAlgorithm().
      * Does nothing if the parameter is not a
@@ -323,7 +323,7 @@ public class TMView
   /* --- Zooming --- */
 
     /**
-     * Zooms the edu.psu.geovista.matrix.treemap.tm of one level in the direction of the node
+     * Zooms the geovista.matrix.treemap.tm of one level in the direction of the node
      * at the given coordinates.
      *
      * @param x    the x coord
@@ -366,7 +366,7 @@ public class TMView
                     || (x >= (getWidth() - insets.right - 1)))
                 || ((y <= insets.top)
                     || (y >= (getHeight() - insets.bottom - 1)))) {
-                return "This is the border of the edu.psu.geovista.matrix.treemap.tm";
+                return "This is the border of the geovista.matrix.treemap.tm";
             } else {
                 return "This rectangle is due to imprecision in calculs";
             }

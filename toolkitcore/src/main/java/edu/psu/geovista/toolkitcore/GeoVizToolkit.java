@@ -73,13 +73,6 @@ import edu.psu.geovista.geoviz.spreadsheet.SpreadSheetBean;
 import edu.psu.geovista.geoviz.spreadsheet.VariableTransformer;
 import edu.psu.geovista.geoviz.star.StarPlot;
 import edu.psu.geovista.geoviz.star.StarPlotMap;
-import edu.psu.geovista.matrix.MapAndScatterplotMatrix;
-import edu.psu.geovista.matrix.MapMatrix;
-import edu.psu.geovista.matrix.MapScatterplotTreemapMatrix;
-import edu.psu.geovista.matrix.TreemapAndScatterplotMatrix;
-import edu.psu.geovista.matrix.map.MoranMap;
-import edu.psu.geovista.matrix.scatterplot.SingleHistogram;
-import edu.psu.geovista.matrix.scatterplot.SingleScatterPlot;
 import edu.psu.geovista.satscan.SaTScan;
 import edu.psu.geovista.sound.SonicClassifier;
 import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
@@ -91,6 +84,13 @@ import edu.psu.geovista.touchgraph.PCAViz;
 import edu.psu.geovista.touchgraph.SubspaceLinkGraph;
 import geovista.animation.IndicationAnimator;
 import geovista.animation.SelectionAnimator;
+import geovista.matrix.MapAndScatterplotMatrix;
+import geovista.matrix.MapMatrix;
+import geovista.matrix.MapScatterplotTreemapMatrix;
+import geovista.matrix.TreemapAndScatterplotMatrix;
+import geovista.matrix.map.MoranMap;
+import geovista.matrix.scatterplot.SingleHistogram;
+import geovista.matrix.scatterplot.SingleScatterPlot;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.

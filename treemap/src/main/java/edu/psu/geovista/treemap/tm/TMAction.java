@@ -31,7 +31,7 @@ import java.awt.event.MouseEvent;
 
 
 /**
- * The TMAction class manages the action on the edu.psu.geovista.matrix.treemap.tm.
+ * The TMAction class manages the action on the geovista.matrix.treemap.tm.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @version 2.5.2
@@ -57,7 +57,7 @@ public class TMAction
   /* --- MouseAdapter --- */
 
     /**
-     * Called when a user clicked on the edu.psu.geovista.matrix.treemap.tm.
+     * Called when a user clicked on the geovista.matrix.treemap.tm.
      * Used to zoom or unzoom.
      *
      * @param e    the MouseEvent generated when clicking

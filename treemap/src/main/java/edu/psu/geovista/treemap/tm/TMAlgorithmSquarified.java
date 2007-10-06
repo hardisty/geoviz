@@ -33,7 +33,7 @@ import java.util.Vector;
 
 
 /**
- * The TMAlgorithmSquarified class implements a squarified edu.psu.geovista.matrix.treemap.tm drawing
+ * The TMAlgorithmSquarified class implements a squarified geovista.matrix.treemap.tm drawing
  * algorithm.
  * See Bruls, Huizing and van Wijk.
  *
