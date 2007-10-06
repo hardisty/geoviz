@@ -1,4 +1,4 @@
-package edu.psu.geovista.category;
+package geovista.category;
 
 /**
  * <p>Title: Studio applications</p>
@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class CategoryConcept extends JPanel{
+public class CategoryConceptPane extends JPanel{
 
 	private BorderLayout allPaneLayout;
 	private JPanel idPane;
@@ -34,49 +34,62 @@ public class CategoryConcept extends JPanel{
 	private GridLayout dspPaneLayout;
 	private JPanel classParametersPane;
 	private GridLayout classParaPaneLayout;
+	private JTextField idField;
+	private JTextField shortNameField;
+	private JTextField classLabelField;
+	private JTextArea dspArea;
+	private JTextField contextField;
+	private JTextField methodField;
+	private JTextField exampleField;
+	private final JButton colorButton = new JButton();
+
 	private Color currentColor;
 
-	private int[] preferedVarID;
+	private String categoryID;
+	private String shortName;
+	private String classLabel;
 
+	private String descriptions;
 
+	private String context;
+	private String method;
+	private int[] examples;
 
-    public CategoryConcept() {
+	public CategoryConceptPane() {
 		super();
-		this.setPreferredSize(new Dimension(100, 200));
-		this.setMinimumSize(new Dimension (100,200));
+		this.setPreferredSize(new Dimension(150, 200));
+		this.setMinimumSize(new Dimension (150,200));
 		paneInit();
     }
-
-	public void setPreferedVars(int[] preferedVars){
-		this.preferedVarID = preferedVars;
-	}
-
-	public int[] getPreferedVars(){
-		return this.preferedVarID;
-	}
 
 	private void paneInit(){
 		this.allPaneLayout = new BorderLayout();
 		this.setLayout(this.allPaneLayout);
+
 		//construct id panel
-		idPaneLayout = new GridLayout(2,2);
+		idPaneLayout = new GridLayout(3,2);
 		this.idPane = new JPanel(this.idPaneLayout);
 		JLabel idLabel = new JLabel("Category ID:");
-		JTextField idField = new JTextField (16);
+		idField = new JTextField (16);
 		JLabel shortNameLabel = new JLabel("Name:");
-		JTextField shortNameField = new JTextField(16);
+		shortNameField = new JTextField(16);
+		JLabel classLabel = new JLabel("Category Label:");
+		classLabelField = new JTextField (16);
 		this.idPane.add(idLabel);
 		this.idPane.add(idField);
 		this.idPane.add(shortNameLabel);
 		this.idPane.add(shortNameField);
+		this.idPane.add(classLabel);
+		this.idPane.add(classLabelField);
+
 		//Construct description panel
 		dspPaneLayout = new GridLayout(3,1);
 		this.conceptDspPane = new JPanel(this.dspPaneLayout);
 		JLabel dspLabel = new JLabel("Description:");
-		JTextArea dspArea = new JTextArea();
+		dspArea = new JTextArea();
 		JPanel indicatedColor = new JPanel(new GridLayout(1,2));
 		JLabel colorLabel = new JLabel("Prefered Color:");
-		final JButton colorButton = new JButton();
+
 		colorButton.setBackground(Color.lightGray);
 		colorButton.setBorderPainted(true);
 		colorButton.setMargin(new Insets(2,2,2,2));
@@ -114,19 +127,20 @@ public class CategoryConcept extends JPanel{
 		this.conceptDspPane.add(dspLabel);
 		this.conceptDspPane.add(dspArea);
 		this.conceptDspPane.add(indicatedColor);
+
 		//Construct classification preference panel
 		classParaPaneLayout = new GridLayout(6,1);
 		this.classParametersPane = new JPanel(this.classParaPaneLayout);
-		JLabel methodLabel = new JLabel("Application Context:");
-		JTextField methodField = new JTextField(30);
-		JLabel variableLabel = new JLabel("Prefered Classification method:");
-		JTextField variableField = new JTextField(30);
+		JLabel contextLabel = new JLabel("Application Context:");
+		contextField = new JTextField(30);
+		JLabel methodLabel = new JLabel("Prefered Classification method:");
+		methodField = new JTextField(30);
 		JLabel exampleLabel = new JLabel("Examples for This Category:");
-		JTextField exampleField = new JTextField(30);
+		exampleField = new JTextField(30);
+		this.classParametersPane.add(contextLabel);
+		this.classParametersPane.add(contextField);
 		this.classParametersPane.add(methodLabel);
 		this.classParametersPane.add(methodField);
-		this.classParametersPane.add(variableLabel);
-		this.classParametersPane.add(variableField);
 		this.classParametersPane.add(exampleLabel);
 		this.classParametersPane.add(exampleField);
 
@@ -137,5 +151,63 @@ public class CategoryConcept extends JPanel{
 		this.validate();
 	}
 
+	public String getCategoryID() {
+      categoryID = this.idField.getText();
+        return categoryID;
+    }
+    public String getClassLabel() {
+    classLabel = this.classLabelField.getText();
+        return classLabel;
+    }
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+        this.idField.setText(this.categoryID);
+    }
+    public void setClassLabel(String classLabel) {
+        this.classLabel = classLabel;
+        this.classLabelField.setText(this.classLabel);
+    }
+    public String getContext() {
+		context = this.contextField.getText();
+        return context;
+    }
+    public void setContext(String context) {
+        this.context = context;
+        this.contextField.setText(this.context);
+    }
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+    public String getDescriptions() {
+      this.descriptions = this.dspArea.getText();
+        return descriptions;
+    }
+    public void setCurrentColor(Color currentColor) {
+        this.currentColor = currentColor;
+        this.colorButton.setBackground(this.currentColor);
+    }
+    public void setDescriptions(String descriptions) {
+        this.descriptions = descriptions;
+        this.dspArea.setText(this.descriptions);
+    }
+    public int[] getExamples() {
+        return examples;
+    }
+    public String getMethod() {
+      this.method = this.methodField.getText();
+        return method;
+    }
+    public void setMethod(String method) {
+        this.method = method;
+        this.methodField.setText(this.method);
+    }
+    public String getShortName() {
+		this.shortName = this.shortNameField.getText();
+        return shortName;
+    }
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+		this.shortNameField.setText(this.shortName);
+    }
 
 }

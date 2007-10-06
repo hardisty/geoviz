@@ -8,7 +8,7 @@
  * @date: Aug 19, 2003$
  * @version: 1.0
  */
-package edu.psu.geovista.category;
+package geovista.category;
 
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;

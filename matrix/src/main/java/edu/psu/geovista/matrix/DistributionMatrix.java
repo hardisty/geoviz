@@ -39,7 +39,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.category.MultiClassDistributions;
+import geovista.category.MultiClassDistributions;
 
 
 public class DistributionMatrix extends AbstractMatrix

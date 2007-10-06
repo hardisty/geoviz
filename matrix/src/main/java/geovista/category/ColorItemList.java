@@ -8,7 +8,7 @@
  * @date: Aug 5, 2003$
  * @version: 1.0
  */
-package edu.psu.geovista.category;
+package geovista.category;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.HashSet;

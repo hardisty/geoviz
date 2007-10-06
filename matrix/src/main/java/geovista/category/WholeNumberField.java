@@ -1,4 +1,4 @@
-package edu.psu.geovista.category;
+package geovista.category;
 
 import java.awt.Toolkit;
 import java.text.NumberFormat;

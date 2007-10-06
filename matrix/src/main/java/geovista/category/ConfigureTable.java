@@ -8,7 +8,7 @@
  * @date: Aug 13, 2003$
  * @version: 1.0
  */
-package edu.psu.geovista.category;
+package geovista.category;
 
 
 import javax.swing.JTable;
