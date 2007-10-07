@@ -65,7 +65,7 @@ import java.util.logging.Logger;
  * separate class must be use to read
  * <a href="http://ostermiller.org/utils/ExcelCSV.html">Excel CSV</a>.
  *
- * @see psu.edu.geovista.io.csv.ExcelCSVParser
+ * @see geovista.io.csv.ExcelCSVParser
  */
 public class CSVParser implements CSVParse {
 	protected final static Logger logger = Logger.getLogger(CSVParser.class.getName());

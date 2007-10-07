@@ -18,39 +18,6 @@
 
 package geovista.toolkitcore;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import geovista.animation.IndicationAnimator;
 import geovista.animation.SelectionAnimator;
 import geovista.cartogram.GeoMapCartogram;
@@ -91,6 +58,39 @@ import geovista.toolkitcore.data.GeoDataSCarolinaCities;
 import geovista.touchgraph.LinkGraph;
 import geovista.touchgraph.PCAViz;
 import geovista.touchgraph.SubspaceLinkGraph;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
@@ -820,7 +820,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	public static void main(String[] args) {
 
-		Logger logger = Logger.getLogger("edu.psu.geovista");
+		Logger logger = Logger.getLogger("geovista");
 		Logger mapLogger = Logger
 				.getLogger("geovista.geoviz.map.MapCanvas");
 		// logger.setLevel(Level.FINEST);
