@@ -25,7 +25,7 @@ import javax.swing.table.AbstractTableModel;
  * <p>Description: This panel provides a generic table-based dialog GUI for 
  * selecting and ordering attributes represented by an list of attribute names.
  * It is intended to be used by RadViz GUI and GUI components in the 
- * edu.psu.geovista.jdm.gui package</p>
+ * geovista.jdm.gui package</p>
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: GeoVISTA</p>
  * @author Gary L.

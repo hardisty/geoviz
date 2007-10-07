@@ -9,6 +9,32 @@ package geovista.matrix.visclass;
  * @version 1.0
  */
 
+import geovista.category.ErrorMatrixPane;
+import geovista.common.classification.Classifier;
+import geovista.common.classification.ClassifierKMParameters;
+import geovista.common.classification.ClassifierKMeans;
+import geovista.common.classification.ClassifierMLParameters;
+import geovista.common.classification.ClusterMixtureModels;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.TrainingData;
+import geovista.common.event.ClassColorEvent;
+import geovista.common.event.ClassColorListener;
+import geovista.common.event.ClassNumberEvent;
+import geovista.common.event.ClassNumberListener;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.ColorArrayListener;
+import geovista.common.event.DataSetDoubleEvent;
+import geovista.common.event.DataSetDoubleListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.MergeCategoryEvent;
+import geovista.common.event.MergeCategoryListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.readers.util.MyFileFilter;
+import geovista.symbolization.ColorRampPicker;
+import geovista.symbolization.ColorSymbolizer;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,32 +63,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
-
-import geovista.category.ErrorMatrixPane;
-import geovista.common.classification.Classifier;
-import geovista.common.classification.ClassifierKMParameters;
-import geovista.common.classification.ClassifierKMeans;
-import geovista.common.classification.ClassifierMLParameters;
-import geovista.common.classification.ClusterMixtureModels;
-import geovista.common.data.DataSetForApps;
-import geovista.common.data.TrainingData;
-import geovista.common.event.ClassColorEvent;
-import geovista.common.event.ClassColorListener;
-import geovista.common.event.ClassNumberEvent;
-import geovista.common.event.ClassNumberListener;
-import geovista.common.event.ColorArrayEvent;
-import geovista.common.event.ColorArrayListener;
-import geovista.common.event.DataSetDoubleEvent;
-import geovista.common.event.DataSetDoubleListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.MergeCategoryEvent;
-import geovista.common.event.MergeCategoryListener;
-import geovista.common.event.SelectionEvent;
-import geovista.common.event.SelectionListener;
-import geovista.readers.util.MyFileFilter;
-import geovista.symbolization.ColorRampPicker;
-import geovista.symbolization.ColorSymbolizer;
 
 public class VisualClassifierMultiVariables extends JPanel implements ActionListener, ComponentListener,
     DataSetListener, ClassColorListener, MergeCategoryListener, ClassNumberListener, DataSetDoubleListener{
@@ -696,7 +696,7 @@ public class VisualClassifierMultiVariables extends JPanel implements ActionList
 				resultIMG.setRGB(j, i, returnColors[i*525 + j].getRGB());
 			}
 		}
-		//edu.psu.geovista.category.GvImageOps image = new edu.psu.geovista.category.GvImageOps(resultIMG);
+		//geovista.category.GvImageOps image = new geovista.category.GvImageOps(resultIMG);
 
 		imageFrame.getContentPane().add(this.imagePane);
 		imageFrame.setSize(525, 525);
