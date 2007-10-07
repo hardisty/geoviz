@@ -35,11 +35,11 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 
 
 

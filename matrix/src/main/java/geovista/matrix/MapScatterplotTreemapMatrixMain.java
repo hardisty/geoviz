@@ -24,9 +24,9 @@ package geovista.matrix;
 
 import javax.swing.JFrame;
 
-import edu.psu.geovista.geoviz.sample.GeoData48States;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
+import geovista.geoviz.sample.GeoData48States;
 
 /**
  * Special geovista.matrix.treemap.tm that knows how to handle quantitative data. Responds to and

@@ -20,11 +20,11 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import edu.psu.geovista.geoviz.sample.GeoData48States;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.coordination.CoordinationManager;
+import geovista.geoviz.sample.GeoData48States;
 
 public class GeoMapMain
     extends JFrame {
