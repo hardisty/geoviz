@@ -51,7 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.sound.SonicClassifier;
 import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
 import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
 import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
@@ -91,6 +90,7 @@ import geovista.matrix.map.MoranMap;
 import geovista.matrix.scatterplot.SingleHistogram;
 import geovista.matrix.scatterplot.SingleScatterPlot;
 import geovista.satscan.SaTScan;
+import geovista.sound.SonicClassifier;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
@@ -327,7 +327,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// Frank: sound devices depend on the presence of a "soundbank.gm"
 			// file,
 			// which is avialble as a resource from
-			// edu.psu.geovista.sound.resources
+			// geovista.sound.resources
 
 			bInterFrame.setSize(350, 100);
 		} else if (shortClassName.equalsIgnoreCase("SelectionAnimator")) {

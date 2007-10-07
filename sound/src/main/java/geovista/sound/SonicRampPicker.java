@@ -14,7 +14,7 @@
  */
 
 
-package edu.psu.geovista.sound;
+package geovista.sound;
 
 import java.awt.Color;
 import java.awt.Component;
