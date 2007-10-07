@@ -10,15 +10,15 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package edu.psu.geovista.geoviz.parvis.file;
+package geovista.geoviz.parvis.file;
 
 import java.net.URL;
 import java.util.Vector;
 
-import edu.psu.geovista.geoviz.parvis.gui.ProgressEvent;
-import edu.psu.geovista.geoviz.parvis.gui.ProgressListener;
-import edu.psu.geovista.geoviz.parvis.model.SimpleParallelSpaceModel;
 import edu.psu.geovista.readers.FileIO;
+import geovista.geoviz.parvis.gui.ProgressEvent;
+import geovista.geoviz.parvis.gui.ProgressListener;
+import geovista.geoviz.parvis.model.SimpleParallelSpaceModel;
 
 /**
  * A Simple file parser for reading STF (Simple Table Fomrat) files from URLs.

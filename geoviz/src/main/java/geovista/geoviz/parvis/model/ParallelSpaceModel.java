@@ -9,7 +9,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package edu.psu.geovista.geoviz.parvis.model;
+package geovista.geoviz.parvis.model;
 
 import java.util.Hashtable;
 

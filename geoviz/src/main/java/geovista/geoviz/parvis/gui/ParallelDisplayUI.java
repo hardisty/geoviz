@@ -9,7 +9,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package edu.psu.geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis.gui;
 
 import javax.swing.plaf.ComponentUI;
 

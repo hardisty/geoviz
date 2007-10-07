@@ -7,7 +7,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package edu.psu.geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis.gui;
 
 import java.io.File;
 import java.net.URL;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
-import edu.psu.geovista.geoviz.parvis.file.STFFile;
+import geovista.geoviz.parvis.file.STFFile;
 
 /**
  *
@@ -59,7 +59,7 @@ public class MainFrame extends javax.swing.JFrame implements ProgressListener {
         datasourceLabel = new javax.swing.JLabel();
         urlField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        parallelDisplay = new edu.psu.geovista.geoviz.parvis.gui.ParallelDisplay();
+        parallelDisplay = new geovista.geoviz.parvis.gui.ParallelDisplay();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenu = new javax.swing.JMenuItem();
@@ -539,7 +539,7 @@ public class MainFrame extends javax.swing.JFrame implements ProgressListener {
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JTextField urlField;
     private javax.swing.JLabel progressLabel;
-    private edu.psu.geovista.geoviz.parvis.gui.ParallelDisplay parallelDisplay;
+    private geovista.geoviz.parvis.gui.ParallelDisplay parallelDisplay;
     private javax.swing.JToggleButton orderButton;
     private javax.swing.JRadioButtonMenuItem translateMenu;
     private javax.swing.JSeparator jSeparator1;

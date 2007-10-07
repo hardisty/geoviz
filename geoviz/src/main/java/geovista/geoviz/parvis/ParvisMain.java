@@ -10,11 +10,11 @@
  *
  */
 
-package edu.psu.geovista.geoviz.parvis;
+package geovista.geoviz.parvis;
 
 import javax.swing.UIManager;
 
-import edu.psu.geovista.geoviz.parvis.gui.MainFrame;
+import geovista.geoviz.parvis.gui.MainFrame;
 
 /**
  * Launcher Class for unsing Parvis as a standalone application.

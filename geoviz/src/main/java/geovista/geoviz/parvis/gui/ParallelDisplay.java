@@ -9,7 +9,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package edu.psu.geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis.gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -26,12 +26,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.geoviz.parvis.model.ParallelSpaceModel;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.ui.ExcentricLabelClient;
+import geovista.geoviz.parvis.model.ParallelSpaceModel;
 
 
 /**
