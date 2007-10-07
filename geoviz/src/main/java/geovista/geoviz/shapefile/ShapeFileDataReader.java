@@ -33,18 +33,18 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.readers.csv.GeogCSVReader;
-import edu.psu.geovista.readers.geog.AttributeDescriptionFile;
-import edu.psu.geovista.readers.geog.ShapeFile;
-import edu.psu.geovista.readers.geog.ShapeFileRecordPoint;
-import edu.psu.geovista.readers.geog.ShapeFileRecordPolyLine;
-import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeneralPathLine;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.dbase.DBaseFieldDescriptor;
 import geovista.geoviz.dbase.DBaseFile;
+import geovista.readers.csv.GeogCSVReader;
+import geovista.readers.geog.AttributeDescriptionFile;
+import geovista.readers.geog.ShapeFile;
+import geovista.readers.geog.ShapeFileRecordPoint;
+import geovista.readers.geog.ShapeFileRecordPolyLine;
+import geovista.readers.geog.ShapeFileRecordPolygon;
 
 /**
  * Takes a file name and returns an Object[] with:

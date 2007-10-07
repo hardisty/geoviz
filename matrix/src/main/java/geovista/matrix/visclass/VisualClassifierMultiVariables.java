@@ -38,7 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.readers.util.MyFileFilter;
 import edu.psu.geovista.symbolization.ColorRampPicker;
 import edu.psu.geovista.symbolization.ColorSymbolizer;
 import geovista.category.ErrorMatrixPane;
@@ -63,6 +62,7 @@ import geovista.common.event.MergeCategoryEvent;
 import geovista.common.event.MergeCategoryListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.readers.util.MyFileFilter;
 
 public class VisualClassifierMultiVariables extends JPanel implements ActionListener, ComponentListener,
     DataSetListener, ClassColorListener, MergeCategoryListener, ClassNumberListener, DataSetDoubleListener{
@@ -730,14 +730,14 @@ public class VisualClassifierMultiVariables extends JPanel implements ActionList
 	  try{
 		  int varnum = dataObject.length-2;
 		  FileInputStream[] istreams = new FileInputStream[varnum];
-		  edu.psu.geovista.readers.Reader[] fileReader = new edu.psu.geovista.readers.Reader[varnum];
+		  geovista.readers.Reader[] fileReader = new geovista.readers.Reader[varnum];
 		  String[] values = new String[varnum];
 		  double[] tuple = new double[varnum];
 		  this.classificationIndex = new int[525*525];
 
 		  for (int i = 0; i < varnum; i ++){
 			  istreams[i] = new FileInputStream(files[i]);
-			  fileReader[i] = new edu.psu.geovista.readers.Reader(istreams[i], ",\n");
+			  fileReader[i] = new geovista.readers.Reader(istreams[i], ",\n");
 		  }
 
 		  for (int i=0;i<525*525;i++){

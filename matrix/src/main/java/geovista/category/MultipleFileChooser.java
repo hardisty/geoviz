@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.readers.util.MyFileFilter;
+import geovista.readers.util.MyFileFilter;
 
 public class MultipleFileChooser extends JPanel implements ActionListener {
 

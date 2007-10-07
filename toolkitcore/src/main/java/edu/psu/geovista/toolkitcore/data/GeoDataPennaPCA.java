@@ -27,11 +27,11 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.readers.csv.GeogCSVReader;
-import edu.psu.geovista.readers.geog.ShapeFile;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeoDataSource;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.csv.GeogCSVReader;
+import geovista.readers.geog.ShapeFile;
 
 /**
  * Reads shapefiles from included resources

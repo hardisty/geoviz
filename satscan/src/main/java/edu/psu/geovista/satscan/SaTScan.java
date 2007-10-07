@@ -39,11 +39,11 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 
-import edu.psu.geovista.readers.FileIO;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.sample.GeoData48States;
+import geovista.readers.FileIO;
 
 /**
  * ConditioningAnimator is used to send out indication signals that corrispond

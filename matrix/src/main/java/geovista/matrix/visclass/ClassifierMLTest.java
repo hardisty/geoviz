@@ -28,7 +28,7 @@ public class ClassifierMLTest {
 	UniPlotMatrix scatterPlotMatrix = new UniPlotMatrix();
 	scatterPlotMatrix.setElementClassName("geovista.geoviz.scatterplot.ScatterPlot");
 
-	edu.psu.geovista.readers.csv.CSVFileDataReader csvReader = new edu.psu.geovista.readers.csv.CSVFileDataReader();
+	geovista.readers.csv.CSVFileDataReader csvReader = new geovista.readers.csv.CSVFileDataReader();
 	String fn = "T:\\GeoVISTA\\data\\kioloa_london.csv";
 	//String fn = "T:\\GeoVISTA\\data\\tm24.csv";
 	//String fn = "D:\\temp\\datatest\\testdata.csv";
