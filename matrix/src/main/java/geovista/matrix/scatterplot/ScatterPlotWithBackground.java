@@ -15,8 +15,8 @@ import java.awt.Graphics2D;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import edu.psu.geovista.common.classification.BoundaryClassifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.common.classification.BoundaryClassifier;
 
 /**
  * put your documentation comment here

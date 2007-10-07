@@ -20,8 +20,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
+import geovista.common.classification.ClassifierPicker;
 
 public class SonicClassifierMain {
 	protected SonicClassifier vc;

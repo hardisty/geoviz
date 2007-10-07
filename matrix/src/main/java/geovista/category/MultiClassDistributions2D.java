@@ -32,7 +32,7 @@ import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.EigenvalueDecomposition;
 
-import edu.psu.geovista.common.classification.MultiGaussian;
+import geovista.common.classification.MultiGaussian;
 import geovista.matrix.scatterplot.DataArray;
 
 public class MultiClassDistributions2D extends JPanel implements MouseListener, ComponentListener

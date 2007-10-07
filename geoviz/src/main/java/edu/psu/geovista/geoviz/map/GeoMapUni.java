@@ -41,7 +41,6 @@ import javax.swing.JToolBar;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.classification.ClassifierPicker;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
@@ -60,6 +59,7 @@ import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
+import geovista.common.classification.ClassifierPicker;
 
 /**
  * This class handles the user state, like selection, pan, zoom, plus

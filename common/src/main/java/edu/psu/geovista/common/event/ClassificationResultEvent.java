@@ -17,7 +17,7 @@ package edu.psu.geovista.common.event;
 
 import java.util.EventObject;
 
-import edu.psu.geovista.common.classification.ClassificationResult;
+import geovista.common.classification.ClassificationResult;
 
 
 /**

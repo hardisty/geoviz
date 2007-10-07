@@ -18,8 +18,8 @@ package edu.psu.geovista.symbolization;
 
 import java.awt.Color;
 
-import edu.psu.geovista.common.classification.Classifier;
-import edu.psu.geovista.common.classification.ClassifierRawQuantiles;
+import geovista.common.classification.Classifier;
+import geovista.common.classification.ClassifierRawQuantiles;
 
 public class ColorSymbolClassificationSimple implements ColorSymbolClassification {
 
