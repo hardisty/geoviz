@@ -34,7 +34,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.descriptive.DescriptiveStats;
 import edu.psu.geovista.geoviz.spreadsheet.formula.Cell;
 import edu.psu.geovista.geoviz.spreadsheet.formula.CellFomulaEditor;
 import edu.psu.geovista.geoviz.spreadsheet.formula.FormulaEditor;
@@ -48,6 +47,7 @@ import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.geoviz.descriptive.DescriptiveStats;
 
 public class SpreadSheetBean extends JPanel
                              implements java.io.Serializable,ChangeListener,
