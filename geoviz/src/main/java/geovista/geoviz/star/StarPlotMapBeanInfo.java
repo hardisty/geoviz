@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.star;
+package geovista.geoviz.star;
 
 /**
  * <p>Title: MapAndScatterplotMatrixBeanInfo</p>
