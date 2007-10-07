@@ -23,25 +23,25 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.event.ColorArrayEvent;
-import edu.psu.geovista.common.event.ColorArrayListener;
-import edu.psu.geovista.common.event.ConditioningEvent;
-import edu.psu.geovista.common.event.ConditioningListener;
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.IndicationEvent;
-import edu.psu.geovista.common.event.IndicationListener;
-import edu.psu.geovista.common.event.PaletteEvent;
-import edu.psu.geovista.common.event.PaletteListener;
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
-import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.geoviz.parvis.file.STFDataSet;
 import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.readers.FileIO;
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.data.DataSetForApps;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.ColorArrayListener;
+import geovista.common.event.ConditioningEvent;
+import geovista.common.event.ConditioningListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.PaletteEvent;
+import geovista.common.event.PaletteListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
 
 /**

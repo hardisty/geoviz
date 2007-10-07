@@ -38,12 +38,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
-import edu.psu.geovista.common.event.SpatialExtentEvent;
-import edu.psu.geovista.common.event.SpatialExtentListener;
-import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.common.event.SubspaceListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SpatialExtentEvent;
+import geovista.common.event.SpatialExtentListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
 public class HistoryGUI
     extends JPanel implements ActionListener,

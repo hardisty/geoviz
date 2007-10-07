@@ -41,16 +41,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.IndicationEvent;
-import edu.psu.geovista.common.event.IndicationListener;
-import edu.psu.geovista.common.event.PaletteEvent;
-import edu.psu.geovista.common.event.PaletteListener;
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
-import edu.psu.geovista.common.event.SpatialExtentEvent;
-import edu.psu.geovista.common.event.SpatialExtentListener;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.geoviz.map.GeoMapUni;
 import edu.psu.geovista.geoviz.map.SpatialWeights;
@@ -62,6 +52,16 @@ import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.PaletteEvent;
+import geovista.common.event.PaletteListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SpatialExtentEvent;
+import geovista.common.event.SpatialExtentListener;
 import geovista.matrix.scatterplot.SingleScatterPlot;
 
 /**

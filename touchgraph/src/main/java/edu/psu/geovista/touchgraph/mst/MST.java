@@ -8,8 +8,8 @@ import java.io.FileOutputStream;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.geoviz.map.GeoMap;
+import geovista.common.event.SelectionEvent;
 
 /**
  * Title: MST Description: Contains only the main method, just starts a

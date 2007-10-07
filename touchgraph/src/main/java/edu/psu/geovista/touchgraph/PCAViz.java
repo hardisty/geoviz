@@ -21,15 +21,15 @@ import cern.colt.matrix.linalg.Algebra;
 import cern.colt.matrix.linalg.SingularValueDecomposition;
 import cern.jet.math.Functions;
 
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.IndicationEvent;
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.common.ui.VariablePicker;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
 import geovista.common.data.DataSetForApps;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
 /**
  * 

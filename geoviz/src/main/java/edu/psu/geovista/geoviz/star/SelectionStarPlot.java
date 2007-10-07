@@ -22,8 +22,8 @@
 package edu.psu.geovista.geoviz.star;
 
 
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
 
 
 /**

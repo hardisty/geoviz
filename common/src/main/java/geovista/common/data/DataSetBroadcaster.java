@@ -29,10 +29,10 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.AuxiliaryDataSetEvent;
-import edu.psu.geovista.common.event.AuxiliaryDataSetListener;
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
+import geovista.common.event.AuxiliaryDataSetEvent;
+import geovista.common.event.AuxiliaryDataSetListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
 
 
 

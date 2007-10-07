@@ -38,20 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.ClassColorEvent;
-import edu.psu.geovista.common.event.ClassColorListener;
-import edu.psu.geovista.common.event.ClassNumberEvent;
-import edu.psu.geovista.common.event.ClassNumberListener;
-import edu.psu.geovista.common.event.ColorArrayEvent;
-import edu.psu.geovista.common.event.ColorArrayListener;
-import edu.psu.geovista.common.event.DataSetDoubleEvent;
-import edu.psu.geovista.common.event.DataSetDoubleListener;
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.MergeCategoryEvent;
-import edu.psu.geovista.common.event.MergeCategoryListener;
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.readers.util.MyFileFilter;
 import edu.psu.geovista.symbolization.ColorRampPicker;
 import edu.psu.geovista.symbolization.ColorSymbolizer;
@@ -63,6 +49,20 @@ import geovista.common.classification.ClassifierMLParameters;
 import geovista.common.classification.ClusterMixtureModels;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.TrainingData;
+import geovista.common.event.ClassColorEvent;
+import geovista.common.event.ClassColorListener;
+import geovista.common.event.ClassNumberEvent;
+import geovista.common.event.ClassNumberListener;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.ColorArrayListener;
+import geovista.common.event.DataSetDoubleEvent;
+import geovista.common.event.DataSetDoubleListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.MergeCategoryEvent;
+import geovista.common.event.MergeCategoryListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
 
 public class VisualClassifierMultiVariables extends JPanel implements ActionListener, ComponentListener,
     DataSetListener, ClassColorListener, MergeCategoryListener, ClassNumberListener, DataSetDoubleListener{

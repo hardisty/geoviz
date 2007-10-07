@@ -18,7 +18,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import edu.psu.geovista.common.event.ClassNumberEvent;
+import geovista.common.event.ClassNumberEvent;
 
 public class EsColorBrewer extends ColorBrewerPlus {
 

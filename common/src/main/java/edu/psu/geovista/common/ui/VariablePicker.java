@@ -35,11 +35,11 @@ import javax.swing.JViewport;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.common.event.SubspaceListener;
 import geovista.common.data.DataSetForApps;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
 public class VariablePicker extends JPanel implements DataSetListener,
 		SubspaceListener, ActionListener, TableModelListener {
