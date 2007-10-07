@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.table;
+package geovista.geoviz.table;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
