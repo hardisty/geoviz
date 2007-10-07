@@ -10,12 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.geoviz.map.GeoMap;
 import edu.psu.geovista.geoviz.parvis.gui.ParallelPlot;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.coordination.CoordinationManager;
+import geovista.geoviz.map.GeoMap;
 
 /**
  * A class for testing the SJava link between R and Java. See:

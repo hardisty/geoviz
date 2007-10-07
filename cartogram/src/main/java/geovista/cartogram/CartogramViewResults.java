@@ -27,7 +27,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.psu.geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.map.GeoMapUni;
 
 //
 //step 4: create cartogram....

@@ -28,7 +28,6 @@ import java.util.logging.Level;
 
 import javax.swing.JPanel;
 
-import edu.psu.geovista.geoviz.map.GeoMap;
 import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.symbolization.glyph.Glyph;
 import edu.psu.geovista.symbolization.glyph.GlyphEvent;
@@ -40,6 +39,7 @@ import geovista.common.event.DataSetModifiedEvent;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.geoviz.map.GeoMap;
 
 /**
  * Paints an array of StarPlotMap. Responds to and broadcasts DataSetChanged,

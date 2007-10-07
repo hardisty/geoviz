@@ -12,7 +12,7 @@
  -------------------------------------------------------------------   */
 
 
-package edu.psu.geovista.geoviz.map;
+package geovista.geoviz.map;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
