@@ -24,13 +24,13 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.common.event.ColorArrayEvent;
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import geovista.common.classification.Classifier;
 import geovista.common.data.DataSetForApps;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.IndicationEvent;
 import geovista.matrix.MatrixElement;
 
 public class TreeMapMatrixElement

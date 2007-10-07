@@ -21,8 +21,8 @@
 
 package edu.psu.geovista.rjava;
 
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
 
 /**
  * This class listens for events, especially coordinated events, and makes the

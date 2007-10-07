@@ -34,10 +34,10 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.IndicationEvent;
-import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
 
 //import javax.swing.colorchooser.*;
 

@@ -37,10 +37,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
 
 public class Histogram extends JPanel implements MouseListener, ComponentListener, DataSetListener, SelectionListener{
 	private static double AXISSPACEPORTION = 1.0/6.0;

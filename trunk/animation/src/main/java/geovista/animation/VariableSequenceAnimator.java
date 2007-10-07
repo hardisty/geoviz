@@ -30,11 +30,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.VariableSelectionEvent;
-import edu.psu.geovista.common.event.VariableSelectionListener;
 import geovista.common.data.DataSetForApps;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.VariableSelectionEvent;
+import geovista.common.event.VariableSelectionListener;
 
 
 /**

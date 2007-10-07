@@ -65,10 +65,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.IndicationEvent;
-import edu.psu.geovista.common.event.IndicationListener;
-import edu.psu.geovista.common.event.SelectionEvent;
-import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.touchgraph.graphelements.GraphEltSet;
 import edu.psu.geovista.touchgraph.graphelements.ImmutableGraphEltSet;
 import edu.psu.geovista.touchgraph.graphelements.TGForEachEdge;
@@ -76,6 +72,10 @@ import edu.psu.geovista.touchgraph.graphelements.TGForEachNode;
 import edu.psu.geovista.touchgraph.graphelements.VisibleLocality;
 import edu.psu.geovista.touchgraph.interaction.GLEditUI;
 import edu.psu.geovista.touchgraph.interaction.TGAbstractClickUI;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
 
 /** TGPanel contains code for drawing the graph, and storing which nodes
   * are selected, and which ones the mouse is over.

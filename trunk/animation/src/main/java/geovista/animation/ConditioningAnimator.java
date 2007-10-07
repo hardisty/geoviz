@@ -37,13 +37,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.event.ConditioningEvent;
-import edu.psu.geovista.common.event.ConditioningListener;
-import edu.psu.geovista.common.event.DataSetEvent;
-import edu.psu.geovista.common.event.DataSetListener;
-import edu.psu.geovista.common.event.SubspaceEvent;
-import edu.psu.geovista.common.event.SubspaceListener;
 import geovista.common.data.DataSetForApps;
+import geovista.common.event.ConditioningEvent;
+import geovista.common.event.ConditioningListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
 
 // TODO: Auto-generated Javadoc
@@ -306,7 +306,7 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
   }
   
   /* (non-Javadoc)
-   * @see edu.psu.geovista.common.event.SubspaceListener#subspaceChanged(edu.psu.geovista.common.event.SubspaceEvent)
+   * @see geovista.common.event.SubspaceListener#subspaceChanged(geovista.common.event.SubspaceEvent)
    */
   public void subspaceChanged (SubspaceEvent e){
     this.subspace = e.getSubspace();
@@ -321,7 +321,7 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
   }
   
   /* (non-Javadoc)
-   * @see edu.psu.geovista.common.event.DataSetListener#dataSetChanged(edu.psu.geovista.common.event.DataSetEvent)
+   * @see geovista.common.event.DataSetListener#dataSetChanged(geovista.common.event.DataSetEvent)
    */
   public void dataSetChanged(DataSetEvent e) {
     this.data = e.getDataSetForApps();
