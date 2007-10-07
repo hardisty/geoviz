@@ -14,7 +14,7 @@
  */
 
 
-package edu.psu.geovista.symbolization;
+package geovista.symbolization;
 
 import java.awt.Color;
 import java.awt.Graphics;

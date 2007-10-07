@@ -27,12 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import edu.psu.geovista.symbolization.ColorSymbolClassification;
-import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
-import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
@@ -51,6 +45,12 @@ import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.matrix.map.MapMatrixElement;
 import geovista.matrix.scatterplot.ScatterPlot;
+import geovista.symbolization.BivariateColorSchemeVisualizer;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolClassification;
+import geovista.symbolization.event.ColorClassifierEvent;
+import geovista.symbolization.event.ColorClassifierListener;
 
 
 public class BivariateGraphFrame extends JPanel implements  DataSetListener, ActionListener,

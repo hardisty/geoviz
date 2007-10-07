@@ -53,7 +53,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import edu.psu.geovista.symbolization.ColorInterpolator;
+import geovista.symbolization.ColorInterpolator;
 
 /**  Edge.
   *

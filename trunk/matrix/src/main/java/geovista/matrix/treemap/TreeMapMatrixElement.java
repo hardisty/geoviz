@@ -24,14 +24,14 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import geovista.common.classification.Classifier;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.IndicationEvent;
 import geovista.matrix.MatrixElement;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 
 public class TreeMapMatrixElement
     extends TreeMapCanvas implements MatrixElement {

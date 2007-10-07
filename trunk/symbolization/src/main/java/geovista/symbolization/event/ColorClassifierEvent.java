@@ -4,7 +4,7 @@
  * Created on December 3, 2004, 3:57 PM
  */
 
-package edu.psu.geovista.symbolization.event;
+package geovista.symbolization.event;
 
 /* -------------------------------------------------------------------
 GeoVISTA Center (Penn State, Dept. of Geography)
@@ -23,7 +23,7 @@ ___ ___
 
 import java.util.EventObject;
 
-import edu.psu.geovista.symbolization.ColorSymbolClassification;
+import geovista.symbolization.ColorSymbolClassification;
 
 
 /**

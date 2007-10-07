@@ -41,9 +41,6 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.symbolization.glyph.Glyph;
-import edu.psu.geovista.symbolization.glyph.GlyphEvent;
-import edu.psu.geovista.symbolization.glyph.GlyphListener;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
@@ -51,6 +48,9 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.geoviz.spacefill.FillOrder;
+import geovista.symbolization.glyph.Glyph;
+import geovista.symbolization.glyph.GlyphEvent;
+import geovista.symbolization.glyph.GlyphListener;
 
 /**
  * This class keeps track of where the Starplots should go. Companion class

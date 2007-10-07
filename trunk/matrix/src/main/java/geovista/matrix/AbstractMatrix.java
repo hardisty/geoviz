@@ -37,12 +37,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import edu.psu.geovista.symbolization.ColorSymbolClassificationSimple;
-import edu.psu.geovista.symbolization.ColorSymbolizer;
-import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
-import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.classification.Classifier;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
@@ -57,6 +51,12 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolizer;
+import geovista.symbolization.event.ColorClassifierEvent;
+import geovista.symbolization.event.ColorClassifierListener;
 
 public abstract class AbstractMatrix
     extends JPanel

@@ -20,7 +20,7 @@
  ------------------------------------------------------------------------------*/
 
 
-package edu.psu.geovista.symbolization.glyph;
+package geovista.symbolization.glyph;
 
 import java.util.EventObject;
 

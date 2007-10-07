@@ -57,11 +57,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 
-import edu.psu.geovista.symbolization.AffineTransformModifier;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import edu.psu.geovista.symbolization.glyph.Glyph;
-import edu.psu.geovista.symbolization.glyph.GlyphEvent;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
@@ -79,6 +74,11 @@ import geovista.geoviz.transform.ShapeAffineTransform;
 import geovista.geoviz.transform.ShapeTransformer;
 import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.image_blur.image.BoxBlurFilter;
+import geovista.symbolization.AffineTransformModifier;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.glyph.Glyph;
+import geovista.symbolization.glyph.GlyphEvent;
 
 /**
  * This class handles the rendering of layer-independent objects like tooltips

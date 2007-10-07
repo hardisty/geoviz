@@ -4,7 +4,7 @@
  * Created on December 12, 2003, 9:13 AM
  */
 
-package edu.psu.geovista.symbolization;
+package geovista.symbolization;
 
 import java.awt.Color;
 import java.util.Vector;

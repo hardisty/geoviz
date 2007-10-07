@@ -1,4 +1,4 @@
-package edu.psu.geovista.symbolization;
+package geovista.symbolization;
 
 import java.beans.BeanInfo;
 import java.beans.SimpleBeanInfo;

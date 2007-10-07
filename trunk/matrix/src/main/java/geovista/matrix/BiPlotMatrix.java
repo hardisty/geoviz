@@ -38,7 +38,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationOneColor;
+import geovista.symbolization.BivariateColorSymbolClassificationOneColor;
 
 public class BiPlotMatrix extends AbstractMatrix implements
 		ListSelectionListener {

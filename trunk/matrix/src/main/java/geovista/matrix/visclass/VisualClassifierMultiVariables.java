@@ -38,8 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.symbolization.ColorRampPicker;
-import edu.psu.geovista.symbolization.ColorSymbolizer;
 import geovista.category.ErrorMatrixPane;
 import geovista.common.classification.Classifier;
 import geovista.common.classification.ClassifierKMParameters;
@@ -63,6 +61,8 @@ import geovista.common.event.MergeCategoryListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.readers.util.MyFileFilter;
+import geovista.symbolization.ColorRampPicker;
+import geovista.symbolization.ColorSymbolizer;
 
 public class VisualClassifierMultiVariables extends JPanel implements ActionListener, ComponentListener,
     DataSetListener, ClassColorListener, MergeCategoryListener, ClassNumberListener, DataSetDoubleListener{

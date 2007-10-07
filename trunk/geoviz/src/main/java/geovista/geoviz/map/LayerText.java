@@ -33,7 +33,7 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
-import edu.psu.geovista.symbolization.glyph.Glyph;
+import geovista.symbolization.glyph.Glyph;
 
 
 /**

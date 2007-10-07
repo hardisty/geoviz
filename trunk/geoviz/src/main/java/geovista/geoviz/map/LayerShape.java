@@ -41,9 +41,9 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.symbolization.ColorInterpolator;
-import edu.psu.geovista.symbolization.glyph.Glyph;
 import geovista.common.ui.Fisheyes;
+import geovista.symbolization.ColorInterpolator;
+import geovista.symbolization.glyph.Glyph;
 
 /**
  * Layer and its subclasses are responsible for rendering spatial data, using

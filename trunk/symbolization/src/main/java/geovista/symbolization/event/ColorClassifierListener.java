@@ -13,7 +13,7 @@ ___ ___
 ------------------------------------------------------------------- *
 */
 
-package edu.psu.geovista.symbolization.event;
+package geovista.symbolization.event;
 
 import java.util.EventListener;
 

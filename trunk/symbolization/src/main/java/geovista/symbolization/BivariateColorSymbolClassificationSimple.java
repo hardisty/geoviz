@@ -20,7 +20,7 @@
 
 
 
-package edu.psu.geovista.symbolization;
+package geovista.symbolization;
 
 import java.awt.Color;
 

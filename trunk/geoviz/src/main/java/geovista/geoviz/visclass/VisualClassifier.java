@@ -51,13 +51,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.symbolization.ColorRampPicker;
-import edu.psu.geovista.symbolization.ColorSymbolClassification;
-import edu.psu.geovista.symbolization.ColorSymbolClassificationSimple;
-import edu.psu.geovista.symbolization.ColorSymbolizer;
-import edu.psu.geovista.symbolization.ColorSymbolizerLinear;
-import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
-import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.classification.Classifier;
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.color.Palette;
@@ -70,6 +63,13 @@ import geovista.common.event.DataSetModifiedEvent;
 import geovista.common.event.DataSetModifiedListener;
 import geovista.common.event.PaletteEvent;
 import geovista.common.event.PaletteListener;
+import geovista.symbolization.ColorRampPicker;
+import geovista.symbolization.ColorSymbolClassification;
+import geovista.symbolization.ColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolizer;
+import geovista.symbolization.ColorSymbolizerLinear;
+import geovista.symbolization.event.ColorClassifierEvent;
+import geovista.symbolization.event.ColorClassifierListener;
 
 // import javax.swing.colorchooser.*;
 
@@ -80,7 +80,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	// Jin Chen: for extending purpose, change private to protected for
 	// following fields:
 	// symbolizationPanel,colors,dataColors,colorerLinear,colorClasser,classPick
-	protected edu.psu.geovista.symbolization.ColorRampPicker symbolizationPanel;
+	protected geovista.symbolization.ColorRampPicker symbolizationPanel;
 
 	// XXX in future, we want to support much beyond colors.
 	protected transient Color[] colors;
@@ -107,8 +107,8 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	public static final int Y_AXIS = 1;
 	public transient boolean orientationInParentIsX = false;
 
-	protected edu.psu.geovista.symbolization.ColorSymbolizerLinear colorerLinear;
-	protected edu.psu.geovista.symbolization.ColorSymbolClassificationSimple colorClasser;
+	protected geovista.symbolization.ColorSymbolizerLinear colorerLinear;
+	protected geovista.symbolization.ColorSymbolClassificationSimple colorClasser;
 
 	protected ClassifierPicker classPick;
 

@@ -33,8 +33,8 @@ import java.awt.geom.GeneralPath;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.symbolization.AffineTransformModifier;
-import edu.psu.geovista.symbolization.glyph.Glyph;
+import geovista.symbolization.AffineTransformModifier;
+import geovista.symbolization.glyph.Glyph;
 
 /**
  * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n =
