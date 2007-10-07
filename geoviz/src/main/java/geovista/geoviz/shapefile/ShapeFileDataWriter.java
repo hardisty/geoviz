@@ -13,7 +13,7 @@
  */
 
 
-package edu.psu.geovista.geoviz.shapefile;
+package geovista.geoviz.shapefile;
 
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;

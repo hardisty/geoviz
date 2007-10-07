@@ -41,9 +41,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
-import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
-import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.data.DataSetForApps;
@@ -62,6 +59,9 @@ import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.map.SpatialWeights;
 import geovista.geoviz.sample.GeoData48States;
+import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.matrix.scatterplot.SingleScatterPlot;
 
 /**

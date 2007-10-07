@@ -28,12 +28,12 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
-import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.common.data.DataSetForApps;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.sample.GeoData48States;
+import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.geoviz.shapefile.ShapeFileToShape;
 
 
 public class TextureMapMain
