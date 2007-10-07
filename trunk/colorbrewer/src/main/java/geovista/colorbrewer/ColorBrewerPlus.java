@@ -35,14 +35,14 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.psu.geovista.common.color.BivariatePalette;
-import edu.psu.geovista.common.color.Palette;
 import edu.psu.geovista.common.event.BivariatePaletteEvent;
 import edu.psu.geovista.common.event.BivariatePaletteListener;
 import edu.psu.geovista.common.event.ClassNumberEvent;
 import edu.psu.geovista.common.event.ClassNumberListener;
 import edu.psu.geovista.common.event.PaletteEvent;
 import edu.psu.geovista.common.event.PaletteListener;
+import geovista.common.color.BivariatePalette;
+import geovista.common.color.Palette;
 
 /**
  GeoVISTA Center (Penn State, Dept. of Geography)

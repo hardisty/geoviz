@@ -4,7 +4,7 @@
  * Created on December 8, 2003, 12:20 PM
  */
 
-package edu.psu.geovista.common.color;
+package geovista.common.color;
 
 import java.awt.Color;
 

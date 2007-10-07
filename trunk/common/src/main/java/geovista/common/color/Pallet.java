@@ -1,4 +1,4 @@
-package edu.psu.geovista.common.color;
+package geovista.common.color;
 
 /**
  * <p>Title: </p>
