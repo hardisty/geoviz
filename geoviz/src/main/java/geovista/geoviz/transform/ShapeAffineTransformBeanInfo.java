@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.transform;
+package geovista.geoviz.transform;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
