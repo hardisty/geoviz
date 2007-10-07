@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.spacefill;
+package geovista.geoviz.spacefill;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
