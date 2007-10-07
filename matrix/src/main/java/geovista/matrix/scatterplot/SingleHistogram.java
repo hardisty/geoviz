@@ -24,12 +24,12 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.DescriptiveStatistics;
 
 public class SingleHistogram extends JPanel implements DataSetListener,
 		SelectionListener, ActionListener, ChangeListener, TableModelListener {

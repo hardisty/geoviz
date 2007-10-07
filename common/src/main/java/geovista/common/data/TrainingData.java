@@ -1,4 +1,4 @@
-package edu.psu.geovista.common.data;
+package geovista.common.data;
 
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)

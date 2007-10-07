@@ -41,10 +41,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ClassificationEvent;
 import edu.psu.geovista.common.event.ClassificationListener;
 import edu.psu.geovista.common.event.DataSetModifiedEvent;
+import geovista.common.data.DataSetForApps;
 
 public class ClassifierPicker
     extends JPanel

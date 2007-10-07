@@ -25,7 +25,7 @@ package edu.psu.geovista.common.event;
 
 import java.util.EventObject;
 
-import edu.psu.geovista.common.data.DataSetForApps;
+import geovista.common.data.DataSetForApps;
 
 
 /**

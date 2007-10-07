@@ -26,9 +26,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.geoviz.map.GeoMap;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
+import geovista.common.data.DataSetForApps;
 
 /*
  *

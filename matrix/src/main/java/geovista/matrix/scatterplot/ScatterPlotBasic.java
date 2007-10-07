@@ -50,14 +50,14 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.IndicationEvent;
 import edu.psu.geovista.common.event.IndicationListener;
 import edu.psu.geovista.common.ui.ExcentricLabelClient;
 import edu.psu.geovista.common.ui.ExcentricLabels;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.DescriptiveStatistics;
 import geovista.matrix.MatrixElement;
 
 public class ScatterPlotBasic extends JPanel implements ComponentListener,

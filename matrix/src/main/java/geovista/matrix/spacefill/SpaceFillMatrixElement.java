@@ -28,8 +28,8 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.geoviz.spacefill.SpaceFillCanvas;
+import geovista.common.data.DataSetForApps;
 import geovista.matrix.MatrixElement;
 
 public class SpaceFillMatrixElement extends SpaceFillCanvas

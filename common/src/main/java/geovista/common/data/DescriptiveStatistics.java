@@ -18,7 +18,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.common.data;
+package geovista.common.data;
 
 import java.util.Arrays;
 import java.util.logging.Level;

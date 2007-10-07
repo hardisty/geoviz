@@ -11,8 +11,8 @@ package geovista.common.classification;
 
 import java.util.Vector;
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.StatisticsVectors;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.StatisticsVectors;
 
 public class ClusterMixtureModels {
 

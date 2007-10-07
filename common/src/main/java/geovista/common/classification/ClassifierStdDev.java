@@ -2,7 +2,7 @@ package geovista.common.classification;
 
 import java.util.logging.Logger;
 
-import edu.psu.geovista.common.data.DescriptiveStatistics;
+import geovista.common.data.DescriptiveStatistics;
 
 
 public class ClassifierStdDev implements DescribedClassifier, BoundaryClassifier  {

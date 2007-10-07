@@ -9,10 +9,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import geovista.common.classification.ClassifierMLClassify;
 import geovista.common.classification.MultiGaussian;
 import geovista.common.classification.MultiGaussianModel;
+import geovista.common.data.DataSetForApps;
 import geovista.matrix.DistributionMatrix;
 
 public class ClassifierMaximumLikelihood
@@ -81,7 +81,7 @@ public class ClassifierMaximumLikelihood
     this.classify.setClassificationModel(this.multiGaussian);
     this.classify.setDataSet(data);
 
-//          edu.psu.geovista.common.data.DataSetForApps dataObjTransfer = new edu.psu.geovista.common.data.DataSetForApps();
+//          geovista.common.data.DataSetForApps dataObjTransfer = new geovista.common.data.DataSetForApps();
 //          dataObjTransfer.setDataObject(data);
 //          this.dataObject = dataObjTransfer.getDataSetNumericAndSpatial();
 //          this.attributesDisplay = dataObjTransfer.getAttributeNamesNumeric();

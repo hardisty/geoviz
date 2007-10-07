@@ -14,7 +14,7 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import edu.psu.geovista.common.data.DataSetForApps;
+import geovista.common.data.DataSetForApps;
 
 /**
  * put your documentation comment here

@@ -81,7 +81,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ColorArrayEvent;
 import edu.psu.geovista.common.event.ColorArrayListener;
 import edu.psu.geovista.common.event.DataSetEvent;
@@ -107,6 +106,7 @@ import edu.psu.geovista.touchgraph.interaction.ZoomScroll;
 import edu.psu.geovista.touchgraph.mst.MSTEdge;
 import edu.psu.geovista.touchgraph.mst.NDimensionalMST;
 import geovista.common.classification.ClassifierPicker;
+import geovista.common.data.DataSetForApps;
 
 
 /** GLPanel contains code for adding scrollbars and interfaces to the TGPanel

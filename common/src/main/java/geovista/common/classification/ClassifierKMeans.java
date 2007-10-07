@@ -9,9 +9,9 @@ package geovista.common.classification;
  * @version 1.0
  */
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
+import geovista.common.data.DataSetForApps;
 
 // import edu.psu.geovista.symbolization.ColorSymbolizerForClassification;
 

@@ -16,7 +16,7 @@
 
 package geovista.common.classification;
 
-import edu.psu.geovista.common.data.ArraySort2D;
+import geovista.common.data.ArraySort2D;
 
 
 public class ClassifierRawQuantiles implements DescribedClassifier, BoundaryClassifier  {

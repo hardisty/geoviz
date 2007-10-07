@@ -21,7 +21,7 @@
 
 package edu.psu.geovista.geoviz.map;
 
-// import edu.psu.geovista.common.data.DataSetForApps;
+// import geovista.common.data.DataSetForApps;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
