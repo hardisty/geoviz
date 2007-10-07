@@ -22,7 +22,7 @@
 
 
 
-package edu.psu.geovista.rjava;
+package geovista.rjava;
 
 import java.util.EventListener;
 
