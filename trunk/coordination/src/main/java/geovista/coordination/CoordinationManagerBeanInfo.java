@@ -1,4 +1,4 @@
-package edu.psu.geovista.coordination;
+package geovista.coordination;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
