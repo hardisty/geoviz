@@ -18,7 +18,7 @@
  -------------------------------------------------------------------   */
 
 
-package edu.psu.geovista.collaboration;
+package geovista.collaboration;
 
 import java.awt.Image;
 import java.beans.BeanInfo;

@@ -1,9 +1,9 @@
 /* -------------------------------------------------------------------
- Java source file for the class RmiListenerClient
- Original Authors: Frank Hardisty
+ Java source file for the class RemoteSpatialExtentListener
+ Original Authors: Frank Hardisty and Linna Li
  $Author: hardisty $
- $Id: RmiListenerClient.java,v 1.1 2006/02/27 16:25:06 hardisty Exp $
- $Date: 2006/02/27 16:25:06 $
+ $Id: RemoteSpatialExtentListener.java,v 1.2 2006/02/27 19:28:41 hardisty Exp $
+ $Date: 2006/02/27 19:28:41 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -17,18 +17,12 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.collaboration;
+package geovista.collaboration;
 
-import java.awt.geom.Rectangle2D;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-public interface RmiListenerClient {
-
-  public void remoteSelectionChanged(String source, int[] selection);
-
-  public void remoteSpatialExtentChanged(String source, Rectangle2D extent);
-
-  public void remoteSubspaceChanged(String source, int[] subspace);
-
-  public void remoteMessageReceived(String name, String msg);
-
+public interface RemoteSpatialExtentListener
+    extends Remote {
+  public void extentChanged(String source, double[] extent) throws RemoteException;
 }

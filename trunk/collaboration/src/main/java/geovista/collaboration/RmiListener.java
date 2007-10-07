@@ -17,7 +17,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.collaboration;
+package geovista.collaboration;
 
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -147,8 +147,8 @@ public class RmiListener
       //any objects register themselves with it. In this class, the pause is supplied by
       //a wait thread in the constructor of the calling class.
 
-      //Runtime.getRuntime().exec("rmic -d . edu.psu.geovista.collaboration.RmiListener");
-      //Runtime.getRuntime().exec("rmic -d . edu.psu.geovista.collaboration.RemoteCollaboration");
+      //Runtime.getRuntime().exec("rmic -d . geovista.collaboration.RmiListener");
+      //Runtime.getRuntime().exec("rmic -d . geovista.collaboration.RemoteCollaboration");
       //System.setSecurityManager();
     }
     catch (IOException ex) {

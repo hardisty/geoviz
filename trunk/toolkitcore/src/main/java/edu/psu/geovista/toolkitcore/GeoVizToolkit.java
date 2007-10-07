@@ -855,7 +855,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		try {
 			Class beanClass = Class
-					.forName("edu.psu.geovista.collaboration.GeoJabber");
+					.forName("geovista.collaboration.GeoJabber");
 			Object beanInstance = beanClass.newInstance();
 			logger.finest("yahhh");
 			logger.finest("found a " + beanClass.getClass().getCanonicalName());
