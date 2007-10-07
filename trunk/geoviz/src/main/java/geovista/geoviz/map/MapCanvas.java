@@ -57,8 +57,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 
-import edu.psu.geovista.geoviz.transform.ShapeAffineTransform;
-import edu.psu.geovista.geoviz.transform.ShapeTransformer;
 import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.AffineTransformModifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
@@ -78,6 +76,8 @@ import geovista.common.ui.ExcentricLabelClient;
 import geovista.common.ui.ExcentricLabels;
 import geovista.common.ui.Fisheyes;
 import geovista.geoviz.condition.ConditionManager;
+import geovista.geoviz.transform.ShapeAffineTransform;
+import geovista.geoviz.transform.ShapeTransformer;
 import geovista.image_blur.image.BoxBlurFilter;
 
 /**
