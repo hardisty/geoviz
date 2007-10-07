@@ -12,10 +12,15 @@
  -------------------------------------------------------------------   */
 
 
-package edu.psu.geovista.sound;
+package geovista.sound;
 
-import junit.framework.*;
-import java.awt.*;
+import geovista.sound.SonicRamp;
+
+import java.awt.Color;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 
 public class SonicRampTest extends TestCase {
