@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.radviz;
+package geovista.geoviz.radviz;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

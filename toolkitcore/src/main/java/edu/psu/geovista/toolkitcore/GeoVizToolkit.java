@@ -51,7 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.geoviz.radviz.RadViz;
 import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
@@ -84,6 +83,7 @@ import geovista.geoviz.condition.ConditionManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.parvis.gui.ParallelPlot;
+import geovista.geoviz.radviz.RadViz;
 import geovista.matrix.MapAndScatterplotMatrix;
 import geovista.matrix.MapMatrix;
 import geovista.matrix.MapScatterplotTreemapMatrix;
