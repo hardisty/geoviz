@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.ui.Fisheyes;
 import edu.psu.geovista.geoviz.map.MapCanvas;
 import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.geoviz.visclass.VisualClassifier;
@@ -49,6 +48,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.VariableSelectionEvent;
 import geovista.common.event.VariableSelectionListener;
+import geovista.common.ui.Fisheyes;
 import geovista.matrix.map.MapMatrixElement;
 import geovista.matrix.scatterplot.ScatterPlot;
 

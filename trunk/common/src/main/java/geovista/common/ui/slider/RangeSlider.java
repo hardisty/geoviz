@@ -22,7 +22,7 @@
 /* --------------------------- Package ---------------------------- */
 
 
-package  edu.psu.geovista.common.ui.slider;
+package  geovista.common.ui.slider;
 
 
 /* ------------------------- Import files ------------------------- */

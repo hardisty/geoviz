@@ -5,7 +5,7 @@
  * a copy of which has been included with this distribution in the           *
  * license-infovis.txt file.                                                 *
  *****************************************************************************/
-package edu.psu.geovista.common.ui;
+package geovista.common.ui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

@@ -57,9 +57,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 
-import edu.psu.geovista.common.ui.ExcentricLabelClient;
-import edu.psu.geovista.common.ui.ExcentricLabels;
-import edu.psu.geovista.common.ui.Fisheyes;
 import edu.psu.geovista.geoviz.condition.ConditionManager;
 import edu.psu.geovista.geoviz.transform.ShapeAffineTransform;
 import edu.psu.geovista.geoviz.transform.ShapeTransformer;
@@ -78,6 +75,9 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
+import geovista.common.ui.ExcentricLabelClient;
+import geovista.common.ui.ExcentricLabels;
+import geovista.common.ui.Fisheyes;
 import geovista.image_blur.image.BoxBlurFilter;
 
 /**
