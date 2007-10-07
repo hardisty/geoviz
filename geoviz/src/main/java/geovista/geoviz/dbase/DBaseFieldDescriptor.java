@@ -20,7 +20,7 @@
 /* --------------------------- Package ---------------------------- */
 
 
-package  edu.psu.geovista.geoviz.dbase;
+package  geovista.geoviz.dbase;
 
 
 /* ------------------ Import classes (packages) ------------------- */
