@@ -15,7 +15,7 @@ package edu.psu.geovista.common.event;
 
 import java.util.EventObject;
 
-import edu.psu.geovista.common.color.Pallet;
+import geovista.common.color.Pallet;
 
 /**
  * An PalletEvent signals that there is a new or changed pallet.

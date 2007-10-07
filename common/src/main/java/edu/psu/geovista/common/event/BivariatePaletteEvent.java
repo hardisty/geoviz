@@ -2,7 +2,7 @@ package edu.psu.geovista.common.event;
 
 import java.util.EventObject;
 
-import edu.psu.geovista.common.color.BivariatePalette;
+import geovista.common.color.BivariatePalette;
 
 
 

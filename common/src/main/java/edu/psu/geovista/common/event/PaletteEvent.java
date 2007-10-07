@@ -15,7 +15,7 @@ package edu.psu.geovista.common.event;
 
 import java.util.EventObject;
 
-import edu.psu.geovista.common.color.Palette;
+import geovista.common.color.Palette;
 
 
 

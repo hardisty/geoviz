@@ -2,7 +2,7 @@ package geovista.colorbrewer;
 
 import java.awt.Color;
 
-import edu.psu.geovista.common.color.BivariatePalette;
+import geovista.common.color.BivariatePalette;
 
 
 /**

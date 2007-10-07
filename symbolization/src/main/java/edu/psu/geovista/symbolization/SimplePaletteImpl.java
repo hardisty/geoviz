@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.common.color.Palette;
+import geovista.common.color.Palette;
 
 /**
  *
