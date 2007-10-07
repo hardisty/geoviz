@@ -1,5 +1,5 @@
 
-package edu.psu.geovista.geoviz.table;
+package geovista.geoviz.table;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;

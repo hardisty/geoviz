@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.table;
+package geovista.geoviz.table;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
