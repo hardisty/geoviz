@@ -48,9 +48,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.ui.Fisheyes;
-import edu.psu.geovista.common.ui.slider.MultiSlider;
-import edu.psu.geovista.common.ui.slider.RangeSlider;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
 import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
@@ -82,6 +79,9 @@ import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
 import geovista.common.event.VariableSelectionEvent;
 import geovista.common.event.VariableSelectionListener;
+import geovista.common.ui.Fisheyes;
+import geovista.common.ui.slider.MultiSlider;
+import geovista.common.ui.slider.RangeSlider;
 
 
 /**

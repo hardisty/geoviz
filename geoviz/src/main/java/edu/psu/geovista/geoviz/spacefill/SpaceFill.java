@@ -33,7 +33,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.ui.panel.FoldupPanel;
 import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.common.data.DataSetForApps;
@@ -45,6 +44,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.ui.panel.FoldupPanel;
 
 public class SpaceFill extends JPanel implements ActionListener, Serializable,
 		SelectionListener, IndicationListener, DataSetListener,

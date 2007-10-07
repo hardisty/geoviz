@@ -13,7 +13,7 @@
  */
 
 
-package edu.psu.geovista.common.ui.panel;
+package geovista.common.ui.panel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

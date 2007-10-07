@@ -21,7 +21,6 @@ import cern.colt.matrix.linalg.Algebra;
 import cern.colt.matrix.linalg.SingularValueDecomposition;
 import cern.jet.math.Functions;
 
-import edu.psu.geovista.common.ui.VariablePicker;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
@@ -30,6 +29,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.common.ui.VariablePicker;
 
 /**
  * 

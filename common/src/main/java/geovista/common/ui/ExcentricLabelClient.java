@@ -10,7 +10,7 @@
  Reference:        Document no:
  ___                ___
  -------------------------------------------------------------------   */
-package edu.psu.geovista.common.ui;
+package geovista.common.ui;
 
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
