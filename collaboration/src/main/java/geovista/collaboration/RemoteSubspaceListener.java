@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------
- Java source file for the class RemoteSelectionListener
+ Java source file for the class RemoteSubspaceListener
  Original Authors: Frank Hardisty
  $Author: hardisty $
- $Id: RemoteSelectionListener.java,v 1.2 2006/02/27 16:25:06 hardisty Exp $
+ $Id: RemoteSubspaceListener.java,v 1.1 2006/02/27 16:25:06 hardisty Exp $
  $Date: 2006/02/27 16:25:06 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -17,12 +17,12 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.collaboration;
+package geovista.collaboration;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface RemoteSelectionListener
+public interface RemoteSubspaceListener
     extends Remote {
-  public void selectionChanged(String source, int[] selection) throws RemoteException;
+  public void subspaceChanged(String source, int[] subspace) throws RemoteException;
 }

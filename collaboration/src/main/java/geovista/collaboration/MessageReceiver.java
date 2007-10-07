@@ -17,13 +17,9 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.collaboration;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+package geovista.collaboration;
 
 
-
-public interface ReceiveMessage extends Remote {
-    void receiveMessage(String name, String msg) throws RemoteException;
+public interface MessageReceiver {
+    void receiveMessage(String name, String msg);
 }
