@@ -11,7 +11,7 @@
  ___                ___
  -------------------------------------------------------------------  *
  */
-package edu.psu.geovista.satscan;
+package geovista.satscan;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

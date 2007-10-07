@@ -1,4 +1,4 @@
-package edu.psu.geovista.satscan;
+package geovista.satscan;
 
 /**
  * <p>Title: MapAndScatterplotMatrixBeanInfo</p>

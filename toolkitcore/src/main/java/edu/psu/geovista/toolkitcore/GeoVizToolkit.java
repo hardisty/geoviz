@@ -51,7 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.satscan.SaTScan;
 import edu.psu.geovista.sound.SonicClassifier;
 import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
 import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
@@ -91,6 +90,7 @@ import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
 import geovista.matrix.scatterplot.SingleHistogram;
 import geovista.matrix.scatterplot.SingleScatterPlot;
+import geovista.satscan.SaTScan;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
