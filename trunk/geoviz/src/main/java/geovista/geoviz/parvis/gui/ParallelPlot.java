@@ -8,7 +8,7 @@
  * Licensed under GNU General Public License (GPL).
  * See http://www.gnu.org/copyleft/gpl.html
  */
-package edu.psu.geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis.gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -23,7 +23,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.parvis.file.STFDataSet;
 import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.readers.FileIO;
 import geovista.common.classification.ClassifierPicker;
@@ -42,6 +41,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.geoviz.parvis.file.STFDataSet;
 
 
 /**
@@ -70,7 +70,7 @@ public class ParallelPlot extends javax.swing.JPanel implements ProgressListener
     private javax.swing.JPanel optionsPanel;
     private javax.swing.JToggleButton brushButton;
     private javax.swing.JButton jButton1;
-    private edu.psu.geovista.geoviz.parvis.gui.ParallelDisplay parallelDisplay;
+    private geovista.geoviz.parvis.gui.ParallelDisplay parallelDisplay;
     private javax.swing.JCheckBox numberBox;
     private javax.swing.JToggleButton scaleButton;
     private javax.swing.JToggleButton translateButton;
@@ -110,7 +110,7 @@ public class ParallelPlot extends javax.swing.JPanel implements ProgressListener
         openPanel = new javax.swing.JPanel();
 
 
-        parallelDisplay = new edu.psu.geovista.geoviz.parvis.gui.ParallelDisplay();
+        parallelDisplay = new geovista.geoviz.parvis.gui.ParallelDisplay();
         dragModePanel = new javax.swing.JPanel();
         reorderButton = new javax.swing.JToggleButton();
         scaleButton = new javax.swing.JToggleButton();
