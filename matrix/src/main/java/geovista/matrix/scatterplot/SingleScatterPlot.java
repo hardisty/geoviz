@@ -27,7 +27,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.symbolization.BivariateColorSchemeVisualizer;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
@@ -46,6 +45,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.VariableSelectionEvent;
 import geovista.common.event.VariableSelectionListener;
+import geovista.geoviz.visclass.VisualClassifier;
 
 public class SingleScatterPlot extends JPanel implements DataSetListener,
 		ActionListener, ColorClassifierListener, SelectionListener,

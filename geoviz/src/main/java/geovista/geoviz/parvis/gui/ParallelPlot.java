@@ -23,7 +23,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.readers.FileIO;
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.data.DataSetForApps;
@@ -42,6 +41,7 @@ import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.geoviz.parvis.file.STFDataSet;
+import geovista.geoviz.visclass.VisualClassifier;
 
 
 /**

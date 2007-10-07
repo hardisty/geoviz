@@ -30,7 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
 import geovista.common.event.DataSetEvent;
@@ -41,6 +40,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.geoviz.visclass.VisualClassifier;
 
 /**
  * Paints an array of StarPlot. Responds to and broadcasts DataSetChanged,

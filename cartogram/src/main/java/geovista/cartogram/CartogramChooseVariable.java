@@ -43,10 +43,10 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumnModel;
 
-import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.data.DataSetForApps;
 import geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.visclass.VisualClassifier;
 
 
 /*

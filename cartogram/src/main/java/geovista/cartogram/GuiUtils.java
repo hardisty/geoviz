@@ -42,11 +42,11 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-import edu.psu.geovista.geoviz.visclass.VisualClassifier;
 import edu.psu.geovista.readers.util.MyFileFilter;
 import geovista.geoviz.dbase.DBaseFile;
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.geoviz.visclass.VisualClassifier;
 
 
 //import org.davekeen.gis.shapefile.GeoESRIWriter;
