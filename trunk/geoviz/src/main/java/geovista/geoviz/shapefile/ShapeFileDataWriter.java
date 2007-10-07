@@ -23,10 +23,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.readers.geog.ShapeFile;
-import edu.psu.geovista.readers.geog.ShapeFileHeader;
-import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
 import geovista.common.data.DataSetForApps;
+import geovista.readers.geog.ShapeFile;
+import geovista.readers.geog.ShapeFileHeader;
+import geovista.readers.geog.ShapeFileRecordPolygon;
 
 /**
  * Takes a file name and a set of shapes, and writes out a shapefile.
@@ -37,7 +37,7 @@ import geovista.common.data.DataSetForApps;
 public class ShapeFileDataWriter {
 	protected final static Logger logger = Logger.getLogger(ShapeFileDataWriter.class.getName());
   public static void writeShapefile(GeneralPath[] paths, String fileName) {
-      /** see edu.psu.geovista.readers.geog.ShapeFileWriter**/
+      /** see geovista.readers.geog.ShapeFileWriter**/
       String baseName = fileName.substring(0, fileName.length() - 4);
       ShapeFile shapeFile = new ShapeFile();
       ShapeFileHeader header = new ShapeFileHeader();

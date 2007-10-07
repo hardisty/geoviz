@@ -1,9 +1,7 @@
 /* -------------------------------------------------------------------
- Java source file for the class GeoDataSCarolina
- Original Author: Frank Hardisty
- $Author: hardistf $
- $Id: ComparableShapes.java,v 1.1 2005/12/05 20:17:05 hardistf Exp $
- $Date: 2005/12/05 20:17:05 $
+ GeoVISTA Center (Penn State, Dept. of Geography)
+ Java source file for the class GeoDataTestNulls
+ Copyright (c), 2002, GeoVISTA Center
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -15,24 +13,26 @@
  You should have received a copy of the GNU Lesser General Public
  License along with this library; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+ Original Author: Frank Hardisty
+ $Author: hardisty $
+ $Id: GeoDataTestNulls.java,v 1.2 2005/09/15 15:04:03 hardisty Exp $
+ $Date: 2005/09/15 15:04:03 $
+ Reference:		Document no:
+ ___				___
+ -------------------------------------------------------------------  *
+ */
 
 
-package edu.psu.geovista.toolkitcore.data;
+package geovista.readers.geog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
 import geovista.common.data.DataSetForApps;
-import geovista.common.data.GeoDataSource;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.readers.csv.GeogCSVReader;
-import geovista.readers.geog.ShapeFile;
 
 /**
  * Reads shapefiles from included resources
@@ -46,43 +46,38 @@ import geovista.readers.geog.ShapeFile;
  * also see DBaseFile, ShapeFile
  *
  */
-public class GeoDataSCarolina implements GeoDataSource{
+public class GeoDataTestNulls {
 
   public static final String COMMAND_DATA_SET_MADE = "dataMade";
 
   private transient DataSetForApps dataForApps;
   private transient EventListenerList listenerList;
-  private transient ShapeFileDataReader shpReader;
-  final static Logger logger = Logger.getLogger(GeoDataSCarolina.class.getName());
 
-  public GeoDataSCarolina() {
+  public GeoDataTestNulls() {
     super();
     listenerList = new EventListenerList();
-    //this.dataForApps = this.makeDataSetForApps();//let's be lazy
+    this.dataForApps = this.makeDataSetForApps();
     this.fireActionPerformed(COMMAND_DATA_SET_MADE);
   }
 
   private DataSetForApps makeDataSetForApps(){
       Object[] shpData = null;
-      shpReader = new ShapeFileDataReader();
       try {
 
         Class cl = this.getClass();
 
-        InputStream isCSV = cl.getResourceAsStream("resources/sc.csv");
+        InputStream isCSV = cl.getResourceAsStream("resources/test_nulls.csv");
         GeogCSVReader csv = new GeogCSVReader();
         Object[] csvData = csv.readFile(isCSV);
-        isCSV.close();
+
         shpData = new Object[csvData.length + 1];
         for (int i = 0; i < csvData.length; i++) {
           shpData[i] = csvData[i];
         }
 
-        InputStream isSHP = cl.getResourceAsStream("resources/sc.shp");
-
+        InputStream isSHP = cl.getResourceAsStream("resources/test_nulls.shp");
         shpData[csvData.length] = new ShapeFile(isSHP);
-        shpData = shpReader.convertShpToShape(shpData);
-        isSHP.close();
+
       } catch (Exception ex) {
         ex.printStackTrace();
       }
@@ -92,21 +87,19 @@ public class GeoDataSCarolina implements GeoDataSource{
 
   }
 
+  //private Object[] makeDataSet(String fileName){
+  //    this.makeDataSetForApps(fileName);
+  //    return dataForApps.getDataObjectOriginal();
+  //}
 
-    public void setDataForApps (DataSetForApps dataForApps) {
+  public void setDataForApps (DataSetForApps dataForApps) {
       this.dataForApps = dataForApps;
     }
     public DataSetForApps getDataForApps() {
-      if (this.dataForApps == null){
-        this.dataForApps = this.makeDataSetForApps();
-      }
       return this.dataForApps;
     }
 
     public Object[] getDataSet() {
-      if (this.dataForApps == null){
-        this.dataForApps = this.makeDataSetForApps();
-      }
       return this.dataForApps.getDataObjectOriginal();
 
     }
@@ -118,9 +111,7 @@ public class GeoDataSCarolina implements GeoDataSource{
   public void addActionListener(ActionListener l) {
     listenerList.add(ActionListener.class, l);
     this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-   if (logger.isLoggable(Level.FINEST)){
-    logger.finest("GeoDataSCarolina.addActionListener, Hi!!");
-   }
+
   }
 
   /**
