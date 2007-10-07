@@ -1,12 +1,11 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class StarPlotCanvas
+ Java source file for the class StarPlotMain
  Copyright (c), 2003, Frank Hardisty
- All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: StarPlotCanvasMain.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
- $Date: 2005/02/13 03:26:27 $
+ $Id: StarPlotMain.java,v 1.3 2006/02/17 17:21:23 hardisty Exp $
+ $Date: 2006/02/17 17:21:23 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -19,7 +18,8 @@
  License along with this library; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
-package edu.psu.geovista.geoviz.star;
+
+package geovista.geoviz.star;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,59 +35,54 @@ import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.shapefile.ShapeFileToShape;
 
 /**
- * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n =
- * the number of values set. The values are expected to range from 0 to 100.
- * Each ray is a line that extends from the origin outword, proportionately in
- * length to the value it represents. The end points of each ray are connected,
- * and the figure filled.
+ * Main class for experimenting with starplots and maps that show starplots
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.3 $
  */
-public class StarPlotCanvasMain {
+public class StarPlotMain {
 
 	public static void main(String[] args) {
 		JFrame app = new JFrame();
 		app.getContentPane().setLayout(new FlowLayout());
-		StarPlotCanvas content = new StarPlotCanvas();
-		content.setPreferredSize(new Dimension(400, 400));
-		StarPlotRendererMain content2 = new StarPlotRendererMain();
-		content2.setPreferredSize(new Dimension(400, 400));
-		content.setBorder(new LineBorder(Color.black));
-		app.getContentPane().add(content);
-		StarPlotRenderer sp = new StarPlotRenderer();
-		int[] lengths = { 100, 10, 45, 22, 67, 89, 34, 87 };
-		sp.setLengths(lengths);
+		StarPlot sp = new StarPlot();
+		sp.setPreferredSize(new Dimension(400, 400));
+		sp.setBorder(new LineBorder(Color.black));
 
-		content2.setSp(sp);
-		app.pack();
-		app.setVisible(true);
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		String fileName = "C:\\arcgis\\arcexe81\\Bin\\TemplateData\\USA\\counties.shp";
 		fileName = "C:\\dc_tracts\\dc_tracts.shp";
+		fileName = "C:\\geovista_old\\cartogram\\3states.shp";
+		fileName = "C:\\geovista_old\\cartogram\\sc.shp";
 		ShapeFileDataReader shpRead = new ShapeFileDataReader();
-		shpRead.setFileName(fileName);
-		boolean useResource = true;
+		// shpRead.setFileName(fileName);
+		boolean useResource = false;
 
 		CoordinationManager coord = new CoordinationManager();
 		GeoData48States stateData = new GeoData48States();
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
-		// GeoMap map = new GeoMap();
-		// app.getContentPane().add(map);
-		// coord.addBean(map);
-		coord.addBean(content);
+		StarPlotMap map = new StarPlotMap();
+		map.setPreferredSize(new Dimension(400, 400));
+
+		// app.getContentPane().add(sp);
+		app.getContentPane().add(map);
+		coord.addBean(map);
+
+		// app.getspPane().add(lg);
+		// coord.addBean(lg);
+		// coord.addBean(sp);
 		coord.addBean(shpProj);
 
 		if (useResource) {
 			shpProj.setInputDataSet(shpRead.convertShpToShape(stateData
 					.getDataSet()));
 		} else {
+			shpRead.setFileName(fileName);
 			Object[] dataSet = shpRead.getDataSet();
 
-			// ShapeFileDataReader reader = new ShapeFileDataReader();
 			shpProj.setInputDataSet(dataSet);
 			Object[] outData = shpProj.getOutputDataSet();
 			shpToShape.setInputDataSet(outData);
@@ -95,7 +90,11 @@ public class StarPlotCanvasMain {
 			// shpProj.setInputDataSet(shpRead.getDataSet());
 
 		}
-
+		app.pack();
+		app.setVisible(true);
+		// IndicationEvent indE = new IndicationEvent(sp, 0);
+		// sp.indicationChanged(indE);
+		map.zoomFullExtent();
 	}
 
 }

@@ -27,11 +27,11 @@ import java.util.Vector;
 
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.geoviz.star.StarPlotCanvas;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.IndicationListener;
+import geovista.geoviz.star.StarPlotCanvas;
 import geovista.matrix.MatrixElement;
 
 /**

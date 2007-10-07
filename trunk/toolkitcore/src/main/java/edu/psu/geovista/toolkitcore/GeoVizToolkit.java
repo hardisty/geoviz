@@ -51,8 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.geoviz.star.StarPlot;
-import edu.psu.geovista.geoviz.star.StarPlotMap;
 import edu.psu.geovista.satscan.SaTScan;
 import edu.psu.geovista.sound.SonicClassifier;
 import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
@@ -84,6 +82,8 @@ import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.spreadsheet.SpreadSheetBean;
 import geovista.geoviz.spreadsheet.VariableTransformer;
+import geovista.geoviz.star.StarPlot;
+import geovista.geoviz.star.StarPlotMap;
 import geovista.matrix.MapAndScatterplotMatrix;
 import geovista.matrix.MapMatrix;
 import geovista.matrix.MapScatterplotTreemapMatrix;
