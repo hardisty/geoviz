@@ -51,7 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.cartogram.GeoMapCartogram;
 import edu.psu.geovista.common.data.DataSetBroadcaster;
 import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.data.DataSetModifiedBroadcaster;
@@ -84,6 +83,7 @@ import edu.psu.geovista.touchgraph.PCAViz;
 import edu.psu.geovista.touchgraph.SubspaceLinkGraph;
 import geovista.animation.IndicationAnimator;
 import geovista.animation.SelectionAnimator;
+import geovista.cartogram.GeoMapCartogram;
 import geovista.matrix.MapAndScatterplotMatrix;
 import geovista.matrix.MapMatrix;
 import geovista.matrix.MapScatterplotTreemapMatrix;
