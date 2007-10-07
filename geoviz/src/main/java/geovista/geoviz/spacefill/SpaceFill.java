@@ -13,7 +13,7 @@
 
  */
 
-package edu.psu.geovista.geoviz.spacefill;
+package geovista.geoviz.spacefill;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
