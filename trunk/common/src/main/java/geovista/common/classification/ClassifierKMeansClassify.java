@@ -1,6 +1,6 @@
 package geovista.common.classification;
 
-import edu.psu.geovista.common.data.DataSetForApps;
+import geovista.common.data.DataSetForApps;
 
 /**
  * <p>Title: </p>

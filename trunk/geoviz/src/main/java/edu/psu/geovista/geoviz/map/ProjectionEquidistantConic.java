@@ -28,7 +28,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.common.data.GeneralPathLine;
+import geovista.common.data.GeneralPathLine;
 
 /**
  * Equidistant Conic projection, useful for reasonably large sections of the

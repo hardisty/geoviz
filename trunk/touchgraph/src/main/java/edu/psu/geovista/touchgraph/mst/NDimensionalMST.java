@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.DescriptiveStatistics;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.DescriptiveStatistics;
 
 
 /**
@@ -476,11 +476,11 @@ public class NDimensionalMST {
 	} // end distance
 
 	public static double[] normalize(double[] data) {
-		double range = edu.psu.geovista.common.data.DescriptiveStatistics
+		double range = geovista.common.data.DescriptiveStatistics
 				.rangeIgnoreNaN(data);
-		double min = edu.psu.geovista.common.data.DescriptiveStatistics
+		double min = geovista.common.data.DescriptiveStatistics
 				.minIgnoreNaN(data);
-		double mean = edu.psu.geovista.common.data.DescriptiveStatistics
+		double mean = geovista.common.data.DescriptiveStatistics
 				.meanIgnoreNaN(data);
 
 		double ratio = 1d / range;

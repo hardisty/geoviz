@@ -32,11 +32,11 @@ import javax.swing.event.EventListenerList;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
+import geovista.common.data.DataSetForApps;
 
 public class TableBrowser extends JPanel
 	    implements  ChangeListener,Serializable,

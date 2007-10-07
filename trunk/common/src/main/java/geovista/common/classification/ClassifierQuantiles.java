@@ -11,7 +11,7 @@ package geovista.common.classification;
 
 import java.util.logging.Logger;
 
-import edu.psu.geovista.common.data.ArraySort2D;
+import geovista.common.data.ArraySort2D;
 
 public class ClassifierQuantiles implements DescribedClassifier, BoundaryClassifier {
     private static final String shortName = "Q Tiles";

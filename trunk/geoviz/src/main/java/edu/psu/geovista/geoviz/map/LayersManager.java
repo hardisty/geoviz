@@ -32,9 +32,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.layerChangeEvent;
 import edu.psu.geovista.common.event.layerChangeListener;
+import geovista.common.data.DataSetForApps;
 
 
 public class LayersManager extends JPanel implements ActionListener{

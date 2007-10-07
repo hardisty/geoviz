@@ -32,8 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.ClassificationEvent;
 import edu.psu.geovista.common.event.ColorArrayEvent;
 import edu.psu.geovista.common.event.ColorArrayListener;
@@ -49,6 +47,8 @@ import edu.psu.geovista.treemap.TMDataDraw;
 import edu.psu.geovista.treemap.TMDataNode;
 import edu.psu.geovista.treemap.TMDataSize;
 import edu.psu.geovista.treemap.tm.TMView;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.DescriptiveStatistics;
 
 /**
  * Paints an array of TreeMapCanvas. Responds to and broadcasts DataSetChanged,

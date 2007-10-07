@@ -23,10 +23,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.readers.geog.ShapeFile;
 import edu.psu.geovista.readers.geog.ShapeFileHeader;
 import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
+import geovista.common.data.DataSetForApps;
 
 /**
  * Takes a file name and a set of shapes, and writes out a shapefile.

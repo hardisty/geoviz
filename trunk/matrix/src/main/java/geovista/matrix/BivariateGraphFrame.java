@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ColorArrayEvent;
 import edu.psu.geovista.common.event.ColorArrayListener;
 import edu.psu.geovista.common.event.DataSetEvent;
@@ -49,6 +48,7 @@ import edu.psu.geovista.symbolization.ColorSymbolClassification;
 import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
 import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.classification.ClassifierPicker;
+import geovista.common.data.DataSetForApps;
 import geovista.matrix.map.MapMatrixElement;
 import geovista.matrix.scatterplot.ScatterPlot;
 

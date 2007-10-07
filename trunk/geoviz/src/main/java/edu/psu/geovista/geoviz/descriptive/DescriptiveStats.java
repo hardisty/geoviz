@@ -34,13 +34,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.text.NumberFormatter;
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.DescriptiveStatistics;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.common.event.SelectionEvent;
 import edu.psu.geovista.common.event.SelectionListener;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.DescriptiveStatistics;
 
 /**
  * Displays descriptive statistics about a current variable, including

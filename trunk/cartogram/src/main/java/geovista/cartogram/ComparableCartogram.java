@@ -21,7 +21,7 @@ package geovista.cartogram;
 
 import java.awt.Shape;
 
-import edu.psu.geovista.common.data.DataSetForApps;
+import geovista.common.data.DataSetForApps;
 
 /*
  * Class used to compare arrays of shapes for equality.

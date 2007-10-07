@@ -20,7 +20,7 @@ package edu.psu.geovista.common.event;
 import java.io.File;
 import java.util.EventObject;
 
-import edu.psu.geovista.common.data.DataSetForApps;
+import geovista.common.data.DataSetForApps;
 public class layerChangeEvent extends EventObject {
 
   private int activateIdx;

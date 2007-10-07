@@ -38,12 +38,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.geoviz.map.GeoMap;
 import edu.psu.geovista.geoviz.map.MapCanvas;
 import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.common.data.DataSetForApps;
 import geovista.matrix.MatrixElement;
 import geovista.matrix.scatterplot.Histogram;
 
@@ -214,8 +214,8 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 		double[] extent = histogram.getXAxisExtents();
 
 		extent = new double[2];
-		extent[0] = edu.psu.geovista.common.data.DescriptiveStatistics.min(dataX);
-		extent[1] = edu.psu.geovista.common.data.DescriptiveStatistics.max(dataX);
+		extent[0] = geovista.common.data.DescriptiveStatistics.min(dataX);
+		extent[1] = geovista.common.data.DescriptiveStatistics.max(dataX);
 		this.xAxisExtents = extent;
 
 	}

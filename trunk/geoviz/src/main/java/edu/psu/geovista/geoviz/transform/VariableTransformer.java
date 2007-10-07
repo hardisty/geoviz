@@ -23,9 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
+import geovista.common.data.DataSetForApps;
 
 /**
  * Transforms variables and adds them to the current working data set. 

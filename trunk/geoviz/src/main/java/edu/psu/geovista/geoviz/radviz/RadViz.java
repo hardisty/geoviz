@@ -52,7 +52,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.common.data.DataSetForApps;
 import edu.psu.geovista.common.event.ClassificationResultEvent;
 import edu.psu.geovista.common.event.ClassificationResultListener;
 import edu.psu.geovista.common.event.DataSetEvent;
@@ -65,6 +64,7 @@ import edu.psu.geovista.common.event.SubspaceEvent;
 import edu.psu.geovista.common.event.SubspaceListener;
 import edu.psu.geovista.readers.csv.CSVFileDataReader;
 import geovista.colorbrewer.OriginalColor;
+import geovista.common.data.DataSetForApps;
 
 
 /**

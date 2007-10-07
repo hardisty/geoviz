@@ -19,7 +19,7 @@
    -------------------------------------------------------------------   */
 
 
-package edu.psu.geovista.common.data;
+package geovista.common.data;
 
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;

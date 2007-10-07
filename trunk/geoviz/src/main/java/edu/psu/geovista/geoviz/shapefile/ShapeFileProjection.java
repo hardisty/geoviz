@@ -25,14 +25,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.data.DataSetForApps;
-import edu.psu.geovista.common.data.GeneralPathLine;
 import edu.psu.geovista.common.event.DataSetEvent;
 import edu.psu.geovista.common.event.DataSetListener;
 import edu.psu.geovista.geoviz.map.Projection;
 import edu.psu.geovista.geoviz.map.ProjectionEquidistantConic;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
 import edu.psu.geovista.geoviz.sample.GeoDataWestCoast;
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.GeneralPathLine;
 
 /**
  * This class, when passed a ShapeFile, will project it using it's current
@@ -289,8 +289,8 @@ public void setInputAuxiliaryData(DataSetForApps auxDataSet) {
 
     Package pack = obj.getClass().getPackage(); //
     logger.finest(pack.getName()+"can't find package when we are an applet");
-    if (className.equals("edu.psu.geovista.common.data.GeoDataWestCoast") ||
-        className.equals("edu.psu.geovista.common.data.GeoData48States")) {
+    if (className.equals("geovista.common.data.GeoDataWestCoast") ||
+        className.equals("geovista.common.data.GeoData48States")) {
       if (e.getSource()instanceof GeoData48States) {
         GeoData48States data = (GeoData48States) e.getSource();
         this.setInputDataSet(data.getDataSet());
