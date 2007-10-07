@@ -30,8 +30,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import edu.psu.geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.common.data.DataSetForApps;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 
 
 /*

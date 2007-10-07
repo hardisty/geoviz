@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.sample;
+package geovista.geoviz.sample;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -16,14 +16,14 @@ import java.beans.SimpleBeanInfo;
  * @version 1.0
  */
 
-public class GeoDataWestCoastBeanInfo extends SimpleBeanInfo {
-  static Class beanClass = GeoDataWestCoast.class;
+public class GeoData48StatesBeanInfo extends SimpleBeanInfo {
+  static Class beanClass = GeoData48States.class;
   static String iconColor16x16Filename = "resources/shpResourceSmall.gif";
-  static String iconColor32x32Filename = "resources/shpWestCoast.gif";
+  static String iconColor32x32Filename = "resources/shpResource.gif";
   static String iconMono16x16Filename;
   static String iconMono32x32Filename;
 
-  public GeoDataWestCoastBeanInfo() {
+  public GeoData48StatesBeanInfo() {
   }
   public PropertyDescriptor[] getPropertyDescriptors() {
     PropertyDescriptor[] pds = new PropertyDescriptor[] { };

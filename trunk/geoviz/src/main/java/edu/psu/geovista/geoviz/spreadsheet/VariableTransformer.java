@@ -22,11 +22,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.geoviz.sample.GeoData48States;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
+import geovista.geoviz.sample.GeoData48States;
 
 public class VariableTransformer extends JPanel implements DataSetListener,
 		ActionListener, ListSelectionListener, TableModelListener {

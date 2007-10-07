@@ -21,10 +21,10 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.geoviz.sample.GeoData48States;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
+import geovista.geoviz.sample.GeoData48States;
 
 
 /**
