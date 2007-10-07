@@ -1,11 +1,11 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class Projection
+ Java source file for the class ProjectionIdentity
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: Projection.java,v 1.4 2004/05/05 17:23:10 hardisty Exp $
+ $Id: ProjectionIdentity.java,v 1.4 2004/05/05 17:23:10 hardisty Exp $
  $Date: 2004/05/05 17:23:10 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -22,20 +22,29 @@
 
 
 
-package  edu.psu.geovista.geoviz.map;
+package  geovista.geoviz.map;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 
 /**
- * Defines what projections must do.
+ * A default projection that does nothing.
  */
-public interface Projection {
+public class ProjectionIdentity implements Projection {
 
     /*
-     * this is in radians unless the projection specifies otherwise.
+     * This returns the data passed in as a point without otherwise changing it.
+     * The second argument can be null, or not. If it is not, that object will
+     * returned by the method
      */
-    public Point2D.Double project (double lat, double longVal, Point2D.Double pt);
-    public Shape project(Shape input);
-
-
+    public Point2D.Double project (double lat, double longVal, Point2D.Double pt){
+        if (pt ==  null) {
+          pt  = new Point2D.Double(longVal, lat);
+        } else {
+          pt.setLocation(longVal, lat);
+        }
+        return pt;
+    }
+    public Shape project (Shape shpIn){
+      return shpIn;
+    }
 }

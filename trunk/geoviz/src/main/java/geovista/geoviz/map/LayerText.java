@@ -22,7 +22,7 @@
 
 
 
-package  edu.psu.geovista.geoviz.map;
+package  geovista.geoviz.map;
 
 //imports for Main method
 import java.awt.Color;

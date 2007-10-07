@@ -22,7 +22,7 @@
 
 
 
-package edu.psu.geovista.geoviz.map;
+package geovista.geoviz.map;
 
 import java.awt.Rectangle;
 import java.util.Arrays;

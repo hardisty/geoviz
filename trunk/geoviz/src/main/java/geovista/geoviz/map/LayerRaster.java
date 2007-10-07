@@ -22,7 +22,7 @@
 
 
 
-package  edu.psu.geovista.geoviz.map;
+package  geovista.geoviz.map;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
