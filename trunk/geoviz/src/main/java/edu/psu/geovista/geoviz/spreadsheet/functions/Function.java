@@ -4,7 +4,7 @@
  * All Rights Researved.
  *
  * Description:
- * Function classes used only by edu.psu.geovista.geoviz.spreadsheet.formula.Formula to evaluate functions.
+ * Function classes used only by geovista.geoviz.spreadsheet.formula.Formula to evaluate functions.
  * Any function needs to have a function handler that implements
  * the "evaluate" interface of the base class functions.Function.
  * A function can accept zero, one, or more parameters.  Each parameter
@@ -43,7 +43,7 @@ public abstract class Function {
 	LinkedList exp = param.getExp();
 	return exp.size() == 1 &&
 	    ((Node)exp.getFirst()).isType(Node.COLON);
-        //((edu.psu.geovista.geoviz.spreadsheet.formula.Node)param.getExp().getFirst()).isType(edu.psu.geovista.geoviz.spreadsheet.formula.Node.COLON);
+        //((geovista.geoviz.spreadsheet.formula.Node)param.getExp().getFirst()).isType(geovista.geoviz.spreadsheet.formula.Node.COLON);
     }
 
     // return the first node of a specified parameter
@@ -64,14 +64,14 @@ public abstract class Function {
      * </code>, etc.
      *
      * @param table the SharpTabelModel
-     * @param node the edu.psu.geovista.geoviz.spreadsheet.formula unit
+     * @param node the geovista.geoviz.spreadsheet.formula unit
      * @param col the int column coordinate
      * @param row the int row coordinate
      * @return the float number
      */
     protected float getSingleParameter( Node node)
         throws ParserException,NoReferenceException {
-        //	edu.psu.geovista.geoviz.spreadsheet.formula.Node param = node.getNextParam();
+        //	geovista.geoviz.spreadsheet.formula.Node param = node.getNextParam();
         LinkedList params = node.getParams();
         Debug.showLinkedList(params,"getSingleParameter( ) show params of node "+node );
         if (params.size() != 1)
@@ -93,7 +93,7 @@ public abstract class Function {
          * with a chain of parameters
          * @param col the int column coordinate
          * @param row the int row coordinate
-         * @edu.psu.geovista.geoviz.spreadsheet.exception ParserException
+         * @geovista.geoviz.spreadsheet.exception ParserException
          */
     public abstract Number evaluate(Node node) throws ParserException,NoReferenceException;
 
@@ -158,7 +158,7 @@ public abstract class Function {
             }
             else{
                 assert false: "Unable to handle the expression";
-                //throw edu.psu.geovista.geoviz.spreadsheet.exception: unable to handle the expression
+                //throw geovista.geoviz.spreadsheet.exception: unable to handle the expression
             }
             if (end.getType() ==Node.REL_ADDR ){
                 Cell cell=end.getReference() ;
@@ -172,7 +172,7 @@ public abstract class Function {
             else{
 
                 assert false: "Unable to handle the expression";
-                //throw edu.psu.geovista.geoviz.spreadsheet.exception: unable to handle the expression
+                //throw geovista.geoviz.spreadsheet.exception: unable to handle the expression
             }
             if (sp.getX()==ep.getX()){//a single column range
                 if (sp.getY() <=ep.getY()){
@@ -225,7 +225,7 @@ public abstract class Function {
     public Formula getOwner() {
         return owner;
     }
-} //edu.psu.geovista.geoviz.spreadsheet.functions.Function Class
+} //geovista.geoviz.spreadsheet.functions.Function Class
 
 
 

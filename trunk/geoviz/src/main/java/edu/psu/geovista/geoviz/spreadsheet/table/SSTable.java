@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-//import edu.psu.geovista.geoviz.spreadsheet.formula.FormulaEditor;
+//import geovista.geoviz.spreadsheet.formula.FormulaEditor;
 import edu.psu.geovista.geoviz.spreadsheet.SpreadSheetBean;
 import edu.psu.geovista.geoviz.spreadsheet.event.SSTableModelEvent;
 import edu.psu.geovista.geoviz.spreadsheet.formula.Cell;
@@ -34,13 +34,13 @@ public class SSTable extends JTable {
     private Object bean;//
     private FunctionManager funManager;
 
-    //edu.psu.geovista.geoviz.spreadsheet.model.TableColumnSort tcs;
+    //geovista.geoviz.spreadsheet.model.TableColumnSort tcs;
     public SSTable(SSTableModel tm) {
         super(tm);
         tm.setTable(this);
         funManager=new FunctionManager(this);
 
-        //tcs=new edu.psu.geovista.geoviz.spreadsheet.model.TableColumnSort(this);
+        //tcs=new geovista.geoviz.spreadsheet.model.TableColumnSort(this);
     }
     /********************************************************************
      *                Event handler
@@ -168,7 +168,7 @@ public class SSTable extends JTable {
                 int row=rows[i];
                 sr.setRow(row);
             }
-            sr.setType(edu.psu.geovista.geoviz.spreadsheet.model.SortRange.ROWS );  */
+            sr.setType(geovista.geoviz.spreadsheet.model.SortRange.ROWS );  */
             int col=this.showSortDialog() ;
             if (col<0) return;//cancel sort
             /*this.createSortMap(0);//use table sort
@@ -182,7 +182,7 @@ public class SSTable extends JTable {
                 int col=cols[i];//selected column in table view
                 sr.setColumn(col);
             }
-            sr.setType(edu.psu.geovista.geoviz.spreadsheet.model.SortRange.COLUMNS ); */
+            sr.setType(geovista.geoviz.spreadsheet.model.SortRange.COLUMNS ); */
             int col=this.showSortDialog() ;
             if (col<0) return;//cancel sort
             /*
@@ -214,7 +214,7 @@ public class SSTable extends JTable {
                 for (int i=0;i<mrows.length ;i++){
 /*//mrows[i]=Cell.transRowViewToTable(rows[i]);//
                     //From table perspective, table' row index=Model's row index
-                    //(which may be the sort edu.psu.geovista.geoviz.spreadsheet.model instead of real edu.psu.geovista.geoviz.spreadsheet.model)
+                    //(which may be the sort geovista.geoviz.spreadsheet.model instead of real geovista.geoviz.spreadsheet.model)
                       Now rows[i] is table's row index=Model row index
                     */
                     mrows[i]=rows[i];
@@ -240,7 +240,7 @@ public class SSTable extends JTable {
                 sr.setRow(row);
 
             }
-            sr.setType(edu.psu.geovista.geoviz.spreadsheet.model.SortRange.RANGE );
+            sr.setType(geovista.geoviz.spreadsheet.model.SortRange.RANGE );
             util.Debug.println("select a range");  */
         }
         this.revaluate() ;
@@ -335,7 +335,7 @@ public class SSTable extends JTable {
         super.setValueAt(value,rowindex,column);
 
     }
-    //auto update edu.psu.geovista.geoviz.spreadsheet.formula value
+    //auto update geovista.geoviz.spreadsheet.formula value
     public void editingStopped(ChangeEvent e) {
          Debug.println("table.editingStopped(ChangeEvent e) ");
          super.editingStopped(e);
@@ -420,7 +420,7 @@ public class SSTable extends JTable {
                 i++;
             }
             return i;
-            //return modelCol- edu.psu.geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL +1 ;//jin
+            //return modelCol- geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL +1 ;//jin
     }
 
     /**
@@ -435,7 +435,7 @@ public class SSTable extends JTable {
                 TableColumn tbcol=tbm.getColumn(viewCol);
                 int col=tbcol.getModelIndex() ;
                 return col;
-            //return  viewCol + edu.psu.geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL -1 ;//jin
+            //return  viewCol + geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL -1 ;//jin
         }
         /**
          * This translates the string form of column into column number ('A' -> 1)
@@ -487,7 +487,7 @@ public class SSTable extends JTable {
         }
         return col;
         //return col + baseCol -1;
-        //return col+edu.psu.geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL ;
+        //return col+geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL ;
     }
 
     /**
@@ -499,7 +499,7 @@ public class SSTable extends JTable {
     public static String translateVVColumn(int column) {
 
 	//column = column - baseCol +1;
-        //column = column - edu.psu.geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL + 1;
+        //column = column - geovista.geoviz.spreadsheet.model.SSTableModel.BASE_COL + 1;
         if (column < 1)
             return null;
 

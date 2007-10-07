@@ -822,7 +822,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		Logger logger = Logger.getLogger("edu.psu.geovista");
 		Logger mapLogger = Logger
-				.getLogger("edu.psu.geovista.geoviz.map.MapCanvas");
+				.getLogger("geovista.geoviz.map.MapCanvas");
 		// logger.setLevel(Level.FINEST);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();

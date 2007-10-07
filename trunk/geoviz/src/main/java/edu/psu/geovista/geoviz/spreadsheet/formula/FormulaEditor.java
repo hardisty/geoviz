@@ -4,7 +4,7 @@
  * All Rights Researved.
  *
  * Description:
- *              The bar for editing a cell's edu.psu.geovista.geoviz.spreadsheet.formula
+ *              The bar for editing a cell's geovista.geoviz.spreadsheet.formula
  * Date: Mar 25, 2003
  * Time: 10:39:53 AM
  * @author Jin Chen
@@ -28,7 +28,7 @@ import edu.psu.geovista.geoviz.spreadsheet.table.SSTable;
 
 public class FormulaEditor extends JPanel{
   JTextField cellF;   //cell field show address of the cell
-  JTextField formulaF;//edu.psu.geovista.geoviz.spreadsheet.formula address for editing
+  JTextField formulaF;//geovista.geoviz.spreadsheet.formula address for editing
   SSTable tb;
   public FormulaEditor(SSTable _tb) {
       this.tb = _tb;
@@ -60,7 +60,7 @@ public class FormulaEditor extends JPanel{
             }
             public void keyPressed(KeyEvent e){}
             public void keyReleased(KeyEvent e){
-                //synchronize the value in edu.psu.geovista.geoviz.spreadsheet.formula editor and cell editor
+                //synchronize the value in geovista.geoviz.spreadsheet.formula editor and cell editor
                 String input=formulaF.getText();
                 int column=tb.getSelectedColumn() ;
                 int row=tb.getSelectedRow() ;

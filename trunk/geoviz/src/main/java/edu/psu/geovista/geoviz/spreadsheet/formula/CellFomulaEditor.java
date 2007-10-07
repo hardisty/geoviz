@@ -3,7 +3,7 @@
  * Copyright (c), 1999 - 2002, GeoVISTA Center
  * All Rights Researved.
  *
- *  Description: It displays the edu.psu.geovista.geoviz.spreadsheet.formula string of a edu.psu.geovista.geoviz.spreadsheet.formula cell when cell is being edited.
+ *  Description: It displays the geovista.geoviz.spreadsheet.formula string of a geovista.geoviz.spreadsheet.formula cell when cell is being edited.
  *              It inherits  all methods of the DefaultCellEditor.
  *
  * Date: Mar 13, 2003
@@ -29,7 +29,7 @@ public class CellFomulaEditor extends DefaultCellEditor {
         super(textField);
         this.cellField = textField;
 
-/* To account for edu.psu.geovista.geoviz.spreadsheet.formula feature only need
+/* To account for geovista.geoviz.spreadsheet.formula feature only need
          * to override the setValue method in EditorDelegate inner
          * class.
          */
@@ -40,7 +40,7 @@ public class CellFomulaEditor extends DefaultCellEditor {
                 if (value instanceof Cell) {
                     Cell temp = (Cell)value;
 
-/* when editing edu.psu.geovista.geoviz.spreadsheet.formula cell
+/* when editing geovista.geoviz.spreadsheet.formula cell
                      * a string representation is displayed
                      */
                     String v;

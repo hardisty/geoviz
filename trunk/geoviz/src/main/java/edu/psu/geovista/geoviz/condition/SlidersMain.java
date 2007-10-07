@@ -62,7 +62,7 @@ public class SlidersMain {
 
 
 		//UniPlotMatrix someSliders = new UniPlotMatrix();
-		//someSliders.setElementClassName("edu.psu.geovista.geoviz.scatterplot.ScatterPlot");
+		//someSliders.setElementClassName("geovista.geoviz.scatterplot.ScatterPlot");
 		edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader shpReader = new edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader();
                //String fn = "C:\\ESRI\\ESRIDATA\\USA\\STATES48.shp";
 			   //String fn = "V:\\Historical-Demographic\\census\\dc_tracts\\dc_tracts.shp";

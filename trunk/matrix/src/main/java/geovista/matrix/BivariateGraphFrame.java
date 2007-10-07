@@ -202,7 +202,7 @@ public class BivariateGraphFrame extends JPanel implements  DataSetListener, Act
         this.add((Component)this.bivariateGraph, BorderLayout.CENTER);
         this.bivariateGraph.setBackground(Color.white);
         //note the not (!) at the beginning of the next condition
-        if (!this.bivariateGraph.getClass().getName().equals("edu.psu.geovista.geoviz.map.MapMatrixElement")){
+        if (!this.bivariateGraph.getClass().getName().equals("geovista.geoviz.map.MapMatrixElement")){
           makeToolbar();
           mapTools.setAlignmentX(Component.LEFT_ALIGNMENT);
           topContent.add(mapTools);

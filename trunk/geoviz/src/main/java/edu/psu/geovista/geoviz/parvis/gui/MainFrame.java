@@ -480,10 +480,10 @@ public class MainFrame extends javax.swing.JFrame implements ProgressListener {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
-        UIManager.put("edu.psu.geovista.geoviz.parvis.gui.ParallelDisplayUI", "edu.psu.geovista.geoviz.parvis.gui.BasicParallelDisplayUI");
+        UIManager.put("geovista.geoviz.parvis.gui.ParallelDisplayUI", "geovista.geoviz.parvis.gui.BasicParallelDisplayUI");
         // new MainFrame().setVisible(true);
         try {
-          MainFrame mf = (MainFrame) java.beans.Beans.instantiate(MainFrame.class.getClassLoader(), "edu.psu.geovista.geoviz.parvis.gui.MainFrame");
+          MainFrame mf = (MainFrame) java.beans.Beans.instantiate(MainFrame.class.getClassLoader(), "geovista.geoviz.parvis.gui.MainFrame");
           mf.setVisible(true);
         //((MainFrame) MainFrame.class.newInstance()).setVisible(true);
         } catch (Exception e) {

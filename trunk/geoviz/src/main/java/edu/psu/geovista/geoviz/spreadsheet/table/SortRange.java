@@ -23,8 +23,8 @@ public class SortRange {
     public static final int RANGE=3;
 
     private int type=3;      //range type
-    private HashSet rows;//the rows' index (in Model)that are in the edu.psu.geovista.geoviz.spreadsheet.tools.Sort Range
-    private HashSet columns;//the columns' index that are in the edu.psu.geovista.geoviz.spreadsheet.tools.Sort Range
+    private HashSet rows;//the rows' index (in Model)that are in the geovista.geoviz.spreadsheet.tools.Sort Range
+    private HashSet columns;//the columns' index that are in the geovista.geoviz.spreadsheet.tools.Sort Range
 
     public SortRange() {
        rows=new HashSet();

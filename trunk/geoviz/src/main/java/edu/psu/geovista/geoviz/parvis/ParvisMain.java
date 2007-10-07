@@ -31,7 +31,7 @@ public class ParvisMain {
     * @param args the command line arguments (currently none available)
     */
     public static void main (String args[]) {
-        UIManager.put("edu.psu.geovista.geoviz.parvis.gui.ParallelDisplayUI", "edu.psu.geovista.geoviz.parvis.gui.BasicParallelDisplayUI");
+        UIManager.put("geovista.geoviz.parvis.gui.ParallelDisplayUI", "geovista.geoviz.parvis.gui.BasicParallelDisplayUI");
         new MainFrame().setVisible(true);
     }
 
