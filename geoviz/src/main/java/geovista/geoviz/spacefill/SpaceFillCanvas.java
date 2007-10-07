@@ -45,16 +45,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.symbolization.AffineTransformModifier;
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
-import edu.psu.geovista.symbolization.ColorSymbolClassification;
-import edu.psu.geovista.symbolization.ColorSymbolClassificationSimple;
 import geovista.common.data.ArraySort2D;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.symbolization.AffineTransformModifier;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.ColorSymbolClassification;
+import geovista.symbolization.ColorSymbolClassificationSimple;
 
 
 public class SpaceFillCanvas extends JPanel implements MouseListener,

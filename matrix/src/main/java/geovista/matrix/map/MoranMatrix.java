@@ -33,8 +33,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.symbolization.event.ColorClassifierEvent;
-import edu.psu.geovista.symbolization.event.ColorClassifierListener;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.DataSetEvent;
@@ -55,6 +53,8 @@ import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.matrix.scatterplot.SingleScatterPlot;
+import geovista.symbolization.event.ColorClassifierEvent;
+import geovista.symbolization.event.ColorClassifierListener;
 
 /**
  * A Moran matrix has a whole series of plots tied together:

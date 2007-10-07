@@ -26,7 +26,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.HashMap;
 
-import edu.psu.geovista.symbolization.glyph.Glyph;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.DataSetEvent;
@@ -34,6 +33,7 @@ import geovista.common.event.DataSetListener;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SubspaceEvent;
+import geovista.symbolization.glyph.Glyph;
 
 /**
  *

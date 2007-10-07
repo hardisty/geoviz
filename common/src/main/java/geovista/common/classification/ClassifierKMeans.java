@@ -13,7 +13,7 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 
-// import edu.psu.geovista.symbolization.ColorSymbolizerForClassification;
+// import geovista.symbolization.ColorSymbolizerForClassification;
 
 public class ClassifierKMeans implements DataSetListener {
 

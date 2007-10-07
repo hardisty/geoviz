@@ -24,7 +24,7 @@
  class to call symbol.draw(), and expect that the background color etc. will
  be set appropriately.
  ------------------------------------------------------------------------------*/
-package edu.psu.geovista.symbolization.glyph;
+package geovista.symbolization.glyph;
 
 
 import java.awt.Color;

@@ -12,7 +12,7 @@ package  geovista.matrix.scatterplot;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassification;
 
 /**
  * put your documentation comment here

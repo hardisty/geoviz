@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import edu.psu.geovista.symbolization.glyph.Glyph;
+import geovista.symbolization.glyph.Glyph;
 
 /**
  * put your documentation comment here
