@@ -37,19 +37,19 @@ public class Cell {
     /** The integer code that denotes the cell holds numbers. */
     public static final int NUMBER = 2;
 
-    /** The integer code that denotes the cell holds a edu.psu.geovista.geoviz.spreadsheet.formula. */
+    /** The integer code that denotes the cell holds a geovista.geoviz.spreadsheet.formula. */
    // public static final int FORMULA = 2;
 
     public static final int UNKNOWN = 3;
 
     private int valueType=0;
 
-    /** Value of the cell. In a edu.psu.geovista.geoviz.spreadsheet.formula, value holds the evaluated value. */
+    /** Value of the cell. In a geovista.geoviz.spreadsheet.formula, value holds the evaluated value. */
     private Object value;
 
     /**
      * This expression contains the string and internal representation
-     * of the edu.psu.geovista.geoviz.spreadsheet.formula if it exists.
+     * of the geovista.geoviz.spreadsheet.formula if it exists.
      */
     private Formula expression;
 
@@ -66,7 +66,7 @@ public class Cell {
      * the row and column labels.
      * <P>
      * <b>Warning:</b> Do not use this with Formulas
-     * @param datum the value of the "label" cell (not a edu.psu.geovista.geoviz.spreadsheet.formula.Formula)
+     * @param datum the value of the "label" cell (not a geovista.geoviz.spreadsheet.formula.Formula)
      */
     public Cell(Vector _container,SSTableModel tm) {
         this.container =_container;
@@ -88,7 +88,7 @@ public class Cell {
          Object value=null;
          try {
              Formula form=this.getFormula() ;
-             if (form.isBad() ){ //invalid edu.psu.geovista.geoviz.spreadsheet.formula
+             if (form.isBad() ){ //invalid geovista.geoviz.spreadsheet.formula
                 this.setValue("#NAME?");
              }
              else{
@@ -96,7 +96,7 @@ public class Cell {
 
                  //Debug.println(" A1:"+SpreadSheetBean4.getTableInstance().getValueAtIndex(1,1));
                 value = form.evaluate();
-/*Debug.println("edu.psu.geovista.geoviz.spreadsheet.formula.Cell.evaluate():"+value);
+/*Debug.println("geovista.geoviz.spreadsheet.formula.Cell.evaluate():"+value);
                 Debug.println("Cell.getViewAddress()"+this.getViewAddress() );
                 Thread.dumpStack() ;    */
                 this.setValue(value);
@@ -116,10 +116,10 @@ public class Cell {
    }
 
     /**
-     * This method returns the edu.psu.geovista.geoviz.spreadsheet.formula associated with the cell or null if it
+     * This method returns the geovista.geoviz.spreadsheet.formula associated with the cell or null if it
      * does not exist.
      *
-     * @return the edu.psu.geovista.geoviz.spreadsheet.formula (string and internal object) or null if does not
+     * @return the geovista.geoviz.spreadsheet.formula (string and internal object) or null if does not
      * exist
      */
     public Formula getFormula() {
@@ -140,7 +140,7 @@ public class Cell {
 
     /**
      * If it is a data cell, it returns the data of the cell. If it is a
-     * edu.psu.geovista.geoviz.spreadsheet.formula, it returns the previously evaluated value of the edu.psu.geovista.geoviz.spreadsheet.formula.
+     * geovista.geoviz.spreadsheet.formula, it returns the previously evaluated value of the geovista.geoviz.spreadsheet.formula.
      *
      * @return the value (data or evaluated) of the cell
      */
@@ -196,12 +196,12 @@ public class Cell {
 
 
     /**
-     * This method sets the cell to be a edu.psu.geovista.geoviz.spreadsheet.formula cell. It puts the edu.psu.geovista.geoviz.spreadsheet.formula
+     * This method sets the cell to be a geovista.geoviz.spreadsheet.formula cell. It puts the geovista.geoviz.spreadsheet.formula
      * object into the expression field. The Table of Cells is responsible
      * for recalculating and setting the appropriate value in the value
      * field of this cell.
      *
-     * @param form the internal representation of edu.psu.geovista.geoviz.spreadsheet.formula to set this cell to
+     * @param form the internal representation of geovista.geoviz.spreadsheet.formula to set this cell to
      */
     public void setAsFormula(boolean isf) {
 
@@ -213,13 +213,13 @@ public class Cell {
     /**
      * This method is useful for determining what information a cell holds. To
      * check if a cell holds a certain type just see if
-     * getType() == edu.psu.geovista.geoviz.spreadsheet.formula.Cell.CODE where CODE is any of the cell constants.
+     * getType() == geovista.geoviz.spreadsheet.formula.Cell.CODE where CODE is any of the cell constants.
      *
      * @return the integer code of the type of data this cell holds
      */
     public int getValueType() {
         if (value==null) valueType= Cell.NULL ;
-        ///if (expression != null) return edu.psu.geovista.geoviz.spreadsheet.formula.Cell.FORMULA; //jin: no use
+        ///if (expression != null) return geovista.geoviz.spreadsheet.formula.Cell.FORMULA; //jin: no use
         else if (value instanceof Number) valueType= Cell.NUMBER;
         else if(value instanceof String)valueType= Cell.TEXT;
         else valueType= Cell.UNKNOWN ;
@@ -232,9 +232,9 @@ public class Cell {
     }
 
     /**
-     * This method returns true IFF it is a edu.psu.geovista.geoviz.spreadsheet.formula cell
+     * This method returns true IFF it is a geovista.geoviz.spreadsheet.formula cell
      *
-     * @return true iff a edu.psu.geovista.geoviz.spreadsheet.formula cell
+     * @return true iff a geovista.geoviz.spreadsheet.formula cell
      */
     public boolean isFormula() {
         return this.isformula ;
@@ -257,7 +257,7 @@ public class Cell {
     }
 
     /**
-     * This method determines a cell is a edu.psu.geovista.geoviz.spreadsheet.formula cell that has a error.
+     * This method determines a cell is a geovista.geoviz.spreadsheet.formula cell that has a error.
      *
      * @return true if cell is an error cell
 
@@ -273,16 +273,16 @@ public class Cell {
     /**
      * toString() method return same data as getValue(), but in different format
      * toString() return String format for table.getValue() to paintCell()
-     * getValue() return  Number for evaluate edu.psu.geovista.geoviz.spreadsheet.formula
+     * getValue() return  Number for evaluate geovista.geoviz.spreadsheet.formula
      * called when paint cell
      */
     public String toString() {
           /*if (this.isFormula() )
                 return "="+expression.toString();
         else*/
-/* Because all values stored in TableModel is in form of edu.psu.geovista.geoviz.spreadsheet.formula.Cell object,
+/* Because all values stored in TableModel is in form of geovista.geoviz.spreadsheet.formula.Cell object,
          * TableModel.getValueAt() will call object.toString() to get actual value
-         *, so toString() only return the evaluted value, not edu.psu.geovista.geoviz.spreadsheet.formula expression*/
+         *, so toString() only return the evaluted value, not geovista.geoviz.spreadsheet.formula expression*/
         if (this.isDeleted() ){
             return "#REF!";
         }
@@ -352,7 +352,7 @@ public class Cell {
                 r= tvc.compareTo(xvc);  //??? throw ClassCastException
 
             }
-            else{ //xt=edu.psu.geovista.geoviz.spreadsheet.formula.Cell.Null, should never reach, just for compile purpose
+            else{ //xt=geovista.geoviz.spreadsheet.formula.Cell.Null, should never reach, just for compile purpose
                 assert false;
                 r= over;
             }
@@ -386,7 +386,7 @@ public class Cell {
 
                 //throw new ClassCastException();
             }
-            else{ //xt =edu.psu.geovista.geoviz.spreadsheet.formula.Cell.Null, should never reach, just for compile purpose
+            else{ //xt =geovista.geoviz.spreadsheet.formula.Cell.Null, should never reach, just for compile purpose
                 assert false;
                 r= over;
             }
@@ -431,8 +431,8 @@ public class Cell {
             //SSTableModel tm=SSTableModel.getInstance() ;
             Point address=this.getDataModel().getCellAddress(this) ;  //address in TableModel
             if (address==null) return null;
-            int x=(int)address.getX() ; //edu.psu.geovista.geoviz.spreadsheet.model index (sort edu.psu.geovista.geoviz.spreadsheet.model if sort)
-            int y=(int)address.getY();  //edu.psu.geovista.geoviz.spreadsheet.model index (sort edu.psu.geovista.geoviz.spreadsheet.model if sort)
+            int x=(int)address.getX() ; //geovista.geoviz.spreadsheet.model index (sort geovista.geoviz.spreadsheet.model if sort)
+            int y=(int)address.getY();  //geovista.geoviz.spreadsheet.model index (sort geovista.geoviz.spreadsheet.model if sort)
 
 
 
@@ -441,7 +441,7 @@ public class Cell {
             int row=SSTable.transRowTableToView(x);
             //int col=Cell.transColModelToView(y);
             int col=this.getDataModel().getTable().transColModelToView(y);
-            //String col=edu.psu.geovista.geoviz.spreadsheet.formula.Node.translateColumn(y );
+            //String col=geovista.geoviz.spreadsheet.formula.Node.translateColumn(y );
             return new Point(row,col);
 
 
@@ -452,7 +452,7 @@ public class Cell {
             if (address!=null){
                     int x=(int)address.getX() ;
                     int y=(int)address.getY();
-                //String row=edu.psu.geovista.geoviz.spreadsheet.formula.Node.translateRow(x );
+                //String row=geovista.geoviz.spreadsheet.formula.Node.translateRow(x );
                     String row=Integer.toString(x);
                     String col=SSTable.translateVVColumn(y);//translate to String. e.g. 1=>A
                     addrs=col+row;

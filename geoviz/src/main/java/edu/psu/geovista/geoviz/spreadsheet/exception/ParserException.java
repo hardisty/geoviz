@@ -4,8 +4,8 @@
  * All Rights Researved.
  *
  * @author Jin Chen
- * This Exception is raised when edu.psu.geovista.geoviz.spreadsheet.formula.Formula fails in tokenizing or parsing the
- * edu.psu.geovista.geoviz.spreadsheet.formula.
+ * This Exception is raised when geovista.geoviz.spreadsheet.formula.Formula fails in tokenizing or parsing the
+ * geovista.geoviz.spreadsheet.formula.
  * @author Jin Chen
  */
 
@@ -18,7 +18,7 @@ public class ParserException extends Exception {
     private String msg;
 
     /**
-     * Contructor for edu.psu.geovista.geoviz.spreadsheet.exception.ParserException.  By default, sets quiet to true.
+     * Contructor for geovista.geoviz.spreadsheet.exception.ParserException.  By default, sets quiet to true.
      */
     public ParserException() { quiet = true; };
 
@@ -43,7 +43,7 @@ public class ParserException extends Exception {
     public boolean isQuiet() { return quiet; }
 
     /**
-     * toString method for edu.psu.geovista.geoviz.spreadsheet.exception.ParserException.
+     * toString method for geovista.geoviz.spreadsheet.exception.ParserException.
      *
      * @return the error message string
      */

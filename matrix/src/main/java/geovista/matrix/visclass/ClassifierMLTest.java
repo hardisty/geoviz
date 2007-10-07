@@ -26,7 +26,7 @@ public class ClassifierMLTest {
 
 	JFrame frame = new JFrame("ML Classifier Test");
 	UniPlotMatrix scatterPlotMatrix = new UniPlotMatrix();
-	scatterPlotMatrix.setElementClassName("edu.psu.geovista.geoviz.scatterplot.ScatterPlot");
+	scatterPlotMatrix.setElementClassName("geovista.geoviz.scatterplot.ScatterPlot");
 
 	edu.psu.geovista.readers.csv.CSVFileDataReader csvReader = new edu.psu.geovista.readers.csv.CSVFileDataReader();
 	String fn = "T:\\GeoVISTA\\data\\kioloa_london.csv";

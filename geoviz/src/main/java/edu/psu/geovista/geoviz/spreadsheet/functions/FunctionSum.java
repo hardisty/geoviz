@@ -63,4 +63,4 @@ public  class FunctionSum extends Function {
     public String getDescription() {
 	return "Adds all the numbers in a set of values.";
     }
-}//edu.psu.geovista.geoviz.spreadsheet.functions.FunctionSum
+}//geovista.geoviz.spreadsheet.functions.FunctionSum

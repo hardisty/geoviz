@@ -89,12 +89,12 @@ public class TableColumnSort {
             Vector colsort=this.createSortVector(rowCount) ;
             int size=sorts.size();
 
-            //int mcol=edu.psu.geovista.geoviz.spreadsheet.formula.Cell.transColViewToModel(col);//Model index
+            //int mcol=geovista.geoviz.spreadsheet.formula.Cell.transColViewToModel(col);//Model index
             int mcol=col;
-            if (mcol<size){//Vector.setElementAt(colsort,mcol); won't throw edu.psu.geovista.geoviz.spreadsheet.exception
+            if (mcol<size){//Vector.setElementAt(colsort,mcol); won't throw geovista.geoviz.spreadsheet.exception
                 sorts.setElementAt(colsort,mcol);
             }
-            else{//Vector.setElementAt(colsort,mcol); will throw edu.psu.geovista.geoviz.spreadsheet.exception, MUST fill with null element
+            else{//Vector.setElementAt(colsort,mcol); will throw geovista.geoviz.spreadsheet.exception, MUST fill with null element
                 int needCol=mcol-size+1;
                 for (int i=0;i<needCol;i++){
                     sorts.add(null);//For those columns no need sort, just maintain a null for them
@@ -111,7 +111,7 @@ public class TableColumnSort {
     public Vector getColumnSort(int col){
          int size=sorts.size();
          if (col>=size){
-         //Vector.setElementAt(colsort,mcol); will throw edu.psu.geovista.geoviz.spreadsheet.exception,
+         //Vector.setElementAt(colsort,mcol); will throw geovista.geoviz.spreadsheet.exception,
           //MUST fill with null element
                 int needCol=col-size+1;
                 for (int i=0;i<needCol;i++){
@@ -139,7 +139,7 @@ public class TableColumnSort {
     //sort rows
     private void sortRows(int col, boolean ascending){
 
-      System.out.println("********* edu.psu.geovista.geoviz.spreadsheet.tools.Sort ->");
+      System.out.println("********* geovista.geoviz.spreadsheet.tools.Sort ->");
       this.createSortMap(0);
 
       int rowCount = tm.getRowCount();
@@ -178,7 +178,7 @@ public class TableColumnSort {
      *
      */
     public void sortColumns(int col, int[] cols,boolean ascending){
-      System.out.println("********* edu.psu.geovista.geoviz.spreadsheet.tools.Sort ->");
+      System.out.println("********* geovista.geoviz.spreadsheet.tools.Sort ->");
       for (int i=0;i<cols.length ;i++){
                 int scol=cols[i];//selected column in table view
                 this.sortRange.setColumn(scol);
@@ -190,7 +190,7 @@ public class TableColumnSort {
       int sortType=this.sortRange.getType() ;
       if (sortType==SortRange.COLUMNS ){
          for (int k=0;k<cols.length ;k++){//do sort for each column
-             //int mcol=edu.psu.geovista.geoviz.spreadsheet.formula.Cell.transColViewToModel(cols[k]);
+             //int mcol=geovista.geoviz.spreadsheet.formula.Cell.transColViewToModel(cols[k]);
             int mcol=cols[k];
             Vector sortMap=(Vector)this.sorts.get(mcol);
                   for(int i=0; i < rowCount; i++) {
@@ -219,7 +219,7 @@ public class TableColumnSort {
           assert false:"sortColumns() can sort it";
       }
 
-      System.out.println("******************************************* edu.psu.geovista.geoviz.spreadsheet.tools.Sort <-");
+      System.out.println("******************************************* geovista.geoviz.spreadsheet.tools.Sort <-");
     }//sortTable
 
    /**   sort Range
@@ -228,7 +228,7 @@ public class TableColumnSort {
      *
      */
     public void sortRange(int col,int[] rows,int[] cols,boolean ascending){
-      System.out.println("********* edu.psu.geovista.geoviz.spreadsheet.tools.Sort ->");
+      System.out.println("********* geovista.geoviz.spreadsheet.tools.Sort ->");
       for (int i=0;i<cols.length ;i++){
                 int scol=cols[i];//selected column in table view
                 if (!sortRange.contains(scol)){
@@ -242,7 +242,7 @@ public class TableColumnSort {
       int sortType=this.sortRange.getType() ;
       if (sortType==SortRange.RANGE ){
          for (int k=0;k<cols.length ;k++){//do sort for each column
-             //int mcol=edu.psu.geovista.geoviz.spreadsheet.formula.Cell.transColViewToModel(cols[k]);
+             //int mcol=geovista.geoviz.spreadsheet.formula.Cell.transColViewToModel(cols[k]);
             int mcol=cols[k];
 
             Vector sortMap=(Vector)this.sorts.get(mcol);
@@ -272,7 +272,7 @@ public class TableColumnSort {
           assert false:"sortColumns() can sort it";
       }
 
-      System.out.println("******************************************* edu.psu.geovista.geoviz.spreadsheet.tools.Sort <-");
+      System.out.println("******************************************* geovista.geoviz.spreadsheet.tools.Sort <-");
     }//sortTable
 
     /**
@@ -306,7 +306,7 @@ public class TableColumnSort {
     }
     /**
      * compare ith element and jth element of tableModel's column
-     * @param   column  column index in table edu.psu.geovista.geoviz.spreadsheet.model
+     * @param   column  column index in table geovista.geoviz.spreadsheet.model
      */
     private int compare(int i, int j, int column, boolean ascending) {
       //int modelCol=table.convertColumnIndexToModel(column);
@@ -331,7 +331,7 @@ public class TableColumnSort {
      *  @param  vx  sortModel 's x . For table view, it is just Model x
      */
     public Point getCellPointAt(int vx, int vy){
-        int mx,my;//edu.psu.geovista.geoviz.spreadsheet.model x, edu.psu.geovista.geoviz.spreadsheet.model y
+        int mx,my;//geovista.geoviz.spreadsheet.model x, geovista.geoviz.spreadsheet.model y
         my=vy;
         int sortSize=this.sorts.size() ;
         Vector columnIndex;

@@ -79,7 +79,7 @@ public class ToolManager {
         JButton sortn=new JButton(sortNoIcon);
         sortn.setToolTipText("Clear Sort ") ;
         sortn.addActionListener(new Sort(table,Sort.CLEAR ));
-        //JButton sort=new JButton("edu.psu.geovista.geoviz.spreadsheet.tools.Sort");
+        //JButton sort=new JButton("geovista.geoviz.spreadsheet.tools.Sort");
         //sort.addActionListener(new Sort(table,-1));
         /***************** NOT implement yet ***************************/
         // we save this button as private member for further reference
@@ -173,7 +173,7 @@ public class ToolManager {
         //fname.add("function");
         //JComboBox functions=new JComboBox(Formula.getFunctionNames() );
         JComboBox functions=new JComboBox(this.table.getFunManager().getFunctionNames() );
-        JPanel tp=new JPanel(); //edu.psu.geovista.geoviz.spreadsheet.tools panel
+        JPanel tp=new JPanel(); //geovista.geoviz.spreadsheet.tools panel
         tp.setLayout(new FlowLayout());
         //tp.add(saveButton);
         //tp.add(printButton);

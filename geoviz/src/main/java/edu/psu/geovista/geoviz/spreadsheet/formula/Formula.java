@@ -39,7 +39,7 @@ import edu.psu.geovista.geoviz.spreadsheet.util.Debug;
 public class Formula {
     //jin:
     private Number value;
-    // the raw edu.psu.geovista.geoviz.spreadsheet.formula string
+    // the raw geovista.geoviz.spreadsheet.formula string
     private String formulaString;  // jin: the expression
     //private String expression;
 
@@ -53,19 +53,19 @@ public class Formula {
     // error message
     private ParserException error;
 
-    // whether this edu.psu.geovista.geoviz.spreadsheet.formula needs recalculation
+    // whether this geovista.geoviz.spreadsheet.formula needs recalculation
     private boolean needsRecalc;
 
     /**
-     * edu.psu.geovista.geoviz.spreadsheet.formula.Formula contructor.
+     * geovista.geoviz.spreadsheet.formula.Formula contructor.
      *
-     * This is used to construct a edu.psu.geovista.geoviz.spreadsheet.formula.Formula object without any
+     * This is used to construct a geovista.geoviz.spreadsheet.formula.Formula object without any
      * parsing process.
      *
-     * @param input the edu.psu.geovista.geoviz.spreadsheet.formula string
-     * @param row the current row where the edu.psu.geovista.geoviz.spreadsheet.formula is stored
+     * @param input the geovista.geoviz.spreadsheet.formula string
+     * @param row the current row where the geovista.geoviz.spreadsheet.formula is stored
      * @param col the current column where the forluma is stored
-     * @param e a edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+     * @param e a geovista.geoviz.spreadsheet.exception.ParserException
      */
     public Formula(String input, int row, int col, ParserException e) {
         formulaString = input.toUpperCase();
@@ -73,14 +73,14 @@ public class Formula {
     }
 
     /**
-     * edu.psu.geovista.geoviz.spreadsheet.formula.Formula contructor.
+     * geovista.geoviz.spreadsheet.formula.Formula contructor.
      *
      * Parse the input string and translate into postfix form.
      *
-     * @param input the edu.psu.geovista.geoviz.spreadsheet.formula string
-     * @param row the current row where the edu.psu.geovista.geoviz.spreadsheet.formula is stored
+     * @param input the geovista.geoviz.spreadsheet.formula string
+     * @param row the current row where the geovista.geoviz.spreadsheet.formula is stored
      * @param col the current column where the forluma is stored
-     * @edu.psu.geovista.geoviz.spreadsheet.exception edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+     * @geovista.geoviz.spreadsheet.exception geovista.geoviz.spreadsheet.exception.ParserException
      * @see #toPostfix
      */
     public Formula(Cell owner, String input, int row, int col) throws ParserException {
@@ -89,16 +89,16 @@ public class Formula {
             try {
                 this.owner =owner;
                 this.getOwners().add(owner);
-                // tokenize and convert the edu.psu.geovista.geoviz.spreadsheet.formula to postfix form (a list of edu.psu.geovista.geoviz.spreadsheet.formula.Node)
+                // tokenize and convert the geovista.geoviz.spreadsheet.formula to postfix form (a list of geovista.geoviz.spreadsheet.formula.Node)
                 nodes= tokenize(formulaString);
-                //Debug.println("edu.psu.geovista.geoviz.spreadsheet.formula.Formula() nodes: "+nodes);
+                //Debug.println("geovista.geoviz.spreadsheet.formula.Formula() nodes: "+nodes);
                 //dependency = createDependency(nodes);//this depend on cells in dependency to evaluate
                 //Debug.println("Dependency: "+dependency);
                 postfix = toPostfix(convertParams(nodes));
                 //this.showTokens(postfix);
                 Debug.println("Postfix: "+postfix);
             }catch (ParserException e) {
-                Debug.println("edu.psu.geovista.geoviz.spreadsheet.formula.Formula constructor: "+e);
+                Debug.println("geovista.geoviz.spreadsheet.formula.Formula constructor: "+e);
                 throwError(e);
             }
     }
@@ -123,7 +123,7 @@ public class Formula {
       *  Not yet
       */
      private void evalueExpression(LinkedList nodes){
-        if (this.isBad() ){//for invalid edu.psu.geovista.geoviz.spreadsheet.formula not passing
+        if (this.isBad() ){//for invalid geovista.geoviz.spreadsheet.formula not passing
             return;
         }
         StringBuffer sb=new StringBuffer();
@@ -136,7 +136,7 @@ public class Formula {
                 if (address!=null){
 /*int x=(int)address.getX() ;
                     int y=(int)address.getY();
-                    //String row=edu.psu.geovista.geoviz.spreadsheet.formula.Node.translateRow(x );
+                    //String row=geovista.geoviz.spreadsheet.formula.Node.translateRow(x );
                     String row=Integer.toString(x);
                     String col=Cell.translateVVColumn(y);//translate to String. e.g. 1=>A
                     addrs=col+row;
@@ -178,7 +178,7 @@ public class Formula {
                     }
                     else{
                         assert false: "Unable to handle the expression";
-                        //throw edu.psu.geovista.geoviz.spreadsheet.exception: unable to handle the expression
+                        //throw geovista.geoviz.spreadsheet.exception: unable to handle the expression
                     }
 
                     if (end.getType() ==Node.REL_ADDR ){
@@ -197,7 +197,7 @@ public class Formula {
                     else{
 
                         assert false: "Unable to handle the expression";
-                        //throw edu.psu.geovista.geoviz.spreadsheet.exception: unable to handle the expression
+                        //throw geovista.geoviz.spreadsheet.exception: unable to handle the expression
                     }
                     sb.append(address.toString() );
 
@@ -214,13 +214,13 @@ public class Formula {
 
 
     /**
-     * Check for bad edu.psu.geovista.geoviz.spreadsheet.formula.
+     * Check for bad geovista.geoviz.spreadsheet.formula.
      *
      * @return boolean true if postfix
      */
     public boolean isBad() {
 	// postfix was set to null when there was any error
-        // in processing the edu.psu.geovista.geoviz.spreadsheet.formula string
+        // in processing the geovista.geoviz.spreadsheet.formula string
         return postfix == null;
     }
 
@@ -250,12 +250,12 @@ public class Formula {
 
 
     /**
-     * Tokenize the edu.psu.geovista.geoviz.spreadsheet.formula string into a list of Nodes.
+     * Tokenize the geovista.geoviz.spreadsheet.formula string into a list of Nodes.
      *
      * @param input the input string to tokenize
-     * @edu.psu.geovista.geoviz.spreadsheet.exception edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+     * @geovista.geoviz.spreadsheet.exception geovista.geoviz.spreadsheet.exception.ParserException
      *
-     * @see edu.psu.geovista.geoviz.spreadsheet.formula.Node
+     * @see geovista.geoviz.spreadsheet.formula.Node
      */
     private LinkedList tokenize(String input) throws ParserException {
             LinkedList tokens = new LinkedList();
@@ -279,7 +279,7 @@ public class Formula {
                 node.setData(String.valueOf(c));
                 //1.
                 if (Character.isLetter(c)) {
-                    // 1. edu.psu.geovista.geoviz.spreadsheet.functions.Function or Relative Address
+                    // 1. geovista.geoviz.spreadsheet.functions.Function or Relative Address
                     node.setType(Node.FUNCTION);
                     node.setParams(new LinkedList());
 
@@ -314,8 +314,8 @@ public class Formula {
                     }
                 }else if (Character.isDigit(c) || c == '.') { //Number or .
 /*||
-                     (lastType == edu.psu.geovista.geoviz.spreadsheet.formula.Node.DEFAULT ||
-                      lastType == edu.psu.geovista.geoviz.spreadsheet.formula.Node.LPAREN || lastType == edu.psu.geovista.geoviz.spreadsheet.formula.Node.COMMA) &&
+                     (lastType == geovista.geoviz.spreadsheet.formula.Node.DEFAULT ||
+                      lastType == geovista.geoviz.spreadsheet.formula.Node.LPAREN || lastType == geovista.geoviz.spreadsheet.formula.Node.COMMA) &&
                       (c == '+' || c == '-')) */
                     // Numbers
                     while (cur < input.length() &&
@@ -440,12 +440,12 @@ public class Formula {
                                     }
 
                                     node = range;
-                                    //			util.Debug.println("edu.psu.geovista.geoviz.spreadsheet.formula.Node: "+node);
+                                    //			util.Debug.println("geovista.geoviz.spreadsheet.formula.Node: "+node);
                                 } else
                                     throwError("#ADDR?");
                 }
 
-                 //		edu.psu.geovista.geoviz.spreadsheet.util.Debug.println("Add: "+node);
+                 //		geovista.geoviz.spreadsheet.util.Debug.println("Add: "+node);
 
                 if (node.isType(Node.OPERATOR) &&
                     (node.getData().equals("+") ||
@@ -468,7 +468,7 @@ public class Formula {
                 throwError(e);
       }catch (Exception e) {
                     e.printStackTrace() ;
-                 ///edu.psu.geovista.geoviz.spreadsheet.util.Debug.println(e.toString());
+                 ///geovista.geoviz.spreadsheet.util.Debug.println(e.toString());
       } //try
 
 
@@ -496,7 +496,7 @@ public class Formula {
      * Convert function parameters.  From a linear sequence of nodes,
      * output a tree-like structure, with all the functions having a
      * linked list of parameters, and each parameter having a linked
-     * list of nodes (that is, each parameter can be a edu.psu.geovista.geoviz.spreadsheet.formula).
+     * list of nodes (that is, each parameter can be a geovista.geoviz.spreadsheet.formula).
      *
      * The basic rules are:
      * <ol>
@@ -592,7 +592,7 @@ public class Formula {
 		    }
 		    else {
                 // this is a function left paren
-                //			edu.psu.geovista.geoviz.spreadsheet.util.Debug.println("exp is "+list);
+                //			geovista.geoviz.spreadsheet.util.Debug.println("exp is "+list);
                 // set the expression of that parameter
                 exp.setType(Node.EXP);
                 exp.setExp(list);
@@ -634,9 +634,9 @@ public class Formula {
      * </ol>
      *
      * @param tokens a linked list to convert
-     * @edu.psu.geovista.geoviz.spreadsheet.exception edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+     * @geovista.geoviz.spreadsheet.exception geovista.geoviz.spreadsheet.exception.ParserException
      *
-     * @see edu.psu.geovista.geoviz.spreadsheet.formula.Node
+     * @see geovista.geoviz.spreadsheet.formula.Node
      * @see #tokenize
      * @see #convertParam
      */
@@ -733,9 +733,9 @@ public class Formula {
     }
 
     /**
-     * From the edu.psu.geovista.geoviz.spreadsheet.formula.Node list; Creates the dependency set.
+     * From the geovista.geoviz.spreadsheet.formula.Node list; Creates the dependency set.
      *
-     * @return a HashSet of edu.psu.geovista.geoviz.spreadsheet.formula.CellPoint that the current cell references
+     * @return a HashSet of geovista.geoviz.spreadsheet.formula.CellPoint that the current cell references
      */
 
     public HashSet getOwners() {
@@ -790,7 +790,7 @@ public class Formula {
     }
 
     /**
-     * This returns the string value of the edu.psu.geovista.geoviz.spreadsheet.formula.
+     * This returns the string value of the geovista.geoviz.spreadsheet.formula.
      *
      * @return the string value
      */
@@ -830,7 +830,7 @@ public class Formula {
      * @param table the TableModel object
      * @param node the head node of the function
      * @return the value as a Float object
-     * @edu.psu.geovista.geoviz.spreadsheet.exception edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+     * @geovista.geoviz.spreadsheet.exception geovista.geoviz.spreadsheet.exception.ParserException
      */
     private Number evalFunction(Node node)
         throws ParserException,NoReferenceException {
@@ -867,11 +867,11 @@ public class Formula {
     * It evaluates the postfix expression by a stack.
     *
     * @param table the TableModel object
-    * @param postfix the edu.psu.geovista.geoviz.spreadsheet.formula in postfix form
+    * @param postfix the geovista.geoviz.spreadsheet.formula in postfix form
     * @param row the row of the cell to be evaluated
     * @param col the column of the cell to be evaluated
     * @return the result as a Float object
-    * @edu.psu.geovista.geoviz.spreadsheet.exception edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+    * @geovista.geoviz.spreadsheet.exception geovista.geoviz.spreadsheet.exception.ParserException
     */
     public  Number evaluate(LinkedList postfix) throws ParserException,NoReferenceException {
             if (this.isBad() ){
@@ -934,12 +934,12 @@ public class Formula {
                             else{//the refrenced cell is a String
                                 if (numOfNode==1&&!it.hasNext() ){
 
-                                    //If the edu.psu.geovista.geoviz.spreadsheet.formula contain ONLY the cell, just throw the String to the referencing cell
+                                    //If the geovista.geoviz.spreadsheet.formula contain ONLY the cell, just throw the String to the referencing cell
                                     // which is setValue() as the string
                                     throw new ParserException((String)o);
                                 }
                                 else{
-                                    ////If the edu.psu.geovista.geoviz.spreadsheet.formula contain more than the cell, throw  "#VALUE!"
+                                    ////If the geovista.geoviz.spreadsheet.formula contain more than the cell, throw  "#VALUE!"
                                     throw new ParserException("#VALUE!");
                                 }
                             }
@@ -979,12 +979,12 @@ public class Formula {
                             else{//the refrenced cell is a String
                                 if (numOfNode==1&&!it.hasNext() ){
 
-                                    //If the edu.psu.geovista.geoviz.spreadsheet.formula contain ONLY the cell, just throw the String to the referencing cell
+                                    //If the geovista.geoviz.spreadsheet.formula contain ONLY the cell, just throw the String to the referencing cell
                                     // which is setValue() as the string
                                     throw new ParserException((String)o);
                                 }
                                 else{
-                                    ////If the edu.psu.geovista.geoviz.spreadsheet.formula contain more than the cell, throw  "#VALUE!"
+                                    ////If the geovista.geoviz.spreadsheet.formula contain more than the cell, throw  "#VALUE!"
                                     throw new ParserException("#VALUE!");
                                 }
                             }
@@ -1010,7 +1010,7 @@ public class Formula {
             }catch (EmptyStackException e) {
                 // imbalance between operands and operators
                 throw new ParserException("#OP?");
-                // ("Wrong format of edu.psu.geovista.geoviz.spreadsheet.formula: too many operators");
+                // ("Wrong format of geovista.geoviz.spreadsheet.formula: too many operators");
             }catch (ParserException e) {
                 throw e;
             } catch (NoReferenceException e) {
@@ -1018,7 +1018,7 @@ public class Formula {
 
             }catch (Exception e) {
                 e.printStackTrace() ;
-                //edu.psu.geovista.geoviz.spreadsheet.util.Debug.println(e);
+                //geovista.geoviz.spreadsheet.util.Debug.println(e);
             }
 
             return new Integer(0);
@@ -1028,7 +1028,7 @@ public class Formula {
      */
     private void checkReference(Cell cell) throws ParserException{
                         if(this.owners.contains(cell)){
-                            this.setBad() ;//stop any further evaluation on the edu.psu.geovista.geoviz.spreadsheet.formula
+                            this.setBad() ;//stop any further evaluation on the geovista.geoviz.spreadsheet.formula
                             //current cell reference to one of his owner
                             //JFrame mf=(JFrame)SwingUtilities.getAncestorOfClass(JFrame.class,SpreadSheetBean.getTableInstance() );
                             JFrame mf=(JFrame)SwingUtilities.getAncestorOfClass(JFrame.class,owner.getDataModel().getTable() );
@@ -1115,7 +1115,7 @@ public class Formula {
 //        }
 
 
-    // The following are just simple edu.psu.geovista.geoviz.spreadsheet.functions
+    // The following are just simple geovista.geoviz.spreadsheet.functions
 
     /**
      * This translates the string form of row into row number ('12' -> 12),
@@ -1144,16 +1144,16 @@ public class Formula {
 
 
     /**
-     * Label the bad cells and throw edu.psu.geovista.geoviz.spreadsheet.exception.ParserException.
+     * Label the bad cells and throw geovista.geoviz.spreadsheet.exception.ParserException.
      * error is saved so next time it won't re-evaluate again:
-     * it directly throws the same edu.psu.geovista.geoviz.spreadsheet.exception.
+     * it directly throws the same geovista.geoviz.spreadsheet.exception.
      *
      * @param s the thing that's bad
-     * @edu.psu.geovista.geoviz.spreadsheet.exception edu.psu.geovista.geoviz.spreadsheet.exception.ParserException
+     * @geovista.geoviz.spreadsheet.exception geovista.geoviz.spreadsheet.exception.ParserException
      */
     private void throwError(Object s) throws ParserException {
 	// test code
-        //	System.err.println("Marking edu.psu.geovista.geoviz.spreadsheet.formula "+formulaString+" as bad");
+        //	System.err.println("Marking geovista.geoviz.spreadsheet.formula "+formulaString+" as bad");
         postfix = null;
         if (error instanceof ParserException)
             throw (ParserException) s;

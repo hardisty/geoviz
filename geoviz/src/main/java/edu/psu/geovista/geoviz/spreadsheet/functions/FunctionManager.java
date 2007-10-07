@@ -26,15 +26,15 @@ public class FunctionManager {
      * Adds a function to the function table.
      *
      * @param funcName the name of the function
-     * @param func the edu.psu.geovista.geoviz.spreadsheet.functions.Function object
-     * @see edu.psu.geovista.geoviz.spreadsheet.functions.Function
+     * @param func the geovista.geoviz.spreadsheet.functions.Function object
+     * @see geovista.geoviz.spreadsheet.functions.Function
      */
     private void register(String funcName, Function func) {
         funcTable.put(funcName, func);
     }
 
     /**
-     * Registers the edu.psu.geovista.geoviz.spreadsheet.functions on the funcTable.
+     * Registers the geovista.geoviz.spreadsheet.functions on the funcTable.
      * Should be called only once.
      */
     public void registerFunctions() {
@@ -60,8 +60,8 @@ public class FunctionManager {
 
 /*
 	register("SUM", new FunctionSum());
-	register("MEAN", new edu.psu.geovista.geoviz.spreadsheet.functions.FunctionAverage());
-	register("AVERAGE", new edu.psu.geovista.geoviz.spreadsheet.functions.FunctionAverage());
+	register("MEAN", new geovista.geoviz.spreadsheet.functions.FunctionAverage());
+	register("AVERAGE", new geovista.geoviz.spreadsheet.functions.FunctionAverage());
 	register("MEDIAN", new FunctionMedian());
 
 	register("INT", new FunctionInt());

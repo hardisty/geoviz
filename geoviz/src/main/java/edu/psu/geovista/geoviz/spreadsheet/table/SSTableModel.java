@@ -75,7 +75,7 @@ public class SSTableModel extends DefaultTableModel{
   public Object getValueAt( int srow, int scolumn){
        //Can't garantee each Cell is not-null since Cell is initial by Model.getValueAt()
         // It is called only when cell (is visible) is painted. Those hidden Cell not painted at beginning
-       int row,column;// row, column index in real edu.psu.geovista.geoviz.spreadsheet.model
+       int row,column;// row, column index in real geovista.geoviz.spreadsheet.model
        //sort->
        if (this.sortModel.isTableSort() ){
             Point cellP=sortModel.getCellPointAt(srow,scolumn);
@@ -108,7 +108,7 @@ public class SSTableModel extends DefaultTableModel{
 
         }
       // Transfer row, col to indexs of real Model
-      //wrapper everything(edu.psu.geovista.geoviz.spreadsheet.formula/number/string) in cell object
+      //wrapper everything(geovista.geoviz.spreadsheet.formula/number/string) in cell object
        Cell cell= processValueAt(data,row,col);
        super.setValueAt(cell,row,col);
 
@@ -139,7 +139,7 @@ public class SSTableModel extends DefaultTableModel{
 
              super.setValueAt(cell,row,col);
              return cell;
-           //super.getValueAt(row,col);//set a edu.psu.geovista.geoviz.spreadsheet.formula.Cell with null value
+           //super.getValueAt(row,col);//set a geovista.geoviz.spreadsheet.formula.Cell with null value
             //aValue = new String("");
             //super.setValueAt(aValue,row,col);
             //return null;
@@ -159,27 +159,27 @@ public class SSTableModel extends DefaultTableModel{
         if (aValue instanceof String) {//Always String ???
 
             String input = (String)aValue;
-            /* try making it a edu.psu.geovista.geoviz.spreadsheet.formula */
+            /* try making it a geovista.geoviz.spreadsheet.formula */
             /*if(input.trim().equals("")){
             }
             else */
-            if (input.startsWith("=")) {//1. edu.psu.geovista.geoviz.spreadsheet.formula.Formula
+            if (input.startsWith("=")) {//1. geovista.geoviz.spreadsheet.formula.Formula
                     Formula form = null;
-                    try { //create edu.psu.geovista.geoviz.spreadsheet.formula and its value and put in a cell
+                    try { //create geovista.geoviz.spreadsheet.formula and its value and put in a cell
 
                         form = new Formula(cell,input.substring(1),
-                                   row, col); //may throw edu.psu.geovista.geoviz.spreadsheet.exception.ParserException if get invalid edu.psu.geovista.geoviz.spreadsheet.formula
+                                   row, col); //may throw geovista.geoviz.spreadsheet.exception.ParserException if get invalid geovista.geoviz.spreadsheet.formula
 
                         cell.setFormula(form);
                         cell.setAsFormula(true); //Must call it explicitly, can't include in setFormula()
                         //cell.evaluate();//
                     }
-                    catch (ParserException e) { //if enter a invalid edu.psu.geovista.geoviz.spreadsheet.formula
+                    catch (ParserException e) { //if enter a invalid geovista.geoviz.spreadsheet.formula
                         // Still keep the fomula, so user can correct it later no parsing
                         form = new Formula(input.substring(1), row, col,e);
                         cell.setFormula(form);
                         cell.setValue(e);  //used for disply error message
-                        cell.setAsFormula(true); //still it is a edu.psu.geovista.geoviz.spreadsheet.formula, but invalid(e.g.:#REF!)
+                        cell.setAsFormula(true); //still it is a geovista.geoviz.spreadsheet.formula, but invalid(e.g.:#REF!)
 
                     }
 
@@ -209,19 +209,19 @@ public class SSTableModel extends DefaultTableModel{
     }   //method
 
     /**
-     * Jin: Even you use table.setDefaultEditor(edu.psu.geovista.geoviz.spreadsheet.formula.Cell.class, new CellFomulaEditor(new JTextField()));
-     *      It still not work since JTable.getDefaultEditor(Class columnClass) is passed in a Object.class, not edu.psu.geovista.geoviz.spreadsheet.formula.Cell.class
+     * Jin: Even you use table.setDefaultEditor(geovista.geoviz.spreadsheet.formula.Cell.class, new CellFomulaEditor(new JTextField()));
+     *      It still not work since JTable.getDefaultEditor(Class columnClass) is passed in a Object.class, not geovista.geoviz.spreadsheet.formula.Cell.class
      *      This is how getDefaultEditor() called:
      *                          editor = getDefaultEditor(getColumnClass(column));
-     *      By default(in AbstractTableModel):getColumnClass return a Object.class. you MUST overide it and return a edu.psu.geovista.geoviz.spreadsheet.formula.Cell.class
-     *      This is same for setting edu.psu.geovista.geoviz.spreadsheet.formula.Cell Render
+     *      By default(in AbstractTableModel):getColumnClass return a Object.class. you MUST overide it and return a geovista.geoviz.spreadsheet.formula.Cell.class
+     *      This is same for setting geovista.geoviz.spreadsheet.formula.Cell Render
      *
      * JTable uses this method to determine the default renderer
      * editor for each cell. This method tells JTable to use
      * CellRender and CellFormulaEditor.
      *
      * @param c the column for which we need to determine the class
-     * @return edu.psu.geovista.geoviz.spreadsheet.formula.Cell class
+     * @return geovista.geoviz.spreadsheet.formula.Cell class
      */
     public Class getColumnClass(int c) {
 
@@ -277,7 +277,7 @@ public class SSTableModel extends DefaultTableModel{
                             }
                         }
                         else{
-                            return "";//String.valueOf(edu.psu.geovista.geoviz.spreadsheet.formula.Cell.translateColumn(col));
+                            return "";//String.valueOf(geovista.geoviz.spreadsheet.formula.Cell.translateColumn(col));
                         }
              }
             else{
@@ -297,7 +297,7 @@ public class SSTableModel extends DefaultTableModel{
             try {
                 columnIdentifiers.set(i,colName );
             } catch (Exception e) {
-                System.out.println("edu.psu.geovista.geoviz.spreadsheet.exception happen i="+i);
+                System.out.println("geovista.geoviz.spreadsheet.exception happen i="+i);
                 e.printStackTrace() ;
             }
 
@@ -368,36 +368,36 @@ public class SSTableModel extends DefaultTableModel{
                     for (int j=row+1;j<column.size();j++){
                           int mx=((Integer)column.elementAt(j)).intValue() ;
                           mx++;
-                          Integer newIndex=new Integer(mx);//updated edu.psu.geovista.geoviz.spreadsheet.model index
+                          Integer newIndex=new Integer(mx);//updated geovista.geoviz.spreadsheet.model index
                           column.setElementAt(newIndex,j);
                     }
-                     //edu.psu.geovista.geoviz.spreadsheet.model.TableColumnSort.showVector(column);
+                     //geovista.geoviz.spreadsheet.model.TableColumnSort.showVector(column);
                     System.out.println("");
                  }
              }
          }
          else{
              Vector sorts=sortModel.getSorts();
-             Vector sortColumn=null;//a column in SortModel that contain sorting info(index) for a column in real edu.psu.geovista.geoviz.spreadsheet.model
+             Vector sortColumn=null;//a column in SortModel that contain sorting info(index) for a column in real geovista.geoviz.spreadsheet.model
              boolean foundSort=false;
              //1. find any valid (not null) column  !!! May not work for multi-level sort
              for (int k=0;k<sorts.size() ;k++){
-                 sortColumn=(Vector)sorts.elementAt(k); //column before a row is insert to real edu.psu.geovista.geoviz.spreadsheet.model
+                 sortColumn=(Vector)sorts.elementAt(k); //column before a row is insert to real geovista.geoviz.spreadsheet.model
                  if (sortColumn!=null){
                      foundSort=true;
-                     //2. Get and the reference to real edu.psu.geovista.geoviz.spreadsheet.model rows, store the reference.
+                     //2. Get and the reference to real geovista.geoviz.spreadsheet.model rows, store the reference.
                      Vector tempCol=(Vector)sortColumn.clone() ;//new Vector(sortColumn.size() );
                      for (int i=0;i<sortColumn.size() ;i++){
-                         int mx=((Integer)sortColumn.elementAt(i)).intValue() ;//row's index in real edu.psu.geovista.geoviz.spreadsheet.model
+                         int mx=((Integer)sortColumn.elementAt(i)).intValue() ;//row's index in real geovista.geoviz.spreadsheet.model
 
                          Vector mrow=(Vector)this.getDataVector().elementAt(mx);//the row vector
                          tempCol.setElementAt(mrow,i);
                      }
 
-                     //3. insert row to real edu.psu.geovista.geoviz.spreadsheet.model
+                     //3. insert row to real geovista.geoviz.spreadsheet.model
                      super.insertRow(row,rowData);
 
-                     //4.re-evaluate the index of those rows(which obtained in step 2)  in real edu.psu.geovista.geoviz.spreadsheet.model after inserting
+                     //4.re-evaluate the index of those rows(which obtained in step 2)  in real geovista.geoviz.spreadsheet.model after inserting
                      for (int i=0;i<tempCol.size() ;i++){
                          Vector mrow=(Vector)tempCol.elementAt(i);
                          int newX=this.getDataVector().indexOf(mrow);//re-evaluted index
@@ -421,9 +421,9 @@ public class SSTableModel extends DefaultTableModel{
          }//else
      }
     /**
-     *  @param  row  edu.psu.geovista.geoviz.spreadsheet.model's row index
-     *              if sort, it will be the index for sort edu.psu.geovista.geoviz.spreadsheet.model.
-     *              real edu.psu.geovista.geoviz.spreadsheet.model index is transparent to outside
+     *  @param  row  geovista.geoviz.spreadsheet.model's row index
+     *              if sort, it will be the index for sort geovista.geoviz.spreadsheet.model.
+     *              real geovista.geoviz.spreadsheet.model index is transparent to outside
      */
     public void removeRow(int row) {
         if (!sortModel.isTableSort()){//no sort
@@ -431,26 +431,26 @@ public class SSTableModel extends DefaultTableModel{
             return;
          }
              Vector sorts=sortModel.getSorts();
-             Vector sortColumn=null;//a column in SortModel that contain sorting info(index) for a column in real edu.psu.geovista.geoviz.spreadsheet.model
+             Vector sortColumn=null;//a column in SortModel that contain sorting info(index) for a column in real geovista.geoviz.spreadsheet.model
              boolean foundSort=false;
             //1. find a valid (not null) column
              for (int k=0;k<sorts.size() ;k++){//!!! May not work for multi-level sort
-                 sortColumn=(Vector)sorts.elementAt(k); //column before a row is insert to real edu.psu.geovista.geoviz.spreadsheet.model
+                 sortColumn=(Vector)sorts.elementAt(k); //column before a row is insert to real geovista.geoviz.spreadsheet.model
                  if (sortColumn!=null){
                          foundSort=true;
-                     //2. Get and the reference to real edu.psu.geovista.geoviz.spreadsheet.model rows, store the reference.
+                     //2. Get and the reference to real geovista.geoviz.spreadsheet.model rows, store the reference.
                          Vector tempCol=(Vector)sortColumn.clone() ;//new Vector(sortColumn.size() );
                          for (int i=0;i<sortColumn.size() ;i++){
-                             int mx=((Integer)sortColumn.elementAt(i)).intValue() ;//row's index in real edu.psu.geovista.geoviz.spreadsheet.model
+                             int mx=((Integer)sortColumn.elementAt(i)).intValue() ;//row's index in real geovista.geoviz.spreadsheet.model
 
                              Vector mrow=(Vector)this.getDataVector().elementAt(mx);//the row vector
                              tempCol.setElementAt(mrow,i);
                          }
-                         int mx=((Integer)sortColumn.elementAt(row)).intValue() ;//real edu.psu.geovista.geoviz.spreadsheet.model row index
+                         int mx=((Integer)sortColumn.elementAt(row)).intValue() ;//real geovista.geoviz.spreadsheet.model row index
                          super.removeRow(mx);
                          sortColumn.remove(row);
                          tempCol.remove(row);
-                     //4.re-evaluate the index of those rows(which obtained in step 2)  in real edu.psu.geovista.geoviz.spreadsheet.model after inserting
+                     //4.re-evaluate the index of those rows(which obtained in step 2)  in real geovista.geoviz.spreadsheet.model after inserting
                          for (int i=0;i<tempCol.size() ;i++){
                              Vector mrow=(Vector)tempCol.elementAt(i);
                              int newX=this.getDataVector().indexOf(mrow);//re-evaluted index
@@ -473,16 +473,16 @@ public class SSTableModel extends DefaultTableModel{
 
     }
      /**
-      * return a cell's edu.psu.geovista.geoviz.spreadsheet.model address.
-      * If table is sort, only return the sort edu.psu.geovista.geoviz.spreadsheet.model address
-      * real edu.psu.geovista.geoviz.spreadsheet.model address is transparent to outside
+      * return a cell's geovista.geoviz.spreadsheet.model address.
+      * If table is sort, only return the sort geovista.geoviz.spreadsheet.model address
+      * real geovista.geoviz.spreadsheet.model address is transparent to outside
       */
      public Point getCellAddress(Cell cell) {
          Vector container=cell.getContainer() ;
          //SSTableModel tmd=SSTableModel.getInstance() ;
-         int mrow=getDataVector().indexOf(container ); //real edu.psu.geovista.geoviz.spreadsheet.model x
-         int mcol=container.indexOf(cell);//real edu.psu.geovista.geoviz.spreadsheet.model y
-         int smrow=mrow;//sort edu.psu.geovista.geoviz.spreadsheet.model's row index
+         int mrow=getDataVector().indexOf(container ); //real geovista.geoviz.spreadsheet.model x
+         int mcol=container.indexOf(cell);//real geovista.geoviz.spreadsheet.model y
+         int smrow=mrow;//sort geovista.geoviz.spreadsheet.model's row index
          if (mrow<0||mcol<0){
              //!!! happen when you delete a column which is referenced by other columns
             return null;

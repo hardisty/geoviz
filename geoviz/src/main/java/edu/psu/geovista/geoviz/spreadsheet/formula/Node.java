@@ -53,7 +53,7 @@ public class Node {
     // for each function param, its type is EXP
 
 //    private static final String[] desc = {
-//    	"Default", "Rel_Addr", "Abs_Addr", "edu.psu.geovista.geoviz.spreadsheet.functions.Function",
+//    	"Default", "Rel_Addr", "Abs_Addr", "geovista.geoviz.spreadsheet.functions.Function",
 //    	"LBracket", "RBracket", "Number", "Operator",
 //	"Comma", "Colon", "Param" };
 
@@ -66,7 +66,7 @@ public class Node {
     private LinkedList exp; // a LinkedList for a function's params
 
     /*
-     * Used for edu.psu.geovista.geoviz.spreadsheet.functions.Function address range parameter (ADDR1:ADDR2)
+     * Used for geovista.geoviz.spreadsheet.functions.Function address range parameter (ADDR1:ADDR2)
      * An address range is ultimately represented as follows:
      *
      * node type: COLON
@@ -75,7 +75,7 @@ public class Node {
      */
     private Node nextRange;
 
-    private boolean pending; // used for processing functions, see edu.psu.geovista.geoviz.spreadsheet.formula.Formula
+    private boolean pending; // used for processing functions, see geovista.geoviz.spreadsheet.formula.Formula
 
 
     //Jin
@@ -89,7 +89,7 @@ public class Node {
     }
 
     /**
-     * edu.psu.geovista.geoviz.spreadsheet.formula.Node constructor
+     * geovista.geoviz.spreadsheet.formula.Node constructor
      *
      * @param node
      */
@@ -105,7 +105,7 @@ public class Node {
      *  For relative address
      */
     public Cell getReference() {
-        return reference;//edu.psu.geovista.geoviz.spreadsheet.formula.Cell object
+        return reference;//geovista.geoviz.spreadsheet.formula.Cell object
     }
     public void setReference(Cell reference) {
         this.reference = reference;
@@ -129,7 +129,7 @@ public class Node {
         this.setAddress(new Point(x,y));
     }
 
-    /** get/set edu.psu.geovista.geoviz.spreadsheet.functions */
+    /** get/set geovista.geoviz.spreadsheet.functions */
     public int getType() { return type; }
     public void setType(int type) {
         this.type = type;

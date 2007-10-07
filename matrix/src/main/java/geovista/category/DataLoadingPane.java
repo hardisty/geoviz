@@ -10,9 +10,9 @@
  */
 package geovista.category;
 
-//import edu.psu.geovista.geoviz.pcp.toolkits.ListControlPane;
-//import edu.psu.geovista.geoviz.pcp.toolkits.table.ConfigureTableModel;
-//import edu.psu.geovista.geoviz.plot.axis.YAxis;
+//import geovista.geoviz.pcp.toolkits.ListControlPane;
+//import geovista.geoviz.pcp.toolkits.table.ConfigureTableModel;
+//import geovista.geoviz.plot.axis.YAxis;
 
 import java.util.Vector;
 import java.util.logging.Logger;
