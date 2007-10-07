@@ -4,7 +4,7 @@
  */
 
 
-package  edu.psu.geovista.geoviz.condition;
+package  geovista.geoviz.condition;
 
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;

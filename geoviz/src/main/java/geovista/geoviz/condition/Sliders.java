@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.condition;
+package geovista.geoviz.condition;
 
 /**
  * <p>Title: </p>

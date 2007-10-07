@@ -1,7 +1,7 @@
-package edu.psu.geovista.geoviz.condition;
+package geovista.geoviz.condition;
 
 
-public class MultiVarCondition {
+public class MultiVarConditionEx {
 
 	Object[] dataArray;
 	Object[] conditionRanges;
@@ -11,7 +11,7 @@ public class MultiVarCondition {
 	double[] conditionRange;
 
     /**Construct the application*/
-    public MultiVarCondition() {
+    public MultiVarConditionEx() {
     }
 
 	public void setDataArray (Object[] dataArray){
@@ -36,10 +36,10 @@ public class MultiVarCondition {
 			this.dataConditioned = (double[])dataArray[i];
 			this.conditionRange = (double[])conditionRanges[i];
 			for(int j = 0; j < len; j ++){
-			    if ((this.dataConditioned[j] < this.conditionRange[0]) || (this.dataConditioned[j] > conditionRange[1])){
-					tempConditioning[i] = -1;
-	    		} else {
+			    if ((this.dataConditioned[j] <= this.conditionRange[0]) || (this.dataConditioned[j] >= conditionRange[1])){
 					tempConditioning[i] = 0;
+	    		} else {
+					tempConditioning[i] = -1;
 		    	}
 				this.conditionResults[j] = (this.conditionResults[j] + 1) * (tempConditioning[i] + 1) - 1;
 			}
