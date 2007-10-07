@@ -19,7 +19,7 @@
 
 
 
-package edu.psu.geovista.texture;
+package geovista.texture;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

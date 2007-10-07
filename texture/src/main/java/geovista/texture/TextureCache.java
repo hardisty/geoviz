@@ -22,7 +22,7 @@
 
 
 
-package edu.psu.geovista.texture;
+package geovista.texture;
 
 import java.awt.Color;
 import java.awt.Component;

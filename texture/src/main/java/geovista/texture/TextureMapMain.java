@@ -19,7 +19,7 @@
 
 
 
-package edu.psu.geovista.texture;
+package geovista.texture;
 
 import java.awt.TexturePaint;
 import java.awt.event.WindowAdapter;
