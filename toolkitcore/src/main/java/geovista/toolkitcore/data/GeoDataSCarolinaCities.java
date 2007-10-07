@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------
- Java source file for the class GeoDataCartogram
+ Java source file for the class GeoDataSCarolinaCities
  Original Author: Frank Hardisty
  $Author: hardistf $
  $Id: ComparableShapes.java,v 1.1 2005/12/05 20:17:05 hardistf Exp $
@@ -18,7 +18,7 @@
  -------------------------------------------------------------------   */
 
 
-package edu.psu.geovista.toolkitcore.data;
+package geovista.toolkitcore.data;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,19 +46,18 @@ import geovista.readers.geog.ShapeFile;
  * also see DBaseFile, ShapeFile
  *
  */
-public class GeoDataCartogram implements GeoDataSource{
+public class GeoDataSCarolinaCities implements GeoDataSource{
 
   public static final String COMMAND_DATA_SET_MADE = "dataMade";
 
   private transient DataSetForApps dataForApps;
   private transient EventListenerList listenerList;
   private transient ShapeFileDataReader shpReader;
-  final static Logger logger = Logger.getLogger(GeoDataCartogram.class.getName());
+  final static Logger logger = Logger.getLogger(GeoDataSCarolina.class.getName());
 
-  public GeoDataCartogram() {
+  public GeoDataSCarolinaCities() {
     super();
     listenerList = new EventListenerList();
-    //this.dataForApps = this.makeDataSetForApps();//let's be lazy
     this.fireActionPerformed(COMMAND_DATA_SET_MADE);
   }
 
@@ -69,7 +68,7 @@ public class GeoDataCartogram implements GeoDataSource{
 
         Class cl = this.getClass();
 
-        InputStream isCSV = cl.getResourceAsStream("resources/cartogram.csv");
+        InputStream isCSV = cl.getResourceAsStream("resources/sccities.csv");
         GeogCSVReader csv = new GeogCSVReader();
         Object[] csvData = csv.readFile(isCSV);
         isCSV.close();
@@ -78,10 +77,10 @@ public class GeoDataCartogram implements GeoDataSource{
           shpData[i] = csvData[i];
         }
 
-        InputStream isSHP = cl.getResourceAsStream("resources/cartogram.shp");
-
-        shpData[csvData.length] = new ShapeFile(isSHP);
-        shpData = shpReader.convertShpToShape(shpData);
+        InputStream isSHP = cl.getResourceAsStream("resources/sccities.shp");
+        ShapeFile shpPoints = new ShapeFile(isSHP);
+        Object pointsObj = shpReader.transform(shpPoints);
+        shpData[csvData.length] = pointsObj;
         isSHP.close();
       } catch (Exception ex) {
         ex.printStackTrace();
@@ -92,7 +91,8 @@ public class GeoDataCartogram implements GeoDataSource{
 
   }
 
-  public void setDataForApps (DataSetForApps dataForApps) {
+
+    public void setDataForApps (DataSetForApps dataForApps) {
       this.dataForApps = dataForApps;
     }
     public DataSetForApps getDataForApps() {
@@ -118,7 +118,7 @@ public class GeoDataCartogram implements GeoDataSource{
     listenerList.add(ActionListener.class, l);
     this.fireActionPerformed(COMMAND_DATA_SET_MADE);
     if (logger.isLoggable(Level.FINEST)){
-     logger.finest("GeoDataCartogram.addActionListener, Hi!!");
+    logger.finest("GeoDataSCarolinaCities.addActionListener, Hi!!");
     }
   }
 

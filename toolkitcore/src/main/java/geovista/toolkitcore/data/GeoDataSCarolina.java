@@ -18,7 +18,7 @@
  -------------------------------------------------------------------   */
 
 
-package edu.psu.geovista.toolkitcore.data;
+package geovista.toolkitcore.data;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

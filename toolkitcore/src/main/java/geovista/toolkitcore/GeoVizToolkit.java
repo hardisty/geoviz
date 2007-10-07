@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place, Suite 3bb      30, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.toolkitcore;
+package geovista.toolkitcore;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -51,10 +51,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import edu.psu.geovista.toolkitcore.data.GeoDataCartogram;
-import edu.psu.geovista.toolkitcore.data.GeoDataPennaPCA;
-import edu.psu.geovista.toolkitcore.data.GeoDataSCarolina;
-import edu.psu.geovista.toolkitcore.data.GeoDataSCarolinaCities;
 import edu.psu.geovista.touchgraph.LinkGraph;
 import edu.psu.geovista.touchgraph.PCAViz;
 import edu.psu.geovista.touchgraph.SubspaceLinkGraph;
@@ -91,6 +87,10 @@ import geovista.matrix.scatterplot.SingleHistogram;
 import geovista.matrix.scatterplot.SingleScatterPlot;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
+import geovista.toolkitcore.data.GeoDataCartogram;
+import geovista.toolkitcore.data.GeoDataPennaPCA;
+import geovista.toolkitcore.data.GeoDataSCarolina;
+import geovista.toolkitcore.data.GeoDataSCarolinaCities;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
