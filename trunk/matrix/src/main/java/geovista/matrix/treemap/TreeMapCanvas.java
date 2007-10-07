@@ -32,10 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 
-import edu.psu.geovista.treemap.TMDataDraw;
-import edu.psu.geovista.treemap.TMDataNode;
-import edu.psu.geovista.treemap.TMDataSize;
-import edu.psu.geovista.treemap.tm.TMView;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.ClassificationEvent;
@@ -49,6 +45,10 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.treemap.TMDataDraw;
+import geovista.treemap.TMDataNode;
+import geovista.treemap.TMDataSize;
+import geovista.treemap.tm.TMView;
 
 /**
  * Paints an array of TreeMapCanvas. Responds to and broadcasts DataSetChanged,
@@ -81,7 +81,7 @@ public class TreeMapCanvas
     root = new TMDataNode(0d, "root");
     fSize = new TMDataSize();
     fDraw = new TMDataDraw();
-    edu.psu.geovista.treemap.tm.TreeMap treeMap = new edu.psu.geovista.treemap.tm.TreeMap(root);
+    geovista.treemap.tm.TreeMap treeMap = new geovista.treemap.tm.TreeMap(root);
     tmview = treeMap.getView(fSize, fDraw);
     this.add(tmview, BorderLayout.CENTER);
     this.addMouseListener(this);
@@ -152,7 +152,7 @@ public class TreeMapCanvas
       branches[i].setName(branchMin[i] + " < " + varName + " < " +  branchMax[i]);
     }
 
-    edu.psu.geovista.treemap.tm.TreeMap treeMap = new edu.psu.geovista.treemap.tm.TreeMap(root); //xxx fix me? do we need a new tree every time?
+    geovista.treemap.tm.TreeMap treeMap = new geovista.treemap.tm.TreeMap(root); //xxx fix me? do we need a new tree every time?
     tmview = treeMap.getView(fSize, fDraw);
     tmview.addMouseListener(this);
     tmview.addMouseMotionListener(this);

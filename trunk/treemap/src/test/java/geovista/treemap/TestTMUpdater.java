@@ -32,8 +32,8 @@ import java.util.Vector;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import edu.psu.geovista.treemap.tm.TMNode;
-import edu.psu.geovista.treemap.tm.TMUpdater;
+import geovista.treemap.tm.TMNode;
+import geovista.treemap.tm.TMUpdater;
 
 /**
  * The TestTMUpdater is a JUnit test class
