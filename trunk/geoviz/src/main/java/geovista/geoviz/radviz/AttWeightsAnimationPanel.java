@@ -7,7 +7,7 @@
  *
  * @author  yliu
  */
-package edu.psu.geovista.geoviz.radviz;
+package geovista.geoviz.radviz;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;

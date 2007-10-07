@@ -7,7 +7,7 @@
  *
  * @author  yliu
  */
-package edu.psu.geovista.geoviz.radviz;
+package geovista.geoviz.radviz;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
