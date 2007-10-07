@@ -1,10 +1,10 @@
 /* -------------------------------------------------------------------
- Java source file for the class WaiterMain
+ Java source file for the class Waiter
  Copyright (c), 2004, Frank Hardisty
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: WaiterMain.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
+ $Id: Waiter.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
  $Date: 2005/02/13 03:26:27 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -19,7 +19,9 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package edu.psu.geovista.rjava;
+package geovista.rjava;
+
+import java.util.logging.Logger;
 
 /**
  * This class listens for events, especially coordinated events, and makes the
@@ -27,17 +29,46 @@ package edu.psu.geovista.rjava;
  * An example is an instance of R polling an instance of this class for the
  * current selection etc.
  */
-public class WaiterMain
-  {
-    /**
-     * Main method for testing.
-     */
-    public static void main(String[] args) {
-      Waiter waiter = new Waiter();
-     
-      waiter.waiting(500d);
-   
+public class Waiter
+    implements Runnable {
+	protected final static Logger logger = Logger.getLogger(Waiter.class.getName());
+  public void run(){
 
+  }
+  public Waiter() {
+    super();
+
+  }
+
+public synchronized boolean waiting(double milis){
+  int anInt = 0;
+  anInt = (int)milis;
+  //Integer bigInt = new Integer(milis);
+
+
+  return this.waiting(anInt);
+}
+  public synchronized boolean waiting(int milis){
+//    Timer tim = new Timer();
+
+    //Thread t = new Thread();
+     logger.finest("going to wait " + milis);
+
+      //let's see if we can thrrow an exception first
+      //int[] myStuff = {1,2};
+      //myStuff[78] = 45;//throw it!
+    boolean ok = false;
+    try {
+          this.wait(milis);
+      //t.wait(milis);
+
+          //tim.wait(milis);
+      ok = true;
+      logger.finest("just waited " + milis);
     }
-
+    catch (InterruptedException ex) {
+      ex.printStackTrace();
+    }
+    return ok;
+  }
 }

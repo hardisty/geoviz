@@ -2,7 +2,7 @@
  Java source file for the class TestSJava
  Copyright (c), 2004, Frank Hardisty
  */
-package edu.psu.geovista.rjava;
+package geovista.rjava;
 
 import java.util.logging.Logger;
 
