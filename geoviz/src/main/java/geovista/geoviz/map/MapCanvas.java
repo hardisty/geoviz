@@ -57,7 +57,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 
-import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.AffineTransformModifier;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassificationSimple;
@@ -78,6 +77,7 @@ import geovista.common.ui.Fisheyes;
 import geovista.geoviz.condition.ConditionManager;
 import geovista.geoviz.transform.ShapeAffineTransform;
 import geovista.geoviz.transform.ShapeTransformer;
+import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.image_blur.image.BoxBlurFilter;
 
 /**

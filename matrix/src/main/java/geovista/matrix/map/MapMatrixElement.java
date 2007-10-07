@@ -38,12 +38,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-import edu.psu.geovista.geoviz.ui.cursor.GeoCursors;
 import edu.psu.geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.common.data.DataSetForApps;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.MapCanvas;
+import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.matrix.MatrixElement;
 import geovista.matrix.scatterplot.Histogram;
 
