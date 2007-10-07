@@ -11,7 +11,7 @@
  ___                ___
  -------------------------------------------------------------------  *
  */
-package edu.psu.geovista.coordination;
+package geovista.coordination;
 
 import java.lang.reflect.Method;
 import java.util.Vector;

@@ -10,7 +10,7 @@
  Reference:        Document no:
  ___                ___
  -------------------------------------------------------------------  */
-package edu.psu.geovista.coordination;
+package geovista.coordination;
 
 import java.awt.Color;
 import java.awt.Component;

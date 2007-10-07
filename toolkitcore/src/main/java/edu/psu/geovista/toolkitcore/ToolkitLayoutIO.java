@@ -57,8 +57,8 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.w3c.dom.NodeList;
 
-import edu.psu.geovista.coordination.CoordinationManager;
-import edu.psu.geovista.coordination.FiringBean;
+import geovista.coordination.CoordinationManager;
+import geovista.coordination.FiringBean;
 import edu.psu.geovista.readers.util.MyFileFilter;
 
 public class ToolkitLayoutIO {

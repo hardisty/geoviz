@@ -41,7 +41,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.psu.geovista.coordination.CoordinationManager;
 import edu.psu.geovista.geoviz.map.GeoMapUni;
 import edu.psu.geovista.geoviz.map.SpatialWeights;
 import edu.psu.geovista.geoviz.sample.GeoData48States;
@@ -62,6 +61,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
+import geovista.coordination.CoordinationManager;
 import geovista.matrix.scatterplot.SingleScatterPlot;
 
 /**
