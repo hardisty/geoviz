@@ -12,7 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-package edu.psu.geovista.sound;
+package geovista.sound;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

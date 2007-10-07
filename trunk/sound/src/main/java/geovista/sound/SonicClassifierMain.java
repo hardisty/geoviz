@@ -12,7 +12,7 @@
  -------------------------------------------------------------------   */
 
 
-package  edu.psu.geovista.sound;
+package  geovista.sound;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
