@@ -42,8 +42,6 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JProgressBar;
 
-import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
-import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
 import edu.psu.geovista.readers.geog.ShapeFile;
 import edu.psu.geovista.readers.geog.ShapeFileHeader;
 import edu.psu.geovista.readers.geog.ShapeFileRecordPoint;
@@ -52,6 +50,8 @@ import edu.psu.geovista.readers.geog.ShapeFileRecordPolygon;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeneralPathLine;
+import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.matrix.scatterplot.LinearRegression;
 
 /*

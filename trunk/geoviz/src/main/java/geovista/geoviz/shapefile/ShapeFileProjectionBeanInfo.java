@@ -1,4 +1,4 @@
-package edu.psu.geovista.geoviz.shapefile;
+package geovista.geoviz.shapefile;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -16,14 +16,14 @@ import java.beans.SimpleBeanInfo;
  * @version 1.0
  */
 
-public class ShapeFileDataReaderBeanInfo extends SimpleBeanInfo {
-  static Class beanClass = ShapeFileDataReader.class;
-  static String iconColor16x16Filename = "resources/shpSmall.gif";
-  static String iconColor32x32Filename = "resources/shp.gif";
+public class ShapeFileProjectionBeanInfo extends SimpleBeanInfo {
+  static Class beanClass = ShapeFileProjection.class;
+  static String iconColor16x16Filename = "resources/projectSmall.gif";
+  static String iconColor32x32Filename = "resources/project.gif";
   static String iconMono16x16Filename;
   static String iconMono32x32Filename;
 
-  public ShapeFileDataReaderBeanInfo() {
+  public ShapeFileProjectionBeanInfo() {
   }
   public PropertyDescriptor[] getPropertyDescriptors() {
     PropertyDescriptor[] pds = new PropertyDescriptor[] { };

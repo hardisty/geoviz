@@ -28,11 +28,11 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
-import edu.psu.geovista.geoviz.shapefile.ShapeFileDataReader;
-import edu.psu.geovista.geoviz.shapefile.ShapeFileProjection;
-import edu.psu.geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoData48States;
+import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.geoviz.shapefile.ShapeFileToShape;
 
 /**
  * Main class for experimenting with starplots and maps that show starplots
