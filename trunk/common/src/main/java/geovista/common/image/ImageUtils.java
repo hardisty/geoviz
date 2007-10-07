@@ -8,7 +8,7 @@
  * @date: Oct 10, 2003$
  * @version: 1.0
  */
-package edu.psu.geovista.common.image;
+package geovista.common.image;
 
 import java.net.URL;
 import java.util.logging.Level;
