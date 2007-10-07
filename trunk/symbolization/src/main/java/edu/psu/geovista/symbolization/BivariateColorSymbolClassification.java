@@ -19,7 +19,7 @@ package edu.psu.geovista.symbolization;
 
 import java.awt.Color;
 
-import edu.psu.geovista.common.classification.Classifier;
+import geovista.common.classification.Classifier;
 
 public interface BivariateColorSymbolClassification {
 

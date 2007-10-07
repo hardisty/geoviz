@@ -9,10 +9,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.event.EventListenerList;
 
-import edu.psu.geovista.common.classification.ClassifierMLClassify;
-import edu.psu.geovista.common.classification.MultiGaussian;
-import edu.psu.geovista.common.classification.MultiGaussianModel;
 import edu.psu.geovista.common.data.DataSetForApps;
+import geovista.common.classification.ClassifierMLClassify;
+import geovista.common.classification.MultiGaussian;
+import geovista.common.classification.MultiGaussianModel;
 import geovista.matrix.DistributionMatrix;
 
 public class ClassifierMaximumLikelihood
