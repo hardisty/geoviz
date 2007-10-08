@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import geovista.common.ui.slider.RangeSlider;
+import geovista.common.ui.RangeSlider;
 
 public class Sliders extends JPanel implements ChangeListener, ComponentListener{
 

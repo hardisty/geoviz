@@ -42,7 +42,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
-import geovista.common.ui.panel.FoldupPanel;
+import geovista.common.ui.FoldupPanel;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.symbolization.BivariateColorSymbolClassification;
 

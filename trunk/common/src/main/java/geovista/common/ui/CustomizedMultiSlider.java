@@ -1,4 +1,4 @@
-package geovista.common.ui.slider;
+package geovista.common.ui;
 
 /**
 GeoVISTA Center (Penn State, Dept. of Geography)

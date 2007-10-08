@@ -22,7 +22,7 @@
 /* --------------------------- Package ---------------------------- */
 
 
-package  geovista.common.ui.slider;
+package  geovista.common.ui;
 
 
 /* ------------------------- Import files ------------------------- */
