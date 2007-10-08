@@ -39,7 +39,7 @@ import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
-import geovista.common.utils.DescriptiveStats;
+import geovista.geoviz.descriptive.DescriptiveStats;
 import geovista.geoviz.spreadsheet.formula.Cell;
 import geovista.geoviz.spreadsheet.formula.CellFomulaEditor;
 import geovista.geoviz.spreadsheet.formula.FormulaEditor;
