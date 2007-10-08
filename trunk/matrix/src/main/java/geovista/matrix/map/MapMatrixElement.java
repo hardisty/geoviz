@@ -40,9 +40,9 @@ import javax.swing.JToolBar;
 
 import geovista.common.data.DataSetForApps;
 import geovista.coordination.CoordinationManager;
+import geovista.geoviz.map.GeoCursors;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.MapCanvas;
-import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.matrix.MatrixElement;
 import geovista.matrix.scatterplot.Histogram;
 import geovista.symbolization.BivariateColorSymbolClassification;

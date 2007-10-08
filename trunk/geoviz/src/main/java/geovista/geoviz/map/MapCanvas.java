@@ -72,7 +72,6 @@ import geovista.common.ui.Fisheyes;
 import geovista.geoviz.condition.ConditionManager;
 import geovista.geoviz.transform.ShapeAffineTransform;
 import geovista.geoviz.transform.ShapeTransformer;
-import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.image_blur.image.BoxBlurFilter;
 import geovista.symbolization.AffineTransformModifier;
 import geovista.symbolization.BivariateColorSymbolClassification;

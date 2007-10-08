@@ -53,7 +53,6 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
-import geovista.geoviz.ui.cursor.GeoCursors;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
