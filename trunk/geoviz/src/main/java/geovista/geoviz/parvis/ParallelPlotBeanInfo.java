@@ -1,4 +1,4 @@
-package geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

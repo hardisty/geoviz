@@ -10,14 +10,11 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package geovista.geoviz.parvis.file;
+package geovista.geoviz.parvis;
 
 import java.net.URL;
 import java.util.Vector;
 
-import geovista.geoviz.parvis.gui.ProgressEvent;
-import geovista.geoviz.parvis.gui.ProgressListener;
-import geovista.geoviz.parvis.model.SimpleParallelSpaceModel;
 import geovista.readers.FileIO;
 
 /**

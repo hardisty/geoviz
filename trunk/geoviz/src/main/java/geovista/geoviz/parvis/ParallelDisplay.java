@@ -9,7 +9,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -31,7 +31,6 @@ import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.ui.ExcentricLabelClient;
-import geovista.geoviz.parvis.model.ParallelSpaceModel;
 
 
 /**

@@ -9,7 +9,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package geovista.geoviz.parvis.file;
+package geovista.geoviz.parvis;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,9 +21,6 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import geovista.geoviz.parvis.gui.ProgressEvent;
-import geovista.geoviz.parvis.gui.ProgressListener;
-import geovista.geoviz.parvis.model.SimpleParallelSpaceModel;
 
 
 /**

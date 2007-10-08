@@ -15,7 +15,7 @@ import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
-import geovista.geoviz.parvis.gui.ParallelPlot;
+import geovista.geoviz.parvis.ParallelPlot;
 
 /**
  * A class for testing the SJava link between R and Java. See:

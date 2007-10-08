@@ -10,7 +10,7 @@
  *
  */
 
-package geovista.geoviz.parvis.model;
+package geovista.geoviz.parvis;
 
 import java.util.Hashtable;
 import java.util.Vector;
