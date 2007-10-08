@@ -1,4 +1,4 @@
-package geovista.common.ui.slider;
+package geovista.common.ui;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

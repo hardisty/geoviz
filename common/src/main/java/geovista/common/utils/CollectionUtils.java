@@ -7,7 +7,7 @@
  * @date: May 24, 2005$
  * @version: 1.0
  */
-package geovista.common.utils.collection;
+package geovista.common.utils;
 
 import java.awt.Color;
 import java.util.ArrayList;

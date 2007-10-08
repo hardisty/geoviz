@@ -23,7 +23,7 @@
 ------------------------------------------------------------------- */
 
 /* --------------------------- Package ---------------------------- */
-package geovista.common.ui.slider;
+package geovista.common.ui;
 
 /* ------------------ Import classes (packages) ------------------- */
 import java.awt.Dimension;

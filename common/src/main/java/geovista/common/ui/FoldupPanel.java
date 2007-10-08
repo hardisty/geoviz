@@ -12,7 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-package geovista.common.ui.panel;
+package geovista.common.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
