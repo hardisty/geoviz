@@ -13,7 +13,7 @@
  */
 
 
-package geovista.geoviz.ui.cursor;
+package geovista.geoviz.map;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Image;
