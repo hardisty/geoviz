@@ -7,7 +7,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;

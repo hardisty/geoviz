@@ -7,7 +7,7 @@
  * See http://www.gnu.org/copyleft/gpl.html
  */
 
-package geovista.geoviz.parvis.gui;
+package geovista.geoviz.parvis;
 
 import java.io.File;
 import java.net.URL;
@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
-import geovista.geoviz.parvis.file.STFFile;
 
 /**
  *
@@ -59,7 +58,7 @@ public class MainFrame extends javax.swing.JFrame implements ProgressListener {
         datasourceLabel = new javax.swing.JLabel();
         urlField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        parallelDisplay = new geovista.geoviz.parvis.gui.ParallelDisplay();
+        parallelDisplay = new geovista.geoviz.parvis.ParallelDisplay();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenu = new javax.swing.JMenuItem();
@@ -539,7 +538,7 @@ public class MainFrame extends javax.swing.JFrame implements ProgressListener {
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JTextField urlField;
     private javax.swing.JLabel progressLabel;
-    private geovista.geoviz.parvis.gui.ParallelDisplay parallelDisplay;
+    private geovista.geoviz.parvis.ParallelDisplay parallelDisplay;
     private javax.swing.JToggleButton orderButton;
     private javax.swing.JRadioButtonMenuItem translateMenu;
     private javax.swing.JSeparator jSeparator1;

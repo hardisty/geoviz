@@ -14,7 +14,6 @@ package geovista.geoviz.parvis;
 
 import javax.swing.UIManager;
 
-import geovista.geoviz.parvis.gui.MainFrame;
 
 /**
  * Launcher Class for unsing Parvis as a standalone application.

@@ -33,7 +33,7 @@ import geovista.coordination.FiringBean;
 import geovista.geoviz.condition.ConditionManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
-import geovista.geoviz.parvis.gui.ParallelPlot;
+import geovista.geoviz.parvis.ParallelPlot;
 import geovista.geoviz.radviz.RadViz;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
