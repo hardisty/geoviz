@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="animation/src/main/java"/>
+	<classpathentry kind="src" path="toolkitcore/src/test/java"/>
 	<classpathentry kind="src" path="sound/src/test/java"/>
 	<classpathentry kind="src" path="treemap/src/test/java"/>
 	<classpathentry kind="src" path="image_blur/src/main/java"/>
