@@ -185,7 +185,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 
 		if (fileNameIn == null || fileNameIn.equals("")) {
-			fileNameIn = "PennaPCA";
+			fileNameIn = "48States";
 		}
 
 		this.loadData(fileNameIn);
