@@ -13,6 +13,14 @@
  */
 package geovista.animation;
 
+import geovista.common.data.DataSetForApps;
+import geovista.common.event.ConditioningEvent;
+import geovista.common.event.ConditioningListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,14 +45,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import geovista.common.data.DataSetForApps;
-import geovista.common.event.ConditioningEvent;
-import geovista.common.event.ConditioningListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.SubspaceEvent;
-import geovista.common.event.SubspaceListener;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,61 +57,61 @@ public class ConditioningAnimator extends JPanel implements ActionListener,
                                                           SubspaceListener
                                                        {
   
-  /** The ticker. */
+  /** The timer. */
   private  Timer ticker;
   
-  /** The curr class index. */
+  /** The current class index. */
   private transient int currClassIndex;
   
-  /** The low cond index. */
+  /** The low conditioning index. */
   private transient int lowCondIndex;
   
-  /** The high cond index. */
+  /** The high conditioning index. */
   private transient int highCondIndex;
   
-  /** The curr conditioning. */
+  /** The current conditioning. */
   private transient int[] currConditioning;
 
   /** The start stop button. */
   private transient JButton startStopButton;
   
-  /** The going. */
+  /** Flag for going or not. */
   private transient boolean going = false;
   
-  /** The speed. */
+  /** Delay, in milliseconds. */
   private  int speed; //in milliseconds
   
-  /** The data. */
+  /** The data to animate over. */
   private transient DataSetForApps data;
   
-  /** The obs. */
+  /** The classified observations */
   private transient ClassedObs[] obs;
   
-  /** The subspace. */
+  /** The subspace, in other words, which variables are selected. */
   private transient int[] subspace;
   
-  /** The subspace index. */
+  /** Which variables is currently selected in the subspace. */
   private transient int subspaceIndex;
   
   /** The time slider. */
   private transient JSlider timeSlider;
 
-  /** The var combo. */
+  /** The variable dropdown box. */
   private transient JComboBox varCombo;
   
-  /** The var combo is adjusting. */
+
   private transient boolean varComboIsAdjusting;
 
-  /** The subspace button. */
+  /** Do we iterate over just the subspace, or over all variables? */
   private transient JRadioButton subspaceButton;
   
-  /** The one var button. */
+
   private transient JRadioButton oneVarButton;
   
-  /** The using subspace. */
+
   private  boolean usingSubspace;
   
-  /** The Constant logger. */
+
   final static Logger logger = Logger.getLogger(ConditioningAnimator.class.getName());
   
   /**
