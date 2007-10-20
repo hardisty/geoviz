@@ -19,6 +19,8 @@
 
 package geovista.toolkitcore;
 
+import geovista.coordination.CoordinationUtils;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -31,8 +33,6 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.event.EventListenerList;
-
-import geovista.coordination.CoordinationUtils;
 
 /*
  * This is a set of objects that each bean coordinated in a GeoVizToolkit is
@@ -50,6 +50,10 @@ public class ToolkitBean implements ComponentListener {
 	EventListenerList listenerList;
 	String uniqueName;
 
+	public ToolkitBean(){
+		
+	}
+	
 	public ToolkitBean(Object originalBean, String uniqueName) {
 		this.listenerList = new EventListenerList();
 		this.setOriginalBean(originalBean, uniqueName);
@@ -175,6 +179,14 @@ public class ToolkitBean implements ComponentListener {
 
 	public void removeComponentListener(ComponentListener l) {
 		listenerList.remove(ComponentListener.class, l);
+	}
+
+	public void setOriginalBean(Object originalBean) {
+		this.originalBean = originalBean;
+	}
+
+	public void setUniqueName(String uniqueName) {
+		this.uniqueName = uniqueName;
 	}
 
 }

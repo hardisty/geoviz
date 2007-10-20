@@ -36,13 +36,19 @@ import javax.swing.JMenuItem;
  */
 
 
+
+
 public class ToolkitBeanSet {
 	final static Logger logger = Logger.getLogger(ToolkitBeanSet.class.getName());
+	
+	
+	private HashSet beanSet;
+	
   public ToolkitBeanSet() {
     this.beanSet = new HashSet();
   }
 
-  private HashSet beanSet;
+
   /*Adds the specified element to this set if it is not already present.
    */
   public boolean add(ToolkitBean b) {
@@ -167,4 +173,14 @@ public class ToolkitBeanSet {
   public int size() {
     return this.beanSet.size();
   }
+
+
+public HashSet getBeanSet() {
+	return beanSet;
+}
+
+
+public void setBeanSet(HashSet beanSet) {
+	this.beanSet = beanSet;
+}
 }
