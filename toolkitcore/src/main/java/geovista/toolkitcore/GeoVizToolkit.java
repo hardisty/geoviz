@@ -938,4 +938,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 */
 	}
 
+	public ToolkitBeanSet getTBeanSet() {
+		return tBeanSet;
+	}
+
+	public void setTBeanSet(ToolkitBeanSet beanSet) {
+		tBeanSet = beanSet;
+	}
+
 }
