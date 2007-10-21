@@ -1,60 +1,75 @@
+/* -------------------------------------------------------------------
+ GeoVISTA Center (Penn State, Dept. of Geography)
+ Java source file for the class VariableTransformerBeanInfo
+ Copyright (c), 2002, GeoVISTA Center
+ All Rights Reserved.
+ Original Author: Frank Hardisty
+ $Author: hardisty $
+ $Id: VariableTransformerBeanInfo.java,v 1.2 2004/05/05 17:23:10 hardisty Exp $
+ $Date: 2004/05/05 17:23:10 $
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -------------------------------------------------------------------   */
 package geovista.geoviz.spreadsheet;
 
-import java.awt.Image;
-import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
 
-import geovista.geoviz.spreadsheet.tools.ToolManager;
-import geovista.geoviz.spreadsheet.util.Debug;
+public class VariableTransformerBeanInfo
+    extends SimpleBeanInfo {
+  static Class beanClass = VariableTransformer.class;
+  static String iconColor16x16Filename = "resources/VariableTransformer16.gif";
+  static String iconColor32x32Filename = "resources/VariableTransformer32.gif";
+  static String iconMono16x16Filename;
+  static String iconMono32x32Filename;
 
-/*
- * Description:
- * Date: Apr 16, 2003
- * Time: 10:29:53 AM
- * @author Jin Chen
- */
+  public VariableTransformerBeanInfo() {
+  }
 
-public class VariableTransformerBeanInfo extends SimpleBeanInfo{
-    private final static Class beanClass=VariableTransformer.class;
-    public BeanDescriptor getBeanDescriptor() {
-        return new BeanDescriptor(beanClass);
+  public PropertyDescriptor[] getPropertyDescriptors() {
+    PropertyDescriptor[] pds = new PropertyDescriptor[] {};
+    return pds;
+  }
+
+  public java.awt.Image getIcon(int iconKind) {
+    switch (iconKind) {
+      case BeanInfo.ICON_COLOR_16x16:
+        return iconColor16x16Filename != null ?
+            loadImage(iconColor16x16Filename) : null;
+      case BeanInfo.ICON_COLOR_32x32:
+        return iconColor32x32Filename != null ?
+            loadImage(iconColor32x32Filename) : null;
+      case BeanInfo.ICON_MONO_16x16:
+        return iconMono16x16Filename != null ? loadImage(iconMono16x16Filename) : null;
+      case BeanInfo.ICON_MONO_32x32:
+        return iconMono32x32Filename != null ? loadImage(iconMono32x32Filename) : null;
     }
+    return null;
+  }
 
-    public Image getIcon(int iconKind){
-        if (iconKind == BeanInfo.ICON_MONO_16x16 ||
-            iconKind == BeanInfo.ICON_COLOR_16x16 )
-        {
-
-          java.awt.Image img = getImage(ToolManager.IMAGES+"VariableTransformer16.gif");  //root is the folder contain this class
-          return img;
-        }
-        if (iconKind == BeanInfo.ICON_MONO_32x32 ||
-            iconKind == BeanInfo.ICON_COLOR_32x32 )
-        {
-          //if(Debug.isDebug()) {
-              String im = ToolManager.IMAGES + "VariableTransformer32.gif";
-              Debug.println(im);
-          //}
-          java.awt.Image img = getImage(ToolManager.IMAGES +"VariableTransformer32.gif");
-          return img;
-        }
-        return null;
-
-    }  //getIcon
-    // loading images
-    public static Image getImage(String fullName) {
-        //String fullName=IMAGES+name;
-        ClassLoader cl=ToolManager.class.getClassLoader() ;
-        URL url=cl.getResource(fullName);
-        if (url == null) {
-            
-            return null;
-        }
-        return new ImageIcon(url).getImage() ;
+  public BeanInfo[] getAdditionalBeanInfo() {
+    Class superclass = beanClass.getSuperclass();
+    try {
+      BeanInfo superBeanInfo = Introspector.getBeanInfo(superclass);
+      return new BeanInfo[] {
+          superBeanInfo};
     }
-
+    catch (IntrospectionException ex) {
+      ex.printStackTrace();
+      return null;
+    }
+  }
 }
