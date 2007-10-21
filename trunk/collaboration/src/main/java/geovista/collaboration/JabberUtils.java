@@ -20,6 +20,7 @@
 package geovista.collaboration;
 
 import java.awt.geom.Rectangle2D;
+
 import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.XMPPConnection;
@@ -60,12 +61,12 @@ public abstract class JabberUtils {
 	public static XMPPConnection openConnection(String serverName) {
 		XMPPConnection conn1 = null;
 		// Create a connection to the named server.
-		try {
+		//try {
 			conn1 = new XMPPConnection(serverName);
-		} catch (XMPPException e) {
+		//} catch (XMPPException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		//}
 		return conn1;
 	}
 
