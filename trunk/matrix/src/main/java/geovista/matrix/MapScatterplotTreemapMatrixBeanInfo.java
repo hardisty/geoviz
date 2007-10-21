@@ -14,8 +14,8 @@ import java.beans.SimpleBeanInfo;
 
 public class MapScatterplotTreemapMatrixBeanInfo extends SimpleBeanInfo {
 	Class beanClass = MapScatterplotTreemapMatrix.class;
-	String iconColor16x16Filename = "genmatrix16.gif";
-	String iconColor32x32Filename = "genmatrix32.gif";
+	String iconColor16x16Filename = "resources/genmatrix16.gif";
+	String iconColor32x32Filename = "resources/genmatrix32.gif";
 	String iconMono16x16Filename;
 	String iconMono32x32Filename;
 

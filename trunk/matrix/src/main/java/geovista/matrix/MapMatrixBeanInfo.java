@@ -14,8 +14,8 @@ import java.beans.SimpleBeanInfo;
 
 public class MapMatrixBeanInfo extends SimpleBeanInfo {
 	Class beanClass = MapMatrix.class;
-	String iconColor16x16Filename = "matrix16.gif";
-	String iconColor32x32Filename = "matrix32.gif";
+	String iconColor16x16Filename = "resources/matrix16.gif";
+	String iconColor32x32Filename = "resources/matrix32.gif";
 	String iconMono16x16Filename;
 	String iconMono32x32Filename;
 

@@ -16,8 +16,8 @@ import java.beans.SimpleBeanInfo;
 
 public class BiPlotMatrixBeanInfo extends SimpleBeanInfo {
 	Class beanClass = BiPlotMatrix.class;
-	String iconColor16x16Filename = "mixedmatrix16.gif";
-	String iconColor32x32Filename = "mixedmatrix32.gif";
+	String iconColor16x16Filename = "resources/mixedmatrix16.gif";
+	String iconColor32x32Filename = "resources/mixedmatrix32.gif";
 	String iconMono16x16Filename;
 	String iconMono32x32Filename;
 

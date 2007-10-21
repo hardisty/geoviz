@@ -16,8 +16,8 @@ import java.beans.SimpleBeanInfo;
 
 public class ScatterPlotBeanInfo extends SimpleBeanInfo {
     Class beanClass = ScatterPlot.class;
-    String iconColor16x16Filename = "scatterplotm16.gif";
-    String iconColor32x32Filename = "scatterplotm32.gif";
+    String iconColor16x16Filename = "resources/SingleScatterPlot16.gif";
+    String iconColor32x32Filename = "resources/SingleScatterPlot32.gif";
     String iconMono16x16Filename;
     String iconMono32x32Filename;
 
