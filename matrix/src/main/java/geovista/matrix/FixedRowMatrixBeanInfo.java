@@ -16,8 +16,8 @@ import java.beans.SimpleBeanInfo;
 
 public class FixedRowMatrixBeanInfo extends SimpleBeanInfo {
 	Class beanClass = FixedRowMatrix.class;
-	String iconColor16x16Filename = "mixedGraph16.gif";
-	String iconColor32x32Filename = "mixedGraph32.gif";
+	String iconColor16x16Filename = "resources/mixedGraph16.gif";
+	String iconColor32x32Filename = "resources/mixedGraph32.gif";
 	String iconMono16x16Filename;
 	String iconMono32x32Filename;
 

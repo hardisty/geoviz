@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="animation/src/main/java"/>
+	<classpathentry kind="src" path="touchgraph/src/main/resources"/>
+	<classpathentry kind="src" path="sound/src/main/resources"/>
 	<classpathentry kind="src" path="matrix/src/main/resources"/>
 	<classpathentry kind="src" path="attic/src/main/java"/>
 	<classpathentry kind="src" path="toolkitcore/src/main/resources"/>
