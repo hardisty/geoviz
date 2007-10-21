@@ -19,6 +19,13 @@
 
 package geovista.collaboration;
 
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SpatialExtentEvent;
+import geovista.common.event.SpatialExtentListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -59,13 +66,6 @@ import org.jivesoftware.smackx.filetransfer.FileTransferManager;
 import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
 import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
-
-import geovista.common.event.SelectionEvent;
-import geovista.common.event.SelectionListener;
-import geovista.common.event.SpatialExtentEvent;
-import geovista.common.event.SpatialExtentListener;
-import geovista.common.event.SubspaceEvent;
-import geovista.common.event.SubspaceListener;
 
 public class  GeoJabber extends JPanel implements SelectionListener,
 		SpatialExtentListener, SubspaceListener, ActionListener,
@@ -312,7 +312,7 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 		Roster rost = conn.getRoster();
 		
 		//Object[] entries = (Object[]) rost.getEntries().toArray()
-		Iterator it  = rost.getEntries();
+		Iterator it  = rost.getEntries().iterator();
 		
 		for (int i = 0; i < rost.getEntryCount(); i++){
 			RosterEntry entry = (RosterEntry)it.next();
@@ -389,7 +389,7 @@ public class  GeoJabber extends JPanel implements SelectionListener,
 			makeChat();
 		}
 		try {
-			Message newMessage = new Message(this.friend.getName(),Message.Type.NORMAL);
+			Message newMessage = new Message(this.friend.getName());
 			newMessage.setBody(msg);
 			//message.setProperty("favoriteColor", "red");
 			if (logger.isLoggable(Level.FINEST)){
