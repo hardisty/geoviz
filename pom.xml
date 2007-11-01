@@ -14,6 +14,15 @@
       <name>reucon</name>
       <url>http://maven.reucon.com/public</url>
     </repository>
+      <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>geovista</id>
+      <name>geovista-repo</name>
+      <url>http://www.geovista.psu.edu/repository/m2</url>
+    </repository>    
+    
   </repositories>
   <modules>
     <module>common</module>
@@ -47,6 +56,11 @@
     </plugins>
   </reporting>
     <dependencies>
+    <dependency>
+    <groupId>org.prefuse</groupId>
+    <artifactId>prefuse</artifactId>
+    <version>beta-20071021</version>
+</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
