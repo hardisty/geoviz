@@ -15,7 +15,8 @@ public class GeoVizToolkitTest extends TestCase {
 	public void testMain() {
 		GeoVizToolkit kit = new GeoVizToolkit("");
 		kit.setVisible(true);
-	 assert(kit != null);
+		System.out.println("I did done test main!");
+	    assert(kit != null);
 	}
 
 }

@@ -14,7 +14,6 @@ import java.beans.XMLEncoder;
 import java.util.BitSet;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 /**
@@ -38,11 +37,14 @@ public class SerializationExp {
 		
 		GeoVizToolkit tk = new GeoVizToolkit("");
 		tk.setVisible(true);
-		ToolkitBeanSet beanSet = tk.getTBeanSet();
+
 		GeoMap geo = new GeoMap();
 		geo.setBackground(Color.CYAN);
+		
+		ToolkitBeanSet beanSet = tk.getTBeanSet();
 		beanSet.add(new ToolkitBean(geo,"a ggg geo"));
 		tk.setVisible(false);
+		
 		enc.writeObject(beanSet);
 		enc.close();
 		
@@ -50,14 +52,14 @@ public class SerializationExp {
 	       Marshaller m;
 	       
 	       
-		try {
-			jc = JAXBContext.newInstance( "geovista" );
-		       m = jc.createMarshaller();
-		       m.marshal(beanSet, System.out);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			jc = JAXBContext.newInstance( "geovista.toolkitcore" );
+//		       m = jc.createMarshaller();
+//		       m.marshal(beanSet, System.out);
+//		} catch (JAXBException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 
 
