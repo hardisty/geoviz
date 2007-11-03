@@ -23,9 +23,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javax.sound.midi.Instrument;
+import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Soundbank;
@@ -93,37 +95,47 @@ private Instrument instruments[];
         this.initSound();
     }
     private void initSound() {
-    try {
-        if (synthesizer == null) {
-            if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
-                logger.finest("getSynthesizer() failed!");
+        try {
+            if (synthesizer == null) {
+                if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
+                    logger.finest("getSynthesizer() failed!");
 
-                return;
+                    return;
+                }
             }
+
+            synthesizer.open();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            return;
         }
 
-        synthesizer.open();
+        //Soundbank sb = synthesizer.getDefaultSoundbank();
+        Class clazz = this.getClass();
+        Soundbank sb = null;
+    	try {
+    		sb = MidiSystem.getSoundbank(clazz.getResourceAsStream("resources/soundbank.gm"));
+    	} catch (InvalidMidiDataException e) {
+    	    logger.throwing(clazz.getName(), "initSound", e);
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} 
+        
+        if (sb != null) {
+            instruments = sb.getInstruments();
+            synthesizer.loadInstrument(instruments[0]);
+        }
+        for (int i = 0; i < instruments.length; i++){
+          this.insturmentCombo.addItem(instruments[i].getName());
+        }
 
-    } catch (Exception ex) {
-        ex.printStackTrace();
 
-        return;
+
+        //this.setInstrument(27);
     }
-
-    Soundbank sb = synthesizer.getDefaultSoundbank();
-
-    if (sb != null) {
-        instruments = synthesizer.getDefaultSoundbank().getInstruments();
-        synthesizer.loadInstrument(instruments[0]);
-    }
-    for (int i = 0; i < instruments.length; i++){
-      this.insturmentCombo.addItem(instruments[i].getName());
-    }
-
-
-
-    //this.setInstrument(27);
-}
 
     public void actionPerformed(ActionEvent e){
       if(e.getSource() == this.insturmentCombo){

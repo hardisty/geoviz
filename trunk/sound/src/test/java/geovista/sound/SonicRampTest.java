@@ -14,8 +14,6 @@
 
 package geovista.sound;
 
-import geovista.sound.SonicRamp;
-
 import java.awt.Color;
 
 import junit.framework.Test;
@@ -30,9 +28,7 @@ public class SonicRampTest extends TestCase {
 		super(name);
                 setUp();
 	}
-	public static void main (String[] args) {
-		junit.textui.TestRunner.run (suite());
-	}
+
 	protected void setUp() {
 		ramp = new SonicRamp();
                 Color[] colors = new Color[3];
