@@ -57,8 +57,9 @@ public class RadvizColorSettingsGUI extends javax.swing.JPanel implements
     private String colorScheme = SCHEME_NAMES[0];
     private Color backgroundColor = Color.white;
     private Color selectionColor = Color.magenta;
-    private Color[] classificationColors = RadViz.getDistinctColors(colorScheme, numClass);
-    
+    //fah 2007
+    //private Color[] classificationColors = RadViz.getDistinctColors(colorScheme, numClass);
+    private Color[] classificationColors = {Color.red, Color.blue};
 
     /**
      * Default constructor
@@ -101,7 +102,8 @@ public class RadvizColorSettingsGUI extends javax.swing.JPanel implements
                         }
                     }
                 }
-                classificationColors = RadViz.getDistinctColors(colorScheme, this.numClass);
+                //fah 2007
+                //classificationColors = RadViz.getDistinctColors(colorScheme, this.numClass);
                 setSchemeLegendLabels(classificationColors.length);
             }
             else {
@@ -111,7 +113,9 @@ public class RadvizColorSettingsGUI extends javax.swing.JPanel implements
                         schemes[i].setSelected(true);
                     }
                 }
-                classificationColors = RadViz.getDistinctColors(colorScheme, this.numClass);
+                //fah 2007
+                //classificationColors = RadViz.getDistinctColors(colorScheme, this.numClass);
+                
                 for (int i = 0; i < classificationColors.length; i++)
                     schemeLegendLabels[i].setBackground(classificationColors[i]);
             }

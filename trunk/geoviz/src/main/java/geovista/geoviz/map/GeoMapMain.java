@@ -14,17 +14,17 @@
 
 package geovista.geoviz.map;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoData48States;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.shapefile.ShapeFileToShape;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 
 public class GeoMapMain
     extends JFrame {
@@ -64,6 +64,8 @@ public class GeoMapMain
     ShapeFileDataReader shpRead = new ShapeFileDataReader();
     shpRead.setFileName(fileName);
     CoordinationManager coord = new CoordinationManager();
+    
+    
     ShapeFileToShape shpToShape = new ShapeFileToShape();
     ShapeFileProjection shpProj = new ShapeFileProjection();
     GeoData48States stateData = new GeoData48States();

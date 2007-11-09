@@ -52,6 +52,8 @@ public class SonicRampTest extends TestCase {
             assertTrue(resultColor == -1);
 
 	}
+
+	
 	public void testRampColors() {
             boolean[] anch = new boolean[7];
             //all anchors start out false
