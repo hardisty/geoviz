@@ -1,5 +1,18 @@
 package geovista.geoviz.radviz;
 
+import geovista.common.data.DataSetForApps;
+import geovista.common.event.ClassificationResultEvent;
+import geovista.common.event.ClassificationResultListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
+import geovista.readers.csv.CSVFileDataReader;
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -46,25 +59,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.MenuElement;
-//import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-
-import geovista.colorbrewer.OriginalColor;
-import geovista.common.data.DataSetForApps;
-import geovista.common.event.ClassificationResultEvent;
-import geovista.common.event.ClassificationResultListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.IndicationEvent;
-import geovista.common.event.IndicationListener;
-import geovista.common.event.SelectionEvent;
-import geovista.common.event.SelectionListener;
-import geovista.common.event.SubspaceEvent;
-import geovista.common.event.SubspaceListener;
-import geovista.readers.csv.CSVFileDataReader;
 
 
 /**
@@ -118,9 +116,9 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
     private JCheckBoxMenuItem indicationOnItem = null, showLegendItem = null;
     private JPopupMenu popup = new JPopupMenu();
     private List classLabels = null;
-    private String colorCodeAtt = CLR_CODE_ATT_DEFAULT, colorScheme = OriginalColor.SET1;
-    
-    protected static final OriginalColor origClr = new OriginalColor();
+    //fah 2007
+    private String colorCodeAtt = CLR_CODE_ATT_DEFAULT, colorScheme = "ble";//OriginalColor.SET1;
+    //protected static final OriginalColor origClr = new OriginalColor();
     
     protected static transient AffineTransform radvizTransform;
     protected transient AttSelectPanel attSelPanel = null;
@@ -184,7 +182,9 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
         addMouseListener(this);
         addMouseMotionListener(this);
         initPopupMenu();
-        setColors(getDistinctColors(getColorScheme(), getNumClass()));
+        
+        //fah 2007
+        //setColors(getDistinctColors(getColorScheme(), getNumClass()));
     }
     
     /**
@@ -377,7 +377,8 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
         setClassification(default_classification);
         if (1 != getNumClass()) {
             setNumClass(1);
-            setColors(getDistinctColors(getColorScheme(), getNumClass()));
+            //fah 2007
+            //setColors(getDistinctColors(getColorScheme(), getNumClass()));
         }
         
         //updateClassificationAndClassLabels(getColorCodeAtt());
@@ -823,23 +824,24 @@ public class RadViz extends JPanel implements ActionListener, ClassificationResu
         setClassLabels(labels);
         if (getClassLabels().size() != getNumClass()) {
             setNumClass(getClassLabels().size());
-            setColors(getDistinctColors(getColorScheme(), getNumClass()));
+            //fah 2007
+            //setColors(getDistinctColors(getColorScheme(), getNumClass()));
         }
     }
     
-    /**
-     * Generates an user specified number of distinct colors using the user specified
-     * color scheme.
-     *
-     * @param colorScheme the desired color scheme for generating distinct colors
-     * @param numClass the desired number of distinct colors to be generated
-     * @return returns an array of distinct colors
-     */
-    public static Color[] getDistinctColors(String colorScheme, int numClass) {
-        int[][] color_scheme = origClr.makescheme(colorScheme, numClass);
-        Color[] distinctColors = origClr.transform(color_scheme, numClass);
-        return distinctColors;
-    }
+//    /**
+//     * Generates an user specified number of distinct colors using the user specified
+//     * color scheme.
+//     *
+//     * @param colorScheme the desired color scheme for generating distinct colors
+//     * @param numClass the desired number of distinct colors to be generated
+//     * @return returns an array of distinct colors
+//     */
+//    public static Color[] getDistinctColors(String colorScheme, int numClass) {
+//        int[][] color_scheme = origClr.makescheme(colorScheme, numClass);
+//        Color[] distinctColors = origClr.transform(color_scheme, numClass);
+//        return distinctColors;
+//    }
     
     /**
      * Finds out the index of the data point that is currently pointed to by the
