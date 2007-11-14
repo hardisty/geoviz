@@ -38,10 +38,10 @@ public class CoordinationManagerTest extends TestCase {
         System.out.println("stuff.....");
         JPanel pan = new JPanel();
 
-        CoordinatingBean coorBean = new CoordinatingBean();
-        CoordinatingBean coorBean2 = new CoordinatingBean();
-        CoordinatingBean coorBean3 = new CoordinatingBean();
-        CoordinatingBean coorBean4 = new CoordinatingBean();
+        ExampleBean coorBean = new ExampleBean();
+        ExampleBean coorBean2 = new ExampleBean();
+        ExampleBean coorBean3 = new ExampleBean();
+        ExampleBean coorBean4 = new ExampleBean();
 
 
         Class[] paramTypes = new Class[1];
