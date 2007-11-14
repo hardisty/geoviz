@@ -3,7 +3,7 @@
  */
 package geovista.toolkitcore;
 
-import geovista.coordination.CoordinatingBean;
+import geovista.geoviz.map.GeoMap;
 import junit.framework.TestCase;
 
 /**
@@ -35,7 +35,7 @@ public class ToolkitBeanSetTest extends TestCase {
 	 */
 	public void testAdd() {
 		ToolkitBean bean = new ToolkitBean();
-        CoordinatingBean coorBean = new CoordinatingBean();
+        GeoMap coorBean = new GeoMap();
 		bean.setOriginalBean(coorBean);
 		tBeanSet.add(bean);
 		assert(tBeanSet.getBeanSet().size() == 1);
@@ -47,7 +47,7 @@ public class ToolkitBeanSetTest extends TestCase {
 	 */
 	public void testContainsToolkitBean() {
 		ToolkitBean bean = new ToolkitBean();
-        CoordinatingBean coorBean = new CoordinatingBean();
+        GeoMap coorBean = new GeoMap();
 		bean.setOriginalBean(coorBean);
 		tBeanSet.add(bean);
 		assert(tBeanSet.contains(bean) == true);
@@ -89,7 +89,7 @@ public class ToolkitBeanSetTest extends TestCase {
 	 */
 	public void testRemove() {
 		ToolkitBean bean = new ToolkitBean();
-        CoordinatingBean coorBean = new CoordinatingBean();
+        GeoMap coorBean = new GeoMap();
 		bean.setOriginalBean(coorBean);
 		tBeanSet.add(bean);
 		assert(tBeanSet.contains(bean) == true);
