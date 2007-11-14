@@ -10,19 +10,6 @@
  */
 package geovista.geoviz.parvis;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.logging.Logger;
-
-import javax.swing.JFrame;
-import javax.swing.JToggleButton;
-import javax.swing.event.EventListenerList;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
@@ -41,6 +28,19 @@ import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.readers.FileIO;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.JToggleButton;
+import javax.swing.event.EventListenerList;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 
 /**
@@ -187,7 +187,7 @@ public class ParallelPlot extends javax.swing.JPanel implements ProgressListener
 
         dragModePanel.setBorder(new javax.swing.border.TitledBorder(
                 new javax.swing.border.EtchedBorder(), "Drag Mode"));
-        reorderButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/psu/geovista/app/parvis/gui/reorder.gif")));
+        reorderButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("reorder.gif")));
         reorderButton.setToolTipText(
             "Reorder axes by dragging them across the display.");
         reorderButton.setSelected(true);
@@ -205,7 +205,7 @@ public class ParallelPlot extends javax.swing.JPanel implements ProgressListener
 
         dragModePanel.add(reorderButton);
 
-        scaleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/psu/geovista/app/parvis/gui/scale.gif")));
+        scaleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("scale.gif")));
         scaleButton.setToolTipText(
             "Scale axes by dragging up (zoom out) or down (zoom in).");
         scaleButton.setFont(new java.awt.Font("Dialog", 0, 10));
@@ -220,7 +220,7 @@ public class ParallelPlot extends javax.swing.JPanel implements ProgressListener
         dragModePanel.add(scaleButton);
 
         translateButton.setIcon(new javax.swing.ImageIcon(
-                getClass().getResource("/edu/psu/geovista/app/parvis/gui/move.gif")));
+                getClass().getResource("move.gif")));
         translateButton.setToolTipText("Translate axes by dragging up or down.");
         translateButton.setFont(new java.awt.Font("Dialog", 0, 10));
         translateButton.setText("translate");
@@ -233,7 +233,7 @@ public class ParallelPlot extends javax.swing.JPanel implements ProgressListener
 
         dragModePanel.add(translateButton);
 
-        brushButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/psu/geovista/app/parvis/gui/brush.gif")));
+        brushButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("brush.gif")));
         brushButton.setToolTipText("Translate axes by dragging up or down.");
         brushButton.setFont(new java.awt.Font("Dialog", 0, 10));
         brushButton.setText("brush");

@@ -11,6 +11,12 @@
 
 package geovista.geoviz.parvis;
 
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.ui.ExcentricLabelClient;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -25,12 +31,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-
-import geovista.common.event.IndicationEvent;
-import geovista.common.event.IndicationListener;
-import geovista.common.event.SelectionEvent;
-import geovista.common.event.SelectionListener;
-import geovista.common.ui.ExcentricLabelClient;
 
 
 /**
@@ -79,7 +79,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener, Indic
     public boolean deepRepaint = true;
 
     static {
-        UIManager.put("geovista.geoviz.parvis.gui.ParallelDisplayUI", "geovista.geoviz.parvis.gui.BasicParallelDisplayUI");
+        UIManager.put("geovista.geoviz.parvis.ParallelDisplayUI", "geovista.geoviz.parvis.BasicParallelDisplayUI");
     }
     /**
      * Creates a new ParallelDisplay.
@@ -366,6 +366,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener, Indic
             setUI((ParallelDisplayUI)UIManager.getUI(this));
         }
         catch (ClassCastException ccex){
+        	ccex.printStackTrace();
         }
         invalidate();
     }
@@ -375,7 +376,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener, Indic
      */
     public String getUIClassID(){
         logger.finest("retrieving classID");
-        return "geovista.geoviz.parvis.gui.ParallelDisplayUI";
+        return "geovista.geoviz.parvis.ParallelDisplayUI";
     }
 
     /**
