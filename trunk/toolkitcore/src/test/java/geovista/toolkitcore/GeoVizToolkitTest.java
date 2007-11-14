@@ -9,8 +9,8 @@ public class GeoVizToolkitTest extends TestCase {
 	}
 
 	protected void setUp() throws Exception {
-		kit = new GeoVizToolkit("");
-		kit.setVisible(true);
+		//kit = new GeoVizToolkit("");
+		//kit.setVisible(true);
 		super.setUp();
 	}
 
@@ -21,8 +21,9 @@ public class GeoVizToolkitTest extends TestCase {
 	    assert(kit != null);
 	}
 	public void testRemoveAllBeans(){
-		int numBeans = kit.coord.getFiringBeans().length;
-		kit.removeAllBeans();
+		GeoVizToolkit newKit = new GeoVizToolkit("");
+		int numBeans = newKit.coord.getFiringBeans().length;
+		newKit.removeAllBeans();
 		assert(kit.coord.getFiringBeans().length == 0);
 	}
 
