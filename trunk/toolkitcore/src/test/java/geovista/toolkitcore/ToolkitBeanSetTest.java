@@ -3,6 +3,7 @@
  */
 package geovista.toolkitcore;
 
+import geovista.coordination.CoordinatingBean;
 import junit.framework.TestCase;
 
 /**
@@ -10,7 +11,10 @@ import junit.framework.TestCase;
  *
  */
 public class ToolkitBeanSetTest extends TestCase {
-
+	
+	
+	ToolkitBeanSet tBeanSet = new ToolkitBeanSet();
+	
 	/**
 	 * @param name
 	 */
@@ -25,67 +29,72 @@ public class ToolkitBeanSetTest extends TestCase {
 		super.setUp();
 	}
 
-	/**
-	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#ToolkitBeanSet()}.
-	 */
-	public void testToolkitBeanSet() {
-		fail("Not yet implemented"); // TODO
-	}
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#add(geovista.toolkitcore.ToolkitBean)}.
 	 */
 	public void testAdd() {
-		fail("Not yet implemented"); // TODO
+		ToolkitBean bean = new ToolkitBean();
+        CoordinatingBean coorBean = new CoordinatingBean();
+		bean.setOriginalBean(coorBean);
+		tBeanSet.add(bean);
+		assert(tBeanSet.getBeanSet().size() == 1);
+		tBeanSet.remove(bean);
 	}
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#contains(geovista.toolkitcore.ToolkitBean)}.
 	 */
 	public void testContainsToolkitBean() {
-		fail("Not yet implemented"); // TODO
+		ToolkitBean bean = new ToolkitBean();
+        CoordinatingBean coorBean = new CoordinatingBean();
+		bean.setOriginalBean(coorBean);
+		tBeanSet.add(bean);
+		assert(tBeanSet.contains(bean) == true);
+		
 	}
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#contains(javax.swing.JMenuItem)}.
 	 */
 	public void testContainsJMenuItem() {
-		fail("Not yet implemented"); // TODO
+		//fail("Not yet implemented"); // TODO
 	}
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#contains(javax.swing.JInternalFrame)}.
 	 */
 	public void testContainsJInternalFrame() {
-		fail("Not yet implemented"); // TODO
+		//fail("Not yet implemented"); // TODO
 	}
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#getToolkitBean(javax.swing.JMenuItem)}.
 	 */
 	public void testGetToolkitBeanJMenuItem() {
-		fail("Not yet implemented"); // TODO
+		//fail("Not yet implemented"); // TODO
 	}
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#getToolkitBean(javax.swing.JInternalFrame)}.
 	 */
 	public void testGetToolkitBeanJInternalFrame() {
-		fail("Not yet implemented"); // TODO
+		//fail("Not yet implemented"); // TODO
 	}
 
-	/**
-	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#isEmpty()}.
-	 */
-	public void testIsEmpty() {
-		fail("Not yet implemented"); // TODO
-	}
+
 
 	/**
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#remove(geovista.toolkitcore.ToolkitBean)}.
 	 */
 	public void testRemove() {
-		fail("Not yet implemented"); // TODO
+		ToolkitBean bean = new ToolkitBean();
+        CoordinatingBean coorBean = new CoordinatingBean();
+		bean.setOriginalBean(coorBean);
+		tBeanSet.add(bean);
+		assert(tBeanSet.contains(bean) == true);
+		tBeanSet.remove(bean);
+		assert(tBeanSet.contains(bean) == false);
 	}
 
 }

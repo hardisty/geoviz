@@ -28,5 +28,11 @@
 			<artifactId>symbolization</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>edu.psu.geovista</groupId>
+			<artifactId>geoviz</artifactId>
+			<scope>test</scope>
+			<version>${project.version}</version>
+		</dependency>		
 	</dependencies>
 </project>

@@ -40,7 +40,7 @@ public class CoordinationManager {
   */
   public CoordinationManager() {
     firingBeans = new FiringBean[0];
-    this.listeningBeans = new ListeningBean[0];
+    listeningBeans = new ListeningBean[0];
   }
 
 //  /**

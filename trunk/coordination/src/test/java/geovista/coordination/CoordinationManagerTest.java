@@ -4,8 +4,6 @@
 package geovista.coordination;
 
 import geovista.common.event.IndicationListener;
-import geovista.geoviz.map.MapCanvas;
-import geovista.geoviz.spacefill.SpaceFill;
 
 import javax.swing.JPanel;
 
@@ -81,17 +79,6 @@ public class CoordinationManagerTest extends TestCase {
 
         //OK, let's try some other beans.
 
-        MapCanvas mapCan = new MapCanvas();
-        System.out.println("*************************************");
-        coord.addBean(pan);
-        System.out.println("*************************************");
-        JPanel pan2 = new JPanel();
-        coord.addBean(pan2);
-        //coord.addBean(coorBean);
-        System.out.println("*************************************");
-        SpaceFill spat = new SpaceFill();
-        coord.addBean(spat);
-        //pan.setBackground(Color.black);
 
 
 
