@@ -8,6 +8,27 @@ package geovista.matrix;
  * @author Xiping Dai
  * @version 1.0
  */
+import geovista.common.classification.Classifier;
+import geovista.common.data.DataSetForApps;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.ColorArrayListener;
+import geovista.common.event.ConditioningEvent;
+import geovista.common.event.ConditioningListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolizer;
+import geovista.symbolization.event.ColorClassifierEvent;
+import geovista.symbolization.event.ColorClassifierListener;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -36,27 +57,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionListener;
-
-import geovista.common.classification.Classifier;
-import geovista.common.data.DataSetForApps;
-import geovista.common.event.ColorArrayEvent;
-import geovista.common.event.ColorArrayListener;
-import geovista.common.event.ConditioningEvent;
-import geovista.common.event.ConditioningListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.IndicationEvent;
-import geovista.common.event.IndicationListener;
-import geovista.common.event.SelectionEvent;
-import geovista.common.event.SelectionListener;
-import geovista.common.event.SubspaceEvent;
-import geovista.common.event.SubspaceListener;
-import geovista.symbolization.BivariateColorSymbolClassification;
-import geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import geovista.symbolization.ColorSymbolClassificationSimple;
-import geovista.symbolization.ColorSymbolizer;
-import geovista.symbolization.event.ColorClassifierEvent;
-import geovista.symbolization.event.ColorClassifierListener;
 
 public abstract class AbstractMatrix
     extends JPanel
@@ -993,8 +993,8 @@ public abstract class AbstractMatrix
     static  {
         try {
             Class cl = UniPlotMatrix.class;
-            URL urlGifH = cl.getResource("arrow_h32.gif");
-            URL urlGifV = cl.getResource("arrow_v32.gif");
+            URL urlGifH = cl.getResource("resources/arrow_h32.gif");
+            URL urlGifV = cl.getResource("resources/arrow_v32.gif");
             leftRightArrow = new ImageIcon(urlGifH);
             topDownArrow = new ImageIcon(urlGifV);
             // Just do this create once
