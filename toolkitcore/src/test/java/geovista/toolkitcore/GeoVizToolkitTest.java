@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 public class GeoVizToolkitTest extends TestCase {
 	GeoVizToolkit kit;
+	GeoVizToolkit newKit = new GeoVizToolkit("");
 	public GeoVizToolkitTest(String name) {
 		super(name);
 	}
@@ -18,13 +19,16 @@ public class GeoVizToolkitTest extends TestCase {
 		
 		
 		System.out.println("I did done test main!");
-	    //assert(kit != null);
+
 	}
 	public void testRemoveAllBeans(){
-		GeoVizToolkit newKit = new GeoVizToolkit("");
+		
 		int numBeans = newKit.coord.getFiringBeans().length;
+		System.out.println(numBeans);
 		newKit.removeAllBeans();
-		assert(kit.coord.getFiringBeans().length == 0);
+		numBeans = newKit.coord.getFiringBeans().length;
+		System.out.println(numBeans);		
+		assert(newKit.coord.getFiringBeans().length == 0);
 	}
 
 }
