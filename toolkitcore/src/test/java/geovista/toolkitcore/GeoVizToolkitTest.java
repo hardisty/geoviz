@@ -18,7 +18,7 @@ public class GeoVizToolkitTest extends TestCase {
 		
 		
 		System.out.println("I did done test main!");
-	    assert(kit != null);
+	    //assert(kit != null);
 	}
 	public void testRemoveAllBeans(){
 		GeoVizToolkit newKit = new GeoVizToolkit("");
