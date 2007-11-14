@@ -22,25 +22,6 @@
 
 package geovista.matrix.map;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
-import java.util.logging.Logger;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.DataSetEvent;
@@ -63,6 +44,25 @@ import geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.matrix.scatterplot.SingleScatterPlot;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+import java.util.logging.Logger;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  * A Moran Map has a choropleth map and a scatterplot tied together
