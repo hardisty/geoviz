@@ -91,6 +91,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 /*
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
@@ -99,7 +101,7 @@ import javax.swing.JOptionPane;
  */
 
 public class GeoVizToolkit extends JFrame implements ActionListener,
-		ComponentListener, DataSetListener {
+		ComponentListener, DataSetListener, InternalFrameListener {
 
 	/**
 	 * 
@@ -173,13 +175,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		super("GeoViz Toolkit");
 
-		this.desktop.setBackground(new Color(20, 20, 80));
+		desktop.setBackground(new Color(20, 20, 80));
 		this.useProj = useProj;
-		this.getContentPane().add(desktop, BorderLayout.CENTER);
-		coord.addBean(this.dataCaster);
+		getContentPane().add(desktop, BorderLayout.CENTER);
+		coord.addBean(dataCaster);
 		try {
 			this.init();
-			this.initMenuListeners();
+			initMenuListeners();
 		} catch (Exception ex1) {
 			ex1.printStackTrace();
 		}
@@ -188,7 +190,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			fileNameIn = "48States";
 		}
 
-		this.loadData(fileNameIn);
+		loadData(fileNameIn);
 
 		URL urlGif = null;
 
@@ -202,20 +204,21 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			ex.printStackTrace();
 		}
 
-		this.setIconImage(im.getImage());
-		this.pack();
-		this.setVisible(true);
+		setIconImage(im.getImage());
+		pack();
+		setVisible(true);
 
-		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
 
-		this.tBeanSet = ToolkitLayoutIO.openStarPlotMapLayout();
-		this.addToolkitBeanSet(this.tBeanSet);
+		// tBeanSet = ToolkitLayoutIO.openStarPlotMapLayout();
+		tBeanSet = ToolkitLayoutIO.openAllComponentsLayout();
+		addToolkitBeanSet(tBeanSet);
 
 		this.repaint();
 	}
 
 	public void addExternalBean(Object bean) {
-		this.coord.addBean(bean);
+		coord.addBean(bean);
 		// XXX total hack for demo
 		DataSetModifiedBroadcaster localCaster = (DataSetModifiedBroadcaster) bean;
 		DataSetForApps dataSetOut = shpProj.getOutputDataSetForApps();
@@ -230,13 +233,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 */
 
 	public void removeAllBeans() {
-		Iterator it = this.tBeanSet.iterator();
+		Iterator it = tBeanSet.iterator();
 		while (it.hasNext()) {
 			ToolkitBean oldBean = (ToolkitBean) it.next();
-			this.removeBeanFromGui(oldBean);
+			removeBeanFromGui(oldBean);
 			oldBean = null;
 		}
-		this.tBeanSet.clear();
+		// this.tBeanSet.clear();
 
 	}
 
@@ -246,8 +249,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 */
 
 	public void deleteBean(ToolkitBean oldBean) {
-		this.removeBeanFromGui(oldBean);
-		this.tBeanSet.remove(oldBean);
+		removeBeanFromGui(oldBean);
+		tBeanSet.remove(oldBean);
 		oldBean = null;
 	}
 
@@ -259,8 +262,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	private void removeBeanFromGui(ToolkitBean oldBean) {
 		JMenuItem item = oldBean.getRemoveMenuItem();
 		item.removeActionListener(this);
-		this.menuRemoveTool.remove(item);
-		this.coord.removeBean(oldBean.getOriginalBean());
+		menuRemoveTool.remove(item);
+		coord.removeBean(oldBean.getOriginalBean());
 
 		// find area in layout occupied by internal frame
 		JInternalFrame iFrame = oldBean.getInternalFrame();
@@ -269,8 +272,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		int iWidth = iFrame.getWidth();
 		int iHeight = iFrame.getHeight();
 		// remove it, then repaint area
-		this.desktop.remove(oldBean.getInternalFrame());
-		this.desktop.repaint(iX, iY, iWidth, iHeight);
+		desktop.remove(oldBean.getInternalFrame());
+		desktop.repaint(iX, iY, iWidth, iHeight);
 
 	}
 
@@ -304,6 +307,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		newToolkitBean = new ToolkitBean(newBean, uniqueName);
 
 		bInterFrame = newToolkitBean.getInternalFrame();
+
 		// ############################################################################//
 		// TODO: replace with something a bit less "by hand"
 		// maybe use the bean's peferredSize if they are a java.awt.Component
@@ -350,10 +354,11 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		desktop.add(newToolkitBean.getInternalFrame(), 0); // add on top
 		newToolkitBean.addComponentListener(this);
+		newToolkitBean.getInternalFrame().addInternalFrameListener(this);
 		JMenuItem item = newToolkitBean.getRemoveMenuItem();
 		item.addActionListener(this);
 
-		this.menuRemoveTool.add(item, 0); // add at the top
+		menuRemoveTool.add(item, 0); // add at the top
 
 		Object newBean = newToolkitBean.getOriginalBean();
 		if (newBean instanceof DataSetListener) {
@@ -365,53 +370,53 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void addToolkitBeanSet(ToolkitBeanSet beanSet) {
-		this.tBeanSet = beanSet;
+		tBeanSet = beanSet;
 		Iterator iter = tBeanSet.iterator();
 		while (iter.hasNext()) {
 			ToolkitBean tBean = (ToolkitBean) iter.next();
 			Object obj = tBean.getOriginalBean();
-			this.coord.addBean(obj);
-			this.addBeanToGui(tBean);
+			coord.addBean(obj);
+			addBeanToGui(tBean);
 
 		}
 
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
-		this.dataSet = e.getDataSetForApps();
+		dataSet = e.getDataSetForApps();
 	}
 
 	private void showHelp() {
 		// lazy initialize
-		if (this.help == null) {
-			this.help = new USCHelp();
-			this.help.pack();
+		if (help == null) {
+			help = new USCHelp();
+			help.pack();
 		}
 		boolean haveHelp = false;
 		Component[] desktopComponents = desktop.getComponents();
-		for (int i = 0; i < desktopComponents.length; i++) {
-			if (desktopComponents[i] == this.help) {
-				desktop.remove(desktopComponents[i]);
-				desktop.add(desktopComponents[i], 0);
+		for (Component element : desktopComponents) {
+			if (element == help) {
+				desktop.remove(element);
+				desktop.add(element, 0);
 				haveHelp = true;
 			}
 		}
 		if (!haveHelp) {
 			logger.finest("GVToolkit, showhelp, adding to desktop");
-			desktop.add(this.help, 0); // add on top
+			desktop.add(help, 0); // add on top
 		}
 		this.repaint();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.menuItemAboutGeoVista) {
+		if (e.getSource() == menuItemAboutGeoVista) {
 
 			JOptionPane.showMessageDialog(this,
 					"Most components in this toolkit "
 							+ "developed at the GeoVISTA Center.");
 
-		} else if (e.getSource() == this.menuItemAboutGeoviz) {
+		} else if (e.getSource() == menuItemAboutGeoviz) {
 
 			JOptionPane
 					.showMessageDialog(
@@ -419,79 +424,78 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 							"This application developed by "
 									+ "Frank Hardisty with contributions by Diansheng Guo, Ke Liao, and Aaron Myers "
 									+ "at the Univerisity of South Carolina, and many others at the GeoVISTA Center.");
-		} else if (e.getSource() == this.menuItemHelp) {
-			this.showHelp();
-		} else if (e.getSource() == this.menuItemExit) {
+		} else if (e.getSource() == menuItemHelp) {
+			showHelp();
+		} else if (e.getSource() == menuItemExit) {
 			// is this too weak? do we need a system exit?
-			this.setVisible(false);
-		} else if (e.getSource() == this.menuItemLoadSC) {
-			this.loadData("SC");
-		} else if (e.getSource() == this.menuItemLoadSCCities) {
-			this.loadData("SCCities");
+			setVisible(false);
+		} else if (e.getSource() == menuItemLoadSC) {
+			loadData("SC");
+		} else if (e.getSource() == menuItemLoadSCCities) {
+			loadData("SCCities");
 
-		} else if (e.getSource() == this.menuItemLoadShp) {
-			this.openShapefilePicker();
-		} else if (e.getSource() == this.menuItemLoadStates) {
-			this.loadData("48States");
-		} else if (e.getSource() == this.menuItemLoadCartogram) {
-			this.loadData("Cartogram");
-		} else if (e.getSource() == this.menuItemLoadBackgroundShape) {
-			this.openBackgroundShapeFilePicker();
-		} else if (e.getSource() == this.menuItemLoadSCBackgroundShape) {
-			this.loadBackgroundData("SC");
+		} else if (e.getSource() == menuItemLoadShp) {
+			openShapefilePicker();
+		} else if (e.getSource() == menuItemLoadStates) {
+			loadData("48States");
+		} else if (e.getSource() == menuItemLoadCartogram) {
+			loadData("Cartogram");
+		} else if (e.getSource() == menuItemLoadBackgroundShape) {
+			openBackgroundShapeFilePicker();
+		} else if (e.getSource() == menuItemLoadSCBackgroundShape) {
+			loadBackgroundData("SC");
 		}
 
-		else if (e.getSource() == this.menuItemOpenLayout) {
+		else if (e.getSource() == menuItemOpenLayout) {
 
 			ToolkitBeanSet tempBeanSet = ToolkitLayoutIO.openLayout(this);
 			if (tempBeanSet == null) {
 				return;
 			}
-			this.removeAllBeans();
-			this.addToolkitBeanSet(tempBeanSet);
+			removeAllBeans();
+			addToolkitBeanSet(tempBeanSet);
 
-		} else if (e.getSource() == this.menuItemSaveLayout) {
+		} else if (e.getSource() == menuItemSaveLayout) {
 
-			ToolkitLayoutIO
-					.writeLayout(this.getFileName(), this.tBeanSet, this);
+			ToolkitLayoutIO.writeLayout(getFileName(), tBeanSet, this);
 
-		} else if (this.toolClassHash.containsKey(e.getSource())) { // one of
+		} else if (toolClassHash.containsKey(e.getSource())) { // one of
 			// our added
 			// classes
 			String className = (String) toolClassHash.get(e.getSource());
 			ToolkitBean tBean = null;
-			tBean = this.instantiateBean(className);
-			this.addBeanToGui(tBean);
-			this.tBeanSet.add(tBean);
+			tBean = instantiateBean(className);
+			addBeanToGui(tBean);
+			tBeanSet.add(tBean);
 
 		}
 
-		else if (e.getSource() == this.menuItemRemoveAllTools) {
-			this.removeAllBeans();
+		else if (e.getSource() == menuItemRemoveAllTools) {
+			removeAllBeans();
 		} else if (e.getSource() instanceof JMenuItem
 				&& tBeanSet.contains((JMenuItem) e.getSource())) {
 			JMenuItem item = (JMenuItem) e.getSource();
 
-			ToolkitBean oldTool = this.tBeanSet.getToolkitBean(item);
+			ToolkitBean oldTool = tBeanSet.getToolkitBean(item);
 			// assert (item != null);
-			this.deleteBean(oldTool); // deleteBean calls removeBeanFromGUI
+			deleteBean(oldTool); // deleteBean calls removeBeanFromGUI
 			oldTool = null; // or should we just let it go out of scope? or do
 			// we need to do more?
 
-		} else if (e.getSource() == this.menuItemCopyApplicationToClipboard) {
+		} else if (e.getSource() == menuItemCopyApplicationToClipboard) {
 
 			ToolkitLayoutIO.copyComponentImageToClipboard(this);
-		} else if (e.getSource() == this.menuItemCopySelectedWindowToClipboard) {
-			JInternalFrame frame = this.desktop.getSelectedFrame();
+		} else if (e.getSource() == menuItemCopySelectedWindowToClipboard) {
+			JInternalFrame frame = desktop.getSelectedFrame();
 			if (frame != null) {
 				ToolkitLayoutIO.copyComponentImageToClipboard(frame);
 			}
 
-		} else if (e.getSource() == this.menuItemSaveWholeImageToFile) {
+		} else if (e.getSource() == menuItemSaveWholeImageToFile) {
 
 			ToolkitLayoutIO.saveImageToFile(this);
-		} else if (e.getSource() == this.menuItemSaveSelectedWindowToFile) {
-			JInternalFrame frame = this.desktop.getSelectedFrame();
+		} else if (e.getSource() == menuItemSaveSelectedWindowToFile) {
+			JInternalFrame frame = desktop.getSelectedFrame();
 			if (frame != null) {
 				ToolkitLayoutIO.saveImageToFile(frame);
 			}
@@ -507,16 +511,16 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void loadBackgroundData(String name) {
-		Object[] newDataSet = this.createData(name);
+		Object[] newDataSet = createData(name);
 		DataSetForApps auxData = new DataSetForApps(newDataSet);
-		this.dataCaster.fireAuxiliaryDataSet(auxData);
+		dataCaster.fireAuxiliaryDataSet(auxData);
 	}
 
 	public void loadData(String name) {
-		Object[] newDataSet = this.createData(name);
+		Object[] newDataSet = createData(name);
 
-		this.dataSet = new DataSetForApps(newDataSet);
-		this.dataCaster.setAndFireDataSet(newDataSet);
+		dataSet = new DataSetForApps(newDataSet);
+		dataCaster.setAndFireDataSet(newDataSet);
 
 	}
 
@@ -556,8 +560,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		} else {
 			shpRead.setFileName(name);
-			if (this.useProj) {
-				this.shpProj.setInputDataSet(shpRead.getDataSet());
+			if (useProj) {
+				shpProj.setInputDataSet(shpRead.getDataSet());
 				newDataSet = shpProj.getOutputDataSet();
 			} else {
 				newDataSet = shpRead.getDataSet();
@@ -574,7 +578,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 				ToolkitLayoutIO.ACTION_OPEN,
 				ToolkitLayoutIO.FILE_TYPE_SHAPEFILE);
 
-		this.loadData(fileName);
+		loadData(fileName);
 	}
 
 	private void openBackgroundShapeFilePicker() {
@@ -582,7 +586,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 				ToolkitLayoutIO.ACTION_OPEN,
 				ToolkitLayoutIO.FILE_TYPE_SHAPEFILE);
 
-		this.loadBackgroundData(fileName);
+		loadBackgroundData(fileName);
 		logger.finest("Background name = " + fileName);
 
 	}
@@ -601,24 +605,23 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		Image im = CoordinationUtils.findSmallIcon(tool);
 		Icon ic = new ImageIcon(im);
 		JMenuItem item = new JMenuItem(shortName, ic);
-		this.menuAddTool.add(item); // the menu
+		menuAddTool.add(item); // the menu
 		item.addActionListener(this);
-		this.toolClassHash.put(item, className); // the menuItem is the key,
+		toolClassHash.put(item, className); // the menuItem is the key,
 		// the classname the value
-		this.toolMenuList.add(item);
+		toolMenuList.add(item);
 
 	}
 
 	public String getFileName() {
-		return this.filePath;
+		return filePath;
 	}
 
 	// start component event handling
 	public void componentHidden(ComponentEvent e) {
 		if (e.getSource() instanceof JInternalFrame
-				&& this.tBeanSet.contains((JInternalFrame) e.getSource())) {
-			this.deleteBean(this.tBeanSet.getToolkitBean((JInternalFrame) e
-					.getSource()));
+				&& tBeanSet.contains((JInternalFrame) e.getSource())) {
+			deleteBean(tBeanSet.getToolkitBean((JInternalFrame) e.getSource()));
 
 		}
 
@@ -640,7 +643,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	public void componentResized(ComponentEvent e) {
 		if (logger.isLoggable(Level.FINEST)) {
 			if (e.getSource() instanceof JInternalFrame
-					&& this.tBeanSet.contains((JInternalFrame) e.getSource())) {
+					&& tBeanSet.contains((JInternalFrame) e.getSource())) {
 				JInternalFrame iFrame = (JInternalFrame) e.getSource();
 				int width = iFrame.getWidth();
 				int height = iFrame.getHeight();
@@ -656,31 +659,31 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	// end component event handling
 	private void initMenuListeners() {
 
-		this.menuItemAboutGeoVista.addActionListener(this);
-		this.menuItemAboutGeoviz.addActionListener(this);
-		this.menuItemExit.addActionListener(this);
-		this.menuItemLoadSC.addActionListener(this);
-		this.menuItemLoadSCCities.addActionListener(this);
-		this.menuItemLoadShp.addActionListener(this);
-		this.menuItemLoadCartogram.addActionListener(this);
-		this.menuItemLoadBackgroundShape.addActionListener(this);
-		this.menuItemLoadSCBackgroundShape.addActionListener(this);
-		this.menuItemLoadStates.addActionListener(this);
-		this.menuItemOpenLayout.addActionListener(this);
-		this.menuItemSaveLayout.addActionListener(this);
-		this.menuItemRemoveAllTools.addActionListener(this);
-		this.menuItemHelp.addActionListener(this);
-		this.menuItemEnableCollaboration.addActionListener(this);
-		this.menuItemDisableCollaboration.addActionListener(this);
-		this.menuItemConnect.addActionListener(this);
-		this.menuItemDisconnect.addActionListener(this);
-		this.menuItemDisableCollaboration.setEnabled(false);
-		this.menuItemConnect.setEnabled(false);
-		this.menuItemDisconnect.setEnabled(false);
-		this.menuItemSaveWholeImageToFile.addActionListener(this);
-		this.menuItemSaveSelectedWindowToFile.addActionListener(this);
-		this.menuItemCopyApplicationToClipboard.addActionListener(this);
-		this.menuItemCopySelectedWindowToClipboard.addActionListener(this);
+		menuItemAboutGeoVista.addActionListener(this);
+		menuItemAboutGeoviz.addActionListener(this);
+		menuItemExit.addActionListener(this);
+		menuItemLoadSC.addActionListener(this);
+		menuItemLoadSCCities.addActionListener(this);
+		menuItemLoadShp.addActionListener(this);
+		menuItemLoadCartogram.addActionListener(this);
+		menuItemLoadBackgroundShape.addActionListener(this);
+		menuItemLoadSCBackgroundShape.addActionListener(this);
+		menuItemLoadStates.addActionListener(this);
+		menuItemOpenLayout.addActionListener(this);
+		menuItemSaveLayout.addActionListener(this);
+		menuItemRemoveAllTools.addActionListener(this);
+		menuItemHelp.addActionListener(this);
+		menuItemEnableCollaboration.addActionListener(this);
+		menuItemDisableCollaboration.addActionListener(this);
+		menuItemConnect.addActionListener(this);
+		menuItemDisconnect.addActionListener(this);
+		menuItemDisableCollaboration.setEnabled(false);
+		menuItemConnect.setEnabled(false);
+		menuItemDisconnect.setEnabled(false);
+		menuItemSaveWholeImageToFile.addActionListener(this);
+		menuItemSaveSelectedWindowToFile.addActionListener(this);
+		menuItemCopyApplicationToClipboard.addActionListener(this);
+		menuItemCopySelectedWindowToClipboard.addActionListener(this);
 
 		// components are organized by dimension of analysis
 		// then by commonality of usage
@@ -689,7 +692,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(VariablePicker.class);
 		addToolToMenu(SpreadSheetBean.class);
 		addToolToMenu(VariableTransformer.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// univariate data viz
 		addToolToMenu(SingleHistogram.class);
@@ -697,12 +700,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// addToolToMenu(SpaceFill.class);
 		addToolToMenu(SonicClassifier.class);
 		addToolToMenu(GeoMapCartogram.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// bivariate data viz
 		addToolToMenu(SingleScatterPlot.class);
 		addToolToMenu(GeoMap.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// multivaraite data viz
 		addToolToMenu(LinkGraph.class);
@@ -712,12 +715,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(RadViz.class);
 		// addToolToMenu(CartogramAndScatterplotMatrix.class);
 		// addToolToMenu(CartogramMatrix.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// tools that operate on variables
 		addToolToMenu(PCAViz.class);
 		addToolToMenu(SubspaceLinkGraph.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// matrix tools
 		// addToolToMenu(TreeMap.class);
@@ -725,18 +728,18 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(TreemapAndScatterplotMatrix.class);
 		addToolToMenu(MapScatterplotTreemapMatrix.class);
 		addToolToMenu(MapMatrix.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// dynamic tools
 		addToolToMenu(SelectionAnimator.class);
 		addToolToMenu(IndicationAnimator.class);
 		addToolToMenu(ConditionManager.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// Spatial analysis tools
 		addToolToMenu(MoranMap.class);
 		addToolToMenu(SaTScan.class);
-		this.menuAddTool.addSeparator();
+		menuAddTool.addSeparator();
 
 		// other...
 		// addToolToMenu(GeoJabber.class);
@@ -744,7 +747,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void init() throws Exception {
-		this.setJMenuBar(jMenuBar1);
+		setJMenuBar(jMenuBar1);
 		menuFile.setText("File");
 		menuItemLoadShp.setText("Load Shapefile from disk");
 		menuAddTool.setText("Add Tool");
@@ -821,15 +824,14 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	public static void main(String[] args) {
 
 		Logger logger = Logger.getLogger("geovista");
-		Logger mapLogger = Logger
-				.getLogger("geovista.geoviz.map.MapCanvas");
-		 logger.setLevel(Level.INFO);
+		Logger mapLogger = Logger.getLogger("geovista.geoviz.map.MapCanvas");
+		logger.setLevel(Level.FINEST);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();
 		// mng.addLogger(logger);
 		// mng.addLogger(mapLogger);
 		ConsoleHandler handler = new ConsoleHandler();
-		handler.setLevel(Level.FINEST);
+		handler.setLevel(Level.INFO);
 		logger.addHandler(handler);
 		mapLogger.addHandler(handler);
 		try {
@@ -854,8 +856,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 
 		try {
-			Class beanClass = Class
-					.forName("geovista.collaboration.GeoJabber");
+			Class beanClass = Class.forName("geovista.collaboration.GeoJabber");
 			Object beanInstance = beanClass.newInstance();
 			logger.finest("yahhh");
 			logger.finest("found a " + beanClass.getClass().getCanonicalName());
@@ -896,46 +897,33 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
-		
-/*     until we get jts in maven
-		String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
-		fileName2 = "C:\\data\\grants\\esda 07\\oe_data\\race1_00.shp";
-		ShapefileReader reader = new ShapefileReader();
-		DriverProperties dp = new DriverProperties(fileName2);
-		FeatureCollection featColl = null;
 
-		try {
-			featColl = reader.read(dp);
-		} catch (IllegalParametersException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		List<Feature> featList = featColl.getFeatures();
-
-		for (Feature feat : featList) {
-
-			Geometry geom = (Geometry) feat.getAttribute(0);
-			//System.out.println(geom.getClass().getName());
-
-			Java2DConverter converter = new Java2DConverter(new Viewport(app
-					.getGlassPane()));
-			try {
-				Shape shp = converter.toShape(geom);
-				Graphics g = app.desktop.getGraphics();
-				Graphics2D g2 = (Graphics2D) g;
-				g2.setColor(Color.yellow);
-				g2.fill(shp);
-			} catch (NoninvertibleTransformException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-*/
+		/*
+		 * until we get jts in maven String fileName2 =
+		 * "C:\\data\\grants\\nevac\\crimes\\cri.shp"; fileName2 =
+		 * "C:\\data\\grants\\esda 07\\oe_data\\race1_00.shp"; ShapefileReader
+		 * reader = new ShapefileReader(); DriverProperties dp = new
+		 * DriverProperties(fileName2); FeatureCollection featColl = null;
+		 * 
+		 * try { featColl = reader.read(dp); } catch (IllegalParametersException
+		 * e) { // TODO Auto-generated catch block e.printStackTrace(); } catch
+		 * (Exception e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 * 
+		 * List<Feature> featList = featColl.getFeatures();
+		 * 
+		 * for (Feature feat : featList) {
+		 * 
+		 * Geometry geom = (Geometry) feat.getAttribute(0);
+		 * //System.out.println(geom.getClass().getName());
+		 * 
+		 * Java2DConverter converter = new Java2DConverter(new Viewport(app
+		 * .getGlassPane())); try { Shape shp = converter.toShape(geom);
+		 * Graphics g = app.desktop.getGraphics(); Graphics2D g2 = (Graphics2D)
+		 * g; g2.setColor(Color.yellow); g2.fill(shp); } catch
+		 * (NoninvertibleTransformException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); } }
+		 */
 	}
 
 	public ToolkitBeanSet getTBeanSet() {
@@ -944,6 +932,43 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	public void setTBeanSet(ToolkitBeanSet beanSet) {
 		tBeanSet = beanSet;
+	}
+
+	public void internalFrameActivated(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameClosed(InternalFrameEvent arg0) {
+		// no-op
+	}
+
+	public void internalFrameClosing(InternalFrameEvent arg0) {
+		JInternalFrame iFrame = arg0.getInternalFrame();
+		ToolkitBean tBean = tBeanSet.getToolkitBean(iFrame);
+
+		deleteBean(tBean);
+
+	}
+
+	public void internalFrameDeactivated(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameDeiconified(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameIconified(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameOpened(InternalFrameEvent arg0) {
+		// no-op
+
 	}
 
 }

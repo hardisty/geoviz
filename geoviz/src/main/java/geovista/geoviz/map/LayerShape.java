@@ -23,6 +23,10 @@ package geovista.geoviz.map;
 
 // import geovista.common.data.DataSetForApps;
 
+import geovista.common.ui.Fisheyes;
+import geovista.symbolization.ColorInterpolator;
+import geovista.symbolization.glyph.Glyph;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -40,10 +44,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import geovista.common.ui.Fisheyes;
-import geovista.symbolization.ColorInterpolator;
-import geovista.symbolization.glyph.Glyph;
 
 /**
  * Layer and its subclasses are responsible for rendering spatial data, using
@@ -97,8 +97,8 @@ public abstract class LayerShape {
 	protected transient Color colorNotInStudyArea = Color.black;
 	protected transient Color colorLine = Color.gray;
 	protected transient Color colorAuxLine = new Color(232, 232, 191); // kind
-	protected transient Color colorBlur = new Color(128, 128, 128, 0);																	// of
-																		// tan
+	protected transient Color colorBlur = new Color(128, 128, 128, 0); // of
+	// tan
 	protected transient Color colorBackground = Color.white;
 	protected transient float defaultStrokeWidth;
 	protected transient Stroke defaultStroke;
@@ -108,7 +108,7 @@ public abstract class LayerShape {
 	protected transient TexturePaint indicationTexture;
 	protected boolean isAuxiliary = false;
 	protected transient float[] spatialDataArea; // area of spatial data in
-													// pixels
+	// pixels
 	transient Fisheyes fisheyes;
 	transient boolean colorsRecieved = false;
 	transient boolean selectionExists = false;
@@ -118,9 +118,9 @@ public abstract class LayerShape {
 	final static Logger logger = Logger.getLogger(LayerShape.class.getName());
 
 	public LayerShape() {
-		this.indication = Integer.MIN_VALUE;
-		this.selectedObservations = new int[0];
-		this.xform = new AffineTransform();
+		indication = Integer.MIN_VALUE;
+		selectedObservations = new int[0];
+		xform = new AffineTransform();
 		defaultStroke = new BasicStroke(1f);
 		selectionStroke = new BasicStroke(2f);
 		deselectionStroke = new BasicStroke(2f);
@@ -139,27 +139,27 @@ public abstract class LayerShape {
 		Color clearBlack = new Color(0, 0, 0, 0);
 		indG2.setColor(clearBlack);
 		indG2.fill(indRect);
-		indG2.setColor(this.colorIndication);
+		indG2.setColor(colorIndication);
 		indG2.drawLine(0, texSize, texSize, 0);
-		this.indicationTexture = new TexturePaint(indBuff, indRect);
+		indicationTexture = new TexturePaint(indBuff, indRect);
 
 	}
 
 	private void initColors() {
-		this.objectColors = new Color[spatialData.length];
+		objectColors = new Color[spatialData.length];
 
 		for (int i = 0; i < objectColors.length; i++) {
 			objectColors[i] = Color.yellow;
 		}
 
-		this.conditionArray = new int[spatialData.length];
+		conditionArray = new int[spatialData.length];
 	}
 
 	public Point findCentroid(int obs) {
-		if (this.spatialData == null || this.spatialData[obs] == null){
+		if (spatialData == null || spatialData[obs] == null) {
 			return null;
 		}
-		Shape s = this.spatialData[obs];
+		Shape s = spatialData[obs];
 
 		// here's an inaccurate but fast algorithm. Todo: replace with something
 		// more accurate but also fast.
@@ -184,27 +184,25 @@ public abstract class LayerShape {
 		 * new int[25]; int x = 0; int y = 0; int prevX = 0; int prevY = 0; int
 		 * whichShape = 0; int numSkipped = 0;
 		 * logger.finest(spatialData.length); for (int i = 0; i <
-		 * spatialData.length; i++) { logger.finest(i); //special thing:
-		 * if points are identical to previous points, we skip 'em PathIterator
-		 * pi = spatialData[i].getPathIterator(new AffineTransform()); int
-		 * numPolys = 0; while (!pi.isDone()) { float[] coords = new float[6];
-		 * int segType = pi.currentSegment(coords); x = (int)coords[0]; y =
-		 * (int)coords[1]; if (segType == PathIterator.SEG_MOVETO) { x =
-		 * Integer.MAX_VALUE; y = Integer.MAX_VALUE; numPolys++;
-		 * numPoints[numPolys] = 0; } if (x == prevX && y == prevY) {
-		 * numSkipped++; } else { numPoints[numPolys]++; prevX = x; prevY = y; }
-		 * pi.next(); }//wend pi = spatialData[i].getPathIterator(new
-		 * AffineTransform()); logger.finest(observationNames[i]);
-		 * logger.finest(numPolys); numPolys = 0; while (!pi.isDone()) {
-		 * float[] coords = new float[6]; int segType =
+		 * spatialData.length; i++) { logger.finest(i); //special thing: if
+		 * points are identical to previous points, we skip 'em PathIterator pi =
+		 * spatialData[i].getPathIterator(new AffineTransform()); int numPolys =
+		 * 0; while (!pi.isDone()) { float[] coords = new float[6]; int segType =
 		 * pi.currentSegment(coords); x = (int)coords[0]; y = (int)coords[1]; if
 		 * (segType == PathIterator.SEG_MOVETO) { x = Integer.MAX_VALUE; y =
-		 * Integer.MAX_VALUE; numPolys++;
-		 * logger.finest(numPoints[numPolys]); } if (x == prevX && y ==
-		 * prevY) { numSkipped++; } else { logger.finest(coords[0] +","+
-		 * coords[1]); prevX = x; prevY = y; } pi.next(); }//wend } //next
-		 * spatialData logger.finest("num skipped " + numSkipped); } //end
-		 * if aux //end special stuff for chaomei
+		 * Integer.MAX_VALUE; numPolys++; numPoints[numPolys] = 0; } if (x ==
+		 * prevX && y == prevY) { numSkipped++; } else { numPoints[numPolys]++;
+		 * prevX = x; prevY = y; } pi.next(); }//wend pi =
+		 * spatialData[i].getPathIterator(new AffineTransform());
+		 * logger.finest(observationNames[i]); logger.finest(numPolys); numPolys =
+		 * 0; while (!pi.isDone()) { float[] coords = new float[6]; int segType =
+		 * pi.currentSegment(coords); x = (int)coords[0]; y = (int)coords[1]; if
+		 * (segType == PathIterator.SEG_MOVETO) { x = Integer.MAX_VALUE; y =
+		 * Integer.MAX_VALUE; numPolys++; logger.finest(numPoints[numPolys]); }
+		 * if (x == prevX && y == prevY) { numSkipped++; } else {
+		 * logger.finest(coords[0] +","+ coords[1]); prevX = x; prevY = y; }
+		 * pi.next(); }//wend } //next spatialData logger.finest("num skipped " +
+		 * numSkipped); } //end if aux //end special stuff for chaomei
 		 */
 		this.spatialData = spatialData;
 
@@ -219,8 +217,8 @@ public abstract class LayerShape {
 			classification = new int[spatialData.length];
 		}
 
-		if ((objectColors == null) || (this.objectColors.length != numObs)) {
-			this.initColors();
+		if ((objectColors == null) || (objectColors.length != numObs)) {
+			initColors();
 		}
 
 		if ((selectedObservationsFullIndex == null)
@@ -243,11 +241,11 @@ public abstract class LayerShape {
 	}
 
 	public Shape[] getSpatialData() {
-		return this.spatialData;
+		return spatialData;
 	}
 
 	public Color[] getColors() {
-		return this.objectColors;
+		return objectColors;
 	}
 
 	public void setBoundingBoxes(Rectangle[] boundingBoxes) {
@@ -272,16 +270,16 @@ public abstract class LayerShape {
 
 	public void setGlyphs(Glyph[] glyphs) {
 		this.glyphs = glyphs;
-		this.locateGlyphs();
+		locateGlyphs();
 	}
 
 	private void locateGlyphs() {
-		if (this.glyphs == null) {
+		if (glyphs == null) {
 			return;
 		}
-		for (int i = 0; i < this.glyphs.length; i++) {
+		for (int i = 0; i < glyphs.length; i++) {
 			Glyph gly = glyphs[i];
-			gly.setLocation(this.findCentroid(i));
+			gly.setLocation(findCentroid(i));
 		}
 	}
 
@@ -303,19 +301,18 @@ public abstract class LayerShape {
 		}
 
 		// set correct selection values in full index
-		for (int i = 0; i < selectedObservations.length; i++) {
-			int obs = selectedObservations[i];
+		for (int obs : selectedObservations) {
 			selectedObservationsFullIndex[obs] = STATUS_SELECTED;
 		}
 		// set selectionExists for rendering
 		if (selectedObservations.length > 0) {
-			this.selectionExists = true;
+			selectionExists = true;
 		} else {
-			this.selectionExists = false;
+			selectionExists = false;
 		}
 
 		this.selectedObservations = selectedObservations; // this happens
-															// anyway
+		// anyway
 
 		// copy current selection values to the old one.
 		if (selectedObservationsOld.length != selectedObservations.length) {
@@ -329,7 +326,7 @@ public abstract class LayerShape {
 	}
 
 	public int[] getSelectedObservations() {
-		return this.selectedObservations;
+		return selectedObservations;
 	}
 
 	public void setIsAuxiliary(boolean isAuxiliary) {
@@ -340,25 +337,25 @@ public abstract class LayerShape {
 		int blue = Color.darkGray.getBlue();
 		int alpha = 200;
 		Color transGray = new Color(red, green, blue, alpha);
-		this.colorLine = transGray;
-		this.defaultStroke = new BasicStroke(2f);
+		colorLine = transGray;
+		defaultStroke = new BasicStroke(2f);
 	}
 
 	public void setParentSize(int height, int width) {
 		findStrokeSize(height, width);
 
-		this.locateGlyphs();
+		locateGlyphs();
 	}
 
 	private void findStrokeSize(int height, int width) {
-		if (this.spatialData == null) {
+		if (spatialData == null) {
 			return;
 		}
 		int shapeCount = 0;
 		Rectangle currBox = new Rectangle(0, 0, width, height);
 
-		for (int i = 0; i < this.spatialData.length; i++) {
-			if (currBox.intersects(spatialData[i].getBounds())) {
+		for (Shape element : spatialData) {
+			if (currBox.intersects(element.getBounds())) {
 				shapeCount++;
 			}
 		}
@@ -367,14 +364,14 @@ public abstract class LayerShape {
 			return;
 		}
 
-		this.spatialDataArea = new float[spatialData.length];
+		spatialDataArea = new float[spatialData.length];
 
 		int counter = 0;
 
-		for (int i = 0; i < spatialData.length; i++) {
-			if (currBox.intersects(spatialData[i].getBounds2D())) {
-				float area = (float) spatialData[i].getBounds().getWidth()
-						* (float) spatialData[i].getBounds().getHeight();
+		for (Shape element : spatialData) {
+			if (currBox.intersects(element.getBounds2D())) {
+				float area = (float) element.getBounds().getWidth()
+						* (float) element.getBounds().getHeight();
 				spatialDataArea[counter] = area;
 
 				logger.finest("area = " + area);
@@ -404,34 +401,34 @@ public abstract class LayerShape {
 		}
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("strokeWidth = " + strokeWidth);
-			
-		}
-		this.defaultStroke = new BasicStroke(strokeWidth);
 
-		this.defaultStrokeWidth = strokeWidth;
+		}
+		defaultStroke = new BasicStroke(strokeWidth);
+
+		defaultStrokeWidth = strokeWidth;
 		if (strokeWidth < 1) { // start with at least one for finding
-								// selectionStroke
+			// selectionStroke
 			strokeWidth = 1;
 		}
-		this.selectionStroke = new BasicStroke(strokeWidth * 1.5f,
+		selectionStroke = new BasicStroke(strokeWidth * 1.5f,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	}
 
 	public void setOriginalSpatialData(Shape[] spatialData) {
-		this.originalSpatialData = spatialData;
+		originalSpatialData = spatialData;
 	}
 
 	public Shape[] getOriginalSpatialData() {
-		return this.originalSpatialData;
+		return originalSpatialData;
 	}
 
 	public boolean getIsAuxiliary() {
-		return this.isAuxiliary;
+		return isAuxiliary;
 	}
 
 	public void setObjectColors(Color[] objectColors) {
 		this.objectColors = objectColors;
-		this.colorsRecieved = true;
+		colorsRecieved = true;
 	}
 
 	public void setData(double[][] data) {
@@ -452,12 +449,12 @@ public abstract class LayerShape {
 
 	public void setColorSelection(Color colorSelection) {
 		this.colorSelection = colorSelection;
-		this.makeTextures();
+		makeTextures();
 	}
 
 	public void setColorIndication(Color colorIndication) {
 		this.colorIndication = colorIndication;
-		this.makeTextures();
+		makeTextures();
 	}
 
 	public void setColorNull(Color colorNull) {
@@ -487,7 +484,7 @@ public abstract class LayerShape {
 	 * @param conditionArray
 	 */
 	public int[] getConditionArray() {
-		return this.conditionArray;
+		return conditionArray;
 	}
 
 	// end accessors
@@ -505,11 +502,11 @@ public abstract class LayerShape {
 	public int[] findSelection(Rectangle2D selBox) {
 
 		Vector selObs = new Vector();
-		for (int i = 0; i < this.spatialData.length; i++) {
-			Rectangle shpBox = this.spatialData[i].getBounds();
+		for (int i = 0; i < spatialData.length; i++) {
+			Rectangle shpBox = spatialData[i].getBounds();
 			if (selBox.intersects(shpBox)) {
-				if (this.spatialData[i].contains(selBox)
-						|| this.spatialData[i].intersects(selBox)) {
+				if (spatialData[i].contains(selBox)
+						|| spatialData[i].intersects(selBox)) {
 					selObs.add(new Integer(i));
 				} // end if really intersects
 			} // end if rough intersects
@@ -524,10 +521,11 @@ public abstract class LayerShape {
 		return selObsInt;
 	}
 
+	@Override
 	public String toString() {
 		String s = this.getClass().toString();
 
-		if (this.spatialData == null) {
+		if (spatialData == null) {
 			s = s + ", spatialData == null.";
 		} else {
 			s = s + ", spatialData.length = " + spatialData.length + ".";
@@ -535,43 +533,47 @@ public abstract class LayerShape {
 
 		return s;
 	}
-	void renderBackground(Graphics2D g2){
-		if (this.objectColors == null) {
+
+	void renderBackground(Graphics2D g2) {
+		if (objectColors == null) {
 			return;
 		}
 		for (int path = 0; path < spatialData.length; path++) {
-			this.renderBackgroundObservation(path, g2);
+			renderBackgroundObservation(path, g2);
 		}
 	}
-	private void renderBackgroundObservation(int obs, Graphics2D g2){
+
+	private void renderBackgroundObservation(int obs, Graphics2D g2) {
 		if (obs < 0) {
 			return;
 		}
-		if (this.objectColors == null || this.objectColors.length <= obs) {
+		if (objectColors == null || objectColors.length <= obs) {
 			return;
 		}
 		Shape shp = spatialData[obs];
 
-		Color color = this.objectColors[obs];
-		
-		if (this.colorBlur.getAlpha() > 0){
-		Color newColor = ColorInterpolator.mixColorsRGB(this.colorBlur, color);	
-		g2.setColor(newColor);
+		Color color = objectColors[obs];
+		if (color == null) {
+			g2.setColor(colorBlur);
+		} else if (colorBlur.getAlpha() > 0) {
+			Color newColor = ColorInterpolator.mixColorsRGB(colorBlur, color);
+			g2.setColor(newColor);
 		} else {
-		g2.setColor(color);
+			g2.setColor(color);
 		}
 		g2.fill(shp);
-		if (this.defaultStrokeWidth >= 0.1f) {
-			g2.setColor(this.colorLine);
+		if (defaultStrokeWidth >= 0.1f) {
+			g2.setColor(colorLine);
 			g2.draw(shp);
 		}
-		
+
 	}
+
 	public void renderObservation(int obs, Graphics2D g2) {
 		if (obs < 0) {
 			return;
 		}
-		if (this.objectColors == null || this.objectColors.length <= obs) {
+		if (objectColors == null || objectColors.length <= obs) {
 			return;
 		}
 		Shape shp = spatialData[obs];
@@ -580,32 +582,31 @@ public abstract class LayerShape {
 			shp = fisheyes.transform(shp);
 
 		}
-		Color color = this.objectColors[obs];
+		Color color = objectColors[obs];
 		if (obs == indication) {
 			renderIndication(g2, shp, color);
 
 		}
 		if (conditionArray[obs] > -1) {
-			g2.setStroke(this.defaultStroke);
-			if (this.selectedObservationsFullIndex[obs] == STATUS_SELECTED
-					|| !this.selectionExists) {
+			g2.setStroke(defaultStroke);
+			if (selectedObservationsFullIndex[obs] == STATUS_SELECTED
+					|| !selectionExists) {
 
-				
 				g2.setColor(color);
-				if (this.textures != null && this.textures[obs] != null) {
+				if (textures != null && textures[obs] != null) {
 					g2.setPaint(textures[obs]);
 				}
 				g2.fill(shp);
 				renderGlyph(obs, g2);
 			}
 
-			if (this.defaultStrokeWidth >= 0.1f) {
-				g2.setColor(this.colorLine);
+			if (defaultStrokeWidth >= 0.1f) {
+				g2.setColor(colorLine);
 				g2.draw(shp);
 			}
 		} // end if condition
-		//glyphs go on top
-		if (obs == indication) {			
+		// glyphs go on top
+		if (obs == indication) {
 			renderGlyph(obs, g2);
 		}
 
@@ -613,71 +614,73 @@ public abstract class LayerShape {
 
 	private void renderIndication(Graphics2D g2, Shape shp, Color color) {
 		Stroke tempStroke = g2.getStroke();
-		
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		BasicStroke secondStroke = new BasicStroke(6f,BasicStroke.CAP_ROUND,BasicStroke.CAP_ROUND);
-		
-		BasicStroke underStroke = new BasicStroke(50f,BasicStroke.CAP_ROUND,BasicStroke.CAP_ROUND);
-		g2.setColor(new Color(128,128,128,128));
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		BasicStroke secondStroke = new BasicStroke(6f, BasicStroke.CAP_ROUND,
+				BasicStroke.CAP_ROUND);
+
+		BasicStroke underStroke = new BasicStroke(50f, BasicStroke.CAP_ROUND,
+				BasicStroke.CAP_ROUND);
+		g2.setColor(new Color(128, 128, 128, 128));
 		g2.setStroke(underStroke);
 		g2.draw(shp);
-		
+
 		g2.setStroke(secondStroke);
 		g2.setColor(Color.black);
 		g2.draw(shp);
-		
+
 		g2.setColor(color);
 		g2.fill(shp);
 		g2.setStroke(tempStroke);
-		
 
 	}
 
 	public void render(Graphics2D g2) {
 
-		if (this.objectColors == null) {
+		if (objectColors == null) {
 			logger.finest("LayerShape, render called on null objectColors");
 			return;
 		}
 
 		if (g2 == null) {
-			throw new IllegalArgumentException(this.toString()
+			throw new IllegalArgumentException(toString()
 					+ " Null graphics passed in to render(Graphics2D).");
 		}
 
-		if (this.isAuxiliary) {
+		if (isAuxiliary) {
 			// XXX this happens too often, that is, more than once upon load.
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("rendering auxiliary layer....shape. ");
 			}
 			try {
-				this.renderAux(g2);
+				renderAux(g2);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 			return;
 		}
 		// skip indication
-		int tempInd = this.indication;
-		this.indication = -1;
+		int tempInd = indication;
+		indication = -1;
 		for (int path = 0; path < spatialData.length; path++) {
-			this.renderObservation(path, g2);
+			renderObservation(path, g2);
 		}
-		//this.renderGlyphs(g2);
-		this.indication = tempInd;
+		// this.renderGlyphs(g2);
+		indication = tempInd;
 
 	} // end method
 
 	private void renderGlyph(int obs, Graphics2D g2) {
-		if (this.spatialData == null) {
+		if (spatialData == null) {
 			return;
 		}
 		Glyph glyph = null;
-		if (this.glyphs != null) {
-			if (this.glyphs[obs] != null) {
+		if (glyphs != null) {
+			if (glyphs[obs] != null) {
 				glyph = glyphs[obs];
 				Color col = glyph.getFillColor();
-				//glyph.setFillColor(this.colorIndication);
+				// glyph.setFillColor(this.colorIndication);
 				glyph.draw(g2);
 				glyph.setFillColor(col);
 
@@ -687,14 +690,14 @@ public abstract class LayerShape {
 
 	@SuppressWarnings("unused")
 	private void renderGlyphs(Graphics2D g2) {
-		if (this.spatialData == null) {
+		if (spatialData == null) {
 			return;
 		}
 		Glyph glyph = null;
-		if (this.glyphs != null) {
-			for (int i = 0; i < this.glyphs.length; i++) {
-				if (this.glyphs[i] != null) {
-					glyph = glyphs[i];
+		if (glyphs != null) {
+			for (Glyph element : glyphs) {
+				if (element != null) {
+					glyph = element;
 					glyph.draw(g2);
 				}
 			}
@@ -715,8 +718,8 @@ public abstract class LayerShape {
 
 		g2.setRenderingHints(qualityHints);
 		// if (this.defaultStrokeWidth >= 0.1f) {
-		g2.setColor(this.colorAuxLine);
-		g2.setStroke(this.selectionStroke);
+		g2.setColor(colorAuxLine);
+		g2.setStroke(selectionStroke);
 
 		if (spatialData != null) {
 			int numPaths = spatialData.length;
@@ -727,7 +730,7 @@ public abstract class LayerShape {
 					s = fisheyes.transform(s);
 				}
 
-				if (this.fillAux) {
+				if (fillAux) {
 					g2.fill(s);
 				} else {
 					g2.draw(s);
@@ -750,11 +753,11 @@ public abstract class LayerShape {
 		}
 		if (rgb > 300) {
 			// its close to white, so
-			this.colorLine = Color.lightGray;
+			colorLine = Color.lightGray;
 		} else {
-			this.colorLine = Color.darkGray;
+			colorLine = Color.darkGray;
 		}
-		this.makeTextures();
+		makeTextures();
 	}
 
 	public void setFillAux(boolean fillAux) {

@@ -33,7 +33,6 @@ class SocketServer {
 
 	public static void main(String args[]) throws Exception {
 
-		String clientSentence;
 		ServerSocket welcomeSocket = null;
 
 		try {
@@ -59,7 +58,6 @@ class SocketServer {
 					connectionSocket.getOutputStream());
 			System.out.println(inFromClient.readLine());
 
-			int data;
 			int totalSizeTransferred = 0;
 			int totalSizeRead;
 			int PACKET_SIZE = 20480;
