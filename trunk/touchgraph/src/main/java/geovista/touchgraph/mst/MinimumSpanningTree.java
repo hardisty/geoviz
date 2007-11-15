@@ -11,26 +11,24 @@ import java.util.Vector;
 
 /**
  * Title: Minimum Spanning Tree Description: Uses Kruskal's algorithm to
- * calculate a MST from a graph. Copyright: Copyright (c) 2002 Company: 
+ * calculate a MST from a graph. Copyright: Copyright (c) 2002 Company:
  * 
  * @author Markus Svensson
  * @version 1.2
  */
 
 public class MinimumSpanningTree {
-	private File file;
+	private final File file;
 
-	private int[][] edges;
+	private final int[][] edges;
 
 	private int numOfVertices = 0;
 
 	private Vector mst = null;
 
-	private int[] cluster;
+	private final int[] cluster;
 
 	private int totalWeight;
-
-	private PriorityQue que;
 
 	/**
 	 * Constructor
@@ -39,21 +37,21 @@ public class MinimumSpanningTree {
 	 *            name of the file containing the graph.
 	 */
 	public MinimumSpanningTree(String fileName) {
-		this.file = new File(fileName);
-		this.edges = this.readFromFile(this.file);
-		for (int i = 0; i < this.edges.length; i++) {
-			if (this.edges[i][0] > this.numOfVertices) {
-				this.numOfVertices = this.edges[i][0];
+		file = new File(fileName);
+		edges = readFromFile(file);
+		for (int[] element : edges) {
+			if (element[0] > numOfVertices) {
+				numOfVertices = element[0];
 			}
-			if (this.edges[i][1] > this.numOfVertices) {
-				this.numOfVertices = this.edges[i][1];
+			if (element[1] > numOfVertices) {
+				numOfVertices = element[1];
 			}
 		}
-		this.mst = new Vector(10, 5);
-		this.que = new PriorityQue(this.edges.length);
-		this.cluster = new int[this.numOfVertices];
-		for (int j = 0; j < this.numOfVertices; j++) {
-			this.cluster[j] = j + 1;
+		mst = new Vector(10, 5);
+
+		cluster = new int[numOfVertices];
+		for (int j = 0; j < numOfVertices; j++) {
+			cluster[j] = j + 1;
 		}
 	}
 
@@ -65,20 +63,20 @@ public class MinimumSpanningTree {
 	 */
 	public MinimumSpanningTree(File file) {
 		this.file = file;
-		this.edges = this.readFromFile(file);
-		for (int i = 0; i < this.edges.length; i++) {
-			if (this.edges[i][0] > this.numOfVertices) {
-				this.numOfVertices = this.edges[i][0];
+		edges = readFromFile(file);
+		for (int[] element : edges) {
+			if (element[0] > numOfVertices) {
+				numOfVertices = element[0];
 			}
-			if (this.edges[i][1] > this.numOfVertices) {
-				this.numOfVertices = this.edges[i][1];
+			if (element[1] > numOfVertices) {
+				numOfVertices = element[1];
 			}
 		}
-		this.mst = new Vector(10, 5);
-		this.que = new PriorityQue(this.edges.length);
-		this.cluster = new int[this.numOfVertices];
-		for (int j = 0; j < this.numOfVertices; j++) {
-			this.cluster[j] = j + 1;
+		mst = new Vector(10, 5);
+
+		cluster = new int[numOfVertices];
+		for (int j = 0; j < numOfVertices; j++) {
+			cluster[j] = j + 1;
 		}
 	}
 
@@ -87,7 +85,8 @@ public class MinimumSpanningTree {
 	 * 
 	 * @return The MST as a two-dimensional array.
 	 */
-	public static ArrayList<MSTEdge> kruskal(int[] fromEdge, int[] toEdge, double[] weights, int numVertices) {
+	public static ArrayList<MSTEdge> kruskal(int[] fromEdge, int[] toEdge,
+			double[] weights, int numVertices) {
 		int[] cluster = new int[numVertices];
 		double totalWeight = 0;
 		ArrayList<MSTEdge> mst = null;
@@ -125,14 +124,14 @@ public class MinimumSpanningTree {
 		String returnString;
 
 		returnString = (res.getString("Processed_File")
-				+ this.file.getAbsolutePath() + res.getString("Possible_Tree"));
-		for (int i = 0; i < this.mst.size(); i++) {
-			MSTEdge temp = (MSTEdge) this.mst.get(i);
+				+ file.getAbsolutePath() + res.getString("Possible_Tree"));
+		for (int i = 0; i < mst.size(); i++) {
+			MSTEdge temp = (MSTEdge) mst.get(i);
 			returnString = returnString + (temp.toString(res));
 		}
 		returnString = (returnString
 				+ "\n-------------------------------------------------"
-				+ res.getString("Total_Weight") + this.totalWeight + "\n\n");
+				+ res.getString("Total_Weight") + totalWeight + "\n\n");
 		return returnString;
 	}
 
@@ -171,6 +170,6 @@ public class MinimumSpanningTree {
 	 * @return The vector containing the MST
 	 */
 	public Vector getVector() {
-		return this.mst;
+		return mst;
 	}
 }

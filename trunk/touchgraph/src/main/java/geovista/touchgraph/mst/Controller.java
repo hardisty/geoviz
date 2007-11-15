@@ -1,5 +1,8 @@
 package geovista.touchgraph.mst;
 
+import geovista.touchgraph.mst.gui.GraphDisplay;
+import geovista.touchgraph.mst.gui.MainGUI;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,10 +10,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
-
-import geovista.touchgraph.mst.gui.GraphDisplay;
-import geovista.touchgraph.mst.gui.MainGUI;
-
 
 /**
  * Title: Controller Description: Controll class for the MST program Copyright:
@@ -40,16 +39,13 @@ public class Controller extends Thread {
 
 	private String fileName;
 
-	private String[] args;
+	private final String[] args;
 
 	private GraphDisplay drawFrame;
 
-	private MainGUI gui;
-
+	private final MainGUI gui;
 
 	private File[] fileArray;
-
-
 
 	private int command = 0;
 
@@ -68,23 +64,23 @@ public class Controller extends Thread {
 	 *            arguments of the program
 	 */
 	public Controller(String[] args) {
-		this.gui = new MainGUI();
+		gui = new MainGUI();
 		// drawFrame = new GraphDisplay();
 		// drawFrame.setVisible(true);
-		this.locale = Locale.getDefault();
-		
-		//this.gui.changeStrings(this.res);
-		this.gui.setVisible(true);
+		locale = Locale.getDefault();
+
+		// this.gui.changeStrings(this.res);
+		gui.setVisible(true);
 		this.args = args;
-		this.run();
+		run();
 	}
 
 	/**
 	 * Show the about dialog
 	 */
 	private void about() {
-		
-		this.process = false;
+
+		process = false;
 	}
 
 	/**
@@ -99,7 +95,7 @@ public class Controller extends Thread {
 	 */
 	private void help() {
 
-		this.process = false;
+		process = false;
 	}
 
 	/**
@@ -108,18 +104,18 @@ public class Controller extends Thread {
 	 * @return The file array
 	 */
 	private File[] fileLoader() {
-		this.gui.setStatusText(this.res.getString("Load_Status"));
+		gui.setStatusText(res.getString("Load_Status"));
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
 		chooser.setMultiSelectionEnabled(true);
 		chooser.setCurrentDirectory(new File("."));
-		int returnValue = chooser.showOpenDialog(this.gui);
+		int returnValue = chooser.showOpenDialog(gui);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			this.process = true;
+			process = true;
 			return chooser.getSelectedFiles();
 		} else {
-			this.gui.setStatusText(this.res.getString("Status_Waiting"));
-			this.process = false;
+			gui.setStatusText(res.getString("Status_Waiting"));
+			process = false;
 			return null;
 		}
 	}
@@ -128,111 +124,112 @@ public class Controller extends Thread {
 	 * Save the window contents to a file.
 	 */
 	private void writeFile() throws IOException {
-		this.gui.setStatusText(this.res.getString("Save_Status"));
+		gui.setStatusText(res.getString("Save_Status"));
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		chooser.setCurrentDirectory(new File("."));
-		int returnValue = chooser.showSaveDialog(this.gui);
+		int returnValue = chooser.showSaveDialog(gui);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			FileWriter writer = new FileWriter(file);
-			writer.write(this.gui.getString(), 0, this.gui.getString().length());
+			writer.write(gui.getString(), 0, gui.getString().length());
 			writer.flush();
 			writer.close();
 		} else {
-			this.gui.setStatusText(this.res.getString("Status_Waiting"));
+			gui.setStatusText(res.getString("Status_Waiting"));
 		}
-		this.process = false;
+		process = false;
 	}
 
 	/**
 	 * Change the language used in the application.
 	 */
 	private void changeLanguage() {
-		if (this.gui.getLanguage() == "EN") {
-			this.locale = new Locale("en", "US");
-		} else if (this.gui.getLanguage() == "SE") {
-			this.locale = new Locale("sv", "SE");
+		if (gui.getLanguage() == "EN") {
+			locale = new Locale("en", "US");
+		} else if (gui.getLanguage() == "SE") {
+			locale = new Locale("sv", "SE");
 		}
-		this.res = ResourceBundle.getBundle(
-				"geovista.touchgraph.mst.gui.language.MSTResource", this.locale);
-		this.gui.changeStrings(this.res);
-		this.process = false;
+		res = ResourceBundle.getBundle(
+				"geovista.touchgraph.mst.gui.language.MSTResource", locale);
+		gui.changeStrings(res);
+		process = false;
 	}
 
 	/**
 	 * Draw the last calculated MST
 	 */
 	private void draw() {
-		if (this.mst == null) {
+		if (mst == null) {
 			return;
 		}
-		this.drawFrame = new GraphDisplay(this.mst.getVector(), this.fileName);
-		this.drawFrame.setVisible(true);
-		this.process = false;
+		drawFrame = new GraphDisplay(mst.getVector(), fileName);
+		drawFrame.setVisible(true);
+		process = false;
 	}
 
 	/**
 	 * Run method for the controller thread
 	 */
+	@Override
 	public void run() {
-		if (this.args.length == 0) {
-			//this.gui.appendOutPutText(this.res.getString("Startup_Message"));
-			//this.gui.appendOutPutText(this.res.getString("Startup_Message_2"));
-			//this.gui.appendOutPutText(this.res.getString("Startup_Message_3"));
+		if (args.length == 0) {
+			// this.gui.appendOutPutText(this.res.getString("Startup_Message"));
+			// this.gui.appendOutPutText(this.res.getString("Startup_Message_2"));
+			// this.gui.appendOutPutText(this.res.getString("Startup_Message_3"));
 		} else {
-			for (int i = 0; i < this.args.length; i++) {
-				MinimumSpanningTree mst = new MinimumSpanningTree(this.args[i]);
-				mst.kruskal(null, null, null, i);
+			for (int i = 0; i < args.length; i++) {
+				MinimumSpanningTree mst = new MinimumSpanningTree(args[i]);
+				MinimumSpanningTree.kruskal(null, null, null, i);
 				@SuppressWarnings("unused")
-				String result = mst.printMST(this.res);
-				//this.gui.appendOutPutText(result);
+				String result = mst.printMST(res);
+				// this.gui.appendOutPutText(result);
 			}
 		}
 		while (true) {
-			//this.gui.setStatusText(this.res.getString("Status_Waiting"));
-			this.command = this.gui.waitForCommand();
-			if (this.command == this.LOAD_FILE) {
-				this.fileArray = this.fileLoader();
-				this.gui.resetCommand();
-			} else if (this.command == this.SAVE) {
+			// this.gui.setStatusText(this.res.getString("Status_Waiting"));
+			command = gui.waitForCommand();
+			if (command == LOAD_FILE) {
+				fileArray = fileLoader();
+				gui.resetCommand();
+			} else if (command == SAVE) {
 				try {
-					this.writeFile();
+					writeFile();
 				} catch (IOException ioe) {
-					this.gui.appendOutPutText(this.res.getString("Save_Failed"));
+					gui.appendOutPutText(res.getString("Save_Failed"));
 				} finally {
-					this.gui.resetCommand();
-					this.process = false;
+					gui.resetCommand();
+					process = false;
 				}
-			} else if (this.command == this.CLEAR) {
-				this.gui.clearOutput();
-				this.gui.resetCommand();
-			} else if (this.command == this.ABOUT) {
-				this.about();
-				this.gui.resetCommand();
-			} else if (this.command == this.HELP) {
-				this.help();
-				this.gui.resetCommand();
-			} else if (this.command == this.LANGUAGE) {
-				this.changeLanguage();
-				this.gui.resetCommand();
-			} else if (this.command == this.EXIT) {
-				this.quit();
-			} else if (this.command == this.DRAW) {
-				this.draw();
-				this.gui.resetCommand();
+			} else if (command == CLEAR) {
+				gui.clearOutput();
+				gui.resetCommand();
+			} else if (command == ABOUT) {
+				about();
+				gui.resetCommand();
+			} else if (command == HELP) {
+				help();
+				gui.resetCommand();
+			} else if (command == LANGUAGE) {
+				changeLanguage();
+				gui.resetCommand();
+			} else if (command == EXIT) {
+				quit();
+			} else if (command == DRAW) {
+				draw();
+				gui.resetCommand();
 			}
 
-			if (this.process == true) {
-				this.gui.setStatusText(this.res.getString("Processing_Status"));
-				for (int i = 0; i < this.fileArray.length; i++) {
-					this.mst = new MinimumSpanningTree(this.fileArray[i]);
-					this.mst.kruskal(null, null, null, i);
-					String result = this.mst.printMST(this.res);
-					this.gui.appendOutPutText(result);
-					this.fileName = this.fileArray[i].getAbsolutePath();
+			if (process == true) {
+				gui.setStatusText(res.getString("Processing_Status"));
+				for (int i = 0; i < fileArray.length; i++) {
+					mst = new MinimumSpanningTree(fileArray[i]);
+					MinimumSpanningTree.kruskal(null, null, null, i);
+					String result = mst.printMST(res);
+					gui.appendOutPutText(result);
+					fileName = fileArray[i].getAbsolutePath();
 				}
-				this.gui.setStatusText(this.res.getString("Done_Status"));
+				gui.setStatusText(res.getString("Done_Status"));
 			}
 		}
 	}

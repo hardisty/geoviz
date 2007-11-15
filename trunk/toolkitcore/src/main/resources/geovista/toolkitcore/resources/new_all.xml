@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GeoVizTool_BeansLayout dataSetFullName=""><bean index="0" xLocation="-1" yLocation="437" width="377" height="127" uniqueName="IndicationAnimator">geovista.animation.IndicationAnimator
+  </bean><bean index="1" xLocation="225" yLocation="225" width="349" height="390" uniqueName="SingleScatterPlot">geovista.matrix.scatterplot.SingleScatterPlot
+  </bean><bean index="2" xLocation="300" yLocation="300" width="505" height="510" uniqueName="RadViz">geovista.geoviz.radviz.RadViz
+  </bean><bean index="3" xLocation="175" yLocation="175" width="609" height="374" uniqueName="GeoMapUni">geovista.geoviz.map.GeoMapUni
+  </bean><bean index="4" xLocation="138" yLocation="1" width="400" height="400" uniqueName="StarPlot">geovista.geoviz.star.StarPlot
+  </bean><bean index="5" xLocation="390" yLocation="422" width="404" height="398" uniqueName="GeoMap">geovista.geoviz.map.GeoMap
+  </bean><bean index="6" xLocation="275" yLocation="275" width="350" height="100" uniqueName="SonicClassifier">geovista.sound.SonicClassifier
+  </bean><bean index="7" xLocation="150" yLocation="150" width="455" height="310" uniqueName="SingleHistogram">geovista.matrix.scatterplot.SingleHistogram
+  </bean><bean index="8" xLocation="200" yLocation="200" width="509" height="414" uniqueName="GeoMapCartogram">geovista.cartogram.GeoMapCartogram
+  </bean><bean index="9" xLocation="325" yLocation="325" width="305" height="310" uniqueName="MapAndScatterplotMatrix">geovista.matrix.MapAndScatterplotMatrix
+  </bean><bean index="10" xLocation="559" yLocation="17" width="463" height="397" uniqueName="StarPlotMap">geovista.geoviz.star.StarPlotMap
+  </bean><bean index="11" xLocation="0" yLocation="-1" width="133" height="418" uniqueName="VariablePicker">geovista.common.ui.VariablePicker
+  </bean><bean index="12" xLocation="125" yLocation="125" width="555" height="230" uniqueName="VariableTransformer">geovista.geoviz.spreadsheet.VariableTransformer
+  </bean><bean index="13" xLocation="250" yLocation="250" width="705" height="607" uniqueName="ParallelPlot">geovista.geoviz.parvis.ParallelPlot
+  </bean></GeoVizTool_BeansLayout>

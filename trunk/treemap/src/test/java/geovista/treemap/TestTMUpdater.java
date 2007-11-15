@@ -26,149 +26,137 @@
 
 package geovista.treemap;
 
+import geovista.treemap.tm.TMNode;
+import geovista.treemap.tm.TMUpdater;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import geovista.treemap.tm.TMNode;
-import geovista.treemap.tm.TMUpdater;
 
 /**
- * The TestTMUpdater is a JUnit test class
- * for testing the setting of TestTMUpdater in TMNode classes.
- *
+ * The TestTMUpdater is a JUnit test class for testing the setting of
+ * TestTMUpdater in TMNode classes.
+ * 
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @version 2.5
  */
-public class TestTMUpdater
-    extends TestCase {
+public class TestTMUpdater extends TestCase {
 
-    private TestNode          root   = null;
-    private TestNode          fold   = null;
-    private TestNode          file   = null;
-    private TMUpdater update = null;
+	private TestNode root = null;
+	private TestNode fold = null;
+	private TestNode file = null;
 
-        
-  /* --- Constructor --- */
+	/**
+	 * Constructor. Take the name of the test in parameter.
+	 * 
+	 * @param name
+	 *            the name of the test
+	 */
+	public TestTMUpdater(String name) {
+		super(name);
+	}
 
-    /**
-     * Constructor.
-     * Take the name of the test in parameter.
-     *
-     * @param name    the name of the test
-     */
-    public TestTMUpdater(String name) {
-        super(name);
-    }
+	/* --- Suite --- */
 
+	/**
+	 * TestSuite.
+	 */
+	public static Test suite() {
+		return new TestSuite(TestTMUpdater.class);
+	}
 
-  /* --- Suite --- */
+	/* --- Setup --- */
 
-    /**
-     * TestSuite.
-     */
-    public static Test suite() {
-        return new TestSuite(TestTMUpdater.class);
-    }
+	/**
+	 * Setup the fixture.
+	 */
+	@Override
+	protected void setUp() {
+		root = new TestNode();
+		fold = new TestNode();
+		file = new TestNode(true);
+		root.add(fold);
+		fold.add(file);
+	}
 
+	/* --- Tests --- */
 
-  /* --- Setup --- */
+	/**
+	 * Tests the setting of the TMUpdater in every TMNodes.
+	 */
+	public void testSettingOfUpdater() {
 
-    /**
-     * Setup the fixture.
-     */
-    protected void setUp() {
-        root = new TestNode();
-        fold = new TestNode();
-        file = new TestNode(true);
-        root.add(fold);
-        fold.add(file);
-    }
+	}
 
-  
-  /* --- Tests --- */
+	/* --- Inners nodes --- */
 
-    /**
-     * Tests the setting of the TMUpdater in every TMNodes.
-     */
-    public void testSettingOfUpdater() {
+	/**
+	 * Implements TMNode
+	 */
+	class TestNode implements TMNode {
 
-    }
+		private Vector children = null; // children
+		private boolean leaf = false; // is a leaf
+		private TMUpdater updater = null; // updater
 
-  
-  /* --- Inners nodes --- */
+		/* --- Constructor --- */
 
-    /**
-     * Implements TMNode
-     */
-    class TestNode
-        implements TMNode {
+		/**
+		 * Constructor.
+		 */
+		TestNode() {
+			children = new Vector();
+		}
 
-        private Vector    children  = null;  // children
-        private boolean   leaf      = false; // is a leaf
-        private TMUpdater updater   = null;  // updater
+		/**
+		 * Constructor.
+		 */
+		TestNode(boolean leaf) {
+			this();
+			this.leaf = leaf;
+		}
 
+		/* --- Standard --- */
 
-      /* --- Constructor --- */
+		/**
+		 * Add child.
+		 */
+		void add(TestNode child) {
+			children.add(child);
+		}
 
-        /**
-         * Constructor.
-         */
-        TestNode() {
-            children = new Vector();
-        }
+		/* --- TMNode --- */
 
-        /**
-         * Constructor.
-         */
-        TestNode(boolean leaf) {
-            this();
-            this.leaf = leaf;
-        }
+		/**
+		 * Is leaf ?
+		 */
+		public boolean isLeaf() {
+			return leaf;
+		}
 
+		/**
+		 * Returns children.
+		 */
+		public Enumeration children() {
+			return children.elements();
+		}
 
-      /* --- Standard --- */
+		/**
+		 * Set updater.
+		 */
+		public void setUpdater(TMUpdater updater) {
+			this.updater = updater;
+		}
 
-        /**
-         * Add child.
-         */
-        void add(TestNode child) {
-            children.add(child);
-        }
-
-
-      /* --- TMNode --- */
-
-        /**
-         * Is leaf ?
-         */
-        public boolean isLeaf() {
-            return leaf;
-        }
-
-        /**
-         * Returns children.
-         */
-        public Enumeration children() {
-            return children.elements();
-        }
-
-        /**
-         * Set updater.
-         */
-        public void setUpdater(TMUpdater updater) {
-            this.updater = updater;
-        }
-
-        /**
-         * Get updater.
-         */
-        public TMUpdater getUpdater() {
-            return updater;
-        }
-    }
+		/**
+		 * Get updater.
+		 */
+		public TMUpdater getUpdater() {
+			return updater;
+		}
+	}
 
 }
-

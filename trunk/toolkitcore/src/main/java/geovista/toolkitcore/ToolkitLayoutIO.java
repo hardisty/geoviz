@@ -19,6 +19,10 @@
 
 package geovista.toolkitcore;
 
+import geovista.coordination.CoordinationManager;
+import geovista.coordination.FiringBean;
+import geovista.readers.util.MyFileFilter;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -57,12 +61,9 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.w3c.dom.NodeList;
 
-import geovista.coordination.CoordinationManager;
-import geovista.coordination.FiringBean;
-import geovista.readers.util.MyFileFilter;
-
 public class ToolkitLayoutIO {
-	protected final static Logger logger = Logger.getLogger(ToolkitLayoutIO.class.getName());
+	protected final static Logger logger = Logger
+			.getLogger(ToolkitLayoutIO.class.getName());
 	public static final int ACTION_OPEN = 0;
 	public static final int ACTION_SAVE = 1;
 
@@ -263,8 +264,7 @@ public class ToolkitLayoutIO {
 
 		ToolkitBeanSet beanSet = new ToolkitBeanSet();
 		Element rootE = docIn.getRootElement();
-		dataSetPathFromXML = (String) (rootE.getAttribute("dataSetFullName")
-				.getValue());
+		dataSetPathFromXML = (rootE.getAttribute("dataSetFullName").getValue());
 		logger.finest("xml read dataset as:");
 		Vector allChildren = new Vector(rootE.getChildren("bean"));
 		for (int i = 0; i < allChildren.size(); i++) {
@@ -362,6 +362,18 @@ public class ToolkitLayoutIO {
 		return ToolkitLayoutIO.openLayout(inStream);
 	}
 
+	public static ToolkitBeanSet openAllComponentsLayout() {
+		InputStream inStream = null;
+		try {
+			Class cl = ToolkitLayoutIO.class;
+
+			inStream = cl.getResourceAsStream("resources/new_all.xml");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return ToolkitLayoutIO.openLayout(inStream);
+	}
+
 	public static ToolkitBeanSet openLayout(Component parent) {
 
 		String xmlFullName = ToolkitLayoutIO.getFileName(parent,
@@ -377,147 +389,88 @@ public class ToolkitLayoutIO {
 		ToolkitLayoutIO.sendImageToClipboard(buff);
 	}
 
-
-	
 	/*
-	public static void saveCommentedImage(Component c) {
-float COMPRESSION_QUALITY = 0.95F;
-		BufferedImage buff = new BufferedImage(c.getWidth(), c.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics g = buff.getGraphics();
-		c.paint(g);
-
-		String outputFileName = "C:\\test.jpg";
-		InputStream inStream = null;
-		try {
-			Class cl = ToolkitLayoutIO.class;
-
-			inStream = cl.getResourceAsStream("resources/default.xml");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		Document doc = ToolkitLayoutIO.readDocument(inStream);
-		// Get core JPEG writer.
-		Iterator writers = ImageIO.getImageWritersByFormatName("jpeg");
-		ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
-		while (writers.hasNext()) {
-			writer = (ImageWriter) writers.next();
-			if (writer.getClass().getName().startsWith(
-					"javax_imageio_jpeg_image_1.0")) {
-				// Break on finding the core provider.
-				break;
-			}
-		}
-		if (writer == null) {
-			System.err.println("Cannot find core JPEG writer!");
-		}
-
-		// Set the compression level.
-		ImageWriteParam writeParam = writer.getDefaultWriteParam();
-		writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		writeParam.setCompressionQuality(COMPRESSION_QUALITY);
-		RenderedImage image = buff;
-		ImageTypeSpecifier spec = ImageTypeSpecifier
-				.createFromBufferedImageType(BufferedImage.TYPE_INT_ARGB);
-		// construct the image metadata.
-		// IIOMetadata imageMetadata = writer.getDefaultImageMetadata(imageType,
-		// param)
-		IIOMetadata imageMetadata = writer.getDefaultImageMetadata(spec, null);
-		// IIOMetadata imageMetadata = new JPEGMetadata();
-		// add something...
-		IIOMetadataNode commentNode = new IIOMetadataNode("com");
-		commentNode.setAttribute("comment", doc.toString());
-		logger.finest(""+imageMetadata.isStandardMetadataFormatSupported());
-		try {
-			IIOMetadataNode root = (IIOMetadataNode) imageMetadata
-					.getAsTree("javax_imageio_jpeg_image_1.0");
-			// root.setAttribute("comment", "Anthony is in trouble");
-			// root.setTextContent("this is text content");
-
-			Vector vec = new Vector();
-			Element el = new Element("AString");
-			vec.add(el);
-			// Element el2 = new Element("anotherstring");
-			// vec.add(el2);
-			// Document doc = new Document(vec);
-
-			// root.setUserObject("Anthony.... this had better be good");
-
-			// root.setUserObject(doc);
-
-
-			// root.setUserObject(someBytes);
-			NodeList rootnl = root.getChildNodes();
-			// root.getLastChild().appendChild(commentNode);
-			for (int i = 0; i < rootnl.getLength(); i++) {
-				Node nod = rootnl.item(i);
-				logger.finest("***");
-				logger.finest("nod " + i);
-				logger.finest("nod name " + nod.getNodeName());
-				logger.finest("nod value " + nod.getNodeValue());
-				IIOMetadataNode iioNod = (IIOMetadataNode) nod;
-				logger.finest("iiomnod comment "
-						+ iioNod.getAttribute("comment"));
-
-			}
-			logger.finest("***");
-			logger.finest("root comment " + root.getAttribute("Comment"));
-			logger.finest("***");
-			logger.finest("root text content " + root.getTextContent());
-			logger.finest("***");
-			logger.finest("root userObject " + root.getUserObject());
-			// imageMetadata.setFromTree("javax_imageio_jpeg_image_1.0", root);
-
-			// imageMetadata.mergeTree("javax_imageio_jpeg_image_1.0",
-			// commentNode);
-
-			IIOMetadataNode newRoot = (IIOMetadataNode) imageMetadata
-					.getAsTree("javax_imageio_jpeg_image_1.0");
-			NodeList nl = newRoot.getChildNodes();
-
-			for (int i = 0; i < nl.getLength(); i++) {
-				logger.finest("***");
-				logger.finest("new nod " + i);
-				Node nod = nl.item(i);
-				logger.finest("new nod name " + nod.getNodeName());
-				logger.finest("new nod value " + nod.getNodeValue());
-				IIOMetadataNode iioNod = (IIOMetadataNode) nod;
-				logger.finest("new iiomnod comment "
-						+ iioNod.getAttribute("Comment"));
-			}
-			logger.finest("***");
-			logger.finest("new root comment "
-					+ newRoot.getAttribute("Comment"));
-			logger.finest("***");
-			System.out
-					.println("new root text content " + root.getTextContent());
-			logger.finest("***");
-			logger.finest("new root userObject " + root.getUserObject());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Set the output stream, write the image
-		try {
-
-			writer
-					.setOutput(new FileImageOutputStream(new File(
-							outputFileName)));
-			// writer.replaceImageMetadata(0,imageMetadata);
-			writer.write(null, new IIOImage(image, null, imageMetadata),
-					writeParam);
-			writer.dispose();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-*/
+	 * public static void saveCommentedImage(Component c) { float
+	 * COMPRESSION_QUALITY = 0.95F; BufferedImage buff = new
+	 * BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+	 * Graphics g = buff.getGraphics(); c.paint(g);
+	 * 
+	 * String outputFileName = "C:\\test.jpg"; InputStream inStream = null; try {
+	 * Class cl = ToolkitLayoutIO.class;
+	 * 
+	 * inStream = cl.getResourceAsStream("resources/default.xml"); } catch
+	 * (Exception ex) { ex.printStackTrace(); } Document doc =
+	 * ToolkitLayoutIO.readDocument(inStream); // Get core JPEG writer. Iterator
+	 * writers = ImageIO.getImageWritersByFormatName("jpeg"); ImageWriter writer =
+	 * ImageIO.getImageWritersByFormatName("jpeg").next(); while
+	 * (writers.hasNext()) { writer = (ImageWriter) writers.next(); if
+	 * (writer.getClass().getName().startsWith( "javax_imageio_jpeg_image_1.0")) { //
+	 * Break on finding the core provider. break; } } if (writer == null) {
+	 * System.err.println("Cannot find core JPEG writer!"); }
+	 *  // Set the compression level. ImageWriteParam writeParam =
+	 * writer.getDefaultWriteParam();
+	 * writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+	 * writeParam.setCompressionQuality(COMPRESSION_QUALITY); RenderedImage
+	 * image = buff; ImageTypeSpecifier spec = ImageTypeSpecifier
+	 * .createFromBufferedImageType(BufferedImage.TYPE_INT_ARGB); // construct
+	 * the image metadata. // IIOMetadata imageMetadata =
+	 * writer.getDefaultImageMetadata(imageType, // param) IIOMetadata
+	 * imageMetadata = writer.getDefaultImageMetadata(spec, null); //
+	 * IIOMetadata imageMetadata = new JPEGMetadata(); // add something...
+	 * IIOMetadataNode commentNode = new IIOMetadataNode("com");
+	 * commentNode.setAttribute("comment", doc.toString());
+	 * logger.finest(""+imageMetadata.isStandardMetadataFormatSupported()); try {
+	 * IIOMetadataNode root = (IIOMetadataNode) imageMetadata
+	 * .getAsTree("javax_imageio_jpeg_image_1.0"); //
+	 * root.setAttribute("comment", "Anthony is in trouble"); //
+	 * root.setTextContent("this is text content");
+	 * 
+	 * Vector vec = new Vector(); Element el = new Element("AString");
+	 * vec.add(el); // Element el2 = new Element("anotherstring"); //
+	 * vec.add(el2); // Document doc = new Document(vec);
+	 *  // root.setUserObject("Anthony.... this had better be good");
+	 *  // root.setUserObject(doc);
+	 * 
+	 *  // root.setUserObject(someBytes); NodeList rootnl =
+	 * root.getChildNodes(); // root.getLastChild().appendChild(commentNode);
+	 * for (int i = 0; i < rootnl.getLength(); i++) { Node nod = rootnl.item(i);
+	 * logger.finest("***"); logger.finest("nod " + i); logger.finest("nod name " +
+	 * nod.getNodeName()); logger.finest("nod value " + nod.getNodeValue());
+	 * IIOMetadataNode iioNod = (IIOMetadataNode) nod; logger.finest("iiomnod
+	 * comment " + iioNod.getAttribute("comment"));
+	 *  } logger.finest("***"); logger.finest("root comment " +
+	 * root.getAttribute("Comment")); logger.finest("***"); logger.finest("root
+	 * text content " + root.getTextContent()); logger.finest("***");
+	 * logger.finest("root userObject " + root.getUserObject()); //
+	 * imageMetadata.setFromTree("javax_imageio_jpeg_image_1.0", root);
+	 *  // imageMetadata.mergeTree("javax_imageio_jpeg_image_1.0", //
+	 * commentNode);
+	 * 
+	 * IIOMetadataNode newRoot = (IIOMetadataNode) imageMetadata
+	 * .getAsTree("javax_imageio_jpeg_image_1.0"); NodeList nl =
+	 * newRoot.getChildNodes();
+	 * 
+	 * for (int i = 0; i < nl.getLength(); i++) { logger.finest("***");
+	 * logger.finest("new nod " + i); Node nod = nl.item(i); logger.finest("new
+	 * nod name " + nod.getNodeName()); logger.finest("new nod value " +
+	 * nod.getNodeValue()); IIOMetadataNode iioNod = (IIOMetadataNode) nod;
+	 * logger.finest("new iiomnod comment " + iioNod.getAttribute("Comment")); }
+	 * logger.finest("***"); logger.finest("new root comment " +
+	 * newRoot.getAttribute("Comment")); logger.finest("***"); System.out
+	 * .println("new root text content " + root.getTextContent());
+	 * logger.finest("***"); logger.finest("new root userObject " +
+	 * root.getUserObject()); } catch (Exception e) { // TODO Auto-generated
+	 * catch block e.printStackTrace(); }
+	 *  // Set the output stream, write the image try {
+	 * 
+	 * writer .setOutput(new FileImageOutputStream(new File( outputFileName))); //
+	 * writer.replaceImageMetadata(0,imageMetadata); writer.write(null, new
+	 * IIOImage(image, null, imageMetadata), writeParam); writer.dispose(); }
+	 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
+	 * catch block e.printStackTrace(); }
+	 *  }
+	 */
 	public static String openCommentedImage(String fileName) {
 
 		fileName = "C:\\test.jpg";
@@ -555,8 +508,7 @@ float COMPRESSION_QUALITY = 0.95F;
 			NodeList nodList = chNod.getChildNodes();
 			for (int i = 0; i < nodList.getLength(); i++) {
 				IIOMetadataNode child = (IIOMetadataNode) nodList.item(i);
-				logger.finest("child " + i + " value = "
-						+ child.getNodeName());
+				logger.finest("child " + i + " value = " + child.getNodeName());
 				if (child.getNodeName().equals("com")) {
 					logger.finest("this is the one");
 					logger.finest(child.getAttribute("comment"));
@@ -591,7 +543,7 @@ float COMPRESSION_QUALITY = 0.95F;
 	// Inner class is used to hold an image while on the clipboard.
 	public static class ImageSelection implements Transferable {
 		// the Image object which will be housed by the ImageSelection
-		private Image image;
+		private final Image image;
 
 		public ImageSelection(Image image) {
 			this.image = image;
@@ -629,7 +581,7 @@ float COMPRESSION_QUALITY = 0.95F;
 		app.add(pan);
 		app.pack();
 		app.setVisible(true);
-		//ToolkitLayoutIO.saveCommentedImage(app);
+		// ToolkitLayoutIO.saveCommentedImage(app);
 		logger.finest(ToolkitLayoutIO.openCommentedImage(""));
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
