@@ -40,79 +40,17 @@ import geovista.common.event.DataSetListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.geoviz.descriptive.DescriptiveStats;
-import geovista.geoviz.spreadsheet.formula.Cell;
-import geovista.geoviz.spreadsheet.formula.CellFomulaEditor;
-import geovista.geoviz.spreadsheet.formula.FormulaEditor;
-import geovista.geoviz.spreadsheet.table.SSTable;
-import geovista.geoviz.spreadsheet.table.SSTableModel;
-import geovista.geoviz.spreadsheet.tools.ToolManager;
-import geovista.geoviz.spreadsheet.util.ColumnSelector;
-import geovista.geoviz.spreadsheet.util.Debug;
+
 
 public class SpreadSheetBean extends JPanel
-                             implements java.io.Serializable,ChangeListener,
+                             implements 
                              SelectionListener, DataSetListener, TableModelListener{
-    public static final boolean DEBUG=false;
-    static final long serialVersionUID = 2262286688943155764L;
-    private  SSTable table; //
-    private  transient boolean scffo=false; //selection change fired from outsite(beans);
+
     private  DescriptiveStats stats;
     private transient DataSetForApps dataSet;
 
     public SpreadSheetBean() {
 
-        this.setLayout(new BorderLayout());
-
-        table=new SSTable( new SSTableModel());
-        table.setBean(this);
-
-        table.reSetRowHeader() ;
-
-        // support select column, row
-        table.getTableHeader().setReorderingAllowed(false);
-        ColumnSelector selector=new ColumnSelector(table);
-        table.getTableHeader().addMouseListener(selector);
-        table.addMouseMotionListener(selector) ;
-
-        table.setColumnSelectionAllowed(true);
-        table.setRowSelectionAllowed(true);
-        table.setCellSelectionEnabled(true);
-        ListSelectionModel lsm=table.getSelectionModel();
-        lsm.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION );
-        //support select column
-
-        table.setAutoCreateColumnsFromModel(false); //If true, any change to Model => recreation of ColumnModel
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF );
-        FormulaEditor fe=new FormulaEditor(table);
-//        table.setFormulaEditor(fe);
-        table.setDefaultEditor(Cell.class, new CellFomulaEditor(new JTextField(),fe));
-
-        // set initial column set value->
-         if (Debug.isDebug() ){
-             int len=10;
-             Float[] values=new Float[len];
-             for(int i=0;i<len;i++){
-                Float v=new Float(i+1);
-                values[i]=v;
-                for (int j=1;j<5;j++){
-                    table.setValueAt(v,i,j)  ;
-                }
-             }
-         }
-        //set value<-
-        table.reSetColumnHeader() ;
-        ToolManager tb=new ToolManager(table);
-
-
-        JPanel controlP=new JPanel();
-        controlP.setLayout(new BorderLayout());
-        controlP.add(tb.getToolBar(),BorderLayout.CENTER ) ;
-        controlP.add(fe,BorderLayout.SOUTH ) ;
-        //this.add(controlP, BorderLayout.NORTH );
-        stats = new DescriptiveStats();
-        this.addSelectionListener(stats);
-        this.add(stats, BorderLayout.SOUTH);
-        this.add(new JScrollPane(table), BorderLayout.CENTER);
 
 
     }
@@ -131,23 +69,13 @@ public class SpreadSheetBean extends JPanel
           this.stats.dataSetChanged(e);
     }
     public void selectionChanged(SelectionEvent e){
-          this.setSelectedIndex(e.getSelection());
+          //this.setSelectedIndex(e.getSelection());
           this.stats.selectionChanged(e);
           
     }
     public void stateChanged(ChangeEvent e) {
-           if(this.scffo ){
-                //Not fire the event if the selection is made by outside(other beans)
-                this.scffo =false;
 
-
-           }
-           else{
-               //fire selection event only when the selection is made internally by bean itself
-               int[] sel = table.getSelectedRows();
-               this.fireSelectionChanged(sel);
-           }
-
+        
     }
 
     /**
@@ -249,111 +177,16 @@ public class SpreadSheetBean extends JPanel
 
           }
 
-          this.setData(tablesData,attributeNames);
+          //this.setData(tablesData,attributeNames);
 
         }
 
-    public void setData(Vector data,Vector columnIdentifiers)
-	{
-         // Insert rowIndex column
-        Iterator Iter =data.iterator();
-        while(Iter.hasNext()){
-            Object o= Iter.next();
-            if (o!=null &&o instanceof Vector  ){
-                Vector v=(Vector)o;
-                Debug.println("v count->:"+v.size());
-                v.insertElementAt(null,0);
-                Debug.println("v count<-:"+v.size());
 
-            }
-        }
-        // Insert rowIndex column<-
-        Debug.println("columnIdentifiers count<-:"+columnIdentifiers.size());
-        columnIdentifiers.insertElementAt("Row Index",0); //Not insert null, super.getColumnName(0) will return 0. It will affect SSTableModel.getColumnName()
-        Debug.println("columnIdentifiers count<-:"+columnIdentifiers.size());
-        SSTableModel tbm=(SSTableModel)table.getModel();
-        tbm.setDataVector(data,columnIdentifiers);
-        //tbm.setDataVector(data,new Vector());
-	}
-    public void setData(Object[][] dataVector,Object[] columnIdentifiers)
-	{
 
-        //SSTableModel tbm=(SSTableModel)table.getModel();
-        setData(convertToVector(dataVector), convertToVector(columnIdentifiers));
-        //tbm.setDataVector(dataVector,columnIdentifiers);
-        //getTableInstance().tableChanged(new TableModelEvent(tbm, TableModelEvent.HEADER_ROW));
 
-	}
-     /**
-     * Returns a vector that contains the same objects as the array.
-     * @param anArray  the array to be converted
-     * @return  the new vector; if <code>anArray</code> is <code>null</code>,
-     *				returns <code>null</code>
-     */
-    protected static Vector convertToVector(Object[] anArray) {
-        if (anArray == null) {
-            return null;
-	}
-        Vector v = new Vector(anArray.length);
-        for (int i=0; i < anArray.length; i++) {
-            v.addElement(anArray[i]);
-        }
-        return v;
-    }
 
-    /**
-     * Returns a vector of vectors that contains the same objects as the array.
-     * @param anArray  the double array to be converted
-     * @return the new vector of vectors; if <code>anArray</code> is
-     *				<code>null</code>, returns <code>null</code>
-     */
-    protected static Vector convertToVector(Object[][] anArray) {
-        if (anArray == null) {
-            return null;
-	}
-        Vector v = new Vector(anArray.length);
-        for (int i=0; i < anArray.length; i++) {
-            v.addElement(convertToVector(anArray[i]));
-        }
-        return v;
-    }
-    public void setSelectedIndex(int[] selectedRows)
-         {   long start,stop; //put is at start of method
-                     if(DEBUG){//put is at start of method
-                         start=Calendar.getInstance().getTime().getTime() ;
-                     }
-             //table.setSelectionMode(2);
-                 if (selectedRows == null){
-                     return;
-                 }
-             int len = selectedRows.length;
-         if(len>0){
-              this.setScffo(true);//selection event is fired by other beans from outside
-             table.setSelectedRow(selectedRows[0]);  //To clear previously selection
-             for (int i = 1 ; i<len ; i++){
-                  this.setScffo(true);//selection event is fired by other beans from outside
-                  table.addSelectedRow(selectedRows[i]) ;
-             }
 
-             //table.repaint() ;
 
-         }
-         else{
-             //dp{
-             if (DEBUG){
-                 System.out.println("setSelectedIndex() get empty array");
-             }//dp}
-         }
-
-         if(DEBUG){  //put is at end of method
-                         stop=Calendar.getInstance().getTime().getTime() ;
-                         System.out.println(" setSelectedIndex() take "+(stop-start)*0.001f+" to finish" );
-         }
-     }
-
-     private  void setScffo(boolean scffo) {
-         this.scffo = scffo;
-     }
 
     /********************************************************************
      *                Test
