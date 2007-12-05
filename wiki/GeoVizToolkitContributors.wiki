@@ -1,0 +1,17 @@
+#summary The GeoViz Toolkit is authored by many people. Their contributions are acknowledged  here.
+
+= Code contributors: =
+
+  * *Frank Hardisty* is the primary author of the GeoViz Toolkit.
+  * *Xiping Dai* developed the matrix components, the scatterplot, and the histogram.
+  * *Gary Liu* developed the radviz component.
+  * *Aaron Myers* developed the help component, and the content in the help.
+  * *Ke Liao* developed the facilities for reading and saving layouts.
+  * *Masahiro Takatskuka* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
+
+
+= Other contributors: =
+
+  * *Alan MacEachren* provided funding, many of the ideas behind the software, and contributed to many design decisions.
+  * *Mark Gahegan* provided the funding, ideas behind the software, and contributed to many design decisions.
+  * *Masahiro Takatskuka* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational.
