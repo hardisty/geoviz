@@ -3,17 +3,17 @@ package geovista.toolkitcore;
 import junit.framework.TestCase;
 
 public class GeoVizToolkitTest extends TestCase {
-	GeoVizToolkit kit;
-	GeoVizToolkit newKit = new GeoVizToolkit("");
+
+	//;// = new GeoVizToolkit("");
 	public GeoVizToolkitTest(String name) {
 		super(name);
 	}
 
-	protected void setUp() throws Exception {
-		//kit = new GeoVizToolkit("");
-		//kit.setVisible(true);
-		super.setUp();
-	}
+//	protected void setUp() throws Exception {
+//		newKit = new GeoVizToolkit("");
+//		newKit.setVisible(true);
+//		super.setUp();
+//	}
 
 	public void testMain() {
 		
@@ -22,13 +22,19 @@ public class GeoVizToolkitTest extends TestCase {
 
 	}
 	public void testRemoveAllBeans(){
+//		GeoVizToolkit newKit = new GeoVizToolkit("");
+//		int numBeans = newKit.coord.getFiringBeans().length;
+//		System.out.println(numBeans);
+//		newKit.removeAllBeans();
+//		numBeans = newKit.coord.getFiringBeans().length;
+//		System.out.println(numBeans);		
+//		assert(newKit.coord.getFiringBeans().length == 0);
 		
-		int numBeans = newKit.coord.getFiringBeans().length;
-		System.out.println(numBeans);
-		newKit.removeAllBeans();
-		numBeans = newKit.coord.getFiringBeans().length;
-		System.out.println(numBeans);		
-		assert(newKit.coord.getFiringBeans().length == 0);
+		
+	}
+	public void testOpenAllComponents(){
+		GeoVizToolkit newKit = new GeoVizToolkit("");
+		newKit.openAllComponents();
 	}
 
 }
