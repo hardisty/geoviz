@@ -1,3 +1,6 @@
+/*
+ * A test class for GeoViz Toolkit.
+ */
 package geovista.toolkitcore;
 
 import junit.framework.TestCase;
