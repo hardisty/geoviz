@@ -42,7 +42,7 @@ import geovista.common.event.SelectionListener;
 import geovista.geoviz.descriptive.DescriptiveStats;
 
 
-public class SpreadSheetBean extends JPanel
+public class SpreadSheetBean extends JTable
                              implements 
                              SelectionListener, DataSetListener, TableModelListener{
 
