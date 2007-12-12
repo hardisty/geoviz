@@ -101,9 +101,9 @@ import javax.swing.event.InternalFrameListener;
  */
 
 public class GeoVizToolkit extends JFrame implements ActionListener,
-		ComponentListener,InternalFrameListener {
+		ComponentListener, InternalFrameListener {
 
-	/** 
+	/**
 	 * 
 	 */
 	final static Logger logger = Logger
@@ -169,7 +169,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	public GeoVizToolkit(String fileNameIn) {
 		new GeoVizToolkit(fileNameIn, false, true);
-		//Thread.dumpStack();
+		// Thread.dumpStack();
 	}
 
 	public GeoVizToolkit(String fileNameIn, boolean useProj, boolean useAux) {
@@ -211,18 +211,20 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 
-		 tBeanSet = ToolkitLayoutIO.openStarPlotMapLayout();
+		tBeanSet = ToolkitLayoutIO.openStarPlotMapLayout();
 
 		addToolkitBeanSet(tBeanSet);
 
 		this.repaint();
 	}
-    void openAllComponents(){
-    	//this.removeAllBeans();
-    	ToolkitBeanSet tempBeanSet = ToolkitLayoutIO.openAllComponentsLayout();
-    	this.addToolkitBeanSet(tempBeanSet);
-    	this.repaint();
-    }
+
+	void openAllComponents() {
+		// this.removeAllBeans();
+		ToolkitBeanSet tempBeanSet = ToolkitLayoutIO.openAllComponentsLayout();
+		this.addToolkitBeanSet(tempBeanSet);
+		this.repaint();
+	}
+
 	public void addExternalBean(Object bean) {
 		coord.addBean(bean);
 		// XXX total hack for demo
@@ -367,16 +369,14 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuRemoveTool.add(item, 0); // add at the top
 
 		Object newBean = newToolkitBean.getOriginalBean();
-		
-		if(dataSet == null){
+
+		if (dataSet == null) {
 			System.out.println("Data set is null, why?");
 			return;
 		} else {
 			System.out.println("Data set is not null.");
 		}
-		
-		
-		
+
 		if (newBean instanceof DataSetListener) {
 			DataSetListener dataListener = (DataSetListener) newBean;
 			dataListener.dataSetChanged(new DataSetEvent(dataSet, this));
@@ -398,9 +398,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
-//	public void dataSetChanged(DataSetEvent e) {
-//		dataSet = e.getDataSetForApps();
-//	}
+	// public void dataSetChanged(DataSetEvent e) {
+	// dataSet = e.getDataSetForApps();
+	// }
 
 	private void showHelp() {
 		// lazy initialize
@@ -533,16 +533,19 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void loadData(String name) {
-		logger.info("geovizdemo, loadData, dataSetIsNull ="
-				+ (dataSet == null));
+		logger
+				.info("geovizdemo, loadData, dataSetIsNull ="
+						+ (dataSet == null));
 		Object[] newDataSet = createData(name);
-		logger.info("geovizdemo, loadData, dataSetIsNull ="
-				+ (dataSet == null));
+		logger
+				.info("geovizdemo, loadData, dataSetIsNull ="
+						+ (dataSet == null));
 		dataSet = new DataSetForApps(newDataSet);
 		dataCaster.setAndFireDataSet(newDataSet);
-		logger.info("geovizdemo, loadData, dataSetIsNull ="
-				+ (dataSet == null));
-		
+		logger
+				.info("geovizdemo, loadData, dataSetIsNull ="
+						+ (dataSet == null));
+
 	}
 
 	private Object[] createData(String name) {
@@ -918,7 +921,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
-		//app.openAllComponents();
+		// app.openAllComponents();
 
 		/*
 		 * until we get jts in maven String fileName2 =
