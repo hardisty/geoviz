@@ -11,7 +11,7 @@ import junit.framework.TestCase;
  *
  */
 public class ToolkitBeanSetTest extends TestCase {
-	
+	 
 	
 	ToolkitBeanSet tBeanSet = new ToolkitBeanSet();
 	
