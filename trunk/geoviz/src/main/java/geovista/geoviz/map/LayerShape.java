@@ -23,6 +23,7 @@ package geovista.geoviz.map;
 
 // import geovista.common.data.DataSetForApps;
 
+import geovista.common.data.DescriptiveStatistics;
 import geovista.common.ui.Fisheyes;
 import geovista.symbolization.ColorInterpolator;
 import geovista.symbolization.glyph.Glyph;
@@ -290,6 +291,12 @@ public abstract class LayerShape {
 
 	// just sets data
 	public void setSelectedObservations(int[] selectedObservations) {
+		//check for error condition
+		int maxVal = DescriptiveStatistics.max(selectedObservations);
+		if (maxVal >= this.spatialData.length){
+			logger.severe("selection index too long, max value = " + maxVal);
+			return;
+		}
 		// copy old full index values
 		for (int i = 0; i < selectedObservationsFullIndex.length; i++) {
 			selectedObservationsOldFullIndex[i] = selectedObservationsFullIndex[i];
@@ -612,6 +619,33 @@ public abstract class LayerShape {
 
 	}
 
+	
+	void renderSecondaryIndication(Graphics2D g2, int obs) {
+		if (obs < 0) {
+			return;
+		}
+		if (objectColors == null || objectColors.length <= obs) {
+			return;
+		}
+		Shape shp = spatialData[obs];
+		Color color = objectColors[obs];
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		Stroke tempStroke = g2.getStroke();
+		BasicStroke secondStroke = new BasicStroke(6f, BasicStroke.CAP_ROUND,
+				BasicStroke.CAP_ROUND);
+		g2.setStroke(secondStroke);
+		
+		g2.setColor(new Color(255,255,0,128));
+		g2.draw(shp);
+
+		g2.setColor(color);
+		g2.fill(shp);
+		
+		g2.setStroke(tempStroke);		
+	}
+	
 	private void renderIndication(Graphics2D g2, Shape shp, Color color) {
 		Stroke tempStroke = g2.getStroke();
 

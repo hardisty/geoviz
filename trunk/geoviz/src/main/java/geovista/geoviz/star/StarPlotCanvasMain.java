@@ -82,8 +82,7 @@ public class StarPlotCanvasMain {
 		coord.addBean(shpProj);
 
 		if (useResource) {
-			shpProj.setInputDataSet(shpRead.convertShpToShape(stateData
-					.getDataSet()));
+			shpProj.setInputDataSet(shpRead.getDataSet());//XXX will need help
 		} else {
 			Object[] dataSet = shpRead.getDataSet();
 

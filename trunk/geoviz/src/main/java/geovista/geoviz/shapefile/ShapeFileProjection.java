@@ -84,6 +84,8 @@ public class ShapeFileProjection
 
         shpNew = projectPolygons(shpFile);
 
+    } else if (shpFile instanceof Shape[]){
+    	shpNew = projectPolygons(shpFile);
     }
 
     else{

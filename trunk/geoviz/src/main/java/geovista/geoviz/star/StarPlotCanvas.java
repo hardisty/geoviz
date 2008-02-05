@@ -401,7 +401,12 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public void indicationChanged(IndicationEvent e) {
-
+		int ind = e.getIndication();
+		if (ind > this.dataSet.getNumObservations()){
+			logger.severe("got indication greater than data set size, ind = " + ind);
+			//Thread.dumpStack();
+			return;
+		}
 		this.setIndication(e.getIndication());
 
 	}

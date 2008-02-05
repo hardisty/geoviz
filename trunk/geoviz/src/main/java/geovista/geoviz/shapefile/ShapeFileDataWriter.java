@@ -24,9 +24,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import geovista.common.data.DataSetForApps;
-import geovista.readers.geog.ShapeFile;
-import geovista.readers.geog.ShapeFileHeader;
-import geovista.readers.geog.ShapeFileRecordPolygon;
+
 
 /**
  * Takes a file name and a set of shapes, and writes out a shapefile.
@@ -36,8 +34,9 @@ import geovista.readers.geog.ShapeFileRecordPolygon;
  */
 public class ShapeFileDataWriter {
 	protected final static Logger logger = Logger.getLogger(ShapeFileDataWriter.class.getName());
+	/** uses old shapefile writer...
   public static void writeShapefile(GeneralPath[] paths, String fileName) {
-      /** see geovista.readers.geog.ShapeFileWriter**/
+  
       String baseName = fileName.substring(0, fileName.length() - 4);
       ShapeFile shapeFile = new ShapeFile();
       ShapeFileHeader header = new ShapeFileHeader();
@@ -133,7 +132,7 @@ public class ShapeFileDataWriter {
 
 
     }
-
+*/
 
 
 }

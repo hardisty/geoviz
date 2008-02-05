@@ -54,6 +54,7 @@ import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
 import geovista.geoviz.visclass.VisualClassifier;
+import geovista.matrix.scatterplot.Histogram;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import geovista.symbolization.ColorSymbolClassification;
@@ -78,6 +79,7 @@ public class GeoMapUni
   public static final int VARIABLE_CHOOSER_MODE_HIDDEN = 2;
   private MapCanvas mapCan;
   private VisualClassifier visClassOne;
+  private Histogram histo;
   //transient private VisualClassifier visClassTwo;
   transient private JToolBar mapTools;
   private JPanel topContent;
@@ -89,6 +91,7 @@ public class GeoMapUni
 
     vcPanel = new JPanel();
     vcPanel.setPreferredSize(new Dimension(600, 40));
+    vcPanel.setMaximumSize(new Dimension(600, 40));
     vcPanel.setLayout(new BoxLayout(vcPanel, BoxLayout.Y_AXIS));
     visClassOne = new VisualClassifier();
 //        visClassTwo = new VisualClassifier();
@@ -103,10 +106,19 @@ public class GeoMapUni
     vcPanel.add(visClassOne);
 //        vcPanel.add(visClassTwo);
 
+    
+    
     JPanel legendPanel = new JPanel();
     legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.X_AXIS));
     legendPanel.add(vcPanel);
     legendPanel.add(Box.createRigidArea(new Dimension(4, 2)));
+
+    histo = new Histogram();
+    Dimension histDim = new Dimension(70,70);
+    histo.setPreferredSize(histDim);
+    
+    legendPanel.add(histo);
+
 
     topContent = new JPanel();
     topContent.setLayout(new BoxLayout(topContent, BoxLayout.Y_AXIS));
@@ -126,6 +138,9 @@ public class GeoMapUni
     mapCan = new MapCanvas();
     this.add(mapCan, BorderLayout.CENTER);
     this.mapCan.addIndicationListener(this);
+    this.addIndicationListener(histo);
+    this.addSelectionListener(histo);
+    histo.addSelectionListener(this);
     visClassOne.addColorClassifierListener(this);
 //        visClassTwo.addColorClassifierListener(this);
 
@@ -289,7 +304,7 @@ public class GeoMapUni
       //index++;//no longer, data set for apps has changed
       this.mapCan.setCurrColorColumnX(index);
       this.mapCan.setCurrColorColumnY(index);
-
+      this.histo.setData(this.dataSet.getNumericDataAsDouble(index));
       this.firePropertyChange("SelectedVariable", index, index);
     }
 
@@ -332,6 +347,7 @@ public class GeoMapUni
     this.setDataSet(e.getDataSetForApps());
     this.dataSet = e.getDataSetForApps();
     this.dataSet.addTableModelListener(this);
+    this.histo.dataSetChanged(e);
   }
 
   public void paletteChanged(PaletteEvent e) {
@@ -468,6 +484,7 @@ public class GeoMapUni
    */
   public void addSelectionListener(SelectionListener l) {
     this.mapCan.addSelectionListener(l);
+    this.histo.addSelectionListener(l);
   }
 
   /**
