@@ -47,7 +47,7 @@ import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMapUni;
-import geovista.geoviz.map.SpatialWeights;
+import geovista.geoviz.map.OldSpatialWeights;
 import geovista.geoviz.sample.GeoData48States;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
@@ -71,7 +71,7 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 	DataSetForApps dataSetOriginal;
 	DataSetForApps dataSetZ;
 	DataSetForApps dataSetMoran;
-	SpatialWeights spatialWeights;
+	OldSpatialWeights spatialWeights;
 
 	public MoranMatrix() {
 		super();
@@ -106,7 +106,7 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 
 	public void dataSetChanged(DataSetEvent e) {
 		this.dataSetOriginal = e.getDataSetForApps();
-		this.spatialWeights = new SpatialWeights(this.dataSetOriginal
+		this.spatialWeights = new OldSpatialWeights(this.dataSetOriginal
 				.getShapeData());
 		// first get the z scores....
 		Object[] dataObjects = dataSetOriginal.getDataObjectOriginal();

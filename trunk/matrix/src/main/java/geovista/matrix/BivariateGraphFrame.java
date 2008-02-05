@@ -496,7 +496,7 @@ public class BivariateGraphFrame extends JPanel implements  DataSetListener, Act
        * removes an IndicationListener from the button
        */
           public void removeIndicationListener (IndicationListener l) {
-                  this.bivariateGraph.addIndicationListener(l);
+                  this.bivariateGraph.removeIndicationListener(l);
       }
 
       /**

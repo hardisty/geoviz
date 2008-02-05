@@ -24,6 +24,8 @@ package geovista.matrix.map;
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
+import geovista.common.data.SpatialStatistics;
+import geovista.common.data.SpatialWeights;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.common.event.IndicationEvent;
@@ -35,8 +37,9 @@ import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
 import geovista.coordination.CoordinationManager;
+import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
-import geovista.geoviz.map.SpatialWeights;
+import geovista.geoviz.map.OldSpatialWeights;
 import geovista.geoviz.sample.GeoData48States;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
@@ -50,6 +53,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -71,7 +75,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 		IndicationListener, DataSetListener, ColorClassifierListener,
 		SpatialExtentListener, PaletteListener, TableModelListener, ActionListener {
 	protected final static Logger logger = Logger.getLogger(MoranMap.class.getName());
-	GeoMapUni map;
+	GeoMap map;
 	SingleScatterPlot sp;
 	DataSetForApps dataSetOriginal;
 	DataSetForApps dataSetZ;
@@ -79,11 +83,12 @@ public class MoranMap extends JPanel implements SelectionListener,
 	SpatialWeights spatialWeights;
 	JList varList;
 	JButton sendButt;
+	int monteCarloIterations;
 
 	public MoranMap() {
 		super();
 		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
-		map = new GeoMapUni();
+		map = new GeoMap();
 		sp = new SingleScatterPlot();
 		map.addSelectionListener(sp);
 		sp.addSelectionListener(map);
@@ -128,7 +133,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 	public void dataSetChanged(DataSetEvent e) {
 		this.dataSetOriginal = e.getDataSetForApps();
-		this.spatialWeights = new SpatialWeights(this.dataSetOriginal.getShapeData());
+		this.spatialWeights = this.dataSetOriginal.getSpatialWeights();;
 		//first get the z scores....
 		Object[] dataObjects = dataSetOriginal.getDataObjectOriginal();
 		Object[] zDataObjects = new Object[dataObjects.length];
@@ -137,7 +142,15 @@ public class MoranMap extends JPanel implements SelectionListener,
         System.arraycopy(names, 0, newNames, 0, names.length);
 		for (int i = 1; i < dataObjects.length; i++){
 			Object thing = dataObjects[i];
-			if (thing instanceof double[]){
+			if(thing instanceof int[]){
+				int[] intThing = (int[])thing;
+				double[] doublething = new double[intThing.length];
+				for (int obs = 0; obs < intThing.length; obs++){
+					doublething[obs] = intThing[obs];
+				}
+				newNames[i-1] = names[i-1] + "_Z";
+				zDataObjects[i] = DescriptiveStatistics.calculateZScores(doublething);				
+			} else if (thing instanceof double[]){
 				double[] doublething = (double[])thing;
 				newNames[i-1] = names[i-1] + "_Z";
 				zDataObjects[i] = DescriptiveStatistics.calculateZScores(doublething);
@@ -154,23 +167,48 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 		String[] moranNames = new String[names.length];
         System.arraycopy(names, 0, moranNames, 0, names.length);
-		for (int i = 1; i < dataObjects.length; i++){
-			Object thing = dataObjects[i];
+        
+		for (int i = 1; i < zDataObjects.length; i++){
+			Object thing = zDataObjects[i];
 			if (thing instanceof double[]){
 				double[] doublething = (double[])thing;
 				moranNames[i-1] = names[i-1] + "_M";
-				moranDataObjects[i] = this.calculateMoranScores(doublething, i);
+				moranDataObjects[i] = SpatialStatistics.calculateMoranScores(doublething, this.spatialWeights);
 			} else{
 				moranDataObjects[i] = dataObjects[i];
 			}
 		}
 		moranDataObjects[0] = moranNames;
+	
 		this.dataSetMoran = new DataSetForApps(moranDataObjects);		
 		
-		DataSetEvent e2 = new DataSetEvent(dataSetMoran, this);
+		//now do monte carlo
+		Object[] monteCarloDataObjects = new Object[dataObjects.length];
+
+		String[] monteCarloNames = new String[names.length];
+        System.arraycopy(names, 0, monteCarloNames, 0, names.length);
+        
+		for (int i = 1; i < zDataObjects.length; i++){
+			Object thing = zDataObjects[i];
+			if (thing instanceof double[]){
+				double[] zData = (double[])thing;			
+				double[] moranData = (double[])moranDataObjects[i];
+				monteCarloIterations = 100;
+				monteCarloDataObjects[i] = SpatialStatistics.findPValues(zData, moranData, monteCarloIterations, this.spatialWeights);
+				monteCarloNames[i-1] = names[i-1] + "_Sig";
+			} else{
+				monteCarloDataObjects[i] = dataObjects[i];
+			}
+		}
+		monteCarloDataObjects[0] = monteCarloNames;
+	
+		DataSetForApps dataSetMonteCarlo = new DataSetForApps(monteCarloDataObjects);	
+		DataSetForApps dataSetAppended = dataSetMonteCarlo.appendDataSet(dataSetZ);
+		
+		DataSetEvent e2 = new DataSetEvent(dataSetAppended, this);
 		Vector vecData = new Vector();
-		for (int i = 0; i < moranNames.length; i++){
-			vecData.add(moranNames[i]);
+		for (int i = 0; i < monteCarloNames.length; i++){
+			vecData.add(monteCarloNames[i]);
 		}
 		this.varList.setListData(vecData);
 		this.map.dataSetChanged(e2);
@@ -197,27 +235,28 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 	}
 
-     /**
-      * @return
-      */
-      double[] calculateMoranScores(double[] zData, int whichVar) {
-         double[] moranData;
-         moranData = new double[zData.length];
-         System.arraycopy(zData, 0, moranData, 0, zData.length);
-         double[] moranScores = new double[moranData.length];
-         for (int i = 0; i < moranData.length; i++){
-        	 int[] iBors = this.spatialWeights.getNeighbors(i);
-        	 double sumScore = 0;
-        	 for (int j = 0; j < iBors.length; j++){
-        		 sumScore = sumScore + this.dataSetZ.getValueAsDouble(whichVar, iBors[j]);
-        	 }
-        	 moranScores[i] = this.dataSetZ.getValueAsDouble(whichVar, i) * sumScore;
-         }      
-         return moranScores;
-     }     
      
-	public static void main(String[] args) {
+     
+     public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.sendButt){
+			if (this.varList.getSelectedIndex() < 0){
+				return;
+			}
+			
+			this.dataSetOriginal.addColumn((String)this.varList.getSelectedValue(), this.dataSetMoran.getNumericDataAsDouble(this.varList.getSelectedIndex()));
+		}
 		
+	}
+  	
+
+	public static void main(String[] args) {
+
+		MoranMap map = new MoranMap();
+		double[] vals = {0, 1, 2, 3};
+		double along = DescriptiveStatistics.percentAbove(vals, -1);
+		System.out.println(along);
+		
+		/**
 		boolean useProj = false;
 		boolean useResource = false;
 		JFrame app = new JFrame("MoranMap Main Class: Why?");
@@ -285,7 +324,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 		long endTime = System.currentTimeMillis();
 		logger.finest("that took = " + (endTime -startTime));
 		logger.finest("count " + count);
-		
+		*/
 		
 		
 
@@ -293,15 +332,6 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 
 
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == this.sendButt){
-			if (this.varList.getSelectedIndex() < 0){
-				return;
-			}
-			
-			this.dataSetOriginal.addColumn((String)this.varList.getSelectedValue(), this.dataSetMoran.getNumericDataAsDouble(this.varList.getSelectedIndex()));
-		}
-		
-	}
+
 
 }
