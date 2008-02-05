@@ -36,8 +36,7 @@ import javax.swing.event.EventListenerList;
  */
 public class ExampleBean implements IndicationListener {
 
-	private int argOne;
-	private int argTwo;
+
 	private int result;
 	private int indication;
 	private EventListenerList listenerList = new EventListenerList();
@@ -45,41 +44,6 @@ public class ExampleBean implements IndicationListener {
 	// null constructor
 	public ExampleBean() {
 		System.out.println("ExampleBean, result = " + result);
-	}
-
-	// this is the only thing this class really does, besides bean bookkeeping
-	private void doAddition() {
-		result = argOne + argTwo;
-
-	}
-
-	// start accessors
-	public void setArgOne(int argOne) {
-		this.argOne = argOne;
-		doAddition();
-	}
-
-	public int getArgOne() {
-		return argOne;
-	}
-
-	public void setArgTwo(int argTwo) {
-		this.argTwo = argTwo;
-		doAddition();
-		fireIndicationChanged(result);
-	}
-
-	public int getArgTwo() {
-		return argTwo;
-	}
-
-	public void setResult(int result) {
-		System.out.println("ExampleBean, setResult = " + result);
-		this.result = result;
-	}
-
-	public int getResult() {
-		return result;
 	}
 
 	public void setListenerList(EventListenerList listenerList) {
@@ -115,7 +79,7 @@ public class ExampleBean implements IndicationListener {
 	 * 
 	 * @see EventListenerList
 	 */
-	private void fireIndicationChanged(int newIndication) {
+	public void fireIndicationChanged(int newIndication) {
 
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
@@ -136,6 +100,9 @@ public class ExampleBean implements IndicationListener {
 
 	public int getIndication() {
 		return indication;
+	}
+	public void setIndication(int ind){
+		this.indication = ind;
 	}
 
 }

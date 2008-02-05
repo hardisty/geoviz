@@ -52,7 +52,10 @@ public class CoordinationManagerGUI extends JScrollPane implements ActionListene
   public void createShortCuts() {
     //this.shortcutsHolder = new JPanel();
 
-    FiringBean[] fBeans = cm.getFiringBeans();
+    FiringBean[] fBeans = null;
+    	
+    fBeans = (FiringBean[]) cm.getFiringBeans().toArray(fBeans);
+    
     FiringBean newBean = fBeans[fBeans.length - 1];
     Icon ic = newBean.getIcon();
     BeanShortcutsGUI bGUI = new BeanShortcutsGUI(newBean.getBeanName(), ic);
@@ -64,7 +67,10 @@ public class CoordinationManagerGUI extends JScrollPane implements ActionListene
 
   public void createBoxes() {
     this.boxHolder.removeAll();
-    FiringBean[] fBeans = cm.getFiringBeans();
+    
+    FiringBean[] fBeans = null;
+	
+    fBeans = (FiringBean[]) cm.getFiringBeans().toArray(fBeans);
     for (int i = 0; i < fBeans.length; i++){
       Object whichBean = fBeans[i].getOriginalBean();
       ListeningBean lBean = new ListeningBean();

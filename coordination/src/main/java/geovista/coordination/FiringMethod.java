@@ -14,6 +14,8 @@
 package geovista.coordination;
 
 import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 
@@ -26,20 +28,19 @@ import java.util.Vector;
  * @author Frank Hardisty
  */
 public class FiringMethod implements Comparable {
-  private int position = -1; //position in parent array of FiringMethods held by FiringBean
-  private int parentBeanPosition = -1;
+ 
   private String methodName;
   private Method originalAddMethod;
   private Method originalRemoveMethod;
   private Object parentBean;
   transient private FiringBean fBean;
-  private ListeningBean[] listeners;
+  private HashSet <ListeningBean> listeners;
   private Class listeningInterface;
 
   /**
   */
   public FiringMethod() {
-    this.listeners = new ListeningBean[0];
+    this.listeners = new HashSet <ListeningBean>();
   }
 
   public int compareTo(Object obj) {
@@ -51,16 +52,19 @@ public class FiringMethod implements Comparable {
   }
 
   public void disableAllBeans() {
-    for (int i = 0; i < listeners.length; i++) {
-      //find and set its listening status
-      Class listenerInterface = this.checkForListening(listeners[i]);
+		Iterator<ListeningBean> it = listeners.iterator();
 
-      if (listenerInterface != null) {
-        this.deregisterListener(listeners[i], listenerInterface,
-                                this.parentBean);
-        this.listeners[i].setListeningStatus(ListeningBean.STATUS_WONT_LISTEN);
-      }
-    }
+		while (it.hasNext()) {
+			ListeningBean lBean = it.next();
+		      //find and set its listening status
+		      Class listenerInterface = this.checkForListening(lBean);
+		      if (listenerInterface != null) {
+		          this.deregisterListener(lBean, listenerInterface,
+		                                  this.parentBean);
+		          lBean.setListeningStatus(ListeningBean.STATUS_WONT_LISTEN);
+		        }
+		
+		}
   }
 
   public void registerListener(ListeningBean lBean, Class interf,
@@ -100,7 +104,7 @@ public class FiringMethod implements Comparable {
     newBean.setOriginalBean(lBean.getOriginalBean());
 
     //first, if this bean is the same as the owning bean, don't add it
-    if (newBean.getPosition() == this.getParentBeanPosition()) {
+    if (newBean.getOriginalBean() == this.parentBean) {
       System.out.println("FiringMethod.addListeningBean, found self");
 
       return;
@@ -116,50 +120,33 @@ public class FiringMethod implements Comparable {
       newBean.setListeningStatus(ListeningBean.STATUS_CANT_LISTEN);
     }
 
-    this.increaseArraySize();
-    this.listeners[listeners.length - 1] = newBean;
+
+    this.listeners.add(lBean);
   }
-
-  public void removeListeningBean(int oldBeanPositionInListenersArray) {
-    if (this.parentBeanPosition > oldBeanPositionInListenersArray) {
-      this.parentBeanPosition = parentBeanPosition - 1;
-    }
-
+  
+  
+  
+  
+  public void removeListeningBean(Object oldBean) {
+	  
+	 ListeningBean lBean = this.findListeningBean(oldBean);
+	 if(lBean == null){
+		 return;
+	 }
+	  
     //find and set its listening status
-    Class listenerInterface = this.checkForListening(
-                                  listeners[oldBeanPositionInListenersArray]);
+    Class listenerInterface = this.checkForListening(lBean);
 
     if (listenerInterface != null) {
-      this.deregisterListener(listeners[oldBeanPositionInListenersArray],
-                              listenerInterface, this.parentBean);
+      this.deregisterListener(lBean,listenerInterface, this.parentBean);
     }
-
-    this.decreaseArraySize(oldBeanPositionInListenersArray);
+    this.listeners.remove(lBean);
+    //this.decreaseArraySize(oldBeanPositionInListenersArray);
   }
 
-  private void increaseArraySize() {
-    ListeningBean[] tempBeans = new ListeningBean[listeners.length + 1];
 
-    for (int i = 0; i < listeners.length; i++) {
-      tempBeans[i] = listeners[i];
-    }
 
-    listeners = tempBeans;
-  }
 
-  private void decreaseArraySize(int arrayPosition) {
-    ListeningBean[] tempBeans = new ListeningBean[listeners.length - 1];
-
-    for (int i = 0; i < arrayPosition; i++) {
-      tempBeans[i] = listeners[i];
-    }
-
-    for (int i = arrayPosition; i < tempBeans.length; i++) {
-      tempBeans[i] = listeners[i + 1];
-    }
-
-    this.listeners = tempBeans;
-  }
 
   private Class checkForListening(ListeningBean listener) {
     Vector inters = new Vector();
@@ -199,50 +186,47 @@ public class FiringMethod implements Comparable {
 
   public boolean listeningBeanOccurs(ListeningBean lBean) {
     boolean occurs = false;
+	Iterator<ListeningBean> it = listeners.iterator();
 
-    for (int i = 0; i < this.listeners.length; i++) {
-      if (lBean.getOriginalBean() == this.listeners[i].getOriginalBean()) {
-        if (this.listeners[i].getListeningStatus() != ListeningBean.STATUS_CANT_LISTEN) {
-          occurs = true;
-        }
-      }
-    }
-
+	while (it.hasNext()) {
+		ListeningBean listBean = it.next();
+		if (lBean.getOriginalBean() == listBean.getOriginalBean()){
+			if (lBean.getListeningStatus() != ListeningBean.STATUS_CANT_LISTEN){
+				occurs = true;
+			}
+		}
+	}	
     return occurs;
   }
+  
+  
+  public ListeningBean findListeningBean(Object bean) {
+	  ListeningBean lBean = null;
+
+		Iterator<ListeningBean> it = listeners.iterator();
+
+		while (it.hasNext()) {
+			ListeningBean listBean = it.next();
+			if (bean == listBean.getOriginalBean()){
+				return listBean;
+			}
+		}	
+	    return lBean;
+	  }
+  
 
   //begin accessors
   public String getMethodName() {
     return methodName;
   }
 
-  public int getPosition() {
-    return position;
-  }
 
   public void setMethodName(String methodName) {
     this.methodName = methodName;
   }
 
-  public void setPosition(int position) {
-    this.position = position;
-  }
 
-  public ListeningBean[] getListeners() {
-    return listeners;
-  }
 
-  public void setListeners(ListeningBean[] listeners) {
-    this.listeners = listeners;
-  }
-
-  public int getParentBeanPosition() {
-    return parentBeanPosition;
-  }
-
-  public void setParentBeanPosition(int parentBeanPosition) {
-    this.parentBeanPosition = parentBeanPosition;
-  }
 
   public Object getParentBean() {
     return parentBean;

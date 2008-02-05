@@ -31,6 +31,14 @@ public class CoordinationManagerTest extends TestCase {
 		coord = new CoordinationManager();
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Test method for
 	 * {@link geovista.coordination.CoordinationManager#addBean(java.lang.Object)}.
@@ -39,37 +47,44 @@ public class CoordinationManagerTest extends TestCase {
 	 */
 	public void testCoordinateObject() {
 
-		System.out.println("stuff.....");
+		System.out.println("testing coordination.....");
 
 		ExampleBean coorBean = new ExampleBean();
 		ExampleBean coorBean2 = new ExampleBean();
 		ExampleBean coorBean3 = new ExampleBean();
 		ExampleBean coorBean4 = new ExampleBean();
 
-		Class[] paramTypes = new Class[1];
-		paramTypes[0] = IndicationListener.class;
 
 		coord.addBean(coorBean);
 		coord.addBean(coorBean2);
 		coord.addBean(coorBean3);
 		coord.addBean(coorBean4);
 
-		assertTrue(coorBean2.getIndication() == 0);
-		coorBean.setArgTwo(1);
-		assertTrue(coorBean2.getIndication() == 1);
-		coord.removeBean(coorBean2);
-		coorBean.setArgTwo(2);
-		assertTrue(coorBean2.getIndication() == 1);
-
-		assertTrue(coorBean3.getIndication() == 2);
-
+		assertTrue(coorBean.getIndication() == 0);
+		coorBean2.setIndication(1);
+		coorBean2.fireIndicationChanged(1);
+		assertTrue(coorBean.getIndication() == 1);
 		coord.removeBean(coorBean);
-		coorBean.setArgTwo(5);
+
+		
+		//coorBean2.setIndication(10);
+		//coorBean2.fireIndicationChanged(10);
+		
+		
+		
+		assertTrue(coorBean.getIndication() == 1);
+		
+		//duplicate removal
+		//coord.removeBean(coorBean);
+
 
 		// trigger events
-		coorBean.setArgOne(10);
-		coorBean.setArgTwo(10);
+		coorBean.setIndication(10);
+		coorBean.fireIndicationChanged(10);
 
+
+		assertTrue(coorBean3.getIndication()==1);
+		
 		// let's remove, add, and remove beans and see if that goes ok
 		coord.removeBean(coorBean4);
 		coord.addBean(coorBean4);
@@ -77,8 +92,9 @@ public class CoordinationManagerTest extends TestCase {
 		coord.removeBean(coorBean4);
 		coord.removeBean(coorBean3);
 		coord.removeBean(coorBean3);
-		assertTrue(coorBean3.getIndication() == 2);
-
+		//assertTrue(coorBean3.getIndication() == 2);
+		
+		//assertTrue(coorBean.getIndication() == 0);
 		// OK, let's try some other beans.
 
 	}
