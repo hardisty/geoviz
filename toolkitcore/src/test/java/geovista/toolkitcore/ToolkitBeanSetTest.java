@@ -34,9 +34,10 @@ public class ToolkitBeanSetTest extends TestCase {
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#add(geovista.toolkitcore.ToolkitBean)}.
 	 */
 	public void testAdd() {
-		ToolkitBean bean = new ToolkitBean();
+		
         GeoMap coorBean = new GeoMap();
-		bean.setOriginalBean(coorBean);
+        ToolkitBean bean = new ToolkitBean(coorBean,"Map");
+	
 		tBeanSet.add(bean);
 		assert(tBeanSet.getBeanSet().size() == 1);
 		tBeanSet.remove(bean);
@@ -46,8 +47,9 @@ public class ToolkitBeanSetTest extends TestCase {
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#contains(geovista.toolkitcore.ToolkitBean)}.
 	 */
 	public void testContainsToolkitBean() {
-		ToolkitBean bean = new ToolkitBean();
         GeoMap coorBean = new GeoMap();
+        ToolkitBean bean = new ToolkitBean(coorBean,"Map");
+        
 		bean.setOriginalBean(coorBean);
 		tBeanSet.add(bean);
 		assert(tBeanSet.contains(bean) == true);
@@ -88,8 +90,8 @@ public class ToolkitBeanSetTest extends TestCase {
 	 * Test method for {@link geovista.toolkitcore.ToolkitBeanSet#remove(geovista.toolkitcore.ToolkitBean)}.
 	 */
 	public void testRemove() {
-		ToolkitBean bean = new ToolkitBean();
         GeoMap coorBean = new GeoMap();
+        ToolkitBean bean = new ToolkitBean(coorBean,"Map");
 		bean.setOriginalBean(coorBean);
 		tBeanSet.add(bean);
 		assert(tBeanSet.contains(bean) == true);
