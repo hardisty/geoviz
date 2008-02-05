@@ -26,6 +26,7 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,8 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * This class takes a set of Java arrays of type double[], int[], boolean[], or
@@ -74,6 +77,7 @@ public class DataSetForApps implements TableModel {
 	public static final int SPATIAL_TYPE_LINE = 1;
 	public static final int SPATIAL_TYPE_POLYGON = 2;
 	public static final int SPATIAL_TYPE_RASTER = 3;
+	public static final int SPATIAL_TYPE_GEOMETRY = 4;
 
 	private transient int spatialType = DataSetForApps.SPATIAL_TYPE_NONE;
 
@@ -90,6 +94,8 @@ public class DataSetForApps implements TableModel {
 	private transient int numNumericAttributes;
 	private transient int numObservations;
 	private transient int[] dataType;
+	
+	private transient SpatialWeights spatialWeights;
 	private transient EventListenerList listenerList;
 	final static Logger logger = Logger.getLogger(DataSetForApps.class.getName());
 	public DataSetForApps() {
@@ -327,6 +333,15 @@ public class DataSetForApps implements TableModel {
 		}
 		return null;
 	}
+	
+	public List<Integer> getNeighbors(int id){
+		return this.spatialWeights.getNeighbor(id);
+	}
+	
+	
+	public SpatialWeights getSpatialWeights(){
+		return this.spatialWeights;
+	}
 
 	/**
 	 * Returns the first instance of a GeneralPath[] found in the data set,
@@ -369,6 +384,18 @@ public class DataSetForApps implements TableModel {
 		return null;
 	}
 
+	/**
+	 * Returns the first instance of a Point2D[] found in the data set,
+	 * searching from last to first, or else null if none exists.
+	 */
+	public Geometry[] getGeomData() {
+		for (int i = this.dataObjectOriginal.length - 1; i > -1; i--) {
+			if (this.dataObjectOriginal[i] instanceof Geometry[]) {
+				return (Geometry[]) this.dataObjectOriginal[i];
+			}
+		}
+		return null;
+	}
 	// /**
 	// * Returns the first instance of a ShapeFile found in the data set,
 	// * searching from last to first, or else null if none exists.
@@ -503,7 +530,9 @@ public class DataSetForApps implements TableModel {
 		dataType = new int[len];
 		numNumericAttributes = 0;
 		for (int i = 0; i < len; i++) {
-
+			if (data[i] instanceof SpatialWeights){
+				this.spatialWeights = (SpatialWeights)data[i];
+			}
 			if (data[i + 1] instanceof String[]) {
 				String attrName = this.attributeNames[i].toLowerCase();
 				if (attrName.endsWith("name")) {
@@ -527,6 +556,8 @@ public class DataSetForApps implements TableModel {
 		}
 
 		for (int i = 0; i < data.length; i++) {
+
+			
 			if (data[i] instanceof Shape[]) {
 				Shape[] temp = ((Shape[]) data[i]);
 				
@@ -541,9 +572,17 @@ public class DataSetForApps implements TableModel {
 				this.spatialType = DataSetForApps.SPATIAL_TYPE_POINT;
 
 				break;
-			}
+			} else if (data[i] instanceof Geometry[]){
+				this.spatialType = DataSetForApps.SPATIAL_TYPE_GEOMETRY;
+				break;
+			} 
+			
 		}
-
+		for (int i = 0; i < data.length; i++) {
+			if (data[i] instanceof SpatialWeights){
+				this.spatialWeights = (SpatialWeights)data[i];
+			}
+		}	
 		int otherInfo = data.length - 1 - len; // Info objects are arrays
 												// besides attribute object,
 												// data objects and observ name

@@ -40,7 +40,7 @@ public class ArraySort2D {
 			if (data[index] > o.data[index]) {
 				return 1;
 			}
-			// not greater, not lessor, must be equal.
+			// not greater, not lesser, must be equal.
 			return 0;
 		}
 
