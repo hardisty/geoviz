@@ -254,7 +254,7 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 	 * removes an IndicationListener from the button
 	 */
 	public void removeIndicationListener(IndicationListener l) {
-		this.scatterPlot.addIndicationListener(l);
+		this.scatterPlot.removeIndicationListener(l);
 	}
 
 //	/**
