@@ -39,8 +39,12 @@
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
-	<classpathentry kind="lib" path="lib/jts-1.8.jar"/>
 	<classpathentry kind="lib" path="lib/smack.jar"/>
 	<classpathentry kind="lib" path="lib/smackx.jar"/>
+	<classpathentry kind="lib" path="lib/jts-1.9.jar"/>
+	<classpathentry kind="lib" path="/testing/libs/gt2-api-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/testing/libs/gt2-main-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/testing/libs/gt2-shapefile-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/testing/libs/gt2-metadata-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
