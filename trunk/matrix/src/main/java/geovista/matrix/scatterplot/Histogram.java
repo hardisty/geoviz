@@ -17,12 +17,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -39,20 +43,23 @@ import javax.swing.event.EventListenerList;
 
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 
-public class Histogram extends JPanel implements MouseListener, ComponentListener, DataSetListener, SelectionListener{
+public class Histogram extends JPanel implements MouseListener, MouseMotionListener, ComponentListener, DataSetListener, SelectionListener, IndicationListener{
 	private static double AXISSPACEPORTION = 1.0/6.0;
 	private static int DEFAULT_HIST_NUM = 20;
 	transient private double[] data;
+	transient private double[] sortedData;
 	transient private String variableName;
 	transient private DataArray dataArray;
 	transient private DataArray histArray;
 	transient private double[] histogramArray;
 	transient private double[] accumulativeFrequency;
 	transient private double[] dataX;
-	 private int histNumber = DEFAULT_HIST_NUM;
+	 private int binCount = DEFAULT_HIST_NUM;
 	transient private double barWidth;
 	private boolean axisOn = true;
 	transient private boolean accFrequency = false;
@@ -70,12 +77,18 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
     transient private int[] classBoundariesInt;
 	//private Vector selRecords = new Vector();
 	transient private BitSet selectedRecords;
-	transient private Vector[] histRecords;
+	transient private int indicatedObs;
+	transient private int indicatedBin;
+	transient private Vector<Integer>[] histRecords;
 	transient private Rectangle[] histRecs;
-	transient private double[] selectionArray; //the count of seleced observation in each histogram bin.
+	transient private double[] selectionArray; //the count of selected observation in each histogram bin.
 	transient private Color background;
 	transient private Color foreground;
          private Color histFillColor = Color.gray;
+         private Color indicationColor = Color.green;
+         private float strokeSize = 3f;
+         BasicStroke stroke = new BasicStroke(strokeSize,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+         
 	transient private JPopupMenu popup;
 	transient private JDialog dialog1;
 	transient private JDialog dialog2;
@@ -90,17 +103,11 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
     	Dimension size = new Dimension(300,200);
       this.setPreferredSize(size);
       this.setSize(size);
-    }
-
-	public void setData (double[] data){
-		this.data = data;
-		this.dataArray = new DataArray(data);
-		this.xAxisExtents = (double[])dataArray.getExtent().clone();
-		this.selectedRecords = new BitSet(data.length);
-		histogramCalculation ();
-		this.addComponentListener(this);
-		this.setupDataforDisplay();
-		this.setAccumulativeFrequency();
+      this.indicatedBin = -1;//deslected
+      
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		
         //Create the popup menu.
 		popup = new JPopupMenu();
 		JMenuItem menuItem = new JMenuItem("Set Histogram Range");
@@ -140,7 +147,22 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 			}
 		});
 		popup.add(menuItem);
-		addMouseListener(this);
+		this.addComponentListener(this);
+    }
+
+	public void setData (double[] data){
+		this.data = data;
+		//this.sortedData = new double[data.length];
+		//System.arraycopy(data, 0, sortedData, 0, this.data.length);
+		//Arrays.sort(sortedData);
+		this.dataArray = new DataArray(data);
+		this.xAxisExtents = (double[])dataArray.getExtent().clone();
+		this.selectedRecords = new BitSet(data.length);
+		histogramCalculation();
+		this.setupDataforDisplay();
+		this.setAccumulativeFrequency();
+
+
 	}
 
 	public double[] getData (){
@@ -157,13 +179,13 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	}
 
 	public void setHistNumber (int num){
-		this.histNumber = num;
+		this.binCount = num;
 		this.setData(this.data);
 		
 	}
 
 	public int getHistNumber (){
-	    return this.histNumber;
+	    return this.binCount;
 	}
 
 	public void setAxisOn (boolean axisOn){
@@ -208,18 +230,20 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 
 	public void setSelections(BitSet selectedObs){ 
 		this.selectedRecords = selectedObs;
-		if (this.selectionArray == null || this.selectionArray.length != this.histNumber){
-			this.selectionArray = new double[this.histNumber];
+		//reset selectionarray
+		if (this.selectionArray == null || this.selectionArray.length != this.binCount){
+			this.selectionArray = new double[this.binCount];
 		} else {
 			for (int i = 0; i < this.selectionArray.length; i ++){
 				this.selectionArray[i] = 0;
 			}
 		}
-		for(int i = 0; i < this.selectedRecords.length(); i ++){
+		//add selected observations to the appropriate bins
+		for(int i = 0; i < this.data.length; i ++){
 			int j;
 			if (this.selectedRecords.get(i)){
 				j=(int)Math.floor((data[i]-xAxisExtents[0])/barWidth);
-				j=((this.histNumber<=j) ? this.histNumber-1 :j);
+				j=((this.binCount<=j) ? this.binCount-1 :j);
 				this.selectionArray[j] ++;
 			}
 		}
@@ -280,38 +304,39 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 		if (data == null){
 			return;
 		}
-		if (data.length < this.histNumber){
-			this.histNumber = data.length;
+		if (data.length < this.binCount){
+			this.binCount = data.length;
 		}
 
-		this.histogramArray = new double[this.histNumber];
-		this.accumulativeFrequency = new double[this.histNumber];
-		this.dataX = new double[this.histNumber];
-		this.histRecords = new Vector[this.histNumber];
-		this.histRecs = new Rectangle[this.histNumber];
+		this.histogramArray = new double[this.binCount];
+		this.accumulativeFrequency = new double[this.binCount];
+		this.dataX = new double[this.binCount];
+		this.histRecords = new Vector[this.binCount];
+		this.histRecs = new Rectangle[this.binCount];
 
-		for (int i = 0; i < this.histNumber; i ++){
-			histRecords[i] = new Vector();
+		for (int i = 0; i < this.binCount; i ++){
+			histRecords[i] = new Vector<Integer>();
 		}
 
-		barWidth = (xAxisExtents[1] - xAxisExtents[0])/ (double)histNumber;
-
+		barWidth = (xAxisExtents[1] - xAxisExtents[0])/ (double)binCount;
+		double[] binMedians = new double[binCount];
+		
 		for (int i = 0; i < data.length; i ++){
 			if (data[i]>=xAxisExtents[0]&&data[i]<=xAxisExtents[1]) {
 				int j=(int)Math.floor((data[i]-xAxisExtents[0])/barWidth);
-				j=((this.histNumber<=j) ? this.histNumber-1 :j);
+				j=((this.binCount<=j) ? this.binCount-1 :j);
+				
 				this.histogramArray[j] ++;
-				this.histRecords[j].add(new Integer(i));
+				this.histRecords[j].add(i);
 			}
 		}
 
-		for (int i = 0; i < this.histNumber; i++){
+		for (int i = 0; i < this.binCount; i++){
 		    dataX[i] = i * barWidth + xAxisExtents[0];
 			if (i == 0){
 				this.accumulativeFrequency[i] = this.histogramArray[i];
 			}else{
-			    this.accumulativeFrequency[i] = this.accumulativeFrequency[i-1]+
-				this.histogramArray[i];
+			    this.accumulativeFrequency[i] = this.accumulativeFrequency[i-1]+ this.histogramArray[i];
 			}
 		}
 
@@ -329,22 +354,29 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 		if (this.axisOn == true){
 			drawAxis(g);
 		}
-		drawPlot(g);
+		drawBars(g);
+		fillIndication(g);
 		if (this.selectionArray != null){
 			drawSelection(g);
 		}
 		if (this.accFrequency == true){
 		    drawAccumulativeFrequency(g);
 		}
-                if (this.classBoundariesInt != null){
-                  logger.finest("class boundaries not null");
-                  this.drawClassBoundaries(g);
-                }
+        if (this.classBoundariesInt != null){
+            logger.finest("class boundaries not null");
+            this.drawClassBoundaries(g);
+        }
+        drawIndication(g);
+        
 	}
 
 
-	private void drawPlot (Graphics g) {
-	    int len = this.histNumber;
+	private void drawBars (Graphics g) {
+	    int len = this.binCount;
+	    if (this.exsInt == null){
+	    	logger.warning("Histogram, drawBars, trying to draw data without x data");
+	    	return;
+	    }
 		for (int i = 0; i < len-1; i ++){
 			g.drawRect(this.exsInt[i], this.whyInt[i], this.exsInt[i+1]-this.exsInt[i], this.plotOriginY - this.whyInt[i]);
                         if (this.histFillColor != null){
@@ -364,6 +396,8 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
                   g.setColor(this.foreground);
                 }
 	}
+	
+
 
 	private void setSelectionScreen(){
 		this.selectionInt = new int[this.selectionArray.length];
@@ -373,7 +407,7 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	}
 
 	private void drawSelection (Graphics g){
-		for (int i = 0; i < this.histNumber-1; i ++){
+		for (int i = 0; i < this.binCount-1; i ++){
 			if (this.selectionArray[i] > 0){
 				g.drawRect(this.exsInt[i], this.selectionInt[i], this.exsInt[i+1]-this.exsInt[i], this.plotOriginY - this.selectionInt[i]);
 				g.setColor(Color.blue);
@@ -381,14 +415,69 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 				g.setColor(foreground);
 			}
 		}
-		if (selectionArray[this.histNumber-1] > 0){
-		g.drawRect(this.exsInt[this.histNumber-1], this.selectionInt[this.histNumber-1], this.plotEndX-this.exsInt[this.histNumber-1], this.plotOriginY - this.selectionInt[this.histNumber-1]);
+		if (selectionArray[this.binCount-1] > 0){
+		g.drawRect(this.exsInt[this.binCount-1], this.selectionInt[this.binCount-1], this.plotEndX-this.exsInt[this.binCount-1], this.plotOriginY - this.selectionInt[this.binCount-1]);
 		g.setColor(Color.blue);
-		g.fillRect(this.exsInt[this.histNumber-1]+1, this.selectionInt[this.histNumber-1]+1, this.plotEndX-this.exsInt[this.histNumber-1]-1, this.plotOriginY - this.selectionInt[this.histNumber-1]-1);
+		g.fillRect(this.exsInt[this.binCount-1]+1, this.selectionInt[this.binCount-1]+1, this.plotEndX-this.exsInt[this.binCount-1]-1, this.plotOriginY - this.selectionInt[this.binCount-1]-1);
 		g.setColor(this.foreground);
 		}
 	}
+	private void drawIndication (Graphics g){
+	    int len = this.binCount;
+	    if(indicatedBin < 0){
+	    	return;
+	    }
+	    Graphics2D g2 = (Graphics2D)g;
+	    Stroke currStroke = g2.getStroke();
+	    RenderingHints hints = g2.getRenderingHints();
+	    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	    g2.setStroke(this.stroke);
+	    
+	    
 
+	    if (indicatedBin < len-1){
+			g2.drawRect(this.exsInt[indicatedBin], this.whyInt[indicatedBin], this.exsInt[indicatedBin+1]-this.exsInt[indicatedBin], this.plotOriginY - this.whyInt[indicatedBin]);
+
+                        
+		} else if (indicatedBin == len-1) {
+                g2.drawRect(this.exsInt[len-1], this.whyInt[len-1], this.plotEndX-this.exsInt[len-1], this.plotOriginY - this.whyInt[len-1]);
+
+               
+		}
+	    
+	    
+	    g2.setStroke(currStroke);
+	    g2.setRenderingHints(hints);
+	}
+	private void fillIndication (Graphics g){
+	    int len = this.binCount;
+	    if(indicatedBin < 0){
+	    	return;
+	    }
+	    
+
+	    if (indicatedBin < len-1){
+			
+                          g.setColor(this.indicationColor);
+                          g.fillRect(this.exsInt[indicatedBin] + 1, this.whyInt[indicatedBin] + 1,
+                                     this.exsInt[indicatedBin + 1] - this.exsInt[indicatedBin] - 1,
+                                     this.plotOriginY - this.whyInt[indicatedBin] - 1);
+                          
+  
+                          
+                          g.setColor(foreground);
+                        
+		} else if (indicatedBin == len-1) {
+              
+                  g.setColor(this.indicationColor);
+                  g.fillRect(this.exsInt[len - 1] + 1, this.whyInt[len - 1] + 1,
+                             this.plotEndX - this.exsInt[len - 1] - 1,
+                             this.plotOriginY - this.whyInt[len - 1] - 1);
+                  g.setColor(this.foreground);
+               
+		}
+		
+	}
 	private void drawAxis (Graphics g) {
 		int plotWidth, plotHeight;
 		plotWidth = (int)this.getSize().getWidth();
@@ -415,6 +504,10 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 		g.setFont(font);
 		//draw the labels on y axis (frequency).
 		String scaleStringY;
+		if (histArray == null){
+			logger.warning("Histogram, drawAxis, histArray is null.");
+			return;
+		}
 		double barNumber = this.histArray.getTickNumber();
 		double yBarDistance = ((plotOriginY - plotEndY)/barNumber);
 			logger.finest("drawaxis: "+plotOriginY+" "+plotEndY+" "+yBarDistance+" "+barNumber);
@@ -464,6 +557,7 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	}
 
 	private void setAccumulativeFrequency(){
+		
 		this.accumulativeInt = new int[this.accumulativeFrequency.length];
 		double scale;
 		scale = getScale(plotOriginY, plotEndY, 0, this.data.length);
@@ -471,7 +565,7 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	}
 
 	private void drawAccumulativeFrequency (Graphics g){
-	    int len = this.histNumber;
+	    int len = this.binCount;
 		g.setColor(Color.blue);
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
@@ -503,6 +597,12 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 
     public void componentResized(ComponentEvent e) {
 		logger.finest("in component resized");
+		if(this.data == null){
+			return;
+		}
+		if (this.accumulativeFrequency == null){
+			this.histogramCalculation();
+		}
 		this.setupDataforDisplay();
 		this.setAccumulativeFrequency();
 		this.repaint();
@@ -546,7 +646,12 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	}
 
 	private void setupDataforDisplay(){
+		if (xAxisExtents != null){
 		logger.finest("In setup data for display ..." + xAxisExtents[0]);
+		} else {
+			logger.info("Histogram trying to setupDataFordisplay and xAxisExtents = null");
+			return;
+		}
 		if (axisOn){
 		    plotOriginX = (int)(this.getWidth()*AXISSPACEPORTION);
 		    plotOriginY = (int)(this.getHeight()*(1 - AXISSPACEPORTION));
@@ -558,7 +663,7 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 			plotEndX = (int)(this.getSize().getWidth()) - 3;
 			plotEndY = 3;
 		}
-		int len = this.histNumber;
+		int len = this.binCount;
 		exsInt = new int[len];
 		whyInt = new int[len];
             //get positions on screen
@@ -568,11 +673,11 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 		scale = getScale(plotOriginY, plotEndY, yAxisExtents[0], yAxisExtents[1]);
 		whyInt = getValueScreen(this.histogramArray, scale, plotOriginY, yAxisExtents[0]);
 		logger.finest("setupdisplay: "+plotOriginY+" "+plotEndY+" "+scale);
-		for (int i = 0; i < this.histNumber -1; i ++){
+		for (int i = 0; i < this.binCount -1; i ++){
 			this.histRecs[i] = new Rectangle (this.exsInt[i], this.whyInt[i],
 			this.exsInt[i+1]-this.exsInt[i], this.plotOriginY - this.whyInt[i]);
 		}
-		this.histRecs[this.histNumber-1] = new Rectangle (this.exsInt[len-1],
+		this.histRecs[this.binCount-1] = new Rectangle (this.exsInt[len-1],
 				this.whyInt[len-1], this.plotEndX-this.exsInt[len-1], this.plotOriginY - this.whyInt[len-1]);
                //get class boundaries' positions on screen
                if(this.classBoundareis != null){
@@ -622,7 +727,7 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 				resetButton_actionPerformed(e);
 			}
 		});
-		histNumberField.setText(Integer.toString(this.histNumber));
+		histNumberField.setText(Integer.toString(this.binCount));
 		this.xAxisMinField.setText(Double.toString(this.xAxisExtents[0]));
 		this.xAxisMaxField.setText(Double.toString(this.xAxisExtents[1]));
 		dialog1.getContentPane().add(new JLabel(("Histogram Number")));
@@ -643,7 +748,7 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
      */
 	private void actionButton_actionPerformed (ActionEvent e) {
         //get the input data from text field
-		this.histNumber = Integer.parseInt(histNumberField.getText());
+		this.binCount = Integer.parseInt(histNumberField.getText());
 		xAxisExtents[0] = Double.parseDouble(xAxisMinField.getText());
 		xAxisExtents[1] = Double.parseDouble(xAxisMaxField.getText());
 		this.histogramCalculation ();
@@ -660,11 +765,11 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
      * @param e
      */
 	private void resetButton_actionPerformed (ActionEvent e) {
-		this.histNumber = Histogram.DEFAULT_HIST_NUM;
+		this.binCount = Histogram.DEFAULT_HIST_NUM;
 		this.xAxisExtents = (double[])dataArray.getExtent().clone();
 		//yAxisExtents = (double[])this.histArray.getMaxMinCoorValue().clone();
 
-		histNumberField.setText(Integer.toString(this.histNumber));
+		histNumberField.setText(Integer.toString(this.binCount));
 		xAxisMinField.setText(Double.toString(xAxisExtents[0]));
 		xAxisMaxField.setText(Double.toString(xAxisExtents[1]));
 		this.histogramCalculation ();
@@ -766,37 +871,37 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 	}
 
 	public void mouseClicked(MouseEvent e){
-		int count = e.getClickCount();
+		
 		//With shift pressed, it will continue to select.
 		if (!(e.isShiftDown())){
 //			this.selRecords.clear();
 			this.selectedRecords.clear();
 
-			if (this.selectionArray == null || this.selectionArray.length != this.histNumber){
-				this.selectionArray = new double[this.histNumber];
+			if (this.selectionArray == null || this.selectionArray.length != this.binCount){
+				this.selectionArray = new double[this.binCount];
 			} else {
 				for (int i = 0; i < this.selectionArray.length; i ++){
 					this.selectionArray[i] = 0;
 				}
 			}
 		}
-		int[] mousePos = new int[2];
-		mousePos[0] = e.getX();
-		mousePos[1] = e.getY();
-		//single click, select performed.
+
+		//double click, select performed.//this is dog slow, why?
 		
-		if (count == 2) {
-			for (int i = 0; i < this.histNumber; i ++){
-				if (this.histRecs[i].contains(mousePos[0],mousePos[1])){
+		//if (count == 2) {
+			for (int i = 0; i < this.binCount; i ++){
+				if (e.getX() >= this.histRecs[i].x && e.getX() < this.histRecs[i].getMaxX()){
+				//if (this.histRecs[i].contains(e.getX(),e.getY())){
 					for (int j = 0; j < this.histRecords[i].size(); j ++){
 						int index = ((Integer)this.histRecords[i].get(j)).intValue();
 						this.selectedRecords.set(index, true);
 						
 					}
 					
-					//fireActionPerformed ();
-					continue;
+					//fireActionPerformed ();//slowness is here....
+					//continue;
 				}
+				
 			}
 			
 			int counter = 0;
@@ -812,9 +917,8 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 			}
 			this.fireSelectionChanged(selInts);
 			this.setSelections(this.selectedRecords);
-			//this.setSelectionScreen();
 			repaint();
-		}
+		//}
 	}
 
 	public void mousePressed(MouseEvent e){
@@ -827,7 +931,22 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 			maybeShowPopup(e);
 		}
 	}
+	public void mouseDragged(MouseEvent e) {
+		
+		
+	}
 
+	public void mouseMoved(MouseEvent e) {
+		for (int i = 0; i < this.binCount; i ++){
+			if (e.getX() >= this.histRecs[i].x && e.getX() < this.histRecs[i].getMaxX()){
+				this.indicatedBin = i;
+				this.repaint();
+				return;
+			}
+		}	
+		this.indicatedBin = -1;
+		this.repaint();
+	}
 	public void mouseEntered(MouseEvent e){
 	}
 
@@ -922,13 +1041,33 @@ public class Histogram extends JPanel implements MouseListener, ComponentListene
 		if (selected == null) {
 			return;
 		} else {
+			//if (this.sel)
 			this.selectedRecords.clear();
 			for (int i = 0; i < selected.length; i++) {
-				this.selectedRecords.set(i,true);
+				int whichObs = selected[i];
+				this.selectedRecords.set(whichObs,true);
+		
 			}
 		}
 		this.setSelections(this.selectedRecords);
 		this.repaint();
 		
 	}
+
+	public void indicationChanged(IndicationEvent e) {
+		this.indicatedObs = e.getIndication();
+		if (indicatedObs < 0){
+			this.indicatedBin = -1;
+			this.repaint();
+			return;
+		}
+		int bin;
+
+		bin=(int)Math.floor((data[this.indicatedObs]-xAxisExtents[0])/barWidth);
+		bin=((this.binCount<=bin) ? this.binCount-1 :bin);
+		this.indicatedBin = bin;
+		this.repaint();
+	}
+
+
 }

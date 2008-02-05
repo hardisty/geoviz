@@ -28,11 +28,13 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 
 public class SingleHistogram extends JPanel implements DataSetListener,
-		SelectionListener, ActionListener, ChangeListener, TableModelListener {
+		SelectionListener, ActionListener, ChangeListener, TableModelListener, IndicationListener {
 	Histogram histo;
 	JSlider binSlider;
 	JLabel nBins;
@@ -76,7 +78,7 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 	 * @see EventListenerList
 	 */
 	public void removeSelectionListener(SelectionListener l) {
-		histo.addSelectionListener(l);
+		histo.removeSelectionListener(l);
 
 	}
 
@@ -445,5 +447,10 @@ public class SingleHistogram extends JPanel implements DataSetListener,
         logger.finest("Math.random:" + "\t" + freq);
 
    }
+
+	public void indicationChanged(IndicationEvent e) {
+		this.histo.indicationChanged(e);
+		
+	}
 	
 }
