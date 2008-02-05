@@ -384,6 +384,10 @@ public class CartogramWizard extends JPanel implements ActionListener {
             this.readShapeFile(inputFileName);
             //this.useProj = this.projCheckBox.isSelected();
         } catch (Exception ex) {
+        	//how about let's use a shapefile that sits in the class files and is 
+        	//sure to be available. 
+        	//also, it would be nice if this worked even when there is no local disk acess....
+        	
             JOptionPane.showMessageDialog(this,
                                           "Sorry, could not correctly read input file: " +
                                           inputFileName +
