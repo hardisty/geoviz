@@ -52,6 +52,8 @@ import geovista.matrix.scatterplot.SingleScatterPlot;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
 import geovista.toolkitcore.data.GeoDataCartogram;
+import geovista.toolkitcore.data.GeoDataNCTC;
+import geovista.toolkitcore.data.GeoDataNiger;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
@@ -106,59 +108,62 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	/**
 	 * 
 	 */
-	final static Logger logger = Logger
+	final transient static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
 	// collection of classes to add
 	ArrayList toolMenuList = new ArrayList();
 	HashMap toolClassHash = new HashMap();
 
 	// collection of active beans
-	ToolkitBeanSet tBeanSet = new ToolkitBeanSet();
+	ToolkitBeanSet tBeanSet;
 
 	// Create JDesktopPane to hold the internal frames
 	JDesktopPane desktop = new JDesktopPane();
 
 	// managing our layouts
 
-	String filePath = "";
+	String filePath = "48States";
 	JFileChooser fileChooser;
 	ShapeFileDataReader shpRead = new ShapeFileDataReader();
 	ShapeFileProjection shpProj = new ShapeFileProjection();
 	DataSetBroadcaster dataCaster = new DataSetBroadcaster();
 	CoordinationManager coord = new CoordinationManager();
-	DataSetForApps dataSet;
-	Vector backgroundDataSets; // every item in this should be a DataSetForApps
-	JMenuBar jMenuBar1 = new JMenuBar();
-	JMenu menuFile = new JMenu();
-	JMenuItem menuItemLoadShp = new JMenuItem();
+	transient DataSetForApps dataSet;
+	transient Vector backgroundDataSets; // every item in this should be a DataSetForApps
+	transient JMenuBar jMenuBar1 = new JMenuBar();
+	transient JMenu menuFile = new JMenu();
+	transient JMenuItem menuItemLoadShp = new JMenuItem();
 
-	JMenu menuAddTool = new JMenu();
-	JMenuItem menuItemLoadStates = new JMenuItem();
-	JMenuItem menuItemLoadSC = new JMenuItem();
-	JMenuItem menuItemLoadSCCities = new JMenuItem();
-	JMenuItem menuItemLoadCartogram = new JMenuItem();
-	JMenuItem menuItemLoadBackgroundShape = new JMenuItem();
-	JMenuItem menuItemLoadSCBackgroundShape = new JMenuItem();
-	JMenu menuRemoveTool = new JMenu();
-	JMenuItem menuItemRemoveAllTools = new JMenuItem();
-	JMenu menuAbout = new JMenu();
-	JMenu menuHelp = new JMenu();
-	JMenuItem menuItemAboutGeoviz = new JMenuItem();
-	JMenuItem menuItemAboutGeoVista = new JMenuItem();
-	JMenuItem menuItemHelp = new JMenuItem();
-	JMenuItem menuItemOpenLayout = new JMenuItem();
-	JMenuItem menuItemSaveLayout = new JMenuItem();
-	JMenuItem menuItemExit = new JMenuItem();
-	JMenu menuCollaborate = new JMenu();
-	JMenuItem menuItemEnableCollaboration = new JMenuItem();
-	JMenuItem menuItemDisableCollaboration = new JMenuItem();
-	JMenuItem menuItemConnect = new JMenuItem();
-	JMenuItem menuItemDisconnect = new JMenuItem();
-	JMenu menuScreenShot = new JMenu();
-	JMenuItem menuItemCopyApplicationToClipboard = new JMenuItem();
-	JMenuItem menuItemCopySelectedWindowToClipboard = new JMenuItem();
-	JMenuItem menuItemSaveWholeImageToFile = new JMenuItem();
-	JMenuItem menuItemSaveSelectedWindowToFile = new JMenuItem();
+	transient JMenu menuAddTool = new JMenu();
+	transient JMenuItem menuItemLoadStates = new JMenuItem();
+	transient JMenuItem menuItemLoadSC = new JMenuItem();
+	transient JMenuItem menuItemLoadSCCities = new JMenuItem();
+	transient JMenuItem menuItemLoadCartogram = new JMenuItem();
+	transient JMenuItem menuItemLoadBackgroundShape = new JMenuItem();
+	transient JMenuItem menuItemLoadSCBackgroundShape = new JMenuItem();
+	transient JMenu menuRemoveTool = new JMenu();
+	transient JMenuItem menuItemRemoveAllTools = new JMenuItem();
+	transient JMenu menuAbout = new JMenu();
+	transient JMenu menuHelp = new JMenu();
+	transient JMenuItem menuItemAboutGeoviz = new JMenuItem();
+	transient JMenuItem menuItemAboutGeoVista = new JMenuItem();
+	transient JMenuItem menuItemHelp = new JMenuItem();
+	transient JMenuItem menuItemOpenLayout = new JMenuItem();
+	transient JMenuItem menuItemSaveLayout = new JMenuItem();
+	transient JMenuItem menuItemExit = new JMenuItem();
+	transient JMenu menuCollaborate = new JMenu();
+	transient JMenuItem menuItemEnableCollaboration = new JMenuItem();
+	transient JMenuItem menuItemDisableCollaboration = new JMenuItem();
+	transient JMenuItem menuItemConnect = new JMenuItem();
+	transient JMenuItem menuItemDisconnect = new JMenuItem();
+	transient JMenu menuScreenShot = new JMenu();
+	transient JMenuItem menuItemCopyApplicationToClipboard = new JMenuItem();
+	transient JMenuItem menuItemCopySelectedWindowToClipboard = new JMenuItem();
+	transient JMenuItem menuItemSaveWholeImageToFile = new JMenuItem();
+	transient JMenuItem menuItemSaveSelectedWindowToFile = new JMenuItem();
+
+	
+	
 	// how about svg and postscript?
 
 	USCHelp help;
@@ -167,15 +172,28 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	static boolean DEBUG = false;
 
+	/*need to call init after the null ctr
+	 * as an alternative with initializaiton, call 
+	 * GeoVizToolkit("")
+	 */
+	public GeoVizToolkit(){
+		super();
+	}
+	
 	public GeoVizToolkit(String fileNameIn) {
 		new GeoVizToolkit(fileNameIn, false, true);
 		// Thread.dumpStack();
 	}
 
+	
 	public GeoVizToolkit(String fileNameIn, boolean useProj, boolean useAux) {
 
 		super("GeoViz Toolkit");
 
+		init(fileNameIn, useProj);
+	}
+
+	public void init(String fileNameIn, boolean useProj) {
 		desktop.setBackground(new Color(20, 20, 80));
 		this.useProj = useProj;
 		getContentPane().add(desktop, BorderLayout.CENTER);
@@ -188,7 +206,11 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 
 		if (fileNameIn == null || fileNameIn.equals("")) {
-			fileNameIn = "48States";
+			fileNameIn = "C:\\data\\grants\\NCI 07\\Files_for_Frank\\Health_Care_2000_Smaller.shp";
+			// fileNameIn = "C:\\data\\grants\\NCI
+			// 07\\Files_for_Frank\\Health_Care_2000_Smaller.shp";
+			fileNameIn = this.filePath;
+			
 		}
 
 		loadData(fileNameIn);
@@ -210,9 +232,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		setVisible(true);
 
 		setExtendedState(Frame.MAXIMIZED_BOTH);
-
-		tBeanSet = ToolkitLayoutIO.openStarPlotMapLayout();
-
+		
+		
+		//if we are coming up from xml format, this might have already been set.
+		if (tBeanSet == null){
+			tBeanSet = ToolkitLayoutIO.openStarPlotMapLayout();
+		}
 		addToolkitBeanSet(tBeanSet);
 
 		this.repaint();
@@ -370,13 +395,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		Object newBean = newToolkitBean.getOriginalBean();
 
-		if (dataSet == null) {
-			System.out.println("Data set is null, why?");
-			return;
-		} else {
-			System.out.println("Data set is not null.");
-		}
-
 		if (newBean instanceof DataSetListener) {
 			DataSetListener dataListener = (DataSetListener) newBean;
 			dataListener.dataSetChanged(new DataSetEvent(dataSet, this));
@@ -533,17 +551,18 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void loadData(String name) {
+		this.filePath = name;
 		logger
-				.info("geovizdemo, loadData, dataSetIsNull ="
+				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
 		Object[] newDataSet = createData(name);
 		logger
-				.info("geovizdemo, loadData, dataSetIsNull ="
+				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
 		dataSet = new DataSetForApps(newDataSet);
 		dataCaster.setAndFireDataSet(newDataSet);
 		logger
-				.info("geovizdemo, loadData, dataSetIsNull ="
+				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
 
 	}
@@ -555,32 +574,40 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		Object[] newDataSet = null;
 		if (name.equals("48States")) {
 			GeoDataGeneralizedStates statesData = new GeoDataGeneralizedStates();
-			Object[] tempDataSet = statesData.getDataSet();
-
-			newDataSet = shpRead.convertShpToShape(tempDataSet);
+			newDataSet = statesData.getDataSet();
 
 		} else if (name.equals("SC")) {
 			GeoDataSCarolina carolinaData = new GeoDataSCarolina();
-			Object[] tempDataSet = carolinaData.getDataSet();
-			newDataSet = shpRead.convertShpToShape(tempDataSet);
+			newDataSet = carolinaData.getDataSet();
 
 		} else if (name.equals("SCCities")) {
 			GeoDataSCarolinaCities carolinaData = new GeoDataSCarolinaCities();
-			Object[] tempDataSet = carolinaData.getDataSet();
-			newDataSet = shpRead.convertShpToShape(tempDataSet);
+			newDataSet = carolinaData.getDataSet();
 
 		} else if (name.equals("Cartogram")) {
 			GeoDataCartogram cartogramData = new GeoDataCartogram();
-			Object[] tempDataSet = cartogramData.getDataSet();
-			newDataSet = shpRead.convertShpToShape(tempDataSet);
+			newDataSet = cartogramData.getDataSet();
 
-		} else if (name.equals("PennaPCA")) {
+		}  
+	 else if (name.equals("nctc")) { 
+		GeoDataNCTC cartogramData = new GeoDataNCTC();
+		newDataSet = cartogramData.getDataSet();
+
+	} 
+		
+		else if (name.equals("niger")) {
+		GeoDataNiger cartogramData = new GeoDataNiger();
+		newDataSet = cartogramData.getDataSet();
+
+	} 
+		
+		
+		else if (name.equals("PennaPCA")) {
 			// XXX hack for testing
 			GeoDataPennaPCA pennaPCAData = new GeoDataPennaPCA();
 			// GeoDataGeneralizedStates pennaPCAData = new
 			// GeoDataGeneralizedStates();
-			Object[] tempDataSet = pennaPCAData.getDataSet();
-			newDataSet = shpRead.convertShpToShape(tempDataSet);
+			newDataSet = pennaPCAData.getDataSet();
 
 		} else {
 			shpRead.setFileName(name);
@@ -591,7 +618,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 				newDataSet = shpRead.getDataSet();
 			}
 		}
-
+		this.setTitle("GeoViz Toolkit -- " + name);
 		return newDataSet;
 
 	}
@@ -636,7 +663,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		toolMenuList.add(item);
 
 	}
-
+/* There is no corresponding setter, 
+ * because it would duplicate loadData(String)
+ */
 	public String getFileName() {
 		return filePath;
 	}
@@ -848,16 +877,17 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	public static void main(String[] args) {
 
 		Logger logger = Logger.getLogger("geovista");
-		Logger mapLogger = Logger.getLogger("geovista.geoviz.map.MapCanvas");
-		logger.setLevel(Level.FINEST);
+		//Logger mapLogger = Logger.getLogger("geovista.geoviz.map.MapCanvas");
+		//logger.setLevel(Level.FINEST);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();
 		// mng.addLogger(logger);
 		// mng.addLogger(mapLogger);
+		/*
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setLevel(Level.INFO);
 		logger.addHandler(handler);
-		mapLogger.addHandler(handler);
+*/
 		try {
 			// Create a file handler that write log record to a file called
 			// my.log
@@ -878,7 +908,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+/*
 		try {
 			Class beanClass = Class.forName("geovista.collaboration.GeoJabber");
 			Object beanInstance = beanClass.newInstance();
@@ -890,7 +920,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			logger.finest("waaaa");
 			e.printStackTrace();
 		}
-
+*/
 		logger.finest("starting.....");
 		logger.finest("java.version = " + System.getProperty("java.version"));
 
@@ -995,5 +1025,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// no-op
 
 	}
+
+	public boolean isUseProj() {
+		return useProj;
+	}
+
+	public void setUseProj(boolean useProj) {
+		this.useProj = useProj;
+	}
+
+
 
 }

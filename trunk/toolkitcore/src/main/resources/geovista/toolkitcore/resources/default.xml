@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GeoVizTool_BeansLayout dataSetFullName="">
-	<bean index="0" xLocation="-1" yLocation="437" width="377"
-		height="127" uniqueName="IndicationAnimator">
-		geovista.animation.IndicationAnimator
-	</bean>
-	<bean index="1" xLocation="0" yLocation="-1" width="133"
-		height="418" uniqueName="VariablePicker">
-		geovista.geoviz.toolkitcore.VariablePicker
-	</bean>
-	<bean index="3" xLocation="544" yLocation="3" width="404"
-		height="398" uniqueName="GeoMap">
-		geovista.geoviz.map.GeoMap
-	</bean>
-	<bean index="4" xLocation="138" yLocation="1" width="400"
-		height="400" uniqueName="StarPlot">
-		edu.sc.geovista.geoviz.star.StarPlot
-	</bean>
-</GeoVizTool_BeansLayout>
+<GeoVizTool_BeansLayout dataSetFullName=""><bean index="0" xLocation="-1" yLocation="437" width="377" height="127" uniqueName="IndicationAnimator">geovista.animation.IndicationAnimator
+  </bean><bean index="1" xLocation="814" yLocation="427" width="455" height="310" uniqueName="SingleHistogram">geovista.matrix.scatterplot.SingleHistogram
+  </bean><bean index="2" xLocation="0" yLocation="-1" width="133" height="418" uniqueName="VariablePicker">geovista.common.ui.VariablePicker
+  </bean><bean index="3" xLocation="559" yLocation="17" width="463" height="397" uniqueName="StarPlotMap">geovista.geoviz.star.StarPlotMap
+  </bean><bean index="4" xLocation="138" yLocation="1" width="400" height="400" uniqueName="StarPlot">geovista.geoviz.star.StarPlot
+  </bean><bean index="5" xLocation="390" yLocation="422" width="404" height="398" uniqueName="GeoMap">geovista.geoviz.map.GeoMap
+  </bean></GeoVizTool_BeansLayout>

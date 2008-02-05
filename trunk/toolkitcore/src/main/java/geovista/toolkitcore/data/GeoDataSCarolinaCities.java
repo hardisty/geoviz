@@ -20,6 +20,11 @@
 
 package geovista.toolkitcore.data;
 
+import geovista.common.data.DataSetForApps;
+import geovista.common.data.GeoDataSource;
+import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.csv.GeogCSVReader;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
@@ -27,12 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
-
-import geovista.common.data.DataSetForApps;
-import geovista.common.data.GeoDataSource;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.readers.csv.GeogCSVReader;
-import geovista.readers.geog.ShapeFile;
 
 /**
  * Reads shapefiles from included resources
@@ -62,32 +61,8 @@ public class GeoDataSCarolinaCities implements GeoDataSource{
   }
 
   private DataSetForApps makeDataSetForApps(){
-      Object[] shpData = null;
-      shpReader = new ShapeFileDataReader();
-      try {
+	  return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(), "sccities");
 
-        Class cl = this.getClass();
-
-        InputStream isCSV = cl.getResourceAsStream("resources/sccities.csv");
-        GeogCSVReader csv = new GeogCSVReader();
-        Object[] csvData = csv.readFile(isCSV);
-        isCSV.close();
-        shpData = new Object[csvData.length + 1];
-        for (int i = 0; i < csvData.length; i++) {
-          shpData[i] = csvData[i];
-        }
-
-        InputStream isSHP = cl.getResourceAsStream("resources/sccities.shp");
-        ShapeFile shpPoints = new ShapeFile(isSHP);
-        Object pointsObj = shpReader.transform(shpPoints);
-        shpData[csvData.length] = pointsObj;
-        isSHP.close();
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-      //this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-        this.dataForApps = new DataSetForApps(shpData);
-      return dataForApps;
 
   }
 

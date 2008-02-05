@@ -21,166 +21,178 @@ package geovista.toolkitcore;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 
 /*
- This class manages a set (no duplicate elements) of ToolkitBean objects.
- It is intended to ease access to them. This implmentation is backed by a
- HashSet.
-
-
-
+ * This class manages a set (no duplicate elements) of ToolkitBean objects. It
+ * is intended to ease access to them. This implmentation is backed by a
+ * HashSet.
+ * 
+ * 
+ * 
  */
 
-
-
-
 public class ToolkitBeanSet {
-	final static Logger logger = Logger.getLogger(ToolkitBeanSet.class.getName());
-	
-	
-	private HashSet beanSet;
-	
-  public ToolkitBeanSet() {
-    this.beanSet = new HashSet();
-  }
+	final transient static Logger logger = Logger
+			.getLogger(ToolkitBeanSet.class.getName());
 
+	private HashSet<ToolkitBean> beanSet;
 
-  /*Adds the specified element to this set if it is not already present.
-   */
-  public boolean add(ToolkitBean b) {
-    return beanSet.add(b); //the HashSet should complain for us if a duplicate is added
-  }
+	public ToolkitBeanSet() {
+		this.beanSet = new HashSet();
+	}
 
-  /*Removes all of the elements from this set.
-   */
-  public void clear() {
-    beanSet.clear();
-  }
+	/*
+	 * Adds the specified element to this set if it is not already present.
+	 */
+	public boolean add(ToolkitBean b) {
+		return beanSet.add(b); // the HashSet should complain for us if a
+								// duplicate is added
+	}
 
-  /*Returns a shallow copy of this HashSet instance: the elements themselves are not cloned.
-   */
-  public Object clone() {
-	try {
-		super.clone();
-	} catch (CloneNotSupportedException e) {
-		logger.throwing(ToolkitBeanSet.class.getName(), "clone()", e);
-	}  
-    ToolkitBeanSet beanSet = new ToolkitBeanSet();
-    Iterator it = this.beanSet.iterator();
-    while (it.hasNext()) {
-      beanSet.add( (ToolkitBean) it.next());
-    }
+	/*
+	 * Removes all of the elements from this set.
+	 */
+	public void clear() {
+		beanSet.clear();
+	}
 
-    return new ToolkitBeanSet();
-  }
+	/*
+	 * Returns a shallow copy of this HashSet instance: the elements themselves
+	 * are not cloned.
+	 */
+	public Object clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			logger.throwing(ToolkitBeanSet.class.getName(), "clone()", e);
+		}
+		ToolkitBeanSet beanSet = new ToolkitBeanSet();
+		Iterator it = this.beanSet.iterator();
+		while (it.hasNext()) {
+			beanSet.add((ToolkitBean) it.next());
+		}
 
-  /*          Returns true if and only if this set contains the specified element. 
-   */
-  public boolean contains(ToolkitBean b) {
-    return this.beanSet.contains(b);
-  }
+		return new ToolkitBeanSet();
+	}
 
-  /*          Returns true if and only if this set contains the specified element. 
-   */
-  public boolean contains(JMenuItem item) {
-    Iterator it = this.beanSet.iterator();
-    while (it.hasNext()) {
-      ToolkitBean tBean = (ToolkitBean) it.next();
-      JMenuItem beanItem = tBean.getRemoveMenuItem();
-      if (item.equals(beanItem)) {
-        return true;
-      }
+	/*
+	 *           Returns true if and only if this set contains the specified
+	 * element. 
+	 */
+	public boolean contains(ToolkitBean b) {
+		return this.beanSet.contains(b);
+	}
 
-    }
+	/*
+	 *           Returns true if and only if this set contains the specified
+	 * element. 
+	 */
+	public boolean contains(JMenuItem item) {
+		Iterator it = this.beanSet.iterator();
+		while (it.hasNext()) {
+			ToolkitBean tBean = (ToolkitBean) it.next();
+			JMenuItem beanItem = tBean.getRemoveMenuItem();
+			if (item.equals(beanItem)) {
+				return true;
+			}
 
-    return false;
-  }
+		}
 
-  /*          Returns true if and only if this set contains the specified element. 
-   */
-  public boolean contains(JInternalFrame iFrame) {
-    Iterator it = this.beanSet.iterator();
-    while (it.hasNext()) {
-      ToolkitBean tBean = (ToolkitBean) it.next();
-      JInternalFrame internalFrame = tBean.getInternalFrame();
-      if (iFrame.equals(internalFrame)) {
-        return true;
-      }
+		return false;
+	}
 
-    }
+	/*
+	 *           Returns true if and only if this set contains the specified
+	 * element. 
+	 */
+	public boolean contains(JInternalFrame iFrame) {
+		Iterator it = this.beanSet.iterator();
+		while (it.hasNext()) {
+			ToolkitBean tBean = (ToolkitBean) it.next();
+			JInternalFrame internalFrame = tBean.getInternalFrame();
+			if (iFrame.equals(internalFrame)) {
+				return true;
+			}
 
-    return false;
-  }
+		}
 
-  /*          Returns the ToolkitBean associated with this JMenuItem, else
-   returns null; 
-   */
-  public ToolkitBean getToolkitBean(JMenuItem item) {
-    Iterator it = this.beanSet.iterator();
-    while (it.hasNext()) {
-      ToolkitBean tBean = (ToolkitBean) it.next();
-      JMenuItem beanItem = tBean.getRemoveMenuItem();
-      if (item.equals(beanItem)) {
-        return tBean;
-      }
-    }
-    return null;
-  }
+		return false;
+	}
 
-  /*          Returns the ToolkitBean associated with this JInternalFrame, else
-    returns null; 
-   */
+	/*
+	 *           Returns the ToolkitBean associated with this JMenuItem, else
+	 * returns null; 
+	 */
+	public ToolkitBean getToolkitBean(JMenuItem item) {
+		Iterator it = this.beanSet.iterator();
+		while (it.hasNext()) {
+			ToolkitBean tBean = (ToolkitBean) it.next();
+			JMenuItem beanItem = tBean.getRemoveMenuItem();
+			if (item.equals(beanItem)) {
+				return tBean;
+			}
+		}
+		return null;
+	}
 
-  public ToolkitBean getToolkitBean(JInternalFrame iFrame) {
-    Iterator it = this.beanSet.iterator();
-    while (it.hasNext()) {
-      ToolkitBean tBean = (ToolkitBean) it.next();
-      JInternalFrame internalFrame = tBean.getInternalFrame();
-      if (iFrame.equals(internalFrame)) {
-        return tBean;
-      }
-    }
+	/*
+	 *           Returns the ToolkitBean associated with this JInternalFrame,
+	 * else returns null; 
+	 */
 
-    return null;
-  }
+	public ToolkitBean getToolkitBean(JInternalFrame iFrame) {
+		Iterator it = this.beanSet.iterator();
+		while (it.hasNext()) {
+			ToolkitBean tBean = (ToolkitBean) it.next();
+			JInternalFrame internalFrame = tBean.getInternalFrame();
+			if (iFrame.equals(internalFrame)) {
+				return tBean;
+			}
+		}
 
-  /*           Returns true if this set contains no elements. 
-   */
-  public boolean isEmpty() {
-    return this.beanSet.isEmpty();
-  }
+		return null;
+	}
 
-  /*           Returns an iterator over the elements in this set. 
-   */
-  public Iterator iterator() {
-    return this.beanSet.iterator();
-  }
+	/*
+	 *           Returns true if this set contains no elements. 
+	 */
+	public boolean isEmpty() {
+		return this.beanSet.isEmpty();
+	}
 
-  /*           Removes the specified element from this set if it is present. 
-   */
-  /*
-   */
-  public boolean remove(ToolkitBean b) {
-    return this.beanSet.remove(b);
-  }
+	/*
+	 *           Returns an iterator over the elements in this set. 
+	 */
+	public Iterator<ToolkitBean> iterator() {
+		return this.beanSet.iterator();
+	}
 
-  /* Returns the number of elements in this set (its cardinality). 
-   */
-  public int size() {
-    return this.beanSet.size();
-  }
+	/*
+	 *           Removes the specified element from this set if it is present. 
+	 */
+	/*
+	 */
+	public boolean remove(ToolkitBean b) {
+		return this.beanSet.remove(b);
+	}
 
+	/*
+	 *  Returns the number of elements in this set (its cardinality). 
+	 */
+	public int size() {
+		return this.beanSet.size();
+	}
 
-public HashSet getBeanSet() {
-	return beanSet;
-}
+	public HashSet getBeanSet() {
+		return beanSet;
+	}
 
-
-public void setBeanSet(HashSet beanSet) {
-	this.beanSet = beanSet;
-}
+	public void setBeanSet(HashSet beanSet) {
+		this.beanSet = beanSet;
+	}
 }

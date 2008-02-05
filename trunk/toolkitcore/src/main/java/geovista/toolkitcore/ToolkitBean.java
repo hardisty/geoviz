@@ -45,21 +45,29 @@ import javax.swing.event.EventListenerList;
 public class ToolkitBean implements ComponentListener {
 
 	private Object originalBean;
-	private JMenuItem removeMenuItem;
+	private transient JMenuItem removeMenuItem;
 	JInternalFrame internalFrame;
 	EventListenerList listenerList;
 	String uniqueName;
+	String objectClass;
+	//private static String defaultName = "bean";
+
 
 	public ToolkitBean(){
 		
 	}
 	
 	public ToolkitBean(Object originalBean, String uniqueName) {
+		init(originalBean, uniqueName);
+
+	}
+
+	public void init(Object originalBean, String uniqueName) {
+		System.out.println("in toolkitbean, in init");
 		this.listenerList = new EventListenerList();
 		this.setOriginalBean(originalBean, uniqueName);
-
+		this.objectClass = originalBean.getClass().getName();
 		this.uniqueName = uniqueName;
-
 	}
 
 	public JInternalFrame getInternalFrame() {
@@ -73,7 +81,15 @@ public class ToolkitBean implements ComponentListener {
 	public JMenuItem getRemoveMenuItem() {
 		return removeMenuItem;
 	}
-
+	public void setOriginalBean(Object originalBean, String uniqueName) {
+		Image im = CoordinationUtils.findSmallIcon(originalBean);
+		Icon ic = new ImageIcon(im);
+		this.originalBean = originalBean;
+		this.internalFrame = this.makeInternalFrame(originalBean, uniqueName,
+				ic);
+		this.removeMenuItem = new JMenuItem(uniqueName, ic);
+		this.uniqueName = uniqueName;
+	}
 	private JInternalFrame makeInternalFrame(Object newInstance,
 			String uniqueName, Icon ic) {
 		JInternalFrame newFrame = new JInternalFrame(uniqueName, true, true,
@@ -97,15 +113,7 @@ public class ToolkitBean implements ComponentListener {
 		return newFrame;
 	}
 
-	public void setOriginalBean(Object originalBean, String uniqueName) {
-		Image im = CoordinationUtils.findSmallIcon(originalBean);
-		Icon ic = new ImageIcon(im);
-		this.originalBean = originalBean;
-		this.internalFrame = this.makeInternalFrame(originalBean, uniqueName,
-				ic);
-		this.removeMenuItem = new JMenuItem(uniqueName, ic);
-		this.uniqueName = uniqueName;
-	}
+
 
 	public String getUniqueName() {
 		return this.uniqueName;
@@ -187,6 +195,15 @@ public class ToolkitBean implements ComponentListener {
 
 	public void setUniqueName(String uniqueName) {
 		this.uniqueName = uniqueName;
+
+	}
+
+	public String getObjectClass() {
+		return objectClass;
+	}
+
+	public void setObjectClass(String objectClass) {
+		this.objectClass = objectClass;
 	}
 
 }
