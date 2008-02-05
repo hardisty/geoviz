@@ -77,8 +77,7 @@ public class StarPlotMain {
 		coord.addBean(shpProj);
 
 		if (useResource) {
-			shpProj.setInputDataSet(shpRead.convertShpToShape(stateData
-					.getDataSet()));
+			shpProj.setInputDataSet(shpRead.getDataSet());//XXX will need help
 		} else {
 			shpRead.setFileName(fileName);
 			Object[] dataSet = shpRead.getDataSet();

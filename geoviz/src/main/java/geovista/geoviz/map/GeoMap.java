@@ -44,6 +44,7 @@ import geovista.common.ui.MultiSlider;
 import geovista.common.ui.RangeSlider;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoData48States;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.shapefile.ShapeFileToShape;
@@ -68,6 +69,7 @@ import java.awt.event.ComponentListener;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -108,7 +110,7 @@ public class GeoMap extends JPanel
 	transient protected VisualClassifier visClassOne;
 	transient protected VisualClassifier visClassTwo;
 
-	protected JPanel legendPanel = new JPanel();
+	transient protected JPanel legendPanel = new JPanel();
 
 	transient protected JToolBar mapTools;
 
@@ -124,16 +126,20 @@ public class GeoMap extends JPanel
 
 	transient protected Fisheyes fisheyes;
 
-	protected final static Logger logger = Logger.getLogger(GeoMap.class
+	transient protected final static Logger logger = Logger.getLogger(GeoMap.class
 			.getName());
 
 	transient DataSetForApps dataSet;
+	
+	Color backgroundColor = Color.green; 
+	
+	Preferences prefs;
 
 	// Added by Diansheng. The reason for this is that for some applications we
 	// need
 	// to assign colors using other componenents instead of the visual
 	// classifier.
-	private boolean visualClassifierNeeded = true;
+	transient private boolean visualClassifierNeeded = true;
 
 	public GeoMap(boolean needVisualClassifier) {
 		super();
@@ -147,6 +153,10 @@ public class GeoMap extends JPanel
 	}
 
 	private void init() {
+		
+		
+		
+		
 		if (visualClassifierNeeded) {
 			JPanel vcPanel = new JPanel();
 			vcPanel.setLayout(new BoxLayout(vcPanel, BoxLayout.Y_AXIS));
@@ -193,6 +203,7 @@ public class GeoMap extends JPanel
 		setLayout(new BorderLayout());
 		this.add(topContent, BorderLayout.NORTH);
 		mapCan = new MapCanvas();
+		//mapCan.setBackground(this.backgroundColor);
 		this.add(mapCan, BorderLayout.CENTER);
 		mapCan.addIndicationListener(this);
 		visClassOne.addColorClassifierListener(this);
@@ -813,7 +824,7 @@ public class GeoMap extends JPanel
 
 		GeoMap map2 = new GeoMap();
 
-		// app.getContentPane().add(map2);
+		app.getContentPane().add(map2);
 		app.pack();
 		app.setVisible(true);
 
@@ -828,7 +839,8 @@ public class GeoMap extends JPanel
 		CoordinationManager coord = new CoordinationManager();
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
-		GeoData48States stateData = new GeoData48States();
+		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
+
 		/*
 		 * String fileName2 = "C:\\data\\grants\\nevac\\crimes\\cri.shp";
 		 * ShapefileReader reader = new ShapefileReader(); DriverProperties dp =
@@ -856,6 +868,7 @@ public class GeoMap extends JPanel
 
 		// coord.addBean(map2);
 		coord.addBean(shpToShape);
+		coord.addBean(map2);
 
 		if (useResource) {
 
@@ -874,6 +887,8 @@ public class GeoMap extends JPanel
 		}
 
 		shpToShape.setInputDataSet(dataSet);
+		
+		map2.setBackground(Color.red);
 		// shpToShape.setInputDataSet(dataSet);
 		// Rectangle2D rect = new Rectangle2D.Float(-30f,-30f,600f,600f);
 		// SpatialExtentEvent ext = new SpatialExtentEvent(map,rect);
@@ -888,14 +903,14 @@ public class GeoMap extends JPanel
 
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
-		ShapeFileToShape shpToShape3 = new ShapeFileToShape();
-		fileName = "C:\\data\\geovista_data\\shapefiles\\jin\\States.shp";
-
-		ShapeFileDataReader shpRead3 = new ShapeFileDataReader();
-		shpRead3.setFileName(fileName);
-		// shpToShape3.setInputDataSet(shpRead3.getDataSet());
-		shpToShape3.setInputDataSet(stateData.getDataSet());
-		map2.setAuxiliarySpatialData(shpToShape3.getOutputDataSetForApps());
+//		ShapeFileToShape shpToShape3 = new ShapeFileToShape();
+//		fileName = "C:\\data\\geovista_data\\shapefiles\\jin\\States.shp";
+//
+//		ShapeFileDataReader shpRead3 = new ShapeFileDataReader();
+//		shpRead3.setFileName(fileName);
+//		// shpToShape3.setInputDataSet(shpRead3.getDataSet());
+//		shpToShape3.setInputDataSet(stateData.getDataSet());
+//		map2.setAuxiliarySpatialData(shpToShape3.getOutputDataSetForApps());
 
 		// map2.setDataSet(shpToShape2.getOutputDataSet());
 
@@ -926,5 +941,16 @@ public class GeoMap extends JPanel
 		// so, what do we do?
 		// add the new column to the picker, I suppose
 
+	}
+
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+		this.setBackground(backgroundColor);
+		this.backgroundColor = backgroundColor;
+		this.mapCan.setBackground(backgroundColor);
+		this.repaint();
 	}
 }

@@ -32,7 +32,7 @@ import geovista.geoviz.sample.GeoData48States;
 /**
  * Calculates spatial weights using only sun's awt classes
  */
-public class SpatialWeights {
+public class OldSpatialWeights {
 	Shape[] shapes;
 	Vector<Integer>[] weightVectors;
 	float tolerance;
@@ -64,8 +64,8 @@ public class SpatialWeights {
 		}
 		return outShapes;
 	}
-	public SpatialWeights(Shape[] shapes){
-		this.tolerance = SpatialWeights.DEFAULT_TOLERANCE;
+	public OldSpatialWeights(Shape[] shapes){
+		this.tolerance = OldSpatialWeights.DEFAULT_TOLERANCE;
 		
 		this.shapes = shapes;
 		//we need to be able to get out the neighbors for any value
@@ -75,7 +75,7 @@ public class SpatialWeights {
 		for (int row = 0; row < shapes.length; row++){
 			this.weightVectors[row] = new Vector<Integer>();
 			for (int col = 0; col < shapes.length; col++){
-				if (row < col && SpatialWeights.touches(shapes[row], shapes[col], tolerance)){
+				if (row < col && OldSpatialWeights.touches(shapes[row], shapes[col], tolerance)){
 					this.weightVectors[row].add(col);
 					nTouches++;
 				} else if (col < row && this.weightVectors[col].contains(row)){
@@ -122,27 +122,27 @@ public class SpatialWeights {
 
 //			System.out.print("touches = ");
 //			for (int j = 0; j < shapeData.length; j++){
-//				if (i != j && SpatialWeights.touches(shapeData[i], shapeData[j], tolerance)){
+//				if (i != j && OldSpatialWeights.touches(shapeData[i], shapeData[j], tolerance)){
 //					System.out.print(dataSet.getObservationName(j) + " ");
 //					nTouches++;
 //				}
 //				
 //			}
 //		}
-		SpatialWeights w = new SpatialWeights(shapeData);
+		OldSpatialWeights w = new OldSpatialWeights(shapeData);
 		long endTime = System.currentTimeMillis();
 		System.out.println("that took = " + (endTime -startTime));
 		System.out.println("n touches = " + w.nTouches);
 		
 //		int nTouches = 0;
 //		long startTime = System.currentTimeMillis();
-//		Shape[] strokedShapes = SpatialWeights.createStrokedShapes(shapeData, tolerance);
+//		Shape[] strokedShapes = OldSpatialWeights.createStrokedShapes(shapeData, tolerance);
 //		long interTime = System.currentTimeMillis();
 //		for (int i = 0; i < shapeData.length; i++){
 
 //			System.out.print("touches = ");
 //			for (int j = 0; j < shapeData.length; j++){
-//				if (i != j && SpatialWeights.touchesSimple(strokedShapes[i], strokedShapes[j])){
+//				if (i != j && OldSpatialWeights.touchesSimple(strokedShapes[i], strokedShapes[j])){
 //					//System.out.print(dataSet.getObservationName(j) + " ");
 //					nTouches++;
 //				}

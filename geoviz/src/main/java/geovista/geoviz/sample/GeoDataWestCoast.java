@@ -15,15 +15,15 @@
 
 package geovista.geoviz.sample;
 
+import geovista.common.data.DataSetForApps;
+import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.csv.GeogCSVReader;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 
 import javax.swing.event.EventListenerList;
-
-import geovista.common.data.DataSetForApps;
-import geovista.readers.csv.GeogCSVReader;
-import geovista.readers.geog.ShapeFile;
 
 /**
  * Reads shapefiles from included resources
@@ -52,30 +52,7 @@ public class GeoDataWestCoast {
   }
 
   private DataSetForApps makeDataSetForApps(){
-      Object[] shpData = null;
-      try {
-
-        Class cl = this.getClass();
-
-        InputStream isCSV = cl.getResourceAsStream("resources/westcoast.csv");
-        GeogCSVReader csv = new GeogCSVReader();
-        Object[] csvData = csv.readFile(isCSV);
-
-        shpData = new Object[csvData.length + 1];
-        for (int i = 0; i < csvData.length; i++) {
-          shpData[i] = csvData[i];
-        }
-
-        InputStream isSHP = cl.getResourceAsStream("resources/westCoast.shp");
-        shpData[csvData.length] = new ShapeFile(isSHP);
-
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-      //this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-        this.dataForApps = new DataSetForApps(shpData);
-      return dataForApps;
-
+	  return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(), "westCoast");
   }
 
   //private Object[] makeDataSet(String fileName){

@@ -64,6 +64,8 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 	DataSetForApps data;
 
 	static boolean DEBUG = true;
+	
+	boolean settingUp = true;
 
 	public StarPlotMap() {
 		super();
@@ -84,6 +86,7 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
+		this.settingUp = true;
 		super.dataSetChanged(e);
 		this.data = e.getDataSetForApps();
 		this.starLayer.dataSetChanged(e);
@@ -100,7 +103,7 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 		SubspaceEvent subE = new SubspaceEvent(this, selectedVars);
 		this.subspaceChanged(subE);
 		this.mapCan.setGlyphs(this.createGlyphs());
-
+		this.settingUp = false;
 	}
 
 	private Glyph[] createGlyphs() {
@@ -150,11 +153,18 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 	}
 
 	public void indicationChanged(IndicationEvent e) {
+		if(this.settingUp){
+			return;
+		}
 
+		int ind = e.getIndication();
+		if (ind > this.starLayer.getDataSet().getNumObservations()){
+			logger.severe("got indication greater than data set size, ind = " + ind);
+			return;
+		}
 		if (e.getSource() != this.starLayer) {
 			this.starLayer.indicationChanged(e);
-		}
-		int ind = e.getIndication();
+		}		
 		this.setLegendIndication(ind);
 		super.indicationChanged(e);
 

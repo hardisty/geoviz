@@ -31,7 +31,6 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeoDataSource;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.readers.csv.GeogCSVReader;
-import geovista.readers.geog.ShapeFile;
 
 /**
  * Reads shapefiles from included resources
@@ -60,33 +59,7 @@ public class GeoDataGeneralizedStates implements GeoDataSource {
 	}
 
 	private DataSetForApps makeDataSetForApps() {
-		Object[] shpData = null;
-		shpReader = new ShapeFileDataReader();
-		try {
-
-			Class cl = this.getClass();
-
-			InputStream isCSV = cl.getResourceAsStream("resources/48small.csv");
-			GeogCSVReader csv = new GeogCSVReader();
-			Object[] csvData = csv.readFile(isCSV);
-			isCSV.close();
-			shpData = new Object[csvData.length + 1];
-			for (int i = 0; i < csvData.length; i++) {
-				shpData[i] = csvData[i];
-			}
-
-			InputStream isSHP = cl.getResourceAsStream("resources/48small.shp");
-
-			shpData[csvData.length] = new ShapeFile(isSHP);
-			shpData = shpReader.convertShpToShape(shpData);
-			isSHP.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		// this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-		this.dataForApps = new DataSetForApps(shpData);
-		return dataForApps;
-
+		return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(), "48small");
 	}
 
 	public void setDataForApps(DataSetForApps dataForApps) {

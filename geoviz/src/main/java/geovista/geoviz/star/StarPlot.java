@@ -106,16 +106,20 @@ public class StarPlot extends JPanel implements DataSetListener,
 	}
 
 	public void indicationChanged(IndicationEvent e) {
-
+		int ind = e.getIndication();	
 		if (e.getSource() != this.starCan) {
 			this.starCan.indicationChanged(e);
 		}
-		int ind = e.getIndication();
 		this.setLegendIndication(ind);
 
 	}
 
 	private void setLegendIndication(int ind) {
+
+		if (ind > this.starCan.getDataSet().getNumObservations()){
+			logger.severe("got indication greater than data set size, ind = " + ind);
+			return;
+		}
 		if (ind >= 0) {
 			this.starLeg.setObsName(starCan.getObservationName(ind));
 			String[] varNames = this.starCan.getVarNames();

@@ -1,12 +1,22 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class GeoData48States
+ Java source file for the class GeoDataTestNulls
  Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  Original Author: Frank Hardisty
- $Author: jmacgill $
- $Id: GeoData48States.java,v 1.1 2004/12/03 19:27:20 jmacgill Exp $
- $Date: 2004/12/03 19:27:20 $
+ $Author: hardisty $
+ $Id: GeoDataTestNulls.java,v 1.2 2005/09/15 15:04:03 hardisty Exp $
+ $Date: 2005/09/15 15:04:03 $
  Reference:		Document no:
  ___				___
  -------------------------------------------------------------------  *
@@ -18,15 +28,12 @@ package geovista.geoviz.sample;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
 import geovista.common.data.DataSetForApps;
-import geovista.common.data.GeoDataSource;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.readers.csv.GeogCSVReader;
-
 
 /**
  * Reads shapefiles from included resources
@@ -40,24 +47,23 @@ import geovista.readers.csv.GeogCSVReader;
  * also see DBaseFile, ShapeFile
  *
  */
-public class GeoData48States implements GeoDataSource{
+public class GeoDataTestNulls {
 
   public static final String COMMAND_DATA_SET_MADE = "dataMade";
 
   private transient DataSetForApps dataForApps;
   private transient EventListenerList listenerList;
-  private transient ShapeFileDataReader shpReader;
-  protected final static Logger logger = Logger.getLogger(GeoData48States.class.getName());
 
-  public GeoData48States() {
+  public GeoDataTestNulls() {
     super();
     listenerList = new EventListenerList();
-    //this.dataForApps = this.makeDataSetForApps();//let's be lazy
+    this.dataForApps = this.makeDataSetForApps();
     this.fireActionPerformed(COMMAND_DATA_SET_MADE);
   }
 
   private DataSetForApps makeDataSetForApps(){
-	  return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(), "states48");
+	  return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(), "test_nulls");
+
 
   }
 
@@ -70,16 +76,10 @@ public class GeoData48States implements GeoDataSource{
       this.dataForApps = dataForApps;
     }
     public DataSetForApps getDataForApps() {
-      if (this.dataForApps == null){
-        this.dataForApps = this.makeDataSetForApps();
-      }
       return this.dataForApps;
     }
 
     public Object[] getDataSet() {
-      if (this.dataForApps == null){
-        this.dataForApps = this.makeDataSetForApps();
-      }
       return this.dataForApps.getDataObjectOriginal();
 
     }
@@ -91,7 +91,7 @@ public class GeoData48States implements GeoDataSource{
   public void addActionListener(ActionListener l) {
     listenerList.add(ActionListener.class, l);
     this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-    logger.finest("GeoData48States.addActionListener, Hi!!");
+
   }
 
   /**
