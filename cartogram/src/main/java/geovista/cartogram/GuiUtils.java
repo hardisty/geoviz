@@ -26,8 +26,12 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -42,7 +46,10 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-import geovista.geoviz.dbase.DBaseFile;
+import org.geotools.data.shapefile.dbf.DbaseFileHeader;
+import org.geotools.data.shapefile.dbf.DbaseFileReader;
+import org.geotools.data.shapefile.dbf.DbaseFileWriter;
+
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.visclass.VisualClassifier;
@@ -226,12 +233,24 @@ public class GuiUtils
     Class cl = stateData.getClass();
 
     InputStream in = cl.getResourceAsStream("resources/states48.dbf");
+    
+    
 
     try {
-      DBaseFile dBase = new DBaseFile(in, fileName + "/states48.dbf");
+
+		InputStream dbfStream = GeoDataGeneralizedStates.class.getResourceAsStream("resources/states48.dbf");
+		ReadableByteChannel dChan = Channels.newChannel(dbfStream);
+	    DbaseFileReader dBaseReader = new DbaseFileReader(dChan, true);
+	    DbaseFileHeader dBaseHeader = dBaseReader.getHeader();
+    	
+     WritableByteChannel out = new FileOutputStream(fileName + "/states48.dbf").getChannel();
+     
+     DbaseFileWriter dBase = new DbaseFileWriter(dBaseHeader,out);
+     //XXX we need to write the contents of the file here... 
 
   	if (logger.isLoggable(Level.INFO)){
-  		logger.info("dBase length = " + dBase.getNumRecords());
+  		
+  		logger.info("dBase length = " + dBaseHeader.getNumRecords());
   	}
 
     }

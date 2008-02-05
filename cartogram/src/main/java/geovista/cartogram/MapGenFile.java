@@ -32,7 +32,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
+import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
@@ -42,17 +45,16 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JProgressBar;
 
+import org.geotools.data.shapefile.Lock;
+import org.geotools.data.shapefile.shp.ShapefileWriter;
+
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeneralPathLine;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.matrix.scatterplot.LinearRegression;
-import geovista.readers.geog.ShapeFile;
-import geovista.readers.geog.ShapeFileHeader;
-import geovista.readers.geog.ShapeFileRecordPoint;
-import geovista.readers.geog.ShapeFileRecordPolyLine;
-import geovista.readers.geog.ShapeFileRecordPolygon;
+
 
 /*
  *
@@ -330,15 +332,17 @@ public class MapGenFile {
 
   public static void writeShapefile(GeneralPath[] paths, String fileName) {
 
-    writeShapefile(paths, fileName, ShapeFile.SHAPE_TYPE_POLYGON);
+    writeShapefile(paths, fileName, 0);//XXX hack
   }
 
   public static void writeShapefile(Point2D[] points, String fileName) {
 
     String baseName = fileName.substring(0, fileName.length() - 4);
-    ShapeFile shapeFile = new ShapeFile();
-    ShapeFileHeader header = new ShapeFileHeader();
-    header.setShapeType(ShapeFile.SHAPE_TYPE_POINT);
+    
+    /** XXX the following code uses the old shapefile writer, but
+     * we are moving to the geotools one. but, we might need some of the
+     * logic still
+    header.setShapeType(ShapeFile.SHAPE_TYPE_POINT
     Rectangle2D unionRect = new Rectangle2D.Float( (float) points[0].getX(),
                                                   (float) points[0].getY(), 0f, 0f);
     for (int i = 0; i < points.length; i++) {
@@ -364,11 +368,18 @@ public class MapGenFile {
     }
 
     shapeFile.setData(theShapes);
+    */
     try {
-      shapeFile.write(fileName, baseName);
+        FileOutputStream shpFis = new FileOutputStream(baseName + ".shp");
+        FileOutputStream shxFis = new FileOutputStream(baseName + ".shx");
+        FileChannel shpChan = shpFis.getChannel();
+        FileChannel shxChan = shxFis.getChannel();
+        Lock lock = new Lock();
+    	ShapefileWriter shpWriter = shpWriter = new ShapefileWriter(shpChan, shxChan, lock);
 
+        //XXX write each point here
     }
-    catch (Exception ex) {
+    catch (IOException ex) {
       ex.printStackTrace();
     }
 
@@ -382,8 +393,25 @@ public class MapGenFile {
    */
   public static void writeShapefile(GeneralPath[] paths, String fileName,
                                     int shapeType) {
-    /** see geovista.readers.geog.ShapeFileWriter**/
-    String baseName = fileName.substring(0, fileName.length() - 4);
+	  String baseName = fileName.substring(0, fileName.length() - 4);
+	    try {
+	        FileOutputStream shpFis = new FileOutputStream(baseName + ".shp");
+	        FileOutputStream shxFis = new FileOutputStream(baseName + ".shx");
+	        FileChannel shpChan = shpFis.getChannel();
+	        FileChannel shxChan = shxFis.getChannel();
+	        Lock lock = new Lock();
+	    	ShapefileWriter shpWriter = shpWriter = new ShapefileWriter(shpChan, shxChan, lock);
+
+	        //XXX write each generalpath here
+	    }
+	    catch (IOException ex) {
+	      ex.printStackTrace();
+	    }	  
+	  
+	  
+	  /** old writer, delete when new one works.
+    /** see geovista.readers.geog.ShapeFileWriter
+    
     ShapeFile shapeFile = new ShapeFile();
     ShapeFileHeader header = new ShapeFileHeader();
     header.setShapeType(shapeType);
@@ -415,8 +443,9 @@ public class MapGenFile {
     catch (Exception ex) {
       ex.printStackTrace();
     }
+    */
   }
-
+/** old writer, delete when new one works.
   private static void makePolygonRecord(GeneralPath[] paths, Vector theShapes) {
     ShapeFileRecordPolygon polygon;
 
@@ -437,7 +466,7 @@ public class MapGenFile {
       theShapes.add(polygon);
     }
   }
-
+*/
   private static Object[] findPartsPoints(GeneralPath[] paths, int i) {
     PathIterator pit = paths[i].getPathIterator(new AffineTransform());
 
@@ -483,7 +512,7 @@ public class MapGenFile {
         bounds.getMaxY()};
     return bbox;
   }
-
+  /** old writer, delete when new one works.
   private static void makePolylineRecord(GeneralPath[] paths,
                                          Vector theShapes) {
     ShapeFileRecordPolyLine polyline;
@@ -505,7 +534,7 @@ public class MapGenFile {
       theShapes.add(polyline);
     }
   }
-
+*/
   /*
    * This method actually creates the temporary files and creates
     a TransformsMain to do the work.
@@ -711,8 +740,7 @@ public class MapGenFile {
     }
     else if (dataSet.getSpatialType() == DataSetForApps.SPATIAL_TYPE_LINE) {
 
-      MapGenFile.writeShapefile(shapes, newShapeFile,
-                                ShapeFile.SHAPE_TYPE_POLYLINE);
+      MapGenFile.writeShapefile(shapes,newShapeFile);//XXX will not work
     }
     else if (dataSet.getSpatialType() == DataSetForApps.SPATIAL_TYPE_POINT) {
       MapGenFile.writeShapefile(newPoints, newShapeFile);
