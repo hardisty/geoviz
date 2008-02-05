@@ -29,7 +29,7 @@ import java.util.EventObject;
 public class SelectionEvent
     extends EventObject {
 
-  private transient int[] selection;
+  private int[] selection;
   private transient int[] higherLevelSelection;
   private transient Color[] multipleSlectionColors;
   private transient double[] selectedPortions;

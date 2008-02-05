@@ -792,13 +792,13 @@ public abstract class DescriptiveStatistics {
 	}
 
 	public static double[] getRegressionResiduals(double[] dataX, double[] dataY) {
-		double[] moranElement = new double[2];
+		double[] regressionElement = new double[2];
 		double sumX, sumY, sumX2, sumXY, slope, intercept;
 		int sampleSize = 0;
 		sumX = sumY = sumX2 = sumXY = slope = intercept = 0;
 
-		moranElement[0] = 0;
-		moranElement[1] = 0;
+		regressionElement[0] = 0;
+		regressionElement[1] = 0;
 
 		for (int i = 0; i < dataX.length; i++) {
 			sumX = sumX + dataX[i];
@@ -818,12 +818,12 @@ public abstract class DescriptiveStatistics {
 			intercept = (sumY - slope * sumX) / sampleSize;
 		}
 
-		moranElement[0] = slope;
-		moranElement[1] = intercept;
+		regressionElement[0] = slope;
+		regressionElement[1] = intercept;
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("Slope is " + slope + "  Intercept is " + intercept);
 		}
-		return moranElement;
+		return regressionElement;
 	}
 
 	/**
@@ -903,7 +903,14 @@ public abstract class DescriptiveStatistics {
 		}
 		return fullXData;
 	}
-
+    public static double percentAbove(double[] values, double value){
+    	  
+    	  Arrays.sort(values);
+    	   
+    	  int place = Arrays.binarySearch(values, value);
+    	  double along = (double)(place+1)/(double)values.length;
+    	  return 1-(Math.abs(along));
+      }
 	public static void sort(double[][] dataIn, int whichColumn) {
 		double[] dataSorted = new double[dataIn.length];
 
