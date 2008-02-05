@@ -6,6 +6,7 @@
 
 package geovista.matrix.scatterplot;
 
+import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.matrix.MatrixElementWrapper;
 
 /**

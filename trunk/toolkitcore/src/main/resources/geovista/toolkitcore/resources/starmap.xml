@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GeoVizTool_BeansLayout dataSetFullName=""><bean index="0" xLocation="807" yLocation="426" width="455" height="310" uniqueName="SingleHistogram">geovista.matrix.scatterplot.SingleHistogram
+<GeoVizTool_BeansLayout dataSetFullName=""><bean index="0" xLocation="807" yLocation="426" width="455" height="310" uniqueName="SingleHistogram">geovista.geoviz.scatterplot.SingleHistogram
   </bean><bean index="1" xLocation="0" yLocation="-1" width="133" height="418" uniqueName="VariablePicker">geovista.common.ui.VariablePicker
   </bean><bean index="2" xLocation="-1" yLocation="437" width="377" height="127" uniqueName="IndicationAnimator">geovista.animation.IndicationAnimator
   </bean><bean index="3" xLocation="559" yLocation="17" width="463" height="397" uniqueName="StarPlotMap">geovista.geoviz.star.StarPlotMap

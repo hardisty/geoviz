@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 import geovista.common.data.ArraySort2D;
-import geovista.matrix.scatterplot.DataArray;
+import geovista.geoviz.scatterplot.DataArray;
 
 public class DistributionGraph extends JPanel implements ComponentListener
 {

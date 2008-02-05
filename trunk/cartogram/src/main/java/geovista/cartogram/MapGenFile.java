@@ -51,9 +51,9 @@ import org.geotools.data.shapefile.shp.ShapefileWriter;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeneralPathLine;
+import geovista.geoviz.scatterplot.LinearRegression;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.matrix.scatterplot.LinearRegression;
 
 
 /*

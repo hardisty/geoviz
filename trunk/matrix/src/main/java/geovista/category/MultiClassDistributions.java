@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
 
 import geovista.common.data.ArraySort2D;
 import geovista.common.data.StatisticsVectors;
-import geovista.matrix.scatterplot.DataArray;
+import geovista.geoviz.scatterplot.DataArray;
 
 public class MultiClassDistributions extends JPanel implements MouseListener, ComponentListener
 {

@@ -21,7 +21,8 @@
  -------------------------------------------------------------------   */
 package geovista.matrix;
 
-import geovista.matrix.scatterplot.ScatterPlot;
+import geovista.geoviz.scatterplot.ScatterPlot;
+import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 import geovista.matrix.treemap.TreeMapMatrixElement;
 
 
@@ -39,10 +40,10 @@ public class TreemapAndScatterplotMatrix
 
   public TreemapAndScatterplotMatrix() {
     super();
-    this.setElementClass1(ScatterPlot.class);
+    this.setElementClass1(ScatterPlotMatrixElement.class);
     this.setElementClass2(TreeMapMatrixElement.class);
 
-  }
+  } 
 
 
 
