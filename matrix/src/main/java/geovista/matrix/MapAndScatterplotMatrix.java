@@ -19,8 +19,9 @@
  -------------------------------------------------------------------   */
 package geovista.matrix;
 
+import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.matrix.map.MapMatrixElement;
-import geovista.matrix.scatterplot.ScatterPlot;
+import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 
 /**
  *
@@ -36,7 +37,7 @@ public class MapAndScatterplotMatrix
 
   public MapAndScatterplotMatrix() {
     super();
-    this.setElementClass1(ScatterPlot.class);
+    this.setElementClass1(ScatterPlotMatrixElement.class);
     this.setElementClass2(MapMatrixElement.class);
 
   }

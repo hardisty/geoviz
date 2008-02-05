@@ -21,8 +21,9 @@
  -------------------------------------------------------------------   */
 package geovista.matrix;
 
+import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.matrix.map.MapMatrixElement;
-import geovista.matrix.scatterplot.ScatterPlot;
+import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 import geovista.matrix.treemap.TreeMapMatrixElement;
 
 /**
@@ -40,7 +41,7 @@ public class MapScatterplotTreemapMatrix
 
   public MapScatterplotTreemapMatrix() {
     super();
-    this.setElementClass0(new ScatterPlot());
+    this.setElementClass0(new ScatterPlotMatrixElement());
     this.setElementClass1(new MapMatrixElement());
     this.setElementClass2(new TreeMapMatrixElement());
 

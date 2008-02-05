@@ -19,8 +19,8 @@
  -------------------------------------------------------------------   */
 package geovista.cartogram;
 
+import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.matrix.BiPlotMatrix;
-import geovista.matrix.scatterplot.ScatterPlot;
 
 /**
  *

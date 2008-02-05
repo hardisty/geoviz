@@ -43,8 +43,8 @@ import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoCursors;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.MapCanvas;
+import geovista.geoviz.scatterplot.Histogram;
 import geovista.matrix.MatrixElement;
-import geovista.matrix.scatterplot.Histogram;
 import geovista.symbolization.BivariateColorSymbolClassification;
 
 public class MapMatrixElement extends MapCanvas implements MatrixElement {

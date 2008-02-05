@@ -43,6 +43,8 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.event.IndicationListener;
 import geovista.common.ui.ExcentricLabelClient;
 import geovista.common.ui.ExcentricLabels;
+import geovista.geoviz.scatterplot.DataArray;
+import geovista.geoviz.scatterplot.Histogram;
 import geovista.matrix.MatrixElement;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;

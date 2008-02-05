@@ -9,6 +9,7 @@
 
 package geovista.matrix.scatterplot;
 
+import geovista.geoviz.scatterplot.ScatterPlotWithBackground;
 import geovista.matrix.MatrixElementWrapper;
 
 /**
