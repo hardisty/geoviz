@@ -39,7 +39,7 @@ public class FiringBean {
   private static String[] disallowedPackages = {
     "java.awt.event", "javax.swing.event", "java.beans"
   };
-  private int position = -1; //position in array of FiringBeans held by CoordinationManager
+  
   private String beanName;
   private Object originalBean;
   private FiringMethod[] methods;
@@ -61,31 +61,16 @@ public class FiringBean {
     }
   }
 
-  public void removeListeningBean(int oldBeanPosition) {
-    if (this.position == oldBeanPosition) {
+  public void removeListeningBean(Object oldBean) {
+	// if the bean being removed is this bean
+    if (oldBean == originalBean) {
       this.disableAllFiringMethods();
 
       return;
     }
-
-    if (this.position > oldBeanPosition) {
-      this.position = position - 1;
-    }
-
-    int listeningBeanArrayPosition = -1;
-
     for (int i = 0; i < methods.length; i++) {
-      listeningBeanArrayPosition = oldBeanPosition - 1;
 
-      if (listeningBeanArrayPosition < 0) {
-        listeningBeanArrayPosition = 0;
-      }
-
-      this.methods[i].removeListeningBean(listeningBeanArrayPosition); //note that here
-
-      //listeningBeanArrayPosition is the position in the array of listeners the firing
-      //method holds, not the position of the listening bean in the overall array
-      //of firing beans
+      this.methods[i].removeListeningBean(oldBean); 
     }
   }
 
@@ -132,8 +117,8 @@ public class FiringBean {
 
 
       //newMeth.setOriginalFireMethod(meths[i]);
-      newMeth.setPosition(i);
-      newMeth.setParentBeanPosition(this.position);
+      //newMeth.setPosition(i);
+
 
       String aName = meths[i].getName();
 
@@ -302,13 +287,7 @@ public class FiringBean {
     return fireMeths;
   }
 
-  public int getPosition() {
-    return position;
-  }
 
-  public void setPosition(int position) {
-    this.position = position;
-  }
 
   public Icon getIcon() {
     Image im = CoordinationUtils.findIcon(this.getOriginalBean());
