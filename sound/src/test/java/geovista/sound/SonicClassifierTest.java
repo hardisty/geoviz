@@ -15,6 +15,7 @@ package geovista.sound;
 
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoData48States;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.shapefile.ShapeFileToShape;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -32,7 +33,7 @@ public class SonicClassifierTest extends TestCase {
 	protected void setUp() {
 		sClasser = new SonicClassifier();
 		CoordinationManager coord = new CoordinationManager();
-		GeoData48States stateData = new GeoData48States();
+		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		coord.addBean(sClasser);
 		coord.addBean(shpToShape);
