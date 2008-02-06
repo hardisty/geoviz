@@ -42,9 +42,9 @@
 	<classpathentry kind="lib" path="lib/smack.jar"/>
 	<classpathentry kind="lib" path="lib/smackx.jar"/>
 	<classpathentry kind="lib" path="lib/jts-1.9.jar"/>
-	<classpathentry kind="lib" path="/testing/libs/gt2-api-2.4-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/testing/libs/gt2-main-2.4-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/testing/libs/gt2-shapefile-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/gt2-api-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/gt2-main-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/gt2-shapefile-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="/testing/libs/gt2-metadata-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

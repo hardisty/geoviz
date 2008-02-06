@@ -37,7 +37,8 @@ public class GeoVizToolkitTest extends TestCase {
 	}
 	public void testOpenAllComponents(){
 		GeoVizToolkit newKit = new GeoVizToolkit("");
-		newKit.openAllComponents();
+		//newKit.openAllComponents();
+		newKit = null;
 	}
 
 }
