@@ -61,17 +61,17 @@ import com.thoughtworks.xstream.XStream;
 
 import geovista.coordination.CoordinationManager;
 import geovista.coordination.FiringBean;
-import geovista.marshal.GeoMapConverter;
-import geovista.marshal.GeoVizToolkitConverter;
-import geovista.marshal.IndicationAnimatorConverter;
-import geovista.marshal.JInternalFrameConverter;
-import geovista.marshal.JPanelConverter;
-import geovista.marshal.SingleHistogramConverter;
-import geovista.marshal.StarPlotConverter;
-import geovista.marshal.StarPlotMapConverter;
-import geovista.marshal.ToolkitBeanConverter;
-import geovista.marshal.VariablePickerConverter;
 import geovista.readers.util.MyFileFilter;
+import geovista.toolkitcore.marshal.GeoMapConverter;
+import geovista.toolkitcore.marshal.GeoVizToolkitConverter;
+import geovista.toolkitcore.marshal.IndicationAnimatorConverter;
+import geovista.toolkitcore.marshal.JInternalFrameConverter;
+import geovista.toolkitcore.marshal.JPanelConverter;
+import geovista.toolkitcore.marshal.SingleHistogramConverter;
+import geovista.toolkitcore.marshal.StarPlotConverter;
+import geovista.toolkitcore.marshal.StarPlotMapConverter;
+import geovista.toolkitcore.marshal.ToolkitBeanConverter;
+import geovista.toolkitcore.marshal.VariablePickerConverter;
 
 public class ToolkitIO {
 	protected final static Logger logger = Logger
