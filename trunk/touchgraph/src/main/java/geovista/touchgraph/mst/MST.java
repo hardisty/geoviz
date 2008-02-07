@@ -67,11 +67,11 @@ public class MST {
 		
 		System.out.println("all done!");
 		
-		//XStream xstream = new XStream(new DomDriver()); // does not require XPP3 library
-		//String eString = xstream.toXML(nums);
+		//XStream streamer = new XStream(new DomDriver()); // does not require XPP3 library
+		//String eString = streamer.toXML(nums);
 		//System.out.println(eString);
 		//JPanel pan = new JPanel();
-		//String panString = xstream.toXML(pan);
+		//String panString = streamer.toXML(pan);
 		//System.out.println(panString);
 		
 		

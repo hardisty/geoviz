@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="animation/src/main/java"/>
+	<classpathentry kind="src" path="marshal/src/main/java"/>
 	<classpathentry kind="src" path="coordination/src/test/java"/>
 	<classpathentry kind="src" path="geoviz/src/test/java"/>
 	<classpathentry kind="src" path="animation/src/test/java"/>
@@ -46,5 +47,6 @@
 	<classpathentry kind="lib" path="lib/gt2-main-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/gt2-shapefile-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="/testing/libs/gt2-metadata-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/xstream-1.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
