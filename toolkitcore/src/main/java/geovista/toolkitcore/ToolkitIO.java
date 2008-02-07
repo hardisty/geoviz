@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------
- Java source file for the class ToolkitLayoutIO
+ Java source file for the class ToolkitIO
  Copyright (c), 2005 Ke Liao, Frank Hardisty
  $Author: hardisty $
- $Id: ToolkitLayoutIO.java,v 1.6 2005/04/11 17:52:14 hardisty Exp $
+ $Id: ToolkitIO.java,v 1.6 2005/04/11 17:52:14 hardisty Exp $
  $Date: 2005/04/11 17:52:14 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -18,10 +18,6 @@
  -------------------------------------------------------------------   */
 
 package geovista.toolkitcore;
-
-import geovista.coordination.CoordinationManager;
-import geovista.coordination.FiringBean;
-import geovista.readers.util.MyFileFilter;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -61,9 +57,25 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.w3c.dom.NodeList;
 
-public class ToolkitLayoutIO {
+import com.thoughtworks.xstream.XStream;
+
+import geovista.coordination.CoordinationManager;
+import geovista.coordination.FiringBean;
+import geovista.marshal.GeoMapConverter;
+import geovista.marshal.GeoVizToolkitConverter;
+import geovista.marshal.IndicationAnimatorConverter;
+import geovista.marshal.JInternalFrameConverter;
+import geovista.marshal.JPanelConverter;
+import geovista.marshal.SingleHistogramConverter;
+import geovista.marshal.StarPlotConverter;
+import geovista.marshal.StarPlotMapConverter;
+import geovista.marshal.ToolkitBeanConverter;
+import geovista.marshal.VariablePickerConverter;
+import geovista.readers.util.MyFileFilter;
+
+public class ToolkitIO {
 	protected final static Logger logger = Logger
-			.getLogger(ToolkitLayoutIO.class.getName());
+			.getLogger(ToolkitIO.class.getName());
 	public static final int ACTION_OPEN = 0;
 	public static final int ACTION_SAVE = 1;
 
@@ -75,6 +87,22 @@ public class ToolkitLayoutIO {
 	private static String IMAGE_DIR = "LastGoodImageDirectory";
 	public static String dataSetPathFromXML = " ";
 
+	void initXStream() {
+		XStream xstream = new XStream();
+		xstream.registerConverter(new GeoMapConverter());
+		xstream.registerConverter(new JPanelConverter(xstream.getMapper(),
+				xstream.getReflectionProvider()));
+		xstream.registerConverter(new JInternalFrameConverter());
+		xstream.registerConverter(new StarPlotConverter());
+		xstream.registerConverter(new StarPlotMapConverter());
+		xstream.registerConverter(new IndicationAnimatorConverter());
+		xstream.registerConverter(new SingleHistogramConverter());
+		xstream.registerConverter(new VariablePickerConverter());
+		xstream.registerConverter(new GeoVizToolkitConverter());
+		xstream.registerConverter(new ToolkitBeanConverter());
+
+	}
+
 	public static void saveImageToFile(Component c) {
 		BufferedImage buff = new BufferedImage(c.getWidth(), c.getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
@@ -82,7 +110,7 @@ public class ToolkitLayoutIO {
 		c.paint(g);
 		Preferences gvPrefs = Preferences
 				.userNodeForPackage(ToolkitBeanSet.class);
-		String defaultDir = gvPrefs.get(ToolkitLayoutIO.IMAGE_DIR, "");
+		String defaultDir = gvPrefs.get(ToolkitIO.IMAGE_DIR, "");
 		JFileChooser chooser = new JFileChooser(defaultDir);
 		MyFileFilter myff = new MyFileFilter("png");
 		chooser.setFileFilter(myff);
@@ -104,7 +132,7 @@ public class ToolkitLayoutIO {
 				e1.printStackTrace();
 			}
 
-			gvPrefs.put(ToolkitLayoutIO.IMAGE_DIR, fi.getPath());
+			gvPrefs.put(ToolkitIO.IMAGE_DIR, fi.getPath());
 
 		}
 
@@ -122,21 +150,21 @@ public class ToolkitLayoutIO {
 			MyFileFilter fileFilter = null;
 			// we want to get the last good directory of the type we are looking
 			// for
-			if (fileType == ToolkitLayoutIO.FILE_TYPE_LAYOUT) {
-				defaultDir = gvPrefs.get(ToolkitLayoutIO.LAYOUT_DIR, "");
+			if (fileType == ToolkitIO.FILE_TYPE_LAYOUT) {
+				defaultDir = gvPrefs.get(ToolkitIO.LAYOUT_DIR, "");
 				fileFilter = new MyFileFilter("xml");
-			} else if (fileType == ToolkitLayoutIO.FILE_TYPE_SHAPEFILE) {
-				defaultDir = gvPrefs.get(ToolkitLayoutIO.SHAPEFILE_DIR, "");
+			} else if (fileType == ToolkitIO.FILE_TYPE_SHAPEFILE) {
+				defaultDir = gvPrefs.get(ToolkitIO.SHAPEFILE_DIR, "");
 				fileFilter = new MyFileFilter(new String[] { "shp", "dbf",
 						"csv" });
 			}
 			JFileChooser fileChooser = new JFileChooser(defaultDir);
 			fileChooser.setFileFilter(fileFilter);
 			int returnVal = JFileChooser.CANCEL_OPTION;
-			if (action == ToolkitLayoutIO.ACTION_OPEN) {
+			if (action == ToolkitIO.ACTION_OPEN) {
 				returnVal = fileChooser.showOpenDialog(parent);
 
-			} else if (action == ToolkitLayoutIO.ACTION_SAVE) {
+			} else if (action == ToolkitIO.ACTION_SAVE) {
 				returnVal = fileChooser.showSaveDialog(parent);
 				File tempFile = fileChooser.getSelectedFile();
 				if (tempFile.exists()) {
@@ -154,7 +182,7 @@ public class ToolkitLayoutIO {
 
 					if (erase == JOptionPane.NO_OPTION) {
 						GeoVizToolkit gvt = (GeoVizToolkit) parent;
-						ToolkitLayoutIO.writeLayout(gvt.getFileName(),
+						ToolkitIO.writeLayout(gvt.getFileName(),
 								gvt.tBeanSet, parent);
 					} else if (erase == JOptionPane.CANCEL_OPTION) {
 						return null;
@@ -169,10 +197,10 @@ public class ToolkitLayoutIO {
 				logger.finest("path = " + path);
 				logger.finest("absolutePath = " + file.getAbsolutePath());
 
-				if (fileType == ToolkitLayoutIO.FILE_TYPE_LAYOUT) {
-					gvPrefs.put(ToolkitLayoutIO.LAYOUT_DIR, path);
-				} else if (fileType == ToolkitLayoutIO.FILE_TYPE_SHAPEFILE) {
-					gvPrefs.put(ToolkitLayoutIO.SHAPEFILE_DIR, path);
+				if (fileType == ToolkitIO.FILE_TYPE_LAYOUT) {
+					gvPrefs.put(ToolkitIO.LAYOUT_DIR, path);
+				} else if (fileType == ToolkitIO.FILE_TYPE_SHAPEFILE) {
+					gvPrefs.put(ToolkitIO.SHAPEFILE_DIR, path);
 				}
 			}
 
@@ -187,8 +215,8 @@ public class ToolkitLayoutIO {
 
 	public static void writeLayout(String dataSetFullName,
 			ToolkitBeanSet tBeanSet, Component parent) {
-		String xmlFullName = ToolkitLayoutIO.getFileName(parent,
-				ToolkitLayoutIO.ACTION_SAVE, ToolkitLayoutIO.FILE_TYPE_LAYOUT);
+		String xmlFullName = ToolkitIO.getFileName(parent,
+				ToolkitIO.ACTION_SAVE, ToolkitIO.FILE_TYPE_LAYOUT);
 		if (xmlFullName == null) {
 			return;
 		}
@@ -329,7 +357,7 @@ public class ToolkitLayoutIO {
 		try {
 			fis = new FileInputStream(xmlFullName);
 
-			return ToolkitLayoutIO.openLayout(fis);
+			return ToolkitIO.openLayout(fis);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -341,44 +369,44 @@ public class ToolkitLayoutIO {
 	public static ToolkitBeanSet openDefaultLayout() {
 		InputStream inStream = null;
 		try {
-			Class cl = ToolkitLayoutIO.class;
+			Class cl = ToolkitIO.class;
 
 			inStream = cl.getResourceAsStream("resources/default.xml");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ToolkitLayoutIO.openLayout(inStream);
+		return ToolkitIO.openLayout(inStream);
 	}
 
 	public static ToolkitBeanSet openStarPlotMapLayout() {
 		InputStream inStream = null;
 		try {
-			Class cl = ToolkitLayoutIO.class;
+			Class cl = ToolkitIO.class;
 
 			inStream = cl.getResourceAsStream("resources/starmap.xml");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ToolkitLayoutIO.openLayout(inStream);
+		return ToolkitIO.openLayout(inStream);
 	}
 
 	public static ToolkitBeanSet openAllComponentsLayout() {
 		InputStream inStream = null;
 		try {
-			Class cl = ToolkitLayoutIO.class;
+			Class cl = ToolkitIO.class;
 
 			inStream = cl.getResourceAsStream("resources/new_all.xml");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ToolkitLayoutIO.openLayout(inStream);
+		return ToolkitIO.openLayout(inStream);
 	}
 
 	public static ToolkitBeanSet openLayout(Component parent) {
 
-		String xmlFullName = ToolkitLayoutIO.getFileName(parent,
-				ToolkitLayoutIO.ACTION_OPEN, ToolkitLayoutIO.FILE_TYPE_LAYOUT);
-		return ToolkitLayoutIO.openLayout(xmlFullName);
+		String xmlFullName = ToolkitIO.getFileName(parent,
+				ToolkitIO.ACTION_OPEN, ToolkitIO.FILE_TYPE_LAYOUT);
+		return ToolkitIO.openLayout(xmlFullName);
 	}
 
 	public static void copyComponentImageToClipboard(Component c) {
@@ -386,7 +414,7 @@ public class ToolkitLayoutIO {
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics g = buff.getGraphics();
 		c.paint(g);
-		ToolkitLayoutIO.sendImageToClipboard(buff);
+		ToolkitIO.sendImageToClipboard(buff);
 	}
 
 	/*
@@ -396,18 +424,18 @@ public class ToolkitLayoutIO {
 	 * Graphics g = buff.getGraphics(); c.paint(g);
 	 * 
 	 * String outputFileName = "C:\\test.jpg"; InputStream inStream = null; try {
-	 * Class cl = ToolkitLayoutIO.class;
+	 * Class cl = ToolkitIO.class;
 	 * 
 	 * inStream = cl.getResourceAsStream("resources/default.xml"); } catch
 	 * (Exception ex) { ex.printStackTrace(); } Document doc =
-	 * ToolkitLayoutIO.readDocument(inStream); // Get core JPEG writer. Iterator
+	 * ToolkitIO.readDocument(inStream); // Get core JPEG writer. Iterator
 	 * writers = ImageIO.getImageWritersByFormatName("jpeg"); ImageWriter writer =
 	 * ImageIO.getImageWritersByFormatName("jpeg").next(); while
 	 * (writers.hasNext()) { writer = (ImageWriter) writers.next(); if
 	 * (writer.getClass().getName().startsWith( "javax_imageio_jpeg_image_1.0")) { //
 	 * Break on finding the core provider. break; } } if (writer == null) {
-	 * System.err.println("Cannot find core JPEG writer!"); }
-	 *  // Set the compression level. ImageWriteParam writeParam =
+	 * System.err.println("Cannot find core JPEG writer!"); } // Set the
+	 * compression level. ImageWriteParam writeParam =
 	 * writer.getDefaultWriteParam();
 	 * writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 	 * writeParam.setCompressionQuality(COMPRESSION_QUALITY); RenderedImage
@@ -427,24 +455,22 @@ public class ToolkitLayoutIO {
 	 * 
 	 * Vector vec = new Vector(); Element el = new Element("AString");
 	 * vec.add(el); // Element el2 = new Element("anotherstring"); //
-	 * vec.add(el2); // Document doc = new Document(vec);
-	 *  // root.setUserObject("Anthony.... this had better be good");
-	 *  // root.setUserObject(doc);
-	 * 
+	 * vec.add(el2); // Document doc = new Document(vec); //
+	 * root.setUserObject("Anthony.... this had better be good"); //
+	 * root.setUserObject(doc);
 	 *  // root.setUserObject(someBytes); NodeList rootnl =
 	 * root.getChildNodes(); // root.getLastChild().appendChild(commentNode);
 	 * for (int i = 0; i < rootnl.getLength(); i++) { Node nod = rootnl.item(i);
 	 * logger.finest("***"); logger.finest("nod " + i); logger.finest("nod name " +
 	 * nod.getNodeName()); logger.finest("nod value " + nod.getNodeValue());
 	 * IIOMetadataNode iioNod = (IIOMetadataNode) nod; logger.finest("iiomnod
-	 * comment " + iioNod.getAttribute("comment"));
-	 *  } logger.finest("***"); logger.finest("root comment " +
-	 * root.getAttribute("Comment")); logger.finest("***"); logger.finest("root
-	 * text content " + root.getTextContent()); logger.finest("***");
-	 * logger.finest("root userObject " + root.getUserObject()); //
-	 * imageMetadata.setFromTree("javax_imageio_jpeg_image_1.0", root);
-	 *  // imageMetadata.mergeTree("javax_imageio_jpeg_image_1.0", //
-	 * commentNode);
+	 * comment " + iioNod.getAttribute("comment")); } logger.finest("***");
+	 * logger.finest("root comment " + root.getAttribute("Comment"));
+	 * logger.finest("***"); logger.finest("root text content " +
+	 * root.getTextContent()); logger.finest("***"); logger.finest("root
+	 * userObject " + root.getUserObject()); //
+	 * imageMetadata.setFromTree("javax_imageio_jpeg_image_1.0", root); //
+	 * imageMetadata.mergeTree("javax_imageio_jpeg_image_1.0", // commentNode);
 	 * 
 	 * IIOMetadataNode newRoot = (IIOMetadataNode) imageMetadata
 	 * .getAsTree("javax_imageio_jpeg_image_1.0"); NodeList nl =
@@ -460,16 +486,15 @@ public class ToolkitLayoutIO {
 	 * .println("new root text content " + root.getTextContent());
 	 * logger.finest("***"); logger.finest("new root userObject " +
 	 * root.getUserObject()); } catch (Exception e) { // TODO Auto-generated
-	 * catch block e.printStackTrace(); }
-	 *  // Set the output stream, write the image try {
+	 * catch block e.printStackTrace(); } // Set the output stream, write the
+	 * image try {
 	 * 
 	 * writer .setOutput(new FileImageOutputStream(new File( outputFileName))); //
 	 * writer.replaceImageMetadata(0,imageMetadata); writer.write(null, new
 	 * IIOImage(image, null, imageMetadata), writeParam); writer.dispose(); }
 	 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
 	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
-	 * catch block e.printStackTrace(); }
-	 *  }
+	 * catch block e.printStackTrace(); } }
 	 */
 	public static String openCommentedImage(String fileName) {
 
@@ -581,8 +606,8 @@ public class ToolkitLayoutIO {
 		app.add(pan);
 		app.pack();
 		app.setVisible(true);
-		// ToolkitLayoutIO.saveCommentedImage(app);
-		logger.finest(ToolkitLayoutIO.openCommentedImage(""));
+		// ToolkitIO.saveCommentedImage(app);
+		logger.finest(ToolkitIO.openCommentedImage(""));
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

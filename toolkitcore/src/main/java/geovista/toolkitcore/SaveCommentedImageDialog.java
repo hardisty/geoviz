@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------
- Java source file for the class ToolkitLayoutIO
+ Java source file for the class ToolkitIO
  Copyright (c), 2005 Ke Liao, Frank Hardisty
  $Author: hardisty $
- $Id: ToolkitLayoutIO.java,v 1.6 2005/04/11 17:52:14 hardisty Exp $
+ $Id: ToolkitIO.java,v 1.6 2005/04/11 17:52:14 hardisty Exp $
  $Date: 2005/04/11 17:52:14 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
