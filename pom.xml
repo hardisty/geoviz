@@ -41,8 +41,9 @@
     <module>sound</module>
     <module>touchgraph</module>
     <module>satscan</module>
+         <module>marshal</module>   
     <module>toolkitcore</module>
-    
+
   </modules>
     <reporting>
     <plugins>
