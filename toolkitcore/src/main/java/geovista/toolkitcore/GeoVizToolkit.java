@@ -240,18 +240,22 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			tBeanSet = ToolkitIO.openStarPlotMapLayout();
 		}
 		addToolkitBeanSet(tBeanSet);
-
+		vizState.setBeanSet(tBeanSet);
 		this.repaint();
 	}
 
 	void openAllComponents() {
-		// this.removeAllBeans();
+		removeAllBeans();
 		ToolkitBeanSet tempBeanSet = ToolkitIO.openAllComponentsLayout();
 		addToolkitBeanSet(tempBeanSet);
 		this.repaint();
 	}
 
-	void setProgramState(VizState newState) {
+	public VizState getVizState() {
+		return vizState;
+	}
+
+	public void setVizState(VizState newState) {
 		removeAllBeans();
 		coord.removeBean(vizState);
 		vizState = newState;
@@ -262,7 +266,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	void saveProgramState() {
-
+		ToolkitIO.saveVizStateToFile(vizState);
 	}
 
 	public void addExternalBean(Object bean) {
@@ -505,8 +509,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		} else if (e.getSource() == menuItemSaveLayout) {
 
-			ToolkitIO.writeLayout(getFileName(), tBeanSet, this);
+			// ToolkitIO.writeLayout(getFileName(), tBeanSet, this);
 
+			saveProgramState();
 		} else if (toolClassHash.containsKey(e.getSource())) { // one of
 			// our added
 			// classes
