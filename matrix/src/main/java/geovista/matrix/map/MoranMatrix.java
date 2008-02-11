@@ -78,10 +78,10 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
 		map = new GeoMapUni();
 		sp = new SingleScatterPlot();
-		this.setLayout(box);
+		setLayout(box);
 		Dimension prefSize = new Dimension(300, 300);
-		this.map.setPreferredSize(prefSize);
-		this.sp.setPreferredSize(prefSize);
+		map.setPreferredSize(prefSize);
+		sp.setPreferredSize(prefSize);
 		LineBorder border = (LineBorder) BorderFactory
 				.createLineBorder(Color.black);
 		map.setBorder(border);
@@ -93,21 +93,24 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 	}
 
 	public void selectionChanged(SelectionEvent e) {
-		this.map.selectionChanged(e);
-		this.sp.selectionChanged(e);
+		map.selectionChanged(e);
+		sp.selectionChanged(e);
 
 	}
 
+	public SelectionEvent getSelectionEvent() {
+		return new SelectionEvent(this, map.getSelectedObservations());
+	}
+
 	public void indicationChanged(IndicationEvent e) {
-		this.map.indicationChanged(e);
-		this.sp.indicationChanged(e);
+		map.indicationChanged(e);
+		sp.indicationChanged(e);
 
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
-		this.dataSetOriginal = e.getDataSetForApps();
-		this.spatialWeights = new OldSpatialWeights(this.dataSetOriginal
-				.getShapeData());
+		dataSetOriginal = e.getDataSetForApps();
+		spatialWeights = new OldSpatialWeights(dataSetOriginal.getShapeData());
 		// first get the z scores....
 		Object[] dataObjects = dataSetOriginal.getDataObjectOriginal();
 		Object[] zDataObjects = new Object[dataObjects.length];
@@ -119,13 +122,13 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 			if (thing instanceof double[]) {
 				double[] doublething = (double[]) thing;
 				newNames[i - 1] = names[i - 1] + "_Z";
-				zDataObjects[i] = this.calculateZScores(doublething);
+				zDataObjects[i] = calculateZScores(doublething);
 			} else {
 				zDataObjects[i] = dataObjects[i];
 			}
 		}
 		zDataObjects[0] = newNames;
-		this.dataSetZ = new DataSetForApps(zDataObjects);
+		dataSetZ = new DataSetForApps(zDataObjects);
 
 		// now do the moran's
 
@@ -138,17 +141,17 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 			if (thing instanceof double[]) {
 				double[] doublething = (double[]) thing;
 				moranNames[i - 1] = names[i - 1] + "_M";
-				moranDataObjects[i] = this.calculateMoranScores(doublething, i);
+				moranDataObjects[i] = calculateMoranScores(doublething, i);
 			} else {
 				moranDataObjects[i] = dataObjects[i];
 			}
 		}
 		moranDataObjects[0] = moranNames;
-		this.dataSetMoran = new DataSetForApps(moranDataObjects);
+		dataSetMoran = new DataSetForApps(moranDataObjects);
 
 		DataSetEvent e2 = new DataSetEvent(dataSetMoran, this);
-		this.map.dataSetChanged(e2);
-		this.sp.dataSetChanged(e2);
+		map.dataSetChanged(e2);
+		sp.dataSetChanged(e2);
 	}
 
 	public void colorClassifierChanged(ColorClassifierEvent e) {
@@ -198,14 +201,13 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 		System.arraycopy(zData, 0, moranData, 0, zData.length);
 		double[] moranScores = new double[moranData.length];
 		for (int i = 0; i < moranData.length; i++) {
-			int[] iBors = this.spatialWeights.getNeighbors(i);
+			int[] iBors = spatialWeights.getNeighbors(i);
 			double sumScore = 0;
-			for (int j = 0; j < iBors.length; j++) {
+			for (int element : iBors) {
 				sumScore = sumScore
-						+ this.dataSetZ.getValueAsDouble(whichVar, iBors[j]);
+						+ dataSetZ.getValueAsDouble(whichVar, element);
 			}
-			moranScores[i] = this.dataSetZ.getValueAsDouble(whichVar, i)
-					* sumScore;
+			moranScores[i] = dataSetZ.getValueAsDouble(whichVar, i) * sumScore;
 		}
 		return moranScores;
 	}

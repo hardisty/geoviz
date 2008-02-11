@@ -21,36 +21,37 @@
  -------------------------------------------------------------------   */
 package geovista.geoviz.star;
 
-
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 
-
 /**
- * Paints an array of SelectionStarPlot. Responds to and broadcasts DataSetChanged,
- * IndicationChanged etc. events.
- *
+ * Paints an array of SelectionStarPlot. Responds to and broadcasts
+ * DataSetChanged, IndicationChanged etc. events.
+ * 
  * @author Frank Hardisty
  * @version $Revision: 1.1 $
  */
-public class SelectionStarPlot
-    extends StarPlot 
-    implements SelectionListener {
+public class SelectionStarPlot extends StarPlot implements SelectionListener {
 
+	int[] savedSelection;
 
-  /**
+	/**
 	 * 
 	 */
 
-public SelectionStarPlot() {
-    super();
+	public SelectionStarPlot() {
+		super();
 
-  }
+	}
 
-  public void selectionChanged(SelectionEvent e){
-   int[] selection = e.getSelection();
-   this.starCan.setObsList(selection);
+	public void selectionChanged(SelectionEvent e) {
+		int[] selection = e.getSelection();
+		starCan.setObsList(selection);
+		savedSelection = e.getSelection();
+	}
 
-  }
+	public SelectionEvent getSelectionEvent() {
+		return new SelectionEvent(this, savedSelection);
+	}
 
-} //end class
+} // end class

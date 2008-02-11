@@ -75,7 +75,8 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	public static final int DEFAULT_PORT = 3232;
 
 	public static final String USER_NAME = "Frank";
-	final static Logger logger = Logger.getLogger(RemoteCollaboration.class.getName());
+	final static Logger logger = Logger.getLogger(RemoteCollaboration.class
+			.getName());
 	static boolean DEBUG = true;
 
 	public RemoteCollaboration() {
@@ -89,30 +90,30 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 		};
 		new Timer(delay, taskPerformer).start();
 
-		this.setLayout(new BorderLayout());
-		this.ipPanel = makeIpPanel();
+		setLayout(new BorderLayout());
+		ipPanel = makeIpPanel();
 		this.add(ipPanel, BorderLayout.NORTH);
-		this.buttonPanel = makeButtonPanel();
+		buttonPanel = makeButtonPanel();
 		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.chatPanel = new ChatPanel();
-		this.chatPanel.setMsgReciever(this);
+		chatPanel = new ChatPanel();
+		chatPanel.setMsgReciever(this);
 		this.add(chatPanel, BorderLayout.CENTER);
-		this.listenerList = new EventListenerList();
+		listenerList = new EventListenerList();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.connectButton) {
-			this.turnButtonsOn();
+		if (e.getSource() == connectButton) {
+			turnButtonsOn();
 
-			this.remoteIP = this.ipField.getText();
-			this.remoteListener = RmiListener.connectToRemoteJVM(this.remoteIP);
-		} else if (e.getSource() == this.sendSelection) {
-			this.sendRemoteSelection();
-		} else if (e.getSource() == this.sendSpatialExtent) {
-			this.sendRemoteSpatialExtent();
-		} else if (e.getSource() == this.sendVariables) {
-			this.sendRemoteSubspace();
+			remoteIP = ipField.getText();
+			remoteListener = RmiListener.connectToRemoteJVM(remoteIP);
+		} else if (e.getSource() == sendSelection) {
+			sendRemoteSelection();
+		} else if (e.getSource() == sendSpatialExtent) {
+			sendRemoteSpatialExtent();
+		} else if (e.getSource() == sendVariables) {
+			sendRemoteSubspace();
 		} else {
 			logger.finest(this.getClass().getName()
 					+ " recieved unknown action");
@@ -121,9 +122,9 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	}
 
 	private JPanel makeIpPanel() {
-		this.ipPanel = new JPanel(new FlowLayout());
-		this.connectButton = new JButton("Connect");
-		this.connectButton.addActionListener(this);
+		ipPanel = new JPanel(new FlowLayout());
+		connectButton = new JButton("Connect");
+		connectButton.addActionListener(this);
 		JLabel ipLabel = new JLabel("IP Address:");
 		ipPanel.add(ipLabel);
 
@@ -143,12 +144,12 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	}
 
 	private JPanel makeButtonPanel() {
-		this.buttonPanel = new JPanel();
+		buttonPanel = new JPanel();
 		// this.buttonPanel.setLayout(new
 		// BoxLayout(this.buttonPanel,BoxLayout.Y_AXIS));
-		this.sendSelection = new JButton("Send Selection");
-		this.sendVariables = new JButton("Send Variables");
-		this.sendSpatialExtent = new JButton("Send Spatial Extent");
+		sendSelection = new JButton("Send Selection");
+		sendVariables = new JButton("Send Variables");
+		sendSpatialExtent = new JButton("Send Spatial Extent");
 		buttonPanel.add(sendSelection);
 		buttonPanel.add(sendVariables);
 		buttonPanel.add(sendSpatialExtent);
@@ -165,7 +166,7 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	}
 
 	private void sendRemoteSpatialExtent() {
-		if (this.spatialExtent == null || this.remoteListener == null) {
+		if (spatialExtent == null || remoteListener == null) {
 			return;
 		}
 
@@ -189,7 +190,7 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	}
 
 	private void sendRemoteSelection() {
-		if (this.selection == null || this.remoteListener == null) {
+		if (selection == null || remoteListener == null) {
 			return;
 		}
 
@@ -197,7 +198,7 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 
 		try {
 			selectionListener.selectionChanged(RemoteCollaboration.USER_NAME,
-					this.selection);
+					selection);
 		} catch (RemoteException ex) {
 			ex.printStackTrace();
 		}
@@ -205,7 +206,7 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	}
 
 	private void sendRemoteSubspace() {
-		if (this.subspace == null || this.remoteListener == null) {
+		if (subspace == null || remoteListener == null) {
 			return;
 		}
 
@@ -213,7 +214,7 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 
 		try {
 			subspaceListener.subspaceChanged(RemoteCollaboration.USER_NAME,
-					this.selection);
+					selection);
 		} catch (RemoteException ex) {
 			ex.printStackTrace();
 		}
@@ -228,7 +229,7 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 					.println("RemoteCollaboration, got message from chat panel: "
 							+ msg);
 		}
-		if (msg == null || this.remoteListener == null) {
+		if (msg == null || remoteListener == null) {
 			return;
 		}
 
@@ -249,35 +250,39 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 
-		this.spatialExtent = e.getSpatialExtent();
+		spatialExtent = e.getSpatialExtent();
 		// we got this event from a remote jvm via our local rmiListener
 		// so pass it along to other listeners on the local jvm
-		this.fireSpatialExtentChanged(this.spatialExtent);
+		fireSpatialExtentChanged(spatialExtent);
 
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {
 
-		this.subspace = e.getSubspace();
+		subspace = e.getSubspace();
 		// we got this event from a remote jvm via our local rmiListener
 		// so pass it along to other listeners on the local jvm
-		this.fireSubspaceChanged(this.subspace);
+		fireSubspaceChanged(subspace);
 
 	}
 
 	public void selectionChanged(SelectionEvent e) {
 
-		this.selection = e.getSelection();
+		selection = e.getSelection();
 		// we got this event from a remote jvm via our local rmiListener
 		// so pass it along to other listeners on the local jvm
-		this.fireSelectionChanged(this.selection);
+		fireSelectionChanged(selection);
 
+	}
+
+	public SelectionEvent getSelectionEvent() {
+		return new SelectionEvent(this, selection);
 	}
 
 	public void remoteMessageReceived(String name, String message) {
 		// we got this selection from somewhere (probably another JVM)
 		// send it to our local chat panel
-		this.chatPanel.receiveMessage(name, message);
+		chatPanel.receiveMessage(name, message);
 	}
 
 	public void remoteSelectionChanged(String source, int[] selection) {
@@ -286,12 +291,12 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 		}
 		// we got this selection from somewhere (probably another JVM)
 		// send it along to registered listeners in this JVM
-		this.fireSelectionChanged(selection);
+		fireSelectionChanged(selection);
 	}
 
 	public void remoteSpatialExtentChanged(String source, Rectangle2D extent) {
 
-		this.fireSpatialExtentChanged(extent);
+		fireSpatialExtentChanged(extent);
 
 	}
 
@@ -300,9 +305,9 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 	}
 
 	private void turnButtonsOn() {
-		this.sendSelection.setEnabled(true);
-		this.sendVariables.setEnabled(true);
-		this.sendSpatialExtent.setEnabled(true);
+		sendSelection.setEnabled(true);
+		sendVariables.setEnabled(true);
+		sendSpatialExtent.setEnabled(true);
 
 	}
 
