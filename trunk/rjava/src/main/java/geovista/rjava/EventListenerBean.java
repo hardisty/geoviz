@@ -26,37 +26,44 @@ import geovista.common.event.SelectionListener;
 
 /**
  * This class listens for events, especially coordinated events, and makes the
- * results available for query by entities that cannot be themselves coordinated.
- * An example is an instance of R polling an instance of this class for the
- * current selection etc.
+ * results available for query by entities that cannot be themselves
+ * coordinated. An example is an instance of R polling an instance of this class
+ * for the current selection etc.
  */
-public class EventListenerBean
-    implements SelectionListener {
-    private transient int[] selection;
-    private transient boolean selectionHasChanged;
-  public EventListenerBean() {
-    super();
-    selectionHasChanged = false;
-  }
+public class EventListenerBean implements SelectionListener {
+	private transient int[] selection;
+	private transient boolean selectionHasChanged;
 
-  public void selectionChanged(SelectionEvent e) {
-     this.selection = e.getSelection();
-     this.selectionHasChanged = true;
-  }
-  public boolean getSelectionHasChanged() {
-    return selectionHasChanged;
-  }
-  public void setSelectionHasChanged(boolean selectionHasChanged) {
-    this.selectionHasChanged = selectionHasChanged;
-  }
-  public int[] getSelection() {
-    this.selectionHasChanged = false;
-    return selection;
+	public EventListenerBean() {
+		super();
+		selectionHasChanged = false;
+	}
 
-  }
-  public void setSelection(int[] selection) {
-    this.selection = selection;
-  }
+	public void selectionChanged(SelectionEvent e) {
+		selection = e.getSelection();
+		selectionHasChanged = true;
+	}
 
+	public SelectionEvent getSelectionEvent() {
+		return new SelectionEvent(this, selection);
+	}
+
+	public boolean getSelectionHasChanged() {
+		return selectionHasChanged;
+	}
+
+	public void setSelectionHasChanged(boolean selectionHasChanged) {
+		this.selectionHasChanged = selectionHasChanged;
+	}
+
+	public int[] getSelection() {
+		selectionHasChanged = false;
+		return selection;
+
+	}
+
+	public void setSelection(int[] selection) {
+		this.selection = selection;
+	}
 
 }

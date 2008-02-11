@@ -63,6 +63,7 @@ implements SelectionListener, DataSetListener {
 	JFormattedTextField stdDevSelFTF;
 	JFormattedTextField skewnessSelFTF;
 	JFormattedTextField kurtosisSelFTF;
+	int[] savedSelection;
 
 	/**
 	 * 
@@ -78,27 +79,27 @@ implements SelectionListener, DataSetListener {
 		currVarPanel.setLayout(new BoxLayout(currVarPanel, BoxLayout.Y_AXIS));
 		currVarPanel.setBorder(BorderFactory
 				.createTitledBorder("Column Stats:"));
-		currVarPanel.add(this.makeMeanPanel());
-		currVarPanel.add(this.makeStdDevPanel());
-		currVarPanel.add(this.makeSkewnessPanel());
-		currVarPanel.add(this.makeKurtosisPanel());
+		currVarPanel.add(makeMeanPanel());
+		currVarPanel.add(makeStdDevPanel());
+		currVarPanel.add(makeSkewnessPanel());
+		currVarPanel.add(makeKurtosisPanel());
 		this.add(currVarPanel);
 
 		JPanel selObsPanel = new JPanel();
 		selObsPanel.setLayout(new BoxLayout(selObsPanel, BoxLayout.Y_AXIS));
 		selObsPanel.setBorder(BorderFactory
 				.createTitledBorder("Selection Stats:"));
-		selObsPanel.add(this.makeSelMeanPanel());
-		selObsPanel.add(this.makeSelStdDevPanel());
-		selObsPanel.add(this.makeSelSkewnessPanel());
-		selObsPanel.add(this.makeSelKurtosisPanel());
+		selObsPanel.add(makeSelMeanPanel());
+		selObsPanel.add(makeSelStdDevPanel());
+		selObsPanel.add(makeSelSkewnessPanel());
+		selObsPanel.add(makeSelKurtosisPanel());
 		this.add(selObsPanel);
 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.add(currVarPanel);
 		bottomPanel.add(selObsPanel);
 
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		JTable table = new JTable();
 		JScrollPane sPane = new JScrollPane();
@@ -205,12 +206,17 @@ implements SelectionListener, DataSetListener {
 
 	public void selectionChanged(SelectionEvent e) {
 		int[] selection = e.getSelection();
-		this.calculateSelStats(selection);
+		calculateSelStats(selection);
+		savedSelection = selection;
 
 	}
 
+	public SelectionEvent getSelectionEvent() {
+		return new SelectionEvent(this, savedSelection);
+	}
+
 	public void dataSetChanged(DataSetEvent e) {
-		this.dataSet = e.getDataSetForApps();
+		dataSet = e.getDataSetForApps();
 		calculateStats();
 
 	}
@@ -218,18 +224,18 @@ implements SelectionListener, DataSetListener {
 	private void calculateStats() {
 		double[] data = dataSet.getNumericDataAsDouble(0);
 		double meanValue = DescriptiveStatistics.mean(data);
-		this.meanFTF.setValue(meanValue);
-		if (this.meanFTF.getText().equals("-0")){
-			this.meanFTF.setText("0");
+		meanFTF.setValue(meanValue);
+		if (meanFTF.getText().equals("-0")) {
+			meanFTF.setText("0");
 		}
-		
+
 		double stdDev = DescriptiveStatistics.stdDev(data, false);
-		this.stdDevFTF.setValue(stdDev);
+		stdDevFTF.setValue(stdDev);
 		double skewness = DescriptiveStatistics.skewness(data, false);
-		this.skewnessFTF.setValue(skewness);
+		skewnessFTF.setValue(skewness);
 		double kurtosis = DescriptiveStatistics.kurtosis(data, false);
-		this.kurtosisFTF.setValue(kurtosis);
-		this.revalidate();
+		kurtosisFTF.setValue(kurtosis);
+		revalidate();
 	}
 
 	private void calculateSelStats(int[] selObs) {
@@ -240,27 +246,27 @@ implements SelectionListener, DataSetListener {
 			data = new double[selObs.length];
 			int counter = 0;
 			for (int i : selObs) {
-				
+
 				data[counter++] = originalData[i];
 			}
 		} else {
-			//strangely, if we don't do this next, the figures
-			//don't agree. XXX investigate why....
-			this.meanSelFTF.setText(this.meanFTF.getText());
-			this.stdDevSelFTF.setText(this.stdDevFTF.getText());
-			this.skewnessSelFTF.setText(this.skewnessFTF.getText());
-			this.kurtosisSelFTF.setText(this.kurtosisFTF.getText());
+			// strangely, if we don't do this next, the figures
+			// don't agree. XXX investigate why....
+			meanSelFTF.setText(meanFTF.getText());
+			stdDevSelFTF.setText(stdDevFTF.getText());
+			skewnessSelFTF.setText(skewnessFTF.getText());
+			kurtosisSelFTF.setText(kurtosisFTF.getText());
 			return;
 		}
 		double meanValue = DescriptiveStatistics.mean(data);
-		this.meanSelFTF.setValue(meanValue);
+		meanSelFTF.setValue(meanValue);
 		double stdDev = DescriptiveStatistics.stdDev(data, true);
-		this.stdDevSelFTF.setValue(stdDev);
+		stdDevSelFTF.setValue(stdDev);
 		double skewness = DescriptiveStatistics.skewness(data, true);
-		this.skewnessSelFTF.setValue(skewness);
+		skewnessSelFTF.setValue(skewness);
 		double kurtosis = DescriptiveStatistics.kurtosis(data, true);
-		this.kurtosisSelFTF.setValue(kurtosis);
-		this.revalidate();
+		kurtosisSelFTF.setValue(kurtosis);
+		revalidate();
 	}
 
 	public static void main(String[] args) {

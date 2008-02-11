@@ -29,10 +29,13 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -57,25 +60,14 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.w3c.dom.NodeList;
 
-import com.thoughtworks.xstream.XStream;
-
 import geovista.coordination.CoordinationManager;
 import geovista.coordination.FiringBean;
 import geovista.readers.util.MyFileFilter;
-import geovista.toolkitcore.marshal.GeoMapConverter;
-import geovista.toolkitcore.marshal.GeoVizToolkitConverter;
-import geovista.toolkitcore.marshal.IndicationAnimatorConverter;
-import geovista.toolkitcore.marshal.JInternalFrameConverter;
-import geovista.toolkitcore.marshal.JPanelConverter;
-import geovista.toolkitcore.marshal.SingleHistogramConverter;
-import geovista.toolkitcore.marshal.StarPlotConverter;
-import geovista.toolkitcore.marshal.StarPlotMapConverter;
-import geovista.toolkitcore.marshal.ToolkitBeanConverter;
-import geovista.toolkitcore.marshal.VariablePickerConverter;
+import geovista.toolkitcore.marshal.Marshaller;
 
 public class ToolkitIO {
-	protected final static Logger logger = Logger
-			.getLogger(ToolkitIO.class.getName());
+	protected final static Logger logger = Logger.getLogger(ToolkitIO.class
+			.getName());
 	public static final int ACTION_OPEN = 0;
 	public static final int ACTION_SAVE = 1;
 
@@ -87,19 +79,17 @@ public class ToolkitIO {
 	private static String IMAGE_DIR = "LastGoodImageDirectory";
 	public static String dataSetPathFromXML = " ";
 
-	void initXStream() {
-		XStream xstream = new XStream();
-		xstream.registerConverter(new GeoMapConverter());
-		xstream.registerConverter(new JPanelConverter(xstream.getMapper(),
-				xstream.getReflectionProvider()));
-		xstream.registerConverter(new JInternalFrameConverter());
-		xstream.registerConverter(new StarPlotConverter());
-		xstream.registerConverter(new StarPlotMapConverter());
-		xstream.registerConverter(new IndicationAnimatorConverter());
-		xstream.registerConverter(new SingleHistogramConverter());
-		xstream.registerConverter(new VariablePickerConverter());
-		xstream.registerConverter(new GeoVizToolkitConverter());
-		xstream.registerConverter(new ToolkitBeanConverter());
+	public static void saveVizStateToFile(VizState state) {
+		Marshaller marsh = Marshaller.INSTANCE;
+		String xml = marsh.toXML(state);
+		logger.info(xml);
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("state.gvz"));
+			out.write(xml);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -171,7 +161,7 @@ public class ToolkitIO {
 					logger.finest("this files exists!");
 
 					int erase;
-					String[] choices = { "Erase existing one",
+					String[] choices = { "Replace existing one",
 							"Choose another name", "Return without saving" };
 					erase = JOptionPane.showOptionDialog(parent,
 							"This fils exists, you want to:",
@@ -182,8 +172,8 @@ public class ToolkitIO {
 
 					if (erase == JOptionPane.NO_OPTION) {
 						GeoVizToolkit gvt = (GeoVizToolkit) parent;
-						ToolkitIO.writeLayout(gvt.getFileName(),
-								gvt.tBeanSet, parent);
+						ToolkitIO.writeLayout(gvt.getFileName(), gvt.tBeanSet,
+								parent);
 					} else if (erase == JOptionPane.CANCEL_OPTION) {
 						return null;
 					}
@@ -213,6 +203,44 @@ public class ToolkitIO {
 
 	}
 
+	public static void writeLayout(String dataSetFullName, String xml,
+			Component parent) {
+		String xmlFullName = ToolkitIO.getFileName(parent,
+				ToolkitIO.ACTION_SAVE, ToolkitIO.FILE_TYPE_LAYOUT);
+		if (xmlFullName == null) {
+			return;
+		}
+		int periodPlace = xmlFullName.lastIndexOf(".");
+		String extension = null;
+		if (periodPlace == -1) {
+			extension = "";
+		} else {
+			extension = xmlFullName
+					.substring(periodPlace, xmlFullName.length());
+		}
+		logger.finest("extension = " + extension);
+		if (extension.compareToIgnoreCase(".xml") != 0) {
+			xmlFullName = xmlFullName + ".xml";
+		}
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(xmlFullName));
+			out.write(xml);
+			out.close();
+			Preferences gvPrefs = Preferences
+					.userNodeForPackage(ToolkitBeanSet.class);
+			if (xmlFullName != null) {
+				File fi = new File(xmlFullName);
+				String path = fi.getAbsolutePath();
+				gvPrefs.put("LastGoodLayoutDirectory", path);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/* a nice example of using jdom to write xml to file */
+	@Deprecated
 	public static void writeLayout(String dataSetFullName,
 			ToolkitBeanSet tBeanSet, Component parent) {
 		String xmlFullName = ToolkitIO.getFileName(parent,
@@ -348,22 +376,19 @@ public class ToolkitIO {
 		return docIn;
 	}
 
-	private static ToolkitBeanSet openLayout(String xmlFullName) {
-		FileInputStream fis = null;
-
-		if (xmlFullName == null) {
-			return null;
-		}
+	private static String openLayout(String fileName) {
+		StringBuffer strBuff = new StringBuffer();
 		try {
-			fis = new FileInputStream(xmlFullName);
-
-			return ToolkitIO.openLayout(fis);
-
-		} catch (Exception e) {
+			BufferedReader in = new BufferedReader(new FileReader(fileName));
+			String str;
+			while ((str = in.readLine()) != null) {
+				strBuff.append(str);
+			}
+			in.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return null;
+		return strBuff.toString();
 	}
 
 	public static ToolkitBeanSet openDefaultLayout() {
@@ -402,7 +427,7 @@ public class ToolkitIO {
 		return ToolkitIO.openLayout(inStream);
 	}
 
-	public static ToolkitBeanSet openLayout(Component parent) {
+	public static String openLayout(Component parent) {
 
 		String xmlFullName = ToolkitIO.getFileName(parent,
 				ToolkitIO.ACTION_OPEN, ToolkitIO.FILE_TYPE_LAYOUT);
@@ -457,10 +482,10 @@ public class ToolkitIO {
 	 * vec.add(el); // Element el2 = new Element("anotherstring"); //
 	 * vec.add(el2); // Document doc = new Document(vec); //
 	 * root.setUserObject("Anthony.... this had better be good"); //
-	 * root.setUserObject(doc);
-	 *  // root.setUserObject(someBytes); NodeList rootnl =
-	 * root.getChildNodes(); // root.getLastChild().appendChild(commentNode);
-	 * for (int i = 0; i < rootnl.getLength(); i++) { Node nod = rootnl.item(i);
+	 * root.setUserObject(doc); // root.setUserObject(someBytes); NodeList
+	 * rootnl = root.getChildNodes(); //
+	 * root.getLastChild().appendChild(commentNode); for (int i = 0; i <
+	 * rootnl.getLength(); i++) { Node nod = rootnl.item(i);
 	 * logger.finest("***"); logger.finest("nod " + i); logger.finest("nod name " +
 	 * nod.getNodeName()); logger.finest("nod value " + nod.getNodeValue());
 	 * IIOMetadataNode iioNod = (IIOMetadataNode) nod; logger.finest("iiomnod

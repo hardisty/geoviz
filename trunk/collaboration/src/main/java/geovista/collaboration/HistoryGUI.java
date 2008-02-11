@@ -45,112 +45,123 @@ import geovista.common.event.SpatialExtentListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 
-public class HistoryGUI
-    extends JPanel implements ActionListener,
-    ChangeListener, ListSelectionListener, SpatialExtentListener,
-    SelectionListener, SubspaceListener {
-	protected final static Logger logger = Logger.getLogger(HistoryGUI.class.getName());
-  Preferences prefs;
+public class HistoryGUI extends JPanel implements ActionListener,
+		ChangeListener, ListSelectionListener, SpatialExtentListener,
+		SelectionListener, SubspaceListener {
+	protected final static Logger logger = Logger.getLogger(HistoryGUI.class
+			.getName());
+	Preferences prefs;
 
-  Vector sourceHistoryStack;
-  JList sourceHistoryList;
-  JScrollPane sourceScrollPane;
+	Vector sourceHistoryStack;
+	JList sourceHistoryList;
+	JScrollPane sourceScrollPane;
 
-  Vector eventHistoryStack;
-  JList eventHistoryList;
-  JScrollPane eventScrollPane;
+	Vector eventHistoryStack;
+	JList eventHistoryList;
+	JScrollPane eventScrollPane;
 
-  public HistoryGUI() {
-    init();
-  }
+	public HistoryGUI() {
+		init();
+	}
 
-  /**
-   *
-   */
-  private void init() {
-    this.setLayout(new FlowLayout());
+	/**
+	 * 
+	 */
+	private void init() {
+		setLayout(new FlowLayout());
 
-    this.sourceHistoryList = new JList();
-    JPanel sourcePanel = new JPanel();
-    sourcePanel.setLayout(new BorderLayout());
-    this.sourceHistoryStack = new Vector();
-    JLabel sourceLabel = new JLabel("Event Source");
-    sourcePanel.add(sourceLabel, BorderLayout.NORTH);
-    sourceScrollPane = new JScrollPane(sourceHistoryList);
-    sourcePanel.add(sourceScrollPane, BorderLayout.CENTER);
-    this.add(sourcePanel);
+		sourceHistoryList = new JList();
+		JPanel sourcePanel = new JPanel();
+		sourcePanel.setLayout(new BorderLayout());
+		sourceHistoryStack = new Vector();
+		JLabel sourceLabel = new JLabel("Event Source");
+		sourcePanel.add(sourceLabel, BorderLayout.NORTH);
+		sourceScrollPane = new JScrollPane(sourceHistoryList);
+		sourcePanel.add(sourceScrollPane, BorderLayout.CENTER);
+		this.add(sourcePanel);
 
-    this.eventHistoryList = new JList();
-    JPanel eventPanel = new JPanel();
-    eventPanel.setLayout(new BorderLayout());
-    this.eventHistoryStack = new Vector();
-    JLabel eventLabel = new JLabel("Event Type");
-    eventPanel.add(eventLabel, BorderLayout.NORTH);
-    eventScrollPane = new JScrollPane(eventHistoryList);
-    eventPanel.add(eventScrollPane, BorderLayout.CENTER);
-    this.add(eventPanel);
+		eventHistoryList = new JList();
+		JPanel eventPanel = new JPanel();
+		eventPanel.setLayout(new BorderLayout());
+		eventHistoryStack = new Vector();
+		JLabel eventLabel = new JLabel("Event Type");
+		eventPanel.add(eventLabel, BorderLayout.NORTH);
+		eventScrollPane = new JScrollPane(eventHistoryList);
+		eventPanel.add(eventScrollPane, BorderLayout.CENTER);
+		this.add(eventPanel);
 
-  }
+	}
 
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-   */
-  public void actionPerformed(ActionEvent e) {
-    // TODO Auto-generated method stub
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 
-  }
+	}
 
-  /* (non-Javadoc)
-   * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-   */
-  public void stateChanged(ChangeEvent e) {
-    // TODO Auto-generated method stub
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
 
-  }
+	}
 
-  /* (non-Javadoc)
-   * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
-   */
-  public void valueChanged(ListSelectionEvent e) {
-    // TODO Auto-generated method stub
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+	 */
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+	}
 
-  public void addEventToStack(HistoryEvent e) {
-    logger.finest("Adding event, event source = " + e.getSource());
-    this.sourceHistoryStack.addElement(e.getSource());
-    this.sourceHistoryList.setListData(sourceHistoryStack);
+	public void addEventToStack(HistoryEvent e) {
+		logger.finest("Adding event, event source = " + e.getSource());
+		sourceHistoryStack.addElement(e.getSource());
+		sourceHistoryList.setListData(sourceHistoryStack);
 
-    this.eventHistoryStack.addElement(e.getEventName());
-    this.sourceHistoryList.setListData(sourceHistoryStack);
-  }
+		eventHistoryStack.addElement(e.getEventName());
+		sourceHistoryList.setListData(sourceHistoryStack);
+	}
 
-  public void spatialExtentChanged(SpatialExtentEvent e) {
+	public void spatialExtentChanged(SpatialExtentEvent e) {
 
-  }
+	}
 
-  public void selectionChanged(SelectionEvent arg0) {
-    // TODO Auto-generated method stub
+	public void selectionChanged(SelectionEvent arg0) {
+		// TODO Auto-generated method stub
 
-  }
+	}
 
-  public void subspaceChanged(SubspaceEvent arg0) {
-    // TODO Auto-generated method stub
+	public void subspaceChanged(SubspaceEvent arg0) {
+		// TODO Auto-generated method stub
 
-  }
+	}
 
-  static public void main(String args[]) {
-    JFrame app = new JFrame();
-    HistoryGUI rc = new HistoryGUI();
-    app.getContentPane().add(rc);
-    app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    app.pack();
-    app.setVisible(true);
-    Rectangle2D.Float rect = new Rectangle2D.Float();
-    SpatialExtentEvent e = new SpatialExtentEvent(app, rect);
-    HistoryEvent e1 = new HistoryEvent("HyunJin", "spatial event", e);
-    HistoryEvent e2 = new HistoryEvent("HyunJin", "spatial event", e);
-    rc.addEventToStack(e1);
-    rc.addEventToStack(e2);
-  }
+	static public void main(String args[]) {
+		JFrame app = new JFrame();
+		HistoryGUI rc = new HistoryGUI();
+		app.getContentPane().add(rc);
+		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		app.pack();
+		app.setVisible(true);
+		Rectangle2D.Float rect = new Rectangle2D.Float();
+		SpatialExtentEvent e = new SpatialExtentEvent(app, rect);
+		HistoryEvent e1 = new HistoryEvent("HyunJin", "spatial event", e);
+		HistoryEvent e2 = new HistoryEvent("HyunJin", "spatial event", e);
+		rc.addEventToStack(e1);
+		rc.addEventToStack(e2);
+	}
+
+	public SelectionEvent getSelectionEvent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="animation/src/main/java"/>
-	<classpathentry kind="src" path="marshal/src/main/java"/>
 	<classpathentry kind="src" path="coordination/src/test/java"/>
 	<classpathentry kind="src" path="geoviz/src/test/java"/>
 	<classpathentry kind="src" path="animation/src/test/java"/>

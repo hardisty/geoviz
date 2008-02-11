@@ -40,8 +40,7 @@
     <module>cartogram</module>
     <module>sound</module>
     <module>touchgraph</module>
-    <module>satscan</module>
-         <module>marshal</module>   
+    <module>satscan</module> 
     <module>toolkitcore</module>
 
   </modules>

@@ -21,41 +21,6 @@
 
 package geovista.geoviz.map;
 
-import geovista.common.classification.ClassifierPicker;
-import geovista.common.data.DataSetForApps;
-import geovista.common.event.AuxiliaryDataSetEvent;
-import geovista.common.event.AuxiliaryDataSetListener;
-import geovista.common.event.ColorArrayEvent;
-import geovista.common.event.ColorArrayListener;
-import geovista.common.event.ConditioningEvent;
-import geovista.common.event.ConditioningListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.IndicationEvent;
-import geovista.common.event.IndicationListener;
-import geovista.common.event.SelectionEvent;
-import geovista.common.event.SelectionListener;
-import geovista.common.event.SpatialExtentEvent;
-import geovista.common.event.SpatialExtentListener;
-import geovista.common.event.VariableSelectionEvent;
-import geovista.common.event.VariableSelectionListener;
-import geovista.common.ui.Fisheyes;
-import geovista.common.ui.MultiSlider;
-import geovista.common.ui.RangeSlider;
-import geovista.coordination.CoordinationManager;
-import geovista.geoviz.sample.GeoData48States;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.geoviz.shapefile.ShapeFileToShape;
-import geovista.geoviz.visclass.VisualClassifier;
-import geovista.symbolization.BivariateColorSchemeVisualizer;
-import geovista.symbolization.BivariateColorSymbolClassification;
-import geovista.symbolization.BivariateColorSymbolClassificationSimple;
-import geovista.symbolization.ColorSymbolClassification;
-import geovista.symbolization.event.ColorClassifierEvent;
-import geovista.symbolization.event.ColorClassifierListener;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -83,6 +48,40 @@ import javax.swing.JToolBar;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
+import geovista.common.classification.ClassifierPicker;
+import geovista.common.data.DataSetForApps;
+import geovista.common.event.AuxiliaryDataSetEvent;
+import geovista.common.event.AuxiliaryDataSetListener;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.ColorArrayListener;
+import geovista.common.event.ConditioningEvent;
+import geovista.common.event.ConditioningListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.event.SpatialExtentEvent;
+import geovista.common.event.SpatialExtentListener;
+import geovista.common.event.VariableSelectionEvent;
+import geovista.common.event.VariableSelectionListener;
+import geovista.common.ui.Fisheyes;
+import geovista.common.ui.MultiSlider;
+import geovista.common.ui.RangeSlider;
+import geovista.coordination.CoordinationManager;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.geoviz.shapefile.ShapeFileToShape;
+import geovista.geoviz.visclass.VisualClassifier;
+import geovista.symbolization.BivariateColorSchemeVisualizer;
+import geovista.symbolization.BivariateColorSymbolClassification;
+import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorSymbolClassification;
+import geovista.symbolization.event.ColorClassifierEvent;
+import geovista.symbolization.event.ColorClassifierListener;
 
 /**
  * This class handles the user state, like selection, pan, zoom, plus
@@ -126,13 +125,13 @@ public class GeoMap extends JPanel
 
 	transient protected Fisheyes fisheyes;
 
-	transient protected final static Logger logger = Logger.getLogger(GeoMap.class
-			.getName());
+	transient protected final static Logger logger = Logger
+			.getLogger(GeoMap.class.getName());
 
 	transient DataSetForApps dataSet;
-	
-	Color backgroundColor = Color.green; 
-	
+
+	Color backgroundColor = Color.green;
+
 	Preferences prefs;
 
 	// Added by Diansheng. The reason for this is that for some applications we
@@ -153,10 +152,7 @@ public class GeoMap extends JPanel
 	}
 
 	private void init() {
-		
-		
-		
-		
+
 		if (visualClassifierNeeded) {
 			JPanel vcPanel = new JPanel();
 			vcPanel.setLayout(new BoxLayout(vcPanel, BoxLayout.Y_AXIS));
@@ -203,7 +199,7 @@ public class GeoMap extends JPanel
 		setLayout(new BorderLayout());
 		this.add(topContent, BorderLayout.NORTH);
 		mapCan = new MapCanvas();
-		//mapCan.setBackground(this.backgroundColor);
+		// mapCan.setBackground(this.backgroundColor);
 		this.add(mapCan, BorderLayout.CENTER);
 		mapCan.addIndicationListener(this);
 		visClassOne.addColorClassifierListener(this);
@@ -887,7 +883,7 @@ public class GeoMap extends JPanel
 		}
 
 		shpToShape.setInputDataSet(dataSet);
-		
+
 		map2.setBackground(Color.red);
 		// shpToShape.setInputDataSet(dataSet);
 		// Rectangle2D rect = new Rectangle2D.Float(-30f,-30f,600f,600f);
@@ -903,14 +899,14 @@ public class GeoMap extends JPanel
 
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
-//		ShapeFileToShape shpToShape3 = new ShapeFileToShape();
-//		fileName = "C:\\data\\geovista_data\\shapefiles\\jin\\States.shp";
-//
-//		ShapeFileDataReader shpRead3 = new ShapeFileDataReader();
-//		shpRead3.setFileName(fileName);
-//		// shpToShape3.setInputDataSet(shpRead3.getDataSet());
-//		shpToShape3.setInputDataSet(stateData.getDataSet());
-//		map2.setAuxiliarySpatialData(shpToShape3.getOutputDataSetForApps());
+		// ShapeFileToShape shpToShape3 = new ShapeFileToShape();
+		// fileName = "C:\\data\\geovista_data\\shapefiles\\jin\\States.shp";
+		//
+		// ShapeFileDataReader shpRead3 = new ShapeFileDataReader();
+		// shpRead3.setFileName(fileName);
+		// // shpToShape3.setInputDataSet(shpRead3.getDataSet());
+		// shpToShape3.setInputDataSet(stateData.getDataSet());
+		// map2.setAuxiliarySpatialData(shpToShape3.getOutputDataSetForApps());
 
 		// map2.setDataSet(shpToShape2.getOutputDataSet());
 
@@ -948,9 +944,13 @@ public class GeoMap extends JPanel
 	}
 
 	public void setBackgroundColor(Color backgroundColor) {
-		this.setBackground(backgroundColor);
+		setBackground(backgroundColor);
 		this.backgroundColor = backgroundColor;
-		this.mapCan.setBackground(backgroundColor);
+		mapCan.setBackground(backgroundColor);
 		this.repaint();
+	}
+
+	public SelectionEvent getSelectionEvent() {
+		return new SelectionEvent(this, getSelectedObservations());
 	}
 }
