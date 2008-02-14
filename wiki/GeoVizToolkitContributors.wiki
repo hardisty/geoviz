@@ -16,4 +16,4 @@
 
   * *Alan MacEachren* provided funding, many of the ideas behind the software, and contributed to many design decisions.
   * *Mark Gahegan* provided the funding, ideas behind the software, and contributed to many design decisions.
-  * *Masahiro Takatskuka* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of theG GeoViz Toolkit.
+  * *Masahiro Takatskuka* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of the GeoViz Toolkit.
