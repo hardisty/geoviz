@@ -12,8 +12,15 @@
   * *Masahiro Takatskuka* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
 
 
-= Other contributors: =
+= Design contributors: =
 
   * *Alan MacEachren* provided funding, many of the ideas behind the software, and contributed to many design decisions.
   * *Mark Gahegan* provided the funding, ideas behind the software, and contributed to many design decisions.
   * *Masahiro Takatskuka* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of the GeoViz Toolkit.
+
+= Financial contributors: =
+ * *The National Science Foundation*, through the Digital Government Quality Graphics grant.
+ * *The North-East Visualization and Analytics Center*
+ * *The National Cancer Institute*
+ * *The Army National Guard of South Carolina*
+ 
