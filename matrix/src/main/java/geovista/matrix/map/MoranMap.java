@@ -23,7 +23,6 @@
 package geovista.matrix.map;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -31,17 +30,16 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import geovista.common.data.DataSetBroadcaster;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.SpatialStatistics;
@@ -56,6 +54,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
+import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.scatterplot.SingleHistogram;
@@ -91,6 +90,9 @@ public class MoranMap extends JPanel implements SelectionListener,
 	JList varList;
 	JButton sendButt;
 	int monteCarloIterations = 100;
+	DataSetBroadcaster dataCaster;
+
+	CoordinationManager coord;
 
 	public MoranMap() {
 		super();
@@ -104,6 +106,20 @@ public class MoranMap extends JPanel implements SelectionListener,
 		sigHist = new SingleHistogram();
 		varSigPlot = new SingleScatterPlot();
 
+		dataCaster = new DataSetBroadcaster();
+
+		coord = new CoordinationManager();
+
+		coord.addBean(dataCaster);
+		coord.addBean(varMap);
+		coord.addBean(moranMap);
+		coord.addBean(sigMap);
+		coord.addBean(varSigMap);
+		coord.addBean(varHist);
+		coord.addBean(moranHist);
+		coord.addBean(sigHist);
+		coord.addBean(varSigPlot);
+
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(2, 4));
 		mainPanel.add(varMap);
@@ -115,21 +131,22 @@ public class MoranMap extends JPanel implements SelectionListener,
 		mainPanel.add(sigHist);
 		mainPanel.add(varSigPlot);
 
+		mainPanel.setPreferredSize(new Dimension(1000, 400));
 		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
-		varSigMap = new GeoMap();
-		sp = new SingleScatterPlot();
-		varSigMap.addSelectionListener(sp);
-		sp.addSelectionListener(varSigMap);
-		varSigMap.addIndicationListener(sp);
-		sp.addIndicationListener(varSigMap);
-		setLayout(box);
-		Dimension prefSize = new Dimension(300, 300);
-		varSigMap.setPreferredSize(prefSize);
-		sp.setPreferredSize(prefSize);
-		LineBorder border = (LineBorder) BorderFactory
-				.createLineBorder(Color.black);
-		varSigMap.setBorder(border);
-		sp.setBorder(border);
+		// varSigMap = new GeoMap();
+		// sp = new SingleScatterPlot();
+		// varSigMap.addSelectionListener(sp);
+		// sp.addSelectionListener(varSigMap);
+		// varSigMap.addIndicationListener(sp);
+		// sp.addIndicationListener(varSigMap);
+		// setLayout(box);
+		Dimension prefSize = new Dimension(200, 200);
+		varSigMap.setMaximumSize(prefSize);
+		varHist.setMaximumSize(prefSize);
+		// LineBorder border = (LineBorder) BorderFactory
+		// .createLineBorder(Color.black);
+		// varSigMap.setBorder(border);
+		// sp.setBorder(border);
 
 		this.add(mainPanel);
 		// this.add(sp);
@@ -164,6 +181,11 @@ public class MoranMap extends JPanel implements SelectionListener,
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
+		dataCaster.setAndFireDataSet(e.getDataSetForApps()
+				.getDataObjectOriginal());
+	}
+
+	public void dataSetChanged_old(DataSetEvent e) {
 		dataSetOriginal = e.getDataSetForApps();
 		spatialWeights = dataSetOriginal.getSpatialWeights();
 		;

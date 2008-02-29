@@ -112,6 +112,7 @@ public class GeoMapUni extends JPanel
 		legendPanel.add(Box.createRigidArea(new Dimension(4, 2)));
 
 		histo = new Histogram();
+		histo.setAxisOn(false);
 		Dimension histDim = new Dimension(70, 70);
 		histo.setPreferredSize(histDim);
 
