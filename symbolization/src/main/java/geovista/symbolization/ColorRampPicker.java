@@ -31,7 +31,7 @@ public class ColorRampPicker
     extends JPanel
     implements ComponentListener {
 
-  public RampSwatch[] panSet;
+  public ColorRampSwatch[] panSet;
   protected boolean[] anchored;
   protected Color[] colors;
   protected ColorRamp ramp;
@@ -83,25 +83,25 @@ public class ColorRampPicker
       this.removeAll();
     }
 
-    panSet = new RampSwatch[nSwatches];
+    panSet = new ColorRampSwatch[nSwatches];
     for (int i = 0; i < panSet.length; i++) {
       if (i == 0) { //first one
-        panSet[i] = new RampSwatch(this, true, true);
+        panSet[i] = new ColorRampSwatch(this, true, true);
         panSet[i].setSwatchColor(this.getLowColor());
       }
       else if (i == nSwatches - 1) { //last one
-        panSet[i] = new RampSwatch(this, true, true);
+        panSet[i] = new ColorRampSwatch(this, true, true);
         panSet[i].setSwatchColor(this.getHighColor());
       }
       else {
         if (i < len - 1) {
           boolean anch = anchored[i];
           Color c = colors[i];
-          panSet[i] = new RampSwatch(this, anch, false);
+          panSet[i] = new ColorRampSwatch(this, anch, false);
           panSet[i].setSwatchColor(c);
         }
         else {
-          panSet[i] = new RampSwatch(this, false, false);
+          panSet[i] = new ColorRampSwatch(this, false, false);
           panSet[i].setSwatchColor(Color.white);
         }
       }
@@ -213,11 +213,11 @@ public class ColorRampPicker
   //end component event handling
   //start accessors
 
-  public void setPanSet(RampSwatch[] panSet) {
+  public void setPanSet(ColorRampSwatch[] panSet) {
     this.panSet = panSet;
   }
 
-  public RampSwatch[] getPanSet() {
+  public ColorRampSwatch[] getPanSet() {
     return this.panSet;
   }
 

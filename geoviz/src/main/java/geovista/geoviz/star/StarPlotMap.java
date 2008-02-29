@@ -26,6 +26,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.logging.Level;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import geovista.common.data.DataSetForApps;
@@ -36,6 +37,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.geoviz.map.GeoMap;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.symbolization.glyph.Glyph;
 import geovista.symbolization.glyph.GlyphEvent;
@@ -64,7 +66,7 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 	DataSetForApps data;
 
 	static boolean DEBUG = true;
-	
+
 	boolean settingUp = true;
 
 	public StarPlotMap() {
@@ -77,7 +79,7 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 		southPanel.add(starLeg, BorderLayout.CENTER);
 		southPanel.add(starColorer, BorderLayout.NORTH);
 		this.add(southPanel, BorderLayout.SOUTH);
-		this.starColorer.addColorArrayListener(this);
+		starColorer.addColorArrayListener(this);
 
 	}
 
@@ -85,13 +87,14 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 		// this.mapCan.glyphChanged(e);
 	}
 
+	@Override
 	public void dataSetChanged(DataSetEvent e) {
-		this.settingUp = true;
+		settingUp = true;
 		super.dataSetChanged(e);
-		this.data = e.getDataSetForApps();
-		this.starLayer.dataSetChanged(e);
-		this.starColorer.setDataSet(e.getDataSetForApps());
-		this.setLegendIndication(0);
+		data = e.getDataSetForApps();
+		starLayer.dataSetChanged(e);
+		starColorer.setDataSet(e.getDataSetForApps());
+		setLegendIndication(0);
 		int nNumericVars = e.getDataSetForApps().getNumberNumericAttributes();
 		if (nNumericVars > 6) {
 			nNumericVars = 6;
@@ -101,9 +104,9 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 			selectedVars[i] = i;
 		}
 		SubspaceEvent subE = new SubspaceEvent(this, selectedVars);
-		this.subspaceChanged(subE);
-		this.mapCan.setGlyphs(this.createGlyphs());
-		this.settingUp = false;
+		subspaceChanged(subE);
+		mapCan.setGlyphs(createGlyphs());
+		settingUp = false;
 	}
 
 	private Glyph[] createGlyphs() {
@@ -111,13 +114,12 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 		Rectangle[] plotLocs = new Rectangle[data.getNumObservations()];
 
 		for (int i = 0; i < plotLocs.length; i++) {
-			plotLocs[i] = new Rectangle(this.defaultGlyphSize,
-					this.defaultGlyphSize);
+			plotLocs[i] = new Rectangle(defaultGlyphSize, defaultGlyphSize);
 		}
 
 		starLayer.setPlotLocations(plotLocs);
 
-		Color[] starColors = this.starColorer.findDataColors();
+		Color[] starColors = starColorer.findDataColors();
 		starLayer.setStarFillColors(starColors);
 		return starLayer.findGlyphs();
 	}
@@ -127,71 +129,84 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {
-		this.starLayer.subspaceChanged(e);
+		starLayer.subspaceChanged(e);
 
-		this.mapCan.setGlyphs(this.createGlyphs());
+		mapCan.setGlyphs(createGlyphs());
 
-		String[] varNames = this.starLayer.getVarNames();
-		this.starLeg.setVariableNames(varNames);
-		double[] values = this.starLayer.getValues(indication);
-		this.starLeg.setValues(values);
+		String[] varNames = starLayer.getVarNames();
+		starLeg.setVariableNames(varNames);
+		double[] values = starLayer.getValues(indication);
+		starLeg.setValues(values);
 
-		this.setLegendIndication(indication);
+		setLegendIndication(indication);
 	}
 
+	@Override
 	public void colorArrayChanged(ColorArrayEvent e) {
 		if (StarPlotMap.logger.isLoggable(Level.FINEST)) {
 			logger.finest("in starplotmap colorarraychanged, got colors");
 		}
-		if (e == null || e.getColors() == null){
+		if (e == null || e.getColors() == null) {
 			return;
 		}
 		Color[] starColors = e.getColors();
-		this.starLayer.setStarFillColors(starColors);
-		this.mapCan.setGlyphs(this.starLayer.findGlyphs());// XXX should not
-															// redo glyphs here
+		starLayer.setStarFillColors(starColors);
+		mapCan.setGlyphs(starLayer.findGlyphs());// XXX should not
+		// redo glyphs here
 	}
 
+	@Override
 	public void indicationChanged(IndicationEvent e) {
-		if(this.settingUp){
+		if (settingUp) {
 			return;
 		}
 
 		int ind = e.getIndication();
-		if (ind > this.starLayer.getDataSet().getNumObservations()){
-			logger.severe("got indication greater than data set size, ind = " + ind);
+		if (ind > starLayer.getDataSet().getNumObservations()) {
+			logger.severe("got indication greater than data set size, ind = "
+					+ ind);
 			return;
 		}
-		if (e.getSource() != this.starLayer) {
-			this.starLayer.indicationChanged(e);
-		}		
-		this.setLegendIndication(ind);
+		if (e.getSource() != starLayer) {
+			starLayer.indicationChanged(e);
+		}
+		setLegendIndication(ind);
 		super.indicationChanged(e);
 
 	}
 
 	private void setLegendIndication(int ind) {
 		if (ind >= 0) {
-			this.starLeg.setObsName(starLayer.getObservationName(ind));
-			String[] varNames = this.starLayer.getVarNames();
-			double[] values = this.starLayer.getValues(ind);
-			int[] spikeLengths = this.starLayer.getSpikeLengths(ind);
-			//we need this check, or we start blowing null pointer exceptions
-			//if the we get an indication during iniditalization.
-			if (spikeLengths == null){
+			starLeg.setObsName(starLayer.getObservationName(ind));
+			String[] varNames = starLayer.getVarNames();
+			double[] values = starLayer.getValues(ind);
+			int[] spikeLengths = starLayer.getSpikeLengths(ind);
+			// we need this check, or we start blowing null pointer exceptions
+			// if the we get an indication during iniditalization.
+			if (spikeLengths == null) {
 				return;
 			}
-			this.starLeg.setValues(values);
-			this.starLeg.setVariableNames(varNames);
+			starLeg.setValues(values);
+			starLeg.setVariableNames(varNames);
 
-			this.starLeg.setSpikeLengths(spikeLengths);
-			Color starColor = this.starLayer.getStarFillColor(ind);
-			this.starLeg.setStarFillColor(starColor);
+			starLeg.setSpikeLengths(spikeLengths);
+			Color starColor = starLayer.getStarFillColor(ind);
+			starLeg.setStarFillColor(starColor);
 
 		}
 
 	}
 
+	public static void main(String[] args) {
+		StarPlotMap map = new StarPlotMap();
+		JFrame frame = new JFrame("StarPlot Map");
+		frame.add(map);
+		frame.pack();
+		frame.setVisible(true);
+		GeoDataGeneralizedStates geodata = new GeoDataGeneralizedStates();
+		DataSetEvent e = new DataSetEvent(geodata.getDataForApps(), geodata);
+		map.dataSetChanged(e);
 
+	}
 
 } // end class

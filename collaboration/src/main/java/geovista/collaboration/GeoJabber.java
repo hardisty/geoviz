@@ -409,10 +409,16 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	}
 
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 
 		spatialExtent = e.getSpatialExtent();
-
+		savedEvent = e;
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {

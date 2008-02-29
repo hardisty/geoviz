@@ -156,6 +156,9 @@ public class ToolkitIO {
 
 			} else if (action == ToolkitIO.ACTION_SAVE) {
 				returnVal = fileChooser.showSaveDialog(parent);
+				if (returnVal == fileChooser.CANCEL_OPTION) {
+					return null;
+				}
 				File tempFile = fileChooser.getSelectedFile();
 				if (tempFile.exists()) {
 					logger.finest("this files exists!");

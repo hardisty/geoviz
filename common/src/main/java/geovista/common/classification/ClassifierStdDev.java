@@ -22,7 +22,7 @@ public class ClassifierStdDev implements DescribedClassifier, BoundaryClassifier
     return ClassifierStdDev.fullName;
   }
 
-  public double[] getBoundaries(double[] data, int numClasses){
+  public double[] getEqualBoundaries(double[] data, int numClasses){
     double[] boundaries = new double[numClasses +1];
     double max = DescriptiveStatistics.max(data);
     double min = DescriptiveStatistics.min(data);

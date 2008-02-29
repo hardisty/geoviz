@@ -53,6 +53,8 @@ public class VizState implements SelectionListener, IndicationListener,
 	int indication;
 	int[] subspace;
 
+	private String selectedBean;
+
 	AuxiliaryDataSetEvent auxDataEvent;
 	ColorClassifierEvent colorClasserEvent;
 	SpatialExtentEvent spatialExtentEvent;
@@ -258,6 +260,45 @@ public class VizState implements SelectionListener, IndicationListener,
 		// next i
 	}
 
+	/**
+	 * adds an SpatialExtentListener
+	 */
+	public void addSpatialExtentListener(SpatialExtentListener l) {
+		listenerList.add(SpatialExtentListener.class, l);
+	}
+
+	/**
+	 * removes an SpatialExtentListener from the component
+	 */
+	public void removeSpatialExtentListener(SpatialExtentListener l) {
+		listenerList.remove(SpatialExtentListener.class, l);
+	}
+
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	void fireSpatialExtentChanged() {
+		if (spatialExtentEvent == null) {
+			return;
+		}
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == SpatialExtentListener.class) {
+
+				((SpatialExtentListener) listeners[i + 1])
+						.spatialExtentChanged(spatialExtentEvent);
+			}
+		} // next i
+	}
+
 	public AuxiliaryDataSetEvent getAuxDataEvent() {
 		return auxDataEvent;
 	}
@@ -297,6 +338,18 @@ public class VizState implements SelectionListener, IndicationListener,
 
 	public SelectionEvent getSelectionEvent() {
 		return new SelectionEvent(this, selection);
+	}
+
+	public IndicationEvent getIndicationEvent() {
+		return new IndicationEvent(this, indication);
+	}
+
+	public String getSelectedBean() {
+		return selectedBean;
+	}
+
+	public void setSelectedBean(String selectedBean) {
+		this.selectedBean = selectedBean;
 	}
 
 }

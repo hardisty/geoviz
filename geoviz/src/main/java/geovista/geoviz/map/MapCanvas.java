@@ -359,9 +359,16 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		this.repaint();
 	}
 
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 		Rectangle2D rect = e.getSpatialExtent();
 		zoomNewExtent(rect);
+		savedEvent = e;
 	}
 
 	public void zoomIn(int x1, int x2, int y1, int y2) {

@@ -326,8 +326,15 @@ public class GeoMapUni extends JPanel
 		}
 	}
 
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 		mapCan.spatialExtentChanged(e);
+		savedEvent = e;
 	}
 
 	public void zoomFullExtent() {

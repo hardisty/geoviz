@@ -18,9 +18,7 @@ import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.NoninvertibleTransformException;
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,7 +31,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -42,21 +39,16 @@ import javax.swing.event.EventListenerList;
 import org.geotools.data.shapefile.Lock;
 import org.geotools.data.shapefile.dbf.DbaseFileHeader;
 import org.geotools.data.shapefile.dbf.DbaseFileReader;
-import org.geotools.data.shapefile.shp.ShapefileException;
-import org.geotools.data.shapefile.shp.ShapefileHeader;
 import org.geotools.data.shapefile.shp.ShapefileReader;
-
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
 
 import geovista.common.data.DataSetForApps;
-import geovista.common.data.GeneralPathLine;
 import geovista.common.data.SpatialWeights;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.jts.Java2DConverter;
-
 import geovista.readers.csv.GeogCSVReader;
 import geovista.readers.geog.AttributeDescriptionFile;
 
@@ -79,9 +71,7 @@ public class ShapeFileDataReader implements Serializable {
 	protected transient String fileName;
 	protected transient EventListenerList listenerList;
 
-	private static double tolerance = 0.01;
-	
-	
+	public static double tolerance = 0.00;
 
 	public ShapeFileDataReader() {
 		super();
@@ -95,8 +85,7 @@ public class ShapeFileDataReader implements Serializable {
 	 * shapes. private Shape[] makeShapes(ShapeFile shp) { Shape[] shapes =
 	 * (Shape[]) this.transform(shp);
 	 * 
-	 * return shapes;
-	 *  }
+	 * return shapes; }
 	 */
 	/**
 	 * fah commented out for now -- no references to this method //return the
@@ -112,9 +101,8 @@ public class ShapeFileDataReader implements Serializable {
 	 * ex.printStackTrace(); } return dbData; }
 	 */
 	// return attribute names of the DB Data
-
 	private static String[] getFieldNames(String fileName) {
-		
+
 		String dbFileName = fileName + ".dbf";
 		FileInputStream fis = null;
 		try {
@@ -122,7 +110,7 @@ public class ShapeFileDataReader implements Serializable {
 		} catch (FileNotFoundException e) {
 			logger.severe("dbf file not found, file = " + dbFileName);
 			e.printStackTrace();
-		}		
+		}
 		String[] fieldNames = getFieldNames(fis);
 		return fieldNames;
 	}
@@ -130,7 +118,6 @@ public class ShapeFileDataReader implements Serializable {
 	private static String[] getFieldNames(FileInputStream fis) {
 		String[] fieldNames = null;
 		try {
-
 
 			ReadableByteChannel dChan = Channels.newChannel(fis);
 			DbaseFileReader dBaseReader = new DbaseFileReader(dChan, true);
@@ -141,12 +128,13 @@ public class ShapeFileDataReader implements Serializable {
 				fieldNames[i] = dBaseHeader.getFieldName(i);
 			}
 
-			//dBaseReader.close();
+			// dBaseReader.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		return fieldNames;
 	}
+
 	public static Geometry[] getGeoms(String baseFileName) {
 
 		try {
@@ -169,8 +157,8 @@ public class ShapeFileDataReader implements Serializable {
 			Vector<Geometry> shapes = new Vector<Geometry>();
 			while (shpReader.hasNext()) {
 				Geometry geom = (Geometry) shpReader.nextRecord().shape();
-				//this helps ensure valid topology
-				//geom = geom.buffer(0);
+				// this helps ensure valid topology
+				// geom = geom.buffer(0);
 				shapes.add(geom);
 			}
 			Geometry[] geomArray = new Geometry[shapes.size()];
@@ -186,112 +174,109 @@ public class ShapeFileDataReader implements Serializable {
 		return null;
 	}
 
-	private static Shape[] getShapes(InputStream shpStream){
+	private static Shape[] getShapes(InputStream shpStream) {
 		Geometry[] geoms = getGeoms(shpStream);
-		
-		//SpatialWeights weights = findSpatialWeights(geoms);
-		
-		
+
+		// SpatialWeights weights = findSpatialWeights(geoms);
+
 		Geometry[] simplerGeoms = makeSimplerGeoms(geoms, tolerance);
 
-		Shape[] shapes = geomsToShapes(simplerGeoms);	
-		
-		
-		
+		Shape[] shapes = geomsToShapes(simplerGeoms);
+
 		return shapes;
 	}
-	
-	
+
 	protected static DataSetForApps makeDataSetForApps(String fileName) {
 		logger.finest("debug");
-		FileInputStream shpStream= null;
-		FileInputStream dbfStream= null;
+		FileInputStream shpStream = null;
+		FileInputStream dbfStream = null;
 		try {
-			shpStream = new FileInputStream(fileName
-					+ ".shp");
-			dbfStream = new FileInputStream(fileName
-					+ ".dbf");
-			
+			shpStream = new FileInputStream(fileName + ".shp");
+			dbfStream = new FileInputStream(fileName + ".dbf");
+
 		} catch (IOException ex) {
 			logger.severe("Error reading file, file name = " + fileName);
 			ex.printStackTrace();
 		}
-		
 
 		DataSetForApps dataForApps = makeDataSetForApps(shpStream, dbfStream);
 		return dataForApps;
-		
+
 	}
-	public static DataSetForApps makeDataSetForAppsCsv(Class clazz, String name){
+
+	public static DataSetForApps makeDataSetForAppsCsv(Class clazz, String name) {
 		DataSetForApps shpData = null;
 
 		try {
 
-			InputStream isCSV = clazz.getResourceAsStream("resources/" + name + ".csv");
-			InputStream isSHP = clazz.getResourceAsStream("resources/" + name + ".shp");
-			
-			if (isCSV == null){
-				logger.severe("Could not find " + clazz.getName() + "/resources/" + name + ".csv");
+			InputStream isCSV = clazz.getResourceAsStream("resources/" + name
+					+ ".csv");
+			InputStream isSHP = clazz.getResourceAsStream("resources/" + name
+					+ ".shp");
+
+			if (isCSV == null) {
+				logger.severe("Could not find " + clazz.getName()
+						+ "/resources/" + name + ".csv");
 				return null;
 			}
-			if (isSHP == null){
-				logger.severe("Could not find " + clazz.getName() + "/resources/" + name + ".shp");
+			if (isSHP == null) {
+				logger.severe("Could not find " + clazz.getName()
+						+ "/resources/" + name + ".shp");
 				return null;
-			}			
-			
-			
+			}
+
 			shpData = ShapeFileDataReader.makeDataSetForAppsCsv(isSHP, isCSV);
-			
+
 			isCSV.close();
-			isSHP.close();			
-			
+			isSHP.close();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return shpData;
 	}
-	public static DataSetForApps makeDataSetForApps(Class clazz, String name){
+
+	public static DataSetForApps makeDataSetForApps(Class clazz, String name) {
 		DataSetForApps shpData = null;
 
 		try {
 
-			InputStream isCSV = clazz.getResourceAsStream("resources/" + name + ".dbf");
-			InputStream isSHP = clazz.getResourceAsStream("resources/" + name + ".shp");
-			
+			InputStream isCSV = clazz.getResourceAsStream("resources/" + name
+					+ ".dbf");
+			InputStream isSHP = clazz.getResourceAsStream("resources/" + name
+					+ ".shp");
+
 			shpData = ShapeFileDataReader.makeDataSetForApps(isSHP, isCSV);
-			
+
 			isCSV.close();
-			isSHP.close();			
-			
+			isSHP.close();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return shpData;
 	}
-	
+
 	public static DataSetForApps makeDataSetForAppsCsv(InputStream shpStream,
 			InputStream isCSV) {
 		Object[] allData;
 
 		GeogCSVReader csv = new GeogCSVReader();
 		Object[] dbColumnData = csv.readFile(isCSV);
-		//isCSV.close();
+		// isCSV.close();
 
 		allData = new Object[dbColumnData.length + 2];
 		for (int i = 0; i < dbColumnData.length; i++) {
 			allData[i] = dbColumnData[i];
 		}
-		
+
 		Geometry[] geoms = getGeoms(shpStream);
 		SpatialWeights weights = findSpatialWeights(geoms);
-		
-		
+
 		Geometry[] simplerGeoms = makeSimplerGeoms(geoms, tolerance);
 
 		Shape[] shapes = geomsToShapes(simplerGeoms);
-		
+
 		allData[dbColumnData.length] = shapes;
 		allData[dbColumnData.length + 1] = weights;
 		// AttributeDescriptionFile desc = null;
@@ -310,42 +295,36 @@ public class ShapeFileDataReader implements Serializable {
 		// this.dataForApps.setSpatialType(type);
 		return dataForApps;
 	}
+
 	private static DataSetForApps makeDataSetForApps(InputStream shpStream,
 			InputStream dbfStream) {
 		Object[] allData;
 
 		Object[] dbColumnData = getDbfData(dbfStream);
-		//String[] fieldNames = getFieldNames(dbfStream);
+		// String[] fieldNames = getFieldNames(dbfStream);
 
 		allData = new Object[dbColumnData.length + 2];
 		for (int i = 0; i < dbColumnData.length; i++) {
 			allData[i] = dbColumnData[i];
 		}
-		
+
 		Geometry[] geoms = getGeoms(shpStream);
 
-		
-		
-		try{
-		SpatialWeights weights = findSpatialWeights(geoms);
+		try {
+			SpatialWeights weights = findSpatialWeights(geoms);
 
-		
-		allData[dbColumnData.length + 1] = weights;
-		}catch (Exception ex){
+			allData[dbColumnData.length + 1] = weights;
+		} catch (Exception ex) {
 			logger.severe("ack ack topology problem!");
 			ex.printStackTrace();
 		}
-		
-		
-		
+
 		Geometry[] simplerGeoms = makeSimplerGeoms(geoms, tolerance);
 
 		Shape[] shapes = geomsToShapes(simplerGeoms);
-		
-		allData[dbColumnData.length] = shapes;
-		
 
-		
+		allData[dbColumnData.length] = shapes;
+
 		// AttributeDescriptionFile desc = null;
 
 		// desc = new AttributeDescriptionFile(fileName + ".desc");// XXX what
@@ -389,7 +368,8 @@ public class ShapeFileDataReader implements Serializable {
 
 		for (int i = 0; i < geoms.length; i++) {
 			Geometry geom = geoms[i];
-			Geometry simplerGeom = DouglasPeuckerSimplifier.simplify(geom, distanceTolerance);
+			Geometry simplerGeom = DouglasPeuckerSimplifier.simplify(geom,
+					distanceTolerance);
 			simplerGeoms[i] = simplerGeom;
 		}
 		return simplerGeoms;
@@ -405,8 +385,6 @@ public class ShapeFileDataReader implements Serializable {
 		return weights;
 	}
 
-
-
 	private static Object[] getDbfColumns(String fileName) {
 
 		String dbFileName = fileName + ".dbf";
@@ -416,48 +394,47 @@ public class ShapeFileDataReader implements Serializable {
 		} catch (FileNotFoundException e) {
 			logger.severe("couldn't find file " + dbFileName);
 			e.printStackTrace();
-		}	
-		
+		}
+
 		Object[] dbColumnData = getDbfColumns(fis);
 		return dbColumnData;
 	}
+
 	private static Object[] getDbfData(InputStream fis) {
-		Object[] dbColumnData = null;		
+		Object[] dbColumnData = null;
 		try {
 
-
-			
 			ReadableByteChannel dChan = Channels.newChannel(fis);
 			DbaseFileReader dBaseReader = new DbaseFileReader(dChan, true);
 			DbaseFileHeader dBaseHeader = dBaseReader.getHeader();
 
 			int nFields = dBaseHeader.getNumFields();
 			int nRows = dBaseHeader.getNumRecords();
-			dbColumnData = new Object[nFields + 1];//+1 for the variable names
+			dbColumnData = new Object[nFields + 1];// +1 for the variable names
 			String[] fieldNames = new String[dBaseHeader.getNumFields()];
 			for (int i = 0; i < fieldNames.length; i++) {
 				fieldNames[i] = dBaseHeader.getFieldName(i);
-			}			
+			}
 			dbColumnData[0] = fieldNames;
 			// set up each array with it's proper type
 			for (int i = 0; i < nFields; i++) {
 				if (dBaseHeader.getFieldClass(i).equals(java.lang.String.class)) {
-					dbColumnData[i+1] = new String[nRows];
+					dbColumnData[i + 1] = new String[nRows];
 				} else if (dBaseHeader.getFieldClass(i).equals(
 						java.lang.Double.class)) {
-					dbColumnData[i+1] = new double[nRows];
+					dbColumnData[i + 1] = new double[nRows];
 				} else if (dBaseHeader.getFieldClass(i).equals(
 						java.lang.Integer.class)) {
-					dbColumnData[i+1] = new int[nRows];
+					dbColumnData[i + 1] = new int[nRows];
 				} else if (dBaseHeader.getFieldClass(i).equals(
 						java.lang.Boolean.class)) {
-					dbColumnData[i+1] = new boolean[nRows];
+					dbColumnData[i + 1] = new boolean[nRows];
 				} else if (dBaseHeader.getFieldClass(i).equals(Date.class)) {
-					dbColumnData[i+1] = new Date[nRows];
+					dbColumnData[i + 1] = new Date[nRows];
 				} else if (dBaseHeader.getFieldClass(i).equals(Long.class)) { // undocumented
 					// in
 					// geotools
-					dbColumnData[i+1] = new int[nRows];
+					dbColumnData[i + 1] = new int[nRows];
 				}
 
 				else {
@@ -473,27 +450,27 @@ public class ShapeFileDataReader implements Serializable {
 				for (int fieldNum = 0; fieldNum < nFields; fieldNum++) {
 					if (dBaseHeader.getFieldClass(fieldNum).equals(
 							java.lang.String.class)) {
-						String[] stringCol = (String[]) dbColumnData[fieldNum+1];
+						String[] stringCol = (String[]) dbColumnData[fieldNum + 1];
 						stringCol[recordNum] = (String) rowData[fieldNum];
 					} else if (dBaseHeader.getFieldClass(fieldNum).equals(
 							java.lang.Double.class)) {
-						double[] doubleCol = (double[]) dbColumnData[fieldNum+1];
+						double[] doubleCol = (double[]) dbColumnData[fieldNum + 1];
 						doubleCol[recordNum] = (Double) rowData[fieldNum];
 					} else if (dBaseHeader.getFieldClass(fieldNum).equals(
 							java.lang.Integer.class)) {
-						int[] intCol = (int[]) dbColumnData[fieldNum+1];
+						int[] intCol = (int[]) dbColumnData[fieldNum + 1];
 						intCol[recordNum] = (Integer) rowData[fieldNum];
 					} else if (dBaseHeader.getFieldClass(fieldNum).equals(
 							java.lang.Boolean.class)) {
-						boolean[] boolCol = (boolean[]) dbColumnData[fieldNum+1];
+						boolean[] boolCol = (boolean[]) dbColumnData[fieldNum + 1];
 						boolCol[recordNum] = (Boolean) rowData[fieldNum];
 					} else if (dBaseHeader.getFieldClass(fieldNum).equals(
 							Date.class)) {
-						Date[] dateCol = (Date[]) dbColumnData[fieldNum+1];
+						Date[] dateCol = (Date[]) dbColumnData[fieldNum + 1];
 						dateCol[recordNum] = (Date) rowData[fieldNum];
 					} else if (dBaseHeader.getFieldClass(fieldNum).equals(
 							Long.class)) {
-						int[] intCol = (int[]) dbColumnData[fieldNum+1];
+						int[] intCol = (int[]) dbColumnData[fieldNum + 1];
 						Long lng = (Long) rowData[fieldNum];
 						intCol[recordNum] = lng.intValue();
 					}
@@ -509,11 +486,9 @@ public class ShapeFileDataReader implements Serializable {
 	}
 
 	private static Object[] getDbfColumns(InputStream fis) {
-		Object[] dbColumnData = null;		
+		Object[] dbColumnData = null;
 		try {
 
-
-			
 			ReadableByteChannel dChan = Channels.newChannel(fis);
 			DbaseFileReader dBaseReader = new DbaseFileReader(dChan, true);
 			DbaseFileHeader dBaseHeader = dBaseReader.getHeader();
@@ -583,7 +558,7 @@ public class ShapeFileDataReader implements Serializable {
 				}
 				recordNum++;
 			}
-			//dBaseReader.close(); // always do this
+			// dBaseReader.close(); // always do this
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -641,29 +616,29 @@ public class ShapeFileDataReader implements Serializable {
 	}
 
 	public DataSetForApps getDataForApps() {
-		return this.dataForApps;
+		return dataForApps;
 	}
 
 	public Object[] getDataSet() {
-		return this.dataForApps.getDataObjectOriginal();
+		return dataForApps.getDataObjectOriginal();
 	}
 
 	public void setFileName(String fileName) {
 		// this.fileName = this.removeExtension(fileName);
-		if ((this.getExtension(fileName).toLowerCase()).equals("dbf")) {
-			this.fileName = this.removeExtension(fileName);
-			this.dataForApps = makeDataSetForApps(this.fileName);
-		} else if ((this.getExtension(fileName).toLowerCase()).equals("csv")) {
-			this.fileName = this.removeExtension(fileName);
-			this.dataForApps = this.makeDataSetForAppsCSV(this.fileName);
-		} else if ((this.getExtension(fileName).toLowerCase()).equals("shp")) {
-			this.fileName = this.removeExtension(fileName);
+		if ((getExtension(fileName).toLowerCase()).equals("dbf")) {
+			this.fileName = removeExtension(fileName);
+			dataForApps = makeDataSetForApps(this.fileName);
+		} else if ((getExtension(fileName).toLowerCase()).equals("csv")) {
+			this.fileName = removeExtension(fileName);
+			dataForApps = makeDataSetForAppsCSV(this.fileName);
+		} else if ((getExtension(fileName).toLowerCase()).equals("shp")) {
+			this.fileName = removeExtension(fileName);
 			String fileDbf = this.fileName + ".dbf";
 			String fileCsv = this.fileName + ".csv";
 			if ((new File(fileDbf)).exists()) {
-				this.dataForApps = makeDataSetForApps(this.fileName);
+				dataForApps = makeDataSetForApps(this.fileName);
 			} else if ((new File(fileCsv)).exists()) {
-				this.dataForApps = this.makeDataSetForAppsCSV(this.fileName);
+				dataForApps = makeDataSetForAppsCSV(this.fileName);
 			} else {
 				try {
 					throw new FileNotFoundException(
@@ -674,30 +649,30 @@ public class ShapeFileDataReader implements Serializable {
 				}
 			}
 		}
-		this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-		this.fireDataSetChanged(this.dataForApps);
+		fireActionPerformed(COMMAND_DATA_SET_MADE);
+		fireDataSetChanged(dataForApps);
 	}
 
 	public void setFileNameCSV(String fileName) {
-		if ((this.getExtension(fileName).toLowerCase()).equals("dbf")) {
-			this.fileName = this.removeExtension(fileName);
-			this.dataForApps = makeDataSetForApps(this.fileName);
-		} else if ((this.getExtension(fileName).toLowerCase()).equals("csv")) {
-			this.fileName = this.removeExtension(fileName);
-			this.dataForApps = this.makeDataSetForAppsCSV(this.fileName);
+		if ((getExtension(fileName).toLowerCase()).equals("dbf")) {
+			this.fileName = removeExtension(fileName);
+			dataForApps = makeDataSetForApps(this.fileName);
+		} else if ((getExtension(fileName).toLowerCase()).equals("csv")) {
+			this.fileName = removeExtension(fileName);
+			dataForApps = makeDataSetForAppsCSV(this.fileName);
 		} else {
-			this.fileName = this.removeExtension(fileName);
-			this.dataForApps = this.makeDataSetForAppsCSV(this.fileName);
+			this.fileName = removeExtension(fileName);
+			dataForApps = makeDataSetForAppsCSV(this.fileName);
 		}
-		this.fireActionPerformed(COMMAND_DATA_SET_MADE);
-		this.fireDataSetChanged(this.dataForApps);
+		fireActionPerformed(COMMAND_DATA_SET_MADE);
+		fireDataSetChanged(dataForApps);
 	}
 
 	public void setFileName(String fileName, int fileType) {
 		if (fileType == ShapeFileDataReader.FILE_TYPE_DBF) {
 			this.setFileName(fileName);
 		} else if (fileType == ShapeFileDataReader.FILE_TYPE_CSV) {
-			this.setFileNameCSV(fileName);
+			setFileNameCSV(fileName);
 		} else {
 			throw new IllegalArgumentException(
 					"ShapeFileDataReader, unexpected file type");
@@ -705,12 +680,12 @@ public class ShapeFileDataReader implements Serializable {
 	}
 
 	public String getFileName() {
-		return this.fileName;
+		return fileName;
 	}
 
 	public String getShortFileName() {
-		int idx = this.fileName.lastIndexOf("\\");
-		return this.fileName.substring(idx);
+		int idx = fileName.lastIndexOf("\\");
+		return fileName.substring(idx);
 	}
 
 	private void writeObject(ObjectOutputStream oos) throws IOException {
@@ -726,8 +701,7 @@ public class ShapeFileDataReader implements Serializable {
 	 * we now allow jts geometries in datasetforapps public Object[]
 	 * convertShpToShape(Object[] dataIn) { if (dataIn[dataIn.length - 1]
 	 * instanceof ShapeFile) { ShapeFile shp = (ShapeFile) dataIn[dataIn.length -
-	 * 1]; dataIn[dataIn.length - 1] = this.makeShapes(shp);
-	 *  } return dataIn; }
+	 * 1]; dataIn[dataIn.length - 1] = this.makeShapes(shp); } return dataIn; }
 	 */
 
 	/**
@@ -786,8 +760,8 @@ public class ShapeFileDataReader implements Serializable {
 	 * dataOld[counter][0], (float) dataOld[counter][1]); } }
 	 * newShapes[currShape] = newShape; currShape++; }
 	 * 
-	 * logger.finest("len = " + len + ", final total = " + currShape);
-	 *  // newShapes[len] = null; return newShapes; }
+	 * logger.finest("len = " + len + ", final total = " + currShape); //
+	 * newShapes[len] = null; return newShapes; }
 	 */
 
 	/**

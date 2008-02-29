@@ -130,8 +130,14 @@ public class HistoryGUI extends JPanel implements ActionListener,
 		sourceHistoryList.setListData(sourceHistoryStack);
 	}
 
-	public void spatialExtentChanged(SpatialExtentEvent e) {
+	SpatialExtentEvent savedEvent;
 
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
+	public void spatialExtentChanged(SpatialExtentEvent e) {
+		savedEvent = e;
 	}
 
 	public void selectionChanged(SelectionEvent arg0) {

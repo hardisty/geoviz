@@ -1688,12 +1688,12 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			numClasses = this.bivarColorClasser.getXColorSymbolizer()
 					.getNumClasses();
 			logger.finest("num classes" + numClasses);
-			xBoundaries = xClasser.getBoundaries(this.dataX, numClasses);
+			xBoundaries = xClasser.getEqualBoundaries(this.dataX, numClasses);
 			yClasser = (BoundaryClassifier) this.bivarColorClasser
 					.getClasserY();
 			numClasses = this.bivarColorClasser.getYColorSymbolizer()
 					.getNumClasses();
-			yBoundaries = yClasser.getBoundaries(this.dataY, numClasses);
+			yBoundaries = yClasser.getEqualBoundaries(this.dataY, numClasses);
 		} catch (ClassCastException ex) {
 
 		}

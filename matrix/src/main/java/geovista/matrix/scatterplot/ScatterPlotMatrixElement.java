@@ -1,4 +1,4 @@
-package  geovista.matrix.scatterplot;
+package geovista.matrix.scatterplot;
 
 /**
  * Title: ScatterPlot
@@ -9,18 +9,14 @@ package  geovista.matrix.scatterplot;
  * @author Jin Chen
  * @version 1.0
  */
-import java.awt.Color;
-import java.awt.Graphics;
-
-import geovista.geoviz.scatterplot.ScatterPlotBasic;
+import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.matrix.MatrixElement;
-import geovista.symbolization.BivariateColorSymbolClassification;
 
 /**
  * put your documentation comment here
  */
-public class ScatterPlotMatrixElement extends ScatterPlotBasic implements MatrixElement{
-
+public class ScatterPlotMatrixElement extends ScatterPlot implements
+		MatrixElement {
 
 	/**
 	 * Return itself.
@@ -30,7 +26,5 @@ public class ScatterPlotMatrixElement extends ScatterPlotBasic implements Matrix
 	public MatrixElement getThis() {
 		return this;
 	}
+
 }
-
-
-

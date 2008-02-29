@@ -159,8 +159,14 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 
 	}
 
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
 	public void spatialExtentChanged(SpatialExtentEvent e) {
-		// TODO Auto-generated method stub
+		savedEvent = e;
 
 	}
 

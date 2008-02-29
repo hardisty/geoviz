@@ -248,13 +248,19 @@ public class RemoteCollaboration extends JPanel implements SelectionListener,
 
 	}
 
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 
 		spatialExtent = e.getSpatialExtent();
 		// we got this event from a remote jvm via our local rmiListener
 		// so pass it along to other listeners on the local jvm
 		fireSpatialExtentChanged(spatialExtent);
-
+		savedEvent = e;
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {

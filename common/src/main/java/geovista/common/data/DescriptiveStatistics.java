@@ -46,8 +46,8 @@ public abstract class DescriptiveStatistics {
 	 * Finds whether the array has any elements which are not Integer.MIN_VALUE
 	 */
 	public static boolean hasNonNullValues(int[] intArray) {
-		for (int i = 0; i < intArray.length; i++) {
-			if (intArray[i] != Integer.MIN_VALUE) {
+		for (int element : intArray) {
+			if (element != Integer.MIN_VALUE) {
 				return true;
 			}
 		}
@@ -59,8 +59,8 @@ public abstract class DescriptiveStatistics {
 	 * Finds whether the array has any elements which are Double.NaN
 	 */
 	public static boolean hasNullValues(double[] doubleArray) {
-		for (int i = 0; i < doubleArray.length; i++) {
-			if (Double.isNaN(doubleArray[i])) {
+		for (double element : doubleArray) {
+			if (Double.isNaN(element)) {
 				return true;
 			}
 		}
@@ -72,8 +72,8 @@ public abstract class DescriptiveStatistics {
 	 * Finds whether the array has any elements which are Integer.MIN_VALUE
 	 */
 	public static boolean hasNullValues(int[] intArray) {
-		for (int i = 0; i < intArray.length; i++) {
-			if (intArray[i] == Integer.MIN_VALUE) {
+		for (int element : intArray) {
+			if (element == Integer.MIN_VALUE) {
 				return true;
 			}
 		}
@@ -85,8 +85,8 @@ public abstract class DescriptiveStatistics {
 	 * Finds whether the array has any elements which are null
 	 */
 	public static boolean hasNullValues(Object[] ObjectArray) {
-		for (int i = 0; i < ObjectArray.length; i++) {
-			if (ObjectArray[i] == null) {
+		for (Object element : ObjectArray) {
+			if (element == null) {
 				return true;
 			}
 		}
@@ -112,8 +112,8 @@ public abstract class DescriptiveStatistics {
 		double min = Double.MAX_VALUE;
 		double temp = 0;
 
-		for (int i = 0; i < doubleArray.length; i++) {
-			temp = doubleArray[i];
+		for (double element : doubleArray) {
+			temp = element;
 
 			if (temp < min) {
 				min = temp;
@@ -143,8 +143,8 @@ public abstract class DescriptiveStatistics {
 		double min = Double.MAX_VALUE;
 		double temp = 0;
 
-		for (int i = 0; i < doubleArray.length; i++) {
-			temp = doubleArray[i];
+		for (double element : doubleArray) {
+			temp = element;
 
 			if (!Double.isNaN(temp)) {
 				if (temp < min) {
@@ -177,8 +177,8 @@ public abstract class DescriptiveStatistics {
 		int temp = 0;
 
 		// we need to ignore Integer.MIN_VALUE because that is our null
-		for (int i = 0; i < intArray.length; i++) {
-			temp = intArray[i];
+		for (int element : intArray) {
+			temp = element;
 
 			if ((temp < min) && (temp != Integer.MIN_VALUE)) {
 				min = temp;
@@ -207,8 +207,8 @@ public abstract class DescriptiveStatistics {
 		double max = Double.MIN_VALUE;
 		double temp = 0;
 
-		for (int i = 0; i < doubleArray.length; i++) {
-			temp = doubleArray[i];
+		for (double element : doubleArray) {
+			temp = element;
 
 			if (temp > max) {
 				max = temp;
@@ -236,8 +236,8 @@ public abstract class DescriptiveStatistics {
 		double max = Double.MIN_VALUE;
 		double temp = 0;
 
-		for (int i = 0; i < doubleArray.length; i++) {
-			temp = doubleArray[i];
+		for (double element : doubleArray) {
+			temp = element;
 
 			if (!Double.isNaN(temp)) {
 				if (temp > max) {
@@ -253,6 +253,7 @@ public abstract class DescriptiveStatistics {
 	 * Returns the largest value of a given int array.
 	 */
 	public static int max(int[] intArray) {
+
 		// first make sure that array is not empty
 		if (intArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.max";
@@ -267,8 +268,8 @@ public abstract class DescriptiveStatistics {
 		int max = Integer.MIN_VALUE;
 		int temp = 0;
 
-		for (int i = 0; i < intArray.length; i++) {
-			temp = intArray[i];
+		for (int element : intArray) {
+			temp = element;
 
 			if (temp > max) {
 				max = temp;
@@ -903,14 +904,16 @@ public abstract class DescriptiveStatistics {
 		}
 		return fullXData;
 	}
-    public static double percentAbove(double[] values, double value){
-    	  
-    	  Arrays.sort(values);
-    	   
-    	  int place = Arrays.binarySearch(values, value);
-    	  double along = (double)(place+1)/(double)values.length;
-    	  return 1-(Math.abs(along));
-      }
+
+	public static double percentAbove(double[] values, double value) {
+
+		Arrays.sort(values);
+
+		int place = Arrays.binarySearch(values, value);
+		double along = (double) (place + 1) / (double) values.length;
+		return 1 - (Math.abs(along));
+	}
+
 	public static void sort(double[][] dataIn, int whichColumn) {
 		double[] dataSorted = new double[dataIn.length];
 
@@ -960,7 +963,7 @@ public abstract class DescriptiveStatistics {
 			}
 
 			pos = pos + hitCount[uniquePos]; // if we are not the first of
-												// that val
+			// that val
 
 			// pos is where this data tuple is "supposed" to be. Is it there
 			// already?
@@ -970,7 +973,7 @@ public abstract class DescriptiveStatistics {
 			if (pos == i) {
 				// direct hit!
 				hitCount[uniquePos]++; // keep track of how many of that val we
-										// passed in the correct position as i
+				// passed in the correct position as i
 			} else if (val == targetVal) {
 				// put this in the right place
 				while (val == targetVal) {
@@ -995,7 +998,6 @@ public abstract class DescriptiveStatistics {
 				i--; // try again???
 			} // end if
 		} // next i
-
 
 	} // end method
 } // end class

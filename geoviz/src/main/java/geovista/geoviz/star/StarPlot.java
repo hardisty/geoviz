@@ -63,21 +63,21 @@ public class StarPlot extends JPanel implements DataSetListener,
 		vc = new VisualClassifier();
 		starCan = new StarPlotCanvas();
 		starLeg = new StarPlotLegend();
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(starCan, BorderLayout.CENTER);
 		this.add(starLeg, BorderLayout.SOUTH);
 		this.add(vc, BorderLayout.NORTH);
-		this.starCan.addIndicationListener(this);
-		this.vc.addColorArrayListener(this);
+		starCan.addIndicationListener(this);
+		vc.addColorArrayListener(this);
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
 		e.getDataSetForApps().addTableModelListener(this);
-		this.starCan.dataSetChanged(e);
-		this.vc.setDataSet(e.getDataSetForApps());
+		starCan.dataSetChanged(e);
+		vc.setDataSet(e.getDataSetForApps());
 
-		Color[] starColors = this.vc.getColorForObservations();
-		this.starCan.setStarFillColors(starColors);
+		Color[] starColors = vc.getColorForObservations();
+		starCan.setStarFillColors(starColors);
 		int nNumericVars = starCan.getDataSet().getNumberNumericAttributes();
 		if (nNumericVars > 6) {
 			nNumericVars = 6;
@@ -87,8 +87,8 @@ public class StarPlot extends JPanel implements DataSetListener,
 			selectedVars[i] = i;
 		}
 		SubspaceEvent subE = new SubspaceEvent(this, selectedVars);
-		this.subspaceChanged(subE);
-		this.setLegendIndication(0);
+		subspaceChanged(subE);
+		// this.setLegendIndication(0);
 	}
 
 	public void dataSetModified(DataSetModifiedEvent e) {
@@ -96,49 +96,50 @@ public class StarPlot extends JPanel implements DataSetListener,
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {
-		this.starCan.subspaceChanged(e);
-		this.setLegendIndication(indication);
+		starCan.subspaceChanged(e);
+		setLegendIndication(indication);
 	}
 
 	public void colorArrayChanged(ColorArrayEvent e) {
 		Color[] starColors = e.getColors();
-		this.starCan.setStarFillColors(starColors);
+		starCan.setStarFillColors(starColors);
 	}
 
 	public void indicationChanged(IndicationEvent e) {
-		int ind = e.getIndication();	
-		if (e.getSource() != this.starCan) {
-			this.starCan.indicationChanged(e);
+		int ind = e.getIndication();
+		if (e.getSource() != starCan) {
+			starCan.indicationChanged(e);
 		}
-		this.setLegendIndication(ind);
+		setLegendIndication(ind);
 
 	}
 
 	private void setLegendIndication(int ind) {
 
-		if (ind > this.starCan.getDataSet().getNumObservations()){
-			logger.severe("got indication greater than data set size, ind = " + ind);
+		if (ind > starCan.getDataSet().getNumObservations()) {
+			logger.severe("got indication greater than data set size, ind = "
+					+ ind);
 			return;
 		}
 		if (ind >= 0) {
-			this.starLeg.setObsName(starCan.getObservationName(ind));
-			String[] varNames = this.starCan.getVarNames();
-			double[] values = this.starCan.getValues(ind);
+			starLeg.setObsName(starCan.getObservationName(ind));
+			String[] varNames = starCan.getVarNames();
+			double[] values = starCan.getValues(ind);
 			if (values == null) {
 				return;
 			}
-			int[] spikeLengths = this.starCan.getSpikeLengths(ind);
-			this.starLeg.setValues(values);
-			this.starLeg.setVariableNames(varNames);
-			if (spikeLengths == null){
+			int[] spikeLengths = starCan.getSpikeLengths(ind);
+			starLeg.setValues(values);
+			starLeg.setVariableNames(varNames);
+			if (spikeLengths == null) {
 				return;
 			}
-			this.starLeg.setSpikeLengths(spikeLengths);
-			Color starColor = this.starCan.getStarFillColor(ind);
+			starLeg.setSpikeLengths(spikeLengths);
+			Color starColor = starCan.getStarFillColor(ind);
 			if (starColor == null) {
 				return;
 			}
-			this.starLeg.setStarFillColor(starColor);
+			starLeg.setStarFillColor(starColor);
 
 		}
 
@@ -148,25 +149,23 @@ public class StarPlot extends JPanel implements DataSetListener,
 	 * adds an IndicationListener to the component
 	 */
 	public void addIndicationListener(IndicationListener l) {
-		this.starCan.addIndicationListener(l);
+		starCan.addIndicationListener(l);
 	}
 
 	/**
 	 * removes an IndicationListener from the component
 	 */
 	public void removeIndicationListener(IndicationListener l) {
-		this.starCan.removeIndicationListener(l);
+		starCan.removeIndicationListener(l);
 	}
 
 	public void tableChanged(TableModelEvent e) {
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("Starplot, got a data set, id = "
-					+ this.starCan.getDataSet().hashCode());
+					+ starCan.getDataSet().hashCode());
 		}
-		this.vc.setDataSet(this.starCan.getDataSet());
-		
+		vc.setDataSet(starCan.getDataSet());
+
 	}
-
-
 
 } // end class

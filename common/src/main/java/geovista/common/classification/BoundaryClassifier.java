@@ -27,6 +27,6 @@ public interface BoundaryClassifier extends Classifier {
    * number of classes plus one.
    */
 
-    public double[] getBoundaries(double[] data, int numClasses);
+    public double[] getEqualBoundaries(double[] data, int numClasses);
 
 }

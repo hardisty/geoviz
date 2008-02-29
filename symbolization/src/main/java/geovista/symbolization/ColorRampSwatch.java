@@ -1,11 +1,11 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class RampSwatch
+ Java source file for the class ColorRampSwatch
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: RampSwatch.java,v 1.3 2005/02/12 20:30:47 hardisty Exp $
+ $Id: ColorRampSwatch.java,v 1.3 2005/02/12 20:30:47 hardisty Exp $
  $Date: 2005/02/12 20:30:47 $
  Reference:		Document no:
  ___				___
@@ -34,7 +34,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class RampSwatch extends JPanel implements MouseListener{
+public class ColorRampSwatch extends JPanel implements MouseListener{
 
     protected boolean anchored;
     protected Color swatchColor;
@@ -43,8 +43,8 @@ public class RampSwatch extends JPanel implements MouseListener{
     protected transient ImageIcon iconBlack;
     protected transient ImageIcon iconWhite;
     protected transient TexturePaint texPaint;
-    protected final static Logger logger = Logger.getLogger(RampSwatch.class.getName());
-    public RampSwatch(ColorRampPicker parent, boolean anchored, boolean end) {
+    protected final static Logger logger = Logger.getLogger(ColorRampSwatch.class.getName());
+    public ColorRampSwatch(ColorRampPicker parent, boolean anchored, boolean end) {
         this.makeImage();
         this.parent = parent;
         this.swatchColor = Color.white;
@@ -109,7 +109,7 @@ public class RampSwatch extends JPanel implements MouseListener{
         logger.finest("Mouse clicked (# of clicks: "  + e.getClickCount() + ")");
       GvColorChooser chooser = new GvColorChooser();
       Color newColor = chooser.showGvDialog(
-                                                RampSwatch.this,
+                                                ColorRampSwatch.this,
                                                 "Pick a Color",
                                                 this.getBackground());
         if (newColor != null) {
@@ -180,7 +180,7 @@ public class RampSwatch extends JPanel implements MouseListener{
             }
         });
         ColorRampPicker pick = new ColorRampPicker();
-        RampSwatch swat = new RampSwatch(pick, true, false);
+        ColorRampSwatch swat = new ColorRampSwatch(pick, true, false);
         app.getContentPane().add(swat);
 
         //app.getContentPane().add(swatchesPanel,BorderLayout.SOUTH);

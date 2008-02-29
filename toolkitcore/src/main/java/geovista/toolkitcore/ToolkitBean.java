@@ -19,8 +19,6 @@
 
 package geovista.toolkitcore;
 
-import geovista.coordination.CoordinationUtils;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -33,6 +31,8 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.event.EventListenerList;
+
+import geovista.coordination.CoordinationUtils;
 
 /*
  * This is a set of objects that each bean coordinated in a GeoVizToolkit is
@@ -50,13 +50,14 @@ public class ToolkitBean implements ComponentListener {
 	EventListenerList listenerList;
 	String uniqueName;
 	String objectClass;
-	//private static String defaultName = "bean";
+	public int zOrder;
 
+	// private static String defaultName = "bean";
 
-	public ToolkitBean(){
-		
+	public ToolkitBean() {
+
 	}
-	
+
 	public ToolkitBean(Object originalBean, String uniqueName) {
 		init(originalBean, uniqueName);
 
@@ -64,9 +65,9 @@ public class ToolkitBean implements ComponentListener {
 
 	public void init(Object originalBean, String uniqueName) {
 		System.out.println("in toolkitbean, in init");
-		this.listenerList = new EventListenerList();
+		listenerList = new EventListenerList();
 		this.setOriginalBean(originalBean, uniqueName);
-		this.objectClass = originalBean.getClass().getName();
+		objectClass = originalBean.getClass().getName();
 		this.uniqueName = uniqueName;
 	}
 
@@ -81,15 +82,16 @@ public class ToolkitBean implements ComponentListener {
 	public JMenuItem getRemoveMenuItem() {
 		return removeMenuItem;
 	}
+
 	public void setOriginalBean(Object originalBean, String uniqueName) {
 		Image im = CoordinationUtils.findSmallIcon(originalBean);
 		Icon ic = new ImageIcon(im);
 		this.originalBean = originalBean;
-		this.internalFrame = this.makeInternalFrame(originalBean, uniqueName,
-				ic);
-		this.removeMenuItem = new JMenuItem(uniqueName, ic);
+		internalFrame = makeInternalFrame(originalBean, uniqueName, ic);
+		removeMenuItem = new JMenuItem(uniqueName, ic);
 		this.uniqueName = uniqueName;
 	}
+
 	private JInternalFrame makeInternalFrame(Object newInstance,
 			String uniqueName, Icon ic) {
 		JInternalFrame newFrame = new JInternalFrame(uniqueName, true, true,
@@ -113,10 +115,8 @@ public class ToolkitBean implements ComponentListener {
 		return newFrame;
 	}
 
-
-
 	public String getUniqueName() {
-		return this.uniqueName;
+		return uniqueName;
 	}
 
 	// start component event handling
