@@ -30,7 +30,7 @@ public class ClassifierQuantiles implements DescribedClassifier, BoundaryClassif
     public ClassifierQuantiles() {
     }
 
-    public double[] getBoundaries(double[] data, int numClasses){
+    public double[] getEqualBoundaries(double[] data, int numClasses){
       double[] boundaries = new double[numClasses +1];
       int nObs;
       if (dataWithIndex == null || dataWithIndex.length != data.length || dataWithIndex[0].length != 2) {

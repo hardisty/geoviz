@@ -23,7 +23,7 @@ public class CategorizerEqualIntervals extends BasicCategorizer {
     }
 
     protected void setCategorygetBoundary(CategoryList ctgList, double[] rawData, int[] classedData) {
-            double[] boundaries =((ClassifierEqualIntervals)classifer).getBoundaries(rawData,ctgList.getNumberOfCategory() );
+            double[] boundaries =((ClassifierEqualIntervals)classifer).getEqualBoundaries(rawData,ctgList.getNumberOfCategory() );
             logger.finest("boundaries:"+boundaries);
             for (int i=0;i<ctgList.getNumberOfCategory() ;i++){
 

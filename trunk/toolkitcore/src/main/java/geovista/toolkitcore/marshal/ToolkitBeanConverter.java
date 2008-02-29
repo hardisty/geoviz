@@ -39,6 +39,9 @@ public class ToolkitBeanConverter implements Converter {
 		writer.startNode("internalFrame");
 		context.convertAnother(tBeans.getInternalFrame());
 		writer.endNode();
+		writer.startNode("zOrder");
+		context.convertAnother(tBeans.zOrder);
+		writer.endNode();
 
 	}
 
@@ -80,7 +83,11 @@ public class ToolkitBeanConverter implements Converter {
 			} else if ("internalFrame".equals(reader.getNodeName())) {
 				internalFrame = (JInternalFrame) context.convertAnother(bean,
 						JInternalFrame.class);
+			} else if ("zOrder".equals(reader.getNodeName())) {
+				bean.zOrder = (Integer) context.convertAnother(bean,
+						Integer.class);
 			}
+
 			reader.moveUp();
 		}
 
@@ -90,5 +97,4 @@ public class ToolkitBeanConverter implements Converter {
 
 		return bean;
 	}
-
 }

@@ -486,6 +486,13 @@ public class GeoMap extends JPanel
 
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 		mapCan.spatialExtentChanged(e);
+		savedEvent = e;
+	}
+
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
@@ -953,4 +960,5 @@ public class GeoMap extends JPanel
 	public SelectionEvent getSelectionEvent() {
 		return new SelectionEvent(this, getSelectedObservations());
 	}
+
 }

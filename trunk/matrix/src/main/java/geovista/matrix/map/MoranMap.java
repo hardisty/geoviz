@@ -25,6 +25,7 @@ package geovista.matrix.map;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -33,6 +34,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
@@ -55,12 +57,15 @@ import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
 import geovista.geoviz.map.GeoMap;
+import geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
+import geovista.toolkitcore.data.GeoDataCartogram;
 
 /**
- * A Moran Map has a choropleth map and a scatterplot tied together
+ * A Moran Map has a choropleth varSigMap and a scatterplot tied together
  */
 public class MoranMap extends JPanel implements SelectionListener,
 		IndicationListener, DataSetListener, ColorClassifierListener,
@@ -68,7 +73,16 @@ public class MoranMap extends JPanel implements SelectionListener,
 		ActionListener {
 	protected final static Logger logger = Logger.getLogger(MoranMap.class
 			.getName());
-	GeoMap map;
+
+	GeoMapUni varMap;
+	GeoMapUni moranMap;
+	GeoMapUni sigMap;
+	GeoMap varSigMap;
+	SingleHistogram varHist;
+	SingleHistogram moranHist;
+	SingleHistogram sigHist;
+	SingleScatterPlot varSigPlot;
+
 	SingleScatterPlot sp;
 	DataSetForApps dataSetOriginal;
 	DataSetForApps dataSetZ;
@@ -76,28 +90,49 @@ public class MoranMap extends JPanel implements SelectionListener,
 	SpatialWeights spatialWeights;
 	JList varList;
 	JButton sendButt;
-	int monteCarloIterations;
+	int monteCarloIterations = 100;
 
 	public MoranMap() {
 		super();
+
+		varMap = new GeoMapUni();
+		moranMap = new GeoMapUni();
+		sigMap = new GeoMapUni();
+		varSigMap = new GeoMap();
+		varHist = new SingleHistogram();
+		moranHist = new SingleHistogram();
+		sigHist = new SingleHistogram();
+		varSigPlot = new SingleScatterPlot();
+
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new GridLayout(2, 4));
+		mainPanel.add(varMap);
+		mainPanel.add(moranMap);
+		mainPanel.add(sigMap);
+		mainPanel.add(varSigMap);
+		mainPanel.add(varHist);
+		mainPanel.add(moranHist);
+		mainPanel.add(sigHist);
+		mainPanel.add(varSigPlot);
+
 		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
-		map = new GeoMap();
+		varSigMap = new GeoMap();
 		sp = new SingleScatterPlot();
-		map.addSelectionListener(sp);
-		sp.addSelectionListener(map);
-		map.addIndicationListener(sp);
-		sp.addIndicationListener(map);
+		varSigMap.addSelectionListener(sp);
+		sp.addSelectionListener(varSigMap);
+		varSigMap.addIndicationListener(sp);
+		sp.addIndicationListener(varSigMap);
 		setLayout(box);
 		Dimension prefSize = new Dimension(300, 300);
-		map.setPreferredSize(prefSize);
+		varSigMap.setPreferredSize(prefSize);
 		sp.setPreferredSize(prefSize);
 		LineBorder border = (LineBorder) BorderFactory
 				.createLineBorder(Color.black);
-		map.setBorder(border);
+		varSigMap.setBorder(border);
 		sp.setBorder(border);
 
-		this.add(map);
-		this.add(sp);
+		this.add(mainPanel);
+		// this.add(sp);
 
 		JPanel varPanel = new JPanel();
 		varList = new JList();
@@ -113,17 +148,17 @@ public class MoranMap extends JPanel implements SelectionListener,
 	}
 
 	public void selectionChanged(SelectionEvent e) {
-		map.selectionChanged(e);
+		varSigMap.selectionChanged(e);
 		sp.selectionChanged(e);
 
 	}
 
 	public SelectionEvent getSelectionEvent() {
-		return new SelectionEvent(this, map.getSelectedObservations());
+		return new SelectionEvent(this, varSigMap.getSelectedObservations());
 	}
 
 	public void indicationChanged(IndicationEvent e) {
-		map.indicationChanged(e);
+		varSigMap.indicationChanged(e);
 		sp.indicationChanged(e);
 
 	}
@@ -194,7 +229,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 			if (thing instanceof double[]) {
 				double[] zData = (double[]) thing;
 				double[] moranData = (double[]) moranDataObjects[i];
-				monteCarloIterations = 100;
+
 				monteCarloDataObjects[i] = SpatialStatistics.findPValues(zData,
 						moranData, monteCarloIterations, spatialWeights);
 				monteCarloNames[i - 1] = names[i - 1] + "_Sig";
@@ -215,7 +250,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 			vecData.add(element);
 		}
 		varList.setListData(vecData);
-		map.dataSetChanged(e2);
+		varSigMap.dataSetChanged(e2);
 		sp.dataSetChanged(e2);
 	}
 
@@ -224,7 +259,14 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 	}
 
+	SpatialExtentEvent savedEvent;
+
+	public SpatialExtentEvent getSpatialExtentEvent() {
+		return savedEvent;
+	}
+
 	public void spatialExtentChanged(SpatialExtentEvent e) {
+		savedEvent = e;
 		// TODO Auto-generated method stub
 
 	}
@@ -254,64 +296,19 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 	public static void main(String[] args) {
 
-		MoranMap map = new MoranMap();
+		MoranMap varSigMap = new MoranMap();
 		double[] vals = { 0, 1, 2, 3 };
-		double along = DescriptiveStatistics.percentAbove(vals, -1);
+		double along = DescriptiveStatistics.percentAbove(vals, 2.9);
 		System.out.println(along);
 
-		/**
-		 * boolean useProj = false; boolean useResource = false; JFrame app =
-		 * new JFrame("MoranMap Main Class: Why?");
-		 * app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 * 
-		 * app.getContentPane().setLayout( new BoxLayout(app.getContentPane(),
-		 * BoxLayout.X_AXIS));
-		 * 
-		 * app.pack(); app.setVisible(true);
-		 * 
-		 * MoranMap map2 = new MoranMap(); app.getContentPane().add(map2);
-		 * app.pack(); app.setVisible(true);
-		 * 
-		 * String fileName =
-		 * "C:\\arcgis\\arcexe81\\Bin\\TemplateData\\USA\\counties.shp";
-		 * fileName = "C:\\temp\\shapefiles\\intrstat.shp"; fileName =
-		 * "C:\\data\\geovista_data\\shapefiles\\larger_cities.shp"; fileName =
-		 * "C:\\data\\geovista_data\\shapefiles\\jin\\CompanyProdLL2000Def.shp";
-		 * fileName =
-		 * "C:\\data\\geovista_data\\Historical-Demographic\\census\\census80_90_00.shp";
-		 * 
-		 * ShapeFileDataReader shpRead = new ShapeFileDataReader();
-		 * shpRead.setFileName(fileName); CoordinationManager coord = new
-		 * CoordinationManager(); ShapeFileToShape shpToShape = new
-		 * ShapeFileToShape(); ShapeFileProjection shpProj = new
-		 * ShapeFileProjection(); GeoData48States stateData = new
-		 * GeoData48States(); //coord.addBean(map2); coord.addBean(shpToShape);
-		 * 
-		 * if (useResource) {
-		 * 
-		 * shpProj.setInputDataSetForApps(stateData.getDataForApps()); } else {
-		 * if (useProj) { stateData.addActionListener(shpProj);
-		 * shpProj.setInputDataSet(shpRead.getDataSet()); } } Object[] data =
-		 * null; if (useProj) { data = shpProj.getOutputDataSet(); } else { data =
-		 * shpRead.getDataSet(); }
-		 * 
-		 * shpToShape.setInputDataSet(data); DataSetForApps dataSet =
-		 * shpToShape.getOutputDataSetForApps();
-		 * 
-		 * long startTime = System.currentTimeMillis(); double total = 0; long
-		 * count = 0;
-		 * 
-		 * int nNumeric = dataSet.getNumberNumericAttributes(); for (int i = 0 ;
-		 * i < nNumeric; i++){ double[] zVals =
-		 * DescriptiveStatistics.calculateZScores(dataSet.getNumericDataAsDouble(i));
-		 * total = total + zVals[0]; count++; }
-		 * 
-		 * 
-		 * 
-		 * 
-		 * long endTime = System.currentTimeMillis(); logger.finest("that took = " +
-		 * (endTime -startTime)); logger.finest("count " + count);
-		 */
+		JFrame frame = new JFrame("Moran Map");
+		frame.add(varSigMap);
+		frame.pack();
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GeoDataCartogram geodata = new GeoDataCartogram();
+		DataSetEvent e = new DataSetEvent(geodata.getDataForApps(), geodata);
+		varSigMap.dataSetChanged(e);
 
 	}
 

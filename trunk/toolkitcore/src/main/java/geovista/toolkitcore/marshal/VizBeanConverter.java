@@ -13,11 +13,14 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.event.SpatialExtentEvent;
+import geovista.common.event.SpatialExtentListener;
 
 public abstract class VizBeanConverter implements Converter {
 
-	private static String SELECTION_STRING = "selection";
-	private static String BACKGROUND_COLOR_STRING = "backgroundColor";
+	private static String SELECTION = "selection";
+	private static String BACKGROUND_COLOR = "backgroundColor";
+	private static String SPATIAL_EXTENT = "spatialExtent";
 
 	/* subclassses need to override, always returns false */
 	public boolean canConvert(Class clazz) {
@@ -31,17 +34,28 @@ public abstract class VizBeanConverter implements Converter {
 			SelectionListener selList = (SelectionListener) value;
 			int[] selection = selList.getSelectionEvent().getSelection();
 			if (selection != null) {
-				writer.startNode(VizBeanConverter.SELECTION_STRING);
+				writer.startNode(VizBeanConverter.SELECTION);
 				context.convertAnother(selection);
 				writer.endNode();
 
 			}
 		}
+
 		if (value instanceof JComponent) {
 			JComponent jcomp = (JComponent) value;
-			writer.startNode(VizBeanConverter.BACKGROUND_COLOR_STRING);
+			writer.startNode(VizBeanConverter.BACKGROUND_COLOR);
 			context.convertAnother(jcomp.getBackground());
 			writer.endNode();
+		}
+		if (value instanceof SpatialExtentListener) {
+			SpatialExtentListener selList = (SpatialExtentListener) value;
+			SpatialExtentEvent e = selList.getSpatialExtentEvent();
+			if (e != null) {
+				writer.startNode(VizBeanConverter.SPATIAL_EXTENT);
+				context.convertAnother(e);
+				writer.endNode();
+
+			}
 		}
 
 	}
@@ -57,19 +71,27 @@ public abstract class VizBeanConverter implements Converter {
 
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
-			if (VizBeanConverter.SELECTION_STRING.equals(reader.getNodeName())) {
+			if (VizBeanConverter.SELECTION.equals(reader.getNodeName())) {
 				SelectionListener selList = (SelectionListener) instantiatedObject;
 				int[] selection = (int[]) context.convertAnother(
 						instantiatedObject, int[].class);
 				SelectionEvent e = new SelectionEvent(this, selection);
 				selList.selectionChanged(e);
-			} else if (VizBeanConverter.BACKGROUND_COLOR_STRING.equals(reader
+			} else if (VizBeanConverter.BACKGROUND_COLOR.equals(reader
 					.getNodeName())) {
 				JComponent comp = (JComponent) instantiatedObject;
 				Color bColor = (ColorUIResource) context.convertAnother(
 						instantiatedObject, ColorUIResource.class);
 
 				comp.setBackground(bColor);
+			} else if (VizBeanConverter.SPATIAL_EXTENT.equals(reader
+					.getNodeName())) {
+				SpatialExtentListener comp = (SpatialExtentListener) instantiatedObject;
+				SpatialExtentEvent e = (SpatialExtentEvent) context
+						.convertAnother(instantiatedObject,
+								SpatialExtentEvent.class);
+
+				comp.spatialExtentChanged(e);
 			}
 			reader.moveUp();
 		}

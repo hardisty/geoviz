@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.FileHandler;
@@ -49,6 +50,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.event.EventListenerList;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
@@ -60,6 +62,11 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.DataSetModifiedBroadcaster;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
+import geovista.common.ui.NotePad;
 import geovista.common.ui.VariablePicker;
 import geovista.coordination.CoordinationManager;
 import geovista.coordination.CoordinationUtils;
@@ -67,6 +74,7 @@ import geovista.coordination.FiringBean;
 import geovista.geoviz.condition.ConditionManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.map.GraduatedSymbolsMap;
 import geovista.geoviz.parvis.ParallelPlot;
 import geovista.geoviz.radviz.RadViz;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
@@ -74,7 +82,7 @@ import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.geoviz.spreadsheet.SpreadSheetBean;
+import geovista.geoviz.spreadsheet.TableViewer;
 import geovista.geoviz.spreadsheet.VariableTransformer;
 import geovista.geoviz.star.StarPlot;
 import geovista.geoviz.star.StarPlotMap;
@@ -86,8 +94,6 @@ import geovista.matrix.map.MoranMap;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
 import geovista.toolkitcore.data.GeoDataCartogram;
-import geovista.toolkitcore.data.GeoDataNCTC;
-import geovista.toolkitcore.data.GeoDataNiger;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
@@ -303,7 +309,23 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public VizState getVizState() {
+		updateVizState();
 		return vizState;
+	}
+
+	private void updateVizState() {
+		vizState.setBeanSet(tBeanSet);
+		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
+		for (ToolkitBean tBean : beans) {
+			tBean.zOrder = desktop.getComponentZOrder(tBean.getInternalFrame());
+		}
+		ToolkitBean tBean = tBeanSet.getToolkitBean(desktop.getSelectedFrame());
+		if (tBean == null) {
+			vizState.setSelectedBean("");
+		} else {
+			vizState.setSelectedBean(tBean.getUniqueName());
+		}
+
 	}
 
 	public void setVizState(VizState newState) {
@@ -311,18 +333,34 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		coord.removeBean(vizState);
 
 		vizState = newState;
+		// XXX may be a problem when connections can be cusomized by the user
+
+		vizState.listenerList = new EventListenerList();
 		coord.addBean(vizState);
 
 		useProj = vizState.useProj;
 		loadData(vizState.dataSource);
 
 		addToolkitBeanSet(vizState.getBeanSet());
+		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
+		for (ToolkitBean tBean : beans) {
+			desktop.setComponentZOrder(tBean.getInternalFrame(), tBean.zOrder);
+		}
 
 		vizState.fireSubspaceChanged();
+		vizState.fireSpatialExtentChanged();
 		vizState.fireSelectionChanged();
+
+		String uniqueName = vizState.getSelectedBean();
+		ToolkitBean tBean = tBeanSet.getToolkitBean(uniqueName);
+		if (tBean != null) {
+			desktop.setSelectedFrame(tBean.getInternalFrame());
+
+		}
 	}
 
 	void saveProgramState() {
+		updateVizState();
 		ToolkitIO.saveVizStateToFile(vizState);
 	}
 
@@ -349,7 +387,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			removeBeanFromGui(oldBean);
 			oldBean = null;
 		}
-		// this.tBeanSet.clear();
+		tBeanSet.clear();
 
 	}
 
@@ -468,15 +506,22 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		item.addActionListener(this);
 
 		menuRemoveTool.add(item, 0); // add at the top
-
 		Object newBean = newToolkitBean.getOriginalBean();
-
 		if (newBean instanceof DataSetListener) {
 			DataSetListener dataListener = (DataSetListener) newBean;
 			dataListener.dataSetChanged(new DataSetEvent(dataSet, this));
 
 		}
-
+		if (newBean instanceof SelectionListener) {
+			SelectionListener selListener = (SelectionListener) newBean;
+			SelectionEvent e = vizState.getSelectionEvent();
+			selListener.selectionChanged(e);
+		}
+		if (newBean instanceof IndicationListener) {
+			IndicationListener indListener = (IndicationListener) newBean;
+			IndicationEvent e = vizState.getIndicationEvent();
+			indListener.indicationChanged(e);
+		}
 	}
 
 	private void addToolkitBeanSet(ToolkitBeanSet beanSet) {
@@ -533,9 +578,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			JOptionPane
 					.showMessageDialog(
 							this,
-							"This application developed by "
-									+ "Frank Hardisty with contributions by Diansheng Guo, Ke Liao, and Aaron Myers "
-									+ "at the Univerisity of South Carolina, and many others at the GeoVISTA Center.");
+							"<html>This application developed by Frank Hardisty "
+									+ "<br>with contributions by Diansheng Guo, Ke Liao, and Aaron Myers "
+									+ "<br>at the Univerisity of South Carolina, and many others at the GeoVISTA Center."
+									+ "<br> Full contributor list here: http://code.google.com/p/geoviz/wiki/GeoVizToolkitContributors </html>");
 		} else if (e.getSource() == menuItemHelp) {
 			showHelp();
 		} else if (e.getSource() == menuItemExit) {
@@ -673,14 +719,14 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			newDataSet = cartogramData.getDataSet();
 
 		} else if (name.equals("nctc")) {
-			GeoDataNCTC cartogramData = new GeoDataNCTC();
-			newDataSet = cartogramData.getDataSet();
+			// GeoDataNCTC cartogramData = new GeoDataNCTC();
+			// newDataSet = cartogramData.getDataSet();
 
 		}
 
 		else if (name.equals("niger")) {
-			GeoDataNiger cartogramData = new GeoDataNiger();
-			newDataSet = cartogramData.getDataSet();
+			// GeoDataNiger cartogramData = new GeoDataNiger();
+			// newDataSet = cartogramData.getDataSet();
 
 		}
 
@@ -823,9 +869,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// components are organized by dimension of analysis
 		// then by commonality of usage
 
+		// Notepad!!!
+		addToolToMenu(NotePad.class);
+		menuAddTool.addSeparator();
+
 		// data handling components
 		addToolToMenu(VariablePicker.class);
-		addToolToMenu(SpreadSheetBean.class);
+		addToolToMenu(TableViewer.class);
 		addToolToMenu(VariableTransformer.class);
 		menuAddTool.addSeparator();
 
@@ -847,6 +897,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(ParallelPlot.class);
 		addToolToMenu(StarPlot.class);
 		addToolToMenu(StarPlotMap.class);
+		addToolToMenu(GraduatedSymbolsMap.class);
 		addToolToMenu(RadViz.class);
 		// addToolToMenu(CartogramAndScatterplotMatrix.class);
 		// addToolToMenu(CartogramMatrix.class);
@@ -873,6 +924,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		// Spatial analysis tools
 		addToolToMenu(MoranMap.class);
+		// addToolToMenu(MoranMatrix.class);
 		addToolToMenu(SaTScan.class);
 		menuAddTool.addSeparator();
 
@@ -985,7 +1037,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		System.setProperty("swing.aatext", "true");
 
 		try {
-			// UIManager.setLookAndFeel(new SyntheticaStandardLookAndFeel());
+			// UIManager.setLookAndFeel(new SubstanceLookAndFeel());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

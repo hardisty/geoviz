@@ -28,15 +28,15 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 
-public class SpreadSheetBeanBeanInfo
+public class TableViewerBeanInfo
     extends SimpleBeanInfo {
-  static Class beanClass = SpreadSheetBean.class;
+  static Class beanClass = TableViewer.class;
   static String iconColor16x16Filename = "resources/spreadsheet16.gif";
   static String iconColor32x32Filename = "resources/spreadsheet32.gif";
   static String iconMono16x16Filename;
   static String iconMono32x32Filename;
 
-  public SpreadSheetBeanBeanInfo() {
+  public TableViewerBeanInfo() {
   }
 
   public PropertyDescriptor[] getPropertyDescriptors() {

@@ -78,9 +78,10 @@ public class StarPlotRenderer implements Glyph {
 
 	public static final Color defaultOutlineColor = Color.black;
 
-	private boolean fill = true;
+	private final boolean fill = true;
 
-	final static Logger logger = Logger.getLogger(StarPlotRenderer.class.getName());
+	final static Logger logger = Logger.getLogger(StarPlotRenderer.class
+			.getName());
 
 	public StarPlotRenderer() {
 		fillColor = StarPlotRenderer.defaultFillColor;
@@ -92,19 +93,19 @@ public class StarPlotRenderer implements Glyph {
 
 	public StarPlotRenderer copy() {
 		StarPlotRenderer newCopy = new StarPlotRenderer();
-		newCopy.setLengths(this.lengths);
-		newCopy.setFillColor(this.getFillColor());
+		newCopy.setLengths(lengths);
+		newCopy.setFillColor(getFillColor());
 
 		return newCopy;
 	}
 
 	public void setLengths(int[] spikeLengths) {
-		if (spikeLengths == null){
+		if (spikeLengths == null) {
 			return;
 		}
-		this.lengths = new int[spikeLengths.length];
+		lengths = new int[spikeLengths.length];
 		for (int i = 0; i < spikeLengths.length; i++) {
-			this.lengths[i] = spikeLengths[i];
+			lengths[i] = spikeLengths[i];
 		}
 		if (xPoints == null || xPoints.length != lengths.length) {
 			xPoints = new float[lengths.length];
@@ -112,26 +113,26 @@ public class StarPlotRenderer implements Glyph {
 
 		}
 
-		this.findPoints(lengths);
-		this.fillPaths();
+		findPoints(lengths);
+		fillPaths();
 	}
 
 	private void fillPaths() {
 		originalFigure = new GeneralPath();
 		originalSpikes = new GeneralPath();
-		if (this.xPoints.length < 1) {
+		if (xPoints.length < 1) {
 			return;
 		}
-		originalFigure.moveTo(this.xPoints[0], this.yPoints[0]);
+		originalFigure.moveTo(xPoints[0], yPoints[0]);
 		originalSpikes.moveTo(0, 0); // home
-		originalSpikes.lineTo(this.xPoints[0], this.yPoints[0]);
+		originalSpikes.lineTo(xPoints[0], yPoints[0]);
 		for (int i = 1; i < xPoints.length; i++) {
-			originalFigure.lineTo(this.xPoints[i], this.yPoints[i]);
+			originalFigure.lineTo(xPoints[i], yPoints[i]);
 			originalSpikes.moveTo(0, 0);
-			originalSpikes.lineTo(this.xPoints[i], this.yPoints[i]);
+			originalSpikes.lineTo(xPoints[i], yPoints[i]);
 		}
-		originalFigure.lineTo(this.xPoints[0], this.yPoints[0]);
-		this.figureReady = true;
+		originalFigure.lineTo(xPoints[0], yPoints[0]);
+		figureReady = true;
 	}
 
 	private void findPoints(int[] lengths) {
@@ -170,13 +171,13 @@ public class StarPlotRenderer implements Glyph {
 		// why double the x and y on the positive?
 		// because the width and height need to be the negative value + the same
 		// positive to be centered on zero
-		this.zoomForm = AffineTransformModifier.makeGeogAffineTransform(
-				paintArea, targetArea, true, true);
+		zoomForm = AffineTransformModifier.makeGeogAffineTransform(paintArea,
+				targetArea, true, true);
 		paintSpikes = originalSpikes.createTransformedShape(zoomForm);
 		paintFigure = originalFigure.createTransformedShape(zoomForm);
-		this.renderedXPoints = null; // reset
-		this.renderedYPoints = null;
-		if (logger.isLoggable(Level.FINEST)){
+		renderedXPoints = null; // reset
+		renderedYPoints = null;
+		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("in StarPlotRenderer.projectFigure");
 		}
 		figureReady = true;
@@ -187,25 +188,25 @@ public class StarPlotRenderer implements Glyph {
 	 */
 
 	public void paintStar(Graphics2D target) {
-		if (!figureReady || this.paintFigure == null) {
+		if (!figureReady || paintFigure == null) {
 			return;
 		}
 		Stroke st = target.getStroke();
 
 		target.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		if (this.fill) {
-			target.setColor(this.fillColor);
-			target.fill(this.paintFigure);
-			target.setColor(this.spikesColor);
+		if (fill) {
+			target.setColor(fillColor);
+			target.fill(paintFigure);
+			target.setColor(spikesColor);
 			target.setStroke(StarPlotRenderer.spikeStroke);
 			target.draw(paintSpikes);
-			target.setColor(this.outlineColor);
+			target.setColor(outlineColor);
 			target.setStroke(StarPlotRenderer.outlineStroke);
-			target.draw(this.paintFigure);
+			target.draw(paintFigure);
 		} else {
 			target.setStroke(StarPlotRenderer.spikeStrokeNoFill);
-			target.setColor(this.spikesColor);
+			target.setColor(spikesColor);
 			target.draw(paintSpikes);
 		}
 
@@ -216,7 +217,7 @@ public class StarPlotRenderer implements Glyph {
 	public void draw(Graphics2D g2) { // we use this when we are acting as a
 		// glyph
 
-		this.paintStar(g2);
+		paintStar(g2);
 
 	}
 
@@ -230,19 +231,17 @@ public class StarPlotRenderer implements Glyph {
 		 * radians = 0; sineAns = Math.sin(radians); cosAns = Math.cos(radians);
 		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
 		 * sineAns); logger.finest("Cosine = " + cosAns);
-		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/4;
-		 * sineAns = Math.sin(radians); cosAns = Math.cos(radians);
-		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
-		 * sineAns); logger.finest("Cosine = " + cosAns);
-		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/2;
+		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/4; sineAns =
+		 * Math.sin(radians); cosAns = Math.cos(radians); logger.finest("Radians = " +
+		 * radians); logger.finest("Sine = " + sineAns); logger.finest("Cosine = " +
+		 * cosAns); logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/2;
 		 * sineAns = Math.sin(radians); cosAns = Math.cos(radians);
 		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
 		 * sineAns); logger.finest("Cosine = " + cosAns);
 		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI; sineAns =
-		 * Math.sin(radians); cosAns = Math.cos(radians);
-		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
-		 * sineAns); logger.finest("Cosine = " + cosAns);
-		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI +
+		 * Math.sin(radians); cosAns = Math.cos(radians); logger.finest("Radians = " +
+		 * radians); logger.finest("Sine = " + sineAns); logger.finest("Cosine = " +
+		 * cosAns); logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI +
 		 * Math.PI / 2; sineAns = Math.sin(radians); cosAns = Math.cos(radians);
 		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
 		 * sineAns); logger.finest("Cosine = " + cosAns);
@@ -278,11 +277,11 @@ public class StarPlotRenderer implements Glyph {
 
 	public void setTargetArea(Rectangle targetArea) {
 		this.targetArea = targetArea;
-		this.projectFigure(this.targetArea);
+		projectFigure(this.targetArea);
 	}
 
 	public int[] getSpikeLengths() {
-		return this.lengths;
+		return lengths;
 	}
 
 	private void transformPoints() {
@@ -290,21 +289,21 @@ public class StarPlotRenderer implements Glyph {
 			zoomForm = new AffineTransform();
 			logger.finest("null transform in sp.transformPoints");
 		}
-		int nPts = this.xPoints.length;
+		int nPts = xPoints.length;
 		float[] srcPts = new float[nPts * 2];
 		float[] dstPts = new float[nPts * 2];
 		for (int i = 0; i < nPts; i++) {
-			srcPts[i * 2] = this.xPoints[i];
-			srcPts[i * 2 + 1] = this.yPoints[i];
+			srcPts[i * 2] = xPoints[i];
+			srcPts[i * 2 + 1] = yPoints[i];
 		}
 		zoomForm.transform(srcPts, 0, dstPts, 0, nPts);
-		if (this.renderedXPoints == null) {
-			this.renderedXPoints = new float[nPts];
-			this.renderedYPoints = new float[nPts];
+		if (renderedXPoints == null) {
+			renderedXPoints = new float[nPts];
+			renderedYPoints = new float[nPts];
 		}
 		for (int i = 0; i < nPts; i++) {
-			this.renderedXPoints[i] = dstPts[i * 2];
-			this.renderedYPoints[i] = dstPts[i * 2 + 1]; // +1 for the y
+			renderedXPoints[i] = dstPts[i * 2];
+			renderedYPoints[i] = dstPts[i * 2 + 1]; // +1 for the y
 			// points in x,y
 			// order
 		}
@@ -313,13 +312,13 @@ public class StarPlotRenderer implements Glyph {
 
 	public float[] getRenderedXPoints() {
 
-		this.transformPoints();
+		transformPoints();
 		return renderedXPoints;
 	}
 
 	public float[] getRenderedYPoints() {
-		if (this.renderedYPoints == null) {
-			this.transformPoints();
+		if (renderedYPoints == null) {
+			transformPoints();
 		}
 
 		return renderedYPoints;
@@ -332,11 +331,11 @@ public class StarPlotRenderer implements Glyph {
 		int x = location.x - (width / 2);
 		int y = location.y - (height / 2);
 		Rectangle targetArea = new Rectangle(x, y, width, height);
-		this.setTargetArea(targetArea);
+		setTargetArea(targetArea);
 	}
 
 	public Shape getOutline() {
-		return this.paintFigure;
+		return paintFigure;
 	}
 
 }

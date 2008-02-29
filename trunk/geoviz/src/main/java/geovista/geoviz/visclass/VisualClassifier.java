@@ -80,7 +80,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	// Jin Chen: for extending purpose, change private to protected for
 	// following fields:
 	// symbolizationPanel,colors,dataColors,colorerLinear,colorClasser,classPick
-	protected geovista.symbolization.ColorRampPicker symbolizationPanel;
+	protected ColorRampPicker symbolizationPanel;
 
 	// XXX in future, we want to support much beyond colors.
 	protected transient Color[] colors;
@@ -90,11 +90,11 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	private transient double[] data;
 	private transient int[] classificationIndex;
 
-	 private int nClasses;
-	 private boolean update;
-	 private boolean interpolate;
-	 private boolean setupFinished;
-	 private boolean variableChooserActive = true;
+	private int nClasses;
+	private boolean update;
+	private boolean interpolate;
+	private boolean setupFinished;
+	private boolean variableChooserActive = true;
 
 	private transient JCheckBox updateBox;
 	private transient JCheckBox interpolateBox;
@@ -107,44 +107,43 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	public static final int Y_AXIS = 1;
 	public transient boolean orientationInParentIsX = false;
 
-	protected geovista.symbolization.ColorSymbolizerLinear colorerLinear;
-	protected geovista.symbolization.ColorSymbolClassificationSimple colorClasser;
+	protected ColorSymbolizerLinear colorerLinear;
+	protected ColorSymbolClassificationSimple colorClasser;
 
 	protected ClassifierPicker classPick;
 
 	private transient TexturePaint texPaint;
 	private transient int oldIndication = 0;
-	final static Logger logger = Logger.getLogger(VisualClassifier.class.getName());
+	final static Logger logger = Logger.getLogger(VisualClassifier.class
+			.getName());
 
 	public VisualClassifier() {
 		super();
-		this.addComponentListener(this);
-		this.colorClasser = new ColorSymbolClassificationSimple();
-		this.colorerLinear = new ColorSymbolizerLinear();
-		this.setupFinished = false;
-		this.nClasses = ColorRampPicker.DEFAULT_NUM_SWATCHES;
-		this.update = true;
-		this.interpolate = true;
+		addComponentListener(this);
+		colorClasser = new ColorSymbolClassificationSimple();
+		colorerLinear = new ColorSymbolizerLinear();
+		setupFinished = false;
+		nClasses = ColorRampPicker.DEFAULT_NUM_SWATCHES;
+		update = true;
+		interpolate = true;
 
-		this.classPick = new ClassifierPicker();
+		classPick = new ClassifierPicker();
 		classPick.addActionListener(this);
 
-		this.makeSymbolizationPanel();
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		makeSymbolizationPanel();
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(classPick);
-		if (this.variableChooserActive == true) {
-			this
-					.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
+		if (variableChooserActive == true) {
+			setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
 		} else {
-			this
-					.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_HIDDEN);
+			setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_HIDDEN);
 		}
 
 		// this.add(classificationPanel);
 		this.add(symbolizationPanel);
-		this.setupFinished = true;
-		this.makeColors();
-		this.setPreferredSize(new Dimension(300, 40));
+		setupFinished = true;
+		makeColors();
+		setPreferredSize(new Dimension(300, 40));
 		/*
 		 * int prefHeight = (int)this.classPick.getPreferredSize().getHeight();
 		 * prefHeight = prefHeight +
@@ -157,8 +156,8 @@ public class VisualClassifier extends JPanel implements ActionListener,
 		 * the smaller one } this.setPreferredSize(new Dimension(prefWidth,
 		 * prefHeight));
 		 */
-		this.revalidate();
-		this.makeTexPaint();
+		revalidate();
+		makeTexPaint();
 	}
 
 	private void makeTexPaint() {
@@ -185,35 +184,35 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	private void makeColors() {
-		if (logger.isLoggable(Level.FINEST)){
+		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("VisClass, making colors...");
 		}
-		Color[] pickerColors = this.symbolizationPanel.getColors();
-		boolean[] pickerAnchors = this.symbolizationPanel.getAnchored();
+		Color[] pickerColors = symbolizationPanel.getColors();
+		boolean[] pickerAnchors = symbolizationPanel.getAnchored();
 		// now we interpolate...linearly
 		int nPicks = pickerColors.length;
-		double picksPerColor = (double) nPicks / (double) this.nClasses;
-		if (this.colors == null) {
-			this.colors = new Color[nClasses];
-		} else if (this.colors.length != nClasses) {
-			this.colors = new Color[nClasses];
+		double picksPerColor = (double) nPicks / (double) nClasses;
+		if (colors == null) {
+			colors = new Color[nClasses];
+		} else if (colors.length != nClasses) {
+			colors = new Color[nClasses];
 		}
 
 		for (int i = 0; i < nClasses; i++) {
-			double whichColor = (double) i * picksPerColor;
+			double whichColor = i * picksPerColor;
 			int index = (int) Math.floor(whichColor);
 			logger.finest("i = " + i + "index = " + index);
-			this.colors[i] = pickerColors[index];
+			colors[i] = pickerColors[index];
 
 		}
-		if (this.interpolate) {
+		if (interpolate) {
 			// for each lock in the picker, find the class that is closest.
-			double colorsPerPick = (double) (this.nClasses - 1)
+			double colorsPerPick = (double) (nClasses - 1)
 					/ (double) (nPicks - 1);
 			// int[] newAnchors = new int[pickerAnchors.length];
 			Vector newAnchors = new Vector();
 			for (int i = 0; i < pickerAnchors.length; i++) {
-				double whichClass = (double) i * colorsPerPick;
+				double whichClass = i * colorsPerPick;
 				int aClass = (int) Math.round(whichClass);
 				if (pickerAnchors[i]) {
 					Integer Ind = new Integer(aClass);
@@ -237,77 +236,68 @@ public class VisualClassifier extends JPanel implements ActionListener,
 				colorAnchors[0] = true;
 			}
 			// now find those durn colors!
-			this.symbolizationPanel.getRamp().rampColors(this.colors,
-					colorAnchors);
-			this.colorerLinear.setRampingColors(this.colors);
-			this.colorerLinear.setAnchors(colorAnchors);
-			this.colorClasser.setColorer(this.colorerLinear);
+			symbolizationPanel.getRamp().rampColors(colors, colorAnchors);
+			colorerLinear.setRampingColors(colors);
+			colorerLinear.setAnchors(colorAnchors);
+			colorClasser.setColorer(colorerLinear);
 		} // end if interpolate
 	}
 
 	public Color[] findDataColors() {
-		if (logger.isLoggable(Level.FINEST)){
+		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("VisClass, finding data colors...");
 		}
-		if (this.classPick.getDataSet() == null) {
+		if (classPick.getDataSet() == null) {
 			return null;
 		}
-		int currVar = this.classPick.getCurrVariableIndex();
-		Classifier classer = this.classPick.getClasser();
-		double[] data = this.classPick.getDataSet().getNumericDataAsDouble(
-				currVar);
+		int currVar = classPick.getCurrVariableIndex();
+		Classifier classer = classPick.getClasser();
+		double[] data = classPick.getDataSet().getNumericDataAsDouble(currVar);
 		int[] classedData = classer.classify(data, classPick.getNClasses());
-		if (this.dataColors == null
-				|| this.dataColors.length != classedData.length) {
-			this.dataColors = new Color[classedData.length];
+		if (dataColors == null || dataColors.length != classedData.length) {
+			dataColors = new Color[classedData.length];
 		}
-		this.colors = this.symbolizationPanel.getColors();
+		colors = symbolizationPanel.getColors();
 		for (int i = 0; i < classedData.length; i++) {
 			int aClass = classedData[i];
 			if (aClass < 0) {
 				aClass = 0; // XXX egregious hack
 			}
-			Color c = this.colors[aClass];
-			this.dataColors[i] = c;
+			Color c = colors[aClass];
+			dataColors[i] = c;
 		}
-		return this.dataColors;
+		return dataColors;
 	}
 
 	/** Listens to the check boxen. */
 	class CheckBoxListener implements ItemListener {
 		public void itemStateChanged(ItemEvent e) {
-			if (e.getSource().equals(VisualClassifier.this.updateBox)) {
-				if (e.getStateChange() == ItemEvent.SELECTED
-						&& VisualClassifier.this.setupFinished) {
-					VisualClassifier.this.update = true;
-					VisualClassifier.this.makeColors();
-					VisualClassifier.this
-							.fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
-					VisualClassifier.this.fireColorClassifierPerformed();
-					VisualClassifier.this.fireColorArrayChanged();
+			if (e.getSource().equals(updateBox)) {
+				if (e.getStateChange() == ItemEvent.SELECTED && setupFinished) {
+					update = true;
+					makeColors();
+					fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
+					fireColorClassifierPerformed();
+					fireColorArrayChanged();
 
 				} else if (e.getStateChange() == ItemEvent.DESELECTED) {
 
-					VisualClassifier.this.update = false;
+					update = false;
 				}
-			} else if (e.getSource().equals(
-					VisualClassifier.this.interpolateBox)) {
-				if (e.getStateChange() == ItemEvent.SELECTED
-						&& VisualClassifier.this.setupFinished) {
-					VisualClassifier.this.interpolate = true;
-					VisualClassifier.this.makeColors();
-					VisualClassifier.this
-							.fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
-					VisualClassifier.this.fireColorClassifierPerformed();
-					VisualClassifier.this.fireColorArrayChanged();
+			} else if (e.getSource().equals(interpolateBox)) {
+				if (e.getStateChange() == ItemEvent.SELECTED && setupFinished) {
+					interpolate = true;
+					makeColors();
+					fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
+					fireColorClassifierPerformed();
+					fireColorArrayChanged();
 
 				} else if (e.getStateChange() == ItemEvent.DESELECTED) {
-					VisualClassifier.this.interpolate = false;
-					VisualClassifier.this.makeColors();
-					VisualClassifier.this
-							.fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
-					VisualClassifier.this.fireColorClassifierPerformed();
-					VisualClassifier.this.fireColorArrayChanged();
+					interpolate = false;
+					makeColors();
+					fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
+					fireColorClassifierPerformed();
+					fireColorArrayChanged();
 				}
 			}
 		}
@@ -318,19 +308,17 @@ public class VisualClassifier extends JPanel implements ActionListener,
 			JSlider source = (JSlider) e.getSource();
 			// if (!source.getValueIsAdjusting()) {
 
-			int fps = (int) source.getValue();
+			int fps = source.getValue();
 			if (fps == 0) {
 				// if (!frozen) stopAnimation();
 			} else {
-				VisualClassifier.this.symbolizationPanel.setNSwatches(fps);
-				VisualClassifier.this.nClasses = fps;
-				VisualClassifier.this.makeColors();
-				VisualClassifier.this
-						.fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
-				VisualClassifier.this.fireColorClassifierPerformed();
-				VisualClassifier.this.fireColorArrayChanged();
-				VisualClassifier.this
-						.fireActionPerformed(VisualClassifier.COMMAND_CLASSES_CHANGED);
+				symbolizationPanel.setNSwatches(fps);
+				nClasses = fps;
+				makeColors();
+				fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
+				fireColorClassifierPerformed();
+				fireColorArrayChanged();
+				fireActionPerformed(VisualClassifier.COMMAND_CLASSES_CHANGED);
 			}
 			// }
 		}
@@ -342,12 +330,12 @@ public class VisualClassifier extends JPanel implements ActionListener,
 
 	public void setSymbolizationPanel(ColorRampPicker symbolizationPanel) {
 		this.symbolizationPanel = symbolizationPanel;
-		this.makeColors();
+		makeColors();
 		logger.finest("VC, settingSymbolizationPanel");
 	}
 
 	public ColorSymbolClassification getColorSymbolClassification() {
-		return this.colorClasser;
+		return colorClasser;
 	}
 
 	public void setColorSymbolClassification(
@@ -357,7 +345,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 
 	public ColorSymbolizer getColorSymbolizer() {
 		logger.finest("VC, gettingColorSymbolizer");
-		return this.colorerLinear;
+		return colorerLinear;
 	}
 
 	public void setColorSymbolizer(ColorSymbolizer colorerLinear) {
@@ -365,18 +353,18 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	public Color[] getColorForObservations() {
-		return this.findDataColors();
+		return findDataColors();
 	}
 
 	public Color[] getColors() {
 		logger.finest("VC, gettingColors");
-		if (this.data == null) {
+		if (data == null) {
 			System.out
 					.println("Warning: VisualClassifier.getColors() called when VC had no data");
 			return null;
 		}
-		this.colors = this.symbolizationPanel.getColors();
-		return this.colors;
+		colors = symbolizationPanel.getColors();
+		return colors;
 	}
 
 	public void setColors(Color[] colors) {
@@ -384,7 +372,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	public int getClassNumber() {
-		return this.nClasses;
+		return nClasses;
 	}
 
 	public void paletteChanged(PaletteEvent e) {
@@ -395,7 +383,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 		// we can't go over the max, or it blows null exceptions
 		// so, we interpolate....
 
-		int numClasses = this.classPick.getNClasses();
+		int numClasses = classPick.getNClasses();
 		Color[] cols = null;
 		if (numClasses <= maxColors) {
 			cols = pal.getColors(numClasses);
@@ -406,41 +394,41 @@ public class VisualClassifier extends JPanel implements ActionListener,
 			cols = pal.getColors(numClasses);
 		}
 
-		this.setColors(cols);
-		this.symbolizationPanel.setColors(cols);
-		this.revalidate();
+		setColors(cols);
+		symbolizationPanel.setColors(cols);
+		revalidate();
 		this.repaint();
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if (command == ColorRampPicker.COMMAND_SWATCH_COLOR_CHANGED) {
-			this.makeColors();
-			this.fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
-			this.fireColorClassifierPerformed();
+			makeColors();
+			fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
+			fireColorClassifierPerformed();
 			VisualClassifier.this.fireColorArrayChanged();
 		} else if (command == ClassifierPicker.COMMAND_CLASSES_CHANGED) {
-			if (logger.isLoggable(Level.FINEST)){
+			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("VisClass, n classes changed...");
 			}
-			int nClasses = this.classPick.getNClasses();
-			this.symbolizationPanel.setNSwatches(nClasses);
+			int nClasses = classPick.getNClasses();
+			symbolizationPanel.setNSwatches(nClasses);
 			this.nClasses = nClasses;
-			this.fireActionPerformed(VisualClassifier.COMMAND_CLASSES_CHANGED);
-			this.makeColors();
-			this.fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
-			this.fireColorClassifierPerformed();
+			fireActionPerformed(VisualClassifier.COMMAND_CLASSES_CHANGED);
+			makeColors();
+			fireActionPerformed(VisualClassifier.COMMAND_COLORS_CHANGED);
+			fireColorClassifierPerformed();
 			VisualClassifier.this.fireColorArrayChanged();
 		} else if (command == ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED) {
-			if (logger.isLoggable(Level.FINEST)){
+			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("VisClass, selected variable changed...");
 			}
 
-			this.fireActionPerformed(ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED);
-			this.fireColorArrayChanged();
+			fireActionPerformed(ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED);
+			fireColorArrayChanged();
 		} else if (command == ClassifierPicker.COMMAND_SELECTED_CLASSIFIER_CHANGED) {
 			// this.colorClasser.setColorer(this.colorerLinear);
-			this.colorClasser.setClasser(this.classPick.getClasser());
+			colorClasser.setClasser(classPick.getClasser());
 			fireColorClassifierPerformed();
 			VisualClassifier.this.fireColorArrayChanged();
 		}
@@ -461,13 +449,13 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	public void componentResized(ComponentEvent e) {
-		double pickPrefWidth = this.classPick.getPreferredSize().getWidth();
+		double pickPrefWidth = classPick.getPreferredSize().getWidth();
 
 		int prefWidth = (int) (pickPrefWidth * 1.5);
-		if (this.getWidth() >= prefWidth) {
-			this.changeOrientation(VisualClassifier.X_AXIS);
+		if (getWidth() >= prefWidth) {
+			changeOrientation(VisualClassifier.X_AXIS);
 		} else {
-			this.changeOrientation(VisualClassifier.Y_AXIS);
+			changeOrientation(VisualClassifier.Y_AXIS);
 		}
 
 	}
@@ -475,32 +463,32 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	// end component event handling
 
 	public void changeOrientation(int orientation) {
-		if (orientation == this.currOrientation) {
+		if (orientation == currOrientation) {
 			return;
 		} else if (orientation == VisualClassifier.X_AXIS) {
-			Component[] comps = new Component[this.getComponentCount()];
-			for (int i = 0; i < this.getComponentCount(); i++) {
-				comps[i] = this.getComponent(i);
+			Component[] comps = new Component[getComponentCount()];
+			for (int i = 0; i < getComponentCount(); i++) {
+				comps[i] = getComponent(i);
 			}
-			this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-			for (int i = 0; i < this.getComponentCount(); i++) {
+			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+			for (int i = 0; i < getComponentCount(); i++) {
 				this.add(comps[i]);
 			}
-			this.currOrientation = VisualClassifier.X_AXIS;
-			this.setPreferredSize(new Dimension(300, 20));
-			this.revalidate();
+			currOrientation = VisualClassifier.X_AXIS;
+			setPreferredSize(new Dimension(300, 20));
+			revalidate();
 		} else if (orientation == VisualClassifier.Y_AXIS) {
-			Component[] comps = new Component[this.getComponentCount()];
-			for (int i = 0; i < this.getComponentCount(); i++) {
-				comps[i] = this.getComponent(i);
+			Component[] comps = new Component[getComponentCount()];
+			for (int i = 0; i < getComponentCount(); i++) {
+				comps[i] = getComponent(i);
 			}
-			this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			for (int i = 0; i < this.getComponentCount(); i++) {
+			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			for (int i = 0; i < getComponentCount(); i++) {
 				this.add(comps[i]);
 			}
-			this.currOrientation = VisualClassifier.Y_AXIS;
-			this.setPreferredSize(new Dimension(300, 40));
-			this.revalidate();
+			currOrientation = VisualClassifier.Y_AXIS;
+			setPreferredSize(new Dimension(300, 40));
+			revalidate();
 		}
 
 	}
@@ -530,9 +518,9 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	 * @see EventListenerList
 	 */
 	protected void fireColorArrayChanged() { // change from private to
-												// protected by Jin Chen to
-												// enable fire the event
-												// programmingly
+		// protected by Jin Chen to
+		// enable fire the event
+		// programmingly
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
 		ColorArrayEvent e = null;
@@ -543,7 +531,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 			if (listeners[i] == ColorArrayListener.class) {
 				// Lazily create the event:
 				if (e == null) {
-					e = new ColorArrayEvent(this, this.findDataColors());
+					e = new ColorArrayEvent(this, findDataColors());
 				}
 
 				((ColorArrayListener) listeners[i + 1]).colorArrayChanged(e);
@@ -557,8 +545,8 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	 */
 	public void addColorClassifierListener(ColorClassifierListener l) {
 		listenerList.add(ColorClassifierListener.class, l);
-		this.fireColorClassifierPerformed(); // so that if any class
-												// registers
+		fireColorClassifierPerformed(); // so that if any class
+		// registers
 		// it gets an event
 	}
 
@@ -587,10 +575,10 @@ public class VisualClassifier extends JPanel implements ActionListener,
 				if (listeners[i] == ColorClassifierListener.class) {
 					// Lazily create the event:
 					if (e == null) {
-						e = new ColorClassifierEvent(this, this
-								.getColorSymbolClassification());
+						e = new ColorClassifierEvent(this,
+								getColorSymbolClassification());
 					}
-					if (this.orientationInParentIsX == true) {
+					if (orientationInParentIsX == true) {
 						e
 								.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_X);
 					} else {
@@ -609,7 +597,7 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	 */
 	public void addActionListener(ActionListener l) {
 		listenerList.add(ActionListener.class, l);
-		this.fireActionPerformed(VisualClassifier.COMMAND_BEAN_REGISTERED);
+		fireActionPerformed(VisualClassifier.COMMAND_BEAN_REGISTERED);
 	}
 
 	/**
@@ -649,24 +637,22 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	public void setIndicatedClass(int indicClass) {
 		// clear old indication
 		// if it still exists
-		if (this.oldIndication < this.symbolizationPanel.getPanSet().length) {
-			this.symbolizationPanel.getPanSet()[this.oldIndication]
-					.setTexPaint(null);
+		if (oldIndication < symbolizationPanel.getPanSet().length) {
+			symbolizationPanel.getPanSet()[oldIndication].setTexPaint(null);
 		}
 
 		if (indicClass < 0) { // used for null or out of range indication
 			this.repaint(); // clear old indication
 			return;
 		}
-		if (indicClass >= this.symbolizationPanel.getPanSet().length) {
+		if (indicClass >= symbolizationPanel.getPanSet().length) {
 			this.repaint(); // clear old indication
 			return;
 		}
 
-		this.symbolizationPanel.getPanSet()[indicClass]
-				.setTexPaint(this.texPaint);
+		symbolizationPanel.getPanSet()[indicClass].setTexPaint(texPaint);
 
-		this.oldIndication = indicClass;
+		oldIndication = indicClass;
 		this.repaint();
 	}
 
@@ -719,18 +705,18 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	public int getVariableChooserMode() {
-		return this.classPick.getVariableChooserMode();
+		return classPick.getVariableChooserMode();
 	}
 
 	public void setVariableChooserMode(int variableChooserMode) {
-		if (this.classPick.getVariableChooserMode() != variableChooserMode) {
-			this.classPick.setVariableChooserMode(variableChooserMode);
+		if (classPick.getVariableChooserMode() != variableChooserMode) {
+			classPick.setVariableChooserMode(variableChooserMode);
 
 		}
 	}
 
 	public void setCurrVariableIndex(int index) {
-		this.classPick.setCurrVariableIndex(index);
+		classPick.setCurrVariableIndex(index);
 	}
 
 	/**
@@ -743,24 +729,24 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	 */
 	@Deprecated
 	public void setData(Object[] data) {
-		this.setDataSet(new DataSetForApps(data));
+		setDataSet(new DataSetForApps(data));
 
 	}
 
 	public void setDataSet(DataSetForApps data) {
-		this.classPick.setDataSet(data);
+		classPick.setDataSet(data);
 	}
 
 	public void setAdditionalData(DataSetForApps data) {
-		this.classPick.setAdditionalData(data);
+		classPick.setAdditionalData(data);
 	}
 
 	public int getCurrVariableIndex() {
-		return this.classPick.getCurrVariableIndex();
+		return classPick.getCurrVariableIndex();
 	}
 
 	public void setHighColor(Color c) {
-		this.symbolizationPanel.setHighColor(c);
+		symbolizationPanel.setHighColor(c);
 	}
 
 	public void setOrientationInParentIsX(boolean orientationInParentIsX) {
@@ -776,22 +762,21 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
-		this.setData(e.getDataSet());
+		setData(e.getDataSet());
 	}
 
 	public void dataSetModified(DataSetModifiedEvent e) {
 		if (e.getEventType() == DataSetModifiedEvent.TYPE_EXTENDED) {
 			// Object[] newData = e.getNewData();
 			// DataSetForApps newDataSet = new DataSetForApps(newData);
-			this.classPick.dataSetModified(e);
+			classPick.dataSetModified(e);
 		}
 	}
 
 	public void tableChanged(TableModelEvent e) {
-	
-	
-		this.classPick.tableChanged(e);
-		this.classPick.setCurrVariableIndex(e.getColumn());
+
+		classPick.tableChanged(e);
+		classPick.setCurrVariableIndex(e.getColumn());
 
 	}
 
@@ -803,7 +788,8 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	}
 
 	/**
-	 * @param update the update to set
+	 * @param update
+	 *            the update to set
 	 */
 	public void setUpdate(boolean update) {
 		this.update = update;

@@ -25,6 +25,7 @@ import javax.swing.event.TableModelListener;
 
 import geovista.common.classification.ClassifierPicker;
 import geovista.common.data.DataSetForApps;
+import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
 import geovista.common.event.ConditioningEvent;
@@ -56,6 +57,7 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	VisualClassifier vc = null;
 	int[] activeVariables = null;
 	DataSetForApps dataSet = null;// contains original data set
+	int[] savedSelection;
 	private final int maxAxes = 6;
 	private long progressstart = 0;
 
@@ -488,6 +490,11 @@ public class ParallelPlot extends javax.swing.JPanel implements
 
 		// Color[] colors = this.vc.getColorForObservations();
 		setColors(vc.getColorForObservations());
+		if (savedSelection != null
+				&& DescriptiveStatistics.max(savedSelection) < dataSet
+						.getNumObservations()) {
+			selectionChanged(new SelectionEvent(this, savedSelection));
+		}
 	}
 
 	/*
@@ -507,15 +514,16 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	 * Added Frank Hardisty 19 July 2002
 	 */
 	public void selectionChanged(SelectionEvent e) {
+		savedSelection = e.getSelection();
 		// if (this.isVisible() == false){
 		// return;
 		// }
-		// if (this.getWidth() * this.getHeight() <= 0){
-		// return;
-		// }
+		if (getWidth() * getHeight() <= 0) {
+			logger.info("ParallelPlot got selection when size was zero");
+			return;
+		}
 		parallelDisplay.selectionChanged(e);
 		parallelDisplay.setEditMode(ParallelDisplay.BRUSH);
-
 		// this.brushButtonActionPerformed(new
 		// ActionEvent(this,ActionEvent.ACTION_PERFORMED,"hi"));
 	}
@@ -559,7 +567,8 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	 * Added Frank Hardisty 19 July 2002
 	 */
 	public void dataSetChanged(DataSetEvent e) {
-		// no more hacks!!! x2!!!!
+
+		// no more hacks!!! x2!!!! x3!!!!!
 		dataSet = e.getDataSetForApps();
 		dataSet.addTableModelListener(this);
 		int nVars = dataSet.getNumberNumericAttributes();
@@ -572,6 +581,15 @@ public class ParallelPlot extends javax.swing.JPanel implements
 			vars[i] = i;
 		}
 		setSubspace(vars);
+		// we set selection here in case we got a selection before the data
+		if (savedSelection == null) {
+			return;
+		}
+		int maxN = DescriptiveStatistics.max(savedSelection);
+		if (dataSet.getNumObservations() > maxN) {
+			selectionChanged(new SelectionEvent(this, savedSelection));
+		}
+
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {

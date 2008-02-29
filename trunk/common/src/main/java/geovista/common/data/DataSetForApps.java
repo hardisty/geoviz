@@ -27,14 +27,13 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -64,7 +63,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @version $Revision: 1.24 $
  * @author Xiping Dai and Frank Hardisty
  */
-public class DataSetForApps implements TableModel {
+public class DataSetForApps extends AbstractTableModel {
 
 	public static final int TYPE_NONE = -1;
 	public static final int TYPE_NAME = 0;
@@ -94,10 +93,12 @@ public class DataSetForApps implements TableModel {
 	private transient int numNumericAttributes;
 	private transient int numObservations;
 	private transient int[] dataType;
-	
+
 	private transient SpatialWeights spatialWeights;
 	private transient EventListenerList listenerList;
-	final static Logger logger = Logger.getLogger(DataSetForApps.class.getName());
+	final static Logger logger = Logger.getLogger(DataSetForApps.class
+			.getName());
+
 	public DataSetForApps() {
 		listenerList = new EventListenerList();
 	}
@@ -106,18 +107,14 @@ public class DataSetForApps implements TableModel {
 	 * This constructor is equivalent to calling setDataObject(data) with the
 	 * array passed in.
 	 * 
-	 * Note: if this DSA is meant to simulate a previously constructed DSA
-	 * then the listenerList from the prevoius DSA will need to be set after 
-	 * this. 
+	 * Note: if this DSA is meant to simulate a previously constructed DSA then
+	 * the listenerList from the prevoius DSA will need to be set after this.
 	 */
 
 	public DataSetForApps(Object[] data) {
 		listenerList = new EventListenerList();
-		this.setDataObject(data);
+		setDataObject(data);
 	}
-
-
-
 
 	/**
 	 * This method accepts the input Object[] and intializes all member
@@ -132,39 +129,39 @@ public class DataSetForApps implements TableModel {
 	 */
 	@Deprecated
 	public void setDataObject(Object[] data) {
-		this.dataObjectOriginal = data;
-		init(this.dataObjectOriginal);
+		dataObjectOriginal = data;
+		init(dataObjectOriginal);
 	}
 
 	/**
 	 * Returns exactly what was passed in to setDataObject(Object[]).
 	 */
 	public Object[] getDataObjectOriginal() {
-		return this.dataObjectOriginal;
+		return dataObjectOriginal;
 	}
 
 	/**
 	 * Retuns all data, including observationNames String[] data at the end.
 	 */
 	public Object[] getDataSetFull() {
-		return this.dataSetFull;
+		return dataSetFull;
 	}
 
 	public Object[] getNamedArrays() {
-		Object[] namedArrays = new Object[this.attributeNames.length];
+		Object[] namedArrays = new Object[attributeNames.length];
 		for (int i = 0; i < namedArrays.length; i++) {
-			namedArrays[i] = this.dataObjectOriginal[i + 1];
+			namedArrays[i] = dataObjectOriginal[i + 1];
 
 		}
 		return namedArrays;
 	}
 
 	/**
-	 * Returns the object array with only numerical variables (double[], int[],
-	 * and String[]) from the attribute arrays, plus any other attached objects.
+	 * Returns the object array with only numerical variables (double[], int[])
+	 * from the attribute arrays, plus any other attached spatial objects.
 	 */
 	public Object[] getDataSetNumericAndSpatial() {
-		return this.dataSetNumericAndSpatial;
+		return dataSetNumericAndSpatial;
 	}
 
 	/**
@@ -172,23 +169,23 @@ public class DataSetForApps implements TableModel {
 	 *         and String[]) from the attribute arrays
 	 */
 	public Object[] getDataSetNumeric() {
-		return this.dataSetNumeric;
+		return dataSetNumeric;
 	}
 
 	public Object[] getDataSetNumericAndAtt() {
-		this.dataSetAttAndNumeric = new Object[this.dataSetNumeric.length + 1];
-		this.dataSetAttAndNumeric[0] = this.attributeNamesNumeric;
-		for (int i = 0; i < this.dataSetNumeric.length; i++) {
-			this.dataSetAttAndNumeric[i + 1] = this.dataSetNumeric[i];
+		dataSetAttAndNumeric = new Object[dataSetNumeric.length + 1];
+		dataSetAttAndNumeric[0] = attributeNamesNumeric;
+		for (int i = 0; i < dataSetNumeric.length; i++) {
+			dataSetAttAndNumeric[i + 1] = dataSetNumeric[i];
 		}
-		return this.dataSetAttAndNumeric;
+		return dataSetAttAndNumeric;
 	}
 
 	/**
 	 * Returns the attribute names for all input arrays.
 	 */
 	public String[] getAttributeNamesOriginal() {
-		return this.attributeNames;
+		return attributeNames;
 	}
 
 	/**
@@ -197,7 +194,7 @@ public class DataSetForApps implements TableModel {
 	 * 
 	 */
 	public String[] getAttributeNamesNumeric() {
-		return this.attributeNamesNumeric;
+		return attributeNamesNumeric;
 	}
 
 	/**
@@ -212,9 +209,9 @@ public class DataSetForApps implements TableModel {
 		// if (numericIndex >= this.numNumericAttributes) {
 
 		// }
-		return this.dataSetNumericAndSpatial[numericIndex + 1]; // skip
-																// attribute
-																// names
+		return dataSetNumericAndSpatial[numericIndex + 1]; // skip
+		// attribute
+		// names
 	}
 
 	/**
@@ -224,7 +221,7 @@ public class DataSetForApps implements TableModel {
 	 * 
 	 */
 	public String[] getObservationNames() {
-		return this.observationNames;
+		return observationNames;
 	}
 
 	/**
@@ -235,7 +232,7 @@ public class DataSetForApps implements TableModel {
 	 */
 
 	public String getObservationName(int obs) {
-		return this.observationNames[obs];
+		return observationNames[obs];
 	}
 
 	/**
@@ -255,22 +252,22 @@ public class DataSetForApps implements TableModel {
 	 * 
 	 */
 	public int[] getConditionArray() {
-		this.conditionArray = new int[this.numObservations];
-		return this.conditionArray;
+		conditionArray = new int[numObservations];
+		return conditionArray;
 	}
 
 	/**
 	 * Returns the number of numerical variables (double[], int[], and String[])
 	 */
 	public int getNumberNumericAttributes() {
-		return this.numNumericAttributes;
+		return numNumericAttributes;
 	}
 
 	/**
 	 * Returns the data type of each attribute array ...??
 	 */
 	public int[] getDataTypeArray() {
-		return this.dataType;
+		return dataType;
 	}
 
 	/**
@@ -278,7 +275,7 @@ public class DataSetForApps implements TableModel {
 	 * attribute names.
 	 */
 	public int getNumObservations() {
-		return this.numObservations;
+		return numObservations;
 
 	}
 
@@ -286,7 +283,7 @@ public class DataSetForApps implements TableModel {
 	 * Returns the type of spatial data in the data set.
 	 */
 	public int getSpatialType() {
-		return this.spatialType;
+		return spatialType;
 
 	}
 
@@ -294,16 +291,20 @@ public class DataSetForApps implements TableModel {
 	 * Returns data after the named arrays. Could be a zero-length array.
 	 */
 	public Object[] getOtherData() {
-		int numOtherObjects = this.dataObjectOriginal.length
-				- this.attributeNames.length - 1;
+		int numOtherObjects = dataObjectOriginal.length - attributeNames.length
+				- 1;
 
 		Object[] otherData = new Object[numOtherObjects];
 		if (otherData.length == 0) {
 			return otherData;
 		}
 
-		for (int i = attributeNames.length + 1; i < this.dataObjectOriginal.length; i++) {
-			otherData[i - attributeNames.length-1] = this.dataObjectOriginal[i];//fah just added a -1 here
+		for (int i = attributeNames.length + 1; i < dataObjectOriginal.length; i++) {
+			otherData[i - attributeNames.length - 1] = dataObjectOriginal[i];// fah
+			// just
+			// added
+			// a -1
+			// here
 		}
 		return otherData;
 
@@ -312,13 +313,13 @@ public class DataSetForApps implements TableModel {
 	public String[] getAttributeDescriptions() {
 		// XXX hack alert on the second part of this condition
 		// not a safe set of assumptions
-		if (this.dataObjectOriginal[this.dataObjectOriginal.length - 1] == null
-				|| !(this.dataObjectOriginal[this.dataObjectOriginal.length - 1] instanceof String[])) {
-			this.attributeDescriptions = null;
+		if (dataObjectOriginal[dataObjectOriginal.length - 1] == null
+				|| !(dataObjectOriginal[dataObjectOriginal.length - 1] instanceof String[])) {
+			attributeDescriptions = null;
 		} else {
-			this.attributeDescriptions = (String[]) this.dataObjectOriginal[this.dataObjectOriginal.length - 1];
+			attributeDescriptions = (String[]) dataObjectOriginal[dataObjectOriginal.length - 1];
 		}
-		return this.attributeDescriptions;
+		return attributeDescriptions;
 	}
 
 	/**
@@ -327,20 +328,19 @@ public class DataSetForApps implements TableModel {
 	 */
 	public Shape[] getShapeData() {
 
-		int i = this.getShapeDataPlace();
+		int i = getShapeDataPlace();
 		if (i > 0) {
-			return (Shape[]) this.dataObjectOriginal[i];
+			return (Shape[]) dataObjectOriginal[i];
 		}
 		return null;
 	}
-	
-	public List<Integer> getNeighbors(int id){
-		return this.spatialWeights.getNeighbor(id);
+
+	public List<Integer> getNeighbors(int id) {
+		return spatialWeights.getNeighbor(id);
 	}
-	
-	
-	public SpatialWeights getSpatialWeights(){
-		return this.spatialWeights;
+
+	public SpatialWeights getSpatialWeights() {
+		return spatialWeights;
 	}
 
 	/**
@@ -348,9 +348,9 @@ public class DataSetForApps implements TableModel {
 	 * searching from last to first, or else null if none exists.
 	 */
 	public GeneralPath[] getGeneralPathData() {
-		for (int i = this.dataObjectOriginal.length - 1; i > -1; i--) {
-			if (this.dataObjectOriginal[i] instanceof GeneralPath[]) {
-				return (GeneralPath[]) this.dataObjectOriginal[i];
+		for (int i = dataObjectOriginal.length - 1; i > -1; i--) {
+			if (dataObjectOriginal[i] instanceof GeneralPath[]) {
+				return (GeneralPath[]) dataObjectOriginal[i];
 			}
 		}
 		return null;
@@ -362,8 +362,8 @@ public class DataSetForApps implements TableModel {
 	 */
 
 	public int getShapeDataPlace() {
-		for (int i = this.dataObjectOriginal.length - 1; i > -1; i--) {
-			if (this.dataObjectOriginal[i] instanceof Shape[]) {
+		for (int i = dataObjectOriginal.length - 1; i > -1; i--) {
+			if (dataObjectOriginal[i] instanceof Shape[]) {
 				return i;
 			}
 		}
@@ -376,9 +376,9 @@ public class DataSetForApps implements TableModel {
 	 * searching from last to first, or else null if none exists.
 	 */
 	public Point2D[] getPoint2DData() {
-		for (int i = this.dataObjectOriginal.length - 1; i > -1; i--) {
-			if (this.dataObjectOriginal[i] instanceof Point2D[]) {
-				return (Point2D[]) this.dataObjectOriginal[i];
+		for (int i = dataObjectOriginal.length - 1; i > -1; i--) {
+			if (dataObjectOriginal[i] instanceof Point2D[]) {
+				return (Point2D[]) dataObjectOriginal[i];
 			}
 		}
 		return null;
@@ -389,13 +389,14 @@ public class DataSetForApps implements TableModel {
 	 * searching from last to first, or else null if none exists.
 	 */
 	public Geometry[] getGeomData() {
-		for (int i = this.dataObjectOriginal.length - 1; i > -1; i--) {
-			if (this.dataObjectOriginal[i] instanceof Geometry[]) {
-				return (Geometry[]) this.dataObjectOriginal[i];
+		for (int i = dataObjectOriginal.length - 1; i > -1; i--) {
+			if (dataObjectOriginal[i] instanceof Geometry[]) {
+				return (Geometry[]) dataObjectOriginal[i];
 			}
 		}
 		return null;
 	}
+
 	// /**
 	// * Returns the first instance of a ShapeFile found in the data set,
 	// * searching from last to first, or else null if none exists.
@@ -417,7 +418,7 @@ public class DataSetForApps implements TableModel {
 	 * getNumberNumericAttributes() -1
 	 */
 	public double[] getNumericDataAsDouble(int numericArrayIndex) {
-		Object dataNumeric = this.dataSetNumericAndSpatial[numericArrayIndex + 1];
+		Object dataNumeric = dataSetNumericAndSpatial[numericArrayIndex + 1];
 		// because it is a string array of variable names
 		double[] doubleData = null;
 		if (dataNumeric instanceof double[]) {
@@ -441,15 +442,15 @@ public class DataSetForApps implements TableModel {
 	}
 
 	/**
-	 * Returns a double where the arrayIndex is the nth array in
-	 * the data set, and obs is the nth observation in that array.
+	 * Returns a double where the arrayIndex is the nth array in the data set,
+	 * and obs is the nth observation in that array.
 	 * 
-	 * note: this is a look into the "raw" data, and does not skip the 
-	 * variable names array
+	 * note: this is a look into the "raw" data, and does not skip the variable
+	 * names array
 	 */
 
 	public double getValueAsDouble(int arrayIndex, int obs) {
-		Object dataNumeric = this.dataObjectOriginal[arrayIndex]; 
+		Object dataNumeric = dataObjectOriginal[arrayIndex];
 		double[] doubleData = null;
 		double doubleVal = Double.NaN;
 		if (dataNumeric instanceof double[]) {
@@ -465,17 +466,18 @@ public class DataSetForApps implements TableModel {
 		}
 		return doubleVal;
 	}
+
 	/**
 	 * Returns a double where the numericArrayIndex is the nth numeric array in
 	 * the data set, and obs is the nth observation in that array.
 	 */
 
 	public double getNumericValueAsDouble(int numericArrayIndex, int obs) {
-		Object dataNumeric = this.dataSetNumericAndSpatial[numericArrayIndex + 1]; // we
-																					// skip
-																					// the
-																					// first
-																					// one
+		Object dataNumeric = dataSetNumericAndSpatial[numericArrayIndex + 1]; // we
+		// skip
+		// the
+		// first
+		// one
 		double[] doubleData = null;
 		double doubleVal = Double.NaN;
 		if (dataNumeric instanceof double[]) {
@@ -497,7 +499,7 @@ public class DataSetForApps implements TableModel {
 	 */
 
 	public String getNumericArrayName(int arrayPlace) {
-		String[] names = (String[]) this.dataSetNumericAndSpatial[0];
+		String[] names = (String[]) dataSetNumericAndSpatial[0];
 		return names[arrayPlace];
 	}
 
@@ -516,28 +518,28 @@ public class DataSetForApps implements TableModel {
 							+ "number of attribute arrays that follow");
 		}
 
-		this.attributeNames = (String[]) data[0];
-		this.dataSetFull = new Object[this.dataObjectOriginal.length + 1]; // plus
-																			// one
-																			// for
-																			// the
-																			// attribute
-																			// names
-																			// place
-		this.dataSetFull[0] = attributeNames;
+		attributeNames = (String[]) data[0];
+		dataSetFull = new Object[dataObjectOriginal.length + 1]; // plus
+		// one
+		// for
+		// the
+		// attribute
+		// names
+		// place
+		dataSetFull[0] = attributeNames;
 
 		int len = attributeNames.length;
 		dataType = new int[len];
 		numNumericAttributes = 0;
 		for (int i = 0; i < len; i++) {
-			if (data[i] instanceof SpatialWeights){
-				this.spatialWeights = (SpatialWeights)data[i];
+			if (data[i] instanceof SpatialWeights) {
+				spatialWeights = (SpatialWeights) data[i];
 			}
 			if (data[i + 1] instanceof String[]) {
-				String attrName = this.attributeNames[i].toLowerCase();
+				String attrName = attributeNames[i].toLowerCase();
 				if (attrName.endsWith("name")) {
 					dataType[i] = DataSetForApps.TYPE_NAME;
-					this.observationNames = (String[]) data[i + 1];
+					observationNames = (String[]) data[i + 1];
 				}
 			} else if (data[i + 1] instanceof double[]) {
 				dataType[i] = DataSetForApps.TYPE_DOUBLE;
@@ -552,44 +554,43 @@ public class DataSetForApps implements TableModel {
 				dataType[i] = DataSetForApps.TYPE_NONE;
 			}
 
-			this.dataSetFull[i + 1] = data[i + 1];
+			dataSetFull[i + 1] = data[i + 1];
 		}
 
-		for (int i = 0; i < data.length; i++) {
+		for (Object element : data) {
 
-			
-			if (data[i] instanceof Shape[]) {
-				Shape[] temp = ((Shape[]) data[i]);
-				
+			if (element instanceof Shape[]) {
+				Shape[] temp = ((Shape[]) element);
+
 				if (temp[0] instanceof GeneralPathLine) {
-					this.spatialType = DataSetForApps.SPATIAL_TYPE_LINE;
+					spatialType = DataSetForApps.SPATIAL_TYPE_LINE;
 				} else {
-					this.spatialType = DataSetForApps.SPATIAL_TYPE_POLYGON; // the
-																			// default
+					spatialType = DataSetForApps.SPATIAL_TYPE_POLYGON; // the
+					// default
 					break;
 				}
-			} else if (data[i] instanceof Point2D[]) {
-				this.spatialType = DataSetForApps.SPATIAL_TYPE_POINT;
+			} else if (element instanceof Point2D[]) {
+				spatialType = DataSetForApps.SPATIAL_TYPE_POINT;
 
 				break;
-			} else if (data[i] instanceof Geometry[]){
-				this.spatialType = DataSetForApps.SPATIAL_TYPE_GEOMETRY;
+			} else if (element instanceof Geometry[]) {
+				spatialType = DataSetForApps.SPATIAL_TYPE_GEOMETRY;
 				break;
-			} 
-			
-		}
-		for (int i = 0; i < data.length; i++) {
-			if (data[i] instanceof SpatialWeights){
-				this.spatialWeights = (SpatialWeights)data[i];
 			}
-		}	
+
+		}
+		for (Object element : data) {
+			if (element instanceof SpatialWeights) {
+				spatialWeights = (SpatialWeights) element;
+			}
+		}
 		int otherInfo = data.length - 1 - len; // Info objects are arrays
-												// besides attribute object,
-												// data objects and observ name
-												// object.
-		this.dataSetNumericAndSpatial = new Object[numNumericAttributes + 2
+		// besides attribute object,
+		// data objects and observ name
+		// object.
+		dataSetNumericAndSpatial = new Object[numNumericAttributes + 2
 				+ otherInfo];
-		this.dataSetNumeric = new Object[numNumericAttributes];
+		dataSetNumeric = new Object[numNumericAttributes];
 		if (otherInfo > 0) {
 			for (int i = 0; i < otherInfo; i++) {
 				dataSetNumericAndSpatial[numNumericAttributes + 2 + i] = data[len
@@ -603,18 +604,18 @@ public class DataSetForApps implements TableModel {
 			while ((dataType[dataTypeIndex]) < 1) {
 				dataTypeIndex++;
 			}
-			this.dataSetNumericAndSpatial[i + 1] = data[dataTypeIndex + 1];
-			this.dataSetNumeric[i] = data[dataTypeIndex + 1];
-			this.attributeNamesNumeric[i] = attributeNames[dataTypeIndex];
-		
+			dataSetNumericAndSpatial[i + 1] = data[dataTypeIndex + 1];
+			dataSetNumeric[i] = data[dataTypeIndex + 1];
+			attributeNamesNumeric[i] = attributeNames[dataTypeIndex];
+
 			dataTypeIndex++;
 		}
 		// The first object in dataObject array is attribute names.
-		dataSetNumericAndSpatial[0] = this.attributeNamesNumeric;
+		dataSetNumericAndSpatial[0] = attributeNamesNumeric;
 		// Reserve an object in array for obervation names. The position is
 		// after
 		// all other data, including spatial data.
-		if (this.observationNames != null) {
+		if (observationNames != null) {
 			dataSetNumericAndSpatial[numNumericAttributes + 1] = observationNames;
 			dataSetFull[len + 1] = observationNames;
 		} else {
@@ -624,26 +625,26 @@ public class DataSetForApps implements TableModel {
 
 		// set the number of observations
 		if (dataType[0] == DataSetForApps.TYPE_NAME) {
-			this.numObservations = ((String[]) dataObjectOriginal[1]).length;
+			numObservations = ((String[]) dataObjectOriginal[1]).length;
 		} else if (dataType[0] == DataSetForApps.TYPE_DOUBLE) {
-			this.numObservations = ((double[]) dataSetNumericAndSpatial[1]).length;
+			numObservations = ((double[]) dataSetNumericAndSpatial[1]).length;
 		} else if (dataType[0] == DataSetForApps.TYPE_INTEGER) {
-			this.numObservations = ((int[]) dataSetNumericAndSpatial[1]).length;
+			numObservations = ((int[]) dataSetNumericAndSpatial[1]).length;
 		} else if (dataType[0] == DataSetForApps.TYPE_BOOLEAN) {
-			this.numObservations = ((boolean[]) dataSetNumericAndSpatial[1]).length;
+			numObservations = ((boolean[]) dataSetNumericAndSpatial[1]).length;
 		}
 
 	}
 
 	public DataSetForApps appendDataSet(DataSetForApps newData) {
 		DataSetForApps returnDataSetForApps = null;
-		if (this.dataObjectOriginal == null) {
+		if (dataObjectOriginal == null) {
 			returnDataSetForApps = new DataSetForApps();
 			returnDataSetForApps.init(newData.getDataObjectOriginal());
 			return returnDataSetForApps;
 		}
 		String[] newNames = newData.getAttributeNamesOriginal();
-		String[] oldNames = this.getAttributeNamesOriginal();
+		String[] oldNames = getAttributeNamesOriginal();
 		String[] concatNames = new String[newNames.length + oldNames.length];
 		// get the names
 		for (int i = 0; i < oldNames.length; i++) {
@@ -655,7 +656,7 @@ public class DataSetForApps implements TableModel {
 		}
 		// get the named arrays
 		Object[] newObjects = newData.getNamedArrays();
-		Object[] oldObjects = this.getNamedArrays();
+		Object[] oldObjects = getNamedArrays();
 		Object[] concatObjects = new Object[newObjects.length
 				+ oldObjects.length];
 		for (int i = 0; i < oldObjects.length; i++) {
@@ -669,7 +670,7 @@ public class DataSetForApps implements TableModel {
 
 		Object[] newOtherObjects = newData.getOtherData();
 
-		Object[] oldOtherObjects = this.getOtherData();
+		Object[] oldOtherObjects = getOtherData();
 		Object[] concatOtherObjects = new Object[newOtherObjects.length
 				+ oldOtherObjects.length];
 		for (int i = 0; i < oldOtherObjects.length; i++) {
@@ -696,15 +697,16 @@ public class DataSetForApps implements TableModel {
 		return returnDataSetForApps;
 
 	}
+
 	public DataSetForApps prependDataSet(DataSetForApps newData) {
 		DataSetForApps returnDataSetForApps = null;
-		if (this.dataObjectOriginal == null) {
+		if (dataObjectOriginal == null) {
 			returnDataSetForApps = new DataSetForApps();
 			returnDataSetForApps.init(newData.getDataObjectOriginal());
 			return returnDataSetForApps;
 		}
 		String[] newNames = newData.getAttributeNamesOriginal();
-		String[] oldNames = this.getAttributeNamesOriginal();
+		String[] oldNames = getAttributeNamesOriginal();
 		String[] concatNames = new String[newNames.length + oldNames.length];
 		// get the names
 		for (int i = 0; i < newNames.length; i++) {
@@ -716,7 +718,7 @@ public class DataSetForApps implements TableModel {
 		}
 		// get the named arrays
 		Object[] newObjects = newData.getNamedArrays();
-		Object[] oldObjects = this.getNamedArrays();
+		Object[] oldObjects = getNamedArrays();
 		Object[] concatObjects = new Object[newObjects.length
 				+ oldObjects.length];
 		for (int i = 0; i < newObjects.length; i++) {
@@ -730,7 +732,7 @@ public class DataSetForApps implements TableModel {
 
 		Object[] newOtherObjects = newData.getOtherData();
 
-		Object[] oldOtherObjects = this.getOtherData();
+		Object[] oldOtherObjects = getOtherData();
 		Object[] concatOtherObjects = new Object[newOtherObjects.length
 				+ oldOtherObjects.length];
 		for (int i = 0; i < newOtherObjects.length; i++) {
@@ -766,7 +768,7 @@ public class DataSetForApps implements TableModel {
 	// numericArrayIndex+1
 	public double getNumericValueAsDoubleSkipColNames(int numericColumnIndex,
 			int row) {
-		Object dataNumeric = this.dataSetNumericAndSpatial[numericColumnIndex + 1];
+		Object dataNumeric = dataSetNumericAndSpatial[numericColumnIndex + 1];
 		double[] doubleData = null;
 		double doubleVal = Double.NaN;
 		if (dataNumeric instanceof double[]) {
@@ -776,8 +778,10 @@ public class DataSetForApps implements TableModel {
 			int[] intData = (int[]) dataNumeric;
 			doubleVal = intData[row];
 		} else {
-			String temp = ( (String[]) dataNumeric)[row];
-			logger.finest("\n" + dataNumeric.getClass() + "=" + temp +  ", col=" + (numericColumnIndex + 1) + "(d=" + this.numNumericAttributes + "), row=" + row + "\n");
+			String temp = ((String[]) dataNumeric)[row];
+			logger.finest("\n" + dataNumeric.getClass() + "=" + temp + ", col="
+					+ (numericColumnIndex + 1) + "(d=" + numNumericAttributes
+					+ "), row=" + row + "\n");
 			throw new IllegalArgumentException(
 					"Unable to parse values in column " + numericColumnIndex
 							+ " as a number");
@@ -787,7 +791,7 @@ public class DataSetForApps implements TableModel {
 
 	public void setNumericValueAsDoubleSkipColNames(int numericColumnIndex,
 			int row, double value) {
-		Object dataNumeric = this.dataSetNumericAndSpatial[numericColumnIndex + 1];
+		Object dataNumeric = dataSetNumericAndSpatial[numericColumnIndex + 1];
 		if (dataNumeric instanceof double[]) {
 			((double[]) dataNumeric)[row] = value;
 		} else if (dataNumeric instanceof int[]) {
@@ -832,118 +836,149 @@ public class DataSetForApps implements TableModel {
 	}
 
 	public void addColumn(String columnName, double[] columnData) {
-		//I guess we add the new data in at the end....
-		//note that clients with refrences to the primitve arrays will
-		//not experience disruption if this method is called, 
-		//but those with a reference to a derived array wouldn't 
-		//be happy.
+		// I guess we add the new data in at the end....
+		// note that clients with refrences to the primitve arrays will
+		// not experience disruption if this method is called,
+		// but those with a reference to a derived array wouldn't
+		// be happy.
 		String[] name = new String[1];
 		name[0] = columnName;
 		Object[] allData = new Object[2];
 		allData[0] = name;
 		allData[1] = columnData;
-		
+
 		DataSetForApps dataSet = new DataSetForApps(allData);
-		DataSetForApps newDataSet = this.prependDataSet(dataSet);
-		this.setDataObject(newDataSet.getDataObjectOriginal());
-		this.fireTableChanged();
+		DataSetForApps newDataSet = prependDataSet(dataSet);
+		setDataObject(newDataSet.getDataObjectOriginal());
+		fireTableChanged();
 
 	}
-	  /**
-	   * Notify all listeners that have registered interest for
-	   * notification on this event type. The event instance
-	   * is lazily created using the parameters passed into
-	   * the fire method.
-	   * @see EventListenerList
-	   * 
-	   * note: at this point, always fires an insertion
-	   */
-	  public void fireTableChanged() {
-		  if (logger.isLoggable(Level.FINEST)){
-			  logger.finest("DataSetForApps, firing table changed");
-		  }
+
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 * 
+	 * note: at this point, always fires an insertion
+	 */
+	public void fireTableChanged() {
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("DataSetForApps, firing table changed");
+		}
 
 		// Guaranteed to return a non-null array
-	    Object[] listeners = listenerList.getListenerList();
-	    TableModelEvent e = null;
+		Object[] listeners = listenerList.getListenerList();
+		TableModelEvent e = null;
 
-	    // Process the listeners last to first, notifying
-	    // those that are interested in this event
-	    for (int i = listeners.length - 2; i >= 0; i -= 2) {
-	      if (listeners[i] == TableModelListener.class) {
-	        // Lazily create the event:
-	        if (e == null) {
-	        	//TableModelEvent(TableModel source, int firstRow, int lastRow, int column, int type) 
-	          e = new TableModelEvent(this,0,this.getNumObservations(),this.getObservationNames().length,TableModelEvent.INSERT);
-	        }
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == TableModelListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					// TableModelEvent(TableModel source, int firstRow, int
+					// lastRow, int column, int type)
+					e = new TableModelEvent(this, 0, getNumObservations(),
+							getObservationNames().length,
+							TableModelEvent.INSERT);
+				}
 
-	        ( (TableModelListener) listeners[i + 1]).tableChanged(e);
-	      }
-	    } //next i
-	  }
-
-
-	public Object getId(int index) {
-		return new Integer(index);
+				((TableModelListener) listeners[i + 1]).tableChanged(e);
+			}
+		} // next i
 	}
 
-	public Vector getIds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int getIndexById(Object id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	@Override
 	public void addTableModelListener(TableModelListener l) {
-		this.listenerList.add(TableModelListener.class, l);
-		
+		listenerList.add(TableModelListener.class, l);
+
 	}
 
-
+	@Override
 	public void removeTableModelListener(TableModelListener l) {
-		this.listenerList.remove(TableModelListener.class, l);
-		
+		listenerList.remove(TableModelListener.class, l);
+
 	}
-//start TableModel methods
-	public Class getColumnClass(int arg0) {
-		// TODO Auto-generated method stub
+
+	// start TableModel methods
+	@Override
+	public Class getColumnClass(int columnIndex) {
+
+		Object dataArray = getDataObjectOriginal()[columnIndex + 1];
+
+		if (dataArray instanceof double[]) {
+			return Double.class;
+		} else if (dataArray instanceof int[]) {
+			return Integer.class;
+		} else if (dataArray instanceof String[]) {
+			return String.class;
+		} else if (dataArray instanceof boolean[]) {
+			return Boolean.class;
+		} else {
+			logger
+					.severe("datasetforaps, getcolumnclass, hit unknown array type, type = "
+							+ dataArray.getClass());
+		}
+
 		return null;
 	}
 
-	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getValueAt(int rowIndex, int columnIndex) {
+
+		Object dataArray = getDataObjectOriginal()[columnIndex + 1];
+		Object datum = null;
+		if (dataArray instanceof double[]) {
+			double[] doubleArray = (double[]) dataArray;
+			datum = new Double(doubleArray[rowIndex]);
+		} else if (dataArray instanceof int[]) {
+			int[] intArray = (int[]) dataArray;
+			datum = new Integer(intArray[rowIndex]);
+		} else if (dataArray instanceof String[]) {
+			String[] stringArray = (String[]) dataArray;
+			datum = new String(stringArray[rowIndex]);
+		} else if (dataArray instanceof boolean[]) {
+			boolean[] booleanArray = (boolean[]) dataArray;
+			datum = new Boolean(booleanArray[rowIndex]);
+		} else {
+			logger
+					.severe("datasetforaps, getcolumnclass, hit unknown array type, type = "
+							+ dataArray.getClass());
+		}
+
+		return datum;
+
 	}
 
+	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
+	@Override
 	public void setValueAt(Object arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
+		// noop, we don't allow editing
+
 	}
-
-
 
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return attributeNames.length;
 	}
 
+	@Override
 	public String getColumnName(int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return attributeNames[columnIndex];
+
 	}
 
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numObservations;
 	}
-//	end TableModel events	
+
+	// end TableModel events
 
 	/**
 	 * @return the listenerList
@@ -953,7 +988,8 @@ public class DataSetForApps implements TableModel {
 	}
 
 	/**
-	 * @param listenerList the listenerList to set
+	 * @param listenerList
+	 *            the listenerList to set
 	 */
 	public void setListenerList(EventListenerList listenerList) {
 		this.listenerList = listenerList;
