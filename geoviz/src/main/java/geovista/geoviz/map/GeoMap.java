@@ -120,7 +120,7 @@ public class GeoMap extends JPanel
 	transient protected GeoCursors cursors;
 
 	transient protected BivariateColorSchemeVisualizer biViz;
-
+	// XXX scatterplot goes here
 	transient protected Dimension currSize;
 
 	transient protected Fisheyes fisheyes;

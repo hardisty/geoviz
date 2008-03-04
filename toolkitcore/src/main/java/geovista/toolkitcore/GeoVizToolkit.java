@@ -525,7 +525,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void addToolkitBeanSet(ToolkitBeanSet beanSet) {
-		logger.info(" addtoolkitbeanset setting tbeanset, size = "
+		logger.fine(" addtoolkitbeanset setting tbeanset, size = "
 				+ beanSet.getBeanSet().size());
 		tBeanSet = beanSet;
 		Iterator iter = tBeanSet.iterator();
@@ -1026,7 +1026,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// my.log
 			FileHandler fHandler = new FileHandler("gv_toolkit.log");
 			fHandler.setFormatter(new SimpleFormatter());
-			// logger.addHandler(fHandler);
+			logger.addHandler(fHandler);
 		} catch (IOException e) {
 			System.err.println("could not create log file");
 			e.printStackTrace();
@@ -1115,7 +1115,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void setTBeanSet(ToolkitBeanSet beanSet) {
-		logger.info("settbeanset setting tbeanset, size = "
+		logger.fine("settbeanset setting tbeanset, size = "
 				+ beanSet.getBeanSet().size());
 		tBeanSet = beanSet;
 	}

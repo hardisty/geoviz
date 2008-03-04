@@ -66,7 +66,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	private transient Image drawingBuff;
 	private transient Rectangle[] plotLocations;
 	private transient DataSetForApps dataSet;
-	private  int indication = -1;
+	private int indication = -1;
 	private transient int plotWidth;
 	private transient int plotHeight;
 	private transient int nRows;
@@ -78,36 +78,36 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	// out where
 	// each plot is located.
 	private transient Color[] starColors;
-	final static Logger logger = Logger.getLogger(StarPlotCanvas.class.getName());
+	final static Logger logger = Logger.getLogger(StarPlotCanvas.class
+			.getName());
 
-	private StarPlotLayer plotLayer;
+	private final StarPlotLayer plotLayer;
 
 	public StarPlotCanvas() {
 		if (StarPlotCanvas.logger.isLoggable(Level.FINEST)) {
 			logger.finest("StarPlotCanvas, in constructor");
 		}
-		this.setBackground(Color.white);
-		this.addComponentListener(this);
-		this.addMouseMotionListener(this);
-		this.addMouseListener(this);
-		this.plotLayer = new StarPlotLayer();
+		setBackground(Color.white);
+		addComponentListener(this);
+		addMouseMotionListener(this);
+		addMouseListener(this);
+		plotLayer = new StarPlotLayer();
 
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
 		plotLayer.dataSetChanged(e);
-		this.dataSet = e.getDataSetForApps();
-		this.plotLocations = new Rectangle[this.dataSet.getNumObservations()];
+		dataSet = e.getDataSetForApps();
+		plotLocations = new Rectangle[dataSet.getNumObservations()];
 		for (int i = 0; i < plotLocations.length; i++) {
-			this.plotLocations[i] = new Rectangle();
+			plotLocations[i] = new Rectangle();
 		}
-	    if ( (this.drawingBuff == null) && (this.getWidth() > 0) &&
-	            (this.getHeight() > 0)) {
-	          this.drawingBuff = this.createImage(this.getWidth(), this.getHeight());
-	        }
-		this.findPlotOrder(dataSet.getNumericDataAsDouble(0));
-		this.findPlotLocations();
-		this.paintDrawingBuff();
+		if ((drawingBuff == null) && (getWidth() > 0) && (getHeight() > 0)) {
+			drawingBuff = this.createImage(getWidth(), getHeight());
+		}
+		findPlotOrder(dataSet.getNumericDataAsDouble(0));
+		findPlotLocations();
+		paintDrawingBuff();
 		this.repaint();
 	}
 
@@ -123,19 +123,19 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 		}
 		plotLayer.subspaceChanged(e);
 		int sortVar = e.getSubspace()[0];
-		double[] data = this.dataSet.getNumericDataAsDouble(sortVar);
-		this.findPlotOrder(data);
-		this.findPlotLocations();
-		this.fireGlyphChanged();
-		this.paintDrawingBuff();
+		double[] data = dataSet.getNumericDataAsDouble(sortVar);
+		findPlotOrder(data);
+		findPlotLocations();
+		fireGlyphChanged();
+		paintDrawingBuff();
 		repaint();
 
 	}
 
 	public void setOrder(int[] order) {
-		this.plotsOrder = order;
-		this.findPlotLocations();
-		this.paintDrawingBuff();
+		plotsOrder = order;
+		findPlotLocations();
+		paintDrawingBuff();
 		this.repaint();
 	}
 
@@ -161,25 +161,25 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	private void findPlotLocations() {
-		Rectangle[] plotLocs = this.plotLocations;
-		if (plotLocs == null || this.getWidth() <= 0 || plotsOrder == null) {
+		Rectangle[] plotLocs = plotLocations;
+		if (plotLocs == null || getWidth() <= 0 || plotsOrder == null) {
 			return;
 		}
-		if (plotLocs.length != this.plotLayer.getObsList().length) {
+		if (plotLocs.length != plotLayer.getObsList().length) {
 			return;
 		}
 		Dimension dim = StarPlotCanvas.findNRowsColumns(plotLocs.length);
-		this.nRows = dim.width;
-		this.nColumns = dim.height;
+		nRows = dim.width;
+		nColumns = dim.height;
 
-		plotWidth = this.getWidth() / nColumns;
-		plotHeight = this.getHeight() / nRows;
+		plotWidth = getWidth() / nColumns;
+		plotHeight = getHeight() / nRows;
 		int plotMin = plotWidth;
 		if (plotHeight < plotWidth) {
 			plotMin = plotHeight;
 		}
 		logger.finest(" plotmin = " + plotMin);
-		penWidth = (float) plotMin / 100f;
+		penWidth = plotMin / 100f;
 		if (penWidth < 0f) {
 			penWidth = 0f;
 		}
@@ -193,7 +193,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 
 				x = (col * plotWidth);
 				y = (row * plotHeight);
-				index = this.plotsOrder[plotsAssigned];
+				index = plotsOrder[plotsAssigned];
 				plotLocs[index] = new Rectangle();
 				plotLocs[index].setBounds(x, y, plotWidth, plotHeight);
 
@@ -203,7 +203,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 				}
 			}
 		}
-		this.plotLayer.setPlotLocations(plotLocs);
+		plotLayer.setPlotLocations(plotLocs);
 	}
 
 	/**
@@ -211,23 +211,24 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	 * expensive operation, so this method should be called by a RenderThread.
 	 */
 	private void paintDrawingBuff() {
-		if (this.drawingBuff == null || this.dataSet == null) {
+		if (drawingBuff == null || dataSet == null) {
 			return;
 		}
-		Graphics g = this.drawingBuff.getGraphics();
+		Graphics g = drawingBuff.getGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		Color veryLightGray = new Color(220, 220, 220);
 		g.setColor(veryLightGray);
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		g.fillRect(0, 0, getWidth(), getHeight());
 
-		this.paintCircles(g2);
+		paintCircles(g2);
 		g2.setStroke(new BasicStroke(penWidth));
 		plotLayer.renderStars(g2);
 		paintGrid(g2);
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
-		//super.paintComponent(g);
+		// super.paintComponent(g);
 		Color veryLightGray = new Color(220, 220, 220);
 		g.setColor(veryLightGray);
 
@@ -236,16 +237,16 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		// Draw buff
-		if (this.drawingBuff != null) {
-			g2.drawImage(this.drawingBuff, null, this);
+		if (drawingBuff != null) {
+			g2.drawImage(drawingBuff, null, this);
 
 		}// Just draw background
 		else {
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g.fillRect(0, 0, getWidth(), getHeight());
 		}
 
 		g2.setColor(StarPlotRenderer.defaultIndicationColor);
-		plotLayer.renderStar(g2, this.indication);
+		plotLayer.renderStar(g2, indication);
 
 	}
 
@@ -257,17 +258,17 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 		int startY;
 		int endY;
 		startX = 0;
-		endX = this.getWidth();
+		endX = getWidth();
 		g2.setColor(StarPlotRenderer.defaultOutlineColor);
 		for (int row = 0; row < nRows; row++) {
-			startY = row * this.plotHeight;
+			startY = row * plotHeight;
 			endY = startY;
 			g2.drawLine(startX, startY, endX, endY);
 		}
 		startY = 0;
-		endY = this.getHeight();
+		endY = getHeight();
 		for (int col = 0; col < nColumns; col++) {
-			startX = col * this.plotWidth;
+			startX = col * plotWidth;
 			endX = startX;
 			g2.drawLine(startX, startY, endX, endY);
 		}
@@ -277,22 +278,22 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	private void paintCircles(Graphics2D g2) {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		Rectangle[] plotLocs = this.plotLocations;
+		Rectangle[] plotLocs = plotLocations;
 
 		g2.setColor(Color.white);
 		int x = 0;
 		int y = 0;
-		int width = this.plotWidth;
-		int height = this.plotHeight;
-		for (int plot = 0; plot < plotLocs.length; plot++) {
-			if (plotLocs[plot] == null) {
+		int width = plotWidth;
+		int height = plotHeight;
+		for (Rectangle element : plotLocs) {
+			if (element == null) {
 				return;
 			}
-			x = plotLocs[plot].x;
-			y = plotLocs[plot].y;
-			width = plotLocs[plot].width;
-			height = plotLocs[plot].height;
-			if (this.plotWidth > this.plotHeight) {
+			x = element.x;
+			y = element.y;
+			width = element.width;
+			height = element.height;
+			if (plotWidth > plotHeight) {
 				x = x + ((width - height) / 2);
 				width = height;
 
@@ -317,12 +318,11 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 
 	public void componentResized(ComponentEvent e) {
 
-		this.findPlotLocations();
-		if (this.getWidth() > 0 && (this.getHeight() > 0)) {
-			this.drawingBuff = this.createImage(this.getWidth(), this
-					.getHeight());
+		findPlotLocations();
+		if (getWidth() > 0 && (getHeight() > 0)) {
+			drawingBuff = this.createImage(getWidth(), getHeight());
 		}
-		this.paintDrawingBuff();
+		paintDrawingBuff();
 		this.repaint();
 
 	}
@@ -351,8 +351,8 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public void mouseExited(MouseEvent e) {
-		this.fireIndicationChanged(-1); // clear indication
-		this.setIndication(-1);
+		fireIndicationChanged(-1); // clear indication
+		setIndication(-1);
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -360,24 +360,24 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		if (this.plotWidth == 0) {
+		if (plotWidth == 0) {
 			return;
 		}
 
-		int row = (int) ((float) e.getY() / (float) this.plotHeight);
+		int row = (int) ((float) e.getY() / (float) plotHeight);
 
-		int column = e.getX() / this.plotWidth;
+		int column = e.getX() / plotWidth;
 
 		int plot = 0;
 		plot = (row * nColumns) + column;
 
-		if (plot >= this.plotLocations.length) {
+		if (plot >= plotLocations.length) {
 			return;
 		}
-		plot = this.plotsOrder[plot];
-		if (plot < this.plotLocations.length && plot != this.indication) {
-			this.setIndication(plot);
-			this.fireIndicationChanged(plot);
+		plot = plotsOrder[plot];
+		if (plot < plotLocations.length && plot != indication) {
+			setIndication(plot);
+			fireIndicationChanged(plot);
 
 		}
 
@@ -385,11 +385,11 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 
 	// end mouse events
 	public String[] getVarNames() {
-		return this.plotLayer.getVarNames();
+		return plotLayer.getVarNames();
 	}
 
 	public double[] getValues(int obs) {
-		double[] vals = this.plotLayer.getValues(obs);
+		double[] vals = plotLayer.getValues(obs);
 		if (vals == null) {
 			return null;
 		}
@@ -397,17 +397,18 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public int[] getSpikeLengths(int obs) {
-		return this.plotLayer.getSpikeLengths(obs);
+		return plotLayer.getSpikeLengths(obs);
 	}
 
 	public void indicationChanged(IndicationEvent e) {
 		int ind = e.getIndication();
-		if (ind > this.dataSet.getNumObservations()){
-			logger.severe("got indication greater than data set size, ind = " + ind);
-			//Thread.dumpStack();
+		if (ind > dataSet.getNumObservations()) {
+			logger.severe("got indication greater than data set size, ind = "
+					+ ind);
+			// Thread.dumpStack();
 			return;
 		}
-		this.setIndication(e.getIndication());
+		setIndication(e.getIndication());
 
 	}
 
@@ -420,8 +421,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	 */
 	public void addGlyphListener(GlyphListener l) {
 		if (StarPlotCanvas.logger.isLoggable(Level.FINEST)) {
-			logger.finest(this.getClass().getName()
-					+ " adding glyph listener");
+			logger.finest(this.getClass().getName() + " adding glyph listener");
 		}
 		listenerList.add(GlyphListener.class, l);
 	}
@@ -454,7 +454,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 			if (listeners[i] == GlyphListener.class) {
 				// Lazily create the event:
 				if (e == null) {
-					Glyph[] glys = this.findGlyphs();
+					Glyph[] glys = findGlyphs();
 					e = new GlyphEvent(this, glys);
 				}
 
@@ -508,38 +508,38 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public void setIndication(int newIndication) {
-		this.plotLayer.setIndication(newIndication);
-		this.indication = newIndication;
+		plotLayer.setIndication(newIndication);
+		indication = newIndication;
 		this.repaint();
 	}
 
 	public String getObservationName(int index) {
-		if (this.dataSet == null) {
+		if (dataSet == null) {
 			return "";
 		}
-		if (this.dataSet.getObservationNames() == null) {
+		if (dataSet.getObservationNames() == null) {
 			return String.valueOf(index);
 		}
-		return this.dataSet.getObservationNames()[index];
+		return dataSet.getObservationNames()[index];
 	}
 
 	public void setStarFillColors(Color[] starColors) {
-		this.applyStarFillColors(starColors);
-		this.paintDrawingBuff();
+		applyStarFillColors(starColors);
+		paintDrawingBuff();
 		this.repaint();
 	}
 
 	private void applyStarFillColors(Color[] starColors) {
 		this.starColors = starColors;
-		this.plotLayer.applyStarFillColors(starColors);
+		plotLayer.applyStarFillColors(starColors);
 
 	}
 
 	public Color getStarFillColor(int ind) {
-		if (this.starColors == null) {
+		if (starColors == null) {
 			return null;
 		}
-		return this.starColors[ind];
+		return starColors[ind];
 
 	}
 
@@ -550,13 +550,17 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	 * 
 	 */
 	public void setObsList(int[] obsList) { // for selections etc.
-		this.plotLayer.setObsList(obsList);
-		this.paintDrawingBuff();
+		plotLayer.setObsList(obsList);
+		paintDrawingBuff();
 		this.repaint();
 
 	}
 
 	public DataSetForApps getDataSet() {
 		return dataSet;
+	}
+
+	public StarPlotLayer getPlotLayer() {
+		return plotLayer;
 	}
 } // end class

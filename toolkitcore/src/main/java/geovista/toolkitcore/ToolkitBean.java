@@ -24,6 +24,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -43,7 +44,7 @@ import geovista.coordination.CoordinationUtils;
  */
 
 public class ToolkitBean implements ComponentListener {
-
+	final static Logger logger = Logger.getLogger(ToolkitBean.class.getName());
 	private Object originalBean;
 	private transient JMenuItem removeMenuItem;
 	JInternalFrame internalFrame;
@@ -64,7 +65,7 @@ public class ToolkitBean implements ComponentListener {
 	}
 
 	public void init(Object originalBean, String uniqueName) {
-		System.out.println("in toolkitbean, in init");
+		logger.fine("in toolkitbean, in init");
 		listenerList = new EventListenerList();
 		this.setOriginalBean(originalBean, uniqueName);
 		objectClass = originalBean.getClass().getName();

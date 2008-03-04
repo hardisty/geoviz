@@ -168,4 +168,8 @@ public class StarPlot extends JPanel implements DataSetListener,
 
 	}
 
+	public StarPlotCanvas getStarCan() {
+		return starCan;
+	}
+
 } // end class

@@ -157,6 +157,7 @@ public class Marshaller {
 		String newString = newLinesToXML(testString);
 		String oldString = newLinesToJava(newString);
 		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTextArea area = new JTextArea();
 		area.setText(oldString);
 		frame.add(area);
