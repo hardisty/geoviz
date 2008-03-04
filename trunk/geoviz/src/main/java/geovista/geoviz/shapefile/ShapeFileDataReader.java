@@ -187,7 +187,9 @@ public class ShapeFileDataReader implements Serializable {
 	}
 
 	protected static DataSetForApps makeDataSetForApps(String fileName) {
-		logger.finest("debug");
+		logger
+				.info("making dataset from shp and dbf in local file, fileName = "
+						+ fileName);
 		FileInputStream shpStream = null;
 		FileInputStream dbfStream = null;
 		try {
@@ -206,7 +208,8 @@ public class ShapeFileDataReader implements Serializable {
 
 	public static DataSetForApps makeDataSetForAppsCsv(Class clazz, String name) {
 		DataSetForApps shpData = null;
-
+		logger.info("making dataset from shp and cvs class resource, name = "
+				+ name);
 		try {
 
 			InputStream isCSV = clazz.getResourceAsStream("resources/" + name
@@ -238,7 +241,8 @@ public class ShapeFileDataReader implements Serializable {
 
 	public static DataSetForApps makeDataSetForApps(Class clazz, String name) {
 		DataSetForApps shpData = null;
-
+		logger.info("making dataset from class dbf and shp resource, name = "
+				+ name);
 		try {
 
 			InputStream isCSV = clazz.getResourceAsStream("resources/" + name

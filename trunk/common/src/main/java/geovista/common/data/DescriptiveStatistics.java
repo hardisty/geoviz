@@ -101,7 +101,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.min";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -131,7 +131,7 @@ public abstract class DescriptiveStatistics {
 		if (doubleArray.length < 1) {
 
 			String s = "Empty array passed to DescriptiveStatistics.min";
-			logger.warning(s);
+			logger.fine(s);
 
 			return Double.NaN;
 		} // end if
@@ -164,7 +164,7 @@ public abstract class DescriptiveStatistics {
 		if (intArray.length < 1) {
 
 			String s = "Empty array passed to DescriptiveStatistics.min";
-			logger.warning(s);
+			logger.fine(s);
 
 			return Integer.MIN_VALUE;
 		} // end if
@@ -195,8 +195,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.max";
-			logger.warning(s);
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -225,7 +224,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.max";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -257,7 +256,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (intArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.max";
-			logger.warning(s);
+			logger.fine(s);
 			return Integer.MIN_VALUE;
 		} // end if
 
@@ -344,7 +343,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.sum";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -368,7 +367,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.mean";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -394,7 +393,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 1) {
 			String s = "Empty array passed to DescriptiveStatistics.mean";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -451,7 +450,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array is not empty
 		if (doubleArray.length < 2) {
 			String s = "Array with less than two elements passed to DescriptiveStatistics.variance";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -518,7 +517,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array has enough elements
 		if (doubleArray.length < 2) {
 			String s = "Array with less than two elements passed to DescriptiveStatistics.stdDev";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -564,7 +563,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array has enough elements
 		if (doubleArray.length < 3) {
 			String s = "Array with less than three elements passed to DescriptiveStatistics.skewness";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -577,7 +576,7 @@ public abstract class DescriptiveStatistics {
 		// now make sure that standard deviation is not zero
 		if (stdDev == 0) {
 			String s = "Array with standard devation of zero passed to DescriptiveStatistics.skewness";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -603,7 +602,7 @@ public abstract class DescriptiveStatistics {
 		// first make sure that array has enough elements
 		if (doubleArray.length < 4) {
 			String s = "Array with less than four elements passed to DescriptiveStatistics.kurtosis";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -616,7 +615,7 @@ public abstract class DescriptiveStatistics {
 		// now make sure that standard deviation is not zero
 		if (stdDev == 0) {
 			String s = "Array with standard devation of zero passed to DescriptiveStatistics.kurtosis";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -640,14 +639,14 @@ public abstract class DescriptiveStatistics {
 		// first make sure the arrays have the same number of elements
 		if (doubleArray.length != doubleArray2.length) {
 			String s = "Two arrays with unequal numbers of elements passed to DescriptiveStatistics.covariance";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
 		// now make sure that arrays have enough elements
 		if (doubleArray.length < 1) {
 			String s = "Array with less than one element passed to DescriptiveStatistics.covariance";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -685,14 +684,14 @@ public abstract class DescriptiveStatistics {
 		// first make sure the arrays have the same number of elements
 		if (doubleArray.length != doubleArray2.length) {
 			String s = "Two arrays with unequal numbers of elements passed to DescriptiveStatistics.covariance";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
 		// now make sure that arrays have enough elements
 		if (doubleArray.length < 1) {
 			String s = "Array with less than one element passed to DescriptiveStatistics.covariance";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
@@ -836,14 +835,14 @@ public abstract class DescriptiveStatistics {
 		// first make sure the arrays have the same number of elements
 		if (doubleArray.length != doubleArray2.length) {
 			String s = "Two arrays with unequal numbers of elements passed to DescriptiveStatistics.correlationCoefficient";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 
 		// now make sure that arrays have enough elements
 		if (doubleArray.length < 1) {
 			String s = "Array with less than one element passed to DescriptiveStatistics.correlationCoefficient";
-			logger.warning(s);
+			logger.fine(s);
 			return Double.NaN;
 		} // end if
 

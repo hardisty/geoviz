@@ -333,4 +333,8 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 	public DataSetForApps getDataSet() {
 		return dataSet;
 	}
+
+	public StarPlotRenderer[] getPlots() {
+		return plots;
+	}
 } // end class
