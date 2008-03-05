@@ -26,6 +26,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.HashMap;
 
+import geovista.common.data.ArraySort2D;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.DataSetEvent;
@@ -118,7 +119,117 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 	}
 
 	private void findSpikeLengths(int[] vars) {
+
 		int nVars = vars.length;
+		int[][] spikeLengths = findLinearScaledSpikes(vars, nVars);
+		// int[][] spikeLengths = findRankOrderSpikes(vars, nVars);
+		// int[][] spikeLengths = findNormalizedSpikes(vars, nVars);
+		// int[][] spikeLengths = findLogarithmSpikes(vars, nVars);
+
+		int[] spikes = new int[nVars];
+		for (int row = 0; row < obsList.length; row++) {
+
+			for (int col = 0; col < spikes.length; col++) {
+
+				spikes[col] = spikeLengths[row][col];
+			}
+			plots[row].setLengths(spikes);
+		}
+
+	}
+
+	@Deprecated
+	private int[][] findLogarithmSpikes(int[] vars, int nVars) {
+		// XXX there's something wrong with this....
+		double[] minVals = new double[nVars];
+		double[] maxVals = new double[nVars];
+		double[] ranges = new double[nVars];
+
+		int[][] spikeLengths = new int[obsList.length][nVars];
+		for (int i = 0; i < nVars; i++) {
+			double[] varData = dataSet.getNumericDataAsDouble(vars[i]);
+			double[] logData = new double[varData.length];
+			for (int j = 0; j < varData.length; j++) {
+				logData[j] = Math.abs(Math.log(varData[j]));
+			}
+			minVals[i] = DescriptiveStatistics.min(logData);
+			maxVals[i] = DescriptiveStatistics.max(logData);
+			ranges[i] = DescriptiveStatistics.range(logData);
+			double range = 0d;
+			double prop = 0d;
+			for (int row = 0; row < obsList.length; row++) {
+				int index = obsList[row];
+				double val = logData[index];
+				range = ranges[i];
+				// make range zero-based
+				range = range - minVals[i];
+				val = val - minVals[i];
+				prop = val / ranges[i];
+				spikeLengths[row][i] = (int) (prop * 100d);
+			}
+		}
+		return spikeLengths;
+	}
+
+	private int[][] findNormalizedSpikes(int[] vars, int nVars) {
+		double[] minVals = new double[nVars];
+		double[] maxVals = new double[nVars];
+		double[] ranges = new double[nVars];
+
+		int[][] spikeLengths = new int[obsList.length][nVars];
+		for (int i = 0; i < nVars; i++) {
+			double[] varData = dataSet.getNumericDataAsDouble(vars[i]);
+			double[] zData = DescriptiveStatistics.calculateZScores(varData);
+			minVals[i] = DescriptiveStatistics.min(zData);
+			maxVals[i] = DescriptiveStatistics.max(zData);
+			ranges[i] = DescriptiveStatistics.range(zData);
+			double range = 0d;
+			double prop = 0d;
+			for (int row = 0; row < obsList.length; row++) {
+				int index = obsList[row];
+				double val = zData[index];
+				range = ranges[i];
+				// make range zero-based
+				range = range - minVals[i];
+				val = val - minVals[i];
+				prop = val / ranges[i];
+				spikeLengths[row][i] = (int) (prop * 100d);
+			}
+		}
+		return spikeLengths;
+	}
+
+	private int[][] findRankOrderSpikes(int[] vars, int nVars) {
+		double[] minVals = new double[nVars];
+		double[] maxVals = new double[nVars];
+		double[] ranges = new double[nVars];
+
+		int[][] spikeLengths = new int[obsList.length][nVars];
+		ArraySort2D sorter = new ArraySort2D();
+		for (int i = 0; i < nVars; i++) {
+			double[] varData = dataSet.getNumericDataAsDouble(vars[i]);
+			int[] sortedIndexes = sorter.getSortedIndex(varData);
+			minVals[i] = DescriptiveStatistics.min(sortedIndexes);
+			maxVals[i] = DescriptiveStatistics.max(sortedIndexes);
+			ranges[i] = DescriptiveStatistics.range(sortedIndexes);
+			double range = 0d;
+			double prop = 0d;
+			for (int row = 0; row < obsList.length; row++) {
+				int index = obsList[row];
+				double val = sortedIndexes[index];
+				range = ranges[i];
+				// make range zero-based
+				range = range - minVals[i];
+				val = val - minVals[i];
+				prop = val / ranges[i];
+				spikeLengths[row][i] = (int) (prop * 100d);
+			}
+		}
+
+		return spikeLengths;
+	}
+
+	private int[][] findLinearScaledSpikes(int[] vars, int nVars) {
 		double[] minVals = new double[nVars];
 		double[] maxVals = new double[nVars];
 		double[] ranges = new double[nVars];
@@ -142,16 +253,7 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 				spikeLengths[row][i] = (int) (prop * 100d);
 			}
 		}
-		int[] spikes = new int[nVars];
-		for (int row = 0; row < obsList.length; row++) {
-
-			for (int col = 0; col < spikes.length; col++) {
-
-				spikes[col] = spikeLengths[row][col];
-			}
-			plots[row].setLengths(spikes);
-		}
-
+		return spikeLengths;
 	}
 
 	public void renderStars(Graphics2D g2) {

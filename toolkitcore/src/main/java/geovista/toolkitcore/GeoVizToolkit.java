@@ -1032,8 +1032,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			e.printStackTrace();
 		}
 
-		boolean useProj = true;
+		boolean useProj = false;
 		boolean useAux = true;
+		double tolerance = 0.001;
+		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 
 		try {

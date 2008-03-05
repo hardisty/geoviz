@@ -18,10 +18,32 @@ package geovista.common.data;
 import java.util.Arrays;
 
 public class ArraySort2D {
+
+	private class IndexedDouble implements Comparable<IndexedDouble> {
+		double data;
+		int index;
+
+		IndexedDouble(double data, int index) {
+			this.data = data;
+			this.index = index;
+		}
+
+		public int compareTo(IndexedDouble otherVal) {
+			if (data < otherVal.data) {
+				return -1;
+			}
+			if (data > otherVal.data) {
+				return 1;
+			}
+			// not greater, not lesser, must be equal.
+			return 0;
+		}
+
+	}
+
 	// XXX this is freezing the jvm (infinate loop?) on nulls
 	// ... needs to be fixed + have some unit tests...
-	//fix implemented, but not tested...
-
+	// fix implemented, but not tested...
 	private class SortableDoubleArray implements
 			Comparable<SortableDoubleArray> {
 
@@ -58,12 +80,44 @@ public class ArraySort2D {
 
 	}
 
+	public int[] getSortedIndex(double[] dataIn) {
+
+		IndexedDouble[] doubleArray = new IndexedDouble[dataIn.length];
+		for (int i = 0; i < dataIn.length; i++) {
+			doubleArray[i] = new IndexedDouble(dataIn[i], i);
+		}
+
+		Arrays.sort(doubleArray);
+		int[] indexArray = new int[dataIn.length];
+		double previousValue = Double.NaN;
+		int previousIndex = 0;
+		int previousI = 0;
+		for (int i = 0; i < dataIn.length; i++) {
+			if (doubleArray[i].data == previousValue) {
+				// indexArray[i] = doubleArray[previousI].index;
+				indexArray[doubleArray[i].index] = previousI;
+			} else {
+
+				// indexArray[i] = doubleArray[i].index;
+				indexArray[doubleArray[i].index] = i;
+				previousValue = doubleArray[i].data;
+				previousIndex = doubleArray[i].index;
+				previousI = i;
+			}
+
+		}
+
+		return indexArray;
+
+	}
+
 	// what is this method supposed to do?
 	// best guess: sort by that column...
 	// strategy -- stuff everything into arraylists?
 	// at any rate: must use arrays.sort
 	// this can take an array of objects that implement Comparable
-	public static void sortDouble_old(double[][] dataIn, int whichColumn) {
+	@Deprecated
+	private static void sortDouble_old(double[][] dataIn, int whichColumn) {
 
 		double[] dataSorted = new double[dataIn.length];
 
@@ -145,7 +199,8 @@ public class ArraySort2D {
 		// }//while switch
 	}// end method
 
-	public static void sortObject2(Object[][] dataIn, int whichColumn) {
+	@Deprecated
+	private static void sortObject2(Object[][] dataIn, int whichColumn) {
 
 		Object[] dataSorted = new Object[dataIn.length];
 
@@ -170,12 +225,12 @@ public class ArraySort2D {
 			nullData = new Object[numNulls][dataIn[0].length];
 			int nullCounter = 0;
 			nonNullCounter = 0;
-			for (int i = 0; i < dataIn.length; i++) {
-				if (dataIn[i][whichColumn] == null) {
-					nullData[nullCounter] = dataIn[i];
+			for (Object[] element : dataIn) {
+				if (element[whichColumn] == null) {
+					nullData[nullCounter] = element;
 					nullCounter++;
 				} else {
-					dataSorted[nonNullCounter] = dataIn[i][whichColumn];
+					dataSorted[nonNullCounter] = element[whichColumn];
 					nonNullCounter++;
 				}// end if
 			}// next i
@@ -274,4 +329,13 @@ public class ArraySort2D {
 		}
 
 	}// end method
+
+	public static void main(String[] args) {
+		double[] someData = { 1, 1, 2, 45, 3, 45, 45, 1 };
+		ArraySort2D sorter = new ArraySort2D();
+		int[] results = sorter.getSortedIndex(someData);
+
+		System.out.println(Arrays.toString(results));
+
+	}
 }// end class
