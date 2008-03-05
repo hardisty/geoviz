@@ -612,4 +612,8 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 		}
 
 	}
+
+	public JComboBox getVariableCombo() {
+		return variableCombo;
+	}
 }

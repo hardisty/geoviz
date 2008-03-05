@@ -301,6 +301,11 @@ public class GeoMapUni extends JPanel
 
 	}
 
+	public void setSelectedVariable(int var) {
+		// me so crazy -- frank
+		visClassOne.getClassPick().getVariableCombo().setSelectedIndex(var);
+	}
+
 	public void selectionChanged(SelectionEvent e) {
 		mapCan.selectionChanged(e);
 	}
