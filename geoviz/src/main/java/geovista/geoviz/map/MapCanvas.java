@@ -47,6 +47,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -530,15 +531,19 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	} // end method
 
 	private void makeToolTip(int arrayIndex) {
+		DecimalFormat nFormat = new DecimalFormat();
+		nFormat.setMaximumFractionDigits(3);
 		if (arrayIndex < 0 || currColorColumnX < 0) {
 			tipText = "";
 		} else if (currColorColumnX == currColorColumnY) {
-			String xVal = String.valueOf(dataSet.getNumericValueAsDouble(
+			String xVal = nFormat.format(dataSet.getNumericValueAsDouble(
 					currColorColumnX, arrayIndex));
+
 			String s = "";
 			String[] observationNames = dataSet.getObservationNames();
 
 			if (observationNames != null) {
+
 				s = s + "Name = " + observationNames[arrayIndex] + "\n";
 			}
 
@@ -564,9 +569,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			// setting multi-line tool tip
 			// b.setToolTipText("<html>ToolTip : 1st Line<br>2nd Line<br> 3rd
 			// Line </html>");
-			String xVal = String.valueOf(dataSet.getNumericValueAsDouble(
+			String xVal = nFormat.format(dataSet.getNumericValueAsDouble(
 					currColorColumnX, arrayIndex));
-			String yVal = String.valueOf(dataSet.getNumericValueAsDouble(
+			String yVal = nFormat.format(dataSet.getNumericValueAsDouble(
 					currColorColumnY, arrayIndex));
 			String s = "";
 			String[] observationNames = dataSet.getObservationNames();
@@ -579,6 +584,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			 * s = s + variableNames[currColorColumnX] + " = " + xVal + "\n" +
 			 * variableNames[currColorColumnY] + " = " + yVal;
 			 */
+
 			s = s + variableNames[currColorColumnY] + " = " + yVal + "\n" + // jin
 					// fix
 					// minor

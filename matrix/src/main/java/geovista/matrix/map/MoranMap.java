@@ -91,7 +91,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 	SpatialWeights spatialWeights;
 	JList varList;
 	JButton sendButt;
-	int monteCarloIterations = 100;
+	int monteCarloIterations = 1000;
 	DataSetBroadcaster dataCaster;
 
 	VariablePicker varPicker;
@@ -175,7 +175,9 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 	public void selectionChanged(SelectionEvent e) {
 		varSigMap.selectionChanged(e);
-		sp.selectionChanged(e);
+		if (sp != null) {
+			sp.selectionChanged(e);
+		}
 
 	}
 
@@ -184,8 +186,14 @@ public class MoranMap extends JPanel implements SelectionListener,
 	}
 
 	public void indicationChanged(IndicationEvent e) {
+		varMap.indicationChanged(e);
+		moranMap.indicationChanged(e);
+		sigMap.indicationChanged(e);
 		varSigMap.indicationChanged(e);
-		sp.indicationChanged(e);
+		varHist.indicationChanged(e);
+		moranHist.indicationChanged(e);
+		sigHist.indicationChanged(e);
+		varSigPlot.indicationChanged(e);
 
 	}
 
