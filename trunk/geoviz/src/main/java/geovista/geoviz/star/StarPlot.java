@@ -23,9 +23,12 @@ package geovista.geoviz.star;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -59,11 +62,43 @@ public class StarPlot extends JPanel implements DataSetListener,
 	int indication;
 	final static Logger logger = Logger.getLogger(StarPlot.class.getName());
 
+	JComboBox methodCombo;
+
 	public StarPlot() {
 		vc = new VisualClassifier();
 		starCan = new StarPlotCanvas();
 		starLeg = new StarPlotLegend();
 		setLayout(new BorderLayout());
+		methodCombo = new JComboBox(StarPlotLayer.ScaleMethod.values());
+		this.add(methodCombo, BorderLayout.WEST);
+		methodCombo.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				if (methodCombo.getSelectedItem().equals(
+						StarPlotLayer.ScaleMethod.Linear)) {
+					starCan.getPlotLayer().setMethod(
+							StarPlotLayer.ScaleMethod.Linear);
+				}
+				if (methodCombo.getSelectedItem().equals(
+						StarPlotLayer.ScaleMethod.Rank_Order)) {
+					starCan.getPlotLayer().setMethod(
+							StarPlotLayer.ScaleMethod.Rank_Order);
+				}
+				if (methodCombo.getSelectedItem().equals(
+						StarPlotLayer.ScaleMethod.Normalized)) {
+					starCan.getPlotLayer().setMethod(
+							StarPlotLayer.ScaleMethod.Normalized);
+				}
+				if (methodCombo.getSelectedItem().equals(
+						StarPlotLayer.ScaleMethod.Log)) {
+					starCan.getPlotLayer().setMethod(
+							StarPlotLayer.ScaleMethod.Log);
+				}
+
+				StarPlot.this.repaint();
+			}
+		});
+
 		this.add(starCan, BorderLayout.CENTER);
 		this.add(starLeg, BorderLayout.SOUTH);
 		this.add(vc, BorderLayout.NORTH);

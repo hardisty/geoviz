@@ -57,14 +57,20 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 	// conditioning
 	private transient Color[] starColors;
 	private transient final HashMap<Integer, StarPlotRenderer> obsHashMap;
+
 	// private static boolean DEBUG = false;
 
+	enum ScaleMethod {
+		Linear, Rank_Order, Log, Normalized
+	};
+
+	private ScaleMethod method;
 	public static final int MAX_N_VARS = 6;
 
 	public StarPlotLayer() {
 
 		obsHashMap = new HashMap<Integer, StarPlotRenderer>();
-
+		method = ScaleMethod.Linear;
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
@@ -110,7 +116,7 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 
 	}
 
-	private void makeStarPlots() {
+	void makeStarPlots() {
 
 		applyStarFillColors(starColors);
 		findSpikeLengths(varList);
@@ -119,12 +125,18 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 	}
 
 	private void findSpikeLengths(int[] vars) {
-
+		int[][] spikeLengths = null;
 		int nVars = vars.length;
-		int[][] spikeLengths = findLinearScaledSpikes(vars, nVars);
-		// int[][] spikeLengths = findRankOrderSpikes(vars, nVars);
-		// int[][] spikeLengths = findNormalizedSpikes(vars, nVars);
-		// int[][] spikeLengths = findLogarithmSpikes(vars, nVars);
+		if (method.equals(ScaleMethod.Linear)) {
+			spikeLengths = findLinearScaledSpikes(vars, nVars);
+		} else if (method.equals(ScaleMethod.Rank_Order)) {
+			spikeLengths = findRankOrderSpikes(vars, nVars);
+
+		} else if (method.equals(ScaleMethod.Normalized)) {
+			spikeLengths = findNormalizedSpikes(vars, nVars);
+		} else if (method.equals(ScaleMethod.Log)) {
+			spikeLengths = findLogarithmSpikes(vars, nVars);
+		}
 
 		int[] spikes = new int[nVars];
 		for (int row = 0; row < obsList.length; row++) {
@@ -438,5 +450,15 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 
 	public StarPlotRenderer[] getPlots() {
 		return plots;
+	}
+
+	public ScaleMethod getMethod() {
+		return method;
+	}
+
+	public void setMethod(ScaleMethod method) {
+		this.method = method;
+		findSpikeLengths(varList);
+
 	}
 } // end class

@@ -271,8 +271,12 @@ public class MoranMap extends JPanel implements SelectionListener,
 
 		if (e.getSource().equals(varList)) {
 			int whichItem = varList.getSelectedIndex();
+			if (whichItem < 0) {
+				return;
+			}
 			double[] newData = dataSetOriginal
 					.getNumericDataAsDouble(whichItem);
+
 			String itemName = (String) varList.getSelectedValue();
 
 			double[] zData = DescriptiveStatistics.calculateZScores(newData);
