@@ -5,7 +5,7 @@
   * *Frank Hardisty* is the primary author of the GeoViz Toolkit.
   * *Xiping Dai* developed the matrix components, the scatterplot, and the histogram.
   * *[http://www.ims.tuwien.ac.at/~flo/ Flo Ledermann]* developed the Parvis parallel coordinate plot. http://home.subnet.at/flo/mv/parvis/
-  * *[http://www.touchgraph.com/management-team.html Alex Shapiro* developed the Touchgraph, which the Linkgraph components are based on. http://sourceforge.net/projects/touchgraph
+  * *[http://www.touchgraph.com/management-team.html Alex Shapiro]* developed the Touchgraph, which the Linkgraph components are based on. http://sourceforge.net/projects/touchgraph
   * *Gary Liu* developed the radviz component.
   * *Aaron Myers* developed the help component, and the content in the help.
   * *Ke Liao* developed the facilities for reading and saving layouts.
