@@ -251,8 +251,31 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		} else {
 			observNames = (String[]) dataObject[len + 1];
 		}
-		initExcentricLabels();
 
+		initExcentricLabels();
+		int nRows = data.getNumObservations();
+		int nColumns = data.getNumberNumericAttributes();
+		double[][] dArrays = new double[nColumns][nRows];
+		Object[] numberArrays = data.getDataSetNumeric();
+		for (int i = 0; i < numberArrays.length; i++) {
+			Object array = numberArrays[i];
+			if (array instanceof double[]) {
+				dArrays[i] = (double[]) array;
+			} else if (array instanceof int[]) {
+				int[] originalData = (int[]) array;
+				double[] newData = new double[originalData.length];
+				for (int j = 0; j < originalData.length; j++) {
+					newData[j] = originalData[j];
+				}
+				dArrays[i] = newData;
+			} else {
+				logger.severe("unexpected array type");
+			}
+
+		}
+		doubleDataArrays = dArrays;
+		initialize();
+		this.repaint();
 	}
 
 	/**
@@ -1957,7 +1980,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			intercept = moransRegression[1];
 			rSquare = regressionInterface.getRSquare(dataX, dataY);
 			correlation = DescriptiveStatistics.correlationCoefficient(dataX,
-					dataY, true);
+					dataY, false);
 			// this.setUpRegressionLine(this.slope, this.intercept, allData);
 			logger.finest("scatterPlotBasic all: " + slope + "," + intercept);
 		} else {

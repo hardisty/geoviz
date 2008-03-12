@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -44,6 +45,7 @@ import geovista.symbolization.glyph.Glyph;
 import geovista.symbolization.glyph.GlyphComboBox;
 import geovista.symbolization.glyph.GlyphEvent;
 import geovista.symbolization.glyph.GlyphListener;
+import geovista.symbolization.glyph.GlyphSizePicker;
 
 /**
  * Paints an array of GraduatedSymbolsMap. Responds to and broadcasts
@@ -69,6 +71,7 @@ public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 
 	boolean settingUp = true;
 	GlyphComboBox glyphCombo;
+	GlyphSizePicker glyphPick;
 
 	public GraduatedSymbolsMap() {
 		super();
@@ -77,7 +80,15 @@ public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 
 		JPanel southPanel = new JPanel();
 		southPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-		southPanel.add(ngonColorer);
+		JPanel southGroupPanel = new JPanel();
+		southGroupPanel.setBorder(BorderFactory.createLineBorder(Color.cyan));
+		southGroupPanel.setLayout(new BoxLayout(southGroupPanel,
+				BoxLayout.Y_AXIS));
+		glyphPick = new GlyphSizePicker();
+		southGroupPanel.add(glyphPick);
+		southGroupPanel.add(ngonColorer);
+		southPanel.add(southGroupPanel);
+
 		glyphCombo = new GlyphComboBox();
 		southPanel.add(glyphCombo);
 		glyphCombo.glyphList.addActionListener(this);
@@ -96,6 +107,7 @@ public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 			int nSides = glyphCombo.glyphList.getSelectedIndex()
 					+ GlyphComboBox.PLUS_FACTOR;
 			setNSides(nSides);
+			glyphPick.setNSides(nSides);
 
 		}
 

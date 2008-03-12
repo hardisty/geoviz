@@ -23,11 +23,6 @@ package geovista.geoviz.map;
 
 // import geovista.common.data.DataSetForApps;
 
-import geovista.common.data.DescriptiveStatistics;
-import geovista.common.ui.Fisheyes;
-import geovista.symbolization.ColorInterpolator;
-import geovista.symbolization.glyph.Glyph;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -45,6 +40,11 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import geovista.common.data.DescriptiveStatistics;
+import geovista.common.ui.Fisheyes;
+import geovista.symbolization.ColorInterpolator;
+import geovista.symbolization.glyph.Glyph;
 
 /**
  * Layer and its subclasses are responsible for rendering spatial data, using
@@ -291,9 +291,9 @@ public abstract class LayerShape {
 
 	// just sets data
 	public void setSelectedObservations(int[] selectedObservations) {
-		//check for error condition
+		// check for error condition
 		int maxVal = DescriptiveStatistics.max(selectedObservations);
-		if (maxVal >= this.spatialData.length){
+		if (maxVal >= spatialData.length) {
 			logger.severe("selection index too long, max value = " + maxVal);
 			return;
 		}
@@ -576,7 +576,7 @@ public abstract class LayerShape {
 
 	}
 
-	public void renderObservation(int obs, Graphics2D g2) {
+	private void renderObservationFill(int obs, Graphics2D g2) {
 		if (obs < 0) {
 			return;
 		}
@@ -604,13 +604,67 @@ public abstract class LayerShape {
 					g2.setPaint(textures[obs]);
 				}
 				g2.fill(shp);
-				renderGlyph(obs, g2);
+
 			}
 
 			if (defaultStrokeWidth >= 0.1f) {
 				g2.setColor(colorLine);
 				g2.draw(shp);
 			}
+		} // end if condition
+
+	}
+
+	public void renderObservationGlyph(int obs, Graphics2D g2) {
+		if (obs < 0) {
+			return;
+		}
+		if (conditionArray[obs] > -1) {
+			if (selectedObservationsFullIndex[obs] == STATUS_SELECTED
+					|| !selectionExists) {
+
+				renderGlyph(obs, g2);
+			}
+
+		} // end if condition
+
+	}
+
+	public void renderObservation(int obs, Graphics2D g2) {
+		if (obs < 0) {
+			return;
+		}
+		if (objectColors == null || objectColors.length <= obs) {
+			return;
+		}
+		Shape shp = spatialData[obs];
+
+		if (fisheyes != null) {
+			shp = fisheyes.transform(shp);
+
+		}
+		Color color = objectColors[obs];
+		if (obs == indication) {
+			renderIndication(g2, shp, color);
+
+		}
+		if (conditionArray[obs] > -1) {
+			g2.setStroke(defaultStroke);
+			if (defaultStrokeWidth >= 0.1f) {
+				g2.setColor(colorLine);
+				g2.draw(shp);
+			}
+			if (selectedObservationsFullIndex[obs] == STATUS_SELECTED
+					|| !selectionExists) {
+
+				g2.setColor(color);
+				if (textures != null && textures[obs] != null) {
+					g2.setPaint(textures[obs]);
+				}
+				g2.fill(shp);
+				renderGlyph(obs, g2);
+			}
+
 		} // end if condition
 		// glyphs go on top
 		if (obs == indication) {
@@ -619,7 +673,6 @@ public abstract class LayerShape {
 
 	}
 
-	
 	void renderSecondaryIndication(Graphics2D g2, int obs) {
 		if (obs < 0) {
 			return;
@@ -629,23 +682,23 @@ public abstract class LayerShape {
 		}
 		Shape shp = spatialData[obs];
 		Color color = objectColors[obs];
-		
+
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		Stroke tempStroke = g2.getStroke();
 		BasicStroke secondStroke = new BasicStroke(6f, BasicStroke.CAP_ROUND,
 				BasicStroke.CAP_ROUND);
 		g2.setStroke(secondStroke);
-		
-		g2.setColor(new Color(255,255,0,128));
+
+		g2.setColor(new Color(255, 255, 0, 128));
 		g2.draw(shp);
 
 		g2.setColor(color);
 		g2.fill(shp);
-		
-		g2.setStroke(tempStroke);		
+
+		g2.setStroke(tempStroke);
 	}
-	
+
 	private void renderIndication(Graphics2D g2, Shape shp, Color color) {
 		Stroke tempStroke = g2.getStroke();
 
@@ -698,7 +751,12 @@ public abstract class LayerShape {
 		int tempInd = indication;
 		indication = -1;
 		for (int path = 0; path < spatialData.length; path++) {
-			renderObservation(path, g2);
+			renderObservationFill(path, g2);
+
+		}
+		for (int path = 0; path < spatialData.length; path++) {
+			renderObservationGlyph(path, g2);
+
 		}
 		// this.renderGlyphs(g2);
 		indication = tempInd;

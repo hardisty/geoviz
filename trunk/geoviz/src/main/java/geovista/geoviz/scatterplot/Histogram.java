@@ -1,13 +1,8 @@
-package geovista.geoviz.scatterplot;
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Authors: Xiping Dai and Frank Hardisty */
 
-/**
- * Title: Histogram
- * Description:  Create histogram for a variable
- * Copyright:    Copyright (c) 2002
- * Company:  GeoVISTA Center
- * @author Xiping Dai
- * @version 1.0
- */
+package geovista.geoviz.scatterplot;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -160,6 +155,7 @@ public class Histogram extends JPanel implements MouseListener,
 		});
 		popup.add(menuItem);
 		addComponentListener(this);
+
 	}
 
 	public void setData(double[] data) {
@@ -216,20 +212,6 @@ public class Histogram extends JPanel implements MouseListener,
 		setupDataforDisplay();
 		this.repaint();
 	}
-
-	/*
-	 * public void setSelection(Vector selectedObs){ this.selRecords =
-	 * selectedObs; logger.finest(selRecords.size()); if (this.selectionArray ==
-	 * null || this.selectionArray.length != this.histNumber){
-	 * this.selectionArray = new double[this.histNumber]; } else { for (int i =
-	 * 0; i < this.selectionArray.length; i ++){ this.selectionArray[i] = 0; } }
-	 * if (this.selectedRecords == null){ this.selectedRecords = new
-	 * int[this.data.length]; } for(int i = 0; i < selRecords.size(); i ++){ int
-	 * j=(int)Math.floor((data[((Integer)selRecords.get(i)).intValue()]-xAxisExtents[0])/barWidth);
-	 * j=((this.histNumber<=j) ? this.histNumber-1 :j); this.selectionArray[j]
-	 * ++; this.selectedRecords[((Integer)selRecords.get(i)).intValue()] = 1; }
-	 * this.setSelectionScreen(); }
-	 */
 
 	public void setSelections(BitSet selectedObs) {
 		selectedRecords = selectedObs;
@@ -420,31 +402,26 @@ public class Histogram extends JPanel implements MouseListener,
 	}
 
 	private void drawSelection(Graphics g) {
-		for (int i = 0; i < binCount - 1; i++) {
+		for (int i = 0; i < binCount; i++) {
 			int x, y, width, height;
 
 			if (selectionArray[i] > 0) {
 				x = exsInt[i];
 				y = selectionInt[i];
-				width = exsInt[i + 1] - exsInt[i];
 				height = plotOriginY - selectionInt[i];
+				if (i == binCount - 1) {
+					width = plotEndX - exsInt[binCount - 1];
+				} else {
+					width = exsInt[i + 1] - exsInt[i];
+
+				}
 				g.drawRect(x, y, width, height);
 				g.setColor(Color.blue);
 				g.fillRect(x + 1, y + 1, width - 1, height - 1);
 				g.setColor(foreground);
 			}
 		}
-		// if (selectionArray[binCount - 1] > 0) {
-		// g.drawRect(exsInt[binCount - 1], selectionInt[binCount - 1],
-		// plotEndX - exsInt[binCount - 1], plotOriginY
-		// - selectionInt[binCount - 1]);
-		// g.setColor(Color.blue);
-		// g.fillRect(exsInt[binCount - 1] + 1,
-		// selectionInt[binCount - 1] + 1, plotEndX
-		// - exsInt[binCount - 1] - 1, plotOriginY
-		// - selectionInt[binCount - 1] - 1);
-		// g.setColor(foreground);
-		// }
+
 	}
 
 	private void drawIndication(Graphics g) {
