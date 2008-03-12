@@ -1,20 +1,8 @@
-/* -------------------------------------------------------------------
- Java source file for the class GeoVizToolkit
- $Author: hardisty $
- $Id: GeoVizToolkit.java,v 1.12 2006/02/16 16:55:19 hardisty Exp $
- $Date: 2006/02/16 16:55:19 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 3bb      30, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* 
+ Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty
+ */
 
 package geovista.toolkitcore;
 
@@ -82,6 +70,7 @@ import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.geoviz.spacefill.SpaceFill;
 import geovista.geoviz.spreadsheet.TableViewer;
 import geovista.geoviz.spreadsheet.VariableTransformer;
 import geovista.geoviz.star.StarPlot;
@@ -94,6 +83,7 @@ import geovista.matrix.map.MoranMap;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
 import geovista.toolkitcore.data.GeoDataCartogram;
+import geovista.toolkitcore.data.GeoDataNiger;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
@@ -725,8 +715,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 
 		else if (name.equals("niger")) {
-			// GeoDataNiger cartogramData = new GeoDataNiger();
-			// newDataSet = cartogramData.getDataSet();
+			GeoDataNiger cartogramData = new GeoDataNiger();
+			newDataSet = cartogramData.getDataSet();
 
 		}
 
@@ -882,7 +872,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// univariate data viz
 		addToolToMenu(SingleHistogram.class);
 		addToolToMenu(GeoMapUni.class);
-		// addToolToMenu(SpaceFill.class);
+		addToolToMenu(SpaceFill.class);
 		addToolToMenu(SonicClassifier.class);
 		addToolToMenu(GeoMapCartogram.class);
 		menuAddTool.addSeparator();
@@ -972,7 +962,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		jMenuBar1.add(menuFile);
 		jMenuBar1.add(menuAddTool);
 		jMenuBar1.add(menuRemoveTool);
-		jMenuBar1.add(menuCollaborate);
+		// XXX until it works jMenuBar1.add(menuCollaborate);
 		jMenuBar1.add(menuScreenShot);
 		jMenuBar1.add(menuAbout);
 		jMenuBar1.add(menuHelp);

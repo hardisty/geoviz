@@ -1,8 +1,12 @@
-/* Licensed under LGPL v. 2.1 or any later version;
+/* 
+ Licensed under LGPL v. 2.1 or any later version;
  see GNU LGPL for details.
- Original Author: Frank Hardisty */
+ Original Author: Frank Hardisty
+ */
 
 package geovista.toolkitcore.data;
+
+import java.util.logging.Logger;
 
 import geovista.common.data.DataSetForApps;
 import geovista.geoviz.sample.GeoDataClassResource;
@@ -18,12 +22,13 @@ import geovista.geoviz.shapefile.ShapeFileDataReader;
  * also see DBaseFile, ShapeFile
  * 
  */
-public class GeoDataSCarolinaCities extends GeoDataClassResource {
+public class GeoDataNiger extends GeoDataClassResource {
+
+	final static Logger logger = Logger.getLogger(GeoDataNiger.class.getName());
 
 	@Override
 	protected DataSetForApps makeDataSetForApps() {
-		return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(),
-				"sccities");
+		return ShapeFileDataReader.makeDataSetForApps(this.getClass(), "niger");
 
 	}
 

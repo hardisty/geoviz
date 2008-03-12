@@ -43,6 +43,20 @@ public abstract class DescriptiveStatistics {
 	}
 
 	/**
+	 * Finds whether the array has any elements which are not the specified NaN
+	 * value.
+	 */
+	public static boolean hasNonNullValues(int[] intArray, int NaNValue) {
+		for (int element : intArray) {
+			if (element != NaNValue) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Finds whether the array has any elements which are not Integer.MIN_VALUE
 	 */
 	public static boolean hasNonNullValues(int[] intArray) {
@@ -151,6 +165,40 @@ public abstract class DescriptiveStatistics {
 					min = temp;
 				} // end if lower
 			} // end if not NaN
+		} // end for
+
+		return min;
+	} // end Min
+
+	/**
+	 * Returns the smallest value of a given int array, exluding the given NaN
+	 * encoded values.
+	 */
+	public static int minIgnoreNaN(int[] intArray, int NaNValue) {
+		// first make sure that array is not empty
+		if (intArray.length < 1) {
+
+			String s = "Empty array passed to DescriptiveStatistics.min";
+			logger.fine(s);
+
+			return NaNValue;
+		} // end if
+
+		if (DescriptiveStatistics.hasNonNullValues(intArray) == false) {
+			return NaNValue;
+		}
+
+		int min = Integer.MAX_VALUE;
+		int temp = 0;
+
+		// we need to ignore the specified NaN
+		for (int element : intArray) {
+
+			temp = element;
+
+			if ((temp < min) && (temp != NaNValue)) {
+				min = temp;
+			} // end if
 		} // end for
 
 		return min;
@@ -279,6 +327,39 @@ public abstract class DescriptiveStatistics {
 	} // end max
 
 	/**
+	 * Returns the largest value of a given int array.
+	 */
+	public static int maxIgnoreNaN(int[] intArray, int NaNValue) {
+
+		// first make sure that array is not empty
+		if (intArray.length < 1) {
+			String s = "Empty array passed to DescriptiveStatistics.max";
+			logger.fine(s);
+			return Integer.MIN_VALUE;
+		} // end if
+
+		if (DescriptiveStatistics.hasNonNullValues(intArray, NaNValue) == false) {
+			return NaNValue;
+		}
+
+		int max = Integer.MIN_VALUE;
+		int temp = 0;
+
+		for (int element : intArray) {
+			if (element != NaNValue) {
+
+				temp = element;
+
+				if (temp > max && temp != NaNValue) {
+					max = temp;
+				} // end if new one larger
+			}// end if not NaN
+		} // end for
+
+		return max;
+	} // end max
+
+	/**
 	 * Returns the difference between the largest and smallest value in a given
 	 * double array.
 	 */
@@ -311,6 +392,25 @@ public abstract class DescriptiveStatistics {
 		double range;
 		min = DescriptiveStatistics.minIgnoreNaN(doubleArray);
 		max = DescriptiveStatistics.maxIgnoreNaN(doubleArray);
+		range = max - min;
+
+		return range;
+	} // end Range
+
+	/**
+	 * Returns the difference between the largest and smallest value in a given
+	 * int array.
+	 */
+	public static int rangeIgnoreNaN(int[] intArray, int NaNValue) {
+		if (DescriptiveStatistics.hasNonNullValues(intArray) == false) {
+			return NaNValue;
+		}
+
+		int min;
+		int max;
+		int range;
+		min = DescriptiveStatistics.minIgnoreNaN(intArray, NaNValue);
+		max = DescriptiveStatistics.maxIgnoreNaN(intArray, NaNValue);
 		range = max - min;
 
 		return range;
