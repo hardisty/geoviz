@@ -69,13 +69,11 @@ public class NGon implements Glyph {
 	}
 
 	public void draw(Graphics2D g2) {
-		AffineTransform xForm = g2.getTransform();
-		// g2.setTransform(zoomForm);
+
 		g2.setColor(strokeColor);
 		g2.draw(drawPath);
 		g2.setColor(fillColor);
 		g2.fill(drawPath);
-		// g2.setTransform(xForm);
 	}
 
 	public Color getFillColor() {
@@ -229,6 +227,14 @@ public class NGon implements Glyph {
 		copy.fillColor = fillColor;
 		copy.zoomForm = zoomForm;
 		return copy;
+	}
+
+	public Shape getDrawPath() {
+		return drawPath;
+	}
+
+	public void setDrawPath(Shape drawPath) {
+		this.drawPath = drawPath;
 	}
 
 }
