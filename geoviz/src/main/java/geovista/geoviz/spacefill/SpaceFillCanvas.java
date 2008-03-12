@@ -63,9 +63,9 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	protected final static Logger logger = Logger
 			.getLogger(SpaceFillCanvas.class.getName());
 	private static final int COLUMN_ORIGINAL_DATA = 0; // for use with
-														// pixelOrder
+	// pixelOrder
 	private static final int COLUMN_ORIGINAL_ORDER = 1; // for use with
-														// pixelOrder
+	// pixelOrder
 	private static final int COLUMN_DATA_ORDER = 2; // for use with pixelOrder
 	private static final int NUM_DATA_COLUMNS = 3; // for use with pixelOrder
 	public static final String COMMAND_SELECTION = "cmdSel";
@@ -75,7 +75,7 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	transient private int[] pixelColorsOriginal; // reflected in pixelBuff
 	transient private String[] observationNames;
 	transient private double[][] pixelOrder; // row, column //reflected in
-												// pixelBuff
+	// pixelBuff
 	transient private int[][] pixelIndex; // reflected in pixelBuff
 	private int[] selectedObservations;
 	transient private int[] conditioning;
@@ -287,6 +287,9 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	// public static void colorPixels(BufferedImage buffIm, double[][] pixOrder,
 	// int[] pixColors, int[][] pixIndex){
 	private void colorPixels() {
+		if (pixelIndex == null) {
+			return;
+		}
 		for (int i = 0; i < pixelIndex.length; i++) { // row
 
 			for (int j = 0; j < pixelIndex[0].length; j++) { // column

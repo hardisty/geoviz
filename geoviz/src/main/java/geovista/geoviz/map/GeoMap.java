@@ -72,11 +72,11 @@ import geovista.common.ui.MultiSlider;
 import geovista.common.ui.RangeSlider;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.geoviz.visclass.VisualClassifier;
-import geovista.symbolization.BivariateColorSchemeVisualizer;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import geovista.symbolization.ColorSymbolClassification;
@@ -119,7 +119,8 @@ public class GeoMap extends JPanel
 
 	transient protected GeoCursors cursors;
 
-	transient protected BivariateColorSchemeVisualizer biViz;
+	// transient protected BivariateColorSchemeVisualizer biViz;
+	transient ScatterPlot biViz;
 	// XXX scatterplot goes here
 	transient protected Dimension currSize;
 
@@ -177,7 +178,9 @@ public class GeoMap extends JPanel
 
 			legendPanel.add(vcPanel);
 			legendPanel.add(Box.createRigidArea(new Dimension(4, 2)));
-			biViz = new BivariateColorSchemeVisualizer();
+			biViz = new ScatterPlot();
+			biViz.setPreferredSize(new Dimension(50, 50));
+			biViz.setAxisOn(false);
 
 			legendPanel.add(biViz);
 
@@ -456,6 +459,7 @@ public class GeoMap extends JPanel
 
 	public void selectionChanged(SelectionEvent e) {
 		mapCan.selectionChanged(e);
+		biViz.setSelections(e.getSelection());
 	}
 
 	public void conditioningChanged(ConditioningEvent e) {
@@ -471,8 +475,8 @@ public class GeoMap extends JPanel
 			int yClass = e.getYClass();
 			visClassOne.setIndicatedClass(xClass);
 			visClassTwo.setIndicatedClass(yClass);
+			biViz.indicationChanged(e);
 
-			// this.fireIndicationChanged(e.getIndication());
 		} else if ((source == mapCan) && (e.getIndication() < 0)) {
 			visClassOne.setIndicatedClass(-1);
 			visClassTwo.setIndicatedClass(-1);
@@ -481,11 +485,13 @@ public class GeoMap extends JPanel
 			// this.fireIndicationChanged(e.getIndication());
 		} else {
 			mapCan.indicationChanged(e);
+			biViz.indicationChanged(e);
 		}
 	}
 
 	public void spatialExtentChanged(SpatialExtentEvent e) {
 		mapCan.spatialExtentChanged(e);
+
 		savedEvent = e;
 	}
 
@@ -501,7 +507,9 @@ public class GeoMap extends JPanel
 					+ e.getDataSetForApps().hashCode());
 		}
 		setDataSet(e.getDataSetForApps());
-
+		biViz.setDataSet(e.getDataSetForApps());
+		int[] indexes = { 0, 1 };
+		biViz.setDataIndices(indexes);
 	}
 
 	public void dataSetAdded(AuxiliaryDataSetEvent e) {
@@ -551,7 +559,7 @@ public class GeoMap extends JPanel
 			e.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_Y);
 		}
 
-		biViz.colorClassifierChanged(e);
+		// biViz.colorClassifierChanged(e);
 
 		if (mapCan == null) {
 			return;
@@ -610,7 +618,8 @@ public class GeoMap extends JPanel
 	}
 
 	public BivariateColorSymbolClassification getBivariateColorSymbolClassification() {
-		return biViz.getBivariateColorClassification();
+		// return biViz.getBivariateColorClassification();
+		return null;
 	}
 
 	public void setDataSet(DataSetForApps dataSet) {
@@ -716,6 +725,7 @@ public class GeoMap extends JPanel
 	 */
 	public void addIndicationListener(IndicationListener l) {
 		mapCan.addIndicationListener(l);
+		biViz.addIndicationListener(l);
 	}
 
 	/**
@@ -723,6 +733,7 @@ public class GeoMap extends JPanel
 	 */
 	public void removeIndicationListener(IndicationListener l) {
 		mapCan.removeIndicationListener(l);
+		biViz.removeIndicationListener(l);
 	}
 
 	/**

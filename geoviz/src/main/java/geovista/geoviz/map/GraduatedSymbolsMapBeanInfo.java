@@ -6,14 +6,14 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
-public class GeoMapUniBeanInfo extends SimpleBeanInfo {
-	static Class beanClass = GeoMapUni.class;
-	static String iconColor16x16Filename = "resources/map16.gif";;
-	static String iconColor32x32Filename = "resources/map32.gif";
+public class GraduatedSymbolsMapBeanInfo extends SimpleBeanInfo {
+	static Class beanClass = GraduatedSymbolsMap.class;
+	static String iconColor16x16Filename = "resources/GraduatedSymbolsMap16.gif";;
+	static String iconColor32x32Filename = "resources/GraduatedSymbolsMap32.gif";
 	static String iconMono16x16Filename;
 	static String iconMono32x32Filename;
 
-	public GeoMapUniBeanInfo() {
+	public GraduatedSymbolsMapBeanInfo() {
 	}
 
 	@Override

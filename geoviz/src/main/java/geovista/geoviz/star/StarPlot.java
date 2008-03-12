@@ -70,7 +70,7 @@ public class StarPlot extends JPanel implements DataSetListener,
 		starLeg = new StarPlotLegend();
 		setLayout(new BorderLayout());
 		methodCombo = new JComboBox(StarPlotLayer.ScaleMethod.values());
-		this.add(methodCombo, BorderLayout.WEST);
+		// this.add(methodCombo, BorderLayout.WEST);
 		methodCombo.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -104,6 +104,12 @@ public class StarPlot extends JPanel implements DataSetListener,
 		this.add(vc, BorderLayout.NORTH);
 		starCan.addIndicationListener(this);
 		vc.addColorArrayListener(this);
+
+		String[] names = { "toy", "data" };
+		double[] toy = { 1, 2, 3 };
+		double[] set = { 4, 5, 6 };
+		Object[] toySet = { names, toy, set };
+		dataSetChanged(new DataSetEvent(this, toySet));
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
