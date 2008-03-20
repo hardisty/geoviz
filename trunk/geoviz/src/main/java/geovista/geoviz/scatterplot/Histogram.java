@@ -155,6 +155,7 @@ public class Histogram extends JPanel implements MouseListener,
 		});
 		popup.add(menuItem);
 		addComponentListener(this);
+		// setData(data);
 
 	}
 

@@ -239,7 +239,9 @@ implements SelectionListener, DataSetListener {
 	}
 
 	private void calculateSelStats(int[] selObs) {
-
+		if (dataSet == null) {
+			return;
+		}
 		double[] originalData = dataSet.getNumericDataAsDouble(0);
 		double[] data = null;
 		if (selObs.length > 0) {
