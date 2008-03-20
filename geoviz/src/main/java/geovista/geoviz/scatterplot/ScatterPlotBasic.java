@@ -795,6 +795,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 * indication specific code by frank hardisty
 	 */
 	protected void drawIndication(Graphics2D g, int i) {
+		if (pointColors == null || pointColors[i] == null) {
+			return;
+		}
 		Graphics2D g2 = g;
 
 		// Stroke oldStroke = g.getStroke();

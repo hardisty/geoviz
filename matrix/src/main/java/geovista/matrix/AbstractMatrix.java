@@ -217,7 +217,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 
 	public void setSelectedObvs(int[] selected) {
 		logger.finest("Set Selected Obs: ");
-		if (selected == null) {
+		if (selected == null || selectedObvsInt == null) {
 			return;
 		} else {
 			for (int i = 0; i < selectedObvsInt.length; i++) {

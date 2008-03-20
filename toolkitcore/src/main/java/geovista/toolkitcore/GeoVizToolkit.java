@@ -337,7 +337,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			desktop.setComponentZOrder(tBean.getInternalFrame(), tBean.zOrder);
 		}
 
-		vizState.fireSubspaceChanged();
+		// vizState.fireSubspaceChanged();
 		vizState.fireSpatialExtentChanged();
 		vizState.fireSelectionChanged();
 
@@ -1024,7 +1024,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		boolean useProj = false;
 		boolean useAux = true;
-		double tolerance = 0.001;
+		double tolerance = 0.0001;
 		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 

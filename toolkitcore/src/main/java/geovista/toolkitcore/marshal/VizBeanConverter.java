@@ -3,7 +3,6 @@ package geovista.toolkitcore.marshal;
 import java.awt.Color;
 
 import javax.swing.JComponent;
-import javax.swing.plaf.ColorUIResource;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -80,9 +79,10 @@ public abstract class VizBeanConverter implements Converter {
 			} else if (VizBeanConverter.BACKGROUND_COLOR.equals(reader
 					.getNodeName())) {
 				JComponent comp = (JComponent) instantiatedObject;
-				Color bColor = (ColorUIResource) context.convertAnother(
-						instantiatedObject, ColorUIResource.class);
-
+				// Color bColor = (ColorUIResource) context.convertAnother(
+				// instantiatedObject, ColorUIResource.class);
+				Color bColor = (Color) context.convertAnother(
+						instantiatedObject, Color.class);
 				comp.setBackground(bColor);
 			} else if (VizBeanConverter.SPATIAL_EXTENT.equals(reader
 					.getNodeName())) {
