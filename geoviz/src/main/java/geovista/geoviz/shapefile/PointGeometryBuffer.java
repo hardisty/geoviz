@@ -85,6 +85,16 @@ public class PointGeometryBuffer {
 	 * i++) dbData[i] = dbf.getDataSet()[i + 1]; } catch (Exception ex) {
 	 * ex.printStackTrace(); } return dbData; }
 	 */
+
+	private Geometry[] makeBuffers(Geometry[] inputGeoms, double distance) {
+		Geometry[] resultGeoms = new Geometry[inputGeoms.length];
+		for (int i = 0; i < inputGeoms.length; i++) {
+			resultGeoms[i] = inputGeoms[i].buffer(distance);
+		}
+
+		return resultGeoms;
+	}
+
 	// return attribute names of the DB Data
 	private static String[] getFieldNames(String fileName) {
 

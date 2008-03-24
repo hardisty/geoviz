@@ -45,6 +45,7 @@ import javax.swing.event.InternalFrameListener;
 import geovista.animation.IndicationAnimator;
 import geovista.animation.SelectionAnimator;
 import geovista.cartogram.GeoMapCartogram;
+import geovista.collaboration.GeoJabber;
 import geovista.common.data.DataSetBroadcaster;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DataSetModifiedBroadcaster;
@@ -919,7 +920,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuAddTool.addSeparator();
 
 		// other...
-		// addToolToMenu(GeoJabber.class);
+		addToolToMenu(GeoJabber.class);
 
 	}
 
