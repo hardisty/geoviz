@@ -71,7 +71,7 @@ public class ShapeFileDataReader implements Serializable {
 	protected transient String fileName;
 	protected transient EventListenerList listenerList;
 
-	public static double tolerance = 0.00;
+	public static double tolerance = .001;
 
 	public ShapeFileDataReader() {
 		super();
