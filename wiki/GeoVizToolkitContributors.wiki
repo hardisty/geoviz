@@ -10,6 +10,7 @@
   * *Aaron Myers* developed the help component, and the content in the help.
   * *Ke Liao* developed the facilities for reading and saving layouts.
   * *Masahiro Takatskuka* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
+  * *[http://www.spatial.ucsb.edu/people/research-associates.php#li Linna Li]* helped to develop the GeoJabber (XMPP) classes. 
 
 
 = Design contributors: =
