@@ -41,11 +41,11 @@ import geovista.common.ui.VariablePicker;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
-import geovista.toolkitcore.data.GeoDataCartogram;
 
 /**
  * A Moran Map has a choropleth varSigMap and a scatterplot tied together
@@ -240,7 +240,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GeoDataCartogram geodata = new GeoDataCartogram();
+		GeoDataGeneralizedStates geodata = new GeoDataGeneralizedStates();
 		DataSetEvent e = new DataSetEvent(geodata.getDataForApps(), geodata);
 		varSigMap.dataSetChanged(e);
 
