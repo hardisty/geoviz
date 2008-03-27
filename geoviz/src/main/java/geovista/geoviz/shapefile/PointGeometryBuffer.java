@@ -30,7 +30,9 @@ import org.geotools.data.shapefile.dbf.DbaseFileHeader;
 import org.geotools.data.shapefile.dbf.DbaseFileReader;
 import org.geotools.data.shapefile.shp.ShapefileReader;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
 
 import geovista.common.data.DataSetForApps;
@@ -93,6 +95,22 @@ public class PointGeometryBuffer {
 		}
 
 		return resultGeoms;
+	}
+
+	private DataSetForApps makeBufferDataSet(double[] xVals, double[] yVals,
+			double distance) {
+		GeometryFactory fact = new GeometryFactory();
+
+		Geometry[] geoms = new Geometry[xVals.length];
+		for (int i = 0; i < xVals.length; i++) {
+			Coordinate coord = new Coordinate(xVals[i], yVals[i]);
+
+			geoms[i] = fact.createPoint(coord);
+
+		}
+		Geometry[] bufferGeoms = makeBuffers(geoms, distance);
+
+		return null;
 	}
 
 	// return attribute names of the DB Data
