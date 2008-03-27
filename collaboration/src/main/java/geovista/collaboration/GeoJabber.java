@@ -27,7 +27,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.EventListenerList;
 
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
@@ -96,10 +98,9 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	final static Logger logger = Logger.getLogger(GeoJabber.class.getName());
 
 	public GeoJabber() {
-		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
-			;
-			XMPPConnection.DEBUG_ENABLED = true;
-		}
+		// if (GeoJabber.logger.isLoggable(Level.FINEST)) {
+		XMPPConnection.DEBUG_ENABLED = true;
+		// }
 		setLayout(new BorderLayout());
 		connectPanel = makeConnectPanel();
 		this.add(connectPanel, BorderLayout.NORTH);
@@ -301,26 +302,32 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		for (int i = 0; i < rost.getEntryCount(); i++) {
 			RosterEntry entry = (RosterEntry) it.next();
 			String friendName = entry.getUser();
-			logger.finest(" friend = " + friendName);
+			logger.info(" friend = " + friendName);
 			friend = entry;
 		}
 
 	}
 
 	private void makeChat() {
-		/*
-		 * until smack lib gets updated ChatManager chatmanager =
-		 * conn.getChatManager(); chat =
-		 * chatmanager.createChat(friend.getUser()+"@satchmo", new
-		 * MessageListener(){
-		 * 
-		 * public void processMessage(Chat arg0, Message arg1) { if
-		 * (logger.isLoggable(Level.FINEST)){ logger.finest("got a chat message, " +
-		 * arg1.getBody()); }
-		 * 
-		 * }}); if (logger.isLoggable(Level.FINEST)){ logger.finest("I'm " +
-		 * this.userName + ", starting new chat with " + chat.getParticipant()); }
-		 */
+		ChatManager chatmanager = conn.getChatManager();
+		if (friend == null) {
+			this.findFriend();
+		}
+		chat = chatmanager.createChat(friend.getUser() + "@satchmo",
+				new MessageListener() {
+
+					public void processMessage(Chat arg0, Message arg1) {
+						if (logger.isLoggable(Level.FINEST)) {
+							logger.finest("got a chat message, "
+									+ arg1.getBody());
+						}
+
+					}
+				});
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("I'm " + userName + ", starting new chat with "
+					+ chat.getParticipant());
+		}
 	}
 
 	private void sendExtension(PacketExtension ext) {
@@ -671,27 +678,30 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	}
 
 	static public void main(String args[]) {
+		Logger logger = Logger.getLogger("geovista");
+		// logger.setLevel(Level.FINEST);
+		XMPPConnection conn = JabberUtils.openConnection("satchmo");
+		try {
 
-		// try {
-		// conn.connect();
-		// //conn.loginAnonymously();
-		// conn.login("Frank", "password");
-		// String[] groups = {"friends"};
-		// conn.getRoster().createEntry("HyangJa", "HyangJa", groups);
-		// conn.disconnect();
-		// conn.connect();
-		//
-		// conn.login("HyangJa", "password");
-		// conn.getRoster().createEntry("Frank", "Frank", groups);
-		// conn.disconnect();
-		//	
-		//			
-		// //conn.getAccountManager().createAccount("Frank", "password");
-		// //conn.getAccountManager().createAccount("HyangJa", "password");
-		// } catch (XMPPException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+			conn.connect();
+			// conn.loginAnonymously();
+			conn.login("Frank", "marble1");
+			String[] groups = null;
+			// conn.getRoster().createEntry("HyangJa", "HyangJa Hardisty",
+			// groups);
+			conn.disconnect();
+
+			conn.connect();
+			conn.login("HyangJa", "marble1");
+			// conn.getRoster().createEntry("Frank", "Frank Hardisty", groups);
+			conn.disconnect();
+
+			// conn.getAccountManager().createAccount("Frank", "password");
+			// conn.getAccountManager().createAccount("HyangJa", "password");
+		} catch (XMPPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		JFrame app = new JFrame();
 		app.getContentPane().setLayout(new FlowLayout());

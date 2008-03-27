@@ -1,27 +1,14 @@
-/* -------------------------------------------------------------------
- Java source file for the class JabberUtils
- Original Authors: Frank Hardisty 
- $Author: hardisty $
- $Id: GeoJabber.java,v 1.9 2006/02/27 19:28:41 hardisty Exp $
- $Date: 2006/02/27 19:28:41 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.collaboration;
 
 import java.awt.geom.Rectangle2D;
+import java.util.logging.Logger;
 
 import org.jivesoftware.smack.AccountManager;
+import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
@@ -38,16 +25,19 @@ public abstract class JabberUtils {
 	public static final int STATE_LEADER = 2;// don't apply packets
 	public static final int STATE_FOLLOWER = 1;// automatically apply packets
 	public static final int STATE_NEITHER = 0;// default.
+	public static final int DEFAULT_PORT = 80;// my favorite port
+	final static Logger logger = Logger.getLogger(JabberUtils.class.getName());
 
 	public static boolean login(XMPPConnection conn, String username,
 			String password) {
 
 		try {
-			//XXX until smack lib gets updated..
-			//conn.connect();
+			// XXX until smack lib gets updated..
+			conn.connect();
 			conn.login(username, password);
 
 		} catch (XMPPException e) {
+			logger.severe("could not connect to XMPPServer");
 			// let world know know about error (delete?)
 			e.printStackTrace();
 			// let calling method know
@@ -61,12 +51,19 @@ public abstract class JabberUtils {
 	public static XMPPConnection openConnection(String serverName) {
 		XMPPConnection conn1 = null;
 		// Create a connection to the named server.
-		//try {
-			conn1 = new XMPPConnection(serverName);
-		//} catch (XMPPException e) {
-			// TODO Auto-generated catch block
-		
-		//}
+		// try {
+		// we are port 80 junkies
+		ConnectionConfiguration connConfig = new ConnectionConfiguration(
+				serverName, JabberUtils.DEFAULT_PORT);
+
+		conn1 = new XMPPConnection(connConfig);
+
+		logger.info("xmpp connected " + conn1.isConnected());
+		logger.info("xmpp using TLS " + conn1.isSecureConnection());
+		// } catch (XMPPException e) {
+		// TODO Auto-generated catch block
+
+		// }
 		return conn1;
 	}
 
@@ -190,7 +187,4 @@ public abstract class JabberUtils {
 		return msg;
 	}
 
-
 }
-
-

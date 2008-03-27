@@ -1,21 +1,6 @@
-/* -------------------------------------------------------------------
- Java source file for the class ChatPanel
- Original Authors: Linna Li and Frank hardisty
- $Author: hardisty $
- $Id: ChatPanel.java,v 1.5 2006/03/03 18:08:20 hardisty Exp $
- $Date: 2006/03/03 18:08:20 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Authors: Frank Hardisty and Linna Li */
 
 package geovista.collaboration;
 
@@ -61,13 +46,13 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 	StyledDocument doc;
 	JScrollPane sPanel;
 
-	
-	protected final static Logger logger = Logger.getLogger(ChatPanel.class.getName());
-	
+	protected final static Logger logger = Logger.getLogger(ChatPanel.class
+			.getName());
+
 	public ChatPanel() {
-		this.altTextColor = ChatPanel.DEFAULT_ALT_TEXT_COLOR;
-		this.textColor = ChatPanel.DEFAULT_TEXT_COLOR;
-		this.setBorder(new LineBorder(Color.black));
+		altTextColor = ChatPanel.DEFAULT_ALT_TEXT_COLOR;
+		textColor = ChatPanel.DEFAULT_TEXT_COLOR;
+		setBorder(new LineBorder(Color.black));
 		// JScrollPane convPanel = new JScrollPane();
 
 		JPanel convPanel = new JPanel(new BorderLayout());
@@ -82,7 +67,7 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 		// sPanel.add(conversationPane);
 		convPanel.add(sPanel, BorderLayout.CENTER);
 
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(convPanel, BorderLayout.CENTER);
 
 		JPanel sendPanel = new JPanel();
@@ -100,16 +85,15 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 	/** Handle the key pressed event from the text field. */
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 10) { // this is the key code for enter
-			String message = this.userName + ": " + this.inputArea.getText();
-			appendMessage(message, this.userName);
+			String message = userName + ": " + inputArea.getText();
+			appendMessage(message, userName);
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("ChatPanel, sending message to receiver: "
 						+ message);
 			}
-			this.msgReciever.receiveMessage(this.userName, this.inputArea
-					.getText());
-			this.inputArea.setText("");
-			this.inputArea.requestFocusInWindow();
+			msgReciever.receiveMessage(userName, inputArea.getText());
+			inputArea.setText("");
+			inputArea.requestFocusInWindow();
 		}
 	}
 
@@ -123,18 +107,17 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.sendMessageButton) {
-			String message = this.userName + ": " + this.inputArea.getText();
-			appendMessage(message, this.userName);
+		if (e.getSource() == sendMessageButton) {
+			String message = userName + ": " + inputArea.getText();
+			appendMessage(message, userName);
 			if (RemoteCollaboration.logger.isLoggable(Level.FINEST)) {
 				logger.finest("ChatPanel, sending message to receiver: "
 						+ message);
 			}
-			this.msgReciever.receiveMessage(this.userName, this.inputArea
-					.getText());
+			msgReciever.receiveMessage(userName, inputArea.getText());
 
-			this.inputArea.setText("");
-			this.inputArea.requestFocusInWindow();
+			inputArea.setText("");
+			inputArea.requestFocusInWindow();
 		}
 
 	}
@@ -148,10 +131,10 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 
 		try {
 			SimpleAttributeSet set = new SimpleAttributeSet();
-			if (sender.equalsIgnoreCase(this.userName)) {
-				StyleConstants.setForeground(set, this.textColor);
+			if (sender.equalsIgnoreCase(userName)) {
+				StyleConstants.setForeground(set, textColor);
 			} else {
-				StyleConstants.setForeground(set, this.altTextColor);
+				StyleConstants.setForeground(set, altTextColor);
 			}
 			StyleConstants.setFontSize(set, 22);
 			conversationPane.setCharacterAttributes(set, true);
@@ -168,13 +151,13 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 	}
 
 	public void setUserName(String name) {
-		this.userName = name;
+		userName = name;
 		logger.finest("ChatPanel set username = " + name);
 
 	}
 
 	public void setTextColor(Color textcolor) {
-		this.textColor = textcolor;
+		textColor = textcolor;
 	}
 
 	public void setMsgReciever(MessageReceiver msgReciever) {
