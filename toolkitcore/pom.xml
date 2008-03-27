@@ -52,5 +52,10 @@
 			<artifactId>animation</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>edu.psu.geovista</groupId>
+			<artifactId>collaboration</artifactId>
+			<version>${project.version}</version>
+		</dependency>		
 	</dependencies>
 </project>
