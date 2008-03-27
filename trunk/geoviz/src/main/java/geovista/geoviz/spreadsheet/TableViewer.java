@@ -10,7 +10,6 @@ package geovista.geoviz.spreadsheet;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,7 +26,6 @@ import geovista.coordination.CoordinationManager;
 import geovista.geoviz.descriptive.DescriptiveStats;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.toolkitcore.ToolkitBean;
 
 public class TableViewer extends JPanel implements SelectionListener,
 		DataSetListener {
@@ -231,10 +229,10 @@ public class TableViewer extends JPanel implements SelectionListener,
 
 		JTable table = new JTable(dataSet);
 		JFrame fram = new JFrame();
-		JDesktopPane top = new JDesktopPane();
-		ToolkitBean tBean = new ToolkitBean(table, "table");
-		top.add(tBean.getInternalFrame());
-		fram.getContentPane().add(top);
+		// JDesktopPane top = new JDesktopPane();
+		// ToolkitBean tBean = new ToolkitBean(table, "table");
+		// top.add(tBean.getInternalFrame());
+		fram.getContentPane().add(table);
 		fram.pack();
 		// fram.setVisible(true);
 
