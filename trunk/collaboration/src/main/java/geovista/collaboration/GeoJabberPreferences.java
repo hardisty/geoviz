@@ -53,7 +53,7 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 	JLabel serverLabel;
 
 	JList collaboratorList;
-	String[] collaborators = { "Linna", "Frank", "HyangJa" };
+	String[] collaborators = { "Hannah", "Frank", "HyangJa" };
 	String collaborator;
 	JLabel collaboratorLabel;
 	String currentCollaborator;
@@ -66,22 +66,21 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 	boolean autoConnect;
 	private XMPPConnection connection;
 
-	Color darkerGrey = new Color(200,250,200);
-	
+	Color darkerGrey = new Color(200, 250, 200);
+
 	Preferences prefs;
-	
+
 	public GeoJabberPreferences() {
 		init();
-
 
 	}
 
 	public GeoJabberPreferences(XMPPConnection conn) {
 		init();
-		if (conn != null){
-		this.connection = conn;
-		this.userName.setText(conn.getUser());
-		this.prefs = Preferences.userNodeForPackage(conn.getClass());
+		if (conn != null) {
+			connection = conn;
+			userName.setText(conn.getUser());
+			prefs = Preferences.userNodeForPackage(conn.getClass());
 		}
 	}
 
@@ -89,11 +88,11 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 	 * 
 	 */
 	private void init() {
-		this.getContentPane().setLayout(new FlowLayout());
-		this.getContentPane().add(this.makeServerPanel());
-		this.getContentPane().add(this.makeUserPanel());
-		this.getContentPane().add(this.makeCollaboratorPanel());
-		this.pack();
+		getContentPane().setLayout(new FlowLayout());
+		getContentPane().add(makeServerPanel());
+		getContentPane().add(makeUserPanel());
+		getContentPane().add(makeCollaboratorPanel());
+		pack();
 
 	}
 
@@ -165,7 +164,9 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
@@ -173,7 +174,9 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
 	public void stateChanged(ChangeEvent e) {
@@ -181,18 +184,20 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
 	 */
 	public void valueChanged(ListSelectionEvent e) {
-		if (e.getSource().equals(this.serverList)) {
+		if (e.getSource().equals(serverList)) {
 			currentServer = (String) serverList.getSelectedValue();
-			this.serverLabel.setText(currentServer);
-		} else if (e.getSource().equals(this.collaboratorList)) {
+			serverLabel.setText(currentServer);
+		} else if (e.getSource().equals(collaboratorList)) {
 			currentCollaborator = (String) collaboratorList.getSelectedValue();
-			this.collaboratorLabel.setText(currentCollaborator);
+			collaboratorLabel.setText(currentCollaborator);
 		}
-		this.pack();
+		pack();
 	}
 
 	/**
@@ -203,7 +208,8 @@ public class GeoJabberPreferences extends JFrame implements ActionListener,
 	}
 
 	/**
-	 * @param connection The connection to set.
+	 * @param connection
+	 *            The connection to set.
 	 */
 	public void setConnection(XMPPConnection connection) {
 		this.connection = connection;

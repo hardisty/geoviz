@@ -1,21 +1,6 @@
-/* -------------------------------------------------------------------
- Java source file for the class ChatPanelTester
- Original Authors: Linna Li and Frank hardisty
- $Author: hardisty $
- $Id: ChatPanelTester.java,v 1.1 2006/02/16 16:54:51 hardisty Exp $
- $Date: 2006/02/16 16:54:51 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Authors: Frank Hardisty and Linna Li */
 
 package geovista.collaboration;
 
@@ -40,10 +25,10 @@ public class ChatPanelTester extends JPanel implements ActionListener {
 	JEditorPane conversationPane;
 	JTextArea inputArea;
 	// XXX hack
-	String name = "Linna";
+	String name = "HyangJa";
 
 	public ChatPanelTester() {
-		this.setBorder(new LineBorder(Color.black));
+		setBorder(new LineBorder(Color.black));
 		JPanel convPanel = new JPanel(new BorderLayout());
 		JLabel conv = new JLabel("Conversation:");
 		convPanel.add(conv, BorderLayout.NORTH);
@@ -52,7 +37,7 @@ public class ChatPanelTester extends JPanel implements ActionListener {
 		conversationPane.setPreferredSize(new Dimension(400, 200));
 		convPanel.add(conversationPane, BorderLayout.CENTER);
 
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(convPanel, BorderLayout.CENTER);
 
 		JPanel sendPanel = new JPanel();
@@ -67,8 +52,8 @@ public class ChatPanelTester extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.sendMessageButton) {
-			String message = this.name + ": " + this.inputArea.getText();
+		if (e.getSource() == sendMessageButton) {
+			String message = name + ": " + inputArea.getText();
 			appendMessage(message);
 		}
 	}

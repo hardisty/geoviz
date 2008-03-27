@@ -1,10 +1,13 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.common.classification;
 
 /**
- * Title: ClassifierQuantiles
- * Description: Quantile classification method
- * Copyright:    Copyright (c) 2001
- * Company: GeoVISTA
+ * Title: ClassifierQuantiles Description: Quantile classification method
+ * Copyright: Copyright (c) 2001 Company: GeoVISTA
+ * 
  * @author Xiping Dai
  * @version 1.0
  */
