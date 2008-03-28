@@ -602,13 +602,13 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	 */
 	public void processPacket(Packet pack) {
 		Message msg = null;
+		msg = (Message) pack;
 		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
 			logger.finest("I'm " + nameField.getText());
 			logger.finest("got packet, xml = " + pack.toXML());
 			logger.finest("packet from = " + pack.getFrom());
 			logger.finest("packet to = " + pack.getTo());
 
-			msg = (Message) pack;
 			logger.finest("Body = " + msg.getBody());
 		}
 		if (followerState == JabberUtils.STATE_LEADER
@@ -685,14 +685,14 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 			conn.connect();
 			// conn.loginAnonymously();
-			conn.login("Frank", "marble1");
+			conn.login("Frank", "password");
 			String[] groups = null;
 			// conn.getRoster().createEntry("HyangJa", "HyangJa Hardisty",
 			// groups);
 			conn.disconnect();
 
 			conn.connect();
-			conn.login("HyangJa", "marble1");
+			conn.login("HyangJa", "password");
 			// conn.getRoster().createEntry("Frank", "Frank Hardisty", groups);
 			conn.disconnect();
 
