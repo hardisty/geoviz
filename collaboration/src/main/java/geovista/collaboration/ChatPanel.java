@@ -125,6 +125,7 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 	public void receiveMessage(String sender, String message) {
 		String newMessage = sender + ": " + message;
 		appendMessage(newMessage, sender);
+
 	}
 
 	private void appendMessage(String message, String sender) {
@@ -141,6 +142,8 @@ public class ChatPanel extends JPanel implements KeyListener, ActionListener,
 
 			doc = conversationPane.getStyledDocument();
 			doc.insertString(doc.getLength(), message + "\n", set);
+			conversationPane.setCaretPosition(conversationPane.getDocument()
+					.getLength());
 			// Dimension d = sPanel.getViewport().getSize();
 			// sPanel.getViewport().setViewPosition(new Point(0,200-d.height));
 		} catch (BadLocationException e) {
