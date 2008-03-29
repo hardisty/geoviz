@@ -47,6 +47,8 @@ import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
 import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
 
+import geovista.common.event.AnnotationEvent;
+import geovista.common.event.AnnotationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
@@ -99,7 +101,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	public GeoJabber() {
 		// if (GeoJabber.logger.isLoggable(Level.FINEST)) {
-		XMPPConnection.DEBUG_ENABLED = true;
+		// XMPPConnection.DEBUG_ENABLED = true;
 		// }
 		setLayout(new BorderLayout());
 		connectPanel = makeConnectPanel();
@@ -181,8 +183,8 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		myCollector = conn.createPacketCollector(filt);
 		conn.addPacketListener(this, filt);
 		// listen for files
-		File incomingFile = new File("C:\\temp\\new.shp");
-		recieveFile(conn, incomingFile);
+		// File incomingFile = new File("C:\\temp\\new.shp");
+		// recieveFile(conn, incomingFile);
 
 	}
 
@@ -232,8 +234,8 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		fileTransferButton = new JButton("Transfer File");
 		buttonPanel.add(sendSelection);
 		buttonPanel.add(sendVariables);
-		// buttonPanel.add(sendSpatialExtent);
-		buttonPanel.add(fileTransferButton);
+		buttonPanel.add(sendSpatialExtent);
+		// buttonPanel.add(fileTransferButton);
 
 		sendSelection.addActionListener(this);
 		sendVariables.addActionListener(this);
@@ -294,6 +296,9 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	}
 
 	private void findFriend() {
+		if (conn == null) {
+			return;
+		}
 		Roster rost = conn.getRoster();
 
 		// Object[] entries = (Object[]) rost.getEntries().toArray()
@@ -331,13 +336,14 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	}
 
 	private void sendExtension(PacketExtension ext) {
+
 		// connect to our pal
 		if (friend == null) {
 			this.findFriend();
 		}
 
 		Message msg = new Message(friend.getUser());
-		msg.setBody("test message");
+		msg.setBody("extension");
 		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
 			logger.finest("msg before = " + msg.toXML());
 		}
@@ -416,15 +422,13 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	public void subspaceChanged(SubspaceEvent e) {
 
 		subspace = e.getSubspace();
+		// this.fireSpatialExtentChanged(e);
 
 	}
 
 	public void selectionChanged(SelectionEvent e) {
-
+		// store for later broadcast
 		selection = e.getSelection();
-		// we got this event from some source on the local jvm
-		// so pass it along to remote listeners via our XMPP connection
-		// this.fireSelectionChanged(this.selection);
 
 	}
 
@@ -442,8 +446,8 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	}
 
 	public void remoteSelectionChanged(String source, int[] selection) {
-		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
-			logger.finest("got remote message from " + source);
+		if (GeoJabber.logger.isLoggable(Level.INFO)) {
+			logger.info("got remote message from " + source);
 		}
 		// we got this selection from somewhere (probably another JVM)
 		// send it along to registered listeners in this JVM
@@ -542,6 +546,40 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	}
 
+	public void addAnnotationListener(AnnotationListener l) {
+		listenerList.add(AnnotationListener.class, l);
+	}
+
+	public void removeAnnotationListener(AnnotationListener l) {
+		listenerList.remove(AnnotationListener.class, l);
+	}
+
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	protected void fireAnnotationChanged(String newAnnotation) {
+
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		AnnotationEvent e = null;
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == AnnotationListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					e = new AnnotationEvent(this, newAnnotation);
+				}
+				((AnnotationListener) listeners[i + 1]).annotationChanged(e);
+			}
+		} // next i
+
+	}
+
 	// Add Subspace Changed Listener
 	public void addSubspaceListener(SubspaceListener l) {
 		listenerList.add(SubspaceListener.class, l);
@@ -604,8 +642,9 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		Message msg = null;
 		msg = (Message) pack;
 		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
-			logger.finest("I'm " + nameField.getText());
-			logger.finest("got packet, xml = " + pack.toXML());
+
+			logger.finest("I'm " + nameField.getText() + "got packet, xml = "
+					+ pack.toXML());
 			logger.finest("packet from = " + pack.getFrom());
 			logger.finest("packet to = " + pack.getTo());
 
@@ -618,9 +657,12 @@ public class GeoJabber extends JPanel implements SelectionListener,
 			}
 			return;
 		}
+		if (!msg.getBody().equals("extension")) {
+			chatPanel.receiveMessage(friend.getName(), msg.getBody());
+		}
 
-		chatPanel.receiveMessage(friend.getName(), msg.getBody());
-		Iterator extensions = (Iterator) pack.getExtensions();
+		Iterator extensions = pack.getExtensions().iterator();
+
 		logger.finest("extensions.hasNext() = " + extensions.hasNext());
 		// XXX hack - what if someone else send us a message?
 		// String sender = this.findFriend(pack);

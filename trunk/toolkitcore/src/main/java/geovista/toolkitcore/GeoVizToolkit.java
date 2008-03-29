@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,8 @@ import geovista.collaboration.GeoJabber;
 import geovista.common.data.DataSetBroadcaster;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DataSetModifiedBroadcaster;
+import geovista.common.event.AnnotationEvent;
+import geovista.common.event.AnnotationListener;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.common.event.IndicationEvent;
@@ -100,7 +103,7 @@ import geovista.touchgraph.SubspaceLinkGraph;
  */
 
 public class GeoVizToolkit extends JFrame implements ActionListener,
-		ComponentListener, InternalFrameListener {
+		ComponentListener, InternalFrameListener, AnnotationListener {
 
 	/**
 	 * 
@@ -944,7 +947,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadBackgroundShape.setText("Load Background Map from disk");
 		menuItemLoadSCBackgroundShape.setText("Load South Carolina Background");
 		menuCollaborate.setText("Remote Collaboration");
-		menuCollaborate.setEnabled(false);// until it works
+		menuCollaborate.setEnabled(true);// until it works
 		menuItemEnableCollaboration.setText("Enable Collaboration");
 		menuItemDisableCollaboration.setText("Disable Collaboration");
 		menuItemConnect.setText("Connect");
@@ -1001,17 +1004,18 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	public static void main(String[] args) {
 
-		Logger logger = Logger.getLogger("geovista");
+		Logger logger = Logger.getLogger("geovista.collaboration");
 		// Logger mapLogger = Logger.getLogger("geovista.geoviz.map.MapCanvas");
-		// logger.setLevel(Level.FINEST);
+		logger.setLevel(Level.FINEST);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();
 		// mng.addLogger(logger);
 		// mng.addLogger(mapLogger);
-		/*
-		 * ConsoleHandler handler = new ConsoleHandler();
-		 * handler.setLevel(Level.INFO); logger.addHandler(handler);
-		 */
+
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setLevel(Level.FINEST);
+		logger.addHandler(handler);
+
 		try {
 			// Create a file handler that write log record to a file called
 			// my.log
@@ -1073,6 +1077,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
+		app.instantiateBean(GeoJabber.class.getName());
+
+		GeoVizToolkit app2 = new GeoVizToolkit(fileName, useProj, useAux);
+		app2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// app.openAllComponents();
 
 		/*
@@ -1156,6 +1164,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	public void setUseProj(boolean useProj) {
 		this.useProj = useProj;
+	}
+
+	public void annotationChanged(AnnotationEvent e) {
+
 	}
 
 }
