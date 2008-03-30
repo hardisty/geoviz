@@ -9,10 +9,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -36,12 +37,8 @@ public class HistoryGUI extends JPanel implements ActionListener,
 	protected final static Logger logger = Logger.getLogger(HistoryGUI.class
 			.getName());
 	Preferences prefs;
-
-	Vector sourceHistoryStack;
-	JList sourceHistoryList;
-	JScrollPane sourceScrollPane;
-
-	Vector eventHistoryStack;
+	ArrayList<HistoryEvent> events;
+	DefaultListModel listModel;
 	JList eventHistoryList;
 	JScrollPane eventScrollPane;
 
@@ -54,21 +51,11 @@ public class HistoryGUI extends JPanel implements ActionListener,
 	 */
 	private void init() {
 		setLayout(new FlowLayout());
-
-		sourceHistoryList = new JList();
-		JPanel sourcePanel = new JPanel();
-		sourcePanel.setLayout(new BorderLayout());
-		sourceHistoryStack = new Vector();
-		JLabel sourceLabel = new JLabel("Event Source");
-		sourcePanel.add(sourceLabel, BorderLayout.NORTH);
-		sourceScrollPane = new JScrollPane(sourceHistoryList);
-		sourcePanel.add(sourceScrollPane, BorderLayout.CENTER);
-		this.add(sourcePanel);
-
-		eventHistoryList = new JList();
+		listModel = new DefaultListModel();
+		eventHistoryList = new JList(listModel);
 		JPanel eventPanel = new JPanel();
 		eventPanel.setLayout(new BorderLayout());
-		eventHistoryStack = new Vector();
+		events = new ArrayList<HistoryEvent>();
 		JLabel eventLabel = new JLabel("Event Type");
 		eventPanel.add(eventLabel, BorderLayout.NORTH);
 		eventScrollPane = new JScrollPane(eventHistoryList);
@@ -108,11 +95,8 @@ public class HistoryGUI extends JPanel implements ActionListener,
 
 	public void addEventToStack(HistoryEvent e) {
 		logger.finest("Adding event, event source = " + e.getSource());
-		sourceHistoryStack.addElement(e.getSource());
-		sourceHistoryList.setListData(sourceHistoryStack);
-
-		eventHistoryStack.addElement(e.getEventName());
-		sourceHistoryList.setListData(sourceHistoryStack);
+		listModel.addElement(e.getEventName());
+		eventHistoryList.ensureIndexIsVisible(listModel.size() - 1);
 	}
 
 	SpatialExtentEvent savedEvent;
@@ -145,9 +129,13 @@ public class HistoryGUI extends JPanel implements ActionListener,
 		Rectangle2D.Float rect = new Rectangle2D.Float();
 		SpatialExtentEvent e = new SpatialExtentEvent(app, rect);
 		HistoryEvent e1 = new HistoryEvent("HyunJin", "spatial event", e);
-		HistoryEvent e2 = new HistoryEvent("HyunJin", "spatial event", e);
+		HistoryEvent e2 = new HistoryEvent("HyunJin", "selection event", e);
 		rc.addEventToStack(e1);
-		rc.addEventToStack(e2);
+		for (int i = 0; i < 30; i++) {
+			rc.addEventToStack(e2);
+		}
+		rc.addEventToStack(e1);
+
 	}
 
 	public SelectionEvent getSelectionEvent() {
