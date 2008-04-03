@@ -697,6 +697,45 @@ public abstract class DescriptiveStatistics {
 	 * less than 3 is a flatter distribution; a kurtosis of greater than 3 is a
 	 * peaky disribution.
 	 * 
+	 */
+	public static double populationKurtosis(double[] doubleArray, boolean sample) {
+		// first make sure that array has enough elements
+		if (doubleArray.length < 4) {
+			String s = "Array with less than four elements passed to DescriptiveStatistics.kurtosis";
+			logger.fine(s);
+			return Double.NaN;
+		} // end if
+
+		double temp = 0;
+		double sum = 0;
+		double n = doubleArray.length;
+		double stdDev = DescriptiveStatistics.stdDev(doubleArray, sample);
+		double mean = DescriptiveStatistics.mean(doubleArray);
+
+		// now make sure that standard deviation is not zero
+		if (stdDev == 0) {
+			String s = "Array with standard devation of zero passed to DescriptiveStatistics.kurtosis";
+			logger.fine(s);
+			return Double.NaN;
+		} // end if
+
+		for (int i = 0; i < n; i++) {
+			temp = doubleArray[i];
+			temp -= mean;
+			sum += (temp * temp * temp * temp);
+		} // end for
+
+		double kurtosis = sum / ((n - 1) * stdDev * stdDev * stdDev * stdDev);
+
+		return kurtosis - 3;
+	} // end kurtosis
+
+	/**
+	 * Returns the kurtosis for a given array. Kurtosis is the "peakyness" of
+	 * the data. A kurtosis of 3 indicates Gaussian distribution. A kurtosis of
+	 * less than 3 is a flatter distribution; a kurtosis of greater than 3 is a
+	 * peaky disribution.
+	 * 
 	 * kurtosis = { [n(n+1) / (n -1)(n - 2)(n-3)] sum[(x_i - mean)^4] / std^4 } -
 	 * [3(n-1)^2 / (n-2)(n-3)]
 	 * 
