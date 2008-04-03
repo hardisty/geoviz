@@ -314,6 +314,18 @@ public class ShapeFileDataReader implements Serializable {
 
 		Geometry[] geoms = getGeoms(shpStream);
 
+		// for carly
+		// int[] fips = (int[]) allData[1];
+		// for (int i = 0; i < geoms.length; i++) {
+		// int oneCode = fips[i];
+		// String stringFips = String.valueOf(oneCode);
+		// stringFips = "00" + stringFips;
+		// int len = stringFips.length();
+		// stringFips = stringFips.substring(len - 5, len);
+		// System.out.println(stringFips + "," + geoms[i].getCoordinate().x
+		// + "," + geoms[i].getCoordinate().y);
+		// }
+
 		try {
 			SpatialWeights weights = findSpatialWeights(geoms);
 
