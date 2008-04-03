@@ -97,7 +97,9 @@ public abstract class LayerShape {
 	protected transient Color colorOutOfFocus = Color.black;
 	protected transient Color colorNotInStudyArea = Color.black;
 	protected transient Color colorLine = Color.gray;
-	protected transient Color colorAuxLine = new Color(232, 232, 191); // kind
+	// protected transient Color colorAuxLine = new Color(232, 232, 191); //
+	// kind
+	protected transient Color colorAuxLine = Color.red; // kind
 	protected transient Color colorBlur = new Color(128, 128, 128, 0); // of
 	// tan
 	protected transient Color colorBackground = Color.white;

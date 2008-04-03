@@ -1077,10 +1077,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
-		app.instantiateBean(GeoJabber.class.getName());
 
-		GeoVizToolkit app2 = new GeoVizToolkit(fileName, useProj, useAux);
-		app2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// GeoVizToolkit app2 = new GeoVizToolkit(fileName, useProj, useAux);
+		// app2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// app.openAllComponents();
 
 		/*
