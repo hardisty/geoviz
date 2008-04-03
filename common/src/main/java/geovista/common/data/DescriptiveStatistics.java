@@ -697,6 +697,9 @@ public abstract class DescriptiveStatistics {
 	 * less than 3 is a flatter distribution; a kurtosis of greater than 3 is a
 	 * peaky disribution.
 	 * 
+	 * kurtosis = { [n(n+1) / (n -1)(n - 2)(n-3)] sum[(x_i - mean)^4] / std^4 } -
+	 * [3(n-1)^2 / (n-2)(n-3)]
+	 * 
 	 */
 	public static double kurtosis(double[] doubleArray, boolean sample) {
 		// first make sure that array has enough elements
@@ -706,7 +709,6 @@ public abstract class DescriptiveStatistics {
 			return Double.NaN;
 		} // end if
 
-		double temp = 0;
 		double sum = 0;
 		double n = doubleArray.length;
 		double stdDev = DescriptiveStatistics.stdDev(doubleArray, sample);
@@ -718,17 +720,31 @@ public abstract class DescriptiveStatistics {
 			logger.fine(s);
 			return Double.NaN;
 		} // end if
+		double kurtosis = 0;
+		double divisor = 0;
+		double dividend = 0;
+		dividend = n * (n + 1);
+		divisor = (n - 1) * (n - 2) * (n - 3);
+		kurtosis = dividend / divisor;
 
-		for (int i = 0; i < n; i++) {
-			temp = doubleArray[i];
-			temp -= mean;
-			sum += (temp * temp * temp * temp);
-		} // end for
+		for (double element : doubleArray) {
+			sum = sum + Math.pow((element - mean), 4);
+		}
+		kurtosis = (kurtosis * sum) / (Math.pow(stdDev, 4));
 
-		double kurtosis = sum / (n * stdDev * stdDev * stdDev * stdDev);
+		double tempDividend = 3 * Math.pow((n - 1), 2);
+		double tempDivisor = (n - 2) * (n - 3);
+
+		kurtosis = kurtosis - (tempDividend / tempDivisor);
 
 		return kurtosis;
 	} // end kurtosis
+
+	public static void main(String[] args) {
+		double[] vals = { 3, 2, 3, 3, 3, 3, 3, 3, 3, 2 };
+		double kurtosis = DescriptiveStatistics.kurtosis(vals, true);
+		System.out.println("kurtosis = " + kurtosis);
+	}
 
 	/**
 	 * Returns the covariance for a given array.
