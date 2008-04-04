@@ -11,6 +11,7 @@
   * *[http://www.cas.sc.edu/geog/students/LiaoKe.html Ke Liao]* developed the facilities for reading and saving layouts.
   * *[http://www.vislab.usyd.edu.au/?q=wiki/masas_homepage Masahiro Takatsuka]* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
   * *[http://www.spatial.ucsb.edu/people/research-associates.php#li Linna Li]* helped to develop the GeoJabber (XMPP) classes. 
+  * *[http://www.personal.psu.edu/users/j/x/jxc93/ Jin Chen]* contributed bug fixes to various parts of the toolkit.
 
 
 = Design contributors: =
