@@ -64,6 +64,7 @@ public class StarPlot extends JPanel implements DataSetListener,
 
 	JComboBox methodCombo;
 
+	@SuppressWarnings("deprecation")
 	public StarPlot() {
 		vc = new VisualClassifier();
 		starCan = new StarPlotCanvas();
