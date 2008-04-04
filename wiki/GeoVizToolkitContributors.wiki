@@ -9,15 +9,15 @@
   * *Gary Liu* developed the radviz component.
   * *Aaron Myers* developed the help component, and the content in the help.
   * *Ke Liao* developed the facilities for reading and saving layouts.
-  * *Masahiro Takatskuka* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
+  * *[http://www.vislab.usyd.edu.au/?q=wiki/masas_homepage Masahiro Takatsuka]* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
   * *[http://www.spatial.ucsb.edu/people/research-associates.php#li Linna Li]* helped to develop the GeoJabber (XMPP) classes. 
 
 
 = Design contributors: =
 
-  * *Alan MacEachren* provided funding, many of the ideas behind the software, and contributed to many design decisions.
-  * *Mark Gahegan* provided the funding, ideas behind the software, and contributed to many design decisions.
-  * *Masahiro Takatskuka* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of the GeoViz Toolkit.
+  * *[http://www.geovista.psu.edu/members/maceachren/ Alan MacEachren]* provided funding, many of the ideas behind the software, and contributed to many design decisions.
+  * *[http://www.sges.auckland.ac.nz/the_school/our_people/gahegan_mark/index.shtm Mark Gahegan]* provided funding, ideas behind the software, and contributed to many design decisions.
+  * *[http://www.vislab.usyd.edu.au/?q=wiki/masas_homepage Masahiro Takatsuka]* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of the GeoViz Toolkit.
 
 = Financial contributors: =
  * *The National Science Foundation*, through the Digital Government Quality Graphics grant.
