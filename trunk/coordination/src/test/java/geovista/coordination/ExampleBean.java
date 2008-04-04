@@ -1,24 +1,13 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ExampleBean
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ExampleBean.java,v 1.2 2002/08/13 20:57:41 hardisty Exp $
- $Date: 2002/08/13 20:57:41 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.coordination;
 
+import javax.swing.event.EventListenerList;
+
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
-
-import javax.swing.event.EventListenerList;
 
 /**
  * This class demonstrates a simple bean that fires an event whenever one of two
@@ -35,7 +24,6 @@ import javax.swing.event.EventListenerList;
  * 
  */
 public class ExampleBean implements IndicationListener {
-
 
 	private int result;
 	private int indication;
@@ -101,8 +89,9 @@ public class ExampleBean implements IndicationListener {
 	public int getIndication() {
 		return indication;
 	}
-	public void setIndication(int ind){
-		this.indication = ind;
+
+	public void setIndication(int ind) {
+		indication = ind;
 	}
 
 }
