@@ -1,16 +1,7 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class IndicationAnimator
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: IndicationAnimator.java,v 1.5 2005/03/28 14:57:01 hardisty Exp $
- $Date: 2005/03/28 14:57:01 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.animation;
 
 import java.awt.BorderLayout;
@@ -50,349 +41,337 @@ import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 
 /**
- * IndicationAnimator is used to send out indication signals that
- * corrispond to current classifications.
- *
+ * IndicationAnimator is used to send out indication signals that corrispond to
+ * current classifications.
+ * 
  */
-public class IndicationAnimator
-    extends JPanel
-    implements ActionListener,
-    ChangeListener,
-    DataSetListener,
-    SubspaceListener,
-    ClassificationListener {
-  private  transient Timer ticker;
-  private transient int currObs;
-  private transient JButton startStopButton;
-  private transient boolean going = false;
-  private  transient int fps; 
-  private transient int delay;//in milliseconds
-  static final int FPS_MIN = 0;
-  static final int FPS_MAX = 30;
-  static final int FPS_INIT = 15;    //initial frames per second
-  private transient DataSetForApps data;
-  private transient int maxIndication = 0;
-  private  transient ClassifierPicker classPick;
-  private transient int[] classes;
-  private transient double[] values;
-  private transient ClassedObs[] obs;
-  private transient int[] subspace;
-  private transient int subspaceIndex;
-  private transient JSlider timeSlider;
-  private transient JCheckBox subspaceBox;
-  private transient boolean usingSubspace;
-  private transient String[] varNames;
-  final transient static Logger logger = Logger.getLogger(IndicationAnimator.class.getName());
-  /**
-   * null ctr
-   */
-  public IndicationAnimator() {
-    usingSubspace = true;
-    fps = FPS_INIT;
+public class IndicationAnimator extends JPanel implements ActionListener,
+		ChangeListener, DataSetListener, SubspaceListener,
+		ClassificationListener {
+	private transient final Timer ticker;
+	private transient int currObs;
+	private transient JButton startStopButton;
+	private transient boolean going = false;
+	private transient final int fps;
+	private transient int delay;// in milliseconds
+	static final int FPS_MIN = 0;
+	static final int FPS_MAX = 30;
+	static final int FPS_INIT = 15; // initial frames per second
+	private transient DataSetForApps data;
+	private transient int maxIndication = 0;
+	private transient final ClassifierPicker classPick;
+	private transient int[] classes;
+	private transient double[] values;
+	private transient ClassedObs[] obs;
+	private transient int[] subspace;
+	private transient int subspaceIndex;
+	private transient JSlider timeSlider;
+	private transient JCheckBox subspaceBox;
+	private transient boolean usingSubspace;
+	private transient String[] varNames;
+	final transient static Logger logger = Logger
+			.getLogger(IndicationAnimator.class.getName());
 
-    ticker = new Timer(fps, this);
+	/**
+	 * null ctr
+	 */
+	public IndicationAnimator() {
+		usingSubspace = true;
+		fps = FPS_INIT;
 
-    this.add(this.makeTopPanel());
+		ticker = new Timer(fps, this);
 
-    classPick = new ClassifierPicker();
-    classPick.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
-    this.add(classPick);
-    classPick.addClassificationListener(this);
-    classPick.addActionListener(this);
-    classPick.setBorder(new LineBorder(Color.white));
-    this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		this.add(makeTopPanel());
 
-  }
+		classPick = new ClassifierPicker();
+		classPick
+				.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
+		this.add(classPick);
+		classPick.addClassificationListener(this);
+		classPick.addActionListener(this);
+		classPick.setBorder(new LineBorder(Color.white));
+		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
-  private JPanel makeTopPanel() {
-    JPanel topPanel = new JPanel();
-    startStopButton = new JButton("Start");
-    topPanel.add(startStopButton);
-    startStopButton.addActionListener(this);
-    this.subspaceBox = new JCheckBox("Subspace?", true);
-    this.subspaceBox.addActionListener(this);
-    topPanel.add(subspaceBox);
-    timeSlider = new JSlider(FPS_MIN, FPS_MAX, FPS_INIT);
-    timeSlider.setMajorTickSpacing(20);
-    timeSlider.setPaintLabels(true);
-    topPanel.add(timeSlider);
-    timeSlider.addChangeListener(this);
-    return topPanel;
-  }
-
-  public void stateChanged(ChangeEvent e) {
-	  JSlider source = (JSlider)e.getSource();
-    if (e.getSource() == this.timeSlider &&
-        !source.getValueIsAdjusting()) {
-        int fps = (int)source.getValue();
-        if (fps == 0) {
-            //if (!frozen) stopAnimation();
-        } else{
-
-        	delay = 1000 / fps;
-        	ticker.setDelay(delay);
-        }
-    	if(logger.isLoggable(Level.FINEST)){
-    		logger.finest("delay = " + delay);
-    	}
-    }
-  }
-
-  private void iterateObs() { //main loop
-    int whichObs = this.obs[currObs].index;
-    this.fireIndicationChanged(whichObs);
-
-	if (logger.isLoggable(Level.FINEST)&& currObs == 0){
-		logger.finest("zero obs index = " + obs[currObs].index + ", value = " + obs[currObs].value);
 	}
 
-    if (currObs < this.maxIndication) { //go up one
-    	this.ticker.setDelay(delay);
-    	currObs++;
-    }
-    else {
-      this.ticker.setDelay(this.delay * 10);
-      if (this.usingSubspace) {
-    		if (logger.isLoggable(Level.FINEST)){
-    			logger.finest("new var!!!");
-    		}
-
-        this.iterateSubspace();
-      }
-      currObs = 0; //reset
-    }
-  }
-
-  public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == this.ticker) {
-      this.iterateObs();
-    }
-    else if (e.getSource() == this.startStopButton) {
-      if (going) {
-        this.going = false; //turn off
-        this.ticker.stop();
-        this.startStopButton.setText("Start");
-      }
-      else {
-        this.going = true; //turn on
-        this.ticker.start();
-        this.startStopButton.setText("Stop");
-      }
-    }
-    else if (e.getSource() == this.subspaceBox) {
-      this.usingSubspace = this.subspaceBox.isSelected();
-    }
-    else if (e.getSource() == this.classPick &&
-             e.getActionCommand().equals(ClassifierPicker.
-                                         COMMAND_SELECTED_VARIABLE_CHANGED)) {
-      //xxx hack for demo
-      this.subspaceIndex = this.classPick.getCurrVariableIndex();
-
-    }
-
-  }
-
-  private void reclassObs() {
-    if (this.data == null) {
-      return;
-    }
-    Arrays.sort(obs);
-  }
-
-  private void iterateSubspace() {
-
-    if (this.subspaceIndex >= subspace.length - 1) {
-      this.subspaceIndex = 0;
-    }
-    else {
-      this.subspaceIndex++;
-    }
-    int currVar = subspace[this.subspaceIndex];
-	if (logger.isLoggable(Level.FINEST)){
-		logger.finest("iterating subspace");
-		logger.finest("subspaceIndex = " + subspaceIndex);
-		logger.finest("currVar = " + currVar);
+	private JPanel makeTopPanel() {
+		JPanel topPanel = new JPanel();
+		startStopButton = new JButton("Start");
+		topPanel.add(startStopButton);
+		startStopButton.addActionListener(this);
+		subspaceBox = new JCheckBox("Subspace?", true);
+		subspaceBox.addActionListener(this);
+		topPanel.add(subspaceBox);
+		timeSlider = new JSlider(FPS_MIN, FPS_MAX, FPS_INIT);
+		timeSlider.setMajorTickSpacing(20);
+		timeSlider.setPaintLabels(true);
+		topPanel.add(timeSlider);
+		timeSlider.addChangeListener(this);
+		return topPanel;
 	}
-    this.classPick.setCurrVariableIndex(currVar);
-    String varName = this.varNames[currVar];
-    DimensionEvent dimEvent = new DimensionEvent(this, currVar, varName);
-    this.fireDimensionChanged(dimEvent);
-  }
 
-  public void subspaceChanged(SubspaceEvent e) {
-    this.subspace = e.getSubspace();
-    iterateSubspace();
-  }
+	public void stateChanged(ChangeEvent e) {
+		JSlider source = (JSlider) e.getSource();
+		if (e.getSource() == timeSlider && !source.getValueIsAdjusting()) {
+			int fps = source.getValue();
+			if (fps == 0) {
+				// if (!frozen) stopAnimation();
+			} else {
 
-  public void dataSetChanged(DataSetEvent e) {
-    this.data = e.getDataSetForApps();
-    this.maxIndication = this.data.getNumObservations() - 1;
-    this.classPick.removeActionListener(this);
-    this.classPick.setDataSet(this.data);
-    this.classPick.addActionListener(this);
+				delay = 1000 / fps;
+				ticker.setDelay(delay);
+			}
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("delay = " + delay);
+			}
+		}
+	}
 
-    this.obs = new ClassedObs[this.data.getNumObservations()];
-    for (int i = 0; i < this.obs.length; i++) {
-      this.obs[i] = new ClassedObs();
-      this.obs[i].index = i;
-    }
-    this.classPick.fireClassificationChanged();
-    this.subspace = new int[data.getNumberNumericAttributes()];
-    this.varNames = data.getAttributeNamesNumeric();
-    for (int i = 0; i < subspace.length; i++) {
-      subspace[i] = i; //oh, the agony
-    }
-  }
+	private void iterateObs() { // main loop
+		int whichObs = obs[currObs].index;
+		fireIndicationChanged(whichObs);
 
-  public void classificationChanged(ClassificationEvent e) {
-    this.classes = e.getClassification();
-    if (e.getSource() == this.classPick) {
-      values = this.data.getNumericDataAsDouble(this.classPick.
-                                                getCurrVariableIndex());
-      for (int i = 0; i < this.obs.length; i++) {
-        int index = this.obs[i].index;
-        this.obs[i].classed = this.classes[index];
-        double aVal = this.values[index];
-        this.obs[i].value = aVal;
-      }
-    }
-    else {
-      for (int i = 0; i < this.obs.length; i++) {
-        int index = this.obs[i].index;
-        this.obs[i].classed = this.classes[index];
-        this.obs[i].value = this.classes[index];
-      }
-    }
+		if (logger.isLoggable(Level.FINEST) && currObs == 0) {
+			logger.finest("zero obs index = " + obs[currObs].index
+					+ ", value = " + obs[currObs].value);
+		}
 
-    this.reclassObs();
-  }
+		if (currObs < maxIndication) { // go up one
+			ticker.setDelay(delay);
+			currObs++;
+		} else {
+			ticker.setDelay(delay * 10);
+			if (usingSubspace) {
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("new var!!!");
+				}
 
-  /**
-   * adds an DimensionListener
-   */
-  public void addDimensionListener(DimensionListener l) {
-    listenerList.add(DimensionListener.class, l);
-  }
+				iterateSubspace();
+			}
+			currObs = 0; // reset
+		}
+	}
 
-  /**
-   * removes an DimensionListener from the component
-   */
-  public void removeDimensionListener(DimensionListener l) {
-    listenerList.remove(DimensionListener.class, l);
-  }
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == ticker) {
+			iterateObs();
+		} else if (e.getSource() == startStopButton) {
+			if (going) {
+				going = false; // turn off
+				ticker.stop();
+				startStopButton.setText("Start");
+			} else {
+				going = true; // turn on
+				ticker.start();
+				startStopButton.setText("Stop");
+			}
+		} else if (e.getSource() == subspaceBox) {
+			usingSubspace = subspaceBox.isSelected();
+		} else if (e.getSource() == classPick
+				&& e.getActionCommand().equals(
+						ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED)) {
+			// xxx hack for demo
+			subspaceIndex = classPick.getCurrVariableIndex();
 
-  /**
-   * Notify all listeners that have registered interest for
-   * notification on this event type. The event instance
-   * is lazily created using the parameters passed into
-   * the fire method.
-   * @see EventListenerList
-   */
-  private void fireDimensionChanged(DimensionEvent e) {
-    // Guaranteed to return a non-null array
-    Object[] listeners = listenerList.getListenerList();
+		}
 
-    // Process the listeners last to first, notifying
-    // those that are interested in this event
-    for (int i = listeners.length - 2; i >= 0; i -= 2) {
-      if (listeners[i] == DimensionListener.class) {
+	}
 
-        ( (DimensionListener) listeners[i + 1]).dimensionChanged(e);
-      }
-    }
+	private void reclassObs() {
+		if (data == null) {
+			return;
+		}
+		Arrays.sort(obs);
+	}
 
-    //next i
-  }
+	private void iterateSubspace() {
 
-  /**
-   * adds an IndicationListener
-   */
-  public void addIndicationListener(IndicationListener l) {
-    listenerList.add(IndicationListener.class, l);
-  }
+		if (subspaceIndex >= subspace.length - 1) {
+			subspaceIndex = 0;
+		} else {
+			subspaceIndex++;
+		}
+		int currVar = subspace[subspaceIndex];
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("iterating subspace");
+			logger.finest("subspaceIndex = " + subspaceIndex);
+			logger.finest("currVar = " + currVar);
+		}
+		classPick.setCurrVariableIndex(currVar);
+		String varName = varNames[currVar];
+		DimensionEvent dimEvent = new DimensionEvent(this, currVar, varName);
+		fireDimensionChanged(dimEvent);
+	}
 
-  /**
-   * removes an IndicationListener from the component
-   */
-  public void removeIndicationListener(IndicationListener l) {
-    listenerList.remove(IndicationListener.class, l);
-  }
+	public void subspaceChanged(SubspaceEvent e) {
+		subspace = e.getSubspace();
+		iterateSubspace();
+	}
 
-  /**
-   * Notify all listeners that have registered interest for
-   * notification on this event type. The event instance
-   * is lazily created using the parameters passed into
-   * the fire method.
-   * @see EventListenerList
-   */
-  private void fireIndicationChanged(int newIndication) {
-    // Guaranteed to return a non-null array
-    Object[] listeners = listenerList.getListenerList();
-    IndicationEvent e = null;
+	public void dataSetChanged(DataSetEvent e) {
+		data = e.getDataSetForApps();
+		maxIndication = data.getNumObservations() - 1;
+		classPick.removeActionListener(this);
+		classPick.setDataSet(data);
+		classPick.addActionListener(this);
 
-    // Process the listeners last to first, notifying
-    // those that are interested in this event
-    for (int i = listeners.length - 2; i >= 0; i -= 2) {
-      if (listeners[i] == IndicationListener.class) {
-        // Lazily create the event:
-        if (e == null) {
-          e = new IndicationEvent(this, newIndication);
-        }
+		obs = new ClassedObs[data.getNumObservations()];
+		for (int i = 0; i < obs.length; i++) {
+			obs[i] = new ClassedObs();
+			obs[i].index = i;
+		}
+		classPick.fireClassificationChanged();
+		subspace = new int[data.getNumberNumericAttributes()];
+		varNames = data.getAttributeNamesNumeric();
+		for (int i = 0; i < subspace.length; i++) {
+			subspace[i] = i; // oh, the agony
+		}
+	}
 
-        ( (IndicationListener) listeners[i + 1]).indicationChanged(e);
-      }
-    }
+	public void classificationChanged(ClassificationEvent e) {
+		classes = e.getClassification();
+		if (e.getSource() == classPick) {
+			values = data.getNumericDataAsDouble(classPick
+					.getCurrVariableIndex());
+			for (int i = 0; i < obs.length; i++) {
+				int index = obs[i].index;
+				obs[i].classed = classes[index];
+				double aVal = values[index];
+				obs[i].value = aVal;
+			}
+		} else {
+			for (int i = 0; i < obs.length; i++) {
+				int index = obs[i].index;
+				obs[i].classed = classes[index];
+				obs[i].value = classes[index];
+			}
+		}
 
-    //next i
-  }
+		reclassObs();
+	}
 
-  public static void main(String[] args) {
-    IndicationAnimator inAnim = new IndicationAnimator();
+	/**
+	 * adds an DimensionListener
+	 */
+	public void addDimensionListener(DimensionListener l) {
+		listenerList.add(DimensionListener.class, l);
+	}
 
+	/**
+	 * removes an DimensionListener from the component
+	 */
+	public void removeDimensionListener(DimensionListener l) {
+		listenerList.remove(DimensionListener.class, l);
+	}
 
-    JFrame app = new JFrame();
-    app.addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent e) {
-        System.exit(0);
-      }
-    });
-    app.getContentPane().setLayout(new BorderLayout());
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	private void fireDimensionChanged(DimensionEvent e) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
 
-    app.getContentPane().add(inAnim);
-    app.pack();
-    app.setVisible(true);
-  }
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == DimensionListener.class) {
 
-  private class ClassedObs
-      implements Comparable {
-    int index;
-    int classed;
-    double value;
+				((DimensionListener) listeners[i + 1]).dimensionChanged(e);
+			}
+		}
 
-    //we compare by value
-    public int compareTo(Object o) {
-      ClassedObs e = (ClassedObs) o;
-      int val = 0;
-      if (Double.isNaN(e.value)) {
-        if (Double.isNaN(this.value)) {
-          return 0;
-        }
-        else {
-          return 1;
-        }
-      } //end if the other value is NaN
+		// next i
+	}
 
-      if (Double.isNaN(this.value)) {
-        val = -1; //everything is bigger than NaN
-      }
-      else if (this.value < e.value) {
-        val = -1;
-      }
-      else if (this.value > e.value) {
-        val = 1;
-      }
+	/**
+	 * adds an IndicationListener
+	 */
+	public void addIndicationListener(IndicationListener l) {
+		listenerList.add(IndicationListener.class, l);
+	}
 
-      return val;
-    }
-  }
+	/**
+	 * removes an IndicationListener from the component
+	 */
+	public void removeIndicationListener(IndicationListener l) {
+		listenerList.remove(IndicationListener.class, l);
+	}
+
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	private void fireIndicationChanged(int newIndication) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		IndicationEvent e = null;
+
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == IndicationListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					e = new IndicationEvent(this, newIndication);
+				}
+
+				((IndicationListener) listeners[i + 1]).indicationChanged(e);
+			}
+		}
+
+		// next i
+	}
+
+	public static void main(String[] args) {
+		IndicationAnimator inAnim = new IndicationAnimator();
+
+		JFrame app = new JFrame();
+		app.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		app.getContentPane().setLayout(new BorderLayout());
+
+		app.getContentPane().add(inAnim);
+		app.pack();
+		app.setVisible(true);
+	}
+
+	private class ClassedObs implements Comparable {
+		int index;
+		int classed;
+		double value;
+
+		// we compare by value
+		public int compareTo(Object o) {
+			ClassedObs e = (ClassedObs) o;
+			int val = 0;
+			if (Double.isNaN(e.value)) {
+				if (Double.isNaN(value)) {
+					return 0;
+				} else {
+					return 1;
+				}
+			} // end if the other value is NaN
+
+			if (Double.isNaN(value)) {
+				val = -1; // everything is bigger than NaN
+			} else if (value < e.value) {
+				val = -1;
+			} else if (value > e.value) {
+				val = 1;
+			}
+
+			return val;
+		}
+	}
 }
