@@ -1,6 +1,6 @@
-/*
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
 package geovista.matrix;
 
@@ -45,11 +45,11 @@ public class BiPlotMatrix extends AbstractMatrix implements
 
 	private Color foreground = Color.white;
 	protected EventListenerList listenerList = new EventListenerList();
-	private Class[] elementClasses = new Class[2];
-	private String[] elementClassNames = new String[2];
+	private final Class[] elementClasses = new Class[2];
+	private final String[] elementClassNames = new String[2];
 	private transient BivariateColorSymbolClassificationOneColor bivarOneColor;
-	protected ImageIcon matrixIcon = new ImageIcon(BiPlotMatrix.class.getResource(
-			"resources/matrixicon16.gif"));
+	protected ImageIcon matrixIcon = new ImageIcon(BiPlotMatrix.class
+			.getResource("resources/matrixicon16.gif"));
 
 	public BiPlotMatrix() {
 		super();
@@ -63,20 +63,20 @@ public class BiPlotMatrix extends AbstractMatrix implements
 	 * @param classname
 	 */
 	public void setElementClassName1(String classname) {
-		this.elementClassNames[0] = classname;
+		elementClassNames[0] = classname;
 		try {
-			setElementClass1((this.elementClassNames[0] != null) ? Class
-					.forName(this.elementClassNames[0]) : null);
+			setElementClass1((elementClassNames[0] != null) ? Class
+					.forName(elementClassNames[0]) : null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void setElementClassName2(String classname) {
-		this.elementClassNames[1] = classname;
+		elementClassNames[1] = classname;
 		try {
-			setElementClass2((this.elementClassNames[1] != null) ? Class
-					.forName(this.elementClassNames[1]) : null);
+			setElementClass2((elementClassNames[1] != null) ? Class
+					.forName(elementClassNames[1]) : null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,11 +88,11 @@ public class BiPlotMatrix extends AbstractMatrix implements
 	 * @return
 	 */
 	public String getElementClassName1() {
-		return this.elementClassNames[0];
+		return elementClassNames[0];
 	}
 
 	public String getElementClassName2() {
-		return this.elementClassNames[1];
+		return elementClassNames[1];
 	}
 
 	/**
@@ -126,44 +126,46 @@ public class BiPlotMatrix extends AbstractMatrix implements
 	 * @param clazz
 	 */
 	public void setElementClass1(Class clazz) {
-		this.elementClasses[0] = clazz;
+		elementClasses[0] = clazz;
 	}
 
 	public void setElementClass2(Class clazz) {
-		this.elementClasses[1] = clazz;
+		elementClasses[1] = clazz;
 	}
 
 	/**
 	 * put your documentation comment here
 	 */
+	@Override
 	protected synchronized void init() {
 
 		logger.finest("get in init()...");
-		if (!this.recreate) {
+		if (!recreate) {
 			return; // maybe display error message.
 		}
-		this.removeAll();
+		removeAll();
 		panelWidthPixels = DEFAULT_PANEL_WIDTH_PIXELS;
 		panelHeightPixels = DEFAULT_PANEL_HEIGHT_PIXELS;
 		setPanelSize(panelWidthPixels, panelHeightPixels);
 
-		this.bivarOneColor = new BivariateColorSymbolClassificationOneColor();
-		int colorTotal = this.background.getRed() + this.background.getGreen()
-				+ this.background.getBlue();
+		bivarOneColor = new BivariateColorSymbolClassificationOneColor();
+		int colorTotal = background.getRed() + background.getGreen()
+				+ background.getBlue();
 		int greyColor = 128 * 3;
-		if (colorTotal < greyColor)
+		if (colorTotal < greyColor) {
 			foreground = Color.white;
-		else
+		} else {
 			foreground = Color.black;
-		this.bivarOneColor.setOneColor(foreground);
+		}
+		bivarOneColor.setOneColor(foreground);
 
-		if (this.dataObject != null) {
+		if (dataObject != null) {
 
-			attList = new JList(this.attributesDisplay);
-			if (this.attributeDescriptions != null) {
-				descriptionList = new JList(this.attributeDescriptions);
+			attList = new JList(attributesDisplay);
+			if (attributeDescriptions != null) {
+				descriptionList = new JList(attributeDescriptions);
 			}
-			this.element = new MatrixElement[plotNumber * plotNumber];
+			element = new MatrixElement[plotNumber * plotNumber];
 			matrixLayout = new GridBagLayout();
 			c = new SPGridBagConstraints();
 			// this.setLayout(matrixLayout);
@@ -184,11 +186,12 @@ public class BiPlotMatrix extends AbstractMatrix implements
 	/**
 	 * put your documentation comment here
 	 */
+	@Override
 	protected void createMatrix() {
 		logger.finest("create SP:");
-		this.setLayout(matrixLayout);
+		setLayout(matrixLayout);
 		columnButton = new SPTagButton[plotNumber];
-		rowButton = new SPTagButton[this.plotNumber];
+		rowButton = new SPTagButton[plotNumber];
 		Dimension tagDm = new Dimension(0, 0);
 		configButton = new JButton();
 		try {
@@ -200,7 +203,7 @@ public class BiPlotMatrix extends AbstractMatrix implements
 						c.gridwidth = 1;
 						c.gridheight = 1;
 
-						configButton.setIcon(this.matrixIcon);
+						configButton.setIcon(matrixIcon);
 						configButton
 								.addActionListener(new java.awt.event.ActionListener() {
 
@@ -229,7 +232,7 @@ public class BiPlotMatrix extends AbstractMatrix implements
 						if (j == plotNumber) {
 							c.gridwidth = GridBagConstraints.REMAINDER;
 						} // end row
-						varTags[j - 1] = this.attributesDisplay[plottedAttributes[j - 1]];
+						varTags[j - 1] = attributesDisplay[plottedAttributes[j - 1]];
 						columnButton[j - 1] = new SPTagButton(varTags[j - 1]);
 						columnButton[j - 1]
 								.setMargin(AbstractMatrix.nullInsets);
@@ -282,37 +285,34 @@ public class BiPlotMatrix extends AbstractMatrix implements
 						dataIndices[0] = plottedAttributes[j - 1] + 1;
 						dataIndices[1] = plottedAttributes[i - 1] + 1;
 						// construct of each element
-						if (this.elementClasses[0] != null
-								&& this.elementClasses[1] == null) {
-							this.element[indexCurrent] = (MatrixElement) this.elementClasses[0]
+						if (elementClasses[0] != null
+								&& elementClasses[1] == null) {
+							element[indexCurrent] = (MatrixElement) elementClasses[0]
 									.newInstance();
-						} else if (this.elementClasses[0] == null
-								&& this.elementClasses[1] != null) {
-							this.element[indexCurrent] = (MatrixElement) this.elementClasses[1]
+						} else if (elementClasses[0] == null
+								&& elementClasses[1] != null) {
+							element[indexCurrent] = (MatrixElement) elementClasses[1]
 									.newInstance();
-						} else if (this.elementClasses[0] != null
-								&& this.elementClasses[1] != null) {
+						} else if (elementClasses[0] != null
+								&& elementClasses[1] != null) {
 							if (i <= j) {
-								this.element[indexCurrent] = (MatrixElement) this.elementClasses[0]
+								element[indexCurrent] = (MatrixElement) elementClasses[0]
 										.newInstance();
 							} else {
-								this.element[indexCurrent] = (MatrixElement) this.elementClasses[1]
+								element[indexCurrent] = (MatrixElement) elementClasses[1]
 										.newInstance();
 							}
 						}
-						this.element[indexCurrent].setAxisOn(false);
-						this.element[indexCurrent].setDataSet(this.dataSet);
-							
+						element[indexCurrent].setAxisOn(false);
+						element[indexCurrent].setDataSet(dataSet);
 
-						this.element[indexCurrent].setBackground(background);
-						this.element[indexCurrent]
-								.setElementPosition(dataIndices);
-						this.element[indexCurrent]
-								.setSelOriginalColorMode(this.selOriginalColorMode);
-						this.element[indexCurrent]
-								.setSelectionColor(this.selectionColor);
-						if ((this.bivarColorClasser != null)
-								&& (!this.element[indexCurrent]
+						element[indexCurrent].setBackground(background);
+						element[indexCurrent].setElementPosition(dataIndices);
+						element[indexCurrent]
+								.setSelOriginalColorMode(selOriginalColorMode);
+						element[indexCurrent].setSelectionColor(selectionColor);
+						if ((bivarColorClasser != null)
+								&& (!element[indexCurrent]
 										.getClass()
 										.getName()
 										.equals(
@@ -321,22 +321,23 @@ public class BiPlotMatrix extends AbstractMatrix implements
 							if (i > j) {
 								reverseColor = true;
 							}
-							this.element[indexCurrent].setBivarColorClasser(
-									this.bivarColorClasser, reverseColor);
+							element[indexCurrent].setBivarColorClasser(
+									bivarColorClasser, reverseColor);
 						}
-						if (this.colorArrayForObs != null) {
-							this.element[indexCurrent]
-									.setColorArrayForObs(this.colorArrayForObs);
+						if (colorArrayForObs != null) {
+							element[indexCurrent]
+									.setColorArrayForObs(colorArrayForObs);
 						}
-						if (j == plotNumber)
+						if (j == plotNumber) {
 							c.gridwidth = GridBagConstraints.REMAINDER; // end
-																		// row
+						}
+						// row
 						c.column = j;
 						c.row = i;
 						matrixLayout.setConstraints(
-								(Component) this.element[indexCurrent], c);
-						add((Component) this.element[indexCurrent]);
-						this.element[indexCurrent]
+								(Component) element[indexCurrent], c);
+						add((Component) element[indexCurrent]);
+						element[indexCurrent]
 								.addActionListener(new ActionListener() {
 
 									/**
@@ -363,8 +364,9 @@ public class BiPlotMatrix extends AbstractMatrix implements
 		}
 		for (int j = 0; j < plotNumber; j++) {
 			if (columnButton[j].getPreferredSize().getWidth() > tagDm
-					.getWidth())
+					.getWidth()) {
 				tagDm = columnButton[j].getPreferredSize();
+			}
 			logger.finest("tagDm: " + tagDm.getWidth() + tagDm.getHeight());
 		}
 		for (int j = 0; j < plotNumber; j++) {
@@ -389,39 +391,40 @@ public class BiPlotMatrix extends AbstractMatrix implements
 		MatrixElement source = (MatrixElement) e.getSource();
 		String command = e.getActionCommand();
 		if (command.compareTo(MatrixElement.COMMAND_POINT_SELECTED) == 0) {
-			logger.finest("SPMC.plotUnitPanel.actionPerformed(), point selected");
+			logger
+					.finest("SPMC.plotUnitPanel.actionPerformed(), point selected");
 			// selectedObvs = source.getSelectedObservations();
-			this.selectedObvsInt = source.getSelections();
-			for (int k = 0; k < this.plotNumber * this.plotNumber; k++) {
+			selectedObvsInt = source.getSelections();
+			for (int k = 0; k < plotNumber * plotNumber; k++) {
 				MatrixElement otherElement = element[k];
 				// Don't recall the scatterplot which generated the original
 				// event
 				if (otherElement != source) {
 					// otherElement.setSelectedObservations(selectedObvs);
-					otherElement.setSelections(this.selectedObvsInt);
+					otherElement.setSelections(selectedObvsInt);
 				}
 			}
 			this.repaint();
 			fireChangeEvent();
-			this.fireSelectionChanged(this.getSelectedObvs());
+			fireSelectionChanged(getSelectedObvs());
 		} else if (command
 				.compareTo(MatrixElement.COMMAND_COLOR_CLASSFICIATION) == 0) {
-			this.bivarColorClasser = source.getBivarColorClasser();
+			bivarColorClasser = source.getBivarColorClasser();
 			boolean reverseColor = false;
 			int row, column;
-			for (int k = 0; k < this.plotNumber * this.plotNumber; k++) {
+			for (int k = 0; k < plotNumber * plotNumber; k++) {
 				MatrixElement otherElement = element[k];
 				// Don't recall the scatterplot which generated the original
 				// event
 				if (otherElement != source) {
-					row = k / this.plotNumber;
-					column = k % this.plotNumber;
+					row = k / plotNumber;
+					column = k % plotNumber;
 					if (row > column) {
 						reverseColor = true;
 					} else {
 						reverseColor = false;
 					}
-					otherElement.setBivarColorClasser(this.bivarColorClasser,
+					otherElement.setBivarColorClasser(bivarColorClasser,
 							reverseColor);
 				}
 			}
@@ -429,11 +432,12 @@ public class BiPlotMatrix extends AbstractMatrix implements
 			fireChangeEvent();
 		} else {
 			if (command.compareTo(MatrixElement.COMMAND_DATARANGE_SET) == 0) {
-				logger.finest("SPMC.plotUnitPanel.actionPerformed(),data range");
+				logger
+						.finest("SPMC.plotUnitPanel.actionPerformed(),data range");
 				double[] xAxisExtents = source.getXAxisExtents();
 				double[] yAxisExtents = source.getYAxisExtents();
 				int pos = 0;
-				for (int k = 0; k < this.plotNumber * this.plotNumber; k++) {
+				for (int k = 0; k < plotNumber * plotNumber; k++) {
 					MatrixElement otherElement = element[k];
 					// Don't recall the scatterplot which generated the original
 					// event
@@ -447,61 +451,63 @@ public class BiPlotMatrix extends AbstractMatrix implements
 				logger.finest("pos: " + pos);
 				for (int i = 0; i < plotNumber; i++) {
 					element[i * plotNumber + c].setXAxisExtents(xAxisExtents);// The
-																				// xAxisExtents
-																				// for
-																				// all
-																				// of
-																				// the
-																				// elements
-																				// in
-																				// the
-																				// same
-																				// column
-																				// have
-																				// to
-																				// be
-																				// changed.
+					// xAxisExtents
+					// for
+					// all
+					// of
+					// the
+					// elements
+					// in
+					// the
+					// same
+					// column
+					// have
+					// to
+					// be
+					// changed.
 					element[c * plotNumber + i].setYAxisExtents(xAxisExtents);// The
-																				// yAxisExtents
-																				// for
-																				// the
-																				// corresponding
-																				// elements
-																				// on
-																				// the
-																				// other
-																				// side
+					// yAxisExtents
+					// for
+					// the
+					// corresponding
+					// elements
+					// on
+					// the
+					// other
+					// side
 					// of diagonal need to be changed.
-					logger.finest("yAxis: " + (r*plotNumber + i) + " " + (r + i*plotNumber));
+					logger.finest("yAxis: " + (r * plotNumber + i) + " "
+							+ (r + i * plotNumber));
 					element[r * plotNumber + i].setYAxisExtents(yAxisExtents); // The
-																				// yAxisExtents
-																				// for
-																				// all
-																				// of
-																				// the
-																				// elements
-																				// in
-																				// the
-																				// same
-																				// row
-																				// have
-																				// to
-																				// be
-																				// changed.
+					// yAxisExtents
+					// for
+					// all
+					// of
+					// the
+					// elements
+					// in
+					// the
+					// same
+					// row
+					// have
+					// to
+					// be
+					// changed.
 					element[r + i * plotNumber].setXAxisExtents(yAxisExtents);// The
-																				// xAxisExtents
-																				// for
-																				// the
-																				// corresponding
-																				// elements
-																				// on
-																				// the
-																				// other
-																				// side
+					// xAxisExtents
+					// for
+					// the
+					// corresponding
+					// elements
+					// on
+					// the
+					// other
+					// side
 					// of diagonal need to be changed.
 				}
-			} else
+			} else {
 				System.err.println("Unknown command! = " + command);
+			}
 		}
 	}
 
@@ -525,9 +531,9 @@ public class BiPlotMatrix extends AbstractMatrix implements
 	 * @param y
 	 */
 	private void attSelectDialog(int x, int y) {
-		attList.setSelectedIndices(this.plottedAttributes);
-		if (this.dialog == null) {
-			this.dialog = new JDialog(dummyFrame, "Attributes for Plot", true);
+		attList.setSelectedIndices(plottedAttributes);
+		if (dialog == null) {
+			dialog = new JDialog(dummyFrame, "Attributes for Plot", true);
 			JButton selectButton;
 			JButton closeButton;
 			dialog.setSize(150, 300);
@@ -536,7 +542,7 @@ public class BiPlotMatrix extends AbstractMatrix implements
 					.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			// attList.addListSelectionListener(this);
 			// JScrollPane scrollPane = new JScrollPane(attList);
-			this.dialogPane = new JScrollPane(attList);
+			dialogPane = new JScrollPane(attList);
 			selectButton = new JButton("Apply");
 			selectButton.addActionListener(new java.awt.event.ActionListener() {
 
@@ -568,10 +574,10 @@ public class BiPlotMatrix extends AbstractMatrix implements
 			JPanel attSelPanel = new JPanel(new BorderLayout());
 			attSelPanel.setPreferredSize(new Dimension(150, 290));
 			attSelPanel.add(new JLabel("Attribute Names:"), BorderLayout.NORTH);
-			attSelPanel.add(this.dialogPane, BorderLayout.CENTER);
+			attSelPanel.add(dialogPane, BorderLayout.CENTER);
 			attSelPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-			if (this.attributeDescriptions != null) {
+			if (attributeDescriptions != null) {
 				logger.finest("attributeDescription not null..");
 				JPanel descPane = new JPanel(new BorderLayout());
 				descPane.add(new JLabel("Descriptions:"), BorderLayout.NORTH);
@@ -581,12 +587,12 @@ public class BiPlotMatrix extends AbstractMatrix implements
 			}
 			dialog.getContentPane().add(attSelPanel, BorderLayout.WEST);
 		} else {
-			this.dialogPane.setViewportView(attList);
+			dialogPane.setViewportView(attList);
 		}
-		this.attList.addListSelectionListener(this);
-		this.plottedAttributes = attList.getSelectedIndices();
-		this.dialog.setLocation(x, y);
-		this.dialog.setVisible(true);
+		attList.addListSelectionListener(this);
+		plottedAttributes = attList.getSelectedIndices();
+		dialog.setLocation(x, y);
+		dialog.setVisible(true);
 	}
 
 	/**
@@ -615,8 +621,9 @@ public class BiPlotMatrix extends AbstractMatrix implements
 	 * @see ListSelectionListener
 	 */
 	public void valueChanged(ListSelectionEvent e) {
-		if (e.getValueIsAdjusting())
+		if (e.getValueIsAdjusting()) {
 			return;
+		}
 		JList theList = (JList) e.getSource();
 		if (theList.isSelectionEmpty()) {
 			return;

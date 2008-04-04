@@ -1,13 +1,8 @@
-package geovista.matrix;
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- * @Xiping Dai
- * @version 1.0
- */
+package geovista.matrix;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -43,6 +38,7 @@ import geovista.common.ui.Fisheyes;
 import geovista.geoviz.map.GeoCursors;
 import geovista.geoviz.map.MapCanvas;
 import geovista.geoviz.scatterplot.ScatterPlot;
+import geovista.geoviz.scatterplot.ScatterPlotBasic;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.matrix.map.MapMatrixElement;
 import geovista.symbolization.BivariateColorSchemeVisualizer;
@@ -478,7 +474,7 @@ public class BivariateGraphFrame extends JPanel implements DataSetListener,
 			bivariateGraph.setElementPosition(displayIndices);
 			// this.fireColorArrayChanged();
 		} else if ((src == bivariateGraph)
-				&& command.compareTo(ScatterPlot.COMMAND_POINT_SELECTED) == 0) {
+				&& command.compareTo(ScatterPlotBasic.COMMAND_POINT_SELECTED) == 0) {
 			// this.selectedObvs = this.scatterPlot.getSelectedObservations();
 			logger.finest("in actionformed");
 			selections = bivariateGraph.getSelections();

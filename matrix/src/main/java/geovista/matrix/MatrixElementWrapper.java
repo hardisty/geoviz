@@ -1,15 +1,9 @@
-/*
- * MatrixElementWrapper.java
- *
- * Created on June 2, 2004, 11:49 AM
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
 package geovista.matrix;
 
-/**
- *
- * @author  jamesm
- */
 public interface MatrixElementWrapper {
-    public Class getMatrixElementClass();
+	public Class getMatrixElementClass();
 }

@@ -1,13 +1,9 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
+
 package geovista.matrix;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2001</p>
- * <p>Company: GeoVISTA Center</p>
- * @author Xiping Dai
- * @version 1.0
- */
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;

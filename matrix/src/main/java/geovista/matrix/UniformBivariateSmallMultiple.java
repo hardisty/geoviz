@@ -1,13 +1,9 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
+
 package geovista.matrix;
 
-/**
- * Title: MixedGraphMatrix
- * Description: Manipulable Matrix
- * Copyright:    Copyright (c) 2001
- * Company: GeoVISTA Center
- * @author Xiping Dai
- * @version 1.0
- */
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -64,7 +60,8 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		this.setSize(panelWidthPixels, panelHeightPixels);
 	}
 
-	final static Logger logger = Logger.getLogger(UniformBivariateSmallMultiple.class.getName());
+	final static Logger logger = Logger
+			.getLogger(UniformBivariateSmallMultiple.class.getName());
 
 	/**
 	 * put your documentation comment here
@@ -72,7 +69,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	 * @param classname
 	 */
 	public void setElementClassName(String classname) {
-		this.elementClassName = classname;
+		elementClassName = classname;
 	}
 
 	/**
@@ -81,7 +78,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	 * @return
 	 */
 	public String getElementClassName() {
-		return this.elementClassName;
+		return elementClassName;
 	}
 
 	/**
@@ -99,12 +96,13 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	 * 
 	 * @param condition
 	 */
+	@Override
 	public void setConditionArray(int[] condition) {
 		if (condition == null) {
 			return;
 		} else {
-			this.conditionArray = condition;
-			for (int k = 0; k < plotNumber * this.rowVarNumber; k++) {
+			conditionArray = condition;
+			for (int k = 0; k < plotNumber * rowVarNumber; k++) {
 				MatrixElement otherElement = element[k];
 				if (otherElement != null) {
 					otherElement.setConditionArray(conditionArray);
@@ -114,6 +112,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		}
 	}
 
+	@Override
 	public void setSelectedObvs(int[] selected) {
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("Set Selected Obs: ");
@@ -121,61 +120,61 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		if (selected == null) {
 			return;
 		} else {
-			for (int i = 0; i < this.selectedObvsInt.length; i++) {
-				this.selectedObvsInt[i] = 0;
+			for (int i = 0; i < selectedObvsInt.length; i++) {
+				selectedObvsInt[i] = 0;
 			}
 			for (int i = 0; i < selected.length; i++) {
-				this.selectedObvsInt[selected[i]] = 1;
+				selectedObvsInt[selected[i]] = 1;
 			}
 		}
-		this.multipleSelectionColors = null;
+		multipleSelectionColors = null;
 		// Once selection from other components has been set, pass it to each
 		// element inside of matrix.
-		for (int k = 0; k < plotNumber * this.rowVarNumber; k++) {
+		for (int k = 0; k < plotNumber * rowVarNumber; k++) {
 			MatrixElement otherElement = element[k];
-			otherElement.setSelections(this.selectedObvsInt);
-			otherElement
-					.setMultipleSelectionColors(this.multipleSelectionColors);
+			otherElement.setSelections(selectedObvsInt);
+			otherElement.setMultipleSelectionColors(multipleSelectionColors);
 		}
 		repaint();
 	}
 
+	@Override
 	protected synchronized void init() {
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("get in init()...");
 		}
-		if (!this.recreate) {
+		if (!recreate) {
 			return; // maybe display error message.
 		}
-		this.removeAll();
+		removeAll();
 
-		attList = new JList(this.attributesDisplay);
-		this.rowAttList = new JList(this.attributesDisplay);
+		attList = new JList(attributesDisplay);
+		rowAttList = new JList(attributesDisplay);
 
-		if (this.elementClassName != null) {
+		if (elementClassName != null) {
 			try {
-				this.elementClass = Class.forName(this.elementClassName);
+				elementClass = Class.forName(elementClassName);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
-		varTags = new String[this.plotNumber]; // column variables.
-		rowTags = new String[this.rowVarNumber];
+		varTags = new String[plotNumber]; // column variables.
+		rowTags = new String[rowVarNumber];
 
-		if (this.plottedRowAttributes == null) {
-			this.plottedRowAttributes = new int[this.rowVarNumber];
-			for (int i = plottedBegin; i < plottedBegin + this.rowVarNumber; i++) {
+		if (plottedRowAttributes == null) {
+			plottedRowAttributes = new int[rowVarNumber];
+			for (int i = plottedBegin; i < plottedBegin + rowVarNumber; i++) {
 				plottedRowAttributes[i - plottedBegin] = i;
 			}
 		}
 
-		if (this.dataObject != null) {
-			this.element = new MatrixElement[plotNumber * this.rowVarNumber];
+		if (dataObject != null) {
+			element = new MatrixElement[plotNumber * rowVarNumber];
 			matrixLayout = new GridBagLayout();
 			c = new SPGridBagConstraints();
 			c.fill = GridBagConstraints.BOTH;
-			this.createMatrix();
+			createMatrix();
 			Container parent = getParent();
 			if (parent != null) {
 				parent.validate();
@@ -187,23 +186,24 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	}
 
 	// Set up elements in matrix.
+	@Override
 	protected void createMatrix() {
 		logger.finest("create SP:");
-		this.setLayout(matrixLayout);
+		setLayout(matrixLayout);
 
 		columnButton = new SPTagButton[plotNumber];
-		SPTagButton[] rowButton = new SPTagButton[this.rowVarNumber];
+		SPTagButton[] rowButton = new SPTagButton[rowVarNumber];
 		Dimension tagDm = new Dimension(0, 0);
 		configButton = new JButton();
 		try {
-			for (int i = 0; i < this.rowVarNumber + 1; i++) {
+			for (int i = 0; i < rowVarNumber + 1; i++) {
 				for (int j = 0; j < plotNumber + 1; j++) {
 					if ((i == 0) && (j == 0)) {
 						c.weightx = 0.0;
 						c.weighty = 0.0;
 						c.gridwidth = 1;
 						c.gridheight = 1;
-						configButton.setIcon(this.matrixIcon);
+						configButton.setIcon(matrixIcon);
 						configButton
 								.setMargin(UniformBivariateSmallMultiple.nullInsets);
 						configButton
@@ -228,12 +228,13 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 					} else if ((i == 0) && (j != 0)) {
 						c.weightx = 1.0;
 						c.weighty = 0.0;
-						c.gridwidth = UniformBivariateSmallMultiple.DEFAULT_BUTTON_CONSTRAINTS;
+						c.gridwidth = AbstractMatrix.DEFAULT_BUTTON_CONSTRAINTS;
 						c.gridheight = 1;
-						if (j == plotNumber)
+						if (j == plotNumber) {
 							c.gridwidth = GridBagConstraints.REMAINDER; // end
+						}
 						// row
-						varTags[j - 1] = this.attributesDisplay[plottedAttributes[j - 1]];
+						varTags[j - 1] = attributesDisplay[plottedAttributes[j - 1]];
 						columnButton[j - 1] = new SPTagButton(varTags[j - 1]);
 						columnButton[j - 1]
 								.setMargin(UniformBivariateSmallMultiple.nullInsets);
@@ -251,7 +252,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 						c.weighty = 1.0;
 						c.gridwidth = 1;
 						c.gridheight = AbstractMatrix.DEFAULT_BUTTON_CONSTRAINTS;
-						rowTags[i - 1] = this.attributesDisplay[this.plottedRowAttributes[i - 1]];
+						rowTags[i - 1] = attributesDisplay[plottedRowAttributes[i - 1]];
 						rowButton[i - 1] = new SPTagButton("s");
 						rowButton[i - 1]
 								.setMargin(UniformBivariateSmallMultiple.nullInsets);
@@ -275,40 +276,37 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 						c.weighty = 1.0;
 						c.gridwidth = AbstractMatrix.DEFAULT_BUTTON_CONSTRAINTS;
 						c.gridheight = AbstractMatrix.DEFAULT_BUTTON_CONSTRAINTS;
-						if (j == plotNumber)
+						if (j == plotNumber) {
 							c.gridwidth = GridBagConstraints.REMAINDER; // end
+						}
 						// row
 						int indexCurrent = (i - 1) * (plotNumber) + (j - 1);
 						int[] dataIndices = new int[2];
 						dataIndices[0] = plottedAttributes[j - 1] + 1;
-						dataIndices[1] = this.plottedRowAttributes[i - 1] + 1;
+						dataIndices[1] = plottedRowAttributes[i - 1] + 1;
 						// construct of each element
-						this.element[indexCurrent] = (MatrixElement) this.elementClass
+						element[indexCurrent] = (MatrixElement) elementClass
 								.newInstance();
-						this.element[indexCurrent].setAxisOn(false);
-						this.element[indexCurrent]
-								.setDataSet(this.dataSet);
-						this.element[indexCurrent]
-								.setSelectionColor(this.selectionColor);
-						this.element[indexCurrent].setBackground(background);
-						this.element[indexCurrent]
-								.setElementPosition(dataIndices);
-						if (this.bivarColorClasser != null) {
-							this.element[indexCurrent].setBivarColorClasser(
-									this.bivarColorClasser, false);
+						element[indexCurrent].setAxisOn(false);
+						element[indexCurrent].setDataSet(dataSet);
+						element[indexCurrent].setSelectionColor(selectionColor);
+						element[indexCurrent].setBackground(background);
+						element[indexCurrent].setElementPosition(dataIndices);
+						if (bivarColorClasser != null) {
+							element[indexCurrent].setBivarColorClasser(
+									bivarColorClasser, false);
 						}
 						c.column = j;
 						c.row = i;
 						matrixLayout.setConstraints(
-								(Component) this.element[indexCurrent], c);
-						add((Component) this.element[indexCurrent]);
+								(Component) element[indexCurrent], c);
+						add((Component) element[indexCurrent]);
 						if (rowButton[i - 1].getText().equals("s")) {
 							rowButton[i - 1]
-									.setText(this
-											.stringToVertical(this.element[indexCurrent]
-													.getShortDiscription()));
+									.setText(stringToVertical(element[indexCurrent]
+											.getShortDiscription()));
 						}
-						this.element[indexCurrent]
+						element[indexCurrent]
 								.addActionListener(new ActionListener() {
 
 									/**
@@ -334,8 +332,9 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		}
 		for (int j = 0; j < plotNumber; j++) {
 			if (columnButton[j].getPreferredSize().getWidth() > tagDm
-					.getWidth())
+					.getWidth()) {
 				tagDm = columnButton[j].getPreferredSize();
+			}
 			logger.finest("tagDm: " + tagDm.getWidth() + tagDm.getHeight());
 		}
 		for (int j = 0; j < plotNumber; j++) {
@@ -360,28 +359,27 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		MatrixElement source = (MatrixElement) e.getSource();
 		String command = e.getActionCommand();
 		if (command.compareTo(MatrixElement.COMMAND_POINT_SELECTED) == 0) {
-			this.selectedObvsInt = source.getSelections();
-			for (int k = 0; k < plotNumber * this.rowVarNumber; k++) {
+			selectedObvsInt = source.getSelections();
+			for (int k = 0; k < plotNumber * rowVarNumber; k++) {
 				MatrixElement otherElement = element[k];
 				// Don't recall the scatterplot which generated the original
 				// event
 				if (otherElement != source) {
-					otherElement.setSelections(this.selectedObvsInt);
+					otherElement.setSelections(selectedObvsInt);
 				}
 			}
 			this.repaint();
 			fireChangeEvent();
-			this.fireSelectionChanged(this.getSelectedObvs());
+			fireSelectionChanged(getSelectedObvs());
 		} else if (command
 				.compareTo(MatrixElement.COMMAND_COLOR_CLASSFICIATION) == 0) {
-			this.bivarColorClasser = source.getBivarColorClasser();
-			for (int k = 0; k < plotNumber * this.rowVarNumber; k++) {
+			bivarColorClasser = source.getBivarColorClasser();
+			for (int k = 0; k < plotNumber * rowVarNumber; k++) {
 				MatrixElement otherElement = element[k];
 				// Don't recall the scatterplot which generated the original
 				// event
 				if (otherElement != source) {
-					otherElement.setBivarColorClasser(this.bivarColorClasser,
-							false);
+					otherElement.setBivarColorClasser(bivarColorClasser, false);
 				}
 			}
 			this.repaint();
@@ -391,7 +389,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 			double[] xAxisExtents = source.getXAxisExtents();
 			double[] yAxisExtents = source.getYAxisExtents();
 			int pos = 0;
-			for (int k = 0; k < this.rowVarNumber * plotNumber; k++) {
+			for (int k = 0; k < rowVarNumber * plotNumber; k++) {
 				MatrixElement otherElement = element[k];
 				// Don't recall the scatterplot which generated the original
 				// event
@@ -403,14 +401,15 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 			int r = pos / plotNumber;
 			int c = pos % plotNumber;
 
-			for (int i = 0; i < this.plotNumber; i++) {
+			for (int i = 0; i < plotNumber; i++) {
 				element[r + i].setYAxisExtents(yAxisExtents);
 				if (logger.isLoggable(Level.FINEST)) {
 					logger.finest("in y axis reset...");
 				}
 			}
-			for (int i = 0; i < this.rowVarNumber; i++) {
-				if (element[c + i * plotNumber].getClass().getName().equals("geovista.geoviz.scatterplot.ScatterPlot")) {
+			for (int i = 0; i < rowVarNumber; i++) {
+				if (element[c + i * plotNumber].getClass().getName().equals(
+						"geovista.geoviz.scatterplot.ScatterPlot")) {
 					element[c + i * plotNumber].setXAxisExtents(xAxisExtents);
 				}
 			}
@@ -431,14 +430,14 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		int[] indicesNew1;
 		String varTagMoved = new String(varTags[lastPos - 1]);
 		varTags[lastPos - 1] = varTags[newPos - 1];
-		this.columnButton[lastPos - 1].setText(varTags[lastPos - 1]);
+		columnButton[lastPos - 1].setText(varTags[lastPos - 1]);
 		varTags[newPos - 1] = varTagMoved;
-		this.columnButton[newPos - 1].setText(varTags[newPos - 1]);
+		columnButton[newPos - 1].setText(varTags[newPos - 1]);
 		if (logger.isLoggable(Level.FINEST)) {
 
 			logger.finest("lastPos: " + lastPos + "newPos:" + newPos);
 		}
-		for (int i = 0; i < this.rowVarNumber; i++) {
+		for (int i = 0; i < rowVarNumber; i++) {
 			indicesLast1 = (element[i * plotNumber + lastPos - 1]
 					.getElementPosition());
 			indicesRow = indicesLast1[0];
@@ -463,15 +462,15 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		int indicesCol;
 		int[] indicesLast2;
 		int[] indicesNew2;
-		String varTagMoved = new String(this.rowTags[lastPos - 1]);
+		String varTagMoved = new String(rowTags[lastPos - 1]);
 		rowTags[lastPos - 1] = rowTags[newPos - 1];
-		this.columnButton[lastPos - 1].setText(rowTags[lastPos - 1]);
+		columnButton[lastPos - 1].setText(rowTags[lastPos - 1]);
 		rowTags[newPos - 1] = varTagMoved;
-		this.columnButton[newPos - 1].setText(rowTags[newPos - 1]);
+		columnButton[newPos - 1].setText(rowTags[newPos - 1]);
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("lastPos: " + lastPos + "newPos:" + newPos);
 		}
-		for (int i = 0; i < this.rowVarNumber; i++) {
+		for (int i = 0; i < rowVarNumber; i++) {
 			indicesLast2 = (element[(lastPos - 1) * plotNumber + i]
 					.getElementPosition());
 			indicesCol = indicesLast2[1];
@@ -507,10 +506,10 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	 * @param y
 	 */
 	private void attSelectDialog(int x, int y) {
-		attList.setSelectedIndices(this.plottedAttributes);
-		this.rowAttList.setSelectedIndices(this.plottedRowAttributes);
-		if (this.dialog == null) {
-			this.dialog = new JDialog(dummyFrame, "Attributes for Plot", true);
+		attList.setSelectedIndices(plottedAttributes);
+		rowAttList.setSelectedIndices(plottedRowAttributes);
+		if (dialog == null) {
+			dialog = new JDialog(dummyFrame, "Attributes for Plot", true);
 			JButton selectButton;
 			JButton closeButton;
 			dialog.setSize(200, 300);
@@ -518,11 +517,11 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 
 			attList
 					.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-			this.dialogPane = new JScrollPane(attList);
+			dialogPane = new JScrollPane(attList);
 
 			rowAttList
 					.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-			this.rowVarScrollPane = new JScrollPane(rowAttList);
+			rowVarScrollPane = new JScrollPane(rowAttList);
 
 			selectButton = new JButton("Apply");
 			selectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -556,21 +555,21 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 			namePanel.add(new JLabel("Column Vars:"));
 			namePanel.add(new JLabel("Row Var:"));
 			JPanel attPanel = new JPanel(new GridLayout(1, 2));
-			attPanel.add(this.dialogPane);
+			attPanel.add(dialogPane);
 			attPanel.add(rowVarScrollPane);
 			dialog.getContentPane().add(namePanel, BorderLayout.NORTH);
 			dialog.getContentPane().add(attPanel, BorderLayout.CENTER);
 			dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		} else {
-			this.dialogPane.setViewportView(attList);
-			this.rowVarScrollPane.setViewportView(rowAttList);
+			dialogPane.setViewportView(attList);
+			rowVarScrollPane.setViewportView(rowAttList);
 		}
-		this.attList.addListSelectionListener(this);
+		attList.addListSelectionListener(this);
 		rowAttList.addListSelectionListener(this);
-		this.plottedAttributes = attList.getSelectedIndices();
-		this.plottedRowAttributes = rowAttList.getSelectedIndices();
-		this.dialog.setLocation(x, y);
-		this.dialog.setVisible(true);
+		plottedAttributes = attList.getSelectedIndices();
+		plottedRowAttributes = rowAttList.getSelectedIndices();
+		dialog.setLocation(x, y);
+		dialog.setVisible(true);
 	}
 
 	/**
@@ -580,7 +579,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	 */
 	private void selectButton_actionPerformed(ActionEvent e) {
 		plotNumber = plottedAttributes.length;
-		this.rowVarNumber = this.plottedRowAttributes.length;
+		rowVarNumber = plottedRowAttributes.length;
 		init();
 	}
 
@@ -639,15 +638,17 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 			posNew = SwingUtilities.convertPoint((SPTagButton) e.getSource(), e
 					.getX(), e.getY(), UniformBivariateSmallMultiple.this);
 			posNew = matrixLayout.location(posNew.x, posNew.y);
-			if (posNew.x > 4 * (plotNumber - 1))
+			if (posNew.x > 4 * (plotNumber - 1)) {
 				posNew.setLocation(posNew.x / 4 + 1, posNew.y / 4);
-			else
+			} else {
 				posNew.setLocation(posNew.x / 4, posNew.y / 4);
-			logger.finest("PosNewX: " + posNew.x + "posNewY: " +posNew.y);
+			}
+			logger.finest("PosNewX: " + posNew.x + "posNewY: " + posNew.y);
 			int lastPos = 0;
 			int newPos = 0;
-			if (!validCellPos(posDrag) || !validCellPos(posNew))
+			if (!validCellPos(posDrag) || !validCellPos(posNew)) {
 				return;
+			}
 			if ((posDrag.x != posNew.x) && (posDrag.y == 0)) {
 				lastPos = posLast.x;
 				newPos = posNew.x;
@@ -684,21 +685,23 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 					.getX(), e.getY(), UniformBivariateSmallMultiple.this);
 			posNew = matrixLayout.location(posNew.x, posNew.y);
 			if (logger.isLoggable(Level.FINEST)) {
-				logger.finest("PosNew0X: " + posNew.x + "posNew0Y: "
-						+ posNew.y);
+				logger
+						.finest("PosNew0X: " + posNew.x + "posNew0Y: "
+								+ posNew.y);
 			}
-			if (posNew.x > 4 * (plotNumber - 1))
+			if (posNew.x > 4 * (plotNumber - 1)) {
 				posNew.setLocation(posNew.x / 4 + 1, posNew.y / 4);
-			else
+			} else {
 				posNew.setLocation(posNew.x / 4, posNew.y / 4);
+			}
 			if (logger.isLoggable(Level.FINEST)) {
-				logger.finest("PosNewX: " + posNew.x + "posNewY: "
-						+ posNew.y);
+				logger.finest("PosNewX: " + posNew.x + "posNewY: " + posNew.y);
 			}
 			int lastPos = 0;
 			int newPos = 0;
-			if (!validCellPos(posDrag) || !validCellPos(posNew))
+			if (!validCellPos(posDrag) || !validCellPos(posNew)) {
 				return;
+			}
 			if (posDrag.x != posNew.x) {
 				lastPos = posDrag.x;
 				newPos = posNew.x;
@@ -752,13 +755,14 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 	 */
 	public void valueChanged(ListSelectionEvent e) {
 
-		if (e.getValueIsAdjusting())
+		if (e.getValueIsAdjusting()) {
 			return;
+		}
 		JList theList = (JList) e.getSource();
 		if (theList.isSelectionEmpty()) {
 			return;
 		} else {
-			if (e.getSource() == this.attList) {
+			if (e.getSource() == attList) {
 				plottedAttributes = theList.getSelectedIndices();
 			} else {
 				plottedRowAttributes = theList.getSelectedIndices();

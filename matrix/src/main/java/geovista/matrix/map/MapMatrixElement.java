@@ -83,11 +83,12 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	 * 
 	 * @param e
 	 */
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		if ((e.getSource() == this) && (e.getClickCount() > 1)) { // This is a
-																	// double-click
-																	// or
-																	// triple...
+			// double-click
+			// or
+			// triple...
 
 			// if (dataIndices[0] != dataIndices[1]) { //why this??? I guess we
 			// don't want to pop up one from the
@@ -98,11 +99,11 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 			detailMap.setBivarColorClasser(this.bivarColorClasser);
 			detailMap
 					.setSelectedObservations(this.getSelectedObservationsInt()); // need
-																					// to
-																					// do
-																					// this
-																					// here
-																					// because
+			// to
+			// do
+			// this
+			// here
+			// because
 
 			// otherwise the selection won't "take"
 			detailMap.setXVariable(super.currColorColumnX);
@@ -135,12 +136,9 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 
 		// super.tickleColors();
 	}
-	
-	
-	
 
 	public void setElementPosition(int[] dataIndices) {
-		this.elementPosition = (int[]) dataIndices.clone();
+		this.elementPosition = dataIndices.clone();
 		// zero based or one based...
 		// well...
 		// i know...
@@ -225,6 +223,7 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	 * 
 	 * @param g
 	 */
+	@Override
 	public void paintComponent(Graphics g) {
 		if (this.elementPosition == null) {
 			return;
