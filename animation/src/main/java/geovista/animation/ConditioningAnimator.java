@@ -1,25 +1,8 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ConditioningAnimator
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ConditioningAnimator.java,v 1.2 2003/07/10 00:24:56 hardisty Exp $
- $Date: 2003/07/10 00:24:56 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
-package geovista.animation;
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
-import geovista.common.data.DataSetForApps;
-import geovista.common.event.ConditioningEvent;
-import geovista.common.event.ConditioningListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.SubspaceEvent;
-import geovista.common.event.SubspaceListener;
+package geovista.animation;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -45,415 +28,427 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import geovista.common.data.DataSetForApps;
+import geovista.common.event.ConditioningEvent;
+import geovista.common.event.ConditioningListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
-// TODO: Auto-generated Javadoc
 /**
- * ConditioningAnimator is used to send out indication signals that
- * corrispond to current classifications.
+ * ConditioningAnimator is used to send out indication signals that correspond
+ * to current classifications.
  */
 public class ConditioningAnimator extends JPanel implements ActionListener,
-                                                          ChangeListener,
-                                                          DataSetListener,
-                                                          SubspaceListener
-                                                       {
-  
-  /** The timer. */
-  private  Timer ticker;
-  
-  /** The current class index. */
-  private transient int currClassIndex;
-  
-  /** The low conditioning index. */
-  private transient int lowCondIndex;
-  
-  /** The high conditioning index. */
-  private transient int highCondIndex;
-  
-  /** The current conditioning. */
-  private transient int[] currConditioning;
+		ChangeListener, DataSetListener, SubspaceListener {
 
-  /** The start stop button. */
-  private transient JButton startStopButton;
-  
-  /** Flag for going or not. */
-  private transient boolean going = false;
-  
-  /** Delay, in milliseconds. */
-  private  int speed; //in milliseconds
-  
-  /** The data to animate over. */
-  private transient DataSetForApps data;
-  
-  /** The classified observations */
-  private transient ClassedObs[] obs;
-  
-  /** The subspace, in other words, which variables are selected. */
-  private transient int[] subspace;
-  
-  /** Which variables is currently selected in the subspace. */
-  private transient int subspaceIndex;
-  
-  /** The time slider. */
-  private transient JSlider timeSlider;
+	/** The timer. */
+	private final Timer ticker;
 
-  /** The variable dropdown box. */
-  private transient JComboBox varCombo;
-  
+	/** The current class index. */
+	private transient int currClassIndex;
 
-  private transient boolean varComboIsAdjusting;
+	/** The low conditioning index. */
+	private transient int lowCondIndex;
 
-  /** Do we iterate over just the subspace, or over all variables? */
-  private transient JRadioButton subspaceButton;
-  
+	/** The high conditioning index. */
+	private transient int highCondIndex;
 
-  private transient JRadioButton oneVarButton;
-  
+	/** The current conditioning. */
+	private transient int[] currConditioning;
 
-  private  boolean usingSubspace;
-  
+	/** The start stop button. */
+	private transient JButton startStopButton;
 
-  final static Logger logger = Logger.getLogger(ConditioningAnimator.class.getName());
-  
-  /**
-   * null ctr.
-   */
-  public ConditioningAnimator() {
-    this.usingSubspace = true;
-    speed = 250;
-    ticker = new Timer(speed, this);
+	/** Flag for going or not. */
+	private transient boolean going = false;
 
-    this.add(this.makeTopPanel());
+	/** Delay, in milliseconds. */
+	private int speed; // in milliseconds
 
+	/** The data to animate over. */
+	private transient DataSetForApps data;
 
-    this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+	/** The classified observations */
+	private transient ClassedObs[] obs;
 
-  }
-  
-  /**
-   * Make top panel.
-   * 
-   * @return the j panel
-   */
-  private JPanel makeTopPanel(){
-    JPanel topPanel = new JPanel();
-    startStopButton = new JButton("Start");
-    topPanel.add(startStopButton);
-    startStopButton.addActionListener(this);
+	/** The subspace, in other words, which variables are selected. */
+	private transient int[] subspace;
 
-    this.varCombo = new JComboBox();
-    varCombo.addActionListener(this);
-    topPanel.add(varCombo);
+	/** Which variable is currently selected in the subspace. */
+	private transient int subspaceIndex;
 
+	/** The time slider. */
+	private transient JSlider timeSlider;
 
-    this.subspaceButton = new JRadioButton("Iterate over subspace");
-    this.oneVarButton = new JRadioButton("Iterate over one variable");
-    this.subspaceButton.setSelected(true);
-    this.subspaceButton.addActionListener(this);
-    this.oneVarButton.addActionListener(this);
+	/** The variable dropdown box. */
+	private transient JComboBox varCombo;
 
-    ButtonGroup buttGroup = new ButtonGroup();
-    buttGroup.add(subspaceButton);
-    buttGroup.add(oneVarButton);
+	private transient boolean varComboIsAdjusting;
 
-    JPanel buttonHolder = new JPanel();
-    BoxLayout boxLayout = new BoxLayout(buttonHolder,BoxLayout.Y_AXIS);
-    buttonHolder.setLayout(boxLayout);
+	/** Do we iterate over just the subspace, or over all variables? */
+	private transient JRadioButton subspaceButton;
 
-    buttonHolder.add(subspaceButton);
-    buttonHolder.add(oneVarButton);
+	private transient JRadioButton oneVarButton;
 
-    topPanel.add(buttonHolder);
-    timeSlider = new JSlider(1,10,5);
-    topPanel.add(timeSlider);
-    timeSlider.addChangeListener(this);
-    return  topPanel;
-  }
-  
-  /* (non-Javadoc)
-   * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-   */
-  public void stateChanged(ChangeEvent e){
-    if (e.getSource() == this.timeSlider && !this.timeSlider.getValueIsAdjusting()){
-      this.speed = this.timeSlider.getValue() * 50;
-      this.ticker.setDelay(speed);
-    }
-  }
-  
-  /**
-   * Iterate conditionings.
-   */
-  private void iterateConditionings(){//main loop
+	private boolean usingSubspace;
 
-    if (this.highCondIndex < this.data.getNumObservations()-1) { //go up one
-     int index = this.obs[this.lowCondIndex].index;
-     this.currConditioning[index] = 0;
-     this.lowCondIndex++;
-     this.highCondIndex++;
-     index = this.obs[this.highCondIndex].index;
-     this.currConditioning[index] = -1;
-     this.fireConditioningChanged(this.currConditioning);
+	final static Logger logger = Logger.getLogger(ConditioningAnimator.class
+			.getName());
 
-     this.ticker.setDelay(this.speed);
-     currClassIndex++;
-    } else {//go back to zero
-      this.ticker.setDelay(this.speed * 10);
+	/**
+	 * null ctr.
+	 */
+	public ConditioningAnimator() {
+		usingSubspace = true;
+		speed = 250;
+		ticker = new Timer(speed, this);
 
-      currClassIndex = 0; //reset
-      if (this.usingSubspace){
+		this.add(makeTopPanel());
 
-         int currVar = this.iterateSubspace();
+		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
-         this.instantiateCurrentVariable(currVar);
-         this.conditionOutLowerRange();
-         this.varComboIsAdjusting = true;
-         this.varCombo.setSelectedIndex(currVar);
-         this.varComboIsAdjusting = false;
-      }
-    }
-  }
-  
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-   */
-  public void actionPerformed(ActionEvent e) {
-    if (this.data == null){
-      //without data, we don't do anything
-      return;
-    }
-    if (e.getSource() == this.ticker) {
-      this.iterateConditionings();
-    } else if (e.getSource() == this.startStopButton) {
-      if (going) {
-        this.going = false; //turn off
-        this.ticker.stop();
-        this.startStopButton.setText("Start");
-      } else {
-        this.going = true; //turn on
-        this.ticker.start();
-        this.startStopButton.setText("Stop");
-      }
-    } else if (e.getSource() == this.subspaceButton){
-        this.usingSubspace = true;
-    } else if (e.getSource() == this.oneVarButton){
-        this.usingSubspace = false;
-    } else if (e.getSource() == this.varCombo){
-        if (this.obs != null && this.varComboIsAdjusting == false){ //might be null if we are getting started
-          int currVar = this.varCombo.getSelectedIndex();
-          this.instantiateCurrentVariable(currVar);
-          this.conditionOutLowerRange();
-        }
-
-    }
-  }
-
-
-  /**
-   * Iterate subspace.
-   * 
-   * @return the int
-   */
-  private int iterateSubspace(){
-	if (logger.isLoggable(Level.FINEST)){
-		logger.finest("iterating subspace");
 	}
 
-    if (this.subspaceIndex >= subspace.length-1){
-      this.subspaceIndex = 0;
-    } else{
-      this.subspaceIndex++;
-    }
-	if (logger.isLoggable(Level.FINEST)){
-		logger.finest("subspaceIndex = " + subspaceIndex);
+	/**
+	 * Make top panel.
+	 * 
+	 * @return the j panel
+	 */
+	private JPanel makeTopPanel() {
+		JPanel topPanel = new JPanel();
+		startStopButton = new JButton("Start");
+		topPanel.add(startStopButton);
+		startStopButton.addActionListener(this);
+
+		varCombo = new JComboBox();
+		varCombo.addActionListener(this);
+		topPanel.add(varCombo);
+
+		subspaceButton = new JRadioButton("Iterate over subspace");
+		oneVarButton = new JRadioButton("Iterate over one variable");
+		subspaceButton.setSelected(true);
+		subspaceButton.addActionListener(this);
+		oneVarButton.addActionListener(this);
+
+		ButtonGroup buttGroup = new ButtonGroup();
+		buttGroup.add(subspaceButton);
+		buttGroup.add(oneVarButton);
+
+		JPanel buttonHolder = new JPanel();
+		BoxLayout boxLayout = new BoxLayout(buttonHolder, BoxLayout.Y_AXIS);
+		buttonHolder.setLayout(boxLayout);
+
+		buttonHolder.add(subspaceButton);
+		buttonHolder.add(oneVarButton);
+
+		topPanel.add(buttonHolder);
+		timeSlider = new JSlider(1, 10, 5);
+		topPanel.add(timeSlider);
+		timeSlider.addChangeListener(this);
+		return topPanel;
 	}
 
-    int currVar = subspace[this.subspaceIndex]+1;//evil strikes again
-    return currVar;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource() == timeSlider && !timeSlider.getValueIsAdjusting()) {
+			speed = timeSlider.getValue() * 50;
+			ticker.setDelay(speed);
+		}
+	}
 
-  }
-  
-  /**
-   * Instantiate current variable.
-   * 
-   * @param currVar the curr var
-   */
-  private void instantiateCurrentVariable(int currVar){
+	/**
+	 * Iterate conditionings.
+	 */
+	private void iterateConditionings() {// main loop
 
-    double[] values = this.data.getNumericDataAsDouble(currVar);
-    for (int i = 0; i < obs.length; i++){
-      obs[i].index = i;
-      obs[i].value = values[i];
-    }
-    Arrays.sort(obs);
-  }
-  
-  /**
-   * Condition out lower range.
-   */
-  private void conditionOutLowerRange(){
+		if (highCondIndex < data.getNumObservations() - 1) { // go up one
+			int index = obs[lowCondIndex].index;
+			currConditioning[index] = 0;
+			lowCondIndex++;
+			highCondIndex++;
+			index = obs[highCondIndex].index;
+			currConditioning[index] = -1;
+			fireConditioningChanged(currConditioning);
 
-    for (int i = 0; i < this.currConditioning.length; i++){
-      currConditioning[i] = 0;//default == activated
-    }
-    int numObs = this.data.getNumObservations();
-    int fifth = numObs/5;
-    for (int i = 0; i < fifth; i++){
-      int index = obs[i].index;
-      currConditioning[index] = -1;
-    }
-    this.lowCondIndex = 0;
-    this.highCondIndex = fifth -1;
+			ticker.setDelay(speed);
+			currClassIndex++;
+		} else {// go back to zero
+			ticker.setDelay(speed * 10);
 
-  }
-  
-  /* (non-Javadoc)
-   * @see geovista.common.event.SubspaceListener#subspaceChanged(geovista.common.event.SubspaceEvent)
-   */
-  public void subspaceChanged (SubspaceEvent e){
-    this.subspace = e.getSubspace();
-    this.subspaceIndex = 0;
-    int currVar = subspace[subspaceIndex];
-    this.instantiateCurrentVariable(currVar);
-    this.conditionOutLowerRange();
-    this.varComboIsAdjusting = true;
-    this.varCombo.setSelectedIndex(currVar);
-    this.varComboIsAdjusting = false;
+			currClassIndex = 0; // reset
+			if (usingSubspace) {
 
-  }
-  
-  /* (non-Javadoc)
-   * @see geovista.common.event.DataSetListener#dataSetChanged(geovista.common.event.DataSetEvent)
-   */
-  public void dataSetChanged(DataSetEvent e) {
-    this.data = e.getDataSetForApps();
-    this.currConditioning =new int[data.getNumObservations()];
-    String[] numericVarNames = data.getAttributeNamesNumeric();
-    for (int i = 0; i < numericVarNames.length; i++){
-      this.varCombo.addItem(numericVarNames[i]);
-    }
-    //tempArray = new int[data.getNumObservations()];
+				int currVar = iterateSubspace();
 
-    this.obs = new ClassedObs[this.data.getNumObservations()];
-    for (int i = 0; i < obs.length; i++){
-      obs[i] = new ClassedObs();
-    }
-    this.subspace = new int[data.getNumberNumericAttributes()];
-    for (int i = 0; i < subspace.length; i++){
-      subspace[i] = i;
-    }
-    this.subspaceIndex = 0;
-    this.instantiateCurrentVariable(this.subspace[subspaceIndex]);
-    this.conditionOutLowerRange();
-  }
+				instantiateCurrentVariable(currVar);
+				conditionOutLowerRange();
+				varComboIsAdjusting = true;
+				varCombo.setSelectedIndex(currVar);
+				varComboIsAdjusting = false;
+			}
+		}
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e) {
+		if (data == null) {
+			// without data, we don't do anything
+			return;
+		}
+		if (e.getSource() == ticker) {
+			iterateConditionings();
+		} else if (e.getSource() == startStopButton) {
+			if (going) {
+				going = false; // turn off
+				ticker.stop();
+				startStopButton.setText("Start");
+			} else {
+				going = true; // turn on
+				ticker.start();
+				startStopButton.setText("Stop");
+			}
+		} else if (e.getSource() == subspaceButton) {
+			usingSubspace = true;
+		} else if (e.getSource() == oneVarButton) {
+			usingSubspace = false;
+		} else if (e.getSource() == varCombo) {
+			if (obs != null && varComboIsAdjusting == false) { // might be null
+				// if
+				// we are getting
+				// started
+				int currVar = varCombo.getSelectedIndex();
+				instantiateCurrentVariable(currVar);
+				conditionOutLowerRange();
+			}
 
+		}
+	}
 
+	/**
+	 * Iterate subspace.
+	 * 
+	 * @return the int
+	 */
+	private int iterateSubspace() {
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("iterating subspace");
+		}
 
+		if (subspaceIndex >= subspace.length - 1) {
+			subspaceIndex = 0;
+		} else {
+			subspaceIndex++;
+		}
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("subspaceIndex = " + subspaceIndex);
+		}
 
-  /**
-   * adds an ConditioningListener.
-   * 
-   * @param l the l
-   */
-  public void addConditioningListener(ConditioningListener l) {
-    listenerList.add(ConditioningListener.class, l);
-  }
+		int currVar = subspace[subspaceIndex] + 1;// evil strikes again
+		return currVar;
 
-  /**
-   * removes an ConditioningListener from the component.
-   * 
-   * @param l the l
-   */
-  public void removeConditioningListener(ConditioningListener l) {
-    listenerList.remove(ConditioningListener.class, l);
-  }
+	}
 
-  /**
-   * Notify all listeners that have registered interest for
-   * notification on this event type. The event instance
-   * is lazily created using the parameters passed into
-   * the fire method.
-   * 
-   * @param newConditioning the new conditioning
-   * 
-   * @see EventListenerList
-   */
-  private void fireConditioningChanged(int[] newConditioning) {
-    // Guaranteed to return a non-null array
-    Object[] listeners = listenerList.getListenerList();
-    ConditioningEvent e = null;
+	/**
+	 * Instantiate current variable.
+	 * 
+	 * @param currVar
+	 *            the curr var
+	 */
+	private void instantiateCurrentVariable(int currVar) {
 
-    // Process the listeners last to first, notifying
-    // those that are interested in this event
-    for (int i = listeners.length - 2; i >= 0; i -= 2) {
-      if (listeners[i] == ConditioningListener.class) {
-        // Lazily create the event:
-        if (e == null) {
-          e = new ConditioningEvent(this, newConditioning);
-        }
+		double[] values = data.getNumericDataAsDouble(currVar);
+		for (int i = 0; i < obs.length; i++) {
+			obs[i].index = i;
+			obs[i].value = values[i];
+		}
+		Arrays.sort(obs);
+	}
 
-        ((ConditioningListener) listeners[i + 1]).conditioningChanged(e);
-      }
-    }
+	/**
+	 * Condition out lower range.
+	 */
+	private void conditionOutLowerRange() {
 
-    //next i
-  }
+		for (int i = 0; i < currConditioning.length; i++) {
+			currConditioning[i] = 0;// default == activated
+		}
+		int numObs = data.getNumObservations();
+		int fifth = numObs / 5;
+		for (int i = 0; i < fifth; i++) {
+			int index = obs[i].index;
+			currConditioning[index] = -1;
+		}
+		lowCondIndex = 0;
+		highCondIndex = fifth - 1;
 
-  /**
-   * The main method.
-   * 
-   * @param args the arguments
-   */
-  public static void main(String[] args) {
-    ConditioningAnimator inAnim = new ConditioningAnimator();
+	}
 
-    JFrame app = new JFrame();
-    app.addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent e) {
-        System.exit(0);
-      }
-    });
-    app.getContentPane().setLayout(new BorderLayout());
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geovista.common.event.SubspaceListener#subspaceChanged(geovista.common.event.SubspaceEvent)
+	 */
+	public void subspaceChanged(SubspaceEvent e) {
+		subspace = e.getSubspace();
+		subspaceIndex = 0;
+		int currVar = subspace[subspaceIndex];
+		instantiateCurrentVariable(currVar);
+		conditionOutLowerRange();
+		varComboIsAdjusting = true;
+		varCombo.setSelectedIndex(currVar);
+		varComboIsAdjusting = false;
 
-    app.getContentPane().add(inAnim);
-    app.pack();
-    app.setVisible(true);
-  }
+	}
 
-  /**
-   * The Class ClassedObs.
-   */
-  private class ClassedObs implements Comparable {
-    
-    /** The index. */
-    int index;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see geovista.common.event.DataSetListener#dataSetChanged(geovista.common.event.DataSetEvent)
+	 */
+	public void dataSetChanged(DataSetEvent e) {
+		data = e.getDataSetForApps();
+		currConditioning = new int[data.getNumObservations()];
+		String[] numericVarNames = data.getAttributeNamesNumeric();
+		for (String element : numericVarNames) {
+			varCombo.addItem(element);
+		}
+		// tempArray = new int[data.getNumObservations()];
 
-    /** The value. */
-    double value;
+		obs = new ClassedObs[data.getNumObservations()];
+		for (int i = 0; i < obs.length; i++) {
+			obs[i] = new ClassedObs();
+		}
+		subspace = new int[data.getNumberNumericAttributes()];
+		for (int i = 0; i < subspace.length; i++) {
+			subspace[i] = i;
+		}
+		subspaceIndex = 0;
+		instantiateCurrentVariable(subspace[subspaceIndex]);
+		conditionOutLowerRange();
+	}
 
-    //we compare by value
-    /* (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    public int compareTo(Object o) {
-      ClassedObs e = (ClassedObs) o;
-      int val = 0;
-      if (Double.isNaN(e.value)){
-        if (Double.isNaN(this.value)){
-          return 0;
-        } else {
-          return 1;
-        }
-      }//end if the other value is NaN
+	/**
+	 * adds an ConditioningListener.
+	 * 
+	 * @param l
+	 *            the l
+	 */
+	public void addConditioningListener(ConditioningListener l) {
+		listenerList.add(ConditioningListener.class, l);
+	}
 
-      if (Double.isNaN(this.value)){
-        val = -1;//everything is bigger than NaN
-      } else if (this.value < e.value) {
-        val = -1;
-      } else if (this.value > e.value) {
-        val = 1;
-      }
+	/**
+	 * removes an ConditioningListener from the component.
+	 * 
+	 * @param l
+	 *            the l
+	 */
+	public void removeConditioningListener(ConditioningListener l) {
+		listenerList.remove(ConditioningListener.class, l);
+	}
 
-      return val;
-    }
-  }
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @param newConditioning
+	 *            the new conditioning
+	 * 
+	 * @see EventListenerList
+	 */
+	private void fireConditioningChanged(int[] newConditioning) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		ConditioningEvent e = null;
+
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == ConditioningListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					e = new ConditioningEvent(this, newConditioning);
+				}
+
+				((ConditioningListener) listeners[i + 1])
+						.conditioningChanged(e);
+			}
+		}
+
+		// next i
+	}
+
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *            the arguments
+	 */
+	public static void main(String[] args) {
+		ConditioningAnimator inAnim = new ConditioningAnimator();
+
+		JFrame app = new JFrame();
+		app.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		app.getContentPane().setLayout(new BorderLayout());
+
+		app.getContentPane().add(inAnim);
+		app.pack();
+		app.setVisible(true);
+	}
+
+	/**
+	 * The Class ClassedObs.
+	 */
+	private class ClassedObs implements Comparable {
+
+		/** The index. */
+		int index;
+
+		/** The value. */
+		double value;
+
+		// we compare by value
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Comparable#compareTo(java.lang.Object)
+		 */
+		public int compareTo(Object o) {
+			ClassedObs e = (ClassedObs) o;
+			int val = 0;
+			if (Double.isNaN(e.value)) {
+				if (Double.isNaN(value)) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}// end if the other value is NaN
+
+			if (Double.isNaN(value)) {
+				val = -1;// everything is bigger than NaN
+			} else if (value < e.value) {
+				val = -1;
+			} else if (value > e.value) {
+				val = 1;
+			}
+
+			return val;
+		}
+	}
 }
