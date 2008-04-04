@@ -17,7 +17,6 @@ import geovista.common.data.DataSetForApps;
 public class ClassifierMaximumLikelihood {
 
 	private String[] attributesDisplay;
-	private String[] trainingAtt;
 	private Vector[] trainingDataVector;
 	private int classnumber = 5; // number of classes
 	private MultiGaussian[] multiGaussian;
@@ -152,7 +151,6 @@ public class ClassifierMaximumLikelihood {
 	}
 
 	public void setTrainingAttributesLabels(String[] att) {
-		trainingAtt = att;
 	}
 
 	// private void maximumClassifier(){
