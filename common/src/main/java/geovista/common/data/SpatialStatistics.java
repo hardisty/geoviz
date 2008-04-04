@@ -50,6 +50,7 @@ public abstract class SpatialStatistics {
 
 	public static double[] calculateRandomMoranScores(double[] zData,
 			SpatialWeights sw) {
+		logger.finest("calculating moran scores");
 		double[] moranData;
 		moranData = new double[zData.length];
 		System.arraycopy(zData, 0, moranData, 0, zData.length);

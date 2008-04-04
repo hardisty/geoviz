@@ -22,11 +22,11 @@ public class SonicClassifierTest extends TestCase {
 
 	@Override
 	protected void setUp() {
-		sClasser = new SonicClassifier();
+		// sClasser = new SonicClassifier();
 		CoordinationManager coord = new CoordinationManager();
 		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
-		coord.addBean(sClasser);
+		// coord.addBean(sClasser);
 		coord.addBean(shpToShape);
 		shpToShape.setInputDataSet(stateData.getDataSet());
 	}

@@ -40,7 +40,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 	public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
 	public static final int VARIABLE_CHOOSER_MODE_HIDDEN = 2;
 	private int nClasses;
-	private double[] classBreaks;
+
 	private int[] previousClassification;
 	private int[] classification;
 	private final boolean update;

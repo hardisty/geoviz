@@ -14,7 +14,6 @@ import javax.swing.event.EventListenerList;
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeoDataSource;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
 
 /**
  * Reads shapefiles from included resources
@@ -32,7 +31,6 @@ public abstract class GeoDataClassResource implements GeoDataSource {
 
 	private transient DataSetForApps dataForApps;
 	private transient EventListenerList listenerList;
-	private transient ShapeFileDataReader shpReader;
 	protected final static Logger logger = Logger
 			.getLogger(GeoDataClassResource.class.getName());
 
