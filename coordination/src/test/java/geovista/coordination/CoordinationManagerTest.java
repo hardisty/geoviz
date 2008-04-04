@@ -1,9 +1,9 @@
-/**
- * 
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.coordination;
 
-import geovista.common.event.IndicationListener;
 import junit.framework.TestCase;
 
 /**
@@ -31,14 +31,6 @@ public class CoordinationManagerTest extends TestCase {
 		coord = new CoordinationManager();
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Test method for
 	 * {@link geovista.coordination.CoordinationManager#addBean(java.lang.Object)}.
@@ -54,7 +46,6 @@ public class CoordinationManagerTest extends TestCase {
 		ExampleBean coorBean3 = new ExampleBean();
 		ExampleBean coorBean4 = new ExampleBean();
 
-
 		coord.addBean(coorBean);
 		coord.addBean(coorBean2);
 		coord.addBean(coorBean3);
@@ -66,25 +57,20 @@ public class CoordinationManagerTest extends TestCase {
 		assertTrue(coorBean.getIndication() == 1);
 		coord.removeBean(coorBean);
 
-		
-		//coorBean2.setIndication(10);
-		//coorBean2.fireIndicationChanged(10);
-		
-		
-		
-		assertTrue(coorBean.getIndication() == 1);
-		
-		//duplicate removal
-		//coord.removeBean(coorBean);
+		// coorBean2.setIndication(10);
+		// coorBean2.fireIndicationChanged(10);
 
+		assertTrue(coorBean.getIndication() == 1);
+
+		// duplicate removal
+		// coord.removeBean(coorBean);
 
 		// trigger events
 		coorBean.setIndication(10);
 		coorBean.fireIndicationChanged(10);
 
+		assertTrue(coorBean3.getIndication() == 1);
 
-		assertTrue(coorBean3.getIndication()==1);
-		
 		// let's remove, add, and remove beans and see if that goes ok
 		coord.removeBean(coorBean4);
 		coord.addBean(coorBean4);
@@ -92,9 +78,9 @@ public class CoordinationManagerTest extends TestCase {
 		coord.removeBean(coorBean4);
 		coord.removeBean(coorBean3);
 		coord.removeBean(coorBean3);
-		//assertTrue(coorBean3.getIndication() == 2);
-		
-		//assertTrue(coorBean.getIndication() == 0);
+		// assertTrue(coorBean3.getIndication() == 2);
+
+		// assertTrue(coorBean.getIndication() == 0);
 		// OK, let's try some other beans.
 
 	}
