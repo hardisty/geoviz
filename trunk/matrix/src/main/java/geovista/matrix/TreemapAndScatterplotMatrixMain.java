@@ -29,8 +29,9 @@ import geovista.common.event.DataSetEvent;
 import geovista.geoviz.sample.GeoData48States;
 
 /**
- * Special geovista.matrix.treemap.tm that knows how to handle quantitative data. Responds to and
- * broadcasts DataSetChanged, IndicationChanged etc. events.
+ * Special geovista.matrix.treemap.tm that knows how to handle quantitative
+ * data. Responds to and broadcasts DataSetChanged, IndicationChanged etc.
+ * events.
  * 
  * @author Frank Hardisty
  * @version $Revision: 1.1 $

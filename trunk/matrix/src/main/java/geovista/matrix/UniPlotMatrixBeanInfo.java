@@ -1,13 +1,8 @@
-package geovista.matrix;
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
-/**
- * <p>Title: UniPlotMatrixBeanInfo</p>
- * <p>Description: Bean info for UniPlotMatrix</p>
- * <p>Copyright: GeoVISTA Center Copyright (c) 2001</p>
- * <p>Company: GeoVISTA Center</p>
- * @author Xiping Dai
- * @version 1.0
- */
+package geovista.matrix;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -23,50 +18,67 @@ public class UniPlotMatrixBeanInfo extends SimpleBeanInfo {
 	String iconMono32x32Filename;
 
 	public UniPlotMatrixBeanInfo() {
-    }
+	}
 
+	@Override
 	public PropertyDescriptor[] getPropertyDescriptors() {
 		try {
-			PropertyDescriptor _background = new PropertyDescriptor("background", beanClass, "getBackground", "setBackground");
-			PropertyDescriptor _selectionColor = new PropertyDescriptor("selectionColor", beanClass, "getSelectionColor", "setSelectionColor");
-			PropertyDescriptor _selOriginalColorMode = new PropertyDescriptor("selOriginalColorMode", beanClass, "getSelOriginalColorMode", "setSelOriginalColorMode");
-			PropertyDescriptor _maxNumArrays = new PropertyDescriptor("maxNumArrays", beanClass, "getMaxNumArrays", "setMaxNumArrays");
-			PropertyDescriptor _plottedBegin = new PropertyDescriptor("plottedBegin", beanClass, "getPlottedBegin", "setPlottedBegin");
-			PropertyDescriptor _elementClassName = new PropertyDescriptor("elementClassName", beanClass);
-			PropertyDescriptor[] pds = new PropertyDescriptor[] {
-				_background,
-				_selectionColor, _selOriginalColorMode, _maxNumArrays, _plottedBegin, _elementClassName};
+			PropertyDescriptor _background = new PropertyDescriptor(
+					"background", beanClass, "getBackground", "setBackground");
+			PropertyDescriptor _selectionColor = new PropertyDescriptor(
+					"selectionColor", beanClass, "getSelectionColor",
+					"setSelectionColor");
+			PropertyDescriptor _selOriginalColorMode = new PropertyDescriptor(
+					"selOriginalColorMode", beanClass,
+					"getSelOriginalColorMode", "setSelOriginalColorMode");
+			PropertyDescriptor _maxNumArrays = new PropertyDescriptor(
+					"maxNumArrays", beanClass, "getMaxNumArrays",
+					"setMaxNumArrays");
+			PropertyDescriptor _plottedBegin = new PropertyDescriptor(
+					"plottedBegin", beanClass, "getPlottedBegin",
+					"setPlottedBegin");
+			PropertyDescriptor _elementClassName = new PropertyDescriptor(
+					"elementClassName", beanClass);
+			PropertyDescriptor[] pds = new PropertyDescriptor[] { _background,
+					_selectionColor, _selOriginalColorMode, _maxNumArrays,
+					_plottedBegin, _elementClassName };
 			return pds;
 
-}
-		catch(IntrospectionException ex) {
+		} catch (IntrospectionException ex) {
 			ex.printStackTrace();
 			return null;
 		}
 	}
+
+	@Override
 	public java.awt.Image getIcon(int iconKind) {
 		switch (iconKind) {
 		case BeanInfo.ICON_COLOR_16x16:
-			  return iconColor16x16Filename != null ? loadImage(iconColor16x16Filename) : null;
+			return iconColor16x16Filename != null
+					? loadImage(iconColor16x16Filename) : null;
 		case BeanInfo.ICON_COLOR_32x32:
-			  return iconColor32x32Filename != null ? loadImage(iconColor32x32Filename) : null;
+			return iconColor32x32Filename != null
+					? loadImage(iconColor32x32Filename) : null;
 		case BeanInfo.ICON_MONO_16x16:
-			  return iconMono16x16Filename != null ? loadImage(iconMono16x16Filename) : null;
+			return iconMono16x16Filename != null
+					? loadImage(iconMono16x16Filename) : null;
 		case BeanInfo.ICON_MONO_32x32:
-			  return iconMono32x32Filename != null ? loadImage(iconMono32x32Filename) : null;
-								}
+			return iconMono32x32Filename != null
+					? loadImage(iconMono32x32Filename) : null;
+		}
 		return null;
 	}
+
+	@Override
 	public BeanInfo[] getAdditionalBeanInfo() {
 		Class superclass = beanClass.getSuperclass();
 		try {
 			BeanInfo superBeanInfo = Introspector.getBeanInfo(superclass);
 			return new BeanInfo[] { superBeanInfo };
-		}
-		catch(IntrospectionException ex) {
+		} catch (IntrospectionException ex) {
 			ex.printStackTrace();
 			return null;
 		}
-    }
+	}
 
 }
