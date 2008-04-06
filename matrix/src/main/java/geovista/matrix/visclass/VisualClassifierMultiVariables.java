@@ -1,10 +1,14 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
+
 package geovista.matrix.visclass;
 
 /**
- * Title: VisualClassifierMultiVariables
+ * 
  * Description: Viasual classifier for multi-variables, such as K-means.
- * Copyright:    Copyright (c) 2001
- * Company: GeoVISTA
+ * Copyright: Copyright (c) 2001 Company: GeoVISTA
+ * 
  * @author Xiping Dai
  * @version 1.0
  */
@@ -920,12 +924,12 @@ public class VisualClassifierMultiVariables extends JPanel implements
 			fireActionPerformed(VisualClassifierMultiVariables.COMMAND_COLORS_CHANGED);
 			// this.fireColorClassifierPerformed();
 		} /*
-		 * else if (command == this.COMMAND_CLASSES_CHANGED) {
-		 * this.colorPickerPanel.setNSwatches(nClasses); this.nClasses =
-		 * nClasses; this.makeColors();
-		 * this.fireActionPerformed(this.COMMAND_COLORS_CHANGED);
-		 * //this.fireColorClassifierPerformed(); }
-		 */
+			 * else if (command == this.COMMAND_CLASSES_CHANGED) {
+			 * this.colorPickerPanel.setNSwatches(nClasses); this.nClasses =
+			 * nClasses; this.makeColors();
+			 * this.fireActionPerformed(this.COMMAND_COLORS_CHANGED);
+			 * //this.fireColorClassifierPerformed(); }
+			 */
 		// need to pass this along, if we are a FoldupPanel
 		// super.actionPerformed(e);
 	}
