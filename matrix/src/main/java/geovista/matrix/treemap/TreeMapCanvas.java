@@ -1,24 +1,7 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class TreeMapCanvas
- Copyright (c), 2003, Frank Hardisty
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: TreeMapCanvas.java,v 1.4 2005/03/28 14:58:31 hardisty Exp $
- $Date: 2005/03/28 14:58:31 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.matrix.treemap;
 
 import java.awt.BorderLayout;
@@ -30,7 +13,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
-
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
@@ -53,303 +35,321 @@ import geovista.treemap.tm.TMView;
 /**
  * Paints an array of TreeMapCanvas. Responds to and broadcasts DataSetChanged,
  * IndicationChanged etc. events.
- *
+ * 
  * @author Frank Hardisty
  * @version $Revision: 1.4 $
  */
-public class TreeMapCanvas
-    extends JPanel implements DataSetListener, DataSetModifiedListener,
-    IndicationListener, SubspaceListener,
-    ColorArrayListener, MouseListener,
-    MouseMotionListener {
-	protected final static Logger logger = Logger.getLogger(TreeMapCanvas.class.getName());
-  private TMDataNode root = null; // the root of the tree
-  TMDataSize fSize;
-  TMDataDraw fDraw;
-  int indication;
-  TMView tmview;
-  DataSetForApps dataSet;
-  TMDataNode[] leaves;
-  int[] classification;
-  Color[] colors;
-  int groupingVarID;
-  int sizingVarID;
-  int colorVarID;
+public class TreeMapCanvas extends JPanel implements DataSetListener,
+		DataSetModifiedListener, IndicationListener, SubspaceListener,
+		ColorArrayListener, MouseListener, MouseMotionListener {
+	protected final static Logger logger = Logger.getLogger(TreeMapCanvas.class
+			.getName());
+	private TMDataNode root = null; // the root of the tree
+	TMDataSize fSize;
+	TMDataDraw fDraw;
+	int indication;
+	TMView tmview;
+	DataSetForApps dataSet;
+	TMDataNode[] leaves;
+	int[] classification;
+	Color[] colors;
+	int groupingVarID;
+	int sizingVarID;
+	int colorVarID;
 
-  public TreeMapCanvas() {
-    this.setLayout(new BorderLayout());
-    root = new TMDataNode(0d, "root");
-    fSize = new TMDataSize();
-    fDraw = new TMDataDraw();
-    geovista.treemap.tm.TreeMap treeMap = new geovista.treemap.tm.TreeMap(root);
-    tmview = treeMap.getView(fSize, fDraw);
-    this.add(tmview, BorderLayout.CENTER);
-    this.addMouseListener(this);
-    this.addMouseMotionListener(this);
-    tmview.addMouseListener(this);
-    tmview.addMouseMotionListener(this);
-  }
+	public TreeMapCanvas() {
+		setLayout(new BorderLayout());
+		root = new TMDataNode(0d, "root");
+		fSize = new TMDataSize();
+		fDraw = new TMDataDraw();
+		geovista.treemap.tm.TreeMap treeMap = new geovista.treemap.tm.TreeMap(
+				root);
+		tmview = treeMap.getView(fSize, fDraw);
+		this.add(tmview, BorderLayout.CENTER);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		tmview.addMouseListener(this);
+		tmview.addMouseMotionListener(this);
+	}
 
-  private String findRootName() {
-    if (this.dataSet == null) {
-      return "no data set";
-    }
-    String rootName = "";
-    rootName = rootName + "Colored by: " +
-        this.dataSet.getNumericArrayName(this.colorVarID);
-    rootName = rootName + ", Grouped by: " +
-        this.dataSet.getNumericArrayName(this.groupingVarID);
-    rootName = rootName + ", Sized by: " +
-        this.dataSet.getNumericArrayName(this.sizingVarID);
+	private String findRootName() {
+		if (dataSet == null) {
+			return "no data set";
+		}
+		String rootName = "";
+		rootName = rootName + "Colored by: "
+				+ dataSet.getNumericArrayName(colorVarID);
+		rootName = rootName + ", Grouped by: "
+				+ dataSet.getNumericArrayName(groupingVarID);
+		rootName = rootName + ", Sized by: "
+				+ dataSet.getNumericArrayName(sizingVarID);
 
-    return rootName;
-  }
+		return rootName;
+	}
 
-  private void initTMView() {
-    String rootName = findRootName();
-    this.root = new TMDataNode(0, rootName);
-    if (dataSet == null || this.classification == null) {
-      return;
-    }
+	private void initTMView() {
+		String rootName = findRootName();
+		root = new TMDataNode(0, rootName);
+		if (dataSet == null || classification == null) {
+			return;
+		}
 
-    int nObs = dataSet.getNumObservations();
-    leaves = new TMDataNode[nObs];
+		int nObs = dataSet.getNumObservations();
+		leaves = new TMDataNode[nObs];
 
-    String varName = dataSet.getNumericArrayName(this.groupingVarID);
-    int nBranches = DescriptiveStatistics.max(this.classification) + 1;
-    TMDataNode[] branches = new TMDataNode[nBranches];
-    double[] branchMin = new double[nBranches];
-    double[] branchMax = new double[nBranches];
+		String varName = dataSet.getNumericArrayName(groupingVarID);
+		int nBranches = DescriptiveStatistics.max(classification) + 1;
+		TMDataNode[] branches = new TMDataNode[nBranches];
+		double[] branchMin = new double[nBranches];
+		double[] branchMax = new double[nBranches];
 
-    for (int i = 0; i < branches.length; i++) {
-      TMDataNode branch = new TMDataNode(0, varName + " branch " + i);
-      branches[i] = branch;
-      branchMin[i] = Double.MAX_VALUE;
-      branchMax[i] = Double.MAX_VALUE * -1;
-    }
+		for (int i = 0; i < branches.length; i++) {
+			TMDataNode branch = new TMDataNode(0, varName + " branch " + i);
+			branches[i] = branch;
+			branchMin[i] = Double.MAX_VALUE;
+			branchMax[i] = Double.MAX_VALUE * -1;
+		}
 
-    for (int i = 0; i < nObs; i++) {
-      double val = dataSet.getNumericValueAsDouble(this.sizingVarID, i);
-      double branchVal = dataSet.getNumericValueAsDouble(this.groupingVarID,i);
-      String name = dataSet.getObservationName(i);
-      TMDataNode aData = new TMDataNode(val, name);
-      int whichBranch = this.classification[i];
-      branches[whichBranch].addChild(aData);
-      if (branchVal < branchMin[whichBranch]) {
-        branchMin[whichBranch] = branchVal;
-      }
-      if (branchVal > branchMax[whichBranch]) {
-        branchMax[whichBranch] = branchVal;
-      }
+		for (int i = 0; i < nObs; i++) {
+			double val = dataSet.getNumericValueAsDouble(sizingVarID, i);
+			double branchVal = dataSet
+					.getNumericValueAsDouble(groupingVarID, i);
+			String name = dataSet.getObservationName(i);
+			TMDataNode aData = new TMDataNode(val, name);
+			int whichBranch = classification[i];
+			branches[whichBranch].addChild(aData);
+			if (branchVal < branchMin[whichBranch]) {
+				branchMin[whichBranch] = branchVal;
+			}
+			if (branchVal > branchMax[whichBranch]) {
+				branchMax[whichBranch] = branchVal;
+			}
 
-      leaves[i] = aData;
-      if (this.colors != null) {
-        leaves[i].setColor(this.colors[i]);
-      }
-    }
-    for (int i = 0; i < branches.length; i++) {
-      root.addChild(branches[i]);
-      branches[i].setName(branchMin[i] + " < " + varName + " < " +  branchMax[i]);
-    }
+			leaves[i] = aData;
+			if (colors != null) {
+				leaves[i].setColor(colors[i]);
+			}
+		}
+		for (int i = 0; i < branches.length; i++) {
+			root.addChild(branches[i]);
+			branches[i].setName(branchMin[i] + " < " + varName + " < "
+					+ branchMax[i]);
+		}
 
-    geovista.treemap.tm.TreeMap treeMap = new geovista.treemap.tm.TreeMap(root); //xxx fix me? do we need a new tree every time?
-    tmview = treeMap.getView(fSize, fDraw);
-    tmview.addMouseListener(this);
-    tmview.addMouseMotionListener(this);
-    this.removeAll();
-    this.add(tmview, BorderLayout.CENTER);
+		geovista.treemap.tm.TreeMap treeMap = new geovista.treemap.tm.TreeMap(
+				root); // xxx
+		// fix
+		// me?
+		// do
+		// we
+		// need
+		// a
+		// new
+		// tree
+		// every
+		// time?
+		tmview = treeMap.getView(fSize, fDraw);
+		tmview.addMouseListener(this);
+		tmview.addMouseMotionListener(this);
+		removeAll();
+		this.add(tmview, BorderLayout.CENTER);
 
-  }
+	}
 
-  public void dataSetChanged(DataSetEvent e) {
-    this.dataSet = e.getDataSetForApps();
-    initTMView();
-  }
+	public void dataSetChanged(DataSetEvent e) {
+		dataSet = e.getDataSetForApps();
+		initTMView();
+	}
 
-  public void dataSetModified(DataSetModifiedEvent e) {
+	public void dataSetModified(DataSetModifiedEvent e) {
 
-  }
+	}
 
-  public void subspaceChanged(SubspaceEvent e) {
+	public void subspaceChanged(SubspaceEvent e) {
 
-  }
+	}
 
-  public void classificationChanged(ClassificationEvent e) {
-    int[] newClasses = e.getClassification();
-    this.setClassification(newClasses);
-  }
+	public void classificationChanged(ClassificationEvent e) {
+		int[] newClasses = e.getClassification();
+		setClassification(newClasses);
+	}
 
-  public void setClassification(int[] newClasses) {
-    this.classification = newClasses;
-    this.initTMView();
-  }
-public void setLayoutMethod(String layoutMethod) {
+	public void setClassification(int[] newClasses) {
+		classification = newClasses;
+		initTMView();
+	}
 
-    tmview.setAlgorithm(layoutMethod);
-  }
-  public void setGroupingVarID(int groupingVarID) {
-    this.groupingVarID = groupingVarID;
-  }
+	public void setLayoutMethod(String layoutMethod) {
 
-  public void setSizingVarID(int sizingVarID) {
-    if (this.sizingVarID == sizingVarID || this.dataSet == null) {
-      return;
-    }
-    this.sizingVarID = sizingVarID;
-    double[] data = this.dataSet.getNumericDataAsDouble(sizingVarID);
-    if (this.leaves == null) {
-      return;
-    }
-    for (int i = 0; i < data.length; i++) {
-      leaves[i].setValue(data[i]);
+		tmview.setAlgorithm(layoutMethod);
+	}
 
-    }
-    //xxx fah we should do the line following, instead of initTMView
-    //xxx but the method doesn't exist yet...
-    //tmview.changeTMComputeSize(new TMComputeSize());
-    this.initTMView();
+	public void setGroupingVarID(int groupingVarID) {
+		this.groupingVarID = groupingVarID;
+	}
 
-  }
+	public void setSizingVarID(int sizingVarID) {
+		if (this.sizingVarID == sizingVarID || dataSet == null) {
+			return;
+		}
+		this.sizingVarID = sizingVarID;
+		double[] data = dataSet.getNumericDataAsDouble(sizingVarID);
+		if (leaves == null) {
+			return;
+		}
+		for (int i = 0; i < data.length; i++) {
+			leaves[i].setValue(data[i]);
 
-  public void setColorVarID(int colorVarID) {
-    this.colorVarID = colorVarID;
-    this.root.setName(this.findRootName());
+		}
+		// xxx fah we should do the line following, instead of initTMView
+		// xxx but the method doesn't exist yet...
+		// tmview.changeTMComputeSize(new TMComputeSize());
+		initTMView();
 
-  }
+	}
 
-  public void colorArrayChanged(ColorArrayEvent e) {
-    Color[] dataColors = e.getColors();
-    this.colors = dataColors; //remember these for when leaves get made, if not now
-    if (this.leaves == null || this.dataSet == null) {
-      return;
-    }
-    for (int i = 0; i < dataColors.length; i++) {
-      leaves[i].setColor(dataColors[i]);
+	public void setColorVarID(int colorVarID) {
+		this.colorVarID = colorVarID;
+		root.setName(findRootName());
 
-    }
-    if (this.root != null) {
-      tmview.changeTMComputeDraw(new TMDataDraw());
-    }
-  }
+	}
 
-  public void indicationChanged(IndicationEvent e) {
-    int newIndication = e.getIndication();
-logger.finest("this.indicaiton = " + this.indication);
-logger.finest("new  = " + newIndication);
+	public void colorArrayChanged(ColorArrayEvent e) {
+		Color[] dataColors = e.getColors();
+		colors = dataColors; // remember these for when leaves get made, if
+		// not now
+		if (leaves == null || dataSet == null) {
+			return;
+		}
+		for (int i = 0; i < dataColors.length; i++) {
+			leaves[i].setColor(dataColors[i]);
 
-    //need to fix old one?
-    if (newIndication < 0 && this.indication >= 0) { //new indication is out of range, old was was in range
-      this.leaves[indication].setIsIndicated(false);
+		}
+		if (root != null) {
+			tmview.changeTMComputeDraw(new TMDataDraw());
+		}
+	}
 
-      this.indication = newIndication;
-      tmview.repaint();
-      tmview.changeTMComputeDraw(new TMDataDraw());
-    }
-    if (newIndication != this.indication && this.leaves != null && newIndication >= 0 &&
-        newIndication < this.leaves.length) {
-      if (this.indication >= 0) {
-        this.leaves[indication].setIsIndicated(false);
-      }
-      this.leaves[newIndication].setIsIndicated(true);
-      this.indication = newIndication;
+	public void indicationChanged(IndicationEvent e) {
+		int newIndication = e.getIndication();
+		logger.finest("this.indicaiton = " + indication);
+		logger.finest("new  = " + newIndication);
 
-      tmview.changeTMComputeDraw(new TMDataDraw());
+		// need to fix old one?
+		if (newIndication < 0 && indication >= 0) { // new indication is out
+			// of range, old was was
+			// in range
+			leaves[indication].setIsIndicated(false);
 
-    }
-  }
+			indication = newIndication;
+			tmview.repaint();
+			tmview.changeTMComputeDraw(new TMDataDraw());
+		}
+		if (newIndication != indication && leaves != null && newIndication >= 0
+				&& newIndication < leaves.length) {
+			if (indication >= 0) {
+				leaves[indication].setIsIndicated(false);
+			}
+			leaves[newIndication].setIsIndicated(true);
+			indication = newIndication;
 
-  //start mouse events
-  /***
-   * Interface methods for mouse events
-   *  * **/
-  public void mouseClicked(MouseEvent e) {
+			tmview.changeTMComputeDraw(new TMDataDraw());
 
-  }
+		}
+	}
 
-  public void mousePressed(MouseEvent e) {
+	// start mouse events
+	/***************************************************************************
+	 * Interface methods for mouse events *
+	 **************************************************************************/
+	public void mouseClicked(MouseEvent e) {
 
-  }
+	}
 
-  public void mouseReleased(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 
-  }
+	}
 
-  public void mouseEntered(MouseEvent e) {
+	public void mouseReleased(MouseEvent e) {
 
-  }
+	}
 
-  public void mouseExited(MouseEvent e) {
-    this.fireIndicationChanged( -1); //clear indication
-    this.indicationChanged(new IndicationEvent(this, -1));
-  }
+	public void mouseEntered(MouseEvent e) {
 
-  public void mouseDragged(MouseEvent e) {
+	}
 
-  }
+	public void mouseExited(MouseEvent e) {
+		fireIndicationChanged(-1); // clear indication
+		indicationChanged(new IndicationEvent(this, -1));
+	}
 
-  public void mouseMoved(MouseEvent e) {
+	public void mouseDragged(MouseEvent e) {
 
-    if (this.tmview == null || this.dataSet == null) {
-      return;
-    }
-    int whichPlot = -1;
-    Object node = tmview.getNodeUnderTheMouse(e);
-    if(node == null){
-      return;//can't find anything, so forget about it.
-    }
-    for (int i = 0; i < this.leaves.length; i++) {
-      if (node == leaves[i]) {
-        whichPlot = i;
-      }
-    }
+	}
 
-    this.fireIndicationChanged(whichPlot);
+	public void mouseMoved(MouseEvent e) {
 
-  }
+		if (tmview == null || dataSet == null) {
+			return;
+		}
+		int whichPlot = -1;
+		Object node = tmview.getNodeUnderTheMouse(e);
+		if (node == null) {
+			return;// can't find anything, so forget about it.
+		}
+		for (int i = 0; i < leaves.length; i++) {
+			if (node == leaves[i]) {
+				whichPlot = i;
+			}
+		}
 
-//end mouse events
-  /**
-   * adds an IndicationListener to the component
-   */
-  public void addIndicationListener(IndicationListener l) {
-    listenerList.add(IndicationListener.class, l);
-  }
+		fireIndicationChanged(whichPlot);
 
-  /**
-   * removes an IndicationListener from the component
-   */
-  public void removeIndicationListener(IndicationListener l) {
-    listenerList.remove(IndicationListener.class, l);
-  }
+	}
 
-  /**
-   * Notify all listeners that have registered interest for
-   * notification on this event type. The event instance
-   * is lazily created using the parameters passed into
-   * the fire method.
-   * @see EventListenerList
-   */
-  public void fireIndicationChanged(int indication) {
-    // Guaranteed to return a non-null array
-    Object[] listeners = listenerList.getListenerList();
-    IndicationEvent e = null;
+	// end mouse events
+	/**
+	 * adds an IndicationListener to the component
+	 */
+	public void addIndicationListener(IndicationListener l) {
+		listenerList.add(IndicationListener.class, l);
+	}
 
-    // Process the listeners last to first, notifying
-    // those that are interested in this event
-    for (int i = listeners.length - 2; i >= 0; i -= 2) {
-      if (listeners[i] == IndicationListener.class) {
-        // Lazily create the event:
-        if (e == null) {
-          e = new IndicationEvent(this, indication);
-        }
+	/**
+	 * removes an IndicationListener from the component
+	 */
+	public void removeIndicationListener(IndicationListener l) {
+		listenerList.remove(IndicationListener.class, l);
+	}
 
-        ( (IndicationListener) listeners[i + 1]).indicationChanged(e);
-      }
-    }
-  }
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	public void fireIndicationChanged(int indication) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		IndicationEvent e = null;
 
-  public int getGroupingVarID() {
-    return groupingVarID;
-  }
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == IndicationListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					e = new IndicationEvent(this, indication);
+				}
 
-} //end class
+				((IndicationListener) listeners[i + 1]).indicationChanged(e);
+			}
+		}
+	}
+
+	public int getGroupingVarID() {
+		return groupingVarID;
+	}
+
+} // end class

@@ -1,18 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class TreeMapMatrixElement
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: TreeMapMatrixElement.java,v 1.2 2005/03/24 20:40:36 hardisty Exp $
- $Date: 2005/03/24 20:40:36 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.matrix.treemap;
 
@@ -33,185 +21,190 @@ import geovista.matrix.MatrixElement;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 
-public class TreeMapMatrixElement
-    extends TreeMapCanvas implements MatrixElement {
+public class TreeMapMatrixElement extends TreeMapCanvas implements
+		MatrixElement {
 
-  //the following are required for returning to matrix
-  private int[] elementPosition;
-  private double[] xAxisExtents;
-  private double[] yAxisExtents;
+	// the following are required for returning to matrix
+	private int[] elementPosition;
+	private double[] xAxisExtents;
+	private double[] yAxisExtents;
 
-  private Color selectionColor;
+	private Color selectionColor;
 
-  public TreeMapMatrixElement() {
-    super();
+	public TreeMapMatrixElement() {
+		super();
 
-    this.setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
-  }
+		setBorder(BorderFactory.createLineBorder(Color.darkGray, 1));
+	}
 
-  /**
-   * @param data
-   * 
-   * This method is deprecated becuase it wants to create its very own pet
-   * DataSetForApps. This is no longer allowed, to allow for a mutable, 
-   * common data set. Use of this method may lead to unexpected
-   * program behavoir. 
-   * Please use setDataSet instead.
-   */
-  @Deprecated
-  public void setData(Object[] data) {
-	 this.setDataSet(new DataSetForApps(data));
-    
-  }
-  
-  public void setDataSet(DataSetForApps data) {
-    super.dataSet = data; //in case we are about to get a new dataSet, get rid of the old one
-    
-    //XXX has this problem been fixed by eliminating the Object[] array
-//    //next -- where did Xiping hide the observation names data?
-//    String[] obsNames = null;
-//
-//    if (data[data.length -2] instanceof String[]){
-//      obsNames = (String[])data[data.length - 2];
-//    } else if (data[data.length -3] instanceof String[]){
-//      obsNames = (String[])data[data.length - 3];
-//    }
-//    dataSet.setObservationNames(obsNames);//why is this necassary????
+	/**
+	 * @param data
+	 * 
+	 * This method is deprecated becuase it wants to create its very own pet
+	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
+	 * data set. Use of this method may lead to unexpected program behavoir.
+	 * Please use setDataSet instead.
+	 */
+	@Deprecated
+	public void setData(Object[] data) {
+		setDataSet(new DataSetForApps(data));
 
-    DataSetEvent e = new DataSetEvent(dataSet,this);
-    super.dataSetChanged(e);
-  }
+	}
 
-  public void setElementPosition(int[] dataIndices) {
-    this.elementPosition = (int[]) dataIndices.clone();
-    super.setGroupingVarID(this.elementPosition[0]-1); //grouping = x // why -1
-    super.setSizingVarID(this.elementPosition[1]-1); //size = y //why -1
-    //super.setCurrOrderColumn(this.elementPosition[0]);//order = x
-    //super.setCurrColorColumn(this.elementPosition[1]);//color = y
+	public void setDataSet(DataSetForApps data) {
+		super.dataSet = data; // in case we are about to get a new dataSet,
+		// get rid of the old one
 
-    BivariateColorSymbolClassification
-        bivarColorClasser =
-        new BivariateColorSymbolClassificationSimple();
+		// XXX has this problem been fixed by eliminating the Object[] array
+		// //next -- where did Xiping hide the observation names data?
+		// String[] obsNames = null;
+		//
+		// if (data[data.length -2] instanceof String[]){
+		// obsNames = (String[])data[data.length - 2];
+		// } else if (data[data.length -3] instanceof String[]){
+		// obsNames = (String[])data[data.length - 3];
+		// }
+		// dataSet.setObservationNames(obsNames);//why is this necassary????
 
-    this.setBivarColorClasser(bivarColorClasser, false);
+		DataSetEvent e = new DataSetEvent(dataSet, this);
+		super.dataSetChanged(e);
+	}
 
-  }
+	public void setElementPosition(int[] dataIndices) {
+		elementPosition = dataIndices.clone();
+		super.setGroupingVarID(elementPosition[0] - 1); // grouping = x
+		// // why -1
+		super.setSizingVarID(elementPosition[1] - 1); // size = y //why -1
+		// super.setCurrOrderColumn(this.elementPosition[0]);//order = x
+		// super.setCurrColorColumn(this.elementPosition[1]);//color = y
 
-  public BivariateColorSymbolClassification getBivarColorClasser() {
-    return null;
-  }
+		BivariateColorSymbolClassification bivarColorClasser = new BivariateColorSymbolClassificationSimple();
 
-  public void setBivarColorClasser(BivariateColorSymbolClassification biClasser,
-                                   boolean why) {
-    if (super.dataSet == null) {
-      return;
-    }
-    double[] dataX = super.dataSet.getNumericDataAsDouble(elementPosition[0]);
-    double[] dataY = super.dataSet.getNumericDataAsDouble(elementPosition[1]);
+		setBivarColorClasser(bivarColorClasser, false);
 
-    Classifier classerX = biClasser.getClasserX();
-    int[] classes = classerX.classify(dataX, 3);
-    super.setClassification(classes);
-    Color[] colors = biClasser.symbolize(dataX, dataY);
-    super.colorArrayChanged(new ColorArrayEvent(this, colors));
+	}
 
-  }
+	public BivariateColorSymbolClassification getBivarColorClasser() {
+		return null;
+	}
 
-  public int[] getElementPosition() {
-    return this.elementPosition;
-  }
+	public void setBivarColorClasser(
+			BivariateColorSymbolClassification biClasser, boolean why) {
+		if (super.dataSet == null) {
+			return;
+		}
+		double[] dataX = super.dataSet
+				.getNumericDataAsDouble(elementPosition[0]);
+		double[] dataY = super.dataSet
+				.getNumericDataAsDouble(elementPosition[1]);
 
-  public void addActionListener(ActionListener l) {
+		Classifier classerX = biClasser.getClasserX();
+		int[] classes = classerX.classify(dataX, 3);
+		super.setClassification(classes);
+		Color[] colors = biClasser.symbolize(dataX, dataY);
+		super.colorArrayChanged(new ColorArrayEvent(this, colors));
 
-  }
+	}
 
-  public void setConditionArray(int[] condArray) {
+	public int[] getElementPosition() {
+		return elementPosition;
+	}
 
-  }
+	public void addActionListener(ActionListener l) {
 
-  public int[] getSelections() {
-    return null;
-  }
+	}
 
-  public void setSelections(int[] sel) {
+	public void setConditionArray(int[] condArray) {
 
-  }
+	}
 
-  public void setSelectedObservations(Vector v) {
+	public int[] getSelections() {
+		return null;
+	}
 
-  }
+	public void setSelections(int[] sel) {
 
-  public Vector getSelectedObservations() {
-    return null;
-  }
+	}
 
-  public void setSelOriginalColorMode(boolean b) {
+	public void setSelectedObservations(Vector v) {
 
-  }
+	}
 
-  public void setIndication(int i) {
-      super.indicationChanged(new IndicationEvent(this,i));
-  }
+	public Vector getSelectedObservations() {
+		return null;
+	}
 
-  //For axes of scatter plot.
-  //a noop for this class
-  public void setAxisOn(boolean axisOn) {
-  }
+	public void setSelOriginalColorMode(boolean b) {
 
-  //Set min and max for axes. xAxisExtents[0] = min, [1] = max.
-  public void setXAxisExtents(double[] xAxisExtents) {
+	}
 
-  }
+	public void setIndication(int i) {
+		super.indicationChanged(new IndicationEvent(this, i));
+	}
 
-  public void setYAxisExtents(double[] yAxisExtents) {}
+	// For axes of scatter plot.
+	// a noop for this class
+	public void setAxisOn(boolean axisOn) {
+	}
 
-  public double[] getXAxisExtents() {
-    return this.xAxisExtents;
-  }
+	// Set min and max for axes. xAxisExtents[0] = min, [1] = max.
+	public void setXAxisExtents(double[] xAxisExtents) {
 
-  public double[] getYAxisExtents() {
-    return this.yAxisExtents;
-  }
+	}
 
-  public String getShortDiscription() {
-    return "TM";
-  }
+	public void setYAxisExtents(double[] yAxisExtents) {
+	}
 
-  //public void setBivarColorClasser (BivariateColorSymbolClassification bivarColorClasser) {
-  //this.bivarColorClasser = bivarColorClasser;
-  //this.sendColorsToLayers(this.dataColorX.length);
-  //}
+	public double[] getXAxisExtents() {
+		return xAxisExtents;
+	}
 
-  public void setSelectionColor(Color c) {
-    this.selectionColor = c;
-    //super.setColorSelection(c);
-  }
+	public double[] getYAxisExtents() {
+		return yAxisExtents;
+	}
 
-  public Color getSelectionColor() {
-    return this.selectionColor;
-  }
+	public String getShortDiscription() {
+		return "TM";
+	}
 
-  public void setMultipleSelectionColors(Color[] c) {
-  }
+	// public void setBivarColorClasser (BivariateColorSymbolClassification
+	// bivarColorClasser) {
+	// this.bivarColorClasser = bivarColorClasser;
+	// this.sendColorsToLayers(this.dataColorX.length);
+	// }
 
-  public void setColorArrayForObs(Color[] c) {
-  }
+	public void setSelectionColor(Color c) {
+		selectionColor = c;
+		// super.setColorSelection(c);
+	}
 
-  public JToolBar getTools() {
-    return null;
-  }
+	public Color getSelectionColor() {
+		return selectionColor;
+	}
 
-  /**
-   * This method only paints the current contents of the drawingBuff.
-   * @param g
-   */
-  public void paintComponent(Graphics g) {
-    super.paintComponent(g);
+	public void setMultipleSelectionColors(Color[] c) {
+	}
 
-    if (this.elementPosition == null) {
-      return;
-    }
+	public void setColorArrayForObs(Color[] c) {
+	}
 
-  }
+	public JToolBar getTools() {
+		return null;
+	}
+
+	/**
+	 * This method only paints the current contents of the drawingBuff.
+	 * 
+	 * @param g
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		if (elementPosition == null) {
+			return;
+		}
+
+	}
 
 }
