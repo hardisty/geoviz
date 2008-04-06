@@ -1,21 +1,6 @@
-/* -------------------------------------------------------------------
- Java source file for the class LeaderFollowerGUI
- Original Author: Frank Hardisty 
- $Author: hardisty $
- $Id: LeaderFollowerGUI.java,v 1.9 2006/02/27 19:28:41 hardisty Exp $
- $Date: 2006/02/27 19:28:41 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation under
- version 2.1 of the License.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.collaboration;
 
@@ -42,7 +27,9 @@ public class LeaderFollowerGUI extends JPanel implements ActionListener {
 	JRadioButton radioNeither;
 	int state;
 	public static final String STATE_PROPTERTY_NAME = "State";
-	protected final static Logger logger = Logger.getLogger(LeaderFollowerGUI.class.getName());
+	protected final static Logger logger = Logger
+			.getLogger(LeaderFollowerGUI.class.getName());
+
 	public LeaderFollowerGUI() {
 		init();
 	}
@@ -51,9 +38,9 @@ public class LeaderFollowerGUI extends JPanel implements ActionListener {
 	 * 
 	 */
 	private void init() {
-		this.setBorder(BorderFactory.createTitledBorder("Choose Role"));
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		//this.setPreferredSize(new Dimension(200,300));
+		setBorder(BorderFactory.createTitledBorder("Choose Role"));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		// this.setPreferredSize(new Dimension(200,300));
 		gr = new ButtonGroup();
 		radioLeader = new JRadioButton("Leader");
 		radioFollower = new JRadioButton("Follower");
@@ -71,27 +58,29 @@ public class LeaderFollowerGUI extends JPanel implements ActionListener {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.radioNeither) {
-			if (this.state != JabberUtils.STATE_NEITHER) {
-				int oldState = this.state;
-				this.state = JabberUtils.STATE_NEITHER;
-				this.firePropertyChange("State", oldState, this.state);
+		if (e.getSource() == radioNeither) {
+			if (state != JabberUtils.STATE_NEITHER) {
+				int oldState = state;
+				state = JabberUtils.STATE_NEITHER;
+				this.firePropertyChange("State", oldState, state);
 			}
-		} else if (e.getSource() == this.radioFollower) {
-			if (this.state != JabberUtils.STATE_FOLLOWER) {
-				int oldState = this.state;
-				this.state = JabberUtils.STATE_FOLLOWER;
-				this.firePropertyChange("State", oldState, this.state);
+		} else if (e.getSource() == radioFollower) {
+			if (state != JabberUtils.STATE_FOLLOWER) {
+				int oldState = state;
+				state = JabberUtils.STATE_FOLLOWER;
+				this.firePropertyChange("State", oldState, state);
 			}
-		} else if (e.getSource() == this.radioLeader) {
-			if (this.state != JabberUtils.STATE_LEADER) {
-				int oldState = this.state;
-				this.state = JabberUtils.STATE_LEADER;
-				this.firePropertyChange("State", oldState, this.state);
+		} else if (e.getSource() == radioLeader) {
+			if (state != JabberUtils.STATE_LEADER) {
+				int oldState = state;
+				state = JabberUtils.STATE_LEADER;
+				this.firePropertyChange("State", oldState, state);
 			}
 		} else {
 			System.out
@@ -115,9 +104,9 @@ public class LeaderFollowerGUI extends JPanel implements ActionListener {
 
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (evt.getPropertyName().equals(
-					LeaderFollowerGUI.STATE_PROPTERTY_NAME))
+					LeaderFollowerGUI.STATE_PROPTERTY_NAME)) {
 				logger.finest("got event, new val = " + evt.getNewValue());
-
+			}
 
 		}
 

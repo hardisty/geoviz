@@ -728,7 +728,6 @@ public class GeoJabber extends JPanel implements SelectionListener,
 			conn.connect();
 			// conn.loginAnonymously();
 			conn.login("Frank", "password");
-			String[] groups = null;
 			// conn.getRoster().createEntry("HyangJa", "HyangJa Hardisty",
 			// groups);
 			conn.disconnect();
