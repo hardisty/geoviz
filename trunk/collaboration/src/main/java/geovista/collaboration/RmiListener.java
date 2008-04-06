@@ -127,7 +127,7 @@ public class RmiListener extends UnicastRemoteObject implements
 			}
 
 			Runtime.getRuntime().exec("rmiregistry"); // start the rmi
-														// registry on the local
+			// registry on the local
 			// machine. The registry exists outside this jvm.
 			// There needs to be a pause of a second or so after this local
 			// command is called, before
