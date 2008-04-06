@@ -1,24 +1,7 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class StarPlotMatrixElement
- Copyright (c), 2003, Frank Hardisty
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: StarPlotMatrixElement.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
- $Date: 2005/02/13 03:26:27 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.matrix.star;
 
 import java.awt.Color;
@@ -46,36 +29,33 @@ public class StarPlotMatrixElement extends StarPlotCanvas implements
 
 	int[] elementPosition;
 
-	
-	  /**
-	   * @param data
-	   * 
-	   * This method is deprecated becuase it wants to create its very own pet
-	   * DataSetForApps. This is no longer allowed, to allow for a mutable, 
-	   * common data set. Use of this method may lead to unexpected
-	   * program behavoir. 
-	   * Please use setDataSet instead.
-	   */
-	  @Deprecated
-	  public void setData(Object[] data) {
-		 this.setDataSet(new DataSetForApps(data));
-	    
-	  }	
-		public void setDataSet(DataSetForApps data) {
-			DataSetEvent e = new DataSetEvent(data,this);
-			super.dataSetChanged(e);
+	/**
+	 * @param data
+	 * 
+	 * This method is deprecated becuase it wants to create its very own pet
+	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
+	 * data set. Use of this method may lead to unexpected program behavoir.
+	 * Please use setDataSet instead.
+	 */
+	@Deprecated
+	public void setData(Object[] data) {
+		setDataSet(new DataSetForApps(data));
 
-			
-		}
+	}
 
+	public void setDataSet(DataSetForApps data) {
+		DataSetEvent e = new DataSetEvent(data, this);
+		super.dataSetChanged(e);
+
+	}
 
 	public void setElementPosition(int[] dataIndices) {
-		this.elementPosition = dataIndices;
+		elementPosition = dataIndices;
 		// xxx update
 	}
 
 	public int[] getElementPosition() {
-		return this.elementPosition;
+		return elementPosition;
 	}
 
 	// For axes of scatter plot.
@@ -104,14 +84,17 @@ public class StarPlotMatrixElement extends StarPlotCanvas implements
 		return null;
 	}
 
+	@Override
 	public void setIndication(int indication) {
 		// xxx implement me
 	}
 
+	@Override
 	public void addIndicationListener(IndicationListener ind) {
 		// xxx implement me
 	}
 
+	@Override
 	public void removeIndicationListener(IndicationListener ind) {
 		// xxx implement me
 	}
@@ -165,8 +148,7 @@ public class StarPlotMatrixElement extends StarPlotCanvas implements
 			BivariateColorSymbolClassification bivarColorClasser,
 			boolean reverseColor) {
 		// super isn't really a bivariate component, so let's handle this here
-		double[] data = this.data
-				.getNumericDataAsDouble(this.elementPosition[0]);
+		double[] data = this.data.getNumericDataAsDouble(elementPosition[0]);
 		Color[] obsColors = bivarColorClasser.symbolize(data, data);
 		super.setStarFillColors(obsColors);
 
@@ -180,7 +162,5 @@ public class StarPlotMatrixElement extends StarPlotCanvas implements
 	public String getShortDiscription() {
 		return "STARPLOT";
 	}
-
-
 
 } // end class
