@@ -1,11 +1,6 @@
-/**
- * Title: ScatterPlotWithBackgroundMEW
- * Description: construct a scatterplot
- * Copyright:    Copyright (c) 2001
- * Company: GeoVISTA Center
- * @author Xiping Dai
- * @version 1.0
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
 package geovista.matrix.scatterplot;
 

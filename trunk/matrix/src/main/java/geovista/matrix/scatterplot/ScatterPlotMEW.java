@@ -1,8 +1,6 @@
-/*
- * ScatterPlotMEW.java
- *
- * Created on June 2, 2004, 11:51 AM
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
 package geovista.matrix.scatterplot;
 

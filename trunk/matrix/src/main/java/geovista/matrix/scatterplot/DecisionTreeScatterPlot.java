@@ -1,3 +1,7 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
+
 package geovista.matrix.scatterplot;
 
 import java.awt.BasicStroke;
@@ -98,16 +102,16 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	transient private int[] conditionArray;
 	transient private int mouseX1, mouseX2, mouseY1, mouseY2;
 	private JPopupMenu popup;
-	private JTextField xAxisMinField = new JTextField(16);
-	private JTextField xAxisMaxField = new JTextField(16);
-	private JTextField yAxisMinField = new JTextField(16);
-	private JTextField yAxisMaxField = new JTextField(16);
-	private EventListenerList listenerListAction = new EventListenerList();
+	private final JTextField xAxisMinField = new JTextField(16);
+	private final JTextField xAxisMaxField = new JTextField(16);
+	private final JTextField yAxisMinField = new JTextField(16);
+	private final JTextField yAxisMaxField = new JTextField(16);
+	private final EventListenerList listenerListAction = new EventListenerList();
 
 	// stuff added for colors
 	transient private Color[] pointColors;
 	transient private BivariateColorSymbolClassification bivarColorClasser = new BivariateColorSymbolClassificationSimple();
-	private Histogram histogram = new Histogram();
+	private final Histogram histogram = new Histogram();
 	transient private ExcentricLabels exLabels;
 	transient private BoundaryClassifier xClasser = null;
 	transient private BoundaryClassifier yClasser = null;
@@ -137,7 +141,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	public DecisionTreeScatterPlot() {
 		super();
 		// this.setBorder(BorderFactory.createRaisedBevelBorder());
-		this.setPreferredSize(new Dimension(300, 300));
+		setPreferredSize(new Dimension(300, 300));
 		// ...where the GUI is constructed:
 		// Create the popup menu.
 		popup = new JPopupMenu();
@@ -158,7 +162,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		menuItem = new JMenuItem("Edit");
 
 		popup.add(menuItem);
-		this.addComponentListener(this);
+		addComponentListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
@@ -182,25 +186,25 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		logger.finest("go into scatterplot...");
 		// this.doubleDataArrays = doubleDataArrays;
 		// this.attributeArrays = (String[])variableNames.clone();
-		this.dataSet = new DataSetForApps(dataObject);// XXX trying to
-														// eliminate these...
-		this.variableNames = (String[]) dataObject[0];
+		dataSet = new DataSetForApps(dataObject);// XXX trying to
+		// eliminate these...
+		variableNames = (String[]) dataObject[0];
 		int len = variableNames.length;
 		if (dataObject[len + 1] == null) {
-			this.observNames = null;
+			observNames = null;
 		} else {
-			this.observNames = (String[]) dataObject[len + 1];
+			observNames = (String[]) dataObject[len + 1];
 		}
 		this.dataIndices = dataIndices;
 		// convert Object array to double arrays.
 		AxisDataSetup();
 		// initialize();
 		this.axisOn = axisOn;
-		this.background = c;
+		background = c;
 		if (c == Color.black) {
-			this.foreground = Color.white;
+			foreground = Color.white;
 		} else {
-			this.foreground = Color.black;
+			foreground = Color.black;
 		}
 		initialize();
 	}
@@ -215,7 +219,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 */
 	@Deprecated
 	public void setDataObject(Object[] data) {
-		this.setDataSet(new DataSetForApps(data));
+		setDataSet(new DataSetForApps(data));
 
 	}
 
@@ -224,12 +228,12 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			logger.finest("data null!");
 			return;
 		}
-		this.dataSet = data;
+		dataSet = data;
 
-		this.variableNames = data.getObservationNames();
+		variableNames = data.getObservationNames();
 
-		this.observNames = data.getObservationNames();
-		this.initExcentricLabels();
+		observNames = data.getObservationNames();
+		initExcentricLabels();
 	}
 
 	/**
@@ -248,10 +252,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 */
 	public void setDataIndices(int[] dataIndices) {
 		this.dataIndices = dataIndices.clone();
-		this.dataX = doubleDataArrays[dataIndices[0]];
-		this.dataY = doubleDataArrays[dataIndices[1]];
-		this.attributeX = variableNames[dataIndices[0]];
-		this.attributeY = variableNames[dataIndices[1]];
+		dataX = doubleDataArrays[dataIndices[0]];
+		dataY = doubleDataArrays[dataIndices[1]];
+		attributeX = variableNames[dataIndices[0]];
+		attributeY = variableNames[dataIndices[1]];
 		initialize();
 	}
 
@@ -262,7 +266,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param indices
 	 */
 	public void setElementPosition(int[] indices) {
-		this.dataIndices = indices;
+		dataIndices = indices;
 		AxisDataSetup();
 		initialize();
 	}
@@ -273,7 +277,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		int len = 0;
 		Object[] dataObject = dataSet.getDataSetNumericAndSpatial();
 		if (dataObject[dataIndices[0]] instanceof double[]) {
-			this.dataX = (double[]) (dataObject[dataIndices[0]]);
+			dataX = (double[]) (dataObject[dataIndices[0]]);
 			len = dataX.length;
 		} else if (dataObject[dataIndices[0]] instanceof int[]) {
 			dataInt = (int[]) dataObject[dataIndices[0]];
@@ -295,8 +299,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			}
 		}
 		if (dataObject[dataIndices[1]] instanceof double[]) {
-			this.dataY = (double[]) dataObject[dataIndices[1]];
-			len = this.dataY.length;
+			dataY = (double[]) dataObject[dataIndices[1]];
+			len = dataY.length;
 		} else if (dataObject[dataIndices[1]] instanceof int[]) {
 			dataInt = (int[]) dataObject[dataIndices[1]];
 			len = dataInt.length;
@@ -316,17 +320,17 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				}
 			}
 		}
-		this.attributeX = variableNames[dataIndices[0] - 1]; // Minus 1
+		attributeX = variableNames[dataIndices[0] - 1]; // Minus 1
 		// because
 		// dataObject[0]
 		// is attribute
 		// names.
-		this.attributeY = variableNames[dataIndices[1] - 1]; // and real data
+		attributeY = variableNames[dataIndices[1] - 1]; // and real data
 		// begin from
 		// dataObject[1].
-		this.selections = new int[len];
-		this.exsint = new int[len];
-		this.whyint = new int[len];
+		selections = new int[len];
+		exsint = new int[len];
+		whyint = new int[len];
 	}
 
 	/**
@@ -335,7 +339,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @return
 	 */
 	public int[] getElementPosition() {
-		return this.dataIndices;
+		return dataIndices;
 	}
 
 	/**
@@ -344,7 +348,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param variableNames
 	 */
 	public void setAttributeArrays(String[] attributeArrays) {
-		this.variableNames = attributeArrays;
+		variableNames = attributeArrays;
 	}
 
 	/**
@@ -383,7 +387,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		logger.finest("set up axis ..." + xAxisExtents[0]);
 		this.xAxisExtents = xAxisExtents.clone();
 		logger.finest("set up axis ..." + xAxisExtents[0]);
-		this.setupDataforDisplay();
+		setupDataforDisplay();
 		repaint();
 	}
 
@@ -395,7 +399,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	public void setYAxisExtents(double[] yAxisExtents) {
 		logger.finest("set up axis ...");
 		this.yAxisExtents = yAxisExtents.clone();
-		this.setupDataforDisplay();
+		setupDataforDisplay();
 		repaint();
 	}
 
@@ -405,7 +409,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @return
 	 */
 	public double[] getXAxisExtents() {
-		return this.xAxisExtents;
+		return xAxisExtents;
 	}
 
 	/**
@@ -414,7 +418,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @return
 	 */
 	public double[] getYAxisExtents() {
-		return this.yAxisExtents;
+		return yAxisExtents;
 	}
 
 	/**
@@ -427,7 +431,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	}
 
 	public void setColorArrayForObs(Color[] colorArray) {
-		this.colorArrayForObs = colorArray;
+		colorArrayForObs = colorArray;
 	}
 
 	/**
@@ -440,13 +444,13 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		if (c == null) {
 			return;
 		}
-		this.background = c;
+		background = c;
 		int colorTotal = c.getRed() + c.getGreen() + c.getBlue();
 		int greyColor = 128 * 3;
 		if (colorTotal < greyColor) {
-			this.foreground = Color.white;
+			foreground = Color.white;
 		} else {
-			this.foreground = Color.black;
+			foreground = Color.black;
 		}
 		this.repaint();
 	}
@@ -461,20 +465,20 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	}
 
 	public void setSelectionColor(Color c) {
-		this.selectionColor = c;
+		selectionColor = c;
 		this.repaint();
 	}
 
 	public Color getSelectionColor() {
-		return this.selectionColor;
+		return selectionColor;
 	}
 
 	public void setMultipleSelectionColors(Color[] c) {
-		this.multipleSelectionColors = c;
+		multipleSelectionColors = c;
 	}
 
 	public Color[] getColors() {
-		return this.pointColors;
+		return pointColors;
 	}
 
 	/**
@@ -498,14 +502,14 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * Set up data and axis for drawing the scatter plot.
 	 */
 	private void initialize() {
-		this.setBackground(background);
-		this.dataArrayX = new DataArray(dataX);
-		this.dataArrayY = new DataArray(dataY);
-		this.conditionArray = new int[dataX.length];
-		this.setBorder(BorderFactory.createLineBorder(Color.gray));
+		setBackground(background);
+		dataArrayX = new DataArray(dataX);
+		dataArrayY = new DataArray(dataY);
+		conditionArray = new int[dataX.length];
+		setBorder(BorderFactory.createLineBorder(Color.gray));
 		if (axisOn) {
-			xAxisExtents = this.dataArrayX.getMaxMinCoorValue().clone();
-			yAxisExtents = this.dataArrayY.getMaxMinCoorValue().clone();
+			xAxisExtents = dataArrayX.getMaxMinCoorValue().clone();
+			yAxisExtents = dataArrayY.getMaxMinCoorValue().clone();
 		} else {
 			xAxisExtents[0] = dataArrayX.getExtent()[0];
 			xAxisExtents[1] = dataArrayX.getExtent()[1];
@@ -513,8 +517,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			yAxisExtents[1] = dataArrayY.getExtent()[1];
 		}
 		// added for colors
-		this.makeColors();
-		this.setupDataforDisplay();
+		makeColors();
+		setupDataforDisplay();
 	}
 
 	/**
@@ -524,8 +528,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 */
 	private void setVisibleAxis(boolean axisOn) {
 		if (axisOn) {
-			plotOriginX = (int) (this.getWidth() * AXISSPACEPORTION);
-			plotOriginY = (int) (this.getHeight() * (1 - AXISSPACEPORTION));
+			plotOriginX = (int) (getWidth() * AXISSPACEPORTION);
+			plotOriginY = (int) (getHeight() * (1 - AXISSPACEPORTION));
 			plotEndX = (int) (this.getSize().getWidth())
 					- (int) (this.getSize().getWidth() * AXISSPACEPORTION / 2);
 			plotEndY = (int) (this.getSize().getHeight() / 12);
@@ -558,13 +562,13 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	public void paintComponent(Graphics g) {
 		logger.finest("paint track..." + count++);
 		// draw a black border and a white background
-		if (this.dataIndices == null) {
+		if (dataIndices == null) {
 			return;
 		}
 		g.setColor(background);
 		g.fillRect(0, 0, getSize().width, getSize().height);
 		g.setColor(foreground);
-		this.paintBorder(g);
+		paintBorder(g);
 		// size = this.getSize();
 		// setVisibleAxis(axisOn);
 		// if(DefaultBackground == null) DefaultBackground =
@@ -574,8 +578,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		}
 		drawPlot(g);
 		Graphics2D g2 = (Graphics2D) g;
-		if (exLabels != null && this.axisOn == true) {
-			this.setToolTipText("");
+		if (exLabels != null && axisOn == true) {
+			setToolTipText("");
 			exLabels.paint(g2, getBounds());
 		}
 
@@ -588,19 +592,19 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 */
 	private void drawPlot(Graphics g) {
 		int plotWidth, plotHeight;
-		plotWidth = this.getWidth();
-		plotHeight = this.getHeight();
+		plotWidth = getWidth();
+		plotHeight = getHeight();
 		int size;
 		size = (plotWidth < plotHeight) ? plotWidth : plotHeight;
 		logger.finest("attribute equal? " + attributeX.equals(attributeY));
-		if (this.dataIndices[0] == this.dataIndices[1]) {
+		if (dataIndices[0] == dataIndices[1]) {
 			logger.finest("In scatterplot, draw histogram..." + dataIndices[0]);
 			histogram.setAxisOn(false);
-			histogram.setVariableName(this.attributeX);
-			histogram.setData(this.dataX);
-			histogram.setXAxisExtents(this.xAxisExtents);
+			histogram.setVariableName(attributeX);
+			histogram.setData(dataX);
+			histogram.setXAxisExtents(xAxisExtents);
 			histogram.setBackground(background);
-			histogram.setSize(this.getWidth(), this.getHeight());
+			histogram.setSize(getWidth(), getHeight());
 			// XXX breaking for now, frank july 07
 			// histogram.setSelections(this.selections);
 			histogram.paintComponent(g);
@@ -635,11 +639,11 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			int len = dataArrayX.length();
 			// draw the points
 
-			if (this.colorArrayForObs != null) {
+			if (colorArrayForObs != null) {
 				for (int i = 0; i < len; i++) {
-					if ((this.colorArrayForObs[i] != null)
+					if ((colorArrayForObs[i] != null)
 							&& (conditionArray[i] > -1)) {
-						g.setColor(this.colorArrayForObs[i]);
+						g.setColor(colorArrayForObs[i]);
 						g
 								.drawOval(exsint[i] - 1, whyint[i] - 1, RADIUS,
 										RADIUS);
@@ -649,28 +653,24 @@ public class DecisionTreeScatterPlot extends JPanel implements
 					}
 				}
 			} else {
-				if (this.xClasser != null) {
+				if (xClasser != null) {
 					logger.finest("classer is not null");
-					for (int i = 0; i < this.classColors.length; i++) {
-						for (int j = 0; j < this.classColors[0].length; j++) {
-							g.setColor(this.classColors[i][j]);
-							g.drawRect(this.xBoundariesInt[i],
-									this.yBoundariesInt[j],
-									this.xBoundariesInt[i + 1]
-											- this.xBoundariesInt[i],
-									this.yBoundariesInt[j + 1]
-											- this.yBoundariesInt[j]);
+					for (int i = 0; i < classColors.length; i++) {
+						for (int j = 0; j < classColors[0].length; j++) {
+							g.setColor(classColors[i][j]);
+							g.drawRect(xBoundariesInt[i], yBoundariesInt[j],
+									xBoundariesInt[i + 1] - xBoundariesInt[i],
+									yBoundariesInt[j + 1] - yBoundariesInt[j]);
 						}
 					}
 				}
 				for (int i = 0; i < len; i++) {
-					if ((exsint[i] <= this.plotEndX)
-							&& (exsint[i] >= plotOriginX)
+					if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
 							&& (whyint[i] <= plotOriginY)
 							&& (whyint[i] >= plotEndY)
 							&& (conditionArray[i] > -1)) {
 
-						g.setColor(this.pointColors[i]);
+						g.setColor(pointColors[i]);
 						g
 								.drawOval(exsint[i] - 1, whyint[i] - 1, RADIUS,
 										RADIUS);
@@ -680,20 +680,20 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				}
 			}
 			for (int i = 0; i < len; i++) {
-				if ((exsint[i] <= this.plotEndX) && (exsint[i] >= plotOriginX)
+				if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
 						&& (whyint[i] <= plotOriginY)
 						&& (whyint[i] >= plotEndY) && (conditionArray[i] > -1)) {
 
-					if (this.selections[i] == 1) {
-						if (this.selectionColor != this.background) {
-							g.setColor(this.selectionColor);
+					if (selections[i] == 1) {
+						if (selectionColor != background) {
+							g.setColor(selectionColor);
 							g.drawOval(exsint[i] - 1, whyint[i] - 1, RADIUS,
 									RADIUS);
 							g.fillOval(exsint[i] - 1, whyint[i] - 1, RADIUS,
 									RADIUS);
 
 						} else {
-							g2.setColor(this.pointColors[i]);
+							g2.setColor(pointColors[i]);
 							// g.setColor(this.foreground);
 							g2.drawOval(exsint[i] - 1, whyint[i] - 1, RADIUS,
 									RADIUS);
@@ -713,10 +713,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 					selectHeight);
 
 			Graphics2D g2d = (Graphics2D) g;
-			this.drawSelectRectangle(g2d, rec);
-			if (this.multipleSelectionColors != null) {
-				for (int i = 0; i < this.dataX.length; i++) {
-					if (this.multipleSelectionColors[i] != null) {
+			drawSelectRectangle(g2d, rec);
+			if (multipleSelectionColors != null) {
+				for (int i = 0; i < dataX.length; i++) {
+					if (multipleSelectionColors[i] != null) {
 						g.setColor(multipleSelectionColors[i]);
 						g
 								.drawOval(exsint[i] - 1, whyint[i] - 1, RADIUS,
@@ -728,27 +728,25 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				}
 			}
 
-			this.drawDecisionRules(g);
+			drawDecisionRules(g);
 
 		}
 	}
 
 	private void drawDecisionRules(Graphics g) {
 
-		if (this.xDecisionInt != null) {
-			g.setColor(this.foreground);
-			logger.finest("x decision int not null.." + this.attributeX + " "
-					+ this.xDecisionInt.length);
-			for (int i = 0; i < this.xDecisionInt.length; i++) {
-				g.drawLine(this.xDecisionInt[i], this.plotOriginY,
-						this.xDecisionInt[i], this.plotEndY);
-				logger.finest(" " + this.xDecisionInt[i] + " ");
+		if (xDecisionInt != null) {
+			g.setColor(foreground);
+			logger.finest("x decision int not null.." + attributeX + " "
+					+ xDecisionInt.length);
+			for (int element : xDecisionInt) {
+				g.drawLine(element, plotOriginY, element, plotEndY);
+				logger.finest(" " + element + " ");
 			}
 		}
-		if (this.yDecisionInt != null) {
-			for (int i = 0; i < this.yDecisionInt.length; i++) {
-				g.drawLine(this.plotOriginX, this.yDecisionInt[i],
-						this.plotEndX, this.yDecisionInt[i]);
+		if (yDecisionInt != null) {
+			for (int element : yDecisionInt) {
+				g.drawLine(plotOriginX, element, plotEndX, element);
 			}
 		}
 	}
@@ -760,10 +758,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 */
 	private void drawAxis(Graphics g) {
 		int plotWidth, plotHeight;
-		plotWidth = this.getWidth();
-		plotHeight = this.getHeight();
+		plotWidth = getWidth();
+		plotHeight = getHeight();
 		logger.finest("plot height" + plotHeight);
-		if (!(this.dataIndices[0] == this.dataIndices[1])) {
+		if (!(dataIndices[0] == dataIndices[1])) {
 
 			logger.finest("origin x = " + plotOriginX);
 			// draw the lines
@@ -784,11 +782,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			String scaleStringY;
 			int i;
 			int realBarNum = 0;
-			double barNumber = this.dataArrayY.getTickNumber();
-			int firstBar = (int) (yAxisExtents[0] / (this.dataArrayY
-					.getMajorTick()));
-			int lastBar = (int) (yAxisExtents[1] / (this.dataArrayY
-					.getMajorTick()));
+			double barNumber = dataArrayY.getTickNumber();
+			int firstBar = (int) (yAxisExtents[0] / (dataArrayY.getMajorTick()));
+			int lastBar = (int) (yAxisExtents[1] / (dataArrayY.getMajorTick()));
 			// double barNumber = (yAxisExtents[1] -
 			// yAxisExtents[0])/(this.dataArrayY.getMajorTick());
 			double yBarDistance = ((plotOriginY - plotEndY) / barNumber);
@@ -797,14 +793,14 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				g.drawLine(plotOriginX - 3, plotEndY
 						+ (int) (realBarNum * yBarDistance), plotOriginX,
 						plotEndY + (int) (realBarNum * yBarDistance));
-				if (Math.abs(this.dataArrayY.getMajorTick()) <= 1) {
+				if (Math.abs(dataArrayY.getMajorTick()) <= 1) {
 					scaleStringY = Float
 							.toString((float) (yAxisExtents[1] - realBarNum
-									* this.dataArrayY.getMajorTick()));
+									* dataArrayY.getMajorTick()));
 				} else {
 					scaleStringY = Integer
 							.toString((int) (yAxisExtents[1] - realBarNum
-									* this.dataArrayY.getMajorTick()));
+									* dataArrayY.getMajorTick()));
 				}
 				g
 						.drawString(
@@ -819,31 +815,31 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				g.drawLine(plotOriginX, plotEndY
 						+ (int) (realBarNum * yBarDistance), plotEndX, plotEndY
 						+ (int) (realBarNum * yBarDistance));
-				g.setColor(this.foreground);
+				g.setColor(foreground);
 				realBarNum++;
 			}
 			// draw tick bars for scales on X coordinate
 			realBarNum = 0;
-			barNumber = this.dataArrayX.getTickNumber();
+			barNumber = dataArrayX.getTickNumber();
 			barNumber = (xAxisExtents[1] - xAxisExtents[0])
-					/ (this.dataArrayX.getMajorTick());
+					/ (dataArrayX.getMajorTick());
 			double xBarDistance = ((plotEndX - plotOriginX) / barNumber);
 			String scaleStringX;
-			for (i = (int) (xAxisExtents[0] / (this.dataArrayX.getMajorTick())); i <= (int) (xAxisExtents[1] / (this.dataArrayX
+			for (i = (int) (xAxisExtents[0] / (dataArrayX.getMajorTick())); i <= (int) (xAxisExtents[1] / (dataArrayX
 					.getMajorTick())) + 0.0001; i++) {
 				// for (i = 0; i <= barNumber; i++) {
 				g.drawLine(plotOriginX + (int) (realBarNum * xBarDistance),
 						plotOriginY, plotOriginX
 								+ (int) (realBarNum * xBarDistance),
 						plotOriginY + 3);
-				if (Math.abs(this.dataArrayX.getMajorTick()) <= 1) {
+				if (Math.abs(dataArrayX.getMajorTick()) <= 1) {
 					scaleStringX = Float
 							.toString((float) (xAxisExtents[0] + realBarNum
-									* this.dataArrayX.getMajorTick()));
+									* dataArrayX.getMajorTick()));
 				} else {
 					scaleStringX = Integer
 							.toString((int) (xAxisExtents[0] + realBarNum
-									* this.dataArrayX.getMajorTick()));
+									* dataArrayX.getMajorTick()));
 				}
 				Graphics2D g2d = (Graphics2D) g;
 				g2d.rotate(-Math.PI / 2, plotOriginX - 2
@@ -860,7 +856,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				g.drawLine(plotOriginX + (int) (realBarNum * xBarDistance),
 						plotOriginY, plotOriginX
 								+ (int) (realBarNum * xBarDistance), plotEndY);
-				g.setColor(this.foreground);
+				g.setColor(foreground);
 				realBarNum++;
 			}
 			font = new Font("", Font.PLAIN, fontSize + 3);
@@ -917,7 +913,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @return
 	 */
 	public int[] getSelections() {
-		return this.selections;
+		return selections;
 	}
 
 	public void setIndication(int indication) {
@@ -985,7 +981,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 
 	private void setupDataforDisplay() {
 		logger.finest("In setup data for display ...");
-		this.setVisibleAxis(axisOn);
+		setVisibleAxis(axisOn);
 		if (dataArrayX == null) {
 			return;
 		}
@@ -1005,48 +1001,48 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				yAxisExtents[1]);
 		whyint = getValueScreen(dataY, yScale, plotOriginY, yAxisExtents[0]);
 		// get class boundaries' positions on screen
-		if (this.xBoundaries != null && this.yBoundaries != null) {
+		if (xBoundaries != null && yBoundaries != null) {
 			logger.finest("x and y boundaries are not null.");
-			this.xBoundariesInt = new int[this.xBoundaries.length];
-			this.yBoundariesInt = new int[this.yBoundaries.length];
-			this.xBoundariesInt = getValueScreen(this.xBoundaries, xScale,
-					plotOriginX, xAxisExtents[0]);
-			this.yBoundariesInt = getValueScreen(this.yBoundaries, yScale,
-					plotOriginY, yAxisExtents[0]);
+			xBoundariesInt = new int[xBoundaries.length];
+			yBoundariesInt = new int[yBoundaries.length];
+			xBoundariesInt = getValueScreen(xBoundaries, xScale, plotOriginX,
+					xAxisExtents[0]);
+			yBoundariesInt = getValueScreen(yBoundaries, yScale, plotOriginY,
+					yAxisExtents[0]);
 		}
 
-		for (int i = 0; i < this.xDecision.size(); i++) {
-			if (this.xDecision.elementAt(i) instanceof Double) {
-				this.xDecisionInt[i] = this.getValueScreen(
-						((Double) (this.xDecision.get(i))).doubleValue(),
-						xScale, plotOriginX, xAxisExtents[0]);
-			} else if (this.xDecision.elementAt(i) instanceof Integer) {
-				this.xDecisionInt[i] = this.getValueScreen(
-						((Integer) (this.xDecision.get(i))).doubleValue(),
-						xScale, plotOriginX, xAxisExtents[0]);
+		for (int i = 0; i < xDecision.size(); i++) {
+			if (xDecision.elementAt(i) instanceof Double) {
+				xDecisionInt[i] = this.getValueScreen(((Double) (xDecision
+						.get(i))).doubleValue(), xScale, plotOriginX,
+						xAxisExtents[0]);
+			} else if (xDecision.elementAt(i) instanceof Integer) {
+				xDecisionInt[i] = this.getValueScreen(((Integer) (xDecision
+						.get(i))).doubleValue(), xScale, plotOriginX,
+						xAxisExtents[0]);
 				logger
 						.finest("In setup data for display ..."
 								+ xDecisionInt[i]);
-			} else if (this.xDecision.elementAt(i) instanceof Vector) {
-				this.xDecisionInt[i] = this.getValueScreen(
-						((Integer) (((Vector) (this.xDecision.get(i))).get(0)))
+			} else if (xDecision.elementAt(i) instanceof Vector) {
+				xDecisionInt[i] = this.getValueScreen(
+						((Integer) (((Vector) (xDecision.get(i))).get(0)))
 								.doubleValue(), xScale, plotOriginX,
 						xAxisExtents[0]);
 			}
 			logger.finest("In setup data for display ..." + xDecisionInt[i]);
 		}
-		for (int i = 0; i < this.yDecision.size(); i++) {
-			if (this.yDecision.elementAt(i) instanceof Double) {
-				this.yDecisionInt[i] = this.getValueScreen(
-						((Double) (this.yDecision.get(i))).doubleValue(),
-						yScale, plotOriginY, yAxisExtents[0]);
-			} else if (this.yDecision.elementAt(i) instanceof Integer) {
-				this.yDecisionInt[i] = this.getValueScreen(
-						((Integer) (this.yDecision.get(i))).doubleValue(),
-						yScale, plotOriginY, yAxisExtents[0]);
-			} else if (this.xDecision.elementAt(i) instanceof Vector) {
-				this.yDecisionInt[i] = this.getValueScreen(
-						((Integer) (((Vector) (this.xDecision.get(i))).get(0)))
+		for (int i = 0; i < yDecision.size(); i++) {
+			if (yDecision.elementAt(i) instanceof Double) {
+				yDecisionInt[i] = this.getValueScreen(((Double) (yDecision
+						.get(i))).doubleValue(), yScale, plotOriginY,
+						yAxisExtents[0]);
+			} else if (yDecision.elementAt(i) instanceof Integer) {
+				yDecisionInt[i] = this.getValueScreen(((Integer) (yDecision
+						.get(i))).doubleValue(), yScale, plotOriginY,
+						yAxisExtents[0]);
+			} else if (xDecision.elementAt(i) instanceof Vector) {
+				yDecisionInt[i] = this.getValueScreen(
+						((Integer) (((Vector) (xDecision.get(i))).get(0)))
 								.doubleValue(), yScale, plotOriginY,
 						yAxisExtents[0]);
 			}
@@ -1055,24 +1051,24 @@ public class DecisionTreeScatterPlot extends JPanel implements
 
 	// start excentric labeling stuff
 	private void initExcentricLabels() {
-		this.exLabels = new ExcentricLabels();
+		exLabels = new ExcentricLabels();
 		exLabels.setComponent(this);
 		exLabels.setOpaque(true);
 		Color halfWhite = new Color(255, 255, 255, 123);
 		exLabels.setBackgroundColor(halfWhite);
-		this.addMouseListener(exLabels);
+		addMouseListener(exLabels);
 
 	}
 
 	public String getObservationLabel(int i) {
-		String[] labels = this.observNames;
+		String[] labels = observNames;
 		String label = labels[i];
 		return label;
 	}
 
 	public Shape getShapeAt(int i) {
-		int x = this.exsint[i];
-		int y = this.whyint[i];
+		int x = exsint[i];
+		int y = whyint[i];
 		Ellipse2D circle = new Ellipse2D.Float(x, y,
 				DecisionTreeScatterPlot.RADIUS, DecisionTreeScatterPlot.RADIUS);
 
@@ -1108,7 +1104,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 
 	public void componentResized(ComponentEvent e) {
 		logger.finest("in component resized");
-		this.setupDataforDisplay();
+		setupDataforDisplay();
 		this.repaint();
 	}
 
@@ -1154,8 +1150,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		if (!(e.isShiftDown())) {
 			// selRecords.clear();
 			// zero all selection indication to deselect them.
-			for (int i = 0; i < this.selections.length; i++) {
-				this.selections[i] = 0;
+			for (int i = 0; i < selections.length; i++) {
+				selections[i] = 0;
 			}
 		}
 		if (mouseX1 <= mouseX2 && mouseY1 <= mouseY2) {
@@ -1188,14 +1184,14 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		for (int i = 0; i < dataX.length; i++) {
 			if (rec.contains(exsint[i], whyint[i]) && (conditionArray[i] > -1)) {
 
-				this.selections[i] = 1;// new selection struction int[]
+				selections[i] = 1;// new selection struction int[]
 				j++;
 			}
 		}
 		selectWidth = 0;
 		selectHeight = 0;
 		// selRecords.trimToSize();
-		this.multipleSelectionColors = null;
+		multipleSelectionColors = null;
 		// this.drawSelectRectangle(rec);
 		repaint();
 		logger.finest("about to fire mouse released");
@@ -1264,8 +1260,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param e
 	 */
 	public void mouseMoved(MouseEvent e) {
-		if (e != null && this.axisOn == false) {
-			this.makeToolTip(e.getX(), e.getY());
+		if (e != null && axisOn == false) {
+			makeToolTip(e.getX(), e.getY());
 			e.consume();
 		}
 	}
@@ -1300,7 +1296,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 							&& (whyint[i] - 5 < mousePos[1])
 							&& (mousePos[1] < whyint[i] + 5)
 							&& (conditionArray[i] > -1)) {
-						this.selections[i] = 1;
+						selections[i] = 1;
 					}
 				}
 
@@ -1317,12 +1313,12 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				detailSP.setAxisOn(true);
 				detailSP.setBackground(background);
 				detailSP.setElementPosition(dataIndices);
-				detailSP.setBivarColorClasser(this.bivarColorClasser, false);
-				detailSP.setColorArrayForObs(this.colorArrayForObs);
-				detailSP.setSelectionColor(this.selectionColor);
-				detailSP.setSelections(this.selections);
-				detailSP.setXAxisExtents(this.xAxisExtents);// ?
-				detailSP.setYAxisExtents(this.yAxisExtents);
+				detailSP.setBivarColorClasser(bivarColorClasser, false);
+				detailSP.setColorArrayForObs(colorArrayForObs);
+				detailSP.setSelectionColor(selectionColor);
+				detailSP.setSelections(selections);
+				detailSP.setXAxisExtents(xAxisExtents);// ?
+				detailSP.setYAxisExtents(yAxisExtents);
 				JFrame dummyFrame = new JFrame();
 				JDialog dlgSP = new JDialog(dummyFrame,
 						"Detailed Scatter Plot", true);
@@ -1376,8 +1372,8 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				dlgSP.setVisible(true);
 			} else {
 				Histogram histogram = new Histogram();
-				histogram.setVariableName(this.attributeX);
-				histogram.setData(this.dataX);
+				histogram.setVariableName(attributeX);
+				histogram.setData(dataX);
 				// histogram.setSelections(this.selections);
 				histogram.setBackground(background);
 				JFrame dummyFrame = new JFrame();
@@ -1493,14 +1489,14 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			String xVal = Double.toString(dataX[arrayIndex]);
 			String yVal = Double.toString(dataY[arrayIndex]);
 			String s = "<html> ";
-			if (this.observNames != null) {
+			if (observNames != null) {
 				s = s + "Name = " + observNames[arrayIndex] + "<br>";
 			}
 
 			s = s + attributeX + " = " + xVal + "<br>" + attributeY + " = "
 					+ yVal + "</html>";
 
-			this.setToolTipText(s);
+			setToolTipText(s);
 		} // end if
 	}
 
@@ -1550,13 +1546,13 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				resetButton_actionPerformed(e);
 			}
 		});
-		dialog.getContentPane().add(new JLabel((this.attributeX + " Min")));
+		dialog.getContentPane().add(new JLabel((attributeX + " Min")));
 		dialog.getContentPane().add(xAxisMinField);
-		dialog.getContentPane().add(new JLabel((this.attributeX + " Max")));
+		dialog.getContentPane().add(new JLabel((attributeX + " Max")));
 		dialog.getContentPane().add(xAxisMaxField);
-		dialog.getContentPane().add(new JLabel((this.attributeY + " Min")));
+		dialog.getContentPane().add(new JLabel((attributeY + " Min")));
 		dialog.getContentPane().add(yAxisMinField);
-		dialog.getContentPane().add(new JLabel((this.attributeY + " Max")));
+		dialog.getContentPane().add(new JLabel((attributeY + " Max")));
 		dialog.getContentPane().add(yAxisMaxField);
 		dialog.getContentPane().add(actionButton);
 		dialog.getContentPane().add(resetButton);
@@ -1585,9 +1581,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		xAxisExtents[1] = Double.parseDouble(xAxisMaxField.getText());
 		yAxisExtents[0] = Double.parseDouble(yAxisMinField.getText());
 		yAxisExtents[1] = Double.parseDouble(yAxisMaxField.getText());
-		this.dataArrayX.setExtent(xAxisExtents);
-		this.dataArrayY.setExtent(yAxisExtents);
-		this.setupDataforDisplay();
+		dataArrayX.setExtent(xAxisExtents);
+		dataArrayY.setExtent(yAxisExtents);
+		setupDataforDisplay();
 		fireActionPerformed(COMMAND_DATARANGE_SET);
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("ok, fire event.");
@@ -1601,11 +1597,11 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param e
 	 */
 	private void resetButton_actionPerformed(ActionEvent e) {
-		this.dataArrayX.setDataExtent();
-		this.dataArrayY.setDataExtent();
+		dataArrayX.setDataExtent();
+		dataArrayY.setDataExtent();
 		if (axisOn) {
-			xAxisExtents = this.dataArrayX.getMaxMinCoorValue().clone();
-			yAxisExtents = this.dataArrayY.getMaxMinCoorValue().clone();
+			xAxisExtents = dataArrayX.getMaxMinCoorValue().clone();
+			yAxisExtents = dataArrayY.getMaxMinCoorValue().clone();
 		} else {
 			xAxisExtents[0] = dataArrayX.getExtent()[0];
 			xAxisExtents[1] = dataArrayX.getExtent()[1];
@@ -1616,7 +1612,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		xAxisMaxField.setText(Double.toString(xAxisExtents[1]));
 		yAxisMinField.setText(Double.toString(yAxisExtents[0]));
 		yAxisMaxField.setText(Double.toString(yAxisExtents[1]));
-		this.setupDataforDisplay();
+		setupDataforDisplay();
 		fireActionPerformed(COMMAND_DATARANGE_SET);
 		repaint();
 	}
@@ -1691,7 +1687,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			BivariateColorSymbolClassification bivarColorClasser,
 			boolean reverseColor) {
 		this.bivarColorClasser = bivarColorClasser;
-		this.makeColors();
+		makeColors();
 		classColors = this.bivarColorClasser.getClassColors();
 		int numClasses;
 
@@ -1701,12 +1697,12 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			numClasses = this.bivarColorClasser.getXColorSymbolizer()
 					.getNumClasses();
 			logger.finest("num classes" + numClasses);
-			xBoundaries = xClasser.getEqualBoundaries(this.dataX, numClasses);
+			xBoundaries = xClasser.getEqualBoundaries(dataX, numClasses);
 			yClasser = (BoundaryClassifier) this.bivarColorClasser
 					.getClasserY();
 			numClasses = this.bivarColorClasser.getYColorSymbolizer()
 					.getNumClasses();
-			yBoundaries = yClasser.getEqualBoundaries(this.dataY, numClasses);
+			yBoundaries = yClasser.getEqualBoundaries(dataY, numClasses);
 		} catch (ClassCastException ex) {
 
 		}
@@ -1714,12 +1710,12 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	}
 
 	public BivariateColorSymbolClassification getBivarColorClasser() {
-		return this.bivarColorClasser;
+		return bivarColorClasser;
 	}
 
 	public void makeColors() {
-		if (this.dataX != null && this.dataY != null) {
-			this.pointColors = this.bivarColorClasser.symbolize(dataX, dataY);
+		if (dataX != null && dataY != null) {
+			pointColors = bivarColorClasser.symbolize(dataX, dataY);
 		}
 	}
 
@@ -1745,30 +1741,30 @@ public class DecisionTreeScatterPlot extends JPanel implements
 					+ treeVector.size());
 		}
 		this.treeVector = treeVector;
-		this.xDecision.clear();
-		this.yDecision.clear();
+		xDecision.clear();
+		yDecision.clear();
 		if (this.treeVector != null) {
 			for (int i = 0; i < this.treeVector.size(); i++) {
 				String att = (String) (((Vector) (this.treeVector.get(i)))
 						.get(2));
 				if (logger.isLoggable(Level.FINEST)) {
-					logger.finest(this.attributeX + " " + att);
+					logger.finest(attributeX + " " + att);
 				}
-				if (this.attributeX.equals(att)) {
+				if (attributeX.equals(att)) {
 					xDecision.add(((Vector) (this.treeVector.get(i))).get(4));
 					logger.finest("treeVector"
 							+ ((Vector) (this.treeVector.get(i))).get(4));
 				}
-				if (this.attributeY.equals(att)) {
+				if (attributeY.equals(att)) {
 					yDecision.add(((Vector) (this.treeVector.get(i))).get(4));
 				}
 			}
-			this.xDecision.trimToSize();
-			this.yDecision.trimToSize();
+			xDecision.trimToSize();
+			yDecision.trimToSize();
 		}
-		this.xDecisionInt = new int[this.xDecision.size()];
-		this.yDecisionInt = new int[this.yDecision.size()];
-		this.setupDataforDisplay();
+		xDecisionInt = new int[xDecision.size()];
+		yDecisionInt = new int[yDecision.size()];
+		setupDataforDisplay();
 		this.repaint();
 	}
 
