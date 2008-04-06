@@ -13,18 +13,18 @@ import geovista.geoviz.scatterplot.ScatterPlotWithBackground;
 import geovista.matrix.MatrixElementWrapper;
 
 /**
- *
- * @author  jamesm
+ * 
+ * @author jamesm
  */
-public class ScatterPlotWithBackgroundMEW implements MatrixElementWrapper{
+public class ScatterPlotWithBackgroundMEW implements MatrixElementWrapper {
 
-    /** Creates a new instance of ScatterPlotMEW */
-    public ScatterPlotWithBackgroundMEW() {
+	/** Creates a new instance of ScatterPlotMEW */
+	public ScatterPlotWithBackgroundMEW() {
 
-    }
+	}
 
-    public Class getMatrixElementClass() {
-        return ScatterPlotWithBackground.class;
-    }
+	public Class getMatrixElementClass() {
+		return ScatterPlotWithBackground.class;
+	}
 
 }
