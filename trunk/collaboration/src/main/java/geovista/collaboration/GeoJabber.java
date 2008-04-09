@@ -41,11 +41,6 @@ import org.jivesoftware.smack.packet.DefaultPacketExtension;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.PacketExtension;
-import org.jivesoftware.smackx.filetransfer.FileTransferListener;
-import org.jivesoftware.smackx.filetransfer.FileTransferManager;
-import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
-import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
-import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
 
 import geovista.common.event.AnnotationEvent;
 import geovista.common.event.AnnotationListener;
@@ -138,7 +133,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("Sending file to " + reciever);
 			}
-			GeoJabber.sendFile(conn, reciever, sendFile);
+			// GeoJabber.sendFile(conn, reciever, sendFile);
 		} else if (e.getSource() == sendComponentButton) {
 
 		}
@@ -781,56 +776,56 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	}
 
-	public static boolean sendFile(XMPPConnection conn, String reciever,
-			File file) {
-		// Create the file transfer manager
-		FileTransferManager manager = new FileTransferManager(conn);
-
-		// Create the outgoing file transfer
-		OutgoingFileTransfer transfer = manager
-				.createOutgoingFileTransfer(reciever);
-
-		// Send the file
-		try {
-			transfer.sendFile(file, "You won't believe this!");
-		} catch (XMPPException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	public boolean recieveFile(XMPPConnection conn, File file) {
-		// Create the file transfer manager
-		final FileTransferManager manager = new FileTransferManager(conn);
-
-		// Create the listener
-		FileAcceptor fiAcc = new FileAcceptor();
-		fiAcc.fi = file;
-		manager.addFileTransferListener(fiAcc);
-		return true;
-	}
-
-	private class FileAcceptor implements FileTransferListener {
-		File fi;
-
-		public void fileTransferRequest(FileTransferRequest request) {
-			// Accept it
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.finest("getting a file.... ");
-			}
-			IncomingFileTransfer transfer = request.accept();
-			try {
-				transfer.recieveFile(fi);
-			} catch (XMPPException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
-			}
-
-		}
-
-	}
+	// public static boolean sendFile(XMPPConnection conn, String reciever,
+	// File file) {
+	// // Create the file transfer manager
+	// FileTransferManager manager = new FileTransferManager(conn);
+	//
+	// // Create the outgoing file transfer
+	// OutgoingFileTransfer transfer = manager
+	// .createOutgoingFileTransfer(reciever);
+	//
+	// // Send the file
+	// try {
+	// transfer.sendFile(file, "You won't believe this!");
+	// } catch (XMPPException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// return false;
+	// }
+	// return true;
+	// }
+	//
+	// public boolean recieveFile(XMPPConnection conn, File file) {
+	// // Create the file transfer manager
+	// final FileTransferManager manager = new FileTransferManager(conn);
+	//
+	// // Create the listener
+	// FileAcceptor fiAcc = new FileAcceptor();
+	// fiAcc.fi = file;
+	// manager.addFileTransferListener(fiAcc);
+	// return true;
+	// }
+	//
+	// private class FileAcceptor implements FileTransferListener {
+	// File fi;
+	//
+	// public void fileTransferRequest(FileTransferRequest request) {
+	// // Accept it
+	// if (logger.isLoggable(Level.FINEST)) {
+	// logger.finest("getting a file.... ");
+	// }
+	// IncomingFileTransfer transfer = request.accept();
+	// try {
+	// transfer.recieveFile(fi);
+	// } catch (XMPPException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	//
+	// }
+	//
+	// }
+	//
+	// }
 
 }
