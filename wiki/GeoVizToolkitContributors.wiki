@@ -23,7 +23,7 @@
   * *[http://docs.codehaus.org/display/~jmacgill James Macgill]* "Maven-ized" much of the code the first time through.
 
 = Financial contributors: =
- * *The National Science Foundation*, through the Digital Government Quality Graphics grant.
+ * *[http://www.nsf.gov/ The National Science Foundation]*, through the [http://www.geovista.psu.edu/grants/dg-qg/intro.html Digital Government Quality Graphics grant].
  * *The North-East Visualization and Analytics Center*
  * *The National Cancer Institute*
  * *The Army National Guard of South Carolina*
