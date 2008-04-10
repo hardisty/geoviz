@@ -6,7 +6,7 @@
   * *Xiping Dai* developed the matrix components, the scatterplot, and the histogram.
   * *[http://www.ims.tuwien.ac.at/~flo/ Flo Ledermann]* developed the Parvis parallel coordinate plot. http://home.subnet.at/flo/mv/parvis/
   * *[http://www.touchgraph.com/management-team.html Alex Shapiro]* developed the Touchgraph, which the Linkgraph components are based on. http://sourceforge.net/projects/touchgraph
-  * *Gary Liu* developed the radviz component.
+  * *Yunping (Gary) Liu* developed the radviz component.
   * *Aaron Myers* developed the help component, and the content in the help.
   * *[http://www.cas.sc.edu/geog/students/LiaoKe.html Ke Liao]* developed the facilities for reading and saving layouts.
   * *[http://www.vislab.usyd.edu.au/?q=wiki/masas_homepage Masahiro Takatsuka]* created some useful bits of code that are still in there, like the multi-slider, a file IO class, and methods for generating various statistical distributions.
@@ -24,7 +24,7 @@
 
 = Financial contributors: =
  * *[http://www.nsf.gov/ The National Science Foundation]*, through the  *[http://www.geovista.psu.edu/grants/dg-qg/intro.html Digital Government Quality Graphics]* grant.
- *[http://www.dhs.gov/index.shtm The Department of Homeland Security] through the  *[http://www.geovista.psu.edu/NEVAC/index.html The North-East Visualization and Analytics Center]*
+* *[http://www.dhs.gov/index.shtm The Department of Homeland Security] through the  *[http://www.geovista.psu.edu/NEVAC/index.html The North-East Visualization and Analytics Center]*
  * *[http://www.cancer.gov/ The National Cancer Institute]* through the *[http://www.geovista.psu.edu/grants/nci-esda/ Geovisualization and Spatial Analysis of Cancer Data]* grant.
  * *[http://www.scguard.com/ The Army National Guard of South Carolina]*
  
