@@ -20,7 +20,7 @@
   * *[http://www.geovista.psu.edu/members/maceachren/ Alan MacEachren]* provided funding, many of the ideas behind the software, and contributed to many design decisions.
   * *[http://www.sges.auckland.ac.nz/the_school/our_people/gahegan_mark/index.shtm Mark Gahegan]* provided funding, ideas behind the software, and contributed to many design decisions.
   * *[http://www.vislab.usyd.edu.au/?q=wiki/masas_homepage Masahiro Takatsuka]* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of the GeoViz Toolkit.
-  * *[http://docs.codehaus.org/display/~jmacgill James Macgill]* "Maven-ized" much of the code the first time through.
+  * *[http://docs.codehaus.org/display/~jmacgill James Macgill]* "Maven-ized" much of the code.
 
 = Financial contributors: =
  * *[http://www.nsf.gov/ The National Science Foundation]*, through the  *[http://www.geovista.psu.edu/grants/dg-qg/intro.html Digital Government Quality Graphics]* grant.
