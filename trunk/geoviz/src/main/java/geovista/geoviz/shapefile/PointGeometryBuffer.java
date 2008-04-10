@@ -81,21 +81,26 @@ public class PointGeometryBuffer {
 	}
 
 	public static void main(String[] args) {
+		ShapeFileProjection shpProj = new ShapeFileProjection();
 		String fileName = "C:\\temp\\buffers.csv";
 		PointGeometryBuffer buffer = new PointGeometryBuffer();
-		DataSetForApps data = buffer.makeBuffers(fileName);
+		DataSetForApps bufferData = buffer.makeBuffers(fileName);
 		JFrame app = new JFrame("testing buffers");
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GeoMap map = new GeoMap();
 		DataSetForApps paShps = ShapeFileDataReader
 				.makeDataSetForApps("C:\\temp\\pa_cnty");
 
+		shpProj.setInputDataSet(paShps.getDataObjectOriginal());
+
 		app.add(map);
 		app.pack();
 		app.setVisible(true);
 
-		map.setDataSet(paShps);
-		map.setAuxiliarySpatialData(data);
+		map.setDataSet(shpProj.getOutputDataSetForApps());
+		shpProj.setInputAuxiliaryData(bufferData);
+		map.setAuxiliarySpatialData(shpProj
+				.getOutputAuxiliarySpatialDataForApps());
 	}
 
 }
