@@ -6,7 +6,7 @@ package geovista.matrix.map;
  * <p>Copyright: Copyright (c) 2001</p>
  * <p>Company: GeoVISTA Center</p>
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 
 import java.beans.BeanInfo;

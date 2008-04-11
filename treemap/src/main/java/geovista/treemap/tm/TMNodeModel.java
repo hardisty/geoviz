@@ -38,7 +38,7 @@ import java.awt.Rectangle;
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @author Vesselin Markovsky [markovsky@semantec.bg]
- * @version 2.5
+ * 
  */
 class TMNodeModel
     extends TMNodeAdapter {

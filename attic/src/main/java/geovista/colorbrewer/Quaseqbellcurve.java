@@ -6,7 +6,7 @@ package geovista.colorbrewer;
  Copyright (c), 2004, GeoVISTA Center
  All Rights Reserved.
  Original Author: Biliang Zhou
- * @version 1.0
+ * 
  */
 
 //Function: L = k*Math.exp(e, -(A2 + B2)/t)

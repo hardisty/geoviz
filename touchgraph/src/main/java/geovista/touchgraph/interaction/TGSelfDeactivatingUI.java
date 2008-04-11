@@ -54,7 +54,7 @@ package geovista.touchgraph.interaction;
   *  the mouse is released.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public abstract class TGSelfDeactivatingUI extends TGUserInterface {
 

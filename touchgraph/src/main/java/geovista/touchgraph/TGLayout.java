@@ -74,7 +74,7 @@ import geovista.touchgraph.graphelements.TGForEachNodePair;
   * </b></p>
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 
 public class TGLayout implements Runnable {

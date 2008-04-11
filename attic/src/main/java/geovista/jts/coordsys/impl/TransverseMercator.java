@@ -38,7 +38,7 @@ import geovista.jts.coordsys.*;
  
  * This class implements the Transverse Mercator Projection.
 
- *  @version $Revision: 1.3 $
+ *  
  *  @author $Author: dkim $
 
  *<pre>

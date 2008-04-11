@@ -43,7 +43,7 @@ import javax.swing.JPanel;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class StarPlotLegendMidPanel extends JPanel implements
 		ComponentListener, MouseListener, MouseMotionListener {

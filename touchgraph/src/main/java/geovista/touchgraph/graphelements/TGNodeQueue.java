@@ -57,7 +57,7 @@ import geovista.touchgraph.Node;
   * first search.  Should probably be implemented with linked lists.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class TGNodeQueue {
 

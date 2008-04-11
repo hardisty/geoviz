@@ -36,7 +36,7 @@ import java.util.Vector;
  * It represent a TMNodeModel which is not a leaf.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMNodeModelComposite
     extends TMNodeModel {

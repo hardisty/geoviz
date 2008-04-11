@@ -50,7 +50,7 @@ import geovista.geoviz.visclass.VisualClassifier;
  * IndicationChanged etc. events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.4 $
+ * 
  */
 public class StarPlot extends JPanel implements DataSetListener,
 		DataSetModifiedListener, IndicationListener, SubspaceListener,

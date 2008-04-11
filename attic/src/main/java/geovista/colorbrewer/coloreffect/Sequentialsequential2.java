@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * </p>
  * 
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class Sequentialsequential2 {

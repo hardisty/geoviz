@@ -33,7 +33,7 @@ package geovista.treemap.tm;
  * kind of TMNode.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMExceptionBadTMNodeKind
     extends IllegalArgumentException {

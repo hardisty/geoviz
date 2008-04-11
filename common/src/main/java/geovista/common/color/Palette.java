@@ -6,7 +6,7 @@ package geovista.common.color;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 import java.awt.Color;
 public interface Palette {

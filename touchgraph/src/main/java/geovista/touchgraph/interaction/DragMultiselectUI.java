@@ -61,7 +61,7 @@ import geovista.touchgraph.TGPoint2D;
   * by enclosing them in a dotted box.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class DragMultiselectUI extends TGAbstractDragUI implements TGPaintListener {
 

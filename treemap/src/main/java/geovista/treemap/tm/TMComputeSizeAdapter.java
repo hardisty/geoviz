@@ -33,7 +33,7 @@ package geovista.treemap.tm;
  * of the TMModelNode interface.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public abstract class TMComputeSizeAdapter 
     implements TMComputeSize {

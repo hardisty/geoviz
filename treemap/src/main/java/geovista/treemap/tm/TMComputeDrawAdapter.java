@@ -35,7 +35,7 @@ import java.awt.Paint;
  * of the TMModelNode interface.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public abstract class TMComputeDrawAdapter 
     implements TMComputeDraw {

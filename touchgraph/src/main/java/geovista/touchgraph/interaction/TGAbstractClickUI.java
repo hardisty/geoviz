@@ -58,7 +58,7 @@ import geovista.touchgraph.TGPanel;
   * mouse clicks.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public abstract class TGAbstractClickUI extends TGSelfDeactivatingUI {
 

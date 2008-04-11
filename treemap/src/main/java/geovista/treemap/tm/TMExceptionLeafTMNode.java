@@ -33,7 +33,7 @@ package geovista.treemap.tm;
  * for adding or removing a child to a TMNode that is a leaf.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMExceptionLeafTMNode
     extends IllegalArgumentException {

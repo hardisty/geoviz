@@ -5,7 +5,7 @@
  *
  * @Original Author: jin Chen
  * @date: May 24, 2005$
- * @version: 1.0
+ * 
  */
 package geovista.common.utils;
 

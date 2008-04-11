@@ -55,7 +55,7 @@ import java.util.Vector;
   *              warps 2D space.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class TGLensSet {
 

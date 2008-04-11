@@ -42,7 +42,7 @@ import geovista.treemap.tm.TreeMap;
  * instead of TMNode to describe the user's tree.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class DemoModel {
 

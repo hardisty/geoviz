@@ -38,7 +38,7 @@ import javax.swing.event.ChangeListener;
 /**
  * Generally describe RangeSliderLegend in here.
  *
- * @version $Revision: 1.1.1.1 $
+ * 
  * @author IsaacBrewer (isaacbrewer@hotmail.com)
  */
 

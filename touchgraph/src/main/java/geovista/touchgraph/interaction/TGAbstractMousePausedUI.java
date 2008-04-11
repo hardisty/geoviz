@@ -59,7 +59,7 @@ import geovista.touchgraph.TGPanel;
 /** TGAbstractMousePausedUI allows one to handle MousePaused events.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public abstract class TGAbstractMousePausedUI extends TGUserInterface {
 

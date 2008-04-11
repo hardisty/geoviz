@@ -91,7 +91,7 @@ import geovista.touchgraph.interaction.TGAbstractClickUI;
   *
   * @author   Alexander Shapiro
   * @author   Murray Altheim  (2001-11-06; cleanup)
-  * @version  1.20
+  * 
   */
 public class TGPanel extends JPanel {
 

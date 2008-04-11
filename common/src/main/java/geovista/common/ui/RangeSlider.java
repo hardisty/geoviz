@@ -51,7 +51,7 @@ import javax.swing.event.EventListenerList;
 /**
  * Generally describe RangeSlider in here.
  *
- * @version $Revision: 1.2 $\n * @author Isaac Brewer (isaacbrewer@hotmail.com)
+ * \n * @author Isaac Brewer (isaacbrewer@hotmail.com)
  */
 /**
  * put your documentation comment here

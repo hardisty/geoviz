@@ -19,7 +19,7 @@ import geovista.common.data.DescriptiveStatistics;
  * </p>
  * 
  * @author not attributable
- * @version 1.0
+ * 
  */
 
 public class LinearRegression implements Regression {

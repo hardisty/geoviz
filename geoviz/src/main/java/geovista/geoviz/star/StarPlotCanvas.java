@@ -59,7 +59,7 @@ import geovista.symbolization.glyph.GlyphListener;
  * Responds to and broadcasts DataSetChanged, IndicationChanged etc. events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.7 $
+ * 
  */
 public class StarPlotCanvas extends JPanel implements ComponentListener,
 		DataSetListener, IndicationListener, MouseListener, MouseMotionListener {

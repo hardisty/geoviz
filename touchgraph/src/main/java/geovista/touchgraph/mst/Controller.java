@@ -16,7 +16,7 @@ import javax.swing.JFileChooser;
  * Copyright (c) 2002 Company:
  * 
  * @author Markus Svensson
- * @version 1.5
+ * 
  */
 
 public class Controller extends Thread {

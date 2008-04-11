@@ -19,7 +19,7 @@ import geovista.touchgraph.interaction.RotateScroll;
   * will probably need to be rewritten for other applications.
   *
   * @author   Frank Hardisty
-  * @version  1.20
+  * 
   */
 public interface NavigableLinkGraph {
 

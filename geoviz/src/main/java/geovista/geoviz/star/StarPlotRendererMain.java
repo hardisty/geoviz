@@ -39,7 +39,7 @@ import javax.swing.border.LineBorder;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.2 $
+ * 
  */
 public class StarPlotRendererMain extends JPanel implements ComponentListener {
 	protected final static Logger logger = Logger.getLogger(StarPlotRendererMain.class.getName());

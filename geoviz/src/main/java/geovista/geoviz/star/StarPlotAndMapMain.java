@@ -40,7 +40,7 @@ import geovista.geoviz.shapefile.ShapeFileToShape;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class StarPlotAndMapMain {
 

@@ -43,7 +43,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * current version.
  * 
  * 
- * @version $Revision: 1.24 $
+ * 
  * @author Xiping Dai and Frank Hardisty
  */
 public class DataSetForApps extends AbstractTableModel {

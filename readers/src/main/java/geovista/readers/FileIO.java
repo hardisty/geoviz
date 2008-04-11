@@ -47,7 +47,7 @@ import java.util.zip.ZipOutputStream;
  * routines for reading and writing files. Features include
  * transparent use of compression and decompression, stdin/stdout.
  *
- * @version $Revision: 1.4 $
+ * 
  * @author Masahiro Takatsuka (masa@psu.edu)
  */
 

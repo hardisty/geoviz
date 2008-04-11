@@ -69,7 +69,7 @@ import javax.swing.JPanel;
  * Launch "java geovista.matrix.treemap.tm.TMPatternFactory" to see the differents patterns.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMPatternFactory {
 

@@ -36,7 +36,7 @@ import javax.swing.SwingUtilities;
  * IT should be executed by a TMThreadQueue.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 abstract class TMThreadModel {
 

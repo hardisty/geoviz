@@ -62,7 +62,7 @@ import geovista.touchgraph.TGPoint2D;
 /** ZoomScroll:  Contains code for enlarging the graph by zooming in.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class ZoomScroll implements GraphListener {
 

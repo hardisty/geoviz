@@ -30,7 +30,7 @@ import geovista.matrix.BiPlotMatrix;
 /**
  *
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class CartogramMatrix
     extends BiPlotMatrix

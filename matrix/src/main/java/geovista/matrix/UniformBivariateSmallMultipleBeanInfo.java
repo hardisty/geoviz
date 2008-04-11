@@ -17,7 +17,7 @@ package geovista.matrix;
  * </p>
  * 
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 import java.beans.BeanInfo;

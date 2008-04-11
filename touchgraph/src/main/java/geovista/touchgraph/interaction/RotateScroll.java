@@ -66,7 +66,7 @@ import geovista.touchgraph.TGPoint2D;
   * lenses above the current one need to be added to TGLensSet to solve this problem.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class RotateScroll implements GraphListener {
 

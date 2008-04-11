@@ -47,7 +47,7 @@ import javax.swing.JProgressBar;
  * and what are the kind of elements used. 
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMSDProgressBar
     extends TMStatusDisplay {

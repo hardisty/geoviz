@@ -48,7 +48,7 @@ import javax.swing.ToolTipManager;
  * The TMView class implements a view of the TreeMap.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMView
     extends    JPanel

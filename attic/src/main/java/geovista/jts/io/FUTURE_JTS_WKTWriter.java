@@ -22,7 +22,7 @@ import java.text.DecimalFormatSymbols;
  * not define a special tag for LinearRings. The standard tag to use is
  * "LINESTRING".
  * 
- * @version 1.4
+ * 
  */
 // Writes z-coordinates if they are not NaN. Will be moved into JTS in
 // the future. [Jon Aquino 2004-10-25]

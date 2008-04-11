@@ -19,7 +19,7 @@ import javax.swing.plaf.ComponentUI;
  * class. See BasicParallelDisplayUI for the actual implementation.
  *
  * @author Flo Ledermann flo@subnet.at
- * @version 0.1
+ * 
  */
 public abstract class ParallelDisplayUI extends ComponentUI {
 

@@ -31,7 +31,7 @@ package geovista.treemap.tm;
  * The TMEventUpdateDraw class implements a update draw event.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMEventUpdateDraw
     extends TMEventUpdate {

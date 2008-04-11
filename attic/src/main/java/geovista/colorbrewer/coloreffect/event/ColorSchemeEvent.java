@@ -6,7 +6,7 @@ package geovista.colorbrewer.coloreffect.event;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: GeoVISTA Center and Department of Geography, Pennsylvania State University</p>
  * @author Diansheng Guo
- * @version 1.0
+ * 
  */
 import java.awt.Color;
 import java.util.EventObject;

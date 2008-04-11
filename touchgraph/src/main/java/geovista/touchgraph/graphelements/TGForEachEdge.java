@@ -54,7 +54,7 @@ import geovista.touchgraph.Edge;
 /** TGForEachEdge:  A dummy object for iterating through edges
   *   
   * @author   Alexander Shapiro                                        
-  * @version  1.20
+  * 
   */
 public abstract class TGForEachEdge {
 

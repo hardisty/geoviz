@@ -61,7 +61,7 @@ import geovista.touchgraph.TGPanel;
 /** LocalityScroll.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class LocalityScroll implements GraphListener {
 

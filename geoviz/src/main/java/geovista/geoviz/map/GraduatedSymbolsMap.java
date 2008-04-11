@@ -52,7 +52,7 @@ import geovista.symbolization.glyph.GlyphSizePicker;
  * DataSetChanged, IndicationChanged etc. events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 		SubspaceListener {

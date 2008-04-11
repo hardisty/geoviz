@@ -48,7 +48,7 @@ import geovista.treemap.tm.TMUpdater;
  * The TMFileNode implements an example of TMNode encapsulating a File.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMFileNode
     implements TMNode {

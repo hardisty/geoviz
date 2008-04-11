@@ -6,7 +6,7 @@
  *
  * @author: jin Chen
  * @date: Aug 13, 2003$
- * @version: 1.0
+ * 
  */
 package geovista.category;
 

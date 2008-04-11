@@ -38,7 +38,7 @@ import geovista.jts.coordsys.*;
 /**
  * This class implements the Mercator projection.
  * 
- * @version $Revision: 1.2 $
+ * 
  * @author $Author: dkim $
  * 
  * <pre>

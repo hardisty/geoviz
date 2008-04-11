@@ -51,7 +51,7 @@ import geovista.symbolization.ColorInterpolator;
  * </p>
  * 
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 
 public class CategoryRecords extends JPanel implements ChangeListener,

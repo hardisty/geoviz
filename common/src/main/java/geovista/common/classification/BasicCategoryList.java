@@ -7,7 +7,7 @@
     2. contain categories for multiple dimensions (variables). That is, the classification is made based on these variables.
  * @author: yunping liu
  * @date: Dec 7, 2004$
- * @version: 2.0
+ * 
  */
 package geovista.common.classification;
 
@@ -21,7 +21,8 @@ public class BasicCategoryList implements CategoryListItf {
 	protected int classifyMethodType;
 	protected int numOfDimension;
 	protected String variableName; // the name of the variable based on which
-									// the classification is made
+
+	// the classification is made
 
 	/** Creates a new instance of JDMCategoryList */
 	public BasicCategoryList(Vector categories, String classifyMethodName,

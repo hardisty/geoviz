@@ -19,7 +19,7 @@ import javax.swing.UIManager;
  * Launcher Class for unsing Parvis as a standalone application.
  *
  * @author Flo Ledermann flo@subnet.at
- * @version 0.1
+ * 
  */
 public class ParvisMain {
 

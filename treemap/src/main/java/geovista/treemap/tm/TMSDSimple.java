@@ -40,7 +40,7 @@ import javax.swing.JLabel;
  * Here, increment() does nothing.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMSDSimple
     extends TMStatusDisplay {

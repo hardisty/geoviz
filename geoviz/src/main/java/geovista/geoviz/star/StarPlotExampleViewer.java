@@ -37,7 +37,7 @@ import javax.swing.border.LineBorder;
 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class StarPlotExampleViewer extends JPanel implements ComponentListener {
 

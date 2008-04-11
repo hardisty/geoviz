@@ -34,7 +34,7 @@ package geovista.readers;
 /**
  * InvalidFileModeException is thown when invalid file mode is specified.
  * 
- * @version $Revision: 1.2 $
+ * 
  * @author Masahiro Takatsuka (masa@psu.edu)
  * @see FileIOException
  */

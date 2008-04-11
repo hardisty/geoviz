@@ -20,7 +20,7 @@ import java.awt.geom.Rectangle2D;
  * information needs to be encoded in the type of the class.
  * 
  * 
- * @version $Revision: 1.2 $
+ * 
  * @author Frank Hardisty
  */
 public class GeneralPathLine implements Shape {

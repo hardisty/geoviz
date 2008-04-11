@@ -39,7 +39,7 @@ import java.util.Enumeration;
  * this interface in the model of the tree.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public interface TMModelNode {
 

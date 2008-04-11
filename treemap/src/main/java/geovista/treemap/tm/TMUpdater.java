@@ -37,7 +37,7 @@ package geovista.treemap.tm;
  * something has changed.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public interface TMUpdater {
 

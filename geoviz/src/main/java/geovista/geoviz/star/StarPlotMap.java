@@ -48,7 +48,7 @@ import geovista.symbolization.glyph.GlyphListener;
  * IndicationChanged etc. events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class StarPlotMap extends GeoMap implements GlyphListener,
 		SubspaceListener {

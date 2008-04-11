@@ -42,7 +42,7 @@ import javax.swing.SwingUtilities;
  * what's happening on the TMView.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMStatusView
     extends Observable {

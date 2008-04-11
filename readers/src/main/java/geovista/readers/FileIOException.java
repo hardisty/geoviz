@@ -35,7 +35,7 @@ import java.io.IOException;
  * FileIOException is used for all geovista.readers package
  * related exceptions.
  * 
- * @version $Revision: 1.2 $
+ * 
  * @author Masahiro Takatsuka (masa@psu.edu)
  * @see IOException
  */

@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class FoldupPanel
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: jmacgill $
- $Id: FoldupPanel.java,v 1.1.1.1 2003/02/28 14:53:56 jmacgill Exp $
- $Date: 2003/02/28 14:53:56 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.common.ui;
 
@@ -43,36 +33,37 @@ import javax.swing.JPanel;
  * Currently, the component only "folds up" vertically.
  */
 public class FoldupPanel extends JPanel implements ActionListener {
-	protected final static Logger logger = Logger.getLogger(FoldupPanel.class.getName());
+	protected final static Logger logger = Logger.getLogger(FoldupPanel.class
+			.getName());
 	transient boolean folded = false;
 	transient ThumbPanel thumb;
-	 JPanel contentPanel;
-	 JPanel spaceHolder;
+	JPanel contentPanel;
+	JPanel spaceHolder;
 	transient Dimension tempPreferredSize;
 	private static Dimension foldedPreferredSize = new Dimension(600, 8);
-	 boolean initFinished;
+	boolean initFinished;
 
 	/**
 	 * null ctr
 	 */
 	public FoldupPanel() {
-		this.initFinished = false;
-		JPanel thumbHolder = this.makeThumbPanel();
-		this.spaceHolder = new JPanel();
+		initFinished = false;
+		JPanel thumbHolder = makeThumbPanel();
+		spaceHolder = new JPanel();
 		thumb.setPreferredSize(new Dimension(8, 30));
 		spaceHolder.setPreferredSize(new Dimension(2000, 5));
 		contentPanel = new JPanel();
 		contentPanel.setPreferredSize(new Dimension(2000, 10));
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(thumbHolder);
 		this.add(contentPanel);
 		this.add(spaceHolder);
 		spaceHolder.setVisible(false);
 		// this.setBorder(BorderFactory.createLineBorder(Color.black,2));
 		// this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		this.setPreferredSize(new Dimension(4000, 5));
-		this.thumb.addActionListener(this);
-		this.initFinished = true;
+		setPreferredSize(new Dimension(4000, 5));
+		thumb.addActionListener(this);
+		initFinished = true;
 	}
 
 	// toggle state. based on listening to our ThumbPanel
@@ -80,19 +71,19 @@ public class FoldupPanel extends JPanel implements ActionListener {
 		String command = e.getActionCommand();
 		if (command.equals("fold")) {
 			logger.finest("folding...");
-			tempPreferredSize = new Dimension(this.getPreferredSize());
-			this.setPreferredSize(FoldupPanel.foldedPreferredSize);
-			this.contentPanel.setVisible(false);
-			this.spaceHolder.setVisible(true);
+			tempPreferredSize = new Dimension(getPreferredSize());
+			setPreferredSize(FoldupPanel.foldedPreferredSize);
+			contentPanel.setVisible(false);
+			spaceHolder.setVisible(true);
 			// this.setSize(new Dimension(600,8));
 		} else if (command.equals("unfold")) {
 			logger.finest("unfolding...");
-			this.setPreferredSize(tempPreferredSize);
-			this.spaceHolder.setVisible(false);
-			this.contentPanel.setVisible(true);
+			setPreferredSize(tempPreferredSize);
+			spaceHolder.setVisible(false);
+			contentPanel.setVisible(true);
 		}
-		this.revalidate();
-		this.thumb.repaint();
+		revalidate();
+		thumb.repaint();
 
 	}
 
@@ -112,7 +103,7 @@ public class FoldupPanel extends JPanel implements ActionListener {
 	}
 
 	public JPanel getContentPanel() {
-		return this.contentPanel;
+		return contentPanel;
 	}
 
 	public void setContentPanel(JPanel contentPanel) {
@@ -120,6 +111,7 @@ public class FoldupPanel extends JPanel implements ActionListener {
 	}
 
 	// overridden methods
+	@Override
 	public Component add(Component c) {
 		if (initFinished) {
 			throw new IllegalArgumentException(
@@ -130,6 +122,7 @@ public class FoldupPanel extends JPanel implements ActionListener {
 		return c;
 	}
 
+	@Override
 	public void add(Component c, Object constraints) {
 		if (initFinished) {
 			throw new IllegalArgumentException(
@@ -139,6 +132,7 @@ public class FoldupPanel extends JPanel implements ActionListener {
 		}
 	}
 
+	@Override
 	public void setLayout(LayoutManager lm) {
 		if (initFinished) {
 			throw new IllegalArgumentException(

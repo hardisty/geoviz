@@ -37,7 +37,7 @@ import geovista.treemap.tm.TMView;
  * IndicationChanged etc. events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.4 $
+ * 
  */
 public class TreeMapCanvas extends JPanel implements DataSetListener,
 		DataSetModifiedListener, IndicationListener, SubspaceListener,

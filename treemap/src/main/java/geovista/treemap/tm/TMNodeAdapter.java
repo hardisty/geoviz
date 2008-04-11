@@ -39,7 +39,7 @@ package geovista.treemap.tm;
  * between filling and tooltip with getUserData() and setUserData().
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public abstract class TMNodeAdapter {
 

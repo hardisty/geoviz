@@ -67,7 +67,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @author Vesselin Markovsky [markovsky@semantec.bg]
- * @version 2.5
+ * 
  */
 public abstract class TMAlgorithm
     extends Observable {
@@ -575,7 +575,7 @@ public abstract class TMAlgorithm
      * for the cushion visualization
      *
      * @author Christophe Bouthier [bouthier@loria.fr]
-     * @version 2.5
+     * 
      */
 
     class TMCushionPaint

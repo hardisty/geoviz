@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  Java source file for the class OriginalColor
  Copyright (c), 2004, 2005 GeoVISTA Center under the LPGL
  Original Author: Biliang Zhou
- * @version 1.0
+ * 
  */
 
 public class OriginalColor {

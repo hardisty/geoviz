@@ -10,7 +10,7 @@ package geovista.matrix.visclass;
  * Copyright: Copyright (c) 2001 Company: GeoVISTA
  * 
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 
 import java.awt.BorderLayout;

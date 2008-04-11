@@ -35,7 +35,7 @@ import geovista.colorbrewer.coloreffect.event.ColorSchemeEvent;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class DesignBoard

@@ -38,7 +38,7 @@ import java.io.InputStreamReader;
 /**
  * Reader reads strings and numbers from a reader or an input stream.
  *
- * @version $Revision: 1.3 $
+ * 
  * @author Masahiro Takatsuka (masa@psu.edu)
  * @see java.io.Reader
  */

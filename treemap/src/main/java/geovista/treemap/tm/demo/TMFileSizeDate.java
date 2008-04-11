@@ -40,7 +40,7 @@ import geovista.treemap.tm.TMNode;
  * It use the date of the file as a size.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMFileSizeDate
     implements TMComputeSize {

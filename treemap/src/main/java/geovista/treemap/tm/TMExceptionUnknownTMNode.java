@@ -33,7 +33,7 @@ package geovista.treemap.tm;
  * a reference to an unknown TMNode. 
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMExceptionUnknownTMNode
     extends IllegalArgumentException {

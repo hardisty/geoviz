@@ -37,7 +37,7 @@ package geovista.treemap.tm;
  * type of event to send.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 abstract class TMEventUpdate {
 

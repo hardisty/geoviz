@@ -50,7 +50,7 @@ import geovista.common.event.PaletteListener;
  Copyright (c), 2004, GeoVISTA Center
  All Rights Reserved.
  Original Author: Biliang Zhou
- * @version 1.0
+ * 
  */
 
 public class ColorBrewerPlus extends JPanel implements ActionListener, ChangeListener, MouseListener, ListSelectionListener, ClassNumberListener {

@@ -25,7 +25,7 @@ package geovista.colorbrewer;
  * The <CODE>Palette</CODE> interface.
  *
  * @author  Chris Weaver
- * @version %I%, %G%
+ * 
  */
 public interface Palette
 {

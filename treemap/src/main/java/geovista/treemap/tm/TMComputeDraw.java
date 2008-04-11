@@ -59,7 +59,7 @@ import java.awt.Paint;
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
  * @author Vesselin Markovsky [markovsky@semantec.bg]
- * @version 2.5
+ * 
  */
 public interface TMComputeDraw {
 

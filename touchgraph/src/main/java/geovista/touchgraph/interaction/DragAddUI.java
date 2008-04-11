@@ -63,7 +63,7 @@ import geovista.touchgraph.TGPanel;
 /**  DragAddUI contains code for adding nodes + edges by dragging.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class DragAddUI extends TGAbstractDragUI implements TGPaintListener {
 

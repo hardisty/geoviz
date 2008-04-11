@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
  * writeback interface might be developed in the future.
  *
  * @author  flo
- * @version 0.1
+ * 
  */
 public interface ParallelSpaceModel {
 

@@ -61,7 +61,7 @@ import geovista.touchgraph.graphelements.TGForEachNode;
  * reference to TGPanel.
  * 
  * @author Alexander Shapiro
- * @version 1.20
+ * 
  */
 public class LocalityUtils {
 

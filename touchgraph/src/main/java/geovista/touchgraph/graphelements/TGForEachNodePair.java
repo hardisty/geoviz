@@ -54,7 +54,7 @@ import geovista.touchgraph.Node;
 /** TGForEachNodePair: A dummy object for iterating through pairs of nodes
   *   
   * @author   Alexander Shapiro                                        
-  * @version  1.20
+  * 
   */
 public abstract class TGForEachNodePair {
 

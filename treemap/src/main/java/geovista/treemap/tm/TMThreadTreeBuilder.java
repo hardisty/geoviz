@@ -35,7 +35,7 @@ package geovista.treemap.tm;
  * After building the tree, it switch the TMView to the initialized state.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMThreadTreeBuilder
     extends TMThreadModel {

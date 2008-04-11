@@ -58,7 +58,7 @@ import geovista.touchgraph.TGPanel;
   * what happends when a mouse is moved over the screen
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public abstract class TGAbstractMouseMotionUI extends TGUserInterface{
 

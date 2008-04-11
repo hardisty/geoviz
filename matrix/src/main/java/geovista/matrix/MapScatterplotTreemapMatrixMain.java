@@ -16,7 +16,7 @@ import geovista.geoviz.sample.GeoData48States;
  * events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class MapScatterplotTreemapMatrixMain {
 

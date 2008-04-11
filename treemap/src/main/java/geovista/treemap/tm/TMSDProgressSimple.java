@@ -42,7 +42,7 @@ import javax.swing.JLabel;
  * and what are the kind of elements used. 
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMSDProgressSimple
     extends TMStatusDisplay {

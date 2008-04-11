@@ -6,7 +6,7 @@
  * For reading csv file contain only String type. e.g. Meta file in csv format
  * @author: jin Chen 
  * @date: Oct 21, 2003$
- * @version: 1.0
+ * 
  */
 package geovista.readers.csv;
 

@@ -26,7 +26,7 @@ import java.awt.Color;
  * The <CODE>Palette1D</CODE> interface.
  *
  * @author  Chris Weaver
- * @version %I%, %G%
+ * 
  */
 public interface Palette1D extends Palette
 {

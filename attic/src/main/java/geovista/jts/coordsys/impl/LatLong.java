@@ -40,7 +40,7 @@ import geovista.jts.coordsys.Projection;
  * Implements the Polyconic projection.
  * *
  * @author $Author: dkim $
- * @version $Revision: 1.2 $
+ * 
  */
 public class LatLong extends Projection {
     public Geographic asGeographic(Planar p, Geographic g) {

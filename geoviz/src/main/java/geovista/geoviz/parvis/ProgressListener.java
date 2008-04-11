@@ -10,13 +10,12 @@
 package geovista.geoviz.parvis;
 
 /**
- *
- * @author  flo
- * @version
+ * 
+ * @author flo
+ * 
  */
 public interface ProgressListener extends java.util.EventListener {
 
-    public void processProgressEvent(ProgressEvent e);
+	public void processProgressEvent(ProgressEvent e);
 
 }
-

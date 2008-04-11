@@ -6,7 +6,7 @@
  *
  * @author: jin Chen
  * @date: Aug 5, 2003$
- * @version: 1.0
+ * 
  */
 package geovista.category;
 import java.awt.Color;

@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * It's the Bridge design pattern.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMModelUpdaterConcrete
     implements TMModelUpdater {

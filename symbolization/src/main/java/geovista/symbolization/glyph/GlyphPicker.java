@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.4 $
+ * 
  */
 public class GlyphPicker extends JDialog implements ActionListener {
 	private JPanel myPanel = null;

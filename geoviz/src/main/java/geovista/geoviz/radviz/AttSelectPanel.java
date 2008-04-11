@@ -29,7 +29,7 @@ import javax.swing.table.AbstractTableModel;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: GeoVISTA</p>
  * @author Gary L.
- * @version 1.0
+ * 
  * @extends JPanel
  * @implements ActionListener
  */

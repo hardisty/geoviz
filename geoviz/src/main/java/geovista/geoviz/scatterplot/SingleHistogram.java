@@ -3,7 +3,7 @@ package geovista.geoviz.scatterplot;
 /**
  * Title: SingleHistogram
  * @author Frank Hardisty
- * @version 1.0
+ * 
  */
 
 import java.awt.BorderLayout;

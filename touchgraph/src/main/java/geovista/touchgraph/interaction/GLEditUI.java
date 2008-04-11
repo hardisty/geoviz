@@ -76,7 +76,7 @@ import geovista.touchgraph.TGPanel;
 /** GLEditUI:  User Interface for editing the graph.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class GLEditUI extends TGUserInterface {
 

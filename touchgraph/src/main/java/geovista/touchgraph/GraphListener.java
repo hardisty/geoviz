@@ -53,7 +53,7 @@ import java.util.EventListener;
 /**  GraphListener.
   *   
   * @author   Alexander Shapiro                                        
-  * @version  1.20
+  * 
   */
 public interface GraphListener extends EventListener{
 
