@@ -1,3 +1,7 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Masahiro Takatsuka */
+
 package geovista.common.data;
 
 import java.util.Random;
