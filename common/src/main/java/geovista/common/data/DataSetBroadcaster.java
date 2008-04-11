@@ -17,6 +17,10 @@ import geovista.common.event.DataSetListener;
 /**
  * This class is able to accept data for rebroadcast. It builds a DataSetForApps
  * and sends it out. This class is designed to work with the R-Java link.
+ * 
+ * @author Frank Hardisty
+ * @see DataSetForApps
+ * 
  */
 public class DataSetBroadcaster {
 
