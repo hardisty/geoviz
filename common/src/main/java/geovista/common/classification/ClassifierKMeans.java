@@ -1,13 +1,8 @@
-package geovista.common.classification;
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 
-/**
- * <p>Title: Studio applications</p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2002</p>
- * <p>Company: GeoVSITA Center</p>
- * @author Xiping Dai
- * @version 1.0
- */
+package geovista.common.classification;
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
@@ -18,59 +13,59 @@ import geovista.common.event.DataSetListener;
 public class ClassifierKMeans implements DataSetListener {
 
 	private int[] cluster; // each element indicates the class number of the
-							// corresponding state.
+	// corresponding state.
 	private double[][] clustermean; // each row is a mean vector of a class.
 	private int[] iniObsIdx; // the indices of observations which are the
-								// assigned initial points (means).
+	// assigned initial points (means).
 	private int[] selectedAttIdx; // the indices of attributes considered in
-									// this classification.
+	// this classification.
 	private Object[] dataObject;
 	private String[] attributesDisplay;
 	private double[][] dataArray; // array for classification, each row is a
-									// data vector of an observation, each
-									// collum is an attribute vector.
+	// data vector of an observation, each
+	// collum is an attribute vector.
 	private int clusternumber = 5; // number of clusters
+
 	public ClassifierKMeans() {
 	}
 
-	  /**
-	   * @param data
-	   * 
-	   * This method is deprecated becuase it wants to create its very own pet
-	   * DataSetForApps. This is no longer allowed, to allow for a mutable, 
-	   * common data set. Use of this method may lead to unexpected
-	   * program behavoir. 
-	   * Please use setDataSet instead.
-	   */
-	  @Deprecated
-	  public void setData(Object[] data) {
-		 this.setDataSet(new DataSetForApps(data));
-	    
-	  }
-	
-	
+	/**
+	 * @param data
+	 * 
+	 * This method is deprecated becuase it wants to create its very own pet
+	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
+	 * data set. Use of this method may lead to unexpected program behavoir.
+	 * Please use setDataSet instead.
+	 */
+	@Deprecated
+	public void setData(Object[] data) {
+		setDataSet(new DataSetForApps(data));
+
+	}
+
 	public void setDataSet(DataSetForApps data) {
 		// remove string data
 		DataSetForApps dataObjTransfer = data;
-		this.dataObject = dataObjTransfer.getDataSetNumeric();
-		this.attributesDisplay = dataObjTransfer.getAttributeNamesNumeric();
+		dataObject = dataObjTransfer.getDataSetNumeric();
+		attributesDisplay = dataObjTransfer.getAttributeNamesNumeric();
 		dataArray = new double[dataObjTransfer.getNumObservations()][attributesDisplay.length];
 		// transfer data array to double array
 		for (int j = 0; j < attributesDisplay.length; j++) {
 			int t = 0;
-			if (dataObject[j] instanceof double[])
+			if (dataObject[j] instanceof double[]) {
 				t = 0;
-			else if (dataObject[j] instanceof int[])
+			} else if (dataObject[j] instanceof int[]) {
 				t = 1;
-			else if (dataObject[j] instanceof boolean[])
+			} else if (dataObject[j] instanceof boolean[]) {
 				t = 2;
+			}
 			for (int i = 0; i < dataArray.length; i++) {
 				switch (t) {
 				case 0:
 					dataArray[i][j] = ((double[]) dataObject[j])[i];
 					break;
 				case 1:
-					dataArray[i][j] = (double) ((int[]) dataObject[j])[i];
+					dataArray[i][j] = ((int[]) dataObject[j])[i];
 					break;
 				case 2:
 					dataArray[i][j] = ((boolean[]) dataObject[j])[i] ? 1.0
@@ -79,10 +74,10 @@ public class ClassifierKMeans implements DataSetListener {
 				}
 			}
 		}
-		if (this.selectedAttIdx == null) {
-			this.selectedAttIdx = new int[this.attributesDisplay.length];
-			for (int i = 0; i < this.attributesDisplay.length; i++) {
-				this.selectedAttIdx[i] = i;
+		if (selectedAttIdx == null) {
+			selectedAttIdx = new int[attributesDisplay.length];
+			for (int i = 0; i < attributesDisplay.length; i++) {
+				selectedAttIdx[i] = i;
 			}
 		}
 		KMeansCluster();
@@ -90,21 +85,21 @@ public class ClassifierKMeans implements DataSetListener {
 
 	public void setDataArray(double[][] dataArray) {
 		this.dataArray = dataArray;
-		if (this.selectedAttIdx == null) {
-			this.selectedAttIdx = new int[this.attributesDisplay.length];
-			for (int i = 0; i < this.attributesDisplay.length; i++) {
-				this.selectedAttIdx[i] = i;
+		if (selectedAttIdx == null) {
+			selectedAttIdx = new int[attributesDisplay.length];
+			for (int i = 0; i < attributesDisplay.length; i++) {
+				selectedAttIdx[i] = i;
 			}
 		}
 		KMeansCluster();
 	}
 
 	public void setAttributesDisplay(String[] att) {
-		this.attributesDisplay = att;
+		attributesDisplay = att;
 	}
 
 	public void setClusterNumber(int clusterNumber) {
-		this.clusternumber = clusterNumber;
+		clusternumber = clusterNumber;
 	}
 
 	public void setIniObsIdx(int[] iniObsIdx) {
@@ -117,47 +112,50 @@ public class ClassifierKMeans implements DataSetListener {
 
 	public void setSelectedAttIdx(int[] selectedAttIdx) {
 
-			this.selectedAttIdx = selectedAttIdx;
-			System.out.print("selectedAttIdx is not null..."
-					+ selectedAttIdx[0]);
+		this.selectedAttIdx = selectedAttIdx;
+		System.out.print("selectedAttIdx is not null..." + selectedAttIdx[0]);
 
 	}
 
 	public int getClusterNumber() {
-		return this.clusternumber;
+		return clusternumber;
 	}
 
 	public int[] getKMeansClusters() {
-		return this.cluster;
+		return cluster;
 	}
 
 	public double[][] getClusterMean() {
-		return this.clustermean;
+		return clustermean;
 	}
 
 	private void KMeansCluster() {
 		// initialize clustermean
 		// clustermean = new double[clusternumber][attributesDisplay.length];
-		clustermean = new double[clusternumber][this.selectedAttIdx.length];
+		clustermean = new double[clusternumber][selectedAttIdx.length];
 		cluster = new int[dataArray.length];
-		if (this.iniObsIdx != null) {
-			for (int i = 0; i < clusternumber; i++)
-				for (int j = 0; j < this.selectedAttIdx.length; j++)
-					clustermean[i][j] = dataArray[this.iniObsIdx[i]][this.selectedAttIdx[j]];
+		if (iniObsIdx != null) {
+			for (int i = 0; i < clusternumber; i++) {
+				for (int j = 0; j < selectedAttIdx.length; j++) {
+					clustermean[i][j] = dataArray[iniObsIdx[i]][selectedAttIdx[j]];
+				}
+			}
 		} else {// no specified initial points
-			for (int i = 0; i < clusternumber; i++)
-				for (int j = 0; j < this.selectedAttIdx.length; j++)
-					clustermean[i][j] = dataArray[i][this.selectedAttIdx[j]];
+			for (int i = 0; i < clusternumber; i++) {
+				for (int j = 0; j < selectedAttIdx.length; j++) {
+					clustermean[i][j] = dataArray[i][selectedAttIdx[j]];
+				}
+			}
 		}
 		// loop to classify
-		double[] obsWithConsideredAtt = new double[this.selectedAttIdx.length];// pick
-																				// data
-																				// within
-																				// considered
-																				// attributes
-																				// for
-																				// each
-																				// observation.
+		double[] obsWithConsideredAtt = new double[selectedAttIdx.length];// pick
+		// data
+		// within
+		// considered
+		// attributes
+		// for
+		// each
+		// observation.
 		double diff = 1.0; // the change between two successive loops.
 		for (int i = 0; i < 100 && diff >= 1.0e-3; i++) // every loop
 		{
@@ -169,12 +167,12 @@ public class ClassifierKMeans implements DataSetListener {
 				cluster[j] = 0;
 				// copy those considered attributes value to array for distance
 				// calculation
-				for (int k = 0; k < this.selectedAttIdx.length; k++) {
-					obsWithConsideredAtt[k] = dataArray[j][this.selectedAttIdx[k]];
+				for (int k = 0; k < selectedAttIdx.length; k++) {
+					obsWithConsideredAtt[k] = dataArray[j][selectedAttIdx[k]];
 				}
 
 				for (int k = 0; k < clustermean.length; k++) // every cluster
-																// mean
+				// mean
 				{
 					// distance = getDistance(dataArray[j], clustermean[k]);
 					distance = getDistance(obsWithConsideredAtt, clustermean[k]);
@@ -187,40 +185,44 @@ public class ClassifierKMeans implements DataSetListener {
 			// recalculate each cluster mean
 			// double[][] clustermeannew = new
 			// double[clusternumber][attributesDisplay.length];
-			double[][] clustermeannew = new double[clusternumber][this.selectedAttIdx.length];
+			double[][] clustermeannew = new double[clusternumber][selectedAttIdx.length];
 			int[] clusteramount = new int[clusternumber];
 			for (int j = 0; j < dataArray.length; j++) {
 				clusteramount[cluster[j]] += 1;
 				// copy those considered attributes value to array for distance
 				// calculation
-				for (int k = 0; k < this.selectedAttIdx.length; k++) {
-					obsWithConsideredAtt[k] = dataArray[j][this.selectedAttIdx[k]];
+				for (int k = 0; k < selectedAttIdx.length; k++) {
+					obsWithConsideredAtt[k] = dataArray[j][selectedAttIdx[k]];
 				}
 				clustermeannew[cluster[j]] = plus(clustermeannew[cluster[j]],
 						obsWithConsideredAtt);
 			}
 			for (int j = 0; j < clusternumber; j++) {
-				if (clusteramount[j] != 0)
+				if (clusteramount[j] != 0) {
 					clustermeannew[j] = divide(clustermeannew[j],
-							(double) clusteramount[j]);
-				else
+							clusteramount[j]);
+				} else {
 					setvalue(clustermeannew[j], clustermean[j]);
+				}
 			}
 			// calculate cluster change
 			// calculate mean of new clusters
-			double[] cm = new double[this.selectedAttIdx.length];
-			for (int j = 0; j < clusternumber; j++)
+			double[] cm = new double[selectedAttIdx.length];
+			for (int j = 0; j < clusternumber; j++) {
 				cm = plus(cm, clustermeannew[j]);
-			cm = divide(cm, (double) clusternumber);
+			}
+			cm = divide(cm, clusternumber);
 			// calculate standard deviation of new clusters
 			double csd = 0.0;
-			for (int j = 0; j < clusternumber; j++)
+			for (int j = 0; j < clusternumber; j++) {
 				csd += distance2(cm, clustermeannew[j]);
+			}
 			csd = Math.sqrt(csd / clusternumber);
 			// calculate change percentage
 			diff = 0.0;
-			for (int j = 0; j < clusternumber; j++)
+			for (int j = 0; j < clusternumber; j++) {
 				diff += distance2(clustermean[j], clustermeannew[j]);
+			}
 			diff = Math.sqrt(diff / clusternumber) / csd;
 			// set new clusters
 			clustermean = clustermeannew;
@@ -238,27 +240,31 @@ public class ClassifierKMeans implements DataSetListener {
 
 	public static double[] plus(double[] a, double[] b) {
 		double[] c = new double[a.length];
-		for (int i = 0; i < a.length; i++)
+		for (int i = 0; i < a.length; i++) {
 			c[i] = a[i] + b[i];
+		}
 		return c;
 	}
 
 	public static double[] divide(double[] a, double b) {
 		double[] c = new double[a.length];
-		for (int i = 0; i < a.length; i++)
+		for (int i = 0; i < a.length; i++) {
 			c[i] = a[i] / b;
+		}
 		return c;
 	}
 
 	public static void setvalue(double[] a, double[] b) {
-		for (int i = 0; i < a.length; i++)
+		for (int i = 0; i < a.length; i++) {
 			a[i] = b[i];
+		}
 	}
 
 	public static double multiply(double[] a, double[] b) {
 		double c = 0.0;
-		for (int i = 0; i < a.length; i++)
+		for (int i = 0; i < a.length; i++) {
 			c += a[i] * b[i];
+		}
 		return c;
 	}
 
@@ -267,18 +273,18 @@ public class ClassifierKMeans implements DataSetListener {
 	}
 
 	public static double distance2(double[] a, double[] b) // square of
-															// distance
+	// distance
 	{
 		double c = 0.0;
-		for (int i = 0; i < a.length; i++)
+		for (int i = 0; i < a.length; i++) {
 			c += (a[i] - b[i]) * (a[i] - b[i]);
+		}
 		return c;
 	}
 
 	// Work with coordinator.
 	public void dataSetChanged(DataSetEvent e) {
-		this.setDataSet(e.getDataSetForApps());
+		setDataSet(e.getDataSetForApps());
 	}
-
 
 }

@@ -1,18 +1,12 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Xiping Dai */
 package geovista.common.classification;
-
-/**
- * Title:
- * Description:
- * Copyright:    Copyright (c) 2001
- * Company:
- * @author Xiping Dai
- * @version 1.0
- */
 
 public interface MultiVariateClassifier {
 
-    public static final int NULL_CLASS = -1;
+	public static final int NULL_CLASS = -1;
 
-    public int[] multiVariateClassify(Object[] data, int numClasses);
+	public int[] multiVariateClassify(Object[] data, int numClasses);
 
 }
