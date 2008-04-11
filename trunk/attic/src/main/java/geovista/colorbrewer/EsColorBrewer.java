@@ -6,7 +6,7 @@
  * The purpose of the class is to make it easier to integerate ColorBrewer into ESTAT
  * @author: jin Chen 
  * @date: Jan 5, 2005$
- * @version: 1.0
+ * 
  */
 package geovista.colorbrewer;
 

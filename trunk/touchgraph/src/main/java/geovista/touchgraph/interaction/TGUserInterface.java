@@ -57,7 +57,7 @@ package geovista.touchgraph.interaction;
   * TGUserInterface must call super.deactivate() if they override this method.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public abstract class TGUserInterface {
 

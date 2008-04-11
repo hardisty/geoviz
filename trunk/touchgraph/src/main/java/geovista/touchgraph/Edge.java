@@ -58,7 +58,7 @@ import geovista.symbolization.ColorInterpolator;
 /**  Edge.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class Edge implements Comparable {
 

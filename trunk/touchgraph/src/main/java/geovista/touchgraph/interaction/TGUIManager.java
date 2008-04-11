@@ -56,7 +56,7 @@ import java.util.Vector;
   * when switching user interfaces from menus.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class TGUIManager {
 

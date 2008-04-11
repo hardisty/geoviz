@@ -37,7 +37,7 @@ import geovista.jts.coordsys.*;
 
 /**
  * @author $Author: dkim $
- * @version $Revision: 1.2 $
+ * 
  * <pre>
  * $Id: MeridianArcLength.java,v 1.2 2003/11/05 05:13:43 dkim Exp $
  * $Date: 2003/11/05 05:13:43 $

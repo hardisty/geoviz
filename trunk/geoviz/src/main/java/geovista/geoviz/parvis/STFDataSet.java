@@ -51,7 +51,7 @@ Ginger         48      100.00
  * defined in the ParallelSpaceModel interface.
  *
  * @author Flo Ledermann flo@subnet.at
- * @version 0.1
+ * 
  */
 public class STFDataSet extends SimpleParallelSpaceModel {
 

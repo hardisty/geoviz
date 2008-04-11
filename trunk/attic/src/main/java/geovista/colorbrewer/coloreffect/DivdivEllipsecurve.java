@@ -8,7 +8,7 @@ package geovista.colorbrewer.coloreffect;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 //Function: A2/a2 + B2/b2 + L2/c2 = 1 (a = b here)

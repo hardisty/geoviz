@@ -56,7 +56,7 @@ import java.util.EventListener;
   * painting.
   *   
   * @author   Alexander Shapiro                                        
-  * @version  1.20
+  * 
   */
 public interface TGPaintListener extends EventListener{
 

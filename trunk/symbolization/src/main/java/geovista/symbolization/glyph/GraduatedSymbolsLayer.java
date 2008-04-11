@@ -41,7 +41,7 @@ import geovista.common.event.SubspaceEvent;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.2 $
+ * 
  */
 public class GraduatedSymbolsLayer implements DataSetListener,
 		IndicationListener {

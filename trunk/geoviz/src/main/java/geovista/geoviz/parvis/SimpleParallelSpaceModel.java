@@ -23,7 +23,7 @@ import javax.swing.event.EventListenerList;
  * two-dimensionsl array, labels are stored in arrays.
  *
  * @author  Flo Ledermann flo@subnet.at
- * @version 0.1
+ * 
  */
 public class SimpleParallelSpaceModel implements ParallelSpaceModel {
 

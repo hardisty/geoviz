@@ -6,7 +6,7 @@ package geovista.geoviz.condition;
  * <p>Copyright: Copyright (c) 2001</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 import java.awt.Dimension;

@@ -52,7 +52,7 @@ package geovista.touchgraph;
 /** TGPoint2D is only needed for java 1.1.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class TGPoint2D {
 

@@ -38,7 +38,7 @@ import geovista.jts.coordsys.*;
  * Implements the Polyconic projection.
  * *
  * @author $Author: dkim $
- * @version $Revision: 1.2 $
+ * 
  * <pre>
  * $Id: Polyconic.java,v 1.2 2003/11/05 05:14:18 dkim Exp $
  * $Date: 2003/11/05 05:14:18 $

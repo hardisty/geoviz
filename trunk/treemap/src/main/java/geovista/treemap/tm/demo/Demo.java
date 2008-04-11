@@ -61,7 +61,7 @@ import geovista.treemap.tm.TreeMap;
  * If no arguments is given, the geovista.matrix.treemap.tm start from the root.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class Demo {
 

@@ -6,7 +6,7 @@ package geovista.category;
  * Copyright:    Copyright (c) 2001
  * Company:
  * @author
- * @version 1.0
+ * 
  */
 
 import java.awt.BorderLayout;

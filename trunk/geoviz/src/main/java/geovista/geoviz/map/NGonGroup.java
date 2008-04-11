@@ -43,7 +43,7 @@ import geovista.symbolization.glyph.NGon;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.2 $
+ * 
  */
 public class NGonGroup implements DataSetListener, IndicationListener {
 

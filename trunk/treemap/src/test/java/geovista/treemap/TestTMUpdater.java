@@ -41,7 +41,7 @@ import junit.framework.TestSuite;
  * TestTMUpdater in TMNode classes.
  * 
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TestTMUpdater extends TestCase {
 

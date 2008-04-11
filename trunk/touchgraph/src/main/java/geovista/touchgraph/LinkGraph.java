@@ -114,7 +114,7 @@ import geovista.touchgraph.mst.NDimensionalMST;
  * probably need to be rewritten for other applications.
  * 
  * @author Alexander Shapiro
- * @version 1.20
+ * 
  */
 public class LinkGraph extends JPanel implements DataSetListener,
 		ListSelectionListener, IndicationListener, SelectionListener,

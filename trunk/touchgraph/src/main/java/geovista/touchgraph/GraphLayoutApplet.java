@@ -56,7 +56,7 @@ import javax.swing.JApplet;
 /**  GraphLayoutApplet.  
   *
   * @author   Alexander Shapiro                                        
-  * @version  1.20
+  * 
   */
 public class GraphLayoutApplet extends JApplet {
 

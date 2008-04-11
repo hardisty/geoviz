@@ -32,7 +32,7 @@ package geovista.treemap.tm;
  * a null parameter is passed where it should not.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMExceptionNullParameter
     extends IllegalArgumentException {

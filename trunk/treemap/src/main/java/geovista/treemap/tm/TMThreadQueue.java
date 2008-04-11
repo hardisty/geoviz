@@ -37,7 +37,7 @@ import java.util.Vector;
  * util.concurrent package.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMThreadQueue {
 

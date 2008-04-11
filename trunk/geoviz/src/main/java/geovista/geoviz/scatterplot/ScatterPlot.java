@@ -7,7 +7,7 @@ package geovista.geoviz.scatterplot;
  * Company: GeoVISTA Center
  * @author Xiping Dai
  * @author Jin Chen
- * @version 1.0
+ * 
  */
 import java.awt.Color;
 import java.awt.Graphics;

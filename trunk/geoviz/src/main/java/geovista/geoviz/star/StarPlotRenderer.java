@@ -45,7 +45,7 @@ import geovista.symbolization.glyph.Glyph;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.4 $
+ * 
  */
 public class StarPlotRenderer implements Glyph {
 

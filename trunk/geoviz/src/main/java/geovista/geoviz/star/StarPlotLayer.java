@@ -43,7 +43,7 @@ import geovista.symbolization.glyph.Glyph;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.2 $
+ * 
  */
 public class StarPlotLayer implements DataSetListener, IndicationListener {
 

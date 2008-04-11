@@ -58,7 +58,7 @@ import geovista.touchgraph.Node;
   * that does not allow for addition or deletion of nodes or edges.
   *
   * @author   Alexander Shapiro                                        
-  * @version  1.20
+  * 
   */
 public interface ImmutableGraphEltSet {
 

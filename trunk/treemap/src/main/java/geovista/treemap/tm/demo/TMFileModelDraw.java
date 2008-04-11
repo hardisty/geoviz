@@ -53,7 +53,7 @@ import geovista.treemap.tm.TMComputeDrawAdapter;
  * </UL>
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMFileModelDraw
     extends TMComputeDrawAdapter {

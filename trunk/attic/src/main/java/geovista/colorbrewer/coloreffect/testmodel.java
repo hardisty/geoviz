@@ -20,7 +20,7 @@ import javax.swing.border.EtchedBorder;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class testmodel extends JPanel implements ActionListener{

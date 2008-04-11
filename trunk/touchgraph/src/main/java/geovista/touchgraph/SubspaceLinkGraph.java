@@ -37,7 +37,7 @@ import geovista.touchgraph.mst.NDimensionalMST;
   * will probably need to be rewritten for other applications.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class SubspaceLinkGraph extends LinkGraph implements DataSetListener,
     ListSelectionListener, ActionListener {

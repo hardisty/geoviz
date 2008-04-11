@@ -36,7 +36,7 @@ package geovista.jts.coordsys;
 /**
 
  * @author $Author: dkim $
- * @version $Revision: 1.2 $
+ * 
 
  *  <pre>
  *  $Id: Spheroid.java,v 1.2 2003/11/05 05:26:52 dkim Exp $

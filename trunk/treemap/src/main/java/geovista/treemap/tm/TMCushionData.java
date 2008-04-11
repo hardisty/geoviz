@@ -32,7 +32,7 @@ package geovista.treemap.tm;
  * for the cushion visualization
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMCushionData {
 

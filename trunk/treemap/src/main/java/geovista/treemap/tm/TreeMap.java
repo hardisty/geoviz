@@ -44,7 +44,7 @@ package geovista.treemap.tm;
  * getView().  It takes a TMSizeRenderer and a TMDrawRenderer as parameters.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TreeMap {
 

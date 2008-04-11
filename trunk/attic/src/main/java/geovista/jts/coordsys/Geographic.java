@@ -36,7 +36,7 @@ package geovista.jts.coordsys;
  * This class is a base for geographic coordinate systems.
  *
  * @author $Author: dkim $
- * @version  $Revision: 1.2 $
+ * 
  *
  * <pre>
  *  $Id: Geographic.java,v 1.2 2003/11/05 05:20:42 dkim Exp $

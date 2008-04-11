@@ -32,7 +32,7 @@ package geovista.treemap.tm;
  * for a new child of a TMNode.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMEventUpdateNewChild
     extends TMEventUpdate {

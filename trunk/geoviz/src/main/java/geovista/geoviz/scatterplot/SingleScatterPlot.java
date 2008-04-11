@@ -7,7 +7,7 @@ package geovista.geoviz.scatterplot;
  * <p>Company: </p>
  * @author unascribed
  * @author
- * @version 1.0
+ * 
  */
 
 import java.awt.BorderLayout;

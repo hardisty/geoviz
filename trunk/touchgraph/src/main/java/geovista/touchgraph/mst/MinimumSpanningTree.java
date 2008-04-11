@@ -14,7 +14,7 @@ import java.util.Vector;
  * calculate a MST from a graph. Copyright: Copyright (c) 2002 Company:
  * 
  * @author Markus Svensson
- * @version 1.2
+ * 
  */
 
 public class MinimumSpanningTree {

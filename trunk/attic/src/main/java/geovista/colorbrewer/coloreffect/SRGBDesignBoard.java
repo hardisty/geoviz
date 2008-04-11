@@ -37,7 +37,7 @@ import javax.swing.event.ChangeListener;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class SRGBDesignBoard extends JPanel implements ActionListener, ChangeListener, KeyListener, MouseListener {

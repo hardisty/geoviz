@@ -39,7 +39,7 @@ import geovista.common.ui.ExcentricLabelClient;
  * the state of the component and interact with the environment.
  * 
  * @author Flo Ledermann flo@subnet.at
- * @version 0.1
+ * 
  */
 public class ParallelDisplay extends JComponent implements ChangeListener,
 		IndicationListener, SelectionListener, ExcentricLabelClient {

@@ -31,7 +31,7 @@ package geovista.treemap.tm;
  * The TMThreadLock class implements a really simple mutex.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMThreadLock {
 

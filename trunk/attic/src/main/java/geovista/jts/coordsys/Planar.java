@@ -35,7 +35,7 @@ package geovista.jts.coordsys;
 /**
 
  * @author $Author: dkim $
- * @version  $Revision: 1.2 $
+ * 
  *
  * <pre>
  * $Id: Planar.java,v 1.2 2003/11/05 05:22:17 dkim Exp $

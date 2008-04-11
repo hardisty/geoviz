@@ -10,7 +10,7 @@ import java.util.Vector;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author Markus Svensson
- * @version 1.5
+ * 
  */
 
 public class GraphDisplay extends JFrame {

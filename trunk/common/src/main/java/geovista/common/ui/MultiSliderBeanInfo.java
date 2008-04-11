@@ -38,7 +38,7 @@ import java.beans.SimpleBeanInfo;
 /**
  * MultiSliderBeanInfo provides information on the MtltiSlider bean.
  * 
- * @version $Revision: 1.1.1.1 $
+ * 
  * @author Masahiro Takatsuka (jh9gpz@yahoo.com)
  * @see SimpleBeanInfo
  */

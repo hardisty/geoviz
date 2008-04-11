@@ -38,7 +38,7 @@ import java.util.Vector;
  * See Bruls, Huizing and van Wijk.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMAlgorithmSquarified
     extends TMAlgorithm {

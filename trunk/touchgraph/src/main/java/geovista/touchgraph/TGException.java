@@ -53,7 +53,7 @@ package geovista.touchgraph;
   *
   * @author   Alexander Shapiro
   * @author   Murray Altheim
-  * @version  1.20
+  * 
   */
 public class TGException extends Exception {
 

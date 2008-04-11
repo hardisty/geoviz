@@ -32,7 +32,7 @@ package geovista.treemap.tm;
  * object used to compute the size of TMNodeModel.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMThreadChangeSizing
     extends TMThreadModel {

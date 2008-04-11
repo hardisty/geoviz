@@ -9,7 +9,7 @@ package geovista.common.classification;
  * Copyright: Copyright (c) 2001 Company: GeoVISTA
  * 
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 
 import java.util.Arrays;

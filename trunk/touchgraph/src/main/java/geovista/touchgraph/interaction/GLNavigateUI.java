@@ -68,7 +68,7 @@ import geovista.touchgraph.TGPanel;
   * to editing.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class GLNavigateUI extends TGUserInterface {
 

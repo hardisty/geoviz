@@ -21,7 +21,7 @@ import geovista.symbolization.BivariateColorSymbolClassification;
  * Suitable for inclusion into multiform matrixes
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class StarPlotMatrixElement extends StarPlotCanvas implements
 		MatrixElement {

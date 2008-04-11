@@ -74,7 +74,7 @@ import geovista.readers.csv.CSVFileDataReader;
  * Company: GeoVISTA
  * 
  * @author Gary L.
- * @version 1.0
+ * 
  */
 public class RadViz extends JPanel implements ActionListener,
 		ClassificationResultListener, DataSetListener, MouseListener,

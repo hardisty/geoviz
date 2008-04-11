@@ -37,7 +37,7 @@ import geovista.treemap.tm.TMNode;
  * for a TMDataNode.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMDataSize
     implements TMComputeSize {

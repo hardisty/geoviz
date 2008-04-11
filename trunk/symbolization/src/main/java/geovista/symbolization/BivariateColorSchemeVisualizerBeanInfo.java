@@ -9,7 +9,7 @@ import java.beans.SimpleBeanInfo;
  * <p>Copyright: Copyright (c) 2002</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class BivariateColorSchemeVisualizerBeanInfo extends SimpleBeanInfo {

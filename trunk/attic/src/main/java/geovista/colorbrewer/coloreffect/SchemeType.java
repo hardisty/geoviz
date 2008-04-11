@@ -13,7 +13,7 @@ import javax.swing.border.TitledBorder;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class SchemeType extends JPanel{

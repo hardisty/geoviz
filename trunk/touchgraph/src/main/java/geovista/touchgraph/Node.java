@@ -62,7 +62,7 @@ import java.util.Vector;
   *
   *  @author   Alexander Shapiro
   *  @author   Murray Altheim (2001-11-06; added support for round rects and alternate Node colors)
-  *  @version  1.20
+  *  
   */
 public class Node {
 

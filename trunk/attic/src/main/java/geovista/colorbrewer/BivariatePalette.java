@@ -30,7 +30,7 @@ import java.util.HashMap;
  * The <CODE>BivariatePalette</CODE> class.
  *
  * @author	Chris Weaver
- * @version %I%, %G%
+ * 
  */
 public final class BivariatePalette
 	implements Palette2D

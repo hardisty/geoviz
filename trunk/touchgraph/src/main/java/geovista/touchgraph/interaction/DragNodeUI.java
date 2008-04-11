@@ -63,7 +63,7 @@ import geovista.touchgraph.TGPanel;
   * </b></p>
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class DragNodeUI extends TGAbstractDragUI{
 

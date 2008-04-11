@@ -32,7 +32,7 @@ package geovista.treemap.tm;
  * The TMNodeModelRoot class implements the root of the tree of TMNodeModels.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMNodeModelRoot {
 

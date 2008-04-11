@@ -63,7 +63,7 @@ import geovista.touchgraph.TGException;
   *
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class VisibleLocality extends Locality {
 

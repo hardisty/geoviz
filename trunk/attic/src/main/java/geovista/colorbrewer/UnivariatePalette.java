@@ -27,7 +27,7 @@ import java.util.HashMap;
  * The <CODE>Curve</CODE> class.
  *
  * @author	Chris Weaver
- * @version %I%, %G%
+ * 
  */
 public final class UnivariatePalette
 	implements Palette1D

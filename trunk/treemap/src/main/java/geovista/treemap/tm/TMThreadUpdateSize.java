@@ -32,7 +32,7 @@ package geovista.treemap.tm;
  * TMNodeModel.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMThreadUpdateSize
     extends TMThreadModel {

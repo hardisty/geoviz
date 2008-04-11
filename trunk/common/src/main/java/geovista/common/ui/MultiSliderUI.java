@@ -47,7 +47,7 @@ import javax.swing.plaf.metal.MetalSliderUI;
 /**
  * A Basic L&F implementation of SliderUI.
  * 
- * @version $Revision: 1.1.1.1 $
+ * 
  * @author Masahiro Takatsuka (masa@psu.edu)
  * @see MetalSliderUI
  */

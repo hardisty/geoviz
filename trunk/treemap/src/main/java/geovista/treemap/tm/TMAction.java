@@ -34,7 +34,7 @@ import java.awt.event.MouseEvent;
  * The TMAction class manages the action on the geovista.matrix.treemap.tm.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5.2
+ * .2
  */
 public class TMAction
     extends MouseAdapter {

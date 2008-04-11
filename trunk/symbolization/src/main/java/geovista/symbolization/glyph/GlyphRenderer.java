@@ -24,7 +24,7 @@ import geovista.symbolization.AffineTransformModifier;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.4 $
+ * 
  */
 public class GlyphRenderer implements Glyph {
 

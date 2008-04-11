@@ -64,7 +64,7 @@ import geovista.touchgraph.TGException;
   *
   * @author   Alexander Shapiro
   * @author   Murray Altheim (added support for IDs)
-  * @version  1.20
+  * 
   */
 public class GraphEltSet implements ImmutableGraphEltSet {
 

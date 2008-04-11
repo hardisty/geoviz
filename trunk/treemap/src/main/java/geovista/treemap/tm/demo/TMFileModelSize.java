@@ -37,7 +37,7 @@ import geovista.treemap.tm.TMComputeSizeAdapter;
  * for a TMFileModelNode.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMFileModelSize
     extends TMComputeSizeAdapter {

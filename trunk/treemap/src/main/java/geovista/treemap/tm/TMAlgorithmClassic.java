@@ -35,7 +35,7 @@ import java.util.Enumeration;
  * The TMAlgorithmClassic class implements a classic geovista.matrix.treemap.tm drawing algorithm.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMAlgorithmClassic
     extends TMAlgorithm {

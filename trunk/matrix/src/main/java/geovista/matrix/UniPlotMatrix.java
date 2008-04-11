@@ -9,7 +9,7 @@ package geovista.matrix;
  * Company: GeoVISTA Center
  * 
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 import java.awt.BorderLayout;
 import java.awt.Component;

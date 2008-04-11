@@ -29,7 +29,7 @@ import geovista.common.event.SelectionListener;
  * DataSetChanged, IndicationChanged etc. events.
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class SelectionStarPlot extends StarPlot implements SelectionListener {
 

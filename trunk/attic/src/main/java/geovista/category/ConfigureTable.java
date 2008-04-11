@@ -6,7 +6,7 @@
  * The table serves only for configuring purpose. It means the table will hold only a small number of row and column.
  * @author: jin Chen
  * @date: Aug 13, 2003$
- * @version: 1.0
+ * 
  */
 package geovista.category;
 

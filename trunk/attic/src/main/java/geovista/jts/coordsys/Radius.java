@@ -38,7 +38,7 @@ package geovista.jts.coordsys;
  * for various projections.
  *
  * @author $Author: dkim $
- * @version  $Revision: 1.2 $
+ * 
  *
  * <pre>
  *

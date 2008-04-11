@@ -1,31 +1,9 @@
-/* -------------------------------------------------------------------
- * GeoVISTA Center (Penn State, Dept. of Geography)
- * 
- * Java source file for the class MultiSlider
- * 
- * Copyright (c), 2002, Masahiro Takatsuka & GeoVISTA Center
- * All Rights Reserved.
- *
- * This is a copy from jh9gpz.ui.slider.MtMultiSlider.java originally
- * written by Masahiro Takatsuka
- * 
- * Original Author: Masahiro Takatsuka
- * $Author: jmacgill $
- * 
- * $Date: 2003/02/28 14:54:06 $
- * 
- * Reference:		Document no:
- * ___				___
- * 
- * To Do:
- * ___
- * 
-------------------------------------------------------------------- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Masahiro Takatsuka */
 
-/* --------------------------- Package ---------------------------- */
 package geovista.common.ui;
 
-/* ------------------ Import classes (packages) ------------------- */
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -37,17 +15,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JSlider;
 
-/*
- * ====================================================================
- * Implementation of class MultiSlider
- * ====================================================================
- */
 /**
  * A component that lets the user graphically select values by slding multiple
  * thumbs within a bounded interval. MultiSlider inherits all fields and methods
  * from javax.swing.JSlider.
  * 
- * @version $Revision: 1.1.1.1 $
+ * 
  * @author Masahiro Takatsuka (jh9gpz@yahoo.com)
  * @see JSlider
  */
@@ -489,9 +462,9 @@ public class MultiSlider extends JSlider {
 
 		if ((oldValue != b) && (accessibleContext != null)) {
 			accessibleContext.firePropertyChange(
-					AccessibleContext.ACCESSIBLE_STATE_PROPERTY,
-					((oldValue) ? AccessibleState.BUSY : null),
-					((b) ? AccessibleState.BUSY : null));
+					AccessibleContext.ACCESSIBLE_STATE_PROPERTY, ((oldValue)
+							? AccessibleState.BUSY : null), ((b)
+							? AccessibleState.BUSY : null));
 		}
 	}
 

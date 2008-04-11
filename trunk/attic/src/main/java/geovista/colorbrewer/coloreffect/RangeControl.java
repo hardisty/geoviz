@@ -18,7 +18,7 @@ import geovista.common.ui.MultiSlider;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author unascribed
- * @version 1.0
+ * 
  */
 
 public class RangeControl extends JPanel implements ChangeListener{

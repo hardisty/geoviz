@@ -33,7 +33,7 @@ import geovista.touchgraph.graphelements.VisibleLocality;
   * will probably need to be rewritten for other applications.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class PCAGraph extends LinkGraph implements ActionListener{
     JButton sendButton = new JButton("Send Factors");

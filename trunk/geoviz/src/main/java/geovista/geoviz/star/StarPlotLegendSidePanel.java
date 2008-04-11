@@ -45,7 +45,7 @@ import javax.swing.border.LineBorder;
  * 
  * 
  * @author Frank Hardisty
- * @version $Revision: 1.1 $
+ * 
  */
 public class StarPlotLegendSidePanel extends JPanel implements
 		ComponentListener, MouseListener, MouseMotionListener {

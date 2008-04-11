@@ -31,7 +31,7 @@ package geovista.treemap.tm;
  * The TMEventUpdateSize class implements a update size event. 
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMEventUpdateSize
     extends TMEventUpdate {

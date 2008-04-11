@@ -35,7 +35,7 @@ import java.util.Vector;
  * for user's nodes when using a TMModelNode.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 class TMNodeEncapsulator
     implements TMNode {

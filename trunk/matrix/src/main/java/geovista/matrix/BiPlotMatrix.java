@@ -9,7 +9,7 @@ package geovista.matrix;
  * 2001 Company: GeoVISTA Center
  * 
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 import java.awt.BorderLayout;
 import java.awt.Color;

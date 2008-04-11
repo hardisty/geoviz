@@ -66,7 +66,7 @@ import geovista.touchgraph.TGException;
   *  More synchronization will almost definitely be required.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class Locality extends GraphEltSet {
 

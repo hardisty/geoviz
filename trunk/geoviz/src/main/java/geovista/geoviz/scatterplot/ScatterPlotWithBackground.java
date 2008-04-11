@@ -6,7 +6,7 @@ package  geovista.geoviz.scatterplot;
  * Copyright:    Copyright (c) 2001
  * Company: GeoVISTA Center
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 import java.awt.Color;
 import java.awt.Graphics;

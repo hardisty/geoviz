@@ -43,7 +43,7 @@ import geovista.treemap.tm.TMNodeAdapter;
  * It uses the color property of each node as its color.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TMDataDraw
     implements TMComputeDraw {

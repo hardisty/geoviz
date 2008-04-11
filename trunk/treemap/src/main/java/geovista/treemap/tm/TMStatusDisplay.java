@@ -39,7 +39,7 @@ import javax.swing.JPanel;
  * the status of the activity.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 abstract class TMStatusDisplay 
     extends JPanel {

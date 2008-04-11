@@ -40,7 +40,7 @@ package geovista.treemap.tm;
  * is compatible with it.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public interface TMComputeSize {
 

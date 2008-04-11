@@ -74,7 +74,7 @@ import geovista.touchgraph.TGPoint2D;
   * the user interacts with the drawn coordinates.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public class HVScroll implements GraphListener {
 

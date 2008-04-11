@@ -6,7 +6,7 @@ package geovista.geoviz.condition;
  * Copyright:    Copyright (c) 2001
  * Company: GeoVISTA
  * @author Xiping
- * @version 1.0
+ * 
  */
 
 import java.awt.BorderLayout;

@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
  * set of JUnit test for the treemap package.
  *
  * @author Christophe Bouthier [bouthier@loria.fr]
- * @version 2.5
+ * 
  */
 public class TestAllTM {
 

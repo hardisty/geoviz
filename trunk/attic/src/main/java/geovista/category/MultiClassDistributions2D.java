@@ -6,7 +6,7 @@ package geovista.category;
  * <p>Copyright: Copyright (c) 2002</p>
  * <p>Company: GeoVSITA Center</p>
  * @author Xiping Dai
- * @version 1.0
+ * 
  */
 
 import java.awt.BorderLayout;

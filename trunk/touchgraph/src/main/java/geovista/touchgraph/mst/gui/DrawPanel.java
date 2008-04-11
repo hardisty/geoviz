@@ -14,7 +14,7 @@ import java.util.*;
  * Company:
  * @author Markus Svensson
  * 
- * @version 1.5
+ * 
  */
 
 public class DrawPanel extends JPanel {

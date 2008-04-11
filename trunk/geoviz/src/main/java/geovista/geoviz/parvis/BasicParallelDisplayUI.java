@@ -38,7 +38,7 @@ import javax.swing.plaf.ComponentUI;
  * The UI Delegate, responsible for rendering the ParallelDisplay component.
  * 
  * @author Flo Ledermann flo@subnet.at
- * @version 0.1
+ * 
  */
 public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		MouseListener, MouseMotionListener {

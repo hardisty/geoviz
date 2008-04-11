@@ -39,7 +39,7 @@ import geovista.jts.coordsys.*;
 /**
  * This class implements the Universal Transverse Mercator Projection.
  
- *  @version $Revision: 1.2 $
+ *  
  *  @author $Author: dkim $
  * <pre>
  *  $Id: UniversalTransverseMercator.java,v 1.2 2003/11/05 05:18:44 dkim Exp $

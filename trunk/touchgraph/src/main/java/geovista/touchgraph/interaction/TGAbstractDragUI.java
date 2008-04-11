@@ -59,7 +59,7 @@ import geovista.touchgraph.TGPanel;
   * what happends when a mouse is pressed, dragged, and released.
   *
   * @author   Alexander Shapiro
-  * @version  1.20
+  * 
   */
 public abstract class TGAbstractDragUI extends TGSelfDeactivatingUI {
 
