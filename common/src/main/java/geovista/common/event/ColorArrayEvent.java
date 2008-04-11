@@ -1,57 +1,44 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ColorArrayEvent
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: jmacgill $
- $Id: ColorArrayEvent.java,v 1.3 2004/12/03 19:27:10 jmacgill Exp $
- $Date: 2004/12/03 19:27:10 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
- */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.common.event;
 
 import java.awt.Color;
 import java.util.EventObject;
 
-
-
 /**
- * An ColorArrayEvent signals that there are colors available for each observation.
- * This is often because the user has somehow indicated that these observations
- * are of interest
- *
- * The integers represents the indexes of that observation in the overall data set.
- *
+ * An ColorArrayEvent signals that there are colors available for each
+ * observation. This is often because the user has somehow indicated that these
+ * observations are of interest
+ * 
+ * The integers represents the indexes of that observation in the overall data
+ * set.
+ * 
  */
 public class ColorArrayEvent extends EventObject {
 
-  private transient Color[] colors;
+	private transient Color[] colors;
 
-  /**
-  * The constructor is the same as that for EventObject, except that the
-  * colors values are indicated.
-  */
+	/**
+	 * The constructor is the same as that for EventObject, except that the
+	 * colors values are indicated.
+	 */
 
-  public ColorArrayEvent(Object source, Color[] colors){
-    super(source);
-    this.colors = colors;
-  }
+	public ColorArrayEvent(Object source, Color[] colors) {
+		super(source);
+		this.colors = colors;
+	}
 
-    //begin accessors
-    public void setColors(Color[] colors) {
-      this.colors = colors;
-    }
-    public Color[] getColors() {
-      return this.colors;
-    }
+	// begin accessors
+	public void setColors(Color[] colors) {
+		this.colors = colors;
+	}
 
+	public Color[] getColors() {
+		return colors;
+	}
 
-
-    //end accessors
+	// end accessors
 
 }

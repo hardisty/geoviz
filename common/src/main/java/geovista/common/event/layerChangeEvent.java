@@ -1,19 +1,6 @@
-/*------------------------------------------------------------------------------
-* GeoVISTA Center, Penn State Geography Deptartment*
-* Copyright (c), 2002, GeoVISTA Center
-* All Rights Researved.
-*
-* Original Authors: Bonan Li
-* $Author: jmacgill $
-*
-* $Date: 2004/03/10 20:24:12 $
-*
-* $Id: layerChangeEvent.java,v 1.1 2004/03/10 20:24:12 jmacgill Exp $
-*
-* To Do:
-*
- ------------------------------------------------------------------------------*/
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Bonan Li */
 
 package geovista.common.event;
 
@@ -21,31 +8,36 @@ import java.io.File;
 import java.util.EventObject;
 
 import geovista.common.data.DataSetForApps;
+
 public class layerChangeEvent extends EventObject {
 
-  private int activateIdx;
-  private int removedIdx;
-  private File activateFile;
-  private DataSetForApps dataSetForApp;
+	private final int activateIdx;
+	private final int removedIdx;
+	private final File activateFile;
+	private final DataSetForApps dataSetForApp;
 
-  public layerChangeEvent(Object source, int activateIdx, int removedIdx, File activateFile, DataSetForApps dataSetForApp) {
-    super(source);
-    this.activateIdx = activateIdx;
-    this.removedIdx = removedIdx;
-    this.activateFile = activateFile;
-    this.dataSetForApp = dataSetForApp;
-  }
+	public layerChangeEvent(Object source, int activateIdx, int removedIdx,
+			File activateFile, DataSetForApps dataSetForApp) {
+		super(source);
+		this.activateIdx = activateIdx;
+		this.removedIdx = removedIdx;
+		this.activateFile = activateFile;
+		this.dataSetForApp = dataSetForApp;
+	}
 
-  public int getActivatedIdx() {
-    return this.activateIdx;
-  }
-  public int getRemovedIdx() {
-    return this.removedIdx;
-  }
-  public File getActivateFile(){
-    return this.activateFile;
-  }
-  public DataSetForApps getDataSetForApp(){
-    return this.dataSetForApp;
-  }
+	public int getActivatedIdx() {
+		return activateIdx;
+	}
+
+	public int getRemovedIdx() {
+		return removedIdx;
+	}
+
+	public File getActivateFile() {
+		return activateFile;
+	}
+
+	public DataSetForApps getDataSetForApp() {
+		return dataSetForApp;
+	}
 }

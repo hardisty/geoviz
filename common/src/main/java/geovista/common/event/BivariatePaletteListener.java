@@ -1,18 +1,13 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.common.event;
 
 import java.util.EventListener;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- * @author unascribed
- * @version 1.0
- */
-
 public interface BivariatePaletteListener extends EventListener {
 
-  public void bivariatepaletteChanged(BivariatePaletteEvent e);
+	public void bivariatepaletteChanged(BivariatePaletteEvent e);
 
 }
