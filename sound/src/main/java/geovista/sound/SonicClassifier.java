@@ -15,19 +15,6 @@
 
 package geovista.sound;
 
-import geovista.common.classification.Classifier;
-import geovista.common.classification.ClassifierPicker;
-import geovista.common.color.Pallet;
-import geovista.common.data.DataSetForApps;
-import geovista.common.event.ColorArrayEvent;
-import geovista.common.event.ColorArrayListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
-import geovista.common.event.IndicationEvent;
-import geovista.common.event.IndicationListener;
-import geovista.common.event.PalletEvent;
-import geovista.common.event.PalletListener;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -53,8 +40,21 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import geovista.common.classification.Classifier;
+import geovista.common.classification.ClassifierPicker;
+import geovista.common.color.Palette;
+import geovista.common.data.DataSetForApps;
+import geovista.common.event.ColorArrayEvent;
+import geovista.common.event.ColorArrayListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
+import geovista.common.event.IndicationEvent;
+import geovista.common.event.IndicationListener;
+import geovista.common.event.PaletteEvent;
+import geovista.common.event.PaletteListener;
+
 public class SonicClassifier extends JPanel implements ActionListener,
-		ComponentListener, PalletListener, IndicationListener, DataSetListener {
+		ComponentListener, PaletteListener, IndicationListener, DataSetListener {
 	protected final static Logger logger = Logger
 			.getLogger(SonicClassifier.class.getName());
 
@@ -352,8 +352,8 @@ public class SonicClassifier extends JPanel implements ActionListener,
 		this.colors = colors;
 	}
 
-	public void palletChanged(PalletEvent e) {
-		Pallet pal = e.getPallet();
+	public void paletteChanged(PaletteEvent e) {
+		Palette pal = e.getPalette();
 		int maxColors = pal.getRecommendedMaxLength();
 		logger.finest("max colors = " + maxColors);
 
