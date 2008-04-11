@@ -1,38 +1,34 @@
-/*
- * GeoVISTA Center (Penn State, Dept. of Geography)
- * Copyright (c), 1999 - 2002, GeoVISTA Center
- * All Rights Researved.
- *
- *
- * @author: jin Chen 
- * @date: Jul 23, 2003$
- * @version: 1.0
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Jin Chen */
 package geovista.common.classification;
 
 import java.util.logging.Logger;
 
-
-
 public class CategorizerEqualIntervals extends BasicCategorizer {
 
-	protected final static Logger logger = Logger.getLogger(CategorizerEqualIntervals.class.getName());
-    public CategorizerEqualIntervals() {
-        this.classifer =new ClassifierEqualIntervals();
+	protected final static Logger logger = Logger
+			.getLogger(CategorizerEqualIntervals.class.getName());
 
-    }
+	public CategorizerEqualIntervals() {
+		classifer = new ClassifierEqualIntervals();
 
-    protected void setCategorygetBoundary(CategoryList ctgList, double[] rawData, int[] classedData) {
-            double[] boundaries =((ClassifierEqualIntervals)classifer).getEqualBoundaries(rawData,ctgList.getNumberOfCategory() );
-            logger.finest("boundaries:"+boundaries);
-            for (int i=0;i<ctgList.getNumberOfCategory() ;i++){
+	}
 
-                Category ctg=ctgList.getCategoryByID(i);
-                if(ctg != null){
-                    ctg.setMin((float)boundaries[i]);
-                    ctg.setMax((float)boundaries[i+1]);
-                }
-            }
-    }
+	@Override
+	protected void setCategorygetBoundary(CategoryList ctgList,
+			double[] rawData, int[] classedData) {
+		double[] boundaries = ((ClassifierEqualIntervals) classifer)
+				.getEqualBoundaries(rawData, ctgList.getNumberOfCategory());
+		logger.finest("boundaries:" + boundaries);
+		for (int i = 0; i < ctgList.getNumberOfCategory(); i++) {
+
+			Category ctg = ctgList.getCategoryByID(i);
+			if (ctg != null) {
+				ctg.setMin((float) boundaries[i]);
+				ctg.setMax((float) boundaries[i + 1]);
+			}
+		}
+	}
 
 }

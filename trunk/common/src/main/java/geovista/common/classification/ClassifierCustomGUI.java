@@ -1,24 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ClassifierPicker
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ClassifierPicker.java,v 1.6 2005/03/24 20:27:16 hardisty Exp $
- $Date: 2005/03/24 20:27:16 $
- This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.common.classification;
 
@@ -217,10 +199,6 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 				newBreaks[i] = breaks[i];
 			}
 			double breaksMin = breaks[breaks.length - 2];
-			double range = max - breaksMin;
-
-			double numNewClasses = nBreaks - breaks.length;
-			double step = range / numNewClasses;
 			for (int i = breaks.length - 1; i < newBreaks.length; i++) {
 				// XXX we would rather have nicely spaced breaks here
 				newBreaks[i] = breaks[breaks.length - 2];
@@ -455,19 +433,11 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 		ClassifierEqualIntervals classer = new ClassifierEqualIntervals();
 		double[] data = { 1, 2, Double.NaN, 4, 3, 2, 1, 2, 3, 4, 6 };
 		int[] classes = classer.classify(data, 4);
-		double[] breaks = { 22, 33, 66 };
 		picker.setData(data);
 		// picker.setClassValues(breaks);
 
 		ClassifierCustom cust = new ClassifierCustom();
 		cust.classify(data, 3);
-		breaks = cust.breaks;
-
-		// double[] breaks = picker.findBreaks(data, classes, 4);
-		// for (double d : breaks) {
-		// System.out.println(d);
-		// }
-
 		frame.pack();
 		frame.setVisible(true);
 	}

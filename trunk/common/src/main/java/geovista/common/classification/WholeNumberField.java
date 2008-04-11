@@ -1,18 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class WholeNumberField
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: WholeNumberField.java,v 1.2 2003/04/25 18:18:26 hardisty Exp $
- $Date: 2003/04/25 18:18:26 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.common.classification;
 
@@ -34,121 +22,129 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-public class WholeNumberField extends JTextField implements FocusListener, KeyListener{
-    private NumberFormat integerFormatter;
-    public static final String COMMAND_NEW_VAL = "newVal";
+public class WholeNumberField extends JTextField implements FocusListener,
+		KeyListener {
+	private final NumberFormat integerFormatter;
+	public static final String COMMAND_NEW_VAL = "newVal";
 
-    public WholeNumberField(int value, int columns) {
+	public WholeNumberField(int value, int columns) {
 
-        super(columns);
-        this.addKeyListener(this);
-        integerFormatter = NumberFormat.getNumberInstance(Locale.US);
-        integerFormatter.setParseIntegerOnly(true);
-        setValue(value);
-        this.addFocusListener(this);
-        this.setMinimumSize(new Dimension(40,20));
-        this.setPreferredSize(new Dimension(40,20));
-        this.setMaximumSize(new Dimension(40,20));
-    }
+		super(columns);
+		addKeyListener(this);
+		integerFormatter = NumberFormat.getNumberInstance(Locale.US);
+		integerFormatter.setParseIntegerOnly(true);
+		setValue(value);
+		addFocusListener(this);
+		setMinimumSize(new Dimension(40, 20));
+		setPreferredSize(new Dimension(40, 20));
+		setMaximumSize(new Dimension(40, 20));
+	}
 
-    public int getValue() {
-        //if this string ends in a return, fire a change
+	public int getValue() {
+		// if this string ends in a return, fire a change
 
-        int retVal = 0;
-        try {
-            retVal = integerFormatter.parse(getText()).intValue();
-        } catch (ParseException e) {
-            // This should never happen because insertString allows
-            // only properly formatted data to get in the field.
-            //toolkit.beep();
-            e.printStackTrace();
-        }
-        return retVal;
-    }
+		int retVal = 0;
+		try {
+			retVal = integerFormatter.parse(getText()).intValue();
+		} catch (ParseException e) {
+			// This should never happen because insertString allows
+			// only properly formatted data to get in the field.
+			// toolkit.beep();
+			e.printStackTrace();
+		}
+		return retVal;
+	}
 
-    public void setValue(int value) {
-        setText(integerFormatter.format(value));
-        this.fireActionPerformed(WholeNumberField.COMMAND_NEW_VAL);
-    }
+	public void setValue(int value) {
+		setText(integerFormatter.format(value));
+		this.fireActionPerformed(WholeNumberField.COMMAND_NEW_VAL);
+	}
 
-    protected Document createDefaultModel() {
-        return new WholeNumberDocument();
-    }
+	@Override
+	protected Document createDefaultModel() {
+		return new WholeNumberDocument();
+	}
 
-    protected class WholeNumberDocument extends PlainDocument {
-        public void insertString(int offs,
-                                 String str,
-                                 AttributeSet a)
-                throws BadLocationException {
-            char[] source = str.toCharArray();
-            char[] result = new char[source.length];
-            int j = 0;
+	protected class WholeNumberDocument extends PlainDocument {
+		@Override
+		public void insertString(int offs, String str, AttributeSet a)
+				throws BadLocationException {
+			char[] source = str.toCharArray();
+			char[] result = new char[source.length];
+			int j = 0;
 
-            for (int i = 0; i < result.length; i++) {
+			for (int i = 0; i < result.length; i++) {
 
-                    result[j++] = source[i];
+				result[j++] = source[i];
 
-            }
-            super.insertString(offs, new String(result, 0, j), a);
+			}
+			super.insertString(offs, new String(result, 0, j), a);
 
-        }
-    }
-//implement listeners
-    public void focusGained(FocusEvent e) {
-    }
+		}
+	}
 
-    public void focusLost(FocusEvent e) {
-        this.fireActionPerformed(WholeNumberField.COMMAND_NEW_VAL);
-    }
+	// implement listeners
+	public void focusGained(FocusEvent e) {
+	}
 
-    public void keyPressed(KeyEvent e){
-      char ch = e.getKeyChar();
-      if (Character.isWhitespace(ch)){
-        this.fireActionPerformed(WholeNumberField.COMMAND_NEW_VAL);
-      }
-    }
-    public void keyReleased(KeyEvent e){
+	public void focusLost(FocusEvent e) {
+		this.fireActionPerformed(WholeNumberField.COMMAND_NEW_VAL);
+	}
 
-    }
-    public void keyTyped(KeyEvent e){
+	public void keyPressed(KeyEvent e) {
+		char ch = e.getKeyChar();
+		if (Character.isWhitespace(ch)) {
+			this.fireActionPerformed(WholeNumberField.COMMAND_NEW_VAL);
+		}
+	}
 
-    }
-//end implement listeners
-    /**
-     * implements ActionListener
-     */
-	public void addActionListener (ActionListener l) {
+	public void keyReleased(KeyEvent e) {
+
+	}
+
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	// end implement listeners
+	/**
+	 * implements ActionListener
+	 */
+	@Override
+	public void addActionListener(ActionListener l) {
 		listenerList.add(ActionListener.class, l);
 	}
 
-    /**
-     * removes an ActionListener from the component
-     */
-	public void removeActionListener (ActionListener l) {
+	/**
+	 * removes an ActionListener from the component
+	 */
+	@Override
+	public void removeActionListener(ActionListener l) {
 		listenerList.remove(ActionListener.class, l);
 	}
 
-    /**
-     * Notify all listeners that have registered interest for
-     * notification on this event type. The event instance
-     * is lazily created using the parameters passed into
-     * the fire method.
-     * @see EventListenerList
-     */
-	private void fireActionPerformed (String command) {
-              // Guaranteed to return a non-null array
-                      Object[] listeners = listenerList.getListenerList();
-                      ActionEvent e = null;
-              // Process the listeners last to first, notifying
-              // those that are interested in this event
-                        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-                                if (listeners[i] == ActionListener.class) {
-                       // Lazily create the event:
-                                        if (e == null) {
-                                                e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, command);
-                                        }
-                                        ((ActionListener)listeners[i + 1]).actionPerformed(e);
-                                }
-                        }//next i
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	private void fireActionPerformed(String command) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		ActionEvent e = null;
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == ActionListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED,
+							command);
+				}
+				((ActionListener) listeners[i + 1]).actionPerformed(e);
+			}
+		}// next i
 	}
 }

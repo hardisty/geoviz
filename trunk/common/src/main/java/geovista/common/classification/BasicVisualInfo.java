@@ -1,38 +1,29 @@
-/*
- * GeoVISTA Center (Penn State, Dept. of Geography)
- * Copyright (c), 1999 - 2002, GeoVISTA Center
- * All Rights Reserved.
- *
- *
- * @author: jin Chen 
- * @date: Jan 6, 2005$
- * @version: 1.0
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Jin Chen */
 package geovista.common.classification;
 
 import java.awt.Color;
 
 public class BasicVisualInfo implements VisualInfo {
-    Color color;
-    CategoryItf category;
+	Color color;
+	CategoryItf category;
 
-    public BasicVisualInfo(Color color) {
-        this.color = color;
-    }
+	public BasicVisualInfo(Color color) {
+		this.color = color;
+	}
 
-    public Color getColor() {
-        return color;
-    }
+	public Color getColor() {
+		return color;
+	}
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    /*public CategoryItf getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryItf category) {
-        this.category = category;
-    }*/
+	/*
+	 * public CategoryItf getCategory() { return category; }
+	 * 
+	 * public void setCategory(CategoryItf category) { this.category = category; }
+	 */
 }
