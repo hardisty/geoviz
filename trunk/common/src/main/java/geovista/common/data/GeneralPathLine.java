@@ -22,6 +22,7 @@ import java.awt.geom.Rectangle2D;
  * 
  * 
  * @author Frank Hardisty
+ * @see java.awt.geom.GeneralPath
  */
 public class GeneralPathLine implements Shape {
 	GeneralPath gp = null;
