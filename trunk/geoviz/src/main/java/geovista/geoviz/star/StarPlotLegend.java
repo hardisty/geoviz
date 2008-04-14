@@ -70,31 +70,32 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 	boolean odd;
 	int rightNum;
 	int leftNum;
-	final static Logger logger = Logger.getLogger(StarPlotLegend.class.getName());
+	final static Logger logger = Logger.getLogger(StarPlotLegend.class
+			.getName());
 
 	public StarPlotLegend() {
 
 		fillColor = Color.black;
 		outlineColor = Color.white;
-		this.setBackground(Color.lightGray);
-		this.addComponentListener(this);
+		setBackground(Color.lightGray);
+		addComponentListener(this);
 
-		this.addMouseMotionListener(this);
-		this.addMouseListener(this);
+		addMouseMotionListener(this);
+		addMouseListener(this);
 
-		this.midPanel = new StarPlotLegendMidPanel();
+		midPanel = new StarPlotLegendMidPanel();
 
-		this.rightPanel = new StarPlotLegendSidePanel();
-		this.rightPanel.setAlignment(StarPlotLegendSidePanel.ALIGNMENT_LEFT);
-		this.leftPanel = new StarPlotLegendSidePanel();
-		this.leftPanel.setAlignment(StarPlotLegendSidePanel.ALIGNMENT_RIGHT);
+		rightPanel = new StarPlotLegendSidePanel();
+		rightPanel.setAlignment(StarPlotLegendSidePanel.ALIGNMENT_LEFT);
+		leftPanel = new StarPlotLegendSidePanel();
+		leftPanel.setAlignment(StarPlotLegendSidePanel.ALIGNMENT_RIGHT);
 		if (logger.isLoggable(Level.FINEST)) {
-			this.midPanel.setBorder(new LineBorder(Color.green)); // for
+			midPanel.setBorder(new LineBorder(Color.green)); // for
 			// debugging
 			// layout
 		}
 		// trying border layout...
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(midPanel, BorderLayout.CENTER);
 		this.add(leftPanel, BorderLayout.WEST);
 		this.add(rightPanel, BorderLayout.EAST);
@@ -105,7 +106,7 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 		// this.add(midPanel);
 		// this.add(rightPanel);
 
-		this.makeConnectorStroke();
+		makeConnectorStroke();
 
 	}
 
@@ -117,23 +118,23 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 		float miterLimit = 0f;
 		float[] dashPattern = { 2f, 3f };
 		float dashPhase = 5f;
-		this.connectorStroke = new BasicStroke(width, cap, join, miterLimit,
+		connectorStroke = new BasicStroke(width, cap, join, miterLimit,
 				dashPattern, dashPhase);
 
 	}
 
 	private void makeStarPlot() {
 
-		this.midPanel.setSpikeLengths(this.spikeLengths);
+		midPanel.setSpikeLengths(spikeLengths);
 
 	}
 
 	private void addDataSidePanels() {
 		odd = false;
-		if (this.spikeLengths.length % 2 == 1) {
+		if (spikeLengths.length % 2 == 1) {
 			odd = true;
 		}
-		rightNum = this.spikeLengths.length / 2;
+		rightNum = spikeLengths.length / 2;
 		leftNum = rightNum;
 		if (odd) {
 			rightNum++;
@@ -145,35 +146,35 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 
 		for (int i = 0; i < spikeLengths.length; i++) {
 			if (i < rightNum) {
-				rightStrings[i] = this.variableNames[i];
-				rightVals[i] = this.values[i];
+				rightStrings[i] = variableNames[i];
+				rightVals[i] = values[i];
 			} else {
 				// for the left ones, need to count down not up, -1 for zero
 				// based
-				leftStrings[spikeLengths.length - i - 1] = this.variableNames[i];
-				leftVals[spikeLengths.length - i - 1] = this.values[i];
+				leftStrings[spikeLengths.length - i - 1] = variableNames[i];
+				leftVals[spikeLengths.length - i - 1] = values[i];
 			}
 		}
-		this.rightPanel.setValues(rightVals);
-		this.leftPanel.setValues(leftVals);
-		this.rightPanel.setVariableNames(rightStrings);
-		this.leftPanel.setVariableNames(leftStrings);
-		this.findConnectorLines();
+		rightPanel.setValues(rightVals);
+		leftPanel.setValues(leftVals);
+		rightPanel.setVariableNames(rightStrings);
+		leftPanel.setVariableNames(leftStrings);
+		findConnectorLines();
 	}
 
 	public void findConnectorLines() {
 		connectorLines = new GeneralPath();
-		int len = this.spikeLengths.length;
-		float[] xPoints = this.midPanel.getXPoints();
-		float[] yPoints = this.midPanel.getYPoints();
-		int midX = this.midPanel.getX();
-		int rightX = this.rightPanel.getX();
+		int len = spikeLengths.length;
+		float[] xPoints = midPanel.getXPoints();
+		float[] yPoints = midPanel.getYPoints();
+		int midX = midPanel.getX();
+		int rightX = rightPanel.getX();
 		float x1, x2, y1, y2;
 
 		for (int i = 0; i < len; i++) {
 
 			if (i < rightNum) {
-				Point2D.Float pt = this.rightPanel.getLabelLocation(i);
+				Point2D.Float pt = rightPanel.getLabelLocation(i);
 				if (pt == null) {
 					return;
 				}
@@ -185,12 +186,13 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 				connectorLines.lineTo(x2, y2);
 
 			} else {
-
-				logger.finest("i = " + i);
-				logger.finest("len - i - 1 = " + (len - i - 1));
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("i = " + i);
+					logger.finest("len - i - 1 = " + (len - i - 1));
+				}
 				// for the left ones, need to count down not up, -1 for zero
 				// based
-				Point2D.Float pt = this.leftPanel.getLabelLocation(len - i - 1);
+				Point2D.Float pt = leftPanel.getLabelLocation(len - i - 1);
 				if (pt == null) {
 					return;
 				}
@@ -209,23 +211,24 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (midPanel == null || this.connectorLines == null) {
+		if (midPanel == null || connectorLines == null) {
 			return;
 		}
 		Graphics2D g2 = (Graphics2D) g.create();
 		g.setColor(Color.white);
-		Rectangle rect = this.findStarCircle();
+		Rectangle rect = findStarCircle();
 
 		g.fillOval(rect.x, rect.y, rect.width, rect.height);
 		g2.setColor(Color.black);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setStroke(this.connectorStroke);
-		if (this.connectorLines != null) {
+		g2.setStroke(connectorStroke);
+		if (connectorLines != null) {
 			findConnectorLines();
-			g2.draw(this.connectorLines);
+			g2.draw(connectorLines);
 		}
 
 		g2.dispose();
@@ -267,11 +270,11 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 	}
 
 	public void componentResized(ComponentEvent e) {
-		if (this.spikeLengths == null || this.rightPanel == null
-				|| this.values == null || this.leftPanel== null) {
+		if (spikeLengths == null || rightPanel == null || values == null
+				|| leftPanel == null) {
 			return;
 		}
-		this.findConnectorLines();
+		findConnectorLines();
 		// trying to make the side panels take up remaining space, not the
 		// middle panel
 		// double midWidth = this.midPanel.getPreferredSize().getWidth();
@@ -322,7 +325,7 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		if (midPanel == null || this.plotWidth <= 0) {
+		if (midPanel == null || plotWidth <= 0) {
 			return;
 		}
 
@@ -334,8 +337,8 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 
 	public void setSpikeLengths(int[] spikeLengths) {
 		this.spikeLengths = spikeLengths;
-		this.makeStarPlot();
-		this.addDataSidePanels();
+		makeStarPlot();
+		addDataSidePanels();
 		this.repaint();
 	}
 
@@ -356,12 +359,12 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 	}
 
 	public void setObsName(String obsName) {
-		this.midPanel.setObsName(obsName);
+		midPanel.setObsName(obsName);
 	}
 
 	public void setStarFillColor(Color starColor) {
-		if (starColor != null && this.midPanel.sp != null) {
-			this.midPanel.sp.setFillColor(starColor);
+		if (starColor != null && midPanel.sp != null) {
+			midPanel.sp.setFillColor(starColor);
 		}
 	}
 } // end class

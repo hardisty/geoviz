@@ -237,7 +237,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 
 	public void setDataSet(DataSetForApps data) {
 		if (data == null) {
-			logger.finest("data null!");
+			logger.info("setting null data!");
 			return;
 		}
 		dataSet = data;
@@ -1058,7 +1058,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 *            the id the data to be indicated
 	 */
 	public void setIndication(int indication) {
-		logger.finest("indicate:" + indication);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("indicate:" + indication);
+		}
 		indiationId = indication;
 		IndicationEvent e = new IndicationEvent(this, indication);
 		histogram.indicationChanged(e);
@@ -1975,7 +1977,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 
 		double[] moransRegression = new double[2];
 		if (dataX != null && dataY != null) {
-			logger.finest("in regression");
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("in regression");
+			}
 			moransRegression = regressionInterface.getRegression(dataX, dataY);
 		}
 		if (allData == true) {
@@ -1985,7 +1989,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			correlation = DescriptiveStatistics.correlationCoefficient(dataX,
 					dataY, false);
 			// this.setUpRegressionLine(this.slope, this.intercept, allData);
-			logger.finest("scatterPlotBasic all: " + slope + "," + intercept);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("scatterPlotBasic all: " + slope + ","
+						+ intercept);
+			}
 		} else {
 			slopeForSelections = moransRegression[0];
 			interceptForSelections = moransRegression[1];
@@ -1994,8 +2001,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			rSquareForSelections = regressionInterface.getRSquare(dataX, dataY);
 			// this.setUpRegressionLine(this.slopeForSelections,
 			// this.interceptForSelections, allData);
-			logger.finest("selected:" + slopeForSelections + ","
-					+ interceptForSelections);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("selected:" + slopeForSelections + ","
+						+ interceptForSelections);
+			}
 		}
 	}
 
@@ -2010,9 +2019,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		double yEstimateStart, yEstimateEnd;
 		yEstimateStart = (xStart * slope) + intercept;
 		yEstimateEnd = (xEnd * slope) + intercept;
-
-		logger.finest("drawPlot: " + xStart + " " + xEnd + "," + yEstimateStart
-				+ " " + yEstimateEnd);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("drawPlot: " + xStart + " " + xEnd + ","
+					+ yEstimateStart + " " + yEstimateEnd);
+		}
 		int yEstStartInt, yEstEndInt;
 		yEstStartInt = this.getValueScreen(yEstimateStart, getScale(
 				plotOriginY, plotEndY, yAxisExtents[0], yAxisExtents[1]),
@@ -2032,7 +2042,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 
 	protected void drawPlotLine(Graphics g, double yStartPosition,
 			double yEndPosition) {
-		logger.finest("drawPlot: " + yStartPosition + yEndPosition);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("drawPlot: " + yStartPosition + yEndPosition);
+		}
 		if (plotLine == false) {
 			return;
 		}
@@ -2041,8 +2053,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		yRegStart = plotOriginY + (int) (yStartPosition);
 		xRegEnd = plotEndX;
 		yRegEnd = plotOriginY + (int) (yEndPosition);
-		logger.finest("drawPlot: " + xRegStart + " " + xRegEnd + ","
-				+ yRegStart + " " + yRegEnd);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("drawPlot: " + xRegStart + " " + xRegEnd + ","
+					+ yRegStart + " " + yRegEnd);
+		}
 		g.drawLine(xRegStart, yRegStart, xRegEnd, yRegEnd);
 	}
 

@@ -1,5 +1,6 @@
 package geovista.geoviz.scatterplot;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import geovista.common.data.DescriptiveStatistics;
@@ -70,9 +71,9 @@ public class LinearRegression implements Regression {
 
 		moranElement[0] = slope;
 		moranElement[1] = intercept;
-
-		logger.finest("Slope is " + slope + "  Intercept is " + intercept);
-
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("Slope is " + slope + "  Intercept is " + intercept);
+		}
 		return moranElement;
 	}
 

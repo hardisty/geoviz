@@ -23,6 +23,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.BitSet;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -252,9 +253,11 @@ public class Histogram extends JPanel implements MouseListener,
 	 *            xAxisExtents
 	 */
 	public void setXAxisExtents(double[] xAxisExtents) {
-		logger.finest("set up axis ..." + xAxisExtents[0]);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("set up axis ..." + xAxisExtents[0]);
+		}
 		this.xAxisExtents = xAxisExtents.clone();
-		logger.finest("set up axis ..." + xAxisExtents[0]);
+
 		histogramCalculation();
 		setupDataforDisplay();
 		repaint();
@@ -668,7 +671,11 @@ public class Histogram extends JPanel implements MouseListener,
 
 	private void setupDataforDisplay() {
 		if (xAxisExtents != null) {
-			logger.finest("In setup data for display ..." + xAxisExtents[0]);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger
+						.finest("In setup data for display ..."
+								+ xAxisExtents[0]);
+			}
 		} else {
 			logger
 					.info("Histogram trying to setupDataFordisplay and xAxisExtents = null");
@@ -697,8 +704,10 @@ public class Histogram extends JPanel implements MouseListener,
 				yAxisExtents[1]);
 		whyInt = getValueScreen(histogramArray, scale, plotOriginY,
 				yAxisExtents[0]);
-		logger.finest("setupdisplay: " + plotOriginY + " " + plotEndY + " "
-				+ scale);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("setupdisplay: " + plotOriginY + " " + plotEndY + " "
+					+ scale);
+		}
 		for (int i = 0; i < binCount - 1; i++) {
 			histRecs[i] = new Rectangle(exsInt[i], whyInt[i], exsInt[i + 1]
 					- exsInt[i], plotOriginY - whyInt[i]);
@@ -708,7 +717,9 @@ public class Histogram extends JPanel implements MouseListener,
 						- whyInt[len - 1]);
 		// get class boundaries' positions on screen
 		if (classBoundareis != null) {
-			logger.finest("x and y boundaries are not null.");
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("x and y boundaries are not null.");
+			}
 			classBoundariesInt = new int[classBoundareis.length];
 			classBoundariesInt = getValueScreen(classBoundareis, scale,
 					plotOriginX, xAxisExtents[0]);

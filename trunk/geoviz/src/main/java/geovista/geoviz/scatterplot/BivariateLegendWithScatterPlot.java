@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -162,8 +163,9 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 		size = (plotWidth < plotHeight) ? plotWidth : plotHeight;
 		pointSize = (size < 360) ? size / 60 : 6;
 		pointSize = (pointSize < 3) ? 3 : pointSize;
-		logger.finest("attribute equal? " + attributeX.equals(attributeY));
-
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("attribute equal? " + attributeX.equals(attributeY));
+		}
 		int len = dataArrayX.length();
 		// draw color background
 		drawClassBackground(g);
@@ -186,7 +188,9 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 	protected void drawClassBackground(Graphics g) {
 		// draw background in colors.
 		if (classColors != null) {
-			logger.finest("classer is not null");
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("classer is not null");
+			}
 			for (int i = 0; i < classColors.length; i++) {
 				for (int j = 0; j < classColors[0].length; j++) {
 					g.setColor(classColors[i][j]);
@@ -257,7 +261,9 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 
 	@Override
 	protected void setupDataforDisplay() {
-		logger.finest("In setup data for display ..." + xAxisExtents[0]);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("In setup data for display ..." + xAxisExtents[0]);
+		}
 		setVisibleAxis(axisOn);
 		if (dataArrayX == null) {
 			return;
@@ -278,7 +284,9 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 		whyint = getValueScreen(dataY, yScale, plotOriginY, yAxisExtents[0]);
 		// get class boundaries' positions on screen
 		if (xBoundaries != null && yBoundaries != null) {
-			logger.finest("x and y boundaries are not null.");
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("x and y boundaries are not null.");
+			}
 			xBoundariesInt = new int[xBoundaries.length];
 			yBoundariesInt = new int[yBoundaries.length];
 			xBoundariesInt = getValueScreen(xBoundaries, xScale, plotOriginX,
@@ -546,7 +554,9 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		logger.finest("mouse clicked: ");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("mouse clicked: ");
+		}
 		int count = e.getClickCount();
 		int[] mousePos = new int[2];
 		mousePos[0] = e.getX();

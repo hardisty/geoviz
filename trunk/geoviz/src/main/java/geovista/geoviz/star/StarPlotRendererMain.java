@@ -28,6 +28,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
@@ -35,14 +36,15 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
-
+ * 
  * 
  * 
  * @author Frank Hardisty
  * 
  */
 public class StarPlotRendererMain extends JPanel implements ComponentListener {
-	protected final static Logger logger = Logger.getLogger(StarPlotRendererMain.class.getName());
+	protected final static Logger logger = Logger
+			.getLogger(StarPlotRendererMain.class.getName());
 	StarPlotRenderer[] plots;
 	double[] values;
 	int[] lengths;
@@ -56,19 +58,21 @@ public class StarPlotRendererMain extends JPanel implements ComponentListener {
 
 		fillColor = Color.black;
 		outlineColor = Color.white;
-		this.addComponentListener(this);
+		addComponentListener(this);
 
 	}
 
 	public StarPlotRenderer sp;
 
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		logger.finest("painting");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("painting");
+		}
 		Rectangle targetArea = new Rectangle();
-		targetArea.setBounds(this.getX(), this.getY(), this.getWidth(), this
-				.getHeight());
+		targetArea.setBounds(getX(), getY(), getWidth(), getHeight());
 		sp.setTargetArea(targetArea);
 		sp.paintStar(g2);
 
@@ -87,13 +91,14 @@ public class StarPlotRendererMain extends JPanel implements ComponentListener {
 	}
 
 	public void componentResized(ComponentEvent e) {
-		logger.finest("width = " + this.getWidth());
-		logger.finest("height = " + this.getHeight());
+		logger.finest("width = " + getWidth());
+		logger.finest("height = " + getHeight());
 		logger.finest("besos a frank");
 	}
 
 	public void componentShown(ComponentEvent e) {
-		logger.finest("componentShown event from " + e.getComponent().getClass().getName());
+		logger.finest("componentShown event from "
+				+ e.getComponent().getClass().getName());
 	}
 
 	// end component handling

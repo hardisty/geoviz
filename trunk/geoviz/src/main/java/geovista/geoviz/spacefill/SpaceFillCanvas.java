@@ -37,6 +37,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -515,8 +516,9 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 				int oldInd = indication;
 				indication = currObs;
 				this.makeToolTip(indication);
-
-				logger.finest("indication = " + indication);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("indication = " + indication);
+				}
 				colorNewIndication(oldInd);
 				colorPixels();
 				fireIndicationChanged(indication);
@@ -1043,8 +1045,9 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 			int oldInd = this.indication;
 			this.indication = indication;
 			// this.makeToolTip(indication);
-
-			logger.finest("indication = " + indication);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("indication = " + indication);
+			}
 			colorNewIndication(oldInd);
 			colorPixels();
 

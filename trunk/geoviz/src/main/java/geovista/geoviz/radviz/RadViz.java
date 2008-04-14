@@ -855,11 +855,13 @@ public class RadViz extends JPanel implements ActionListener,
 	// specified
 	// * color scheme.
 	// *
-	// * @param colorScheme the desired color scheme for generating distinct colors
+	// * @param colorScheme the desired color scheme for generating distinct
+	// colors
 	// * @param numClass the desired number of distinct colors to be generated
 	// * @return returns an array of distinct colors
 	// */
-	// public static Color[] getDistinctColors(String colorScheme, int numClass) {
+	// public static Color[] getDistinctColors(String colorScheme, int numClass)
+	// {
 	// int[][] color_scheme = origClr.makescheme(colorScheme, numClass);
 	// Color[] distinctColors = origClr.transform(color_scheme, numClass);
 	// return distinctColors;
@@ -1275,8 +1277,10 @@ public class RadViz extends JPanel implements ActionListener,
 		g.setStroke(stroke_bkup);
 		g.setColor(clr_bkup);
 		g.draw(radvizBox);
-		for (int i = 0; i < missingData.size(); i++) {
-			logger.finest("missing " + missingData.get(i));
+		if (logger.isLoggable(Level.FINEST)) {
+			for (int i = 0; i < missingData.size(); i++) {
+				logger.finest("missing " + missingData.get(i));
+			}
 		}
 	}
 
@@ -1906,7 +1910,8 @@ public class RadViz extends JPanel implements ActionListener,
 			} else {
 				// Left button down, be prepared for the user to drag either a
 				// selection
-				// box or an attribute label. Meanwhile, clear the current selection
+				// box or an attribute label. Meanwhile, clear the current
+				// selection
 				if (!leftBtnPressed) {
 					leftBtnPressed = true;
 				}
