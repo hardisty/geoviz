@@ -183,7 +183,9 @@ public class VisualClassifier extends JPanel implements ActionListener,
 		for (int i = 0; i < nClasses; i++) {
 			double whichColor = i * picksPerColor;
 			int index = (int) Math.floor(whichColor);
-			logger.finest("i = " + i + "index = " + index);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("i = " + i + "index = " + index);
+			}
 			colors[i] = pickerColors[index];
 
 		}

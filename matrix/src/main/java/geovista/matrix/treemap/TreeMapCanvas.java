@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
@@ -232,9 +233,10 @@ public class TreeMapCanvas extends JPanel implements DataSetListener,
 
 	public void indicationChanged(IndicationEvent e) {
 		int newIndication = e.getIndication();
-		logger.finest("this.indicaiton = " + indication);
-		logger.finest("new  = " + newIndication);
-
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("this.indicaiton = " + indication);
+			logger.finest("new  = " + newIndication);
+		}
 		// need to fix old one?
 		if (newIndication < 0 && indication >= 0) { // new indication is out
 			// of range, old was was

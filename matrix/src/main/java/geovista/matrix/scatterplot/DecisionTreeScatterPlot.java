@@ -384,9 +384,11 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param xAxisExtents
 	 */
 	public void setXAxisExtents(double[] xAxisExtents) {
-		logger.finest("set up axis ..." + xAxisExtents[0]);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("set up axis ..." + xAxisExtents[0]);
+		}
 		this.xAxisExtents = xAxisExtents.clone();
-		logger.finest("set up axis ..." + xAxisExtents[0]);
+
 		setupDataforDisplay();
 		repaint();
 	}
@@ -397,7 +399,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param yAxisExtents
 	 */
 	public void setYAxisExtents(double[] yAxisExtents) {
-		logger.finest("set up axis ...");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("set up Y axis ...");
+		}
 		this.yAxisExtents = yAxisExtents.clone();
 		setupDataforDisplay();
 		repaint();
@@ -533,8 +537,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			plotEndX = (int) (this.getSize().getWidth())
 					- (int) (this.getSize().getWidth() * AXISSPACEPORTION / 2);
 			plotEndY = (int) (this.getSize().getHeight() / 12);
-			logger.finest("size width: " + this.getSize().getWidth());
-			logger.finest("plot Origin X: " + plotOriginX);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("size width: " + this.getSize().getWidth());
+				logger.finest("plot Origin X: " + plotOriginX);
+			}
 		} else {
 			plotOriginX = 2;
 			plotOriginY = (int) (this.getSize().getHeight() - 2);
@@ -560,7 +566,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		logger.finest("paint track..." + count++);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("paint track..." + count++);
+		}
 		// draw a black border and a white background
 		if (dataIndices == null) {
 			return;
@@ -596,9 +604,14 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		plotHeight = getHeight();
 		int size;
 		size = (plotWidth < plotHeight) ? plotWidth : plotHeight;
-		logger.finest("attribute equal? " + attributeX.equals(attributeY));
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("attribute equal? " + attributeX.equals(attributeY));
+		}
 		if (dataIndices[0] == dataIndices[1]) {
-			logger.finest("In scatterplot, draw histogram..." + dataIndices[0]);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("In scatterplot, draw histogram..."
+						+ dataIndices[0]);
+			}
 			histogram.setAxisOn(false);
 			histogram.setVariableName(attributeX);
 			histogram.setData(dataX);
@@ -654,7 +667,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				}
 			} else {
 				if (xClasser != null) {
-					logger.finest("classer is not null");
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("classer is not null");
+					}
 					for (int i = 0; i < classColors.length; i++) {
 						for (int j = 0; j < classColors[0].length; j++) {
 							g.setColor(classColors[i][j]);
@@ -737,11 +752,15 @@ public class DecisionTreeScatterPlot extends JPanel implements
 
 		if (xDecisionInt != null) {
 			g.setColor(foreground);
-			logger.finest("x decision int not null.." + attributeX + " "
-					+ xDecisionInt.length);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("x decision int not null.." + attributeX + " "
+						+ xDecisionInt.length);
+			}
 			for (int element : xDecisionInt) {
 				g.drawLine(element, plotOriginY, element, plotEndY);
-				logger.finest(" " + element + " ");
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest(" " + element + " ");
+				}
 			}
 		}
 		if (yDecisionInt != null) {
@@ -760,10 +779,13 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		int plotWidth, plotHeight;
 		plotWidth = getWidth();
 		plotHeight = getHeight();
-		logger.finest("plot height" + plotHeight);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("plot height" + plotHeight);
+		}
 		if (!(dataIndices[0] == dataIndices[1])) {
-
-			logger.finest("origin x = " + plotOriginX);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("origin x = " + plotOriginX);
+			}
 			// draw the lines
 			g.setColor(foreground);
 			g.drawLine(plotOriginX, plotEndY, plotOriginX, plotOriginY);
@@ -980,7 +1002,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	}
 
 	private void setupDataforDisplay() {
-		logger.finest("In setup data for display ...");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("In setup data for display ...");
+		}
 		setVisibleAxis(axisOn);
 		if (dataArrayX == null) {
 			return;
@@ -1002,7 +1026,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 		whyint = getValueScreen(dataY, yScale, plotOriginY, yAxisExtents[0]);
 		// get class boundaries' positions on screen
 		if (xBoundaries != null && yBoundaries != null) {
-			logger.finest("x and y boundaries are not null.");
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("x and y boundaries are not null.");
+			}
 			xBoundariesInt = new int[xBoundaries.length];
 			yBoundariesInt = new int[yBoundaries.length];
 			xBoundariesInt = getValueScreen(xBoundaries, xScale, plotOriginX,
@@ -1020,9 +1046,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				xDecisionInt[i] = this.getValueScreen(((Integer) (xDecision
 						.get(i))).doubleValue(), xScale, plotOriginX,
 						xAxisExtents[0]);
-				logger
-						.finest("In setup data for display ..."
-								+ xDecisionInt[i]);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("In setup data for display ..."
+							+ xDecisionInt[i]);
+				}
 			} else if (xDecision.elementAt(i) instanceof Vector) {
 				xDecisionInt[i] = this.getValueScreen(
 						((Integer) (((Vector) (xDecision.get(i))).get(0)))

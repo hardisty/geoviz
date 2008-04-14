@@ -84,7 +84,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	private final StarPlotLayer plotLayer;
 
 	public StarPlotCanvas() {
-		if (StarPlotCanvas.logger.isLoggable(Level.FINEST)) {
+		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("StarPlotCanvas, in constructor");
 		}
 		setBackground(Color.white);
@@ -118,7 +118,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {
-		if (StarPlotCanvas.logger.isLoggable(Level.FINEST)) {
+		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("subspaceChanged in StarPlotCanvas");
 		}
 		plotLayer.subspaceChanged(e);
@@ -153,7 +153,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 			nRows++;
 		}
 		if (nRows * nColumns < nPlots) {
-			logger.finest("StarPlotCanvas, that's unpossible!");
+			logger.info("StarPlotCanvas, that's unpossible!");
 			nColumns++;
 		}
 		dim = new Dimension(nRows, nColumns);
@@ -178,12 +178,16 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 		if (plotHeight < plotWidth) {
 			plotMin = plotHeight;
 		}
-		logger.finest(" plotmin = " + plotMin);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest(" plotmin = " + plotMin);
+		}
 		penWidth = plotMin / 100f;
 		if (penWidth < 0f) {
 			penWidth = 0f;
 		}
-		logger.finest(" penwidth = " + penWidth);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest(" penwidth = " + penWidth);
+		}
 		int plotsAssigned = 0;
 		int x = 0;
 		int y = 0;
