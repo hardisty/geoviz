@@ -30,6 +30,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
@@ -166,7 +167,9 @@ public class SonicClassifier extends JPanel implements ActionListener,
 		for (int i = 0; i < nClasses; i++) {
 			double whichColor = i * picksPerColor;
 			int index = (int) Math.floor(whichColor);
-			logger.finest("i = " + i + "index  = " + index);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("i = " + i + "index  = " + index);
+			}
 			colors[i] = pickerColors[index];
 
 		}
@@ -317,7 +320,9 @@ public class SonicClassifier extends JPanel implements ActionListener,
 			return;
 		}
 		int aClass = currClassification[obs];
-		logger.finest("aClass = " + aClass);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("aClass = " + aClass);
+		}
 		if (aClass < 0) {
 			return;// null class, maybe play special sound?
 		}
@@ -327,7 +332,9 @@ public class SonicClassifier extends JPanel implements ActionListener,
 
 	public void indicationChanged(IndicationEvent e) {
 		int ind = e.getIndication();
-		logger.finest("indication = " + ind);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("indication = " + ind);
+		}
 		if (ind >= 0) {
 			playObservationKey(ind);
 		}
