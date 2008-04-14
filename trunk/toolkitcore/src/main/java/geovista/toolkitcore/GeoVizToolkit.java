@@ -96,15 +96,15 @@ import geovista.touchgraph.LinkGraph;
 import geovista.touchgraph.PCAViz;
 import geovista.touchgraph.SubspaceLinkGraph;
 
+/**
+ * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
+ * 
+ * @author Frank Hardisty
+ */
+
 public class GeoVizToolkit extends JFrame implements ActionListener,
 		ComponentListener, InternalFrameListener, AnnotationListener {
 
-	/**
-	 * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a
-	 * default.
-	 * 
-	 * @author Frank Hardisty
-	 */
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
 	// collection of classes to add
