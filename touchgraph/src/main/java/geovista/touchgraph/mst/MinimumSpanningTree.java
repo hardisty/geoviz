@@ -1,13 +1,7 @@
 package geovista.touchgraph.mst;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StreamTokenizer;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.HashSet;
 
 /**
  * Title: Minimum Spanning Tree Description: Uses Kruskal's algorithm to
@@ -18,67 +12,6 @@ import java.util.Vector;
  */
 
 public class MinimumSpanningTree {
-	private final File file;
-
-	private final int[][] edges;
-
-	private int numOfVertices = 0;
-
-	private Vector mst = null;
-
-	private final int[] cluster;
-
-	private int totalWeight;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param The
-	 *            name of the file containing the graph.
-	 */
-	public MinimumSpanningTree(String fileName) {
-		file = new File(fileName);
-		edges = readFromFile(file);
-		for (int[] element : edges) {
-			if (element[0] > numOfVertices) {
-				numOfVertices = element[0];
-			}
-			if (element[1] > numOfVertices) {
-				numOfVertices = element[1];
-			}
-		}
-		mst = new Vector(10, 5);
-
-		cluster = new int[numOfVertices];
-		for (int j = 0; j < numOfVertices; j++) {
-			cluster[j] = j + 1;
-		}
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param The
-	 *            file containing the graph
-	 */
-	public MinimumSpanningTree(File file) {
-		this.file = file;
-		edges = readFromFile(file);
-		for (int[] element : edges) {
-			if (element[0] > numOfVertices) {
-				numOfVertices = element[0];
-			}
-			if (element[1] > numOfVertices) {
-				numOfVertices = element[1];
-			}
-		}
-		mst = new Vector(10, 5);
-
-		cluster = new int[numOfVertices];
-		for (int j = 0; j < numOfVertices; j++) {
-			cluster[j] = j + 1;
-		}
-	}
 
 	/**
 	 * Calculate the MST using Kruskal's algorithm.
@@ -88,6 +21,9 @@ public class MinimumSpanningTree {
 	public static ArrayList<MSTEdge> kruskal(int[] fromEdge, int[] toEdge,
 			double[] weights, int numVertices) {
 		int[] cluster = new int[numVertices];
+		for (int j = 0; j < numVertices; j++) {
+			cluster[j] = j + 1;
+		}
 		double totalWeight = 0;
 		ArrayList<MSTEdge> mst = null;
 		PriorityQue que = new PriorityQue(numVertices);
@@ -113,63 +49,68 @@ public class MinimumSpanningTree {
 		return mst;
 	}
 
-	/**
-	 * Print the MST
-	 * 
-	 * @param The
-	 *            language to use for output
-	 * @return A string representation of the mst
-	 */
-	public String printMST(ResourceBundle res) {
-		String returnString;
+	public static int findNumNodes(ArrayList<MSTEdge> edges) {
+		HashSet set = new HashSet();
 
-		returnString = (res.getString("Processed_File")
-				+ file.getAbsolutePath() + res.getString("Possible_Tree"));
-		for (int i = 0; i < mst.size(); i++) {
-			MSTEdge temp = (MSTEdge) mst.get(i);
-			returnString = returnString + (temp.toString(res));
+		for (MSTEdge edge : edges) {
+			set.add(edge.getStart());
+			set.add(edge.getEnd());
+
 		}
-		returnString = (returnString
-				+ "\n-------------------------------------------------"
-				+ res.getString("Total_Weight") + totalWeight + "\n\n");
-		return returnString;
+
+		System.out.println(set.size());
+		return set.size();
+
 	}
 
 	/**
-	 * Read the graph from a file.
+	 * Calculate the MST using Kruskal's algorithm.
 	 * 
-	 * @parma The file containing the graph.
-	 * @return A 2-dimensional array of the edges of the graph.
+	 * @return The MST as a two-dimensional array.
 	 */
-	private int[][] readFromFile(File f) {
-		ArrayList numbers = new ArrayList();
-		try {
-			StreamTokenizer tok = new StreamTokenizer(new FileReader(f));
-			while (tok.nextToken() != StreamTokenizer.TT_EOF) {
-				numbers.add(new Integer((int) tok.nval));
+	public static ArrayList<MSTEdge> kruskal(ArrayList<MSTEdge> inputEdges) {
+		int numVertices = MinimumSpanningTree.findNumNodes(inputEdges);
+		int[] cluster = new int[numVertices];
+		for (int j = 0; j < numVertices; j++) {
+			cluster[j] = j + 1;
+		}
+		double totalWeight = 0;
+		ArrayList<MSTEdge> mst = new ArrayList<MSTEdge>();
+		PriorityQue que = new PriorityQue(numVertices);
+		for (int i = 0; i < inputEdges.size(); i++) {
+			que.insertItem(new MSTEdge(inputEdges.get(i).getStart(), inputEdges
+					.get(i).getEnd(), inputEdges.get(i).getWeight()));
+		}
+
+		while (mst.size() < numVertices - 1) {
+			MSTEdge current = que.removeMin();
+			int pos1 = cluster[current.getEnd()];
+			int pos2 = cluster[current.getStart()];
+
+			if (pos1 != pos2) {
+				mst.add(current);
+				totalWeight += current.getWeight();
+				for (int k = 0; k < cluster.length; k++) {
+					if (cluster[k] == pos1) {
+						cluster[k] = pos2;
+					}
+				}
 			}
-		} catch (IOException e) {
-			System.err.println("Fatal Error: File not found!");
-			System.exit(0);
 		}
-
-		int numberOfEdges = numbers.size() / 3;
-		int[][] result = new int[numberOfEdges][3];
-		Iterator iter = numbers.iterator();
-		for (int i = 0; i < numberOfEdges; i++) {
-			result[i][0] = ((Integer) iter.next()).intValue();
-			result[i][1] = ((Integer) iter.next()).intValue();
-			result[i][2] = ((Integer) iter.next()).intValue();
-		}
-		return result;
+		return mst;
 	}
 
-	/**
-	 * Get the MST vector
-	 * 
-	 * @return The vector containing the MST
-	 */
-	public Vector getVector() {
-		return mst;
+	public static MSTEdge[] kruskalArray(MSTEdge[] inputEdges) {
+		ArrayList<MSTEdge> list = new ArrayList<MSTEdge>(inputEdges.length);
+		for (MSTEdge element : inputEdges) {
+			list.add(element);
+		}
+		ArrayList<MSTEdge> mstList = MinimumSpanningTree.kruskal(list);
+		MSTEdge[] outputEdges = new MSTEdge[mstList.size()];
+		for (int i = 0; i < mstList.size(); i++) {
+			outputEdges[i] = mstList.get(i);
+		}
+
+		return outputEdges;
 	}
 }

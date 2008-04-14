@@ -62,7 +62,9 @@ public class PriorityQue {
 				index = i;
 			}
 		}
+
 		que.removeElementAt(index);
+
 		capacity = que.size();
 		return temp;
 	}

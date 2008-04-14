@@ -43,6 +43,8 @@ import geovista.common.event.SubspaceListener;
  * SelectionAnimator is used to send out indication signals that corrispond to
  * current classifications.
  * 
+ * @author Frank Hardisty
+ * 
  */
 public class SelectionAnimator extends JPanel implements ActionListener,
 		ChangeListener, DataSetListener, SubspaceListener,

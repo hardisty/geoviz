@@ -24,7 +24,6 @@ import javax.swing.event.EventListenerList;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 
-
 /**
  * Creates a minimum spanning tree. Uses Diansheng's SpatialMST to do the work.
  * 
@@ -40,7 +39,7 @@ public class NDimensionalMST {
 	private transient int[] points; // one point per observation
 	// we start with every edge, then these get weaned
 	private transient MSTEdge[] edges; // to make MST, but soon this will
-											// be just the Gabriel Graph edges
+	// be just the Gabriel Graph edges
 
 	private transient MSTEdge[] mstEdges;
 
@@ -51,8 +50,10 @@ public class NDimensionalMST {
 	private transient double[] tempLow; // for hypersphere calculations
 	private transient double[] tempHigh;
 	transient double mstMedian;
-	final static Logger logger = Logger.getLogger(NDimensionalMST.class.getName());
-//test
+	final static Logger logger = Logger.getLogger(NDimensionalMST.class
+			.getName());
+
+	// test
 	public NDimensionalMST() {
 	}
 
@@ -77,17 +78,17 @@ public class NDimensionalMST {
 		int nEdges = (data.getNumberNumericAttributes())
 				* (data.getNumberNumericAttributes()); // matrix, so square it
 		nEdges = nEdges - data.getNumberNumericAttributes(); // take diagonal
-																// away (no
-																// distances
-																// from points
-																// to
-																// themselves)
+		// away (no
+		// distances
+		// from points
+		// to
+		// themselves)
 		nEdges = nEdges / 2;// only need to process one way, it's symetric
 		logger.finest("nEdges " + nEdges);
 		// nEdges+=1;//what the ???
 
 		edges = new MSTEdge[nEdges]; // this is the max, we can make it
-											// smaller later
+		// smaller later
 
 		double dist = 0;
 		int edgeCount = 0;
@@ -95,11 +96,11 @@ public class NDimensionalMST {
 		Object[] doubleData = new Object[data.getNumberNumericAttributes()];
 		for (int i = 0; i < data.getNumberNumericAttributes(); i++) {
 			// +1 for datasetforapps foulness
-			doubleData[i] = (double[]) data.getNumericDataAsDouble(i); // set
-																		// the
-																		// id =
-																		// implicit
-																		// index
+			doubleData[i] = data.getNumericDataAsDouble(i); // set
+			// the
+			// id =
+			// implicit
+			// index
 		}
 		double[] doubleOrigin = null;
 		double[] doubleDest = null;
@@ -115,19 +116,17 @@ public class NDimensionalMST {
 					dist = DescriptiveStatistics
 							.correlationCoefficientIgnoreNaN(doubleOrigin,
 									doubleDest, false);
-					logger.finest("origin = " + origin + ", dest = " +dest + ", dist = " + dist);
+					logger.finest("origin = " + origin + ", dest = " + dest
+							+ ", dist = " + dist);
 					dist = Math.abs(dist);
 					dist = 1 - dist;
-					logger.finest("dist " +dist);
-					edges[edgeCount] = new MSTEdge(originPoint, destPoint,
-							dist);
+					logger.finest("dist " + dist);
+					edges[edgeCount] = new MSTEdge(originPoint, destPoint, dist);
 					edgeCount++;
 
 				} // end if origin != dest
 			} // next dest
 		} // next origin
-
-
 
 		logger.finest("before quicksort");
 		// now sort those edges
@@ -135,11 +134,12 @@ public class NDimensionalMST {
 		// QuickSort.sort(edges, 0, edges.length - 1);
 
 		logger.finest("num edges before mst = " + edges.length);
-		//dgMST.setEdges(edges);
-		//XXX fix me
-		this.mstEdges = (MSTEdge[])MinimumSpanningTree.kruskal(null, null, null, 0).toArray();
+		// dgMST.setEdges(edges);
+		// XXX fix me
+		mstEdges = (MSTEdge[]) MinimumSpanningTree.kruskal(null, null, null, 0)
+				.toArray();
 		int medianPlace = mstEdges.length / 2;
-		this.mstMedian = this.mstEdges[medianPlace].getWeight();
+		mstMedian = mstEdges[medianPlace].getWeight();
 
 		// SpatialEdge[] newEdges = dgMST.getNewEdges();
 	}
@@ -185,17 +185,17 @@ public class NDimensionalMST {
 	 * if (origin == 451) { logger.isLoggable(Level.FINEST) = true; }
 	 * 
 	 * logger.finest("origin = " + origin); //long mem =
-	 * Runtime.getRuntime().freeMemory(); logger.finest("free mem = " +
-	 * mem); for (int dest = 0; dest < data.getNumObservations(); dest++) { if
-	 * (origin < dest) { SpatialPoint destPoint = points[dest];
+	 * Runtime.getRuntime().freeMemory(); logger.finest("free mem = " + mem);
+	 * for (int dest = 0; dest < data.getNumObservations(); dest++) { if (origin <
+	 * dest) { SpatialPoint destPoint = points[dest];
 	 * 
 	 * for (int i = 0; i < selectedIndicies.length; i++) { double[] doubleDat =
 	 * (double[]) doubleData[i]; destinationLocation[i] = doubleDat[dest]; }
 	 * 
-	 * if (logger.isLoggable(Level.FINEST)) { logger.finest("dest = " + dest); //mem =
-	 * Runtime.getRuntime().freeMemory(); logger.finest("detail: free mem = " +
-	 * mem); } boolean foundAnyPoint = false; boolean foundThisPoint = false;
-	 * for (int testPoint = 0; testPoint < data.getNumObservations();
+	 * if (logger.isLoggable(Level.FINEST)) { logger.finest("dest = " + dest);
+	 * //mem = Runtime.getRuntime().freeMemory(); logger.finest("detail: free
+	 * mem = " + mem); } boolean foundAnyPoint = false; boolean foundThisPoint =
+	 * false; for (int testPoint = 0; testPoint < data.getNumObservations();
 	 * testPoint++) { if (testPoint != origin && testPoint != dest) { for (int i =
 	 * 0; i < selectedIndicies.length; i++) { double[] doubleDat = (double[])
 	 * doubleData[i]; testLocation[i] = doubleDat[testPoint]; } foundThisPoint =
@@ -204,13 +204,12 @@ public class NDimensionalMST {
 	 * false; } if (!foundAnyPoint){ dist =
 	 * this.manhattanDistance(originLocation, destinationLocation);
 	 * edges[edgeCount] = new SpatialEdge(originPoint, destPoint, dist);
-	 * edgeCount++; }
-	 *  } //end if origin != dest } //next dest } //next origin
+	 * edgeCount++; } } //end if origin != dest } //next dest } //next origin
 	 * 
 	 * //now reduce the number in the edge array SpatialEdge[] newEdges = new
 	 * SpatialEdge[edgeCount]; System.arraycopy(edges,0,newEdges,0,edgeCount);
-	 * edges = newEdges; logger.finest("nEdges = " + edgeCount); //bail
-	 * here if doing gabriel if (data.getNumObservations() > 3){ return; }
+	 * edges = newEdges; logger.finest("nEdges = " + edgeCount); //bail here if
+	 * doing gabriel if (data.getNumObservations() > 3){ return; }
 	 * 
 	 * 
 	 * //SpatialEdge[] newEdges = dgMST.getNewEdges(); }
@@ -221,30 +220,30 @@ public class NDimensionalMST {
 		for (int i = 0; i < selectedIndicies.length; i++) {
 			doubleData[i] = NDimensionalMST.normalize(data
 					.getNumericDataAsDouble(selectedIndicies[i])); // skip
-																	// variable
-																	// names
+			// variable
+			// names
 		}
 
 		points = new int[data.getNumObservations()];
 
-		this.tempLow = new double[data.getNumObservations()];
-		this.tempHigh = new double[data.getNumObservations()];
+		tempLow = new double[data.getNumObservations()];
+		tempHigh = new double[data.getNumObservations()];
 
 		for (int i = 0; i < data.getNumObservations(); i++) {
 			points[i] = i; // set the id = implicit index
 		}
 
 		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix,
-																			// so
-																			// square
-																			// it
+		// so
+		// square
+		// it
 		nEdges = nEdges - data.getNumObservations(); // take diagonal away
-														// (no distances from
-														// points to themselves)
+		// (no distances from
+		// points to themselves)
 		nEdges = nEdges / 2;
 
 		edges = new MSTEdge[nEdges]; // this is the max, we can make it
-											// smaller later
+		// smaller later
 
 		double dist = 0;
 		int edgeCount = 0;
@@ -263,10 +262,7 @@ public class NDimensionalMST {
 			}
 
 			logger.finest("origin = " + origin);
-			
 
-
-			
 			for (int dest = 0; dest < data.getNumObservations(); dest++) {
 				if (origin < dest) {
 					int destPoint = points[dest];
@@ -285,8 +281,7 @@ public class NDimensionalMST {
 
 					dist = NDimensionalMST.manhattanDistance(originLocation,
 							destinationLocation);
-					edges[edgeCount] = new MSTEdge(originPoint, destPoint,
-							dist);
+					edges[edgeCount] = new MSTEdge(originPoint, destPoint, dist);
 					edgeCount++;
 
 				} // end if origin != dest
@@ -294,54 +289,49 @@ public class NDimensionalMST {
 		} // next origin
 
 		// now reduce the number in the edge array
-		MSTEdge[] newEdges = new MSTEdge[edgeCount];
-		System.arraycopy(edges, 0, newEdges, 0, edgeCount);
-		edges = newEdges;
+		// MSTEdge[] newEdges = new MSTEdge[edgeCount];
+		// System.arraycopy(edges, 0, newEdges, 0, edgeCount);
+		// edges = newEdges;
 		logger.finest("nEdges = " + edgeCount);
 
-		this.mstEdges = this.findMSTEdges(edges);
+		mstEdges = findMSTEdges(edges);
 		// Edge[] newEdges = dgMST.getNewEdges();
 	}
 
 	private MSTEdge[] findMSTEdges(MSTEdge[] edges) {
 
-
 		logger.finest("before quicksort");
 		// now sort those edges
 		Arrays.sort(edges);
 
-
 		logger.finest("num edges before mst = " + edges.length);
 
-		//XXX do MST
-		return edges;
+		return MinimumSpanningTree.kruskalArray(edges);
 	}
-	
-	
 
 	// XXX is this method used anywhere?
 	MSTEdge[] findAllEdges(Object[] doubleData, DataSetForApps data,
 			int[] selectedIndicies) {
 		points = new int[data.getNumObservations()];
 
-		this.tempLow = new double[data.getNumObservations()];
-		this.tempHigh = new double[data.getNumObservations()];
+		tempLow = new double[data.getNumObservations()];
+		tempHigh = new double[data.getNumObservations()];
 
 		for (int i = 0; i < data.getNumObservations(); i++) {
 			points[i] = i; // set the id = implicit index
 		}
 
 		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix,
-																			// so
-																			// square
-																			// it
+		// so
+		// square
+		// it
 		nEdges = nEdges - data.getNumObservations(); // take diagonal away
-														// (no distances from
-														// points to themselves)
+		// (no distances from
+		// points to themselves)
 		nEdges = nEdges / 2;
 
 		edges = new MSTEdge[nEdges]; // this is the max, we can make it
-											// smaller later
+		// smaller later
 
 		double dist = 0;
 		int edgeCount = 0;
@@ -363,7 +353,6 @@ public class NDimensionalMST {
 
 			logger.finest("origin = " + origin);
 
-
 			for (int dest = 0; dest < data.getNumObservations(); dest++) {
 				if (origin < dest) {
 					int destPoint = points[dest];
@@ -374,7 +363,7 @@ public class NDimensionalMST {
 					}
 
 					if (logger.isLoggable(Level.FINEST)) {
-						 long mem = Runtime.getRuntime().freeMemory();
+						long mem = Runtime.getRuntime().freeMemory();
 						logger.finest("free mem = " + mem);
 						logger.finest("dest = " + dest);
 
@@ -389,9 +378,8 @@ public class NDimensionalMST {
 								double[] doubleDat = (double[]) doubleData[i];
 								testLocation[i] = doubleDat[testPoint];
 							}
-							foundThisPoint = (this.withinHyperSphere(
-									originLocation, destinationLocation,
-									testLocation));
+							foundThisPoint = (withinHyperSphere(originLocation,
+									destinationLocation, testLocation));
 						}
 						if (foundThisPoint) {
 							foundAnyPoint = true;
@@ -402,8 +390,8 @@ public class NDimensionalMST {
 					if (!foundAnyPoint) {
 						dist = NDimensionalMST.manhattanDistance(
 								originLocation, destinationLocation);
-						edges[edgeCount] = new MSTEdge(originPoint,
-								destPoint, dist);
+						edges[edgeCount] = new MSTEdge(originPoint, destPoint,
+								dist);
 						edgeCount++;
 					}
 
@@ -416,15 +404,15 @@ public class NDimensionalMST {
 	private boolean withinHyperSphere(double[] pointOne, double[] pointTwo,
 			double[] candidate) {
 
-		double factor = Math.pow(1.05, (double) pointOne.length);
+		double factor = Math.pow(1.05, pointOne.length);
 		// first we fill in the temp data and check for out of hypercube
 		for (int var = 0; var < pointOne.length; var++) {
 			if (pointOne[var] < pointTwo[var]) {
-				this.tempLow[var] = pointOne[var] / factor;
-				this.tempHigh[var] = pointTwo[var] * factor;
+				tempLow[var] = pointOne[var] / factor;
+				tempHigh[var] = pointTwo[var] * factor;
 			} else {
-				this.tempLow[var] = pointTwo[var] / factor;
-				this.tempHigh[var] = pointOne[var] * factor;
+				tempLow[var] = pointTwo[var] / factor;
+				tempHigh[var] = pointOne[var] * factor;
 			}
 			if (candidate[var] < tempLow[var] || candidate[var] > tempHigh[var]) {
 				return false;
