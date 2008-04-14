@@ -4,24 +4,24 @@ import java.util.ResourceBundle;
 
 /**
  * Title: Minimum Spanning Tree Edge class Description: Used for the minimum
- * spanning tree assignment Copyright: Copyright (c) 2002 Company:
+ * spanning tree assignment
  * 
  * @author Markus Svensson
- * 
+ * @author Frank Hardisty
  */
 
-public class MSTEdge {
+public class MSTEdge implements Comparable {
 	private int start;
 
 	private int end;
 
-	private double weight;
+	private final double weight;
 
 	/**
 	 * Default constructor, init weight to +infinity
 	 */
 	public MSTEdge() {
-		this.weight = Integer.MAX_VALUE;
+		weight = Integer.MAX_VALUE;
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class MSTEdge {
 	 * @return The weight
 	 */
 	public double getWeight() {
-		return this.weight;
+		return weight;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class MSTEdge {
 	 * @return The start vertex
 	 */
 	public int getStart() {
-		return this.start;
+		return start;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class MSTEdge {
 	 * @return The end vretex
 	 */
 	public int getEnd() {
-		return this.end;
+		return end;
 	}
 
 	/**
@@ -75,9 +75,31 @@ public class MSTEdge {
 	 * @return String representation of the edge
 	 */
 	public String toString(ResourceBundle res) {
-		String returnString = (res.getString("Start") + this.start
-				+ res.getString("End") + this.end + res.getString("Weight") + this.weight);
+		String returnString = (res.getString("Start") + start
+				+ res.getString("End") + end + res.getString("Weight") + weight);
 		return returnString;
 
+	}
+
+	public int compareTo(Object obj) {
+		MSTEdge e = (MSTEdge) obj;
+		int val = 0;
+		if (Double.isNaN(e.weight)) {
+			if (Double.isNaN(weight)) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}// end if the other value is NaN
+
+		if (Double.isNaN(weight)) {
+			val = -1;// everything is bigger than NaN
+		} else if (weight < e.weight) {
+			val = -1;
+		} else if (weight > e.weight) {
+			val = 1;
+		}
+
+		return val;
 	}
 }
