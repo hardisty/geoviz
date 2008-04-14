@@ -4,6 +4,7 @@
 
 package geovista.common.classification;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import geovista.common.data.DescriptiveStatistics;
@@ -68,7 +69,9 @@ public class ClassifierStdDev implements DescribedClassifier,
 				// }else{
 				// boundaries[i] = mean + (stdDev * (i - numClasses / 2));
 				// }
-				logger.finest("" + boundaries[i]);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("" + boundaries[i]);
+				}
 			}
 		} else {
 			for (int i = 0; i < boundaries.length; i++) {
@@ -105,7 +108,9 @@ public class ClassifierStdDev implements DescribedClassifier,
 				// }else{
 				// boundaries[i] = mean + (stdDev * (i - numClasses / 2 - 0.5));
 				// }
-				logger.finest("" + boundaries[i]);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("" + boundaries[i]);
+				}
 			}
 		}
 		return boundaries;

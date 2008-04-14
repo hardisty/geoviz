@@ -84,7 +84,9 @@ public class NDimensionalMST {
 		// to
 		// themselves)
 		nEdges = nEdges / 2;// only need to process one way, it's symetric
-		logger.finest("nEdges " + nEdges);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("nEdges " + nEdges);
+		}
 		// nEdges+=1;//what the ???
 
 		edges = new MSTEdge[nEdges]; // this is the max, we can make it
@@ -116,11 +118,15 @@ public class NDimensionalMST {
 					dist = DescriptiveStatistics
 							.correlationCoefficientIgnoreNaN(doubleOrigin,
 									doubleDest, false);
-					logger.finest("origin = " + origin + ", dest = " + dest
-							+ ", dist = " + dist);
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("origin = " + origin + ", dest = " + dest
+								+ ", dist = " + dist);
+					}
 					dist = Math.abs(dist);
 					dist = 1 - dist;
-					logger.finest("dist " + dist);
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("dist " + dist);
+					}
 					edges[edgeCount] = new MSTEdge(originPoint, destPoint, dist);
 					edgeCount++;
 
@@ -260,8 +266,9 @@ public class NDimensionalMST {
 
 			if (origin == 451) {
 			}
-
-			logger.finest("origin = " + origin);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("origin = " + origin);
+			}
 
 			for (int dest = 0; dest < data.getNumObservations(); dest++) {
 				if (origin < dest) {
@@ -292,20 +299,20 @@ public class NDimensionalMST {
 		// MSTEdge[] newEdges = new MSTEdge[edgeCount];
 		// System.arraycopy(edges, 0, newEdges, 0, edgeCount);
 		// edges = newEdges;
-		logger.finest("nEdges = " + edgeCount);
-
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("nEdges = " + edgeCount);
+		}
 		mstEdges = findMSTEdges(edges);
 		// Edge[] newEdges = dgMST.getNewEdges();
 	}
 
 	private MSTEdge[] findMSTEdges(MSTEdge[] edges) {
 
-		logger.finest("before quicksort");
 		// now sort those edges
 		Arrays.sort(edges);
-
-		logger.finest("num edges before mst = " + edges.length);
-
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("num edges before mst = " + edges.length);
+		}
 		return MinimumSpanningTree.kruskalArray(edges);
 	}
 

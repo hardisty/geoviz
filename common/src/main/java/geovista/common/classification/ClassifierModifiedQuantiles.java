@@ -4,6 +4,7 @@
 
 package geovista.common.classification;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import geovista.common.data.ArraySort2D;
@@ -197,7 +198,9 @@ public class ClassifierModifiedQuantiles implements DescribedClassifier,
 					index = (int) dataWithIndex[j][1];
 					classification[index] = i;
 				}
-				logger.finest("last class drawn.");
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("last class drawn.");
+				}
 			}
 		}
 		index = 0;
