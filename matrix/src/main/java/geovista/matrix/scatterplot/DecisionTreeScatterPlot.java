@@ -1056,7 +1056,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 								.doubleValue(), xScale, plotOriginX,
 						xAxisExtents[0]);
 			}
-			logger.finest("In setup data for display ..." + xDecisionInt[i]);
+
 		}
 		for (int i = 0; i < yDecision.size(); i++) {
 			if (yDecision.elementAt(i) instanceof Double) {

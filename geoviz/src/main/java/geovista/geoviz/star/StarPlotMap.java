@@ -143,7 +143,7 @@ public class StarPlotMap extends GeoMap implements GlyphListener,
 
 	@Override
 	public void colorArrayChanged(ColorArrayEvent e) {
-		if (StarPlotMap.logger.isLoggable(Level.FINEST)) {
+		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("in starplotmap colorarraychanged, got colors");
 		}
 		if (e == null || e.getColors() == null) {
