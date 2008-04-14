@@ -1,4 +1,4 @@
-package geovista.touchgraph.mst;
+package geovista.common.cluster;
 
 import java.util.Vector;
 

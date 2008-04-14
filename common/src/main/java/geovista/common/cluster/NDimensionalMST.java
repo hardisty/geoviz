@@ -11,7 +11,7 @@
  ___                ___
  -------------------------------------------------------------------  *
  */
-package geovista.touchgraph.mst;
+package geovista.common.cluster;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
