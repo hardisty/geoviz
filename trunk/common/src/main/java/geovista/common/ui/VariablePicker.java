@@ -51,7 +51,8 @@ public class VariablePicker extends JPanel implements DataSetListener,
 	JButton sendButton;
 	String[] varNames;
 	JList varList;
-	final static Logger logger = Logger.getLogger(VariablePicker.class.getName());
+	final static Logger logger = Logger.getLogger(VariablePicker.class
+			.getName());
 	DataSetForApps dataSet;
 
 	// Creates Variable Picker
@@ -59,8 +60,8 @@ public class VariablePicker extends JPanel implements DataSetListener,
 		super();
 		varList = new JList();
 		BorderLayout layout = new BorderLayout();
-		this.setLayout(layout);
-		this.sendButton = new JButton("Send Selection");
+		setLayout(layout);
+		sendButton = new JButton("Send Selection");
 		this.add(sendButton, BorderLayout.NORTH);
 		sendButton.addActionListener(this);
 		JScrollPane scrollPane = new JScrollPane();
@@ -69,8 +70,8 @@ public class VariablePicker extends JPanel implements DataSetListener,
 		scrollPane.setViewport(scrollView);
 		scrollPane.getViewport();
 		this.add(scrollPane, BorderLayout.CENTER);
-		this.varList.setVisibleRowCount(10);
-		if (logger.isLoggable(Level.FINEST)&& this.varNames != null) {
+		varList.setVisibleRowCount(10);
+		if (logger.isLoggable(Level.FINEST) && varNames != null) {
 			logger.finest("the first attribute is " + varNames[0]);
 		}
 	}
@@ -81,21 +82,21 @@ public class VariablePicker extends JPanel implements DataSetListener,
 		dataSet.addTableModelListener(this);
 		DataSetForApps tempDApp = new DataSetForApps(e.getDataSet());
 		String[] newVarNames = tempDApp.getAttributeNamesNumeric();
-		this.varList.setListData(newVarNames);
-		this.varList.repaint();
+		varList.setListData(newVarNames);
+		varList.repaint();
 	}
 
 	// Adds Action Perfromed Event
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == sendButton) {
-			this.fireSubspaceChanged(this.varList.getSelectedIndices());
+			fireSubspaceChanged(varList.getSelectedIndices());
 		}
 	}
 
 	// Add Subspace Changed Event
 	public void subspaceChanged(SubspaceEvent e) {
 		int[] subspace = e.getSubspace();
-		this.varList.setSelectedIndices(subspace);
+		varList.setSelectedIndices(subspace);
 	}
 
 	// Fires Subspace Changed
@@ -155,9 +156,11 @@ public class VariablePicker extends JPanel implements DataSetListener,
 	}
 
 	public void tableChanged(TableModelEvent e) {
-		logger.finest("variablepicker, tableChanged");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("variablepicker, tableChanged");
+		}
 		String[] newVarNames = dataSet.getAttributeNamesNumeric();
-		this.varList.setListData(newVarNames);
-		this.varList.repaint();
+		varList.setListData(newVarNames);
+		varList.repaint();
 	}
 }

@@ -2,6 +2,8 @@ package geovista.common.cluster;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Title: Minimum Spanning Tree Description: Uses Kruskal's algorithm to
@@ -12,6 +14,8 @@ import java.util.HashSet;
  */
 
 public class MinimumSpanningTree {
+	final static Logger logger = Logger.getLogger(MinimumSpanningTree.class
+			.getName());
 
 	/**
 	 * Calculate the MST using Kruskal's algorithm.
@@ -57,8 +61,9 @@ public class MinimumSpanningTree {
 			set.add(edge.getEnd());
 
 		}
-
-		System.out.println(set.size());
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("num nodes = " + set.size());
+		}
 		return set.size();
 
 	}

@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -162,7 +163,9 @@ public class CustomizedMultiSlider extends JPanel implements MouseListener,
 
 		// draw class colors
 		if (classColors != null && pixelValues != null) {
-			logger.finest(pixelValues.size() + "," + classColors.length);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest(pixelValues.size() + "," + classColors.length);
+			}
 			int v1 = 0;
 			v = 0;
 			for (int i = 1; i < pixelValues.size(); i++) {

@@ -4,6 +4,7 @@
 
 package geovista.common.data;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
@@ -66,7 +67,9 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	 * @see EventListenerList
 	 */
 	protected void fireDataSetModifiedChanged() {
-		logger.finest("ShpToShp.fireDataSetModifiedChanged, Hi!!");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("ShpToShp.fireDataSetModifiedChanged, Hi!!");
+		}
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
 		DataSetModifiedEvent e = null;

@@ -4,6 +4,7 @@
 
 package geovista.common.data;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class StatisticsVectors {
@@ -192,7 +193,7 @@ public class StatisticsVectors {
 	}
 
 	public static double distanceSquare(double[] a, double[] b) // square of
-																// distance
+	// distance
 	{
 		double c = 0.0;
 		for (int i = 0; i < a.length; i++) {
@@ -279,7 +280,9 @@ public class StatisticsVectors {
 	}
 
 	public static double[][] Transpose(double[][] a) {
-		logger.finest("Performing Transpose...");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("Performing Transpose...");
+		}
 		int tms = a.length;
 		double m[][] = new double[tms][tms];
 		for (int i = 0; i < tms; i++) {
@@ -293,7 +296,9 @@ public class StatisticsVectors {
 	public static double[][] Inverse(double[][] a) throws Exception {
 		// Formula used to Calculate Inverse:
 		// inv(A) = 1/det(A) * adj(A)
-		logger.finest("Performing Inverse...");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("Performing Inverse...");
+		}
 		int tms = a.length;
 		double m[][] = new double[tms][tms];
 		double mm[][] = Adjoint(a);
@@ -311,7 +316,9 @@ public class StatisticsVectors {
 	}
 
 	public static double[][] Adjoint(double[][] a) throws Exception {
-		logger.finest("Performing Adjoint...");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("Performing Adjoint...");
+		}
 		int tms = a.length;
 
 		double m[][] = new double[tms][tms];
@@ -353,7 +360,7 @@ public class StatisticsVectors {
 		double f1 = 0;
 		double temp = 0;
 		int tms = m.length; // get This Matrix Size (could be smaller than
-							// global)
+		// global)
 		int v = 1;
 		iDF = 1;
 
@@ -375,7 +382,7 @@ public class StatisticsVectors {
 						}
 						v++; // count row switchs
 						iDF = iDF * -1; // each switch changes determinant
-										// factor
+						// factor
 					}
 				}
 

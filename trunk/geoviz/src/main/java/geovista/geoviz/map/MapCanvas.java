@@ -422,10 +422,12 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
 			LayerShape ls = (LayerShape) e.nextElement();
 			// start print centroids
-			logger.finest("Centroids:");
-			for (int i = 0; i < dataSet.getNumObservations(); i++) {
-				Point p = ls.findCentroid(i);
-				logger.finest(p.x + "," + p.y);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("Centroids:");
+				for (int i = 0; i < dataSet.getNumObservations(); i++) {
+					Point p = ls.findCentroid(i);
+					logger.finest(p.x + "," + p.y);
+				}
 			}
 			// end print centroids
 
@@ -600,7 +602,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	public void componentShown(ComponentEvent e) {
 		componentResized(e);
-		logger.finest("showing component");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("showing component");
+		}
 
 		// LayerShape aLayer = (LayerShape)
 		// this.shapeLayers.get(this.activeLayer);
@@ -636,8 +640,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			if (fisheyes != null) {
 				float width = getWidth();
 				fisheyes.setLensRadius(width / 5f);
-
-				logger.finest("lens radius = " + fisheyes.getLensRadius());
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("lens radius = " + fisheyes.getLensRadius());
+				}
 			}
 			// hack
 			// this.sendColorsToLayers(this.dataColorX.length);
@@ -1416,7 +1421,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				Color halfGrey = new Color(248, 248, 248, 230);
 				ls.colorBlur = halfGrey;
 				ls.renderBackground(g2); // paint your whole self (including
-											// selections)
+				// selections)
 				ls.colorBlur = beforeColor;
 			} // next element
 
@@ -1473,8 +1478,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			int layerNum = 0;
 			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
 				LayerShape ls = (LayerShape) e.nextElement();
-				logger.finest("layerNum = " + layerNum + ", activeLayer = "
-						+ activeLayer);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("layerNum = " + layerNum + ", activeLayer = "
+							+ activeLayer);
+				}
 				if (ls.getIsAuxiliary() && layerNum > activeLayer) { // if
 					// you
 					// are

@@ -7,6 +7,7 @@ package geovista.common.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class SpatialStatistics {
@@ -34,7 +35,9 @@ public abstract class SpatialStatistics {
 
 	public static double[] calculateRandomMoranScores(double[] zData,
 			SpatialWeights sw) {
-		logger.finest("calculating moran scores");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("calculating moran scores");
+		}
 		double[] moranData;
 		moranData = new double[zData.length];
 		System.arraycopy(zData, 0, moranData, 0, zData.length);

@@ -382,8 +382,9 @@ public abstract class LayerShape {
 				float area = (float) element.getBounds().getWidth()
 						* (float) element.getBounds().getHeight();
 				spatialDataArea[counter] = area;
-
-				logger.finest("area = " + area);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("area = " + area);
+				}
 				counter++;
 			}
 		}
@@ -392,9 +393,10 @@ public abstract class LayerShape {
 
 		int firstForth = spatialDataArea.length / 2;
 		float shapeArea = spatialDataArea[firstForth];
-
-		logger.finest("LayerShape.setParent, shapeCount = " + shapeCount);
-		logger.finest(",shapeArea = " + shapeArea);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("LayerShape.setParent, shapeCount = " + shapeCount);
+			logger.finest(",shapeArea = " + shapeArea);
+		}
 		float strokeWidth = 0f;
 
 		if (shapeArea < 40) {

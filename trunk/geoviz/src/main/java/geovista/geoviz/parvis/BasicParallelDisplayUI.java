@@ -29,6 +29,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComponent;
@@ -414,9 +415,10 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 			ParallelDisplay comp) {
 		GeneralPath rPath = new GeneralPath();
 		float val = getYValue(num, startAxis, comp);
-		logger.finest("PCPUI val = " + val);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("PCPUI val = " + val);
+		}
 		boolean wasNaN = false;
-		float previousVal = val;
 		if (!Float.isNaN(val)) {
 			rPath.moveTo(stepx * startAxis, val);
 			wasNaN = false;
@@ -425,8 +427,9 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		}
 		for (int j = startAxis + 1; j <= stopAxis; j++) {
 			val = getYValue(num, j, comp);
-
-			logger.finest("PCPUI val = " + val);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("PCPUI val = " + val);
+			}
 			if (Float.isNaN(val)) {// if this one is NaN
 				wasNaN = true;
 			} else {// if this one is not NaN
@@ -444,7 +447,6 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 				}
 				wasNaN = false;
 			}
-			previousVal = val;
 		}
 		return rPath;
 
@@ -778,11 +780,11 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 
 				if (activeAxis != num) {
 					comp.swapAxes(activeAxis, num);
-
-					logger.finest("setting repaint axes: "
-							+ (Math.min(num, activeAxis) - 1) + ", "
-							+ (Math.max(num, activeAxis) + 1));
-
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("setting repaint axes: "
+								+ (Math.min(num, activeAxis) - 1) + ", "
+								+ (Math.max(num, activeAxis) + 1));
+					}
 					renderRegion(Math.min(num, activeAxis) - 1, Math.max(num,
 							activeAxis) + 1);
 
@@ -1049,7 +1051,9 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 				for (int j = 0; j < numRecords; j++) {
 					float recVal = (1 - part) * getYValue(j, i, comp) + part
 							* getYValue(j, i + 1, comp);
-					logger.finest("getRecordByCoordinates" + recVal);
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("getRecordByCoordinates" + recVal);
+					}
 					if (Math.abs(recVal - y) < 3.0) {
 						return j;
 					}
@@ -1083,7 +1087,9 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		for (int i = 0; i < numDimensions - 1; i++) {
 			if ((x >= i * stepx) && (x < (i + 1) * stepx)) {// if x part matches
 				float part = (x - i * stepx) / (float) stepx;
-				logger.finest("part " + part);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("part " + part);
+				}
 				for (int j = 0; j < numRecords; j++) {
 					float recVal = (1 - part) * getYValue(j, i, comp) + part
 							* getYValue(j, i + 1, comp);
