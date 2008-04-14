@@ -82,6 +82,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import geovista.common.classification.ClassifierPicker;
+import geovista.common.cluster.MSTEdge;
+import geovista.common.cluster.NDimensionalMST;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
@@ -105,8 +107,6 @@ import geovista.touchgraph.interaction.LocalityScroll;
 import geovista.touchgraph.interaction.RotateScroll;
 import geovista.touchgraph.interaction.TGUIManager;
 import geovista.touchgraph.interaction.ZoomScroll;
-import geovista.touchgraph.mst.MSTEdge;
-import geovista.touchgraph.mst.NDimensionalMST;
 
 /**
  * GLPanel contains code for adding scrollbars and interfaces to the TGPanel The
@@ -908,8 +908,8 @@ public class LinkGraph extends JPanel implements DataSetListener,
 
 			tgPanel.setLocale(n1, 2);
 			tgPanel.setSelect(tgPanel.getGES().getFirstNode()); // Select first
-																// node, so
-																// hiding works
+			// node, so
+			// hiding works
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
