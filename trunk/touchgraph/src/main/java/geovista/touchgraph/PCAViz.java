@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,15 +30,13 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.common.ui.VariablePicker;
-import geovista.geoviz.sample.GeoData48States;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 
 /**
  * 
  */
 public class PCAViz extends JPanel implements DataSetListener,
 		SubspaceListener, ActionListener {
-
-
 
 	PCAGraph graph;
 
@@ -57,7 +56,7 @@ public class PCAViz extends JPanel implements DataSetListener,
 	 * Default constructor.
 	 */
 	public PCAViz() {
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		graph = new PCAGraph();
 		graph.sendButton.addActionListener(this);
 		picker = new VariablePicker();
@@ -71,13 +70,15 @@ public class PCAViz extends JPanel implements DataSetListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.graph.sendButton && nFactors > 0) {
+		if (e.getSource() == graph.sendButton && nFactors > 0) {
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("PCAViz, asking data set to fire");
 			}
-			//note: calling this method on the data set causes it to fire it's own notification
-			this.dataSetOriginal.addColumn(newData.getNumericArrayName(0),newData.getNumericDataAsDouble(0));
-			
+			// note: calling this method on the data set causes it to fire it's
+			// own notification
+			dataSetOriginal.addColumn(newData.getNumericArrayName(0), newData
+					.getNumericDataAsDouble(0));
+
 		}
 	}
 
@@ -87,13 +88,13 @@ public class PCAViz extends JPanel implements DataSetListener,
 					+ e.getDataSetForApps().hashCode());
 		}
 		// we need to keep a reference to the original
-		this.dataSetOriginal = e.getDataSetForApps();
+		dataSetOriginal = e.getDataSetForApps();
 
-		this.picker.dataSetChanged(e);
-		this.dataSet = e.getDataSetForApps();
+		picker.dataSetChanged(e);
+		dataSet = e.getDataSetForApps();
 		// let's do an initial variable selection so the GUI has something to
 		// show
-		int nVars = this.dataSet.getNumberNumericAttributes();
+		int nVars = dataSet.getNumberNumericAttributes();
 		int nPCAVars = 0;
 		if (nVars < 6) {
 			nPCAVars = nVars;
@@ -105,7 +106,7 @@ public class PCAViz extends JPanel implements DataSetListener,
 			selVars[i] = i;
 		}
 		SubspaceEvent eSub = new SubspaceEvent(this, selVars);
-		this.subspaceChanged(eSub);
+		subspaceChanged(eSub);
 
 	}
 
@@ -167,8 +168,8 @@ public class PCAViz extends JPanel implements DataSetListener,
 		}
 
 		int nFactors = 3;
-		DataSetForApps results = this.doPCA(dataSet, subspace, nFactors);
-		this.newData = results;
+		DataSetForApps results = doPCA(dataSet, subspace, nFactors);
+		newData = results;
 		// here we assemble a list of nodes and their distances.
 		// we want from (factor) to (original variable) for each original
 		// variable
@@ -202,8 +203,27 @@ public class PCAViz extends JPanel implements DataSetListener,
 		}
 		// XXX looking for an alternative to this cntr
 		DataSetForApps newDataSet = new DataSetForApps(allData);
-		this.graph.setDataSet(newDataSet, nFactors);
+		graph.setDataSet(newDataSet, nFactors);
 		this.nFactors = nFactors;
+
+	}
+
+	DoubleMatrix2D replaceNaN(DoubleMatrix2D matrix, double newVal) {
+		DoubleMatrix2D newMatrix = matrix.copy();
+
+		int rows = newMatrix.rows();
+		int columns = newMatrix.columns();
+
+		for (int row = 0; row < rows; row++) {
+			for (int column = 0; column < columns; column++) {
+				double val = newMatrix.get(row, column);
+				if (Double.isNaN(val)) {
+					newMatrix.set(row, column, newVal);
+				}
+			}
+		}
+
+		return newMatrix;
 
 	}
 
@@ -214,6 +234,7 @@ public class PCAViz extends JPanel implements DataSetListener,
 		int col = matrix.columns();
 		for (int i = 0; i < col; i++) {
 			double mean = matrix.viewColumn(i).zSum() / row;
+
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("mean = " + mean);
 			}
@@ -223,16 +244,21 @@ public class PCAViz extends JPanel implements DataSetListener,
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("norm = " + norm);
 			}
+			// replace NaN with zero
+			matrix = replaceNaN(matrix, 0);
+
 			matrix.viewColumn(i).assign(Functions.div(norm));
 		}
+
 		SingularValueDecomposition svd = new SingularValueDecomposition(matrix);
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("svd " + svd);
 		}
 		DoubleMatrix2D v = svd.getV();
 		DoubleMatrix2D vn = factory.make(v.rows(), pcn);
-		for (int i = 0; i < pcn; i++)
+		for (int i = 0; i < pcn; i++) {
 			vn.viewColumn(i).assign(v.viewColumn(i));
+		}
 		return alg.transpose(svd.getU());
 	}
 
@@ -258,7 +284,7 @@ public class PCAViz extends JPanel implements DataSetListener,
 
 		matrix.assign(data1);
 
-		DoubleMatrix2D results = this.getPCAmatrix(matrix, nFactors);
+		DoubleMatrix2D results = getPCAmatrix(matrix, nFactors);
 		double[][] pcaFactors = results.toArray();
 		String[] factorNames = new String[nFactors];
 		for (int i = 0; i < nFactors; i++) {
@@ -280,8 +306,12 @@ public class PCAViz extends JPanel implements DataSetListener,
 		// } catch (UnsupportedLookAndFeelException ex) {
 		// ex.printStackTrace();
 		// }
-		logger.finest("java.version = "
-				+ System.getProperty("java.version")
+		Logger logger = Logger.getLogger("geovista.touchgraph");
+		logger.setLevel(Level.FINEST);
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setLevel(Level.FINEST);
+		logger.addHandler(handler);
+		logger.finest("java.version = " + System.getProperty("java.version")
 				+ ", Runtime.avaialableProcessors = "
 				+ Runtime.getRuntime().availableProcessors());
 		JFrame frame;
@@ -294,8 +324,10 @@ public class PCAViz extends JPanel implements DataSetListener,
 		frame.setSize(500, 500);
 		frame.setVisible(true);
 
-		GeoData48States data = new GeoData48States();
-		DataSetEvent e = new DataSetEvent(data.getDataForApps(),frame);
+		GeoDataGeneralizedStates data = new GeoDataGeneralizedStates();
+
+		// GeoDataSCarolina data = new GeoDataSCarolina();
+		DataSetEvent e = new DataSetEvent(data.getDataForApps(), frame);
 		glPanel.dataSetChanged(e);
 		int[] subspace = { 1, 2, 3 };
 		glPanel.subspaceChanged(new SubspaceEvent(frame, subspace));

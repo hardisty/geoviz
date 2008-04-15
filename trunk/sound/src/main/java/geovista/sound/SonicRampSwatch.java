@@ -77,7 +77,7 @@ public class SonicRampSwatch extends JPanel implements MouseListener,
 		initSound();
 	}
 
-	private void initSound() {
+	private void initSound_old() {
 		try {
 			if (synthesizer == null) {
 				if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
@@ -108,6 +108,41 @@ public class SonicRampSwatch extends JPanel implements MouseListener,
 		cc = new ChannelData(midiChannels[0], 0);
 
 		setInstrument(27);
+	}
+
+	private void initSound() {
+		try {
+			if (synthesizer == null) {
+				if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
+					logger.severe("getSynthesizer() failed!");
+
+					return;
+				}
+			}
+
+			synthesizer.open();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+			return;
+		}
+
+		Soundbank sb = SonicRampPicker.sb;
+
+		if (sb == null) {
+			SonicRampPicker.openSoundbank();
+		}
+
+		if (sb != null) {
+			instruments = sb.getInstruments();
+			synthesizer.loadInstrument(instruments[0]);
+		}
+		MidiChannel[] midiChannels = synthesizer.getChannels();
+
+		cc = new ChannelData(midiChannels[0], 0);
+
+		// setInstrument(27);
 	}
 
 	public void makeImage() {
@@ -169,7 +204,7 @@ public class SonicRampSwatch extends JPanel implements MouseListener,
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() > 1) { // double or more clicks
 		} else if (e.getClickCount() == 1) { // toggle anchor state on single
-												// click
+			// click
 
 			if (isEnd) {
 				return; // if we are an end, we should always remain anchored!
@@ -178,7 +213,7 @@ public class SonicRampSwatch extends JPanel implements MouseListener,
 			if (anchored) {
 				setAnchored(false);
 				parent.swatchChanged(); // if we are now "unanchored", need to
-										// update
+				// update
 			} else {
 				setAnchored(true); // This won't affect other swatches
 			}
