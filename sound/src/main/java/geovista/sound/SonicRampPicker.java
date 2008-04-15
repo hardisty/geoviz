@@ -53,7 +53,7 @@ public class SonicRampPicker extends JPanel implements ComponentListener,
 	public static final int DEFAULT_NUM_SWATCHES = 8;
 
 	public static final Color DEFAULT_LOW_COLOR = new Color(255, 255, 255);// light
-																			// grey
+	// grey
 	public static final Color DEFAULT_HIGH_COLOR_DARK = new Color(0, 0, 0);
 	public static final int DEFAULT_LOW_KEY = 30;// light grey
 	public static final int DEFAULT_HIGH_KEY = 90;
@@ -67,17 +67,20 @@ public class SonicRampPicker extends JPanel implements ComponentListener,
 	protected final static Logger logger = Logger
 			.getLogger(SonicRampPicker.class.getName());
 	private Instrument instruments[];
+	static Soundbank sb;
 
 	public SonicRampPicker() {
 		init();
 	}
 
 	private void init() {
+		openSoundbank();
 		insturmentCombo = new JComboBox();
 		insturmentCombo.addActionListener(this);
 		insturmentCombo.setPreferredSize(new Dimension(80, 20));
 		// this.setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
 		ramp = new SonicRamp();
 
 		nSwatches = SonicRampPicker.DEFAULT_NUM_SWATCHES; // default
@@ -90,11 +93,12 @@ public class SonicRampPicker extends JPanel implements ComponentListener,
 		ramp.rampColors(colors, anchored);
 
 		setPreferredSize(new Dimension(365, 20));// these match 0.5 of the
-													// ClassifierPicker
+		// ClassifierPicker
 		// this.setMinimumSize(new Dimension(200,20));
 		// this.setMaximumSize(new Dimension(1000,60));
 		addComponentListener(this);
 		initSound();
+
 	}
 
 	private void initSound() {
@@ -116,17 +120,6 @@ public class SonicRampPicker extends JPanel implements ComponentListener,
 		}
 
 		// Soundbank sb = synthesizer.getDefaultSoundbank();
-		Class clazz = this.getClass();
-		Soundbank sb = null;
-		try {
-			sb = MidiSystem.getSoundbank(clazz
-					.getResourceAsStream("resources/soundbank.gm"));
-		} catch (InvalidMidiDataException e) {
-			logger.throwing(clazz.getName(), "initSound", e);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		if (sb != null) {
 			instruments = sb.getInstruments();
@@ -137,6 +130,20 @@ public class SonicRampPicker extends JPanel implements ComponentListener,
 		}
 
 		// this.setInstrument(27);
+	}
+
+	static void openSoundbank() {
+		Class clazz = SonicRampPicker.class;
+
+		try {
+			sb = MidiSystem.getSoundbank(clazz
+					.getResourceAsStream("resources/soundbank.gm"));
+		} catch (InvalidMidiDataException e) {
+			logger.throwing(clazz.getName(), "initSound", e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {

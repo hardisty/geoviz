@@ -224,7 +224,10 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 
 	// start accessors
 	public void setDataSet(DataSetForApps dataSet) {
+		Color[] colors = vc.getColors();
+		spat.setColors(colors);
 
+		spat.setColorSymbolizer(vc.getColorSymbolClassification());
 		setVariableNames(dataSet.getAttributeNamesNumeric());
 		spat.setDataSet(dataSet);
 		if (dataSet.getNumberNumericAttributes() > 2) {
@@ -344,7 +347,8 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
-		setData(e.getDataSet());
+		vc.dataSetChanged(e);
+		setDataSet(e.getDataSetForApps());
 	}
 
 	public void conditioningChanged(ConditioningEvent e) {

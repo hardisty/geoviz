@@ -346,7 +346,7 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	}
 
 	private void colorCurrIndication() {
-		if (indication >= 0) {
+		if (indication >= 0 && pixelColors != null) {
 			pixelColors[indication] = colorIndication.getRGB();
 		}
 	}
@@ -946,7 +946,7 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	}
 
 	public void setDataSet(DataSetForApps dataIn) {
-		dataSet = new DataSetForApps();
+		dataSet = dataIn;
 		variableNames = dataSet.getAttributeNamesNumeric();
 		data = dataSet.getDataSetNumericAndSpatial();
 
@@ -965,9 +965,9 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 		}
 		conditioning = new int[dataSet.getNumObservations()];
 		colorPixels();
-		originalSpatialData = dataSet.getShapeData();
 
 		if (useDrawingShapes) {
+			originalSpatialData = dataSet.getShapeData();
 			makeGeographicShapes(originalSpatialData);
 		}
 	}
@@ -1169,6 +1169,9 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	}
 
 	public void setSelectedObservationsInt(int[] selectedObservations) {
+		if (data == null) {
+			return;
+		}
 		// copy selected obs
 		selectedObservationsOld = new int[this.selectedObservations.length];
 
