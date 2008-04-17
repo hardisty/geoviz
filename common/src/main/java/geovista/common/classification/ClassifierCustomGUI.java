@@ -16,10 +16,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -44,7 +47,8 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 	static int DEFAULT_N_CLASSES = 3;
 	static int DEFUALT_LABEL_WIDTH = 4;
 	JComboBox classBox;
-	ArrayList<NumberTextField> textFields;
+	JCheckBox inverseBox;
+	ArrayList<NumberTextField> classBoundaryFields;
 	ArrayList<NumberTextField> classCountFields;
 
 	boolean debugGUI = false;
@@ -73,12 +77,12 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 
 		createClassLabels(defaultNClasses);
 
-		textFields = new ArrayList<NumberTextField>();
+		classBoundaryFields = new ArrayList<NumberTextField>();
 		for (int i = 0; i < defaultNClasses + 1; i++) {
 			double d = 0.01 * i;
 			NumberTextField textField = new NumberTextField(String.valueOf(d));
 			textField.index = i;
-			textFields.add(textField);
+			classBoundaryFields.add(textField);
 		}
 		textFieldPanel = new JPanel();
 		textFieldPanel.setOpaque(false);
@@ -109,15 +113,22 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 		String[] classArray = { "2", "3", "4", "5", "6", "7", "8" };
 
 		classBox = new JComboBox(classArray);
+
 		classBox.addActionListener(this);
 		classBox.setSelectedIndex(1);
 		JPanel nClassPanel = new JPanel();
+		nClassPanel.setLayout(new BorderLayout());
 		nClassPanel.setOpaque(false);
-		nClassPanel.add(new JLabel("N Classes:"));
+		nClassPanel.add(new JLabel("N Classes:"), BorderLayout.NORTH);
 		nClassPanel.add(classBox);
+		inverseBox = new JCheckBox("Invert?");
+		inverseBox.setSelected(false);
+		inverseBox.addActionListener(this);
+		nClassPanel.add(inverseBox, BorderLayout.SOUTH);
+
 		this.add(nClassPanel, BorderLayout.EAST);
 		setPreferredSize(new Dimension(500, 100));
-
+		mSlider.addChangeListener(this);
 	}
 
 	private void createClassLabels(int nClasses) {
@@ -138,7 +149,7 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 		mSlider.removeChangeListener(this);
 		mSlider.setNumberOfThumbs(nClasses - 1);
 		textFieldPanel.removeAll();
-		textFields = new ArrayList<NumberTextField>();
+		classBoundaryFields = new ArrayList<NumberTextField>();
 		for (int i = 0; i < nClasses + 1; i++) {
 			double d = 0.01 * i;
 			NumberTextField textField = new NumberTextField(String.valueOf(d));
@@ -146,11 +157,12 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 			textField.setColumns(DEFUALT_LABEL_WIDTH);
 			textField.addActionListener(this);
 			textField.index = i;
-			textFields.add(textField);
+			classBoundaryFields.add(textField);
 		}
-		textFields.get(0).setEditable(false);
-		textFields.get(textFields.size() - 1).setEditable(false);
-		for (NumberTextField lab : textFields) {
+		classBoundaryFields.get(0).setEditable(false);
+		classBoundaryFields.get(classBoundaryFields.size() - 1).setEditable(
+				false);
+		for (NumberTextField lab : classBoundaryFields) {
 			textFieldPanel.add(lab);
 		}
 		revalidate();
@@ -173,16 +185,48 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 	private void doCustomClassification(double[] data) {
 		double min = DescriptiveStatistics.min(data);
 		double max = DescriptiveStatistics.max(data);
-		logger.info("min = " + min);
-		logger.info("max = " + max);
+		logger.finest("min = " + min);
+		logger.finest("max = " + max);
 		int intMin = (int) (min * 100d);
 		int intMax = (int) (max * 100d);
 		mSlider.setMinimum(intMin);
 		mSlider.setMaximum(intMax);
 
-		textFields.get(0).setValue(min);
-		textFields.get(textFields.size() - 1).setValue(max);
+		mSlider.setInverted(customClasser.inverse);
+
 		// da breaks
+
+		int nClasses = classify(data, min, max);
+
+		int[] classes = customClasser.classify(data,
+				customClasser.breaks.length - 1);
+		if (classCountFields.size() != nClasses) {
+			createClassLabels(nClasses);
+		}
+
+		fillClassCounts(classes);
+		mSlider.setNumberOfThumbs(nClasses - 1);
+
+		setClassBoundaryFields();
+
+		for (int i = 1; i < classBoundaryFields.size() - 1; i++) {
+			double val = customClasser.breaks[i];
+			int intVal = (int) (val * 100d);
+			mSlider.setValueAt(i - 1, intVal);
+		}
+
+	}
+
+	private void setClassBoundaryFields() {
+		for (int i = 0; i < classBoundaryFields.size(); i++) {
+			NumberTextField field = classBoundaryFields.get(i);
+			logger.finest("break " + i + ": " + customClasser.breaks[i]);
+			field.setValue(customClasser.breaks[i]);
+
+		}
+	}
+
+	private int classify(double[] data, double min, double max) {
 		String nString = (String) classBox.getSelectedItem();
 		int nClasses = Integer.valueOf(nString);
 		int nBreaks = nClasses + 1;// fence post
@@ -198,7 +242,6 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 			for (int i = 1; i < breaks.length - 1; i++) {
 				newBreaks[i] = breaks[i];
 			}
-			double breaksMin = breaks[breaks.length - 2];
 			for (int i = breaks.length - 1; i < newBreaks.length; i++) {
 				// XXX we would rather have nicely spaced breaks here
 				newBreaks[i] = breaks[breaks.length - 2];
@@ -218,26 +261,7 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 			newBreaks[nBreaks - 1] = max;
 			customClasser.breaks = newBreaks;
 		}
-
-		int[] classes = customClasser.classify(data,
-				customClasser.breaks.length - 1);
-		if (classCountFields.size() != nClasses) {
-			createClassLabels(nClasses);
-		}
-		fillClassCounts(classes);
-		mSlider.setNumberOfThumbs(nClasses - 1);
-		for (int i = 0; i < textFields.size(); i++) {
-			NumberTextField field = textFields.get(i);
-			field.setValue(customClasser.breaks[i]);
-
-		}
-
-		for (int i = 1; i < textFields.size() - 1; i++) {
-			double val = customClasser.breaks[i];
-			int intVal = (int) (val * 100d);
-			mSlider.setValueAt(i - 1, intVal);
-		}
-
+		return nClasses;
 	}
 
 	/* returns true if anything changed */
@@ -285,6 +309,20 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 			mSlider.setValueAt(index + 1, (int) val);
 
 		}
+		if (e.getSource().equals(inverseBox)) {
+			logger.finest("inverting classer");
+			customClasser.inverse = inverseBox.isSelected();
+			double[] boundaries = customClasser.breaks;
+			double[] newBoundaries = new double[boundaries.length];
+
+			for (int i = 0; i < boundaries.length; i++) {
+				newBoundaries[i] = boundaries[boundaries.length - i - 1];
+			}
+			customClasser.breaks = newBoundaries;
+
+			doCustomClassification(savedData);
+
+		}
 		mSlider.addChangeListener(this);
 		this.repaint();
 		fireActionPerformed(ClassifierPicker.COMMAND_SELECTED_CLASSIFIER_CHANGED);
@@ -303,12 +341,12 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 
 		double val = mSlider.getValue();
 		val = val / 100d;
-		NumberTextField textField = textFields.get(whichThumb + 1);
+		NumberTextField textField = classBoundaryFields.get(whichThumb + 1);
 		textField.removeActionListener(this);
 		textField.setValue(val);
 		textField.addActionListener(this);
 
-		// textFields.get(whichThumb + 1).resi
+		// classBoundaryFields.get(whichThumb + 1).resi
 		if (savedData != null && customClasser.breaks != null) {
 			customClasser.breaks[whichThumb + 1] = val;
 
@@ -358,8 +396,8 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 		// int nClasses = nBreaks - 1;
 		// int range = mSlider.getMaximum() - mSlider.getMinimum();
 		//
-		// for (int i = 0; i < textFields.size(); i++) {
-		// NumberTextField field = textFields.get(i);
+		// for (int i = 0; i < classBoundaryFields.size(); i++) {
+		// NumberTextField field = classBoundaryFields.get(i);
 		// Rectangle rect = field.getBounds();
 		// int x1 = rect.x + (rect.width / 2);
 		// int y1 = rect.y + rect.height;
@@ -424,24 +462,6 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 		}
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ClassifierCustomGUI picker = new ClassifierCustomGUI();
-		frame.add(picker);
-
-		ClassifierEqualIntervals classer = new ClassifierEqualIntervals();
-		double[] data = { 1, 2, Double.NaN, 4, 3, 2, 1, 2, 3, 4, 6 };
-		int[] classes = classer.classify(data, 4);
-		picker.setData(data);
-		// picker.setClassValues(breaks);
-
-		ClassifierCustom cust = new ClassifierCustom();
-		cust.classify(data, 3);
-		frame.pack();
-		frame.setVisible(true);
-	}
-
 	// XXX need to flesh this out.
 	public ClassifierCustom showClassifierDialog(double[] data,
 			Classifier currClassifier) {
@@ -498,5 +518,32 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 			}
 		} // next i
 
+	}
+
+	public static void main(String[] args) {
+		Logger logger = Logger.getLogger("geovista");
+		logger.setLevel(Level.FINEST);
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setLevel(Level.FINEST);
+		logger.addHandler(handler);
+		logger.finest("java.version = " + System.getProperty("java.version")
+				+ ", Runtime.avaialableProcessors = "
+				+ Runtime.getRuntime().availableProcessors());
+
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ClassifierCustomGUI picker = new ClassifierCustomGUI();
+		frame.add(picker);
+
+		ClassifierEqualIntervals classer = new ClassifierEqualIntervals();
+		double[] data = { 1, 2, Double.NaN, 4, 3, 2, 1, 2, 3, 4, 6 };
+		int[] classes = classer.classify(data, 4);
+		picker.setData(data);
+		// picker.setClassValues(breaks);
+
+		ClassifierCustom cust = new ClassifierCustom();
+		cust.classify(data, 3);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }

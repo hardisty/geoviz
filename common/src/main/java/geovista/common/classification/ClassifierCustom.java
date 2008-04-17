@@ -13,6 +13,7 @@ public class ClassifierCustom implements DescribedClassifier,
 	private static final String fullName = "Custom Classifier";
 	transient private int[] classification;
 	double[] breaks;
+	boolean inverse;
 
 	public ClassifierCustom() {
 
@@ -57,9 +58,11 @@ public class ClassifierCustom implements DescribedClassifier,
 		classification = new int[data.length];
 
 		for (int i = 0; i < data.length; i++) {
-
-			classification[i] = findBin(data[i]);
-
+			if (inverse) {
+				classification[i] = findBinInverse(data[i]);
+			} else {
+				classification[i] = findBin(data[i]);
+			}
 		}// next i
 
 		return classification;
@@ -79,6 +82,20 @@ public class ClassifierCustom implements DescribedClassifier,
 		return bin;
 	}
 
+	private int findBinInverse(double val) {
+		int bin = 0;
+		if (Double.isNaN(val)) {
+			return Classifier.NULL_CLASS;
+		}
+		for (int i = 0; i < breaks.length - 1; i++) {
+			if (val <= breaks[i] && val > breaks[i + 1]) {
+				return i;
+			}
+		}
+
+		return bin;
+	}
+
 	public static void main(String[] args) {
 		ClassifierCustom cust = new ClassifierCustom();
 		double[] data = { 1, 6, 3, 4, 3, 2, 1, 2, 3, 4, 6 };
@@ -91,6 +108,23 @@ public class ClassifierCustom implements DescribedClassifier,
 
 		int[] classes = cust.classify(data, 3);
 		for (int i : classes) {
+			System.out.println(i);
+		}
+		cust.inverse = true;
+		double[] newBoundaries = new double[boundaries.length];
+
+		for (int i = 0; i < boundaries.length; i++) {
+			newBoundaries[i] = boundaries[boundaries.length - i - 1];
+		}
+		cust.breaks = newBoundaries;
+
+		System.out.println("***************");
+		for (double d : boundaries) {
+			System.out.println(d);
+		}
+		System.out.println("***************");
+		int[] invclasses = cust.classify(data, 3);
+		for (int i : invclasses) {
 			System.out.println(i);
 		}
 
