@@ -55,230 +55,223 @@ import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.readers.util.MyFileFilter;
 
-
-//import org.davekeen.gis.shapefile.GeoESRIWriter;
-
-
+// import org.davekeen.gis.shapefile.GeoESRIWriter;
 
 /*
  * This class holds refactored GUI methods
  */
 
-public class GuiUtils
-    extends JPanel {
-    final static Logger logger = Logger.getLogger(GuiUtils.class.getName());
-  public static String chooseOutputFilename(Component comp) {
-    Preferences gvPrefs = Preferences.userNodeForPackage(comp.getClass());
+public class GuiUtils extends JPanel {
+	final static Logger logger = Logger.getLogger(GuiUtils.class.getName());
 
-    try {
-      LookAndFeel laf = UIManager.getLookAndFeel();
-      //this is systemUI (MS32 or whatever)
-      UIManager.setLookAndFeel(UIManager.
-                               getSystemLookAndFeelClassName());
+	public static String chooseOutputFilename(Component comp) {
+		Preferences gvPrefs = Preferences.userNodeForPackage(comp.getClass());
 
-      String defaultDir = gvPrefs.get("LastGoodOutputDirectory", "");
+		try {
+			LookAndFeel laf = UIManager.getLookAndFeel();
+			// this is systemUI (MS32 or whatever)
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-      JFileChooser fileChooser = new JFileChooser(defaultDir);
+			String defaultDir = gvPrefs.get("LastGoodOutputDirectory", "");
 
-      MyFileFilter fileFilter = new MyFileFilter(new String[] {"shp"});
-      fileChooser.setFileFilter(fileFilter);
-      int returnVal = fileChooser.showOpenDialog(comp);
+			JFileChooser fileChooser = new JFileChooser(defaultDir);
 
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = null;
-        file = fileChooser.getSelectedFile();
-        String fileName = file.getAbsolutePath();
+			MyFileFilter fileFilter = new MyFileFilter(new String[] { "shp" });
+			fileChooser.setFileFilter(fileFilter);
+			int returnVal = fileChooser.showOpenDialog(comp);
 
-        gvPrefs.put("LastGoodOutputDirectory", fileName);
-        UIManager.setLookAndFeel(laf); //UI back to whatever we were
-        return fileName;
-      }
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = null;
+				file = fileChooser.getSelectedFile();
+				String fileName = file.getAbsolutePath();
 
-      UIManager.setLookAndFeel(laf); //UI back to whatever we were
+				gvPrefs.put("LastGoodOutputDirectory", fileName);
+				UIManager.setLookAndFeel(laf); // UI back to whatever we were
+				return fileName;
+			}
 
-    }
-    catch (Exception ex) {
-      //something bad happened, reset
-      gvPrefs.put("LastGoodOutputDirectory", "");
-      ex.printStackTrace();
-    }
-    return null;
-  }
+			UIManager.setLookAndFeel(laf); // UI back to whatever we were
 
-  public static String chooseInputFilename(Component comp) {
-    Preferences gvPrefs = Preferences.userNodeForPackage(comp.getClass());
+		} catch (Exception ex) {
+			// something bad happened, reset
+			gvPrefs.put("LastGoodOutputDirectory", "");
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
-    try {
-      LookAndFeel laf = UIManager.getLookAndFeel();
-      //this is systemUI (MS32 or whatever)
-      UIManager.setLookAndFeel(UIManager.
-                               getSystemLookAndFeelClassName());
+	public static String chooseInputFilename(Component comp) {
+		Preferences gvPrefs = Preferences.userNodeForPackage(comp.getClass());
 
-      String defaultDir = gvPrefs.get("LastGoodInputDirectory", "");
+		try {
+			LookAndFeel laf = UIManager.getLookAndFeel();
+			// this is systemUI (MS32 or whatever)
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-      JFileChooser fileChooser = new JFileChooser(defaultDir);
+			String defaultDir = gvPrefs.get("LastGoodInputDirectory", "");
 
-      MyFileFilter fileFilter = new MyFileFilter(new String[] {"shp"});
-      fileChooser.setFileFilter(fileFilter);
-      int returnVal = fileChooser.showOpenDialog(comp);
+			JFileChooser fileChooser = new JFileChooser(defaultDir);
 
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = null;
-        file = fileChooser.getSelectedFile();
-        String fileName = file.getAbsolutePath();
+			MyFileFilter fileFilter = new MyFileFilter(new String[] { "shp" });
+			fileChooser.setFileFilter(fileFilter);
+			int returnVal = fileChooser.showOpenDialog(comp);
 
-        gvPrefs.put("LastGoodInputDirectory", fileName);
-        UIManager.setLookAndFeel(laf); //UI back to whatever we were
-        return fileName;
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = null;
+				file = fileChooser.getSelectedFile();
+				String fileName = file.getAbsolutePath();
 
-      }
+				gvPrefs.put("LastGoodInputDirectory", fileName);
+				UIManager.setLookAndFeel(laf); // UI back to whatever we were
+				return fileName;
 
-      UIManager.setLookAndFeel(laf); //UI back to whatever we were
+			}
 
-    }
-    catch (Exception ex) {
-      ex.printStackTrace();
-    }
-    return null;
-  }
+			UIManager.setLookAndFeel(laf); // UI back to whatever we were
 
-  /*
-   * Connects the two maps for indication and selection.
-   */
-  public static void connectMaps(GeoMapUni mapInput, GeoMapUni mapOutput) {
-    mapInput.addIndicationListener(mapOutput);
-    mapInput.addSelectionListener(mapOutput);
-    mapOutput.addIndicationListener(mapInput);
-    mapOutput.addSelectionListener(mapInput);
-    //mapInput.getVisClassOne().addActionListener(mapOutput.getVisClassOne());
-    //mapOutput.getVisClassOne().addActionListener(mapInput.getVisClassOne());
-  }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
-  public static JPanel createInputPanel(GeoMapUni mapInput,
-                                        JLabel inputFileNameLabel,
-                                        JButton chooseInputFileButton,
-                                        JTextField inputFileTextField) {
-    JPanel inputPanel = new JPanel();
-    JPanel pickerPanel = new JPanel();
-    //mapInput.setBackground(Color.white);
+	/*
+	 * Connects the two maps for indication and selection.
+	 */
+	public static void connectMaps(GeoMapUni mapInput, GeoMapUni mapOutput) {
+		mapInput.addIndicationListener(mapOutput);
+		mapInput.addSelectionListener(mapOutput);
+		mapOutput.addIndicationListener(mapInput);
+		mapOutput.addSelectionListener(mapInput);
+		// mapInput.getVisClassOne().addActionListener(mapOutput.getVisClassOne());
+		// mapOutput.getVisClassOne().addActionListener(mapInput.getVisClassOne());
+	}
 
-    //mapInput.setPreferredSize(mapSize);
-    inputFileNameLabel = new JLabel();
-    inputFileNameLabel.setText("Input File Name:");
-    chooseInputFileButton.setText("Choose");
-    Dimension mapSize = new Dimension(200, 150);
-    mapInput.setMinimumSize(mapSize);
-    Border border = BorderFactory.createLineBorder(Color.black);
-    inputPanel.setBorder(border);
-    pickerPanel.add(chooseInputFileButton);
-    pickerPanel.add(inputFileNameLabel);
-    pickerPanel.add(inputFileTextField);
-    Dimension pickerPanelSize = new Dimension(200, 60);
-    pickerPanel.setPreferredSize(pickerPanelSize);
-    inputPanel.setLayout(new BorderLayout());
-    inputPanel.add(mapInput, BorderLayout.CENTER);
-    inputPanel.add(pickerPanel, BorderLayout.SOUTH);
-    return inputPanel;
+	public static JPanel createInputPanel(GeoMapUni mapInput,
+			JLabel inputFileNameLabel, JButton chooseInputFileButton,
+			JTextField inputFileTextField) {
+		JPanel inputPanel = new JPanel();
+		JPanel pickerPanel = new JPanel();
+		// mapInput.setBackground(Color.white);
 
-  }
+		// mapInput.setPreferredSize(mapSize);
+		inputFileNameLabel = new JLabel();
+		inputFileNameLabel.setText("Input File Name:");
+		chooseInputFileButton.setText("Choose");
+		Dimension mapSize = new Dimension(200, 150);
+		mapInput.setMinimumSize(mapSize);
+		Border border = BorderFactory.createLineBorder(Color.black);
+		inputPanel.setBorder(border);
+		pickerPanel.add(chooseInputFileButton);
+		pickerPanel.add(inputFileNameLabel);
+		pickerPanel.add(inputFileTextField);
+		Dimension pickerPanelSize = new Dimension(200, 60);
+		pickerPanel.setPreferredSize(pickerPanelSize);
+		inputPanel.setLayout(new BorderLayout());
+		inputPanel.add(mapInput, BorderLayout.CENTER);
+		inputPanel.add(pickerPanel, BorderLayout.SOUTH);
+		return inputPanel;
 
-  public static JPanel createOutputPanel(
-      JLabel outputFileNameLabel,
-      JButton chooseOutputFileButton,
-      JTextField outputFileTextField, String borderTitle) {
-    //JPanel outputPanel = new JPanel();
-    JPanel pickerPanel = new JPanel();
+	}
 
-    outputFileNameLabel = new JLabel();
-    chooseOutputFileButton.setText("Choose");
-    //chooseOutputFileButton.setPreferredSize(new Dimension(100,30));
+	public static JPanel createOutputPanel(JLabel outputFileNameLabel,
+			JButton chooseOutputFileButton, JTextField outputFileTextField,
+			String borderTitle) {
+		// JPanel outputPanel = new JPanel();
+		JPanel pickerPanel = new JPanel();
 
-    Border border = BorderFactory.createTitledBorder(borderTitle);
-    outputFileTextField.setText("A file name");
-    pickerPanel.setBorder(border);
-    pickerPanel.add(chooseOutputFileButton);
-    pickerPanel.add(outputFileNameLabel);
-    pickerPanel.add(outputFileTextField);
-    //Dimension pickerPanelSize = new Dimension(200, 60);
-    //pickerPanel.setPreferredSize(pickerPanelSize);
-    //outputPanel.setLayout(new BorderLayout());
+		outputFileNameLabel = new JLabel();
+		chooseOutputFileButton.setText("Choose");
+		// chooseOutputFileButton.setPreferredSize(new Dimension(100,30));
 
-    //outputPanel.add(pickerPanel, BorderLayout.SOUTH);
-    return pickerPanel;
+		Border border = BorderFactory.createTitledBorder(borderTitle);
+		outputFileTextField.setText("A file name");
+		pickerPanel.setBorder(border);
+		pickerPanel.add(chooseOutputFileButton);
+		pickerPanel.add(outputFileNameLabel);
+		pickerPanel.add(outputFileTextField);
+		// Dimension pickerPanelSize = new Dimension(200, 60);
+		// pickerPanel.setPreferredSize(pickerPanelSize);
+		// outputPanel.setLayout(new BorderLayout());
 
-  }
+		// outputPanel.add(pickerPanel, BorderLayout.SOUTH);
+		return pickerPanel;
 
-  /*
-   * Disconnects the two maps for indication and selection.
-   */
+	}
 
-  public static void disconnectMaps(GeoMapUni mapInput, GeoMapUni mapOutput) {
-    mapInput.removeIndicationListener(mapOutput);
-    mapInput.removeSelectionListener(mapOutput);
-    mapOutput.removeIndicationListener(mapInput);
-    mapOutput.removeSelectionListener(mapInput);
-  }
+	/*
+	 * Disconnects the two maps for indication and selection.
+	 */
 
-  /*
-   * If we don't have a valid file name, we create one.
-   */
-  public static String writeDefaultShapefile() {
-    GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
-    String fileName = System.getProperty("user.home");
-    String inputFileName = fileName + "/states48.shp";
-    File newDir = new File(fileName);
-    newDir.mkdir();
-    MapGenFile.writeShapefile(stateData.getDataForApps().getGeneralPathData(),
-                              inputFileName);
-    Class cl = stateData.getClass();
+	public static void disconnectMaps(GeoMapUni mapInput, GeoMapUni mapOutput) {
+		mapInput.removeIndicationListener(mapOutput);
+		mapInput.removeSelectionListener(mapOutput);
+		mapOutput.removeIndicationListener(mapInput);
+		mapOutput.removeSelectionListener(mapInput);
+	}
 
-    InputStream in = cl.getResourceAsStream("resources/states48.dbf");
-    
-    
+	/*
+	 * If we don't have a valid file name, we create one.
+	 */
+	public static String writeDefaultShapefile() {
+		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
+		String fileName = System.getProperty("user.home");
+		String inputFileName = fileName + "/states48.shp";
+		File newDir = new File(fileName);
+		newDir.mkdir();
+		MapGenFile.writeShapefile(stateData.getDataForApps()
+				.getGeneralPathData(), inputFileName);
+		Class cl = stateData.getClass();
 
-    try {
+		InputStream in = cl.getResourceAsStream("resources/states48.dbf");
 
-		InputStream dbfStream = GeoDataGeneralizedStates.class.getResourceAsStream("resources/states48.dbf");
-		ReadableByteChannel dChan = Channels.newChannel(dbfStream);
-	    DbaseFileReader dBaseReader = new DbaseFileReader(dChan, true);
-	    DbaseFileHeader dBaseHeader = dBaseReader.getHeader();
-    	
-     WritableByteChannel out = new FileOutputStream(fileName + "/states48.dbf").getChannel();
-     
-     DbaseFileWriter dBase = new DbaseFileWriter(dBaseHeader,out);
-     //XXX we need to write the contents of the file here... 
+		try {
 
-  	if (logger.isLoggable(Level.INFO)){
-  		
-  		logger.info("dBase length = " + dBaseHeader.getNumRecords());
-  	}
+			InputStream dbfStream = GeoDataGeneralizedStates.class
+					.getResourceAsStream("resources/states48.dbf");
+			ReadableByteChannel dChan = Channels.newChannel(dbfStream);
+			DbaseFileReader dBaseReader = new DbaseFileReader(dChan, true);
+			DbaseFileHeader dBaseHeader = dBaseReader.getHeader();
 
-    }
-    catch (IOException ex) {
-      ex.printStackTrace();
-    }
+			WritableByteChannel out = new FileOutputStream(fileName
+					+ "/states48.dbf").getChannel();
 
-    return inputFileName;
-  }
+			DbaseFileWriter dBase = new DbaseFileWriter(dBaseHeader, out);
 
- class VCSelectionExchanger
-      implements ActionListener {
-    VisualClassifier vcOne;
-    VisualClassifier vcTwo;
-    public VCSelectionExchanger(VisualClassifier vcOne, VisualClassifier vcTwo){
-      this.vcOne = vcOne;
-      this.vcTwo = vcTwo;
-    }
-    public void actionPerformed(ActionEvent e) {
-      if ( (e.getSource() == vcOne) && e.getActionCommand().equals("SelectedVariable")) {
-        int index = vcOne.getCurrVariableIndex();
-        vcTwo.setCurrVariableIndex(index);
-      } else if ( (e.getSource() == vcTwo) && e.getActionCommand().equals("SelectedVariable")) {
-        int index = vcTwo.getCurrVariableIndex();
-        vcOne.setCurrVariableIndex(index);
-      }
+			if (logger.isLoggable(Level.INFO)) {
 
-    }
-  }
+				logger.info("dBase length = " + dBaseHeader.getNumRecords());
+			}
 
-  }
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return inputFileName;
+	}
+
+	class VCSelectionExchanger implements ActionListener {
+		VisualClassifier vcOne;
+		VisualClassifier vcTwo;
+
+		public VCSelectionExchanger(VisualClassifier vcOne,
+				VisualClassifier vcTwo) {
+			this.vcOne = vcOne;
+			this.vcTwo = vcTwo;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			if ((e.getSource() == vcOne)
+					&& e.getActionCommand().equals("SelectedVariable")) {
+				int index = vcOne.getCurrVariableIndex();
+				vcTwo.setCurrVariableIndex(index);
+			} else if ((e.getSource() == vcTwo)
+					&& e.getActionCommand().equals("SelectedVariable")) {
+				int index = vcTwo.getCurrVariableIndex();
+				vcOne.setCurrVariableIndex(index);
+			}
+
+		}
+	}
+
+}
