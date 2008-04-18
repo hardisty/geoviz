@@ -16,10 +16,12 @@ import geovista.common.ui.NotePad;
 import geovista.common.ui.VariablePicker;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
+import geovista.geoviz.map.GraduatedSymbolsMap;
 import geovista.geoviz.parvis.ParallelPlot;
 import geovista.geoviz.radviz.RadViz;
 import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
+import geovista.geoviz.spacefill.SpaceFill;
 import geovista.geoviz.spreadsheet.TableViewer;
 import geovista.geoviz.spreadsheet.VariableTransformer;
 import geovista.geoviz.star.StarPlot;
@@ -66,6 +68,9 @@ public class Marshaller {
 		streamer.alias("GeoMapUni", GeoMapUni.class);
 		streamer.registerConverter(new GeoMapUniConverter());
 
+		streamer.alias("SpaceFill", SpaceFill.class);
+		streamer.registerConverter(new SpaceFillConverter());
+
 		streamer.alias("SonicClassifier", SonicClassifier.class);
 		streamer.registerConverter(new SonicClassifierConverter());
 
@@ -89,6 +94,9 @@ public class Marshaller {
 
 		streamer.alias("StarPlotMap", StarPlotMap.class);
 		streamer.registerConverter(new StarPlotMapConverter());
+
+		streamer.alias("GraduatedSymbolsMap", GraduatedSymbolsMap.class);
+		streamer.registerConverter(new GraduatedSymbolsMapConverter());
 
 		streamer.alias("RadViz", RadViz.class);
 		streamer.registerConverter(new RadVizConverter());

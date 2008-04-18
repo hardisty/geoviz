@@ -43,7 +43,9 @@ public abstract class VizBeanConverter implements Converter {
 		if (value instanceof JComponent) {
 			JComponent jcomp = (JComponent) value;
 			writer.startNode(VizBeanConverter.BACKGROUND_COLOR);
-			context.convertAnother(jcomp.getBackground());
+			Color background = jcomp.getBackground();
+			Color newColor = new Color(background.getRGB());
+			context.convertAnother(newColor);
 			writer.endNode();
 		}
 		if (value instanceof SpatialExtentListener) {
