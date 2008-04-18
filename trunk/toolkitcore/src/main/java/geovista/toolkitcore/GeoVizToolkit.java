@@ -9,6 +9,7 @@ package geovista.toolkitcore;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Image;
@@ -58,6 +59,8 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 import geovista.common.ui.NotePad;
 import geovista.common.ui.VariablePicker;
 import geovista.coordination.CoordinationManager;
@@ -319,37 +322,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
-	public void setVizState(VizState newState) {
-		removeAllBeans();
-		coord.removeBean(vizState);
-
-		vizState = newState;
-		// XXX may be a problem when connections can be cusomized by the user
-
-		vizState.listenerList = new EventListenerList();
-		coord.addBean(vizState);
-
-		useProj = vizState.useProj;
-		loadData(vizState.dataSource);
-
-		addToolkitBeanSet(vizState.getBeanSet());
-		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
-		for (ToolkitBean tBean : beans) {
-			desktop.setComponentZOrder(tBean.getInternalFrame(), tBean.zOrder);
-		}
-
-		// vizState.fireSubspaceChanged();
-		vizState.fireSpatialExtentChanged();
-		vizState.fireSelectionChanged();
-
-		String uniqueName = vizState.getSelectedBean();
-		ToolkitBean tBean = tBeanSet.getToolkitBean(uniqueName);
-		if (tBean != null) {
-			desktop.setSelectedFrame(tBean.getInternalFrame());
-
-		}
-	}
-
 	void saveProgramState() {
 		updateVizState();
 		ToolkitIO.saveVizStateToFile(vizState);
@@ -483,6 +455,36 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		return newToolkitBean;
 	}
 
+	public void setVizState(VizState newState) {
+
+		removeAllBeans();
+		coord.removeBean(vizState);
+
+		vizState = newState;
+		// XXX may be a problem when connections can be cusomized by the user
+
+		vizState.listenerList = new EventListenerList();
+		coord.addBean(vizState);
+
+		useProj = vizState.useProj;
+		loadData(vizState.dataSource);
+
+		addToolkitBeanSet(vizState.getBeanSet());
+		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
+		for (ToolkitBean tBean : beans) {
+			desktop.setComponentZOrder(tBean.getInternalFrame(), tBean.zOrder);
+		}
+
+		String uniqueName = vizState.getSelectedBean();
+		ToolkitBean tBean = tBeanSet.getToolkitBean(uniqueName);
+		if (tBean != null) {
+			desktop.setSelectedFrame(tBean.getInternalFrame());
+
+		}
+		Object newBean = tBean.getOriginalBean();
+		fireNewBeanMethods(newBean);
+	}
+
 	/*
 	 * adds bean to coordinator. Adds bean to the main gui area, also to the
 	 * remove bean menu
@@ -497,22 +499,36 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		item.addActionListener(this);
 
 		menuRemoveTool.add(item, 0); // add at the top
-		Object newBean = newToolkitBean.getOriginalBean();
+
+	}
+
+	private void fireNewBeanMethods(Object newBean) {
 		if (newBean instanceof DataSetListener) {
 			DataSetListener dataListener = (DataSetListener) newBean;
 			dataListener.dataSetChanged(new DataSetEvent(dataSet, this));
 
 		}
+		if (newBean instanceof SubspaceListener) {
+			SubspaceListener selListener = (SubspaceListener) newBean;
+			SubspaceEvent e = vizState.getSubspaceEvent();
+			if (e.getSubspace() != null) {
+				selListener.subspaceChanged(e);
+			}
+		}
+
 		if (newBean instanceof SelectionListener) {
 			SelectionListener selListener = (SelectionListener) newBean;
 			SelectionEvent e = vizState.getSelectionEvent();
-			selListener.selectionChanged(e);
+			if (e.getSelection() != null) {
+				selListener.selectionChanged(e);
+			}
 		}
 		if (newBean instanceof IndicationListener) {
 			IndicationListener indListener = (IndicationListener) newBean;
 			IndicationEvent e = vizState.getIndicationEvent();
 			indListener.indicationChanged(e);
 		}
+
 	}
 
 	private void addToolkitBeanSet(ToolkitBeanSet beanSet) {
@@ -525,7 +541,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			Object obj = tBean.getOriginalBean();
 			coord.addBean(obj);
 			addBeanToGui(tBean);
-
+			Object newBean = tBean.getOriginalBean();
+			fireNewBeanMethods(newBean);
 		}
 
 	}
@@ -598,18 +615,28 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		else if (e.getSource() == menuItemOpenLayout) {
 
 			String xml = ToolkitIO.openLayout(this);
+
 			if (xml == null) {
 				return;
 			}
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			logger.info("creating mashaller");
 			Marshaller marsh = Marshaller.INSTANCE;
-
+			logger.info("about to instantiate VizState");
 			VizState state = (VizState) marsh.fromXML(xml);
+			logger.info("instantiated VizState");
+
+			logger.info("about to set VizState");
 			setVizState(state);
+			logger.info("set VizState");
+			setCursor(Cursor.getDefaultCursor());
 
 		} else if (e.getSource() == menuItemSaveLayout) {
 			Marshaller marsh = Marshaller.INSTANCE;
 			String xml = marsh.toXML(getVizState());
-			logger.info(xml);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest(xml);
+			}
 			ToolkitIO.writeLayout(getFileName(), xml, this);
 			// ToolkitIO.writeLayout(getFileName(), tBeanSet, this);
 
@@ -620,6 +647,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			ToolkitBean tBean = null;
 			tBean = instantiateBean(className);
 			addBeanToGui(tBean);
+			Object newBean = tBean.getOriginalBean();
+			fireNewBeanMethods(newBean);
 			tBeanSet.add(tBean);
 
 		}
@@ -671,6 +700,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void loadData(String name) {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		this.repaint();
 		vizState.setDataSource(name);
 		filePath = name;
 		logger
@@ -685,6 +716,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		logger
 				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
+		setCursor(Cursor.getDefaultCursor());
 
 	}
 
@@ -999,11 +1031,70 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuRemoveTool.add(menuItemRemoveAllTools);
 	}
 
+	public ToolkitBeanSet getTBeanSet() {
+		return tBeanSet;
+	}
+
+	public void setTBeanSet(ToolkitBeanSet beanSet) {
+		logger.fine("settbeanset setting tbeanset, size = "
+				+ beanSet.getBeanSet().size());
+		tBeanSet = beanSet;
+	}
+
+	public void internalFrameActivated(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameClosed(InternalFrameEvent arg0) {
+		// no-op
+	}
+
+	public void internalFrameClosing(InternalFrameEvent arg0) {
+		JInternalFrame iFrame = arg0.getInternalFrame();
+		ToolkitBean tBean = tBeanSet.getToolkitBean(iFrame);
+
+		deleteBean(tBean);
+
+	}
+
+	public void internalFrameDeactivated(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameDeiconified(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameIconified(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public void internalFrameOpened(InternalFrameEvent arg0) {
+		// no-op
+
+	}
+
+	public boolean isUseProj() {
+		return useProj;
+	}
+
+	public void setUseProj(boolean useProj) {
+		this.useProj = useProj;
+	}
+
+	public void annotationChanged(AnnotationEvent e) {
+
+	}
+
 	public static void main(String[] args) {
 
-		Logger logger = Logger.getLogger("geovista.collaboration");
+		Logger logger = Logger.getLogger("geovista");
 		// Logger mapLogger = Logger.getLogger("geovista.geoviz.map.MapCanvas");
-		logger.setLevel(Level.FINEST);
+		// logger.setLevel(Level.FINEST);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();
 		// mng.addLogger(logger);
@@ -1011,7 +1102,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setLevel(Level.FINEST);
-		logger.addHandler(handler);
+		// logger.addHandler(handler);
 
 		try {
 			// Create a file handler that write log record to a file called
@@ -1106,64 +1197,4 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		 * block e.printStackTrace(); } }
 		 */
 	}
-
-	public ToolkitBeanSet getTBeanSet() {
-		return tBeanSet;
-	}
-
-	public void setTBeanSet(ToolkitBeanSet beanSet) {
-		logger.fine("settbeanset setting tbeanset, size = "
-				+ beanSet.getBeanSet().size());
-		tBeanSet = beanSet;
-	}
-
-	public void internalFrameActivated(InternalFrameEvent arg0) {
-		// no-op
-
-	}
-
-	public void internalFrameClosed(InternalFrameEvent arg0) {
-		// no-op
-	}
-
-	public void internalFrameClosing(InternalFrameEvent arg0) {
-		JInternalFrame iFrame = arg0.getInternalFrame();
-		ToolkitBean tBean = tBeanSet.getToolkitBean(iFrame);
-
-		deleteBean(tBean);
-
-	}
-
-	public void internalFrameDeactivated(InternalFrameEvent arg0) {
-		// no-op
-
-	}
-
-	public void internalFrameDeiconified(InternalFrameEvent arg0) {
-		// no-op
-
-	}
-
-	public void internalFrameIconified(InternalFrameEvent arg0) {
-		// no-op
-
-	}
-
-	public void internalFrameOpened(InternalFrameEvent arg0) {
-		// no-op
-
-	}
-
-	public boolean isUseProj() {
-		return useProj;
-	}
-
-	public void setUseProj(boolean useProj) {
-		this.useProj = useProj;
-	}
-
-	public void annotationChanged(AnnotationEvent e) {
-
-	}
-
 }

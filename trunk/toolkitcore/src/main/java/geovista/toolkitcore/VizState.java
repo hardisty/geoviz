@@ -352,4 +352,8 @@ public class VizState implements SelectionListener, IndicationListener,
 		this.selectedBean = selectedBean;
 	}
 
+	public SubspaceEvent getSubspaceEvent() {
+		return new SubspaceEvent(this, subspace);
+	}
+
 }

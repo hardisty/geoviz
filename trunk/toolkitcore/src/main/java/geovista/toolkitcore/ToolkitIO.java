@@ -129,6 +129,7 @@ public class ToolkitIO {
 	}
 
 	public static String getFileName(Component parent, int action, int fileType) {
+		logger.info("in get file name method");
 		Preferences gvPrefs = Preferences
 				.userNodeForPackage(ToolkitBeanSet.class);
 		String fullFileName = null;
@@ -140,6 +141,7 @@ public class ToolkitIO {
 			MyFileFilter fileFilter = null;
 			// we want to get the last good directory of the type we are looking
 			// for
+			logger.info("getting defaults");
 			if (fileType == ToolkitIO.FILE_TYPE_LAYOUT) {
 				defaultDir = gvPrefs.get(ToolkitIO.LAYOUT_DIR, "");
 				fileFilter = new MyFileFilter("xml");
@@ -148,15 +150,18 @@ public class ToolkitIO {
 				fileFilter = new MyFileFilter(new String[] { "shp", "dbf",
 						"csv" });
 			}
+
 			JFileChooser fileChooser = new JFileChooser(defaultDir);
 			fileChooser.setFileFilter(fileFilter);
 			int returnVal = JFileChooser.CANCEL_OPTION;
 			if (action == ToolkitIO.ACTION_OPEN) {
+				logger.info("about to show open dialog");
 				returnVal = fileChooser.showOpenDialog(parent);
 
 			} else if (action == ToolkitIO.ACTION_SAVE) {
+				logger.info("about to show save dialog");
 				returnVal = fileChooser.showSaveDialog(parent);
-				if (returnVal == fileChooser.CANCEL_OPTION) {
+				if (returnVal == JFileChooser.CANCEL_OPTION) {
 					return null;
 				}
 				File tempFile = fileChooser.getSelectedFile();
@@ -391,6 +396,7 @@ public class ToolkitIO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		logger.info("built string " + strBuff.toString());
 		return strBuff.toString();
 	}
 
@@ -434,6 +440,11 @@ public class ToolkitIO {
 
 		String xmlFullName = ToolkitIO.getFileName(parent,
 				ToolkitIO.ACTION_OPEN, ToolkitIO.FILE_TYPE_LAYOUT);
+		if (xmlFullName == null) {
+			return null;
+		}
+
+		logger.info("xmlFullName = " + xmlFullName);
 		return ToolkitIO.openLayout(xmlFullName);
 	}
 
