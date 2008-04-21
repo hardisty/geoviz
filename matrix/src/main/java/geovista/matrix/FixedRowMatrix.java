@@ -129,6 +129,22 @@ public class FixedRowMatrix extends AbstractMatrix implements
 		setElementClassName3((obj != null) ? obj.getClass().getName() : null);
 	}
 
+	public void setElementClass0(Class clazz) {
+		elementClasses[0] = clazz;
+	}
+
+	public void setElementClass1(Class clazz) {
+		elementClasses[1] = clazz;
+	}
+
+	public void setElementClass2(Class clazz) {
+		elementClasses[2] = clazz;
+	}
+
+	public void setElementClass3(Class clazz) {
+		elementClasses[3] = clazz;
+	}
+
 	/**
 	 * Overwrite the method in AbstractMatrix, because the size of the matrix is
 	 * different.
@@ -198,6 +214,8 @@ public class FixedRowMatrix extends AbstractMatrix implements
 					e.printStackTrace();
 				}
 				graphTypeNumber++;
+			} else {
+				graphTypeNumber = elementClasses.length;
 			}
 		}
 		varTags = new String[plotNumber];
@@ -247,7 +265,8 @@ public class FixedRowMatrix extends AbstractMatrix implements
 									public void actionPerformed(ActionEvent e) {
 										try {
 											configButton_actionPerformed(e);
-										} catch (Exception exception) {
+										} catch (Exception ex) {
+											ex.printStackTrace();
 										}
 									}
 								});
@@ -317,6 +336,7 @@ public class FixedRowMatrix extends AbstractMatrix implements
 						// construct of each element
 						element[indexCurrent] = (MatrixElement) elementClasses[i - 1]
 								.newInstance();
+						logger.info(element[indexCurrent].getClass().getName());
 						element[indexCurrent].setAxisOn(false);
 						element[indexCurrent].setDataSet(dataSet);
 						element[indexCurrent].setSelectionColor(selectionColor);
@@ -350,7 +370,8 @@ public class FixedRowMatrix extends AbstractMatrix implements
 										// the event
 										try {
 											unit_actionPerformed(e);
-										} catch (Exception exception) {
+										} catch (Exception ex) {
+											ex.printStackTrace();
 										}
 									}
 								});

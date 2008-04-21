@@ -39,9 +39,9 @@ public class ColorRampPicker extends JPanel implements ComponentListener {
 
 	public static final int DEFAULT_NUM_SWATCHES = 3;
 
-	// public static final Color DEFAULT_LOW_COLOR = new Color(200, 200, 200);
+	public static final Color DEFAULT_LOW_COLOR = new Color(120, 120, 120);
 	// //light grey
-	public static final Color DEFAULT_LOW_COLOR = new Color(0, 150, 150);
+	// public static final Color DEFAULT_LOW_COLOR = new Color(0, 150, 150);
 	public static final Color DEFAULT_HIGH_COLOR_PURPLE = new Color(150, 0, 150);
 	public static final Color DEFAULT_HIGH_COLOR_GREEN = new Color(0, 150, 0);
 

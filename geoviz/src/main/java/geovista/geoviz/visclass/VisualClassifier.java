@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -45,6 +46,7 @@ import geovista.common.event.DataSetModifiedEvent;
 import geovista.common.event.DataSetModifiedListener;
 import geovista.common.event.PaletteEvent;
 import geovista.common.event.PaletteListener;
+import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.symbolization.ColorRampPicker;
 import geovista.symbolization.ColorSymbolClassification;
 import geovista.symbolization.ColorSymbolClassificationSimple;
@@ -778,4 +780,17 @@ public class VisualClassifier extends JPanel implements ActionListener,
 	public void setUpdate(boolean update) {
 		this.update = update;
 	}
+
+	public static void main(String[] args) {
+		JFrame app = new JFrame();
+		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		VisualClassifier vc = new VisualClassifier();
+		GeoDataGeneralizedStates data = new GeoDataGeneralizedStates();
+		vc.setDataSet(data.getDataForApps());
+		app.add(vc);
+		app.pack();
+		app.setVisible(true);
+
+	}
+
 }

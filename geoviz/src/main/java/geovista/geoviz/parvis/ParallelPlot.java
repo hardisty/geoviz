@@ -680,59 +680,6 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	}
 
 	/**
-	 * Main method for testing purposes.
-	 */
-	public static void main(String[] args) {
-		String fileName = "C:\\geovista_old\\data\\test6.csv";
-
-		Object[] dataSet = new Object[4];
-		String[] labels = new String[] { "0", "1", "Name" };
-		dataSet[0] = labels;
-
-		try {
-			FileIO fio = new FileIO(fileName, "r");
-
-			for (int col = 0; col < 2; col++) {
-				double[] doubleData = new double[7];
-
-				for (int row = 0; row < 7; row++) {
-					doubleData[row] = fio.readDouble();
-				}
-
-				dataSet[col + 1] = doubleData;
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		String[] names = new String[7];
-
-		for (int row = 0; row < 7; row++) {
-			names[row] = "Obs " + row;
-		}
-
-		dataSet[3] = names;
-
-		STFDataSet f = new STFDataSet(dataSet);
-		logger.finest("min = " + f.getMinValue(0));
-		logger.finest("max = " + f.getMaxValue(0));
-
-		ParallelPlot mp = new ParallelPlot();
-		JFrame app = new JFrame();
-		app.getContentPane().add(mp);
-		mp.setDataSet(dataSet);
-		app.pack();
-		app.setVisible(true);
-
-		app.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-	}
-
-	/**
 	 * adds an IndicationListener
 	 */
 	public void addIndicationListener(IndicationListener l) {
@@ -792,5 +739,58 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	public void tableChanged(TableModelEvent e) {
 		vc.setDataSet(dataSet);
 
+	}
+
+	/**
+	 * Main method for testing purposes.
+	 */
+	public static void main(String[] args) {
+		String fileName = "C:\\geovista_old\\data\\test6.csv";
+
+		Object[] dataSet = new Object[4];
+		String[] labels = new String[] { "0", "1", "Name" };
+		dataSet[0] = labels;
+
+		try {
+			FileIO fio = new FileIO(fileName, "r");
+
+			for (int col = 0; col < 2; col++) {
+				double[] doubleData = new double[7];
+
+				for (int row = 0; row < 7; row++) {
+					doubleData[row] = fio.readDouble();
+				}
+
+				dataSet[col + 1] = doubleData;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		String[] names = new String[7];
+
+		for (int row = 0; row < 7; row++) {
+			names[row] = "Obs " + row;
+		}
+
+		dataSet[3] = names;
+
+		STFDataSet f = new STFDataSet(dataSet);
+		logger.finest("min = " + f.getMinValue(0));
+		logger.finest("max = " + f.getMaxValue(0));
+
+		ParallelPlot mp = new ParallelPlot();
+		JFrame app = new JFrame();
+		app.getContentPane().add(mp);
+		mp.setDataSet(dataSet);
+		app.pack();
+		app.setVisible(true);
+
+		app.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 	}
 }

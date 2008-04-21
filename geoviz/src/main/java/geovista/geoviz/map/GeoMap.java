@@ -72,11 +72,11 @@ import geovista.common.ui.MultiSlider;
 import geovista.common.ui.RangeSlider;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
-import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
 import geovista.geoviz.shapefile.ShapeFileToShape;
 import geovista.geoviz.visclass.VisualClassifier;
+import geovista.symbolization.BivariateColorSchemeVisualizer;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import geovista.symbolization.ColorSymbolClassification;
@@ -119,8 +119,9 @@ public class GeoMap extends JPanel
 
 	transient protected GeoCursors cursors;
 
-	// transient protected BivariateColorSchemeVisualizer biViz;
-	transient ScatterPlot biViz;
+	transient protected BivariateColorSchemeVisualizer biViz;
+	// transient ScatterPlot biViz;
+
 	// XXX scatterplot goes here
 	transient protected Dimension currSize;
 
@@ -178,9 +179,10 @@ public class GeoMap extends JPanel
 
 			legendPanel.add(vcPanel);
 			legendPanel.add(Box.createRigidArea(new Dimension(4, 2)));
-			biViz = new ScatterPlot();
+			// biViz = new ScatterPlot();
+			biViz = new BivariateColorSchemeVisualizer();
 			biViz.setPreferredSize(new Dimension(50, 50));
-			biViz.setAxisOn(false);
+			// biViz.setAxisOn(false);
 
 			legendPanel.add(biViz);
 
@@ -459,7 +461,7 @@ public class GeoMap extends JPanel
 
 	public void selectionChanged(SelectionEvent e) {
 		mapCan.selectionChanged(e);
-		biViz.setSelections(e.getSelection());
+		// biViz.setSelections(e.getSelection());
 	}
 
 	public void conditioningChanged(ConditioningEvent e) {
@@ -507,9 +509,6 @@ public class GeoMap extends JPanel
 					+ e.getDataSetForApps().hashCode());
 		}
 		setDataSet(e.getDataSetForApps());
-		biViz.setDataSet(e.getDataSetForApps());
-		int[] indexes = { 0, 1 };
-		biViz.setDataIndices(indexes);
 	}
 
 	public void dataSetAdded(AuxiliaryDataSetEvent e) {
@@ -559,7 +558,7 @@ public class GeoMap extends JPanel
 			e.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_Y);
 		}
 
-		// biViz.colorClassifierChanged(e);
+		biViz.colorClassifierChanged(e);
 
 		if (mapCan == null) {
 			return;
@@ -623,6 +622,10 @@ public class GeoMap extends JPanel
 	}
 
 	public void setDataSet(DataSetForApps dataSet) {
+		if (dataSet == null) {
+			logger.warning("null data sent to map");
+			return;
+		}
 		dataSet.addTableModelListener(this);
 		this.dataSet = dataSet;
 		mapCan.setDataSet(dataSet);
@@ -725,7 +728,7 @@ public class GeoMap extends JPanel
 	 */
 	public void addIndicationListener(IndicationListener l) {
 		mapCan.addIndicationListener(l);
-		biViz.addIndicationListener(l);
+		// biViz.addIndicationListener(l);
 	}
 
 	/**
@@ -733,7 +736,7 @@ public class GeoMap extends JPanel
 	 */
 	public void removeIndicationListener(IndicationListener l) {
 		mapCan.removeIndicationListener(l);
-		biViz.removeIndicationListener(l);
+		// biViz.removeIndicationListener(l);
 	}
 
 	/**
