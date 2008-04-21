@@ -85,6 +85,7 @@ import geovista.geoviz.star.StarPlotMap;
 import geovista.matrix.MapAndScatterplotMatrix;
 import geovista.matrix.MapMatrix;
 import geovista.matrix.MapScatterplotTreemapMatrix;
+import geovista.matrix.MultiplotMatrix;
 import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
 import geovista.satscan.SaTScan;
@@ -110,6 +111,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
+	private static String VERSION_NUM = "0.8.4";
 	// collection of classes to add
 	ArrayList toolMenuList;
 	HashMap toolClassHash;
@@ -468,7 +470,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		useProj = vizState.useProj;
 		loadData(vizState.dataSource);
-
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		addToolkitBeanSet(vizState.getBeanSet());
 		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
 		for (ToolkitBean tBean : beans) {
@@ -483,6 +485,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 		Object newBean = tBean.getOriginalBean();
 		fireNewBeanMethods(newBean);
+		setCursor(Cursor.getDefaultCursor());
 	}
 
 	/*
@@ -586,10 +589,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			JOptionPane
 					.showMessageDialog(
 							this,
-							"<html>This application developed by Frank Hardisty "
-									+ "<br>with contributions by Diansheng Guo, Ke Liao, and Aaron Myers "
-									+ "<br>at the Univerisity of South Carolina, and many others at the GeoVISTA Center."
-									+ "<br> Full contributor list here: http://code.google.com/p/geoviz/wiki/GeoVizToolkitContributors </html>");
+							"<html>"
+									+ "GeoViz Toolkit, Version "
+									+ VERSION_NUM
+									+ "<br>This application developed by Frank Hardisty "
+									+ "<br>with contributions by many others. "
+									+ "<br> Contributor list here: "
+									+ "<br> http://code.google.com/p/geoviz/wiki/GeoVizToolkitContributors </html>");
 		} else if (e.getSource() == menuItemHelp) {
 			showHelp();
 		} else if (e.getSource() == menuItemExit) {
@@ -643,6 +649,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} else if (toolClassHash.containsKey(e.getSource())) { // one of
 			// our added
 			// classes
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			String className = (String) toolClassHash.get(e.getSource());
 			ToolkitBean tBean = null;
 			tBean = instantiateBean(className);
@@ -650,7 +657,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			Object newBean = tBean.getOriginalBean();
 			fireNewBeanMethods(newBean);
 			tBeanSet.add(tBean);
-
+			setCursor(Cursor.getDefaultCursor());
 		}
 
 		else if (e.getSource() == menuItemRemoveAllTools) {
@@ -937,6 +944,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(TreemapAndScatterplotMatrix.class);
 		addToolToMenu(MapScatterplotTreemapMatrix.class);
 		addToolToMenu(MapMatrix.class);
+		addToolToMenu(MultiplotMatrix.class);
 		menuAddTool.addSeparator();
 
 		// dynamic tools

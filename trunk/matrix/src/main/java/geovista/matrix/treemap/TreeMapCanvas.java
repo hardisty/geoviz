@@ -118,6 +118,9 @@ public class TreeMapCanvas extends JPanel implements DataSetListener,
 			String name = dataSet.getObservationName(i);
 			TMDataNode aData = new TMDataNode(val, name);
 			int whichBranch = classification[i];
+			if (whichBranch < 0) {
+				whichBranch = 0;
+			}
 			branches[whichBranch].addChild(aData);
 			if (branchVal < branchMin[whichBranch]) {
 				branchMin[whichBranch] = branchVal;

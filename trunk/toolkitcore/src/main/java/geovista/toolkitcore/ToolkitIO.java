@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
@@ -396,7 +397,9 @@ public class ToolkitIO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		logger.info("built string " + strBuff.toString());
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("built string " + strBuff.toString());
+		}
 		return strBuff.toString();
 	}
 
