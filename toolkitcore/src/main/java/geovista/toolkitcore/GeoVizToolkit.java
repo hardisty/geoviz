@@ -289,18 +289,18 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		// if we are coming up from xml format, this might have already been
 		// set.
-		if (tBeanSet == null) {
-			tBeanSet = ToolkitIO.openStarPlotMapLayout();
+		if (vizState.beanSet == null) {
+			VizState state = ToolkitIO.openDefaultLayout();
+			setVizState(state);
 		}
-		addToolkitBeanSet(tBeanSet);
-		vizState.setBeanSet(tBeanSet);
+
 		this.repaint();
 	}
 
 	void openAllComponents() {
 		removeAllBeans();
-		ToolkitBeanSet tempBeanSet = ToolkitIO.openAllComponentsLayout();
-		addToolkitBeanSet(tempBeanSet);
+		VizState state = ToolkitIO.openAllComponentsLayout();
+		setVizState(state);
 		this.repaint();
 	}
 
@@ -345,7 +345,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 */
 
 	public void removeAllBeans() {
-
+		if (tBeanSet == null) {
+			return;
+		}
 		Iterator it = tBeanSet.getBeanSet().iterator();
 		while (it.hasNext()) {
 			ToolkitBean oldBean = (ToolkitBean) it.next();
@@ -458,7 +460,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void setVizState(VizState newState) {
-
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		removeAllBeans();
 		coord.removeBean(vizState);
 
@@ -619,23 +621,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 
 		else if (e.getSource() == menuItemOpenLayout) {
+			VizState state = ToolkitIO.getVizState(this);
 
-			String xml = ToolkitIO.openLayout(this);
-
-			if (xml == null) {
+			if (state == null) {
 				return;
 			}
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-			logger.info("creating mashaller");
-			Marshaller marsh = Marshaller.INSTANCE;
-			logger.info("about to instantiate VizState");
-			VizState state = (VizState) marsh.fromXML(xml);
-			logger.info("instantiated VizState");
 
 			logger.info("about to set VizState");
 			setVizState(state);
 			logger.info("set VizState");
-			setCursor(Cursor.getDefaultCursor());
 
 		} else if (e.getSource() == menuItemSaveLayout) {
 			Marshaller marsh = Marshaller.INSTANCE;
