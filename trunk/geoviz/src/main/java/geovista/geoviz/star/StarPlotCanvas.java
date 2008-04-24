@@ -322,9 +322,9 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 
 	public void componentResized(ComponentEvent e) {
 
-		findPlotLocations();
 		if (getWidth() > 0 && (getHeight() > 0)) {
 			drawingBuff = this.createImage(getWidth(), getHeight());
+			findPlotLocations();
 		}
 		paintDrawingBuff();
 		this.repaint();

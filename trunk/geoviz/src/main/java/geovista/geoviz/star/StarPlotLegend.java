@@ -43,6 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
+ * 
  * Paint a legend for a StarPlot, along with the current plot.
  * 
  * 
@@ -227,7 +228,7 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setStroke(connectorStroke);
 		if (connectorLines != null) {
-			findConnectorLines();
+			findConnectorLines();// XXX was causing exceptions
 			g2.draw(connectorLines);
 		}
 
