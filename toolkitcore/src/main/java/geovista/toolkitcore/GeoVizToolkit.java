@@ -111,7 +111,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
-	private static String VERSION_NUM = "0.8.4";
+	private static String VERSION_NUM = "0.8.5";
 	// collection of classes to add
 	ArrayList toolMenuList;
 	HashMap toolClassHash;
