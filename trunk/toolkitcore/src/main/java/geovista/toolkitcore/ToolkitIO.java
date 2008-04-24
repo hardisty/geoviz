@@ -33,13 +33,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -51,18 +50,11 @@ import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageInputStream;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.XMLOutputter;
 import org.w3c.dom.NodeList;
 
-import geovista.coordination.CoordinationManager;
-import geovista.coordination.FiringBean;
 import geovista.readers.util.MyFileFilter;
 import geovista.toolkitcore.marshal.Marshaller;
 
@@ -181,8 +173,8 @@ public class ToolkitIO {
 
 					if (erase == JOptionPane.NO_OPTION) {
 						GeoVizToolkit gvt = (GeoVizToolkit) parent;
-						ToolkitIO.writeLayout(gvt.getFileName(), gvt.tBeanSet,
-								parent);
+						String xml = Marshaller.INSTANCE.toXML(gvt);
+						ToolkitIO.writeLayout(gvt.getFileName(), xml, parent);
 					} else if (erase == JOptionPane.CANCEL_OPTION) {
 						return null;
 					}
@@ -248,147 +240,23 @@ public class ToolkitIO {
 
 	}
 
-	/* a nice example of using jdom to write xml to file */
-	@Deprecated
-	public static void writeLayout(String dataSetFullName,
-			ToolkitBeanSet tBeanSet, Component parent) {
-		String xmlFullName = ToolkitIO.getFileName(parent,
-				ToolkitIO.ACTION_SAVE, ToolkitIO.FILE_TYPE_LAYOUT);
-		if (xmlFullName == null) {
-			return;
-		}
-		int periodPlace = xmlFullName.lastIndexOf(".");
-		String extension = null;
-		if (periodPlace == -1) {
-			extension = "";
-		} else {
-			extension = xmlFullName
-					.substring(periodPlace, xmlFullName.length());
-		}
-		logger.finest("extension = " + extension);
-		if (extension.compareToIgnoreCase(".xml") != 0) {
-			xmlFullName = xmlFullName + ".xml";
-		}
-		// ### write xml and label it with the name given by the user ###//
-		Document doc = new Document();
-		Element rootEle = new Element("GeoVizTool_BeansLayout");
-		rootEle.setAttribute("dataSetFullName", dataSetFullName);
+	private static String getVizStateXML(String fileName) {
 
-		Vector beanElements = new Vector();
-		Element beanElement = new Element("bean");
-		int x, y, wd, ht, beanCount = 0;
-		ToolkitBean temp;
-		Iterator itBeans = tBeanSet.iterator();
-		while (itBeans.hasNext()) {
-			temp = (ToolkitBean) itBeans.next();
-			x = temp.getInternalFrame().getX();
-			y = temp.getInternalFrame().getY();
-			wd = temp.getInternalFrame().getWidth();
-			ht = temp.getInternalFrame().getHeight();
-			beanElement.setText(temp.getOriginalBean().getClass().getName());
-			beanElement.setAttribute("index", Integer.toString(beanCount));
-			beanElement.setAttribute("xLocation", Integer.toString(x));
-			beanElement.setAttribute("yLocation", Integer.toString(y));
-			beanElement.setAttribute("width", Integer.toString(wd));
-			beanElement.setAttribute("height", Integer.toString(ht));
-
-			beanElement.setAttribute("uniqueName", temp.getUniqueName());
-			beanElement.addContent("\n  ");
-			// rootEle.addContent(beanCount, beanElement);
-			beanElements.add(beanCount, beanElement);
-			beanElement = new Element("bean");
-
-			beanCount++;
-		}
-		rootEle.setContent(beanElements);
-		doc.setRootElement(rootEle);
-		XMLOutputter outp = new XMLOutputter();
-
-		// XMLOutputter outp = new XMLOutputter(" ", true);
-		// ## set indent besides new lines, not implemented in 1.O though
-		FileOutputStream fos = null;
-
+		InputStreamReader inReader = null;
 		try {
-			fos = new FileOutputStream(xmlFullName);
-			outp.output(doc, fos);
-			Preferences gvPrefs = Preferences
-					.userNodeForPackage(ToolkitBeanSet.class);
-			if (xmlFullName != null) {
-				File fi = new File(xmlFullName);
-				String path = fi.getAbsolutePath();
-				gvPrefs.put("LastGoodLayoutDirectory", path);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			inReader = new FileReader(fileName);
+		} catch (FileNotFoundException e1) {
+
+			e1.printStackTrace();
 		}
 
+		return readCharStream(inReader);
 	}
 
-	private static ToolkitBeanSet openLayout(InputStream is) {
-		Document docIn = readDocument(is);
-
-		ToolkitBeanSet beanSet = new ToolkitBeanSet();
-		Element rootE = docIn.getRootElement();
-		dataSetPathFromXML = (rootE.getAttribute("dataSetFullName").getValue());
-		logger.finest("xml read dataset as:");
-		Vector allChildren = new Vector(rootE.getChildren("bean"));
-		for (int i = 0; i < allChildren.size(); i++) {
-			Element tempBean = (Element) (allChildren.get(i));
-			String className = tempBean.getText();
-			ToolkitBean newToolkitBean = null;
-			JInternalFrame bInterFrame = null;
-			CoordinationManager coord = new CoordinationManager();
-			className = className.trim();
-
-			try {
-
-				Object newBean = GeoVizToolkit.makeObject(className);
-				FiringBean newFBean = coord.addBean(newBean);
-				String uniqueName = newFBean.getBeanName();
-
-				newToolkitBean = new ToolkitBean(newBean, uniqueName);
-
-				bInterFrame = newToolkitBean.getInternalFrame();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-			int x = Integer.parseInt(tempBean.getAttributeValue("xLocation"));
-			int y = Integer.parseInt(tempBean.getAttributeValue("yLocation"));
-			int width = Integer.parseInt(tempBean.getAttributeValue("width"));
-			int height = Integer.parseInt(tempBean.getAttributeValue("height"));
-
-			bInterFrame.setSize(width, height);
-			bInterFrame.setLocation(x, y);
-			bInterFrame.setPreferredSize(new Dimension(width, height));
-
-			beanSet.add(newToolkitBean);
-
-		}
-
-		// this.repaint();
-		return beanSet;
-
-	}
-
-	private static Document readDocument(InputStream is) {
-		Document docIn = null;
-		// #### READ XML THROUGH SAXBUILDER ####//
-		try {
-
-			SAXBuilder sb = new SAXBuilder();
-			docIn = sb.build(is);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return docIn;
-	}
-
-	private static String openLayout(String fileName) {
+	private static String readCharStream(InputStreamReader inReader) {
 		StringBuffer strBuff = new StringBuffer();
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(fileName));
+			BufferedReader in = new BufferedReader(inReader);
 			String str;
 			while ((str = in.readLine()) != null) {
 				strBuff.append(str);
@@ -403,43 +271,55 @@ public class ToolkitIO {
 		return strBuff.toString();
 	}
 
-	public static ToolkitBeanSet openDefaultLayout() {
+	public static VizState openDefaultLayout() {
+		String xmlName = "default";
+
+		return getVizStateFromResource(xmlName);
+	}
+
+	private static VizState getVizStateFromResource(String xmlName) {
 		InputStream inStream = null;
 		try {
 			Class cl = ToolkitIO.class;
 
-			inStream = cl.getResourceAsStream("resources/default.xml");
+			inStream = cl.getResourceAsStream("resources/" + xmlName + ".xml");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ToolkitIO.openLayout(inStream);
+		String xml = readCharStream(new InputStreamReader(inStream));
+		logger.info("getting mashaller");
+		Marshaller marsh = Marshaller.INSTANCE;
+		logger.info("about to instantiate VizState");
+		VizState state = (VizState) marsh.fromXML(xml);
+		logger.info("instantiated VizState");
+		return state;
 	}
 
-	public static ToolkitBeanSet openStarPlotMapLayout() {
-		InputStream inStream = null;
-		try {
-			Class cl = ToolkitIO.class;
+	public static VizState openStarPlotMapLayout() {
+		String xmlName = "starmap";
+		return getVizStateFromResource(xmlName);
+	}
 
-			inStream = cl.getResourceAsStream("resources/starmap.xml");
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	public static VizState openAllComponentsLayout() {
+		String xmlName = "new_all";
+		return getVizStateFromResource(xmlName);
+	}
+
+	public static VizState getVizState(Component parent) {
+		String xml = ToolkitIO.makeVizStateXML(parent);
+		if (xml == null) {
+			return null;
 		}
-		return ToolkitIO.openLayout(inStream);
+		logger.info("getting mashaller");
+		Marshaller marsh = Marshaller.INSTANCE;
+		logger.info("about to instantiate VizState");
+		VizState state = (VizState) marsh.fromXML(xml);
+		logger.info("instantiated VizState");
+		return state;
+
 	}
 
-	public static ToolkitBeanSet openAllComponentsLayout() {
-		InputStream inStream = null;
-		try {
-			Class cl = ToolkitIO.class;
-
-			inStream = cl.getResourceAsStream("resources/new_all.xml");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ToolkitIO.openLayout(inStream);
-	}
-
-	public static String openLayout(Component parent) {
+	public static String makeVizStateXML(Component parent) {
 
 		String xmlFullName = ToolkitIO.getFileName(parent,
 				ToolkitIO.ACTION_OPEN, ToolkitIO.FILE_TYPE_LAYOUT);
@@ -448,7 +328,7 @@ public class ToolkitIO {
 		}
 
 		logger.info("xmlFullName = " + xmlFullName);
-		return ToolkitIO.openLayout(xmlFullName);
+		return ToolkitIO.getVizStateXML(xmlFullName);
 	}
 
 	public static void copyComponentImageToClipboard(Component c) {

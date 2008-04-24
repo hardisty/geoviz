@@ -37,7 +37,6 @@
 	<classpathentry kind="src" path="touchgraph/src/main/java"/>
 	<classpathentry kind="src" path="treemap/src/main/java"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
-	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
 	<classpathentry kind="lib" path="lib/smack.jar"/>
@@ -46,7 +45,7 @@
 	<classpathentry kind="lib" path="lib/gt2-api-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/gt2-main-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/gt2-shapefile-2.4-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib/xstream-1.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/xstream-1.2.2.jar" sourcepath="C:/java_projects/xstream/lib-src/src/java"/>
 	<classpathentry kind="lib" path="lib/gt2-metadata-2.4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
