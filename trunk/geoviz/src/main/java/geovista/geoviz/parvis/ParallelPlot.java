@@ -60,7 +60,6 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	int[] savedSelection;
 	private final int maxAxes = 6;
 	private long progressstart = 0;
-	private boolean selectionApplied;
 
 	private javax.swing.JPanel renderPanel;
 	private javax.swing.JToggleButton reorderButton;
@@ -511,11 +510,13 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		} else {
 			parallelDisplay.indicationChanged(e);
 		}
-		if (!selectionApplied
-				&& savedSelection != null
+		if (
+		// !selectionApplied
+		// &&
+		savedSelection != null
 				&& DescriptiveStatistics.max(savedSelection) < dataSet
 						.getNumObservations()) {
-			selectionChanged(new SelectionEvent(this, savedSelection));
+			// selectionChanged(new SelectionEvent(this, savedSelection));
 
 		}
 	}
@@ -530,12 +531,12 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		// }
 		if (getWidth() * getHeight() <= 0) {
 			logger.info("ParallelPlot got selection when size was zero");
-			selectionApplied = false;
+
 			return;
 		}
 		parallelDisplay.selectionChanged(e);
 		parallelDisplay.setEditMode(ParallelDisplay.BRUSH);
-		selectionApplied = true;
+
 		// this.brushButtonActionPerformed(new
 		// ActionEvent(this,ActionEvent.ACTION_PERFORMED,"hi"));
 	}
