@@ -196,7 +196,6 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 			axisOffset = null;
 			axisScale = null;
 
-			brushValues = null;
 		}
 
 		this.model = model;
@@ -207,9 +206,12 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 			axisOffset = new float[model.getNumDimensions()];
 			axisScale = new float[model.getNumDimensions()];
 			axisOrder = new int[model.getNumDimensions()];
-
-			brushValues = new float[model.getNumRecords()];
-
+			// fah -- trying this to fix the problem of selections breaking the
+			// model
+			if (brushValues == null
+					|| brushValues.length != model.getNumRecords()) {
+				brushValues = new float[model.getNumRecords()];
+			}
 			for (int i = 0; i < model.getNumDimensions(); i++) {
 				// initialize scaling of axis to show maximum detail
 				axisOffset[i] = model.getMaxValue(i);
