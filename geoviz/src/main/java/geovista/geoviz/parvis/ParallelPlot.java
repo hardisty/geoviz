@@ -17,8 +17,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JToggleButton;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -49,10 +57,10 @@ import geovista.readers.FileIO;
  * 
  * @author Flo Ledermann flo@subnet.at
  */
-public class ParallelPlot extends javax.swing.JPanel implements
-		ProgressListener, DataSetListener, IndicationListener,
-		SelectionListener, ColorArrayListener, SubspaceListener,
-		PaletteListener, ConditioningListener, TableModelListener {
+public class ParallelPlot extends JPanel implements ProgressListener,
+		DataSetListener, IndicationListener, SelectionListener,
+		ColorArrayListener, SubspaceListener, PaletteListener,
+		ConditioningListener, TableModelListener {
 	JToggleButton lastButton = null;
 	VisualClassifier vc = null;
 	int[] activeVariables = null;
@@ -61,25 +69,25 @@ public class ParallelPlot extends javax.swing.JPanel implements
 	private final int maxAxes = 6;
 	private long progressstart = 0;
 
-	private javax.swing.JPanel renderPanel;
-	private javax.swing.JToggleButton reorderButton;
-	private javax.swing.JButton minMaxButton;
-	private javax.swing.JLabel renderLabel;
-	private javax.swing.JButton minMaxAbsButton;
-	private javax.swing.JButton varMinMaxButton;
-	private javax.swing.JProgressBar renderProgressBar;
-	private javax.swing.JPanel optionsPanel;
-	private javax.swing.JToggleButton brushButton;
-	private javax.swing.JButton jButton1;
+	private JPanel renderPanel;
+	private JToggleButton reorderButton;
+	private JButton minMaxButton;
+	private JLabel renderLabel;
+	private JButton minMaxAbsButton;
+	private JButton varMinMaxButton;
+	private JProgressBar renderProgressBar;
+	private JPanel optionsPanel;
+	private JToggleButton brushButton;
+	private JButton jButton1;
 	private geovista.geoviz.parvis.ParallelDisplay parallelDisplay;
-	private javax.swing.JCheckBox numberBox;
-	private javax.swing.JToggleButton scaleButton;
-	private javax.swing.JToggleButton translateButton;
-	private javax.swing.JPanel dragModePanel;
-	private javax.swing.JLabel timeLabel;
-	private javax.swing.JPanel dummyPanel;
-	private javax.swing.JPanel openPanel;
-	private javax.swing.JButton zeroMaxButton;
+	private JCheckBox numberBox;
+	private JToggleButton scaleButton;
+	private JToggleButton translateButton;
+	private JPanel dragModePanel;
+	private JLabel timeLabel;
+	private JPanel dummyPanel;
+	private JPanel openPanel;
+	private JButton zeroMaxButton;
 	protected final static Logger logger = Logger.getLogger(ParallelPlot.class
 			.getName());
 
@@ -113,26 +121,26 @@ public class ParallelPlot extends javax.swing.JPanel implements
 
 		java.awt.GridBagConstraints gridBagConstraints;
 
-		openPanel = new javax.swing.JPanel();
+		openPanel = new JPanel();
 
-		parallelDisplay = new geovista.geoviz.parvis.ParallelDisplay();
-		dragModePanel = new javax.swing.JPanel();
-		reorderButton = new javax.swing.JToggleButton();
-		scaleButton = new javax.swing.JToggleButton();
-		translateButton = new javax.swing.JToggleButton();
-		brushButton = new javax.swing.JToggleButton();
-		jButton1 = new javax.swing.JButton();
-		optionsPanel = new javax.swing.JPanel();
-		numberBox = new javax.swing.JCheckBox();
-		zeroMaxButton = new javax.swing.JButton();
-		minMaxButton = new javax.swing.JButton();
-		minMaxAbsButton = new javax.swing.JButton();
-		varMinMaxButton = new javax.swing.JButton();
-		dummyPanel = new javax.swing.JPanel();
-		renderPanel = new javax.swing.JPanel();
-		renderLabel = new javax.swing.JLabel();
-		renderProgressBar = new javax.swing.JProgressBar();
-		timeLabel = new javax.swing.JLabel();
+		parallelDisplay = new ParallelDisplay();
+		dragModePanel = new JPanel();
+		reorderButton = new JToggleButton();
+		scaleButton = new JToggleButton();
+		translateButton = new JToggleButton();
+		brushButton = new JToggleButton();
+		jButton1 = new JButton();
+		optionsPanel = new JPanel();
+		numberBox = new JCheckBox();
+		zeroMaxButton = new JButton();
+		minMaxButton = new JButton();
+		minMaxAbsButton = new JButton();
+		varMinMaxButton = new JButton();
+		dummyPanel = new JPanel();
+		renderPanel = new JPanel();
+		renderLabel = new JLabel();
+		renderProgressBar = new JProgressBar();
+		timeLabel = new JLabel();
 
 		// fileMenu.setText("File");
 		// openFileItem.setText("Open File...");
@@ -147,11 +155,10 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		// openPanel.setLayout(new
 		// java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 		/*
-		 * openPanel.setBorder(new javax.swing.border.TitledBorder(new
-		 * javax.swing.border.EtchedBorder(), "Datasource",
-		 * javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-		 * javax.swing.border.TitledBorder.TOP)); label.setText("url:");
-		 * openPanel.add(label);
+		 * openPanel.setBorder(new border.TitledBorder(new
+		 * border.EtchedBorder(), "Datasource",
+		 * border.TitledBorder.DEFAULT_JUSTIFICATION, border.TitledBorder.TOP));
+		 * label.setText("url:"); openPanel.add(label);
 		 * 
 		 * urlField.setToolTipText("Type in URL to load. Press enter.");
 		 * urlField.setText("file:///D:/Uni/visualisierung/datasets/cameras.stf");
@@ -164,7 +171,7 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		 * 
 		 * load.setToolTipText("Press to choose a file from your local HD.");
 		 * load.setText("open File..."); load.setBorder(new
-		 * javax.swing.border.EtchedBorder()); load.addActionListener(new
+		 * border.EtchedBorder()); load.addActionListener(new
 		 * java.awt.event.ActionListener() { public void
 		 * actionPerformed(java.awt.event.ActionEvent evt) {
 		 * loadActionPerformed(evt); } });
@@ -189,9 +196,9 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		dragModePanel.setLayout(new java.awt.FlowLayout(
 				java.awt.FlowLayout.LEFT));
 
-		dragModePanel.setBorder(new javax.swing.border.TitledBorder(
-				new javax.swing.border.EtchedBorder(), "Drag Mode"));
-		reorderButton.setIcon(new javax.swing.ImageIcon(getClass().getResource(
+		dragModePanel.setBorder(new TitledBorder(new EtchedBorder(),
+				"Drag Mode"));
+		reorderButton.setIcon(new ImageIcon(getClass().getResource(
 				"reorder.gif")));
 		reorderButton
 				.setToolTipText("Reorder axes by dragging them across the display.");
@@ -210,8 +217,7 @@ public class ParallelPlot extends javax.swing.JPanel implements
 
 		dragModePanel.add(reorderButton);
 
-		scaleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				"scale.gif")));
+		scaleButton.setIcon(new ImageIcon(getClass().getResource("scale.gif")));
 		scaleButton
 				.setToolTipText("Scale axes by dragging up (zoom out) or down (zoom in).");
 		scaleButton.setFont(new java.awt.Font("Dialog", 0, 10));
@@ -225,7 +231,7 @@ public class ParallelPlot extends javax.swing.JPanel implements
 
 		dragModePanel.add(scaleButton);
 
-		translateButton.setIcon(new javax.swing.ImageIcon(getClass()
+		translateButton.setIcon(new ImageIcon(getClass()
 				.getResource("move.gif")));
 		translateButton
 				.setToolTipText("Translate axes by dragging up or down.");
@@ -240,8 +246,7 @@ public class ParallelPlot extends javax.swing.JPanel implements
 
 		dragModePanel.add(translateButton);
 
-		brushButton.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				"brush.gif")));
+		brushButton.setIcon(new ImageIcon(getClass().getResource("brush.gif")));
 		brushButton.setToolTipText("Translate axes by dragging up or down.");
 		brushButton.setFont(new java.awt.Font("Dialog", 0, 10));
 		brushButton.setText("brush");
@@ -272,8 +277,7 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		optionsPanel
 				.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-		optionsPanel.setBorder(new javax.swing.border.TitledBorder(
-				new javax.swing.border.EtchedBorder(), "Options"));
+		optionsPanel.setBorder(new TitledBorder(new EtchedBorder(), "Options"));
 		numberBox
 				.setToolTipText("Display numeric tooltips when hovering over a record.");
 		numberBox.setSelected(true);
@@ -335,8 +339,8 @@ public class ParallelPlot extends javax.swing.JPanel implements
 
 		renderPanel
 				.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-		renderPanel.setBorder(new javax.swing.border.TitledBorder(
-				new javax.swing.border.EtchedBorder(), "Visual Classifier"));
+		renderPanel.setBorder(new TitledBorder(new EtchedBorder(),
+				"Visual Classifier"));
 		renderPanel.add(vc);
 		vc.setPreferredSize(new Dimension(600, 20));
 		vc.getSymbolizationPanel().setLowColor(Color.black);
@@ -494,7 +498,9 @@ public class ParallelPlot extends javax.swing.JPanel implements
 		if (savedSelection != null
 				&& DescriptiveStatistics.max(savedSelection) < dataSet
 						.getNumObservations()) {
-			selectionChanged(new SelectionEvent(this, savedSelection));
+			// XXX should remember slections, but getting
+			// arrayindexoutofboundselection
+			// selectionChanged(new SelectionEvent(this, savedSelection));
 
 		}
 	}

@@ -10,6 +10,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +45,8 @@ import com.vividsolutions.jts.geom.Geometry;
  * 
  * 
  * 
- * @author Xiping Dai and Frank Hardisty
+ * @author Xiping Dai
+ * @author Frank Hardisty
  */
 public class DataSetForApps extends AbstractTableModel {
 
@@ -77,8 +79,12 @@ public class DataSetForApps extends AbstractTableModel {
 	private transient int numObservations;
 	private transient int[] dataType;
 
+	private String dataSourceName;// adding for Jared
+
 	private transient SpatialWeights spatialWeights;
 	private transient EventListenerList listenerList;
+
+	public Map<String, String>[] aliases;
 
 	public static int NULL_INT_VALUE = Integer.MIN_VALUE;
 
@@ -213,7 +219,7 @@ public class DataSetForApps extends AbstractTableModel {
 	/**
 	 * Returns the name of the observations, at observation "obs", if any names
 	 * were attached. The names are determined by the first attribute name which
-	 * ends in "name", case insenstive.
+	 * ends in "name", case insensitive.
 	 * 
 	 */
 
@@ -505,6 +511,8 @@ public class DataSetForApps extends AbstractTableModel {
 		}
 
 		attributeNames = (String[]) data[0];
+		aliases = new Map[attributeNames.length];
+
 		dataSetFull = new Object[dataObjectOriginal.length + 1]; // plus
 		// one
 		// for
@@ -937,6 +945,11 @@ public class DataSetForApps extends AbstractTableModel {
 
 	}
 
+	public String getAlias(int rowIndex, int columnIndex) {
+
+		return "";
+	}
+
 	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
 
@@ -979,6 +992,14 @@ public class DataSetForApps extends AbstractTableModel {
 	 */
 	public void setListenerList(EventListenerList listenerList) {
 		this.listenerList = listenerList;
+	}
+
+	public String getDataSourceName() {
+		return dataSourceName;
+	}
+
+	public void setDataSourceName(String dataSourceName) {
+		this.dataSourceName = dataSourceName;
 	}
 
 }
