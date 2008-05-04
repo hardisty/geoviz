@@ -218,20 +218,22 @@ public class Histogram extends JPanel implements MouseListener,
 	public void setSelections(BitSet selectedObs) {
 		selectedRecords = selectedObs;
 		// reset selectionarray
-		if (selectionArray == null || selectionArray.length != binCount) {
-			selectionArray = new double[binCount];
-		} else {
-			for (int i = 0; i < selectionArray.length; i++) {
-				selectionArray[i] = 0;
-			}
-		}
+
+		selectionArray = new double[binCount];
+
 		// add selected observations to the appropriate bins
 		for (int i = 0; i < data.length; i++) {
-			int j;
+
 			if (selectedRecords.get(i)) {
-				j = (int) Math.floor((data[i] - xAxisExtents[0]) / barWidth);
-				j = ((binCount <= j) ? binCount - 1 : j);
-				selectionArray[j]++;
+				if (data[i] >= xAxisExtents[0] && data[i] <= xAxisExtents[1]) {
+					int j = (int) Math.floor((data[i] - xAxisExtents[0])
+							/ barWidth);
+					j = ((binCount <= j) ? binCount - 1 : j);
+					if (logger.isLoggable(Level.INFO)) {
+						logger.info("adding " + j);
+					}
+					selectionArray[j]++;
+				}
 			}
 		}
 		setSelectionScreen();
@@ -306,8 +308,6 @@ public class Histogram extends JPanel implements MouseListener,
 		}
 
 		histogramArray = new double[binCount];
-		accumulativeFrequency = new double[binCount];
-		dataX = new double[binCount];
 		histRecords = new Vector[binCount];
 		histRecs = new Rectangle[binCount];
 
@@ -327,6 +327,8 @@ public class Histogram extends JPanel implements MouseListener,
 			}
 		}
 
+		dataX = new double[binCount];
+		accumulativeFrequency = new double[binCount];
 		for (int i = 0; i < binCount; i++) {
 			dataX[i] = i * barWidth + xAxisExtents[0];
 			if (i == 0) {
@@ -338,6 +340,8 @@ public class Histogram extends JPanel implements MouseListener,
 		}
 
 		histArray = new DataArray(histogramArray);
+		double[] zeroFloor = { 0, histArray.getExtent()[1] };
+		histArray.setExtent(zeroFloor);
 		yAxisExtents = histArray.getMaxMinCoorValue();
 	}
 
@@ -402,6 +406,7 @@ public class Histogram extends JPanel implements MouseListener,
 		double scale;
 		scale = getScale(plotOriginY, plotEndY, yAxisExtents[0],
 				yAxisExtents[1]);
+		logger.info("scale = " + scale);
 		selectionInt = getValueScreen(selectionArray, scale, plotOriginY, 0);
 	}
 
@@ -643,6 +648,7 @@ public class Histogram extends JPanel implements MouseListener,
 	private double getScale(int min, int max, double dataMin, double dataMax) {
 		double scale;
 		scale = (max - min) / (dataMax - dataMin);
+		// scale = (max - min) / (dataMax);
 		return scale;
 	}
 
@@ -664,6 +670,8 @@ public class Histogram extends JPanel implements MouseListener,
 				valueScreen[i] = Integer.MIN_VALUE;
 			} else {
 				valueScreen[i] = (int) ((dataArray[i] - dataMin) * scale + min);
+				logger.info("dataArray[i] = " + dataArray[i]);
+				logger.info("valueScreen[i] = " + valueScreen[i]);
 			}
 		}
 		return valueScreen;

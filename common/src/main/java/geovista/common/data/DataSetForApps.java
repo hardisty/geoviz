@@ -946,8 +946,20 @@ public class DataSetForApps extends AbstractTableModel {
 	}
 
 	public String getAlias(int rowIndex, int columnIndex) {
+		Map<String, String> colAliases = null;
+		if (aliases[columnIndex + 1] == null) {
+			return "";
+		} else {
+			String alias = "";
+			colAliases = aliases[columnIndex + 1];
+			alias = colAliases.get(String.valueOf(rowIndex));
+			if (alias == null) {
+				return "";
+			} else {
+				return alias;
+			}
+		}
 
-		return "";
 	}
 
 	@Override
