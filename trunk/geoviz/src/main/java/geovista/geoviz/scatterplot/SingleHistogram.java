@@ -249,10 +249,6 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 
 	}
 
-	public static int f(int i, int j) {
-		return 0;
-	}
-
 	public static void main2(String[] args) {
 		// int N = Integer.parseInt(args[0]);
 
@@ -394,7 +390,7 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 			@SuppressWarnings("unused")
 			int k;
 			for (int j = 1; j <= N; j++) {
-				k = f(i, j);
+				k = 0;
 			}
 		}
 		stop = System.currentTimeMillis();
