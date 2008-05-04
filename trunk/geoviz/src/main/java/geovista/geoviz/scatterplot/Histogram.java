@@ -229,8 +229,8 @@ public class Histogram extends JPanel implements MouseListener,
 					int j = (int) Math.floor((data[i] - xAxisExtents[0])
 							/ barWidth);
 					j = ((binCount <= j) ? binCount - 1 : j);
-					if (logger.isLoggable(Level.INFO)) {
-						logger.info("adding " + j);
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("adding " + j);
 					}
 					selectionArray[j]++;
 				}
@@ -406,7 +406,9 @@ public class Histogram extends JPanel implements MouseListener,
 		double scale;
 		scale = getScale(plotOriginY, plotEndY, yAxisExtents[0],
 				yAxisExtents[1]);
-		logger.info("scale = " + scale);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("scale = " + scale);
+		}
 		selectionInt = getValueScreen(selectionArray, scale, plotOriginY, 0);
 	}
 
@@ -518,8 +520,10 @@ public class Histogram extends JPanel implements MouseListener,
 		}
 		double barNumber = histArray.getTickNumber();
 		double yBarDistance = ((plotOriginY - plotEndY) / barNumber);
-		logger.finest("drawaxis: " + plotOriginY + " " + plotEndY + " "
-				+ yBarDistance + " " + barNumber);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("drawaxis: " + plotOriginY + " " + plotEndY + " "
+					+ yBarDistance + " " + barNumber);
+		}
 		for (int i = 0; i <= barNumber; i++) {
 			g.drawLine(plotOriginX - 3, plotEndY + (int) (i * yBarDistance),
 					plotOriginX, plotEndY + (int) (i * yBarDistance));
@@ -670,8 +674,10 @@ public class Histogram extends JPanel implements MouseListener,
 				valueScreen[i] = Integer.MIN_VALUE;
 			} else {
 				valueScreen[i] = (int) ((dataArray[i] - dataMin) * scale + min);
-				logger.info("dataArray[i] = " + dataArray[i]);
-				logger.info("valueScreen[i] = " + valueScreen[i]);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("dataArray[i] = " + dataArray[i]);
+					logger.finest("valueScreen[i] = " + valueScreen[i]);
+				}
 			}
 		}
 		return valueScreen;
