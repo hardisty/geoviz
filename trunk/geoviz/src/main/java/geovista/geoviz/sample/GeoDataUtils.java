@@ -12,36 +12,18 @@
  -------------------------------------------------------------------  *
  */
 
-
 package geovista.geoviz.sample;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.InputStream;
-import java.util.logging.Logger;
-
-import javax.swing.event.EventListenerList;
-
-import geovista.common.data.DataSetForApps;
-import geovista.common.data.GeoDataSource;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.readers.csv.GeogCSVReader;
-
 
 /**
  * Reads shapefiles from included resources
- *
- * Object[0] = names of variables
- * 0bject[1] = data (double[], int[], or String[])
- * 0bject[1] = data (double[], int[], or String[])
- * ...
- * Object[n-1] = the shapefile data
- *
+ * 
+ * Object[0] = names of variables 0bject[1] = data (double[], int[], or
+ * String[]) 0bject[1] = data (double[], int[], or String[]) ... Object[n-1] =
+ * the shapefile data
+ * 
  * also see DBaseFile, ShapeFile
- *
+ * 
  */
 public class GeoDataUtils {
 
-	
-	
 }

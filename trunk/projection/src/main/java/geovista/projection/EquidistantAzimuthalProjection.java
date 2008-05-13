@@ -32,7 +32,7 @@ public class EquidistantAzimuthalProjection extends AzimuthalProjection {
 
 	private int mode;
 	private double[] en;
-	private double M1;
+
 	private double N1;
 	private double Mp;
 	private double He;
@@ -59,6 +59,7 @@ public class EquidistantAzimuthalProjection extends AzimuthalProjection {
 		return p;
 	}
 
+	@Override
 	public void initialize() {
 		super.initialize();
 		if (Math.abs(Math.abs(projectionLatitude) - MapMath.HALFPI) < EPS10) {
@@ -93,6 +94,7 @@ public class EquidistantAzimuthalProjection extends AzimuthalProjection {
 		}
 	}
 
+	@Override
 	public Point2D.Double project(double lam, double phi, Point2D.Double xy) {
 		if (spherical) {
 			double coslam, cosphi, sinphi;
@@ -186,6 +188,7 @@ public class EquidistantAzimuthalProjection extends AzimuthalProjection {
 		return xy;
 	}
 
+	@Override
 	public Point2D.Double projectInverse(double x, double y, Point2D.Double lp) {
 		if (spherical) {
 			double cosc, c_rh, sinc;
@@ -223,8 +226,6 @@ public class EquidistantAzimuthalProjection extends AzimuthalProjection {
 			}
 		} else {
 			double c, Az, cosAz, A, B, D, E, F, psi, t;
-			int i;
-
 			if ((c = MapMath.distance(x, y)) < EPS10) {
 				lp.y = projectionLatitude;
 				lp.x = 0.;
@@ -267,6 +268,7 @@ public class EquidistantAzimuthalProjection extends AzimuthalProjection {
 		return new Ellipse2D.Double(-r, -r, 2 * r, 2 * r);
 	}
 
+	@Override
 	public boolean hasInverse() {
 		return true;
 	}

@@ -36,8 +36,6 @@ public class AlbersProjection extends Projection {
 	private double rho0;
 	private double phi1;
 	private double phi2;
-	private double[] en;
-
 	private final static int N_ITER = 15;
 	private final static double EPSILON = 1.0e-7;
 	private final static double TOL = 1.0e-10;
@@ -145,7 +143,7 @@ public class AlbersProjection extends Projection {
 		if (!spherical) {
 			double ml1, m1;
 
-			if ((en = MapMath.enfn(es)) == null) {
+			if (es == Double.NaN) {
 				throw new IllegalArgumentException("0");
 			}
 			m1 = MapMath.msfn(sinphi, cosphi, es);
