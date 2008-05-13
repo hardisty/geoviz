@@ -717,7 +717,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} else {
 			dataSet.setDataSourceName("");
 		}
-		dataCaster.setAndFireDataSet(newDataSet);
+		dataCaster.setAndFireDataSet(dataSet);
 		logger
 				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
