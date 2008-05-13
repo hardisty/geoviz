@@ -29,6 +29,7 @@ public class DataSetBroadcaster {
 
 	Object[] rawData;
 	String[] varNames;
+	String dataSourceName;
 	final static Logger logger = Logger.getLogger(DataSetBroadcaster.class
 			.getName());
 
@@ -77,6 +78,12 @@ public class DataSetBroadcaster {
 		this.fireDataSetChanged();
 	}
 
+	public void setAndFireDataSet(DataSetForApps dataSetApps) {
+		rawData = dataSetApps.getDataObjectOriginal();
+		dataSourceName = dataSetApps.getDataSourceName();
+		this.fireDataSetChanged();
+	}
+
 	public void fireAuxiliaryDataSet(DataSetForApps auxDataSet) {
 		fireAuxiliaryDataSetChanged(auxDataSet);
 	}
@@ -92,6 +99,9 @@ public class DataSetBroadcaster {
 			return message;
 		}
 		DataSetForApps dataSet = new DataSetForApps(rawData);
+		if (dataSourceName != null) {
+			dataSet.setDataSourceName(dataSourceName);
+		}
 		this.fireDataSetChanged(dataSet);
 		if (logger.isLoggable(Level.FINEST)) {
 			String message = "DataSetBroadcaster, fireDataSetChanged called, ok";

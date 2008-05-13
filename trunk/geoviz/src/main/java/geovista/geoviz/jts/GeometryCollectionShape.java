@@ -1,4 +1,3 @@
-
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
  * for visualizing and manipulating spatial features with geometry and attributes.
@@ -40,86 +39,84 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 
 public class GeometryCollectionShape implements Shape {
-    private ArrayList<Shape> shapes = new ArrayList();
+	private final ArrayList<Shape> shapes = new ArrayList();
 
-    public GeometryCollectionShape() {
-    }
+	public GeometryCollectionShape() {
+	}
 
-    public void add(Shape shape) {
-        shapes.add(shape);
-    }
+	public void add(Shape shape) {
+		shapes.add(shape);
+	}
 
-    public Rectangle getBounds() {
-    	Rectangle rect = new Rectangle();
-    	for (Shape shp : shapes){
-    		Rectangle shpRect = shp.getBounds();
-    		rect = rect.union(shpRect);
-    	}
-        return rect;
-    }
-  
-    public Rectangle2D getBounds2D() {
-        Rectangle2D rectangle = null;
+	public Rectangle getBounds() {
+		Rectangle rect = new Rectangle();
+		for (Shape shp : shapes) {
+			Rectangle shpRect = shp.getBounds();
+			rect = rect.union(shpRect);
+		}
+		return rect;
+	}
 
-    	for (Shape shape : shapes){
+	public Rectangle2D getBounds2D() {
+		Rectangle2D rectangle = null;
 
-            if (rectangle == null) {
-                rectangle = shape.getBounds2D();
-            } else {
-                rectangle.add(shape.getBounds2D());
-            }
-        }
+		for (Shape shape : shapes) {
 
-        return rectangle;
-    }
+			if (rectangle == null) {
+				rectangle = shape.getBounds2D();
+			} else {
+				rectangle.add(shape.getBounds2D());
+			}
+		}
 
-    public boolean contains(double x, double y) {
-        /**@todo Implement this java.awt.Shape method*/
-        throw new java.lang.UnsupportedOperationException(
-            "Method contains() not yet implemented.");
-    }
+		return rectangle;
+	}
 
-    public boolean contains(Point2D p) {
-        /**@todo Implement this java.awt.Shape method*/
-        throw new java.lang.UnsupportedOperationException(
-            "Method contains() not yet implemented.");
-    }
+	public boolean contains(double x, double y) {
+		/** @todo Implement this java.awt.Shape method */
+		throw new java.lang.UnsupportedOperationException(
+				"Method contains() not yet implemented.");
+	}
 
-    public boolean intersects(double x, double y, double w, double h) {
-        /**@todo Implement this java.awt.Shape method*/
-        throw new java.lang.UnsupportedOperationException(
-            "Method intersects() not yet implemented.");
-    }
+	public boolean contains(Point2D p) {
+		/** @todo Implement this java.awt.Shape method */
+		throw new java.lang.UnsupportedOperationException(
+				"Method contains() not yet implemented.");
+	}
 
-    public boolean intersects(Rectangle2D r) {
-        /**@todo Implement this java.awt.Shape method*/
-        throw new java.lang.UnsupportedOperationException(
-            "Method intersects() not yet implemented.");
-    }
+	public boolean intersects(double x, double y, double w, double h) {
+		/** @todo Implement this java.awt.Shape method */
+		throw new java.lang.UnsupportedOperationException(
+				"Method intersects() not yet implemented.");
+	}
 
-    public boolean contains(double x, double y, double w, double h) {
-        /**@todo Implement this java.awt.Shape method*/
-        throw new java.lang.UnsupportedOperationException(
-            "Method contains() not yet implemented.");
-    }
+	public boolean intersects(Rectangle2D r) {
+		/** @todo Implement this java.awt.Shape method */
+		throw new java.lang.UnsupportedOperationException(
+				"Method intersects() not yet implemented.");
+	}
 
-    public boolean contains(Rectangle2D r) {
-        /**@todo Implement this java.awt.Shape method*/
-        throw new java.lang.UnsupportedOperationException(
-            "Method contains() not yet implemented.");
-    }
+	public boolean contains(double x, double y, double w, double h) {
+		/** @todo Implement this java.awt.Shape method */
+		throw new java.lang.UnsupportedOperationException(
+				"Method contains() not yet implemented.");
+	}
 
-    public PathIterator getPathIterator(AffineTransform at) {
-        return new ShapeCollectionPathIterator(shapes, at);
-    }
+	public boolean contains(Rectangle2D r) {
+		/** @todo Implement this java.awt.Shape method */
+		throw new java.lang.UnsupportedOperationException(
+				"Method contains() not yet implemented.");
+	}
 
-    public PathIterator getPathIterator(AffineTransform at, double flatness) {
-        // since we don't support curved geometries, can simply delegate to the simple method
-        return getPathIterator(at);
-    }
+	public PathIterator getPathIterator(AffineTransform at) {
+		return new ShapeCollectionPathIterator(shapes, at);
+	}
+
+	public PathIterator getPathIterator(AffineTransform at, double flatness) {
+		// since we don't support curved geometries, can simply delegate to the
+		// simple method
+		return getPathIterator(at);
+	}
 }
-
