@@ -61,7 +61,7 @@ public class RobinsonProjection extends PseudoCylindricalProjection {
 	private final static double FYC = 1.3523;
 	private final static double C1 = 11.45915590261646417544;
 	private final static double RC1 = 0.08726646259971647884;
-	private final static double ONEEPS = 1.000001;
+	// private final static double ONEEPS = 1.000001;
 	private final static double EPS = 1e-8;
 
 	public RobinsonProjection() {
@@ -73,6 +73,7 @@ public class RobinsonProjection extends PseudoCylindricalProjection {
 						* (array[offset + 2] + z * array[offset + 3])));
 	}
 
+	@Override
 	public Point2D.Double project(double lplam, double lpphi, Point2D.Double xy) {
 		double phi = Math.abs(lpphi);
 		int i = (int) Math.floor(phi * C1);
@@ -89,6 +90,7 @@ public class RobinsonProjection extends PseudoCylindricalProjection {
 		return xy;
 	}
 
+	@Override
 	public Point2D.Double projectInverse(double x, double y, Point2D.Double lp) {
 		int i;
 		double t, t1;
@@ -135,6 +137,7 @@ public class RobinsonProjection extends PseudoCylindricalProjection {
 		return lp;
 	}
 
+	@Override
 	public boolean hasInverse() {
 		return true;
 	}

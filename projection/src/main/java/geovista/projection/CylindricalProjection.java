@@ -16,8 +16,6 @@ limitations under the License.
 
 package geovista.projection;
 
-import java.awt.*;
-import java.awt.geom.*;
 
 /**
  * The superclass for all cylindrical projections.

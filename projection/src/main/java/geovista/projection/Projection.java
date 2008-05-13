@@ -611,7 +611,7 @@ public class Projection implements Cloneable {
 	}
 
 	public void setEllipsoid(Ellipsoid ellipsoid) {
-		ellipsoid = ellipsoid;
+		this.ellipsoid = ellipsoid;
 		a = ellipsoid.equatorRadius;
 		e = ellipsoid.eccentricity;
 		es = ellipsoid.eccentricity2;
