@@ -69,6 +69,7 @@ public class StarPlot extends JPanel implements DataSetListener,
 		vc = new VisualClassifier();
 		starCan = new StarPlotCanvas();
 		starLeg = new StarPlotLegend();
+
 		setLayout(new BorderLayout());
 		methodCombo = new JComboBox(StarPlotLayer.ScaleMethod.values());
 		// this.add(methodCombo, BorderLayout.WEST);
@@ -111,9 +112,11 @@ public class StarPlot extends JPanel implements DataSetListener,
 		double[] set = { 4, 5, 6 };
 		Object[] toySet = { names, toy, set };
 		dataSetChanged(new DataSetEvent(this, toySet));
+		starLeg.isInitializing = false;
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
+		starLeg.isInitializing = true;
 		e.getDataSetForApps().addTableModelListener(this);
 		starCan.dataSetChanged(e);
 		vc.setDataSet(e.getDataSetForApps());
@@ -131,6 +134,7 @@ public class StarPlot extends JPanel implements DataSetListener,
 		SubspaceEvent subE = new SubspaceEvent(this, selectedVars);
 		subspaceChanged(subE);
 		// this.setLegendIndication(0);
+		starLeg.isInitializing = false;
 	}
 
 	public void dataSetModified(DataSetModifiedEvent e) {

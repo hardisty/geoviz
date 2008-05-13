@@ -9,6 +9,7 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -960,6 +961,22 @@ public class DataSetForApps extends AbstractTableModel {
 			}
 		}
 
+	}
+
+	public void setAlias(int column, String[] vals, String[] aliases) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		for (int i = 0; i < vals.length; i++) {
+			map.put(vals[i], aliases[i]);
+		}
+		this.aliases[column] = map;
+	}
+
+	public void setAlias(int column, int[] vals, String[] aliases) {
+		String[] intVals = new String[vals.length];
+		for (int i = 0; i < vals.length; i++) {
+			intVals[i] = String.valueOf(intVals[i]);
+		}
+		this.setAlias(column, vals, aliases);
 	}
 
 	@Override
