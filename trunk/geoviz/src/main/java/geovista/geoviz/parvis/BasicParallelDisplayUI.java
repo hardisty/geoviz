@@ -454,6 +454,9 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 
 	void drawRecord(Graphics2D g2, ParallelDisplay comp, int num,
 			int startAxis, int stopAxis) {
+		if (numRecords <= 0) {
+			return;
+		}
 		if (conditioning.length != numRecords) {
 			conditioning = new int[numRecords];
 		}

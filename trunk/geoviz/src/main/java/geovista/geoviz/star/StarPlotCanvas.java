@@ -540,7 +540,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	}
 
 	public Color getStarFillColor(int ind) {
-		if (starColors == null) {
+		if (starColors == null || starColors.length <= ind) {
 			return null;
 		}
 		return starColors[ind];

@@ -1,7 +1,6 @@
 /* 
  Licensed under LGPL v. 2.1 or any later version;
  see GNU LGPL for details.
- Original Author: Frank Hardisty
  */
 
 package geovista.toolkitcore;
@@ -33,7 +32,6 @@ import java.util.logging.SimpleFormatter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -121,7 +119,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	ToolkitBeanSet tBeanSet;
 
 	// Create JDesktopPane to hold the internal frames
-	JDesktopPane desktop = new JDesktopPane();
+	GvDesktopPane desktop = new GvDesktopPane();
 
 	// managing our layouts
 
@@ -132,8 +130,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	DataSetBroadcaster dataCaster;
 	CoordinationManager coord;
 	DataSetForApps dataSet;
-	Vector backgroundDataSets; // every item in this should be a
-	// DataSetForApps
+	Vector<DataSetForApps> backgroundDataSets;
 	JMenuBar jMenuBar1;
 	JMenu menuFile;
 	JMenuItem menuItemLoadShp;
@@ -198,13 +195,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void initMembers() {
+
 		// collection of classes to add
 		toolMenuList = new ArrayList();
 		toolClassHash = new HashMap();
 
 		// Create JDesktopPane to hold the internal frames
-		desktop = new JDesktopPane();
+		desktop = new GvDesktopPane();
 
+		// addBindings();
 		// managing our layouts
 		filePath = "48States";
 		shpRead = new ShapeFileDataReader();
@@ -441,12 +440,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} else if (shortClassName.equalsIgnoreCase("TableBrowser")) {
 			bInterFrame.setSize(670, 530);
 		} else if (shortClassName.equalsIgnoreCase("SonicClassifier")) {
-			// Ke: ######SONICCLASSIFIER COULD MAKE THE PROGRAM DEAD IN ABSENCE
-			// OF SOUND DEVICE
-			// Frank: sound devices depend on the presence of a "soundbank.gm"
-			// file,
-			// which is avialble as a resource from
-			// geovista.sound.resources
 
 			bInterFrame.setSize(350, 100);
 		} else if (shortClassName.equalsIgnoreCase("SelectionAnimator")) {
@@ -641,18 +634,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			ToolkitIO.writeLayout(getFileName(), xml, this);
 			// ToolkitIO.writeLayout(getFileName(), tBeanSet, this);
 
-		} else if (toolClassHash.containsKey(e.getSource())) { // one of
-			// our added
-			// classes
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-			String className = (String) toolClassHash.get(e.getSource());
-			ToolkitBean tBean = null;
-			tBean = instantiateBean(className);
-			addBeanToGui(tBean);
-			Object newBean = tBean.getOriginalBean();
-			fireNewBeanMethods(newBean);
-			tBeanSet.add(tBean);
-			setCursor(Cursor.getDefaultCursor());
+		} else if (toolClassHash.containsKey(e.getSource())) {
+			createAndAddBean(e);
 		}
 
 		else if (e.getSource() == menuItemRemoveAllTools) {
@@ -693,6 +676,18 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// } else if (e.getSource() == this.menuItemDisconnect) {
 		//
 		// }
+	}
+
+	private void createAndAddBean(ActionEvent e) {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		String className = (String) toolClassHash.get(e.getSource());
+		ToolkitBean tBean = null;
+		tBean = instantiateBean(className);
+		addBeanToGui(tBean);
+		Object newBean = tBean.getOriginalBean();
+		fireNewBeanMethods(newBean);
+		tBeanSet.add(tBean);
+		setCursor(Cursor.getDefaultCursor());
 	}
 
 	private void loadBackgroundData(String name) {
@@ -1209,4 +1204,5 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		 * block e.printStackTrace(); } }
 		 */
 	}
+
 }

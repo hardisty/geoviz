@@ -69,13 +69,14 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 	int plotHeight;
 	float penWidth;
 	boolean odd;
+	boolean isInitializing;
 	int rightNum;
 	int leftNum;
 	final static Logger logger = Logger.getLogger(StarPlotLegend.class
 			.getName());
 
 	public StarPlotLegend() {
-
+		isInitializing = true;
 		fillColor = Color.black;
 		outlineColor = Color.white;
 		setBackground(Color.lightGray);
@@ -108,7 +109,7 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 		// this.add(rightPanel);
 
 		makeConnectorStroke();
-
+		isInitializing = false;
 	}
 
 	private void makeConnectorStroke() {
@@ -214,6 +215,9 @@ public class StarPlotLegend extends JPanel implements ComponentListener,
 
 	@Override
 	public void paintComponent(Graphics g) {
+		if (isInitializing) {
+			return;
+		}
 		super.paintComponent(g);
 		if (midPanel == null || connectorLines == null) {
 			return;
