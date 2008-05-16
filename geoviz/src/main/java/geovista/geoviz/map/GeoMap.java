@@ -508,6 +508,7 @@ public class GeoMap extends JPanel
 			logger.finest("GeoMap, got a data set, id = "
 					+ e.getDataSetForApps().hashCode());
 		}
+		logger.info(e.getDataSetForApps().getDataSourceName());
 		setDataSet(e.getDataSetForApps());
 	}
 
