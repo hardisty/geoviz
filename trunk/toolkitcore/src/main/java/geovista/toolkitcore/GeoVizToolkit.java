@@ -1124,7 +1124,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		boolean useProj = false;
 		boolean useAux = true;
-		double tolerance = 0.0001;
+		double tolerance = 0.1;
 		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 

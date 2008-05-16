@@ -1,24 +1,24 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>edu.psu.geovista</groupId>
+	<groupId>geovista</groupId>
 	<artifactId>sound</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>sound</name>
 	<!-- Inherits only JUnit and 1.5 compilation plugins from parent POM -->
 	<parent>
-		<groupId>edu.psu.geovista</groupId>
+		<groupId>geovista</groupId>
 		<artifactId>studio-modules</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>edu.psu.geovista</groupId>
+			<groupId>geovista</groupId>
 			<artifactId>symbolization</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>edu.psu.geovista</groupId>
+			<groupId>geovista</groupId>
 			<artifactId>geoviz</artifactId>
 			<version>${project.version}</version>
 		</dependency>
