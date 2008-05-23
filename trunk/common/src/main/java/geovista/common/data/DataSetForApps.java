@@ -97,6 +97,27 @@ public class DataSetForApps extends AbstractTableModel {
 	}
 
 	/**
+	 * Convenience constructor.
+	 * 
+	 * @param varNames
+	 *            String names of variables
+	 * @param data
+	 *            Array of arrays, of types double[], int[], or String[]
+	 * @param geoms
+	 *            Shapely shapes
+	 */
+	public DataSetForApps(String[] varNames, Object[] data, Shape[] geoms) {
+		listenerList = new EventListenerList();
+		Object[] originalData = new Object[data.length + 2];
+		originalData[0] = varNames;
+		for (int i = 0; i < data.length; i++) {
+			originalData[i + 1] = data[i];
+		}
+		originalData[originalData.length - 1] = geoms;
+		setDataObject(originalData);
+	}
+
+	/**
 	 * This constructor is equivalent to calling setDataObject(data) with the
 	 * array passed in.
 	 * 
@@ -107,6 +128,19 @@ public class DataSetForApps extends AbstractTableModel {
 	public DataSetForApps(Object[] data) {
 		listenerList = new EventListenerList();
 		setDataObject(data);
+	}
+
+	public DataSetForApps(String[] varNames, Object[] data, Shape[] geoms,
+			SpatialWeights weights) {
+		listenerList = new EventListenerList();
+		Object[] originalData = new Object[data.length + 3];
+		originalData[0] = varNames;
+		for (int i = 0; i < data.length; i++) {
+			originalData[i + 1] = data[i];
+		}
+		originalData[originalData.length - 1] = geoms;
+		originalData[originalData.length - 2] = weights;
+		setDataObject(originalData);
 	}
 
 	/**
@@ -329,7 +363,7 @@ public class DataSetForApps extends AbstractTableModel {
 	}
 
 	public List<Integer> getNeighbors(int id) {
-		return spatialWeights.getNeighbor(id);
+		return spatialWeights.getNeighborIDs(id);
 	}
 
 	public SpatialWeights getSpatialWeights() {

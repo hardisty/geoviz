@@ -125,6 +125,7 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 			variableCombo.addItem(dataSet.getNumericArrayName(i));
 		}
 		variableCombo.addActionListener(this);
+		this.histo.selectionChanged(new SelectionEvent());
 	}
 
 	public void selectionChanged(SelectionEvent e) {

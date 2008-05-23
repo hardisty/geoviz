@@ -162,7 +162,8 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 
 	private void findPlotLocations() {
 		Rectangle[] plotLocs = plotLocations;
-		if (plotLocs == null || getWidth() <= 0 || plotsOrder == null) {
+		if (plotLocs == null || getWidth() <= 0 || plotsOrder == null
+				|| plotsOrder.length != plotLocs.length) {
 			return;
 		}
 		if (plotLocs.length != plotLayer.getObsList().length) {

@@ -1534,7 +1534,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				// Color indicationColor = ls.colorIndication;
 				SpatialWeights sw = dataSet.getSpatialWeights();
 				if (sw != null) {
-					List<Integer> bors = sw.getNeighbor(indication);
+					List<Integer> bors = sw.getNeighborIDs(indication);
 
 					for (Integer obsBor : bors) {
 						ls.renderSecondaryIndication(g2, obsBor);

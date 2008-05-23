@@ -636,48 +636,48 @@ public class GeoMap extends JPanel
 		// set default data to get color from
 		int numNumeric = dataSet.getNumberNumericAttributes();
 
-		int currColorColumnX = mapCan.getCurrColorColumnX();
-		int currColorColumnY = mapCan.getCurrColorColumnY();
-
-		if (currColorColumnX < 0) {
-			if (numNumeric > 0) {
-				int index = visClassOne.getCurrVariableIndex();
-				// this.setXVariable(1);
-				// this.mapCan.setCurrColorColumnX(1); // jin: set the initial
-				// variable index of visualclassifier
-				setXVariable(index);
-				mapCan.setCurrColorColumnX(index);
-			}
-		} else if (currColorColumnX < numNumeric) {
-			setXVariable(currColorColumnX);
-			mapCan.setCurrColorColumnX(currColorColumnX);
-		}
-
-		if (currColorColumnY < 0) {
-			if (numNumeric > 1) {
-
-				int index = visClassTwo.getCurrVariableIndex();
-				// this.setYVariable(2);
-				// this.mapCan.setCurrColorColumnY(2); // jin: set the initial
-				// variable index of visualclassifier
-				setYVariable(index);
-				mapCan.setCurrColorColumnY(index);
-			} else if (numNumeric == 1) {
-				setYVariable(1);
-				mapCan.setCurrColorColumnY(1);
-			}
-		} else if (currColorColumnY < numNumeric) {
-			setYVariable(currColorColumnY);
-			mapCan.setCurrColorColumnY(currColorColumnY);
-		}
+		// int currColorColumnX = mapCan.getCurrColorColumnX();
+		// int currColorColumnY = mapCan.getCurrColorColumnY();
+		//
+		// if (currColorColumnX < 0) {
+		// if (numNumeric > 0) {
+		// int index = visClassOne.getCurrVariableIndex();
+		// // this.setXVariable(1);
+		// // this.mapCan.setCurrColorColumnX(1); // jin: set the initial
+		// // variable index of visualclassifier
+		// setXVariable(index);
+		// mapCan.setCurrColorColumnX(index);
+		// }
+		// } else if (currColorColumnX < numNumeric) {
+		// setXVariable(currColorColumnX);
+		// mapCan.setCurrColorColumnX(currColorColumnX);
+		// }
+		//
+		// if (currColorColumnY < 0) {
+		// if (numNumeric > 1) {
+		//
+		// int index = visClassTwo.getCurrVariableIndex();
+		// // this.setYVariable(2);
+		// // this.mapCan.setCurrColorColumnY(2); // jin: set the initial
+		// // variable index of visualclassifier
+		// setYVariable(index);
+		// mapCan.setCurrColorColumnY(index);
+		// } else if (numNumeric == 1) {
+		// setYVariable(1);
+		// mapCan.setCurrColorColumnY(1);
+		// }
+		// } else if (currColorColumnY < numNumeric) {
+		// setYVariable(currColorColumnY);
+		// mapCan.setCurrColorColumnY(currColorColumnY);
+		// }
 
 		// Jin: fix the bug the initially the variable names in comboxes not
 		// mataching the variable names in the indication
 
 		if (numNumeric > 2) { // frank: fix the bug of the map crashing if
 			// there are not enough variables
-			visClassOne.setCurrVariableIndex(1); // Jin
-			visClassTwo.setCurrVariableIndex(2);
+			visClassOne.setCurrVariableIndex(0); // Jin
+			visClassTwo.setCurrVariableIndex(1);
 			// frank here again... lets try something else....
 			ActionEvent e = new ActionEvent(this, 0,
 					ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED);

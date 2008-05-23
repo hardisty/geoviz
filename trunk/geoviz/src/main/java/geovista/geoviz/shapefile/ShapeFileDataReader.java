@@ -174,7 +174,7 @@ public class ShapeFileDataReader implements Serializable {
 		return null;
 	}
 
-	private static Shape[] getShapes(InputStream shpStream) {
+	public static Shape[] getShapes(InputStream shpStream) {
 		Geometry[] geoms = getGeoms(shpStream);
 
 		// SpatialWeights weights = findSpatialWeights(geoms);
@@ -184,6 +184,13 @@ public class ShapeFileDataReader implements Serializable {
 		Shape[] shapes = geomsToShapes(simplerGeoms);
 
 		return shapes;
+	}
+
+	public static SpatialWeights getWeights(InputStream shpStream) {
+		Geometry[] geoms = getGeoms(shpStream);
+
+		SpatialWeights weights = findSpatialWeights(geoms);
+		return weights;
 	}
 
 	protected static DataSetForApps makeDataSetForApps(String fileName) {
