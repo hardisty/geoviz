@@ -28,15 +28,7 @@
         <objectClass>geovista.geoviz.parvis.ParallelPlot</objectClass>
         <originalBean>
           <selection>
-            <int>0</int>
-            <int>2</int>
-            <int>15</int>
-            <int>21</int>
-            <int>29</int>
-            <int>30</int>
-            <int>32</int>
-            <int>35</int>
-            <int>39</int>
+
           </selection>
           <backgroundColor>
             <red>238</red>
@@ -178,7 +170,7 @@
       </ToolkitBean>
     </beanSet>
   </beanSet>
-  <dataSource>48States</dataSource>
+  <dataSource>GTD</dataSource>
   <selection reference="../beanSet/beanSet/ToolkitBean[2]/originalBean/selection"/>
   <indication>-1</indication>
   <selectedBean>SingleHistogram</selectedBean>
