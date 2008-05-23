@@ -94,6 +94,7 @@ import geovista.toolkitcore.data.GeoDataNiger;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
+import geovista.toolkitcore.data.PurdueDataReader;
 import geovista.toolkitcore.marshal.Marshaller;
 import geovista.touchgraph.LinkGraph;
 import geovista.touchgraph.PCAViz;
@@ -140,6 +141,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	JMenuItem menuItemLoadSC;
 	JMenuItem menuItemLoadSCCities;
 	JMenuItem menuItemLoadCartogram;
+	JMenuItem menuItemLoadGTD;
 	JMenuItem menuItemLoadBackgroundShape;
 	JMenuItem menuItemLoadSCBackgroundShape;
 	JMenu menuRemoveTool;
@@ -220,6 +222,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadSC = new JMenuItem();
 		menuItemLoadSCCities = new JMenuItem();
 		menuItemLoadCartogram = new JMenuItem();
+		menuItemLoadGTD = new JMenuItem();
 		menuItemLoadBackgroundShape = new JMenuItem();
 		menuItemLoadSCBackgroundShape = new JMenuItem();
 		menuRemoveTool = new JMenu();
@@ -267,7 +270,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		}
 
-		loadData(fileNameIn);
+		// loadData(fileNameIn);
 
 		URL urlGif = null;
 
@@ -608,6 +611,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			loadData("48States");
 		} else if (e.getSource() == menuItemLoadCartogram) {
 			loadData("Cartogram");
+
+		} else if (e.getSource() == menuItemLoadGTD) {
+			loadData("GTD");
+
 		} else if (e.getSource() == menuItemLoadBackgroundShape) {
 			openBackgroundShapeFilePicker();
 		} else if (e.getSource() == menuItemLoadSCBackgroundShape) {
@@ -734,7 +741,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			GeoDataGeneralizedStates statesData = new GeoDataGeneralizedStates();
 			newDataSet = statesData.getDataSet();
 
-		} else if (name.equals("SC")) {
+		} else if (name.equals("GTD")) {
+			// GTDReader gtdData = new GTDReader();
+			PurdueDataReader gtdData = new PurdueDataReader();
+			newDataSet = gtdData.getDataForApps().getDataObjectOriginal();
+		}
+
+		else if (name.equals("SC")) {
 			GeoDataSCarolina carolinaData = new GeoDataSCarolina();
 			newDataSet = carolinaData.getDataSet();
 
@@ -876,6 +889,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadSCCities.addActionListener(this);
 		menuItemLoadShp.addActionListener(this);
 		menuItemLoadCartogram.addActionListener(this);
+		menuItemLoadGTD.addActionListener(this);
 		menuItemLoadBackgroundShape.addActionListener(this);
 		menuItemLoadSCBackgroundShape.addActionListener(this);
 		menuItemLoadStates.addActionListener(this);
@@ -972,6 +986,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadSC.setText("Load South Carolina County Data");
 		menuItemLoadSCCities.setText("Load South Carolina City Data");
 		menuItemLoadCartogram.setText("Load Population Cartogram");
+		menuItemLoadGTD.setText("Load GTD");
 		menuRemoveTool.setText("Remove Tool");
 		menuAbout.setText("About");
 		menuHelp.setText("Help");
@@ -1011,6 +1026,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuFile.add(menuItemLoadSC);
 		menuFile.add(menuItemLoadSCCities);
 		menuFile.add(menuItemLoadCartogram);
+		menuFile.add(menuItemLoadGTD);
 		menuFile.addSeparator();
 		menuFile.add(menuItemLoadBackgroundShape);
 		menuFile.add(menuItemLoadSCBackgroundShape);
@@ -1124,7 +1140,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		boolean useProj = false;
 		boolean useAux = true;
-		double tolerance = 0.1;
+		double tolerance = 0.001;
 		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 
@@ -1148,6 +1164,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		String fileName = null;
 
 		if (args.length == 0) {
+			// fileName = "GTD";
 			// fileName = "c:\\temp\\shapefiles\\ca_cities.shp";
 			// fileName =
 			// "C:\\data\\geovista_data\\Historical-Demographic\\census\\census80_90_00.shp";

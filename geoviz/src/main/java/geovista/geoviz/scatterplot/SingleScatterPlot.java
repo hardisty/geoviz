@@ -144,8 +144,8 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 
 		displayIndices[0] = 1;
 		displayIndices[1] = 2;
-		setXVariable(displayIndices[0]);
-		setYVariable(displayIndices[1]);
+		setXVariable(displayIndices[0] - 1);
+		setYVariable(displayIndices[1] - 1);
 		scatterPlot.setAxisOn(true);
 		scatterPlot.setElementPosition(displayIndices);
 	}

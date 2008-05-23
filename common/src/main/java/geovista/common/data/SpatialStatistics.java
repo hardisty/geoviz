@@ -23,7 +23,7 @@ public abstract class SpatialStatistics {
 
 		double[] moranScores = new double[zData.length];
 		for (int i = 0; i < zData.length; i++) {
-			List<Integer> bors = sw.getNeighbor(i);
+			List<Integer> bors = sw.getNeighborIDs(i);
 			double sumScore = 0;
 			for (int j = 0; j < bors.size(); j++) {
 				sumScore = sumScore + zData[bors.get(j)];
@@ -46,7 +46,7 @@ public abstract class SpatialStatistics {
 
 		double[] moranScores = new double[moranData.length];
 		for (int i = 0; i < moranData.length; i++) {
-			List<Integer> bors = sw.getNeighbor(i);
+			List<Integer> bors = sw.getNeighborIDs(i);
 			double sumScore = 0;
 			for (int j = 0; j < bors.size(); j++) {
 				sumScore = sumScore + moranData[bors.get(j)];
