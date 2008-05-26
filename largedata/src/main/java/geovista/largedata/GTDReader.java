@@ -2,7 +2,7 @@
  see GNU LGPL for details.
  Original Author: Frank Hardisty */
 
-package geovista.toolkitcore.data;
+package geovista.largedata;
 
 import java.awt.Shape;
 import java.io.BufferedReader;

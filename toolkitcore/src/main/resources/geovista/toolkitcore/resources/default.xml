@@ -170,7 +170,7 @@
       </ToolkitBean>
     </beanSet>
   </beanSet>
-  <dataSource>GTD</dataSource>
+  <dataSource>48States</dataSource>
   <selection reference="../beanSet/beanSet/ToolkitBean[2]/originalBean/selection"/>
   <indication>-1</indication>
   <selectedBean>SingleHistogram</selectedBean>
