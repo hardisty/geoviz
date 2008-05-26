@@ -4,7 +4,7 @@
  Original Author: Frank Hardisty
  */
 
-package geovista.toolkitcore.data;
+package geovista.largedata;
 
 import java.util.logging.Logger;
 

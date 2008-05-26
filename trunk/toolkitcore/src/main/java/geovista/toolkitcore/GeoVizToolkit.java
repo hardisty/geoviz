@@ -50,6 +50,7 @@ import geovista.collaboration.GeoJabber;
 import geovista.common.data.DataSetBroadcaster;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DataSetModifiedBroadcaster;
+import geovista.common.data.GeoDataSource;
 import geovista.common.event.AnnotationEvent;
 import geovista.common.event.AnnotationListener;
 import geovista.common.event.DataSetEvent;
@@ -90,11 +91,9 @@ import geovista.matrix.map.MoranMap;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
 import geovista.toolkitcore.data.GeoDataCartogram;
-import geovista.toolkitcore.data.GeoDataNiger;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
-import geovista.toolkitcore.data.PurdueDataReader;
 import geovista.toolkitcore.marshal.Marshaller;
 import geovista.touchgraph.LinkGraph;
 import geovista.touchgraph.PCAViz;
@@ -742,12 +741,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			newDataSet = statesData.getDataSet();
 
 		} else if (name.equals("GTD")) {
-			// GTDReader gtdData = new GTDReader();
-			PurdueDataReader gtdData = new PurdueDataReader();
-			newDataSet = gtdData.getDataForApps().getDataObjectOriginal();
-		}
-
-		else if (name.equals("SC")) {
+			String className = "geovista.largedata.GTDReader";
+			newDataSet = geoDataFromName(className);
+		} else if (name.equals("Purdue")) {
+			String className = "geovista.largedata.PurdueDataReader";
+			newDataSet = geoDataFromName(className);
+		} else if (name.equals("SC")) {
 			GeoDataSCarolina carolinaData = new GeoDataSCarolina();
 			newDataSet = carolinaData.getDataSet();
 
@@ -765,10 +764,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		}
 
-		else if (name.equals("niger")) {
-			GeoDataNiger cartogramData = new GeoDataNiger();
-			newDataSet = cartogramData.getDataSet();
+		else if (name.equals("Niger")) {
+			String className = "geovista.largedata.GeoDataNiger";
 
+			newDataSet = geoDataFromName(className);
 		}
 
 		else if (name.equals("PennaPCA")) {
@@ -791,6 +790,23 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		setTitle("GeoViz Toolkit -- " + name);
 		return newDataSet;
 
+	}
+
+	private Object[] geoDataFromName(String className) {
+		Object[] newDataSet;
+		Class nigerClass;
+		Object nigerInstance = null;
+		try {
+			nigerClass = Class.forName(className);
+			nigerInstance = nigerClass.newInstance();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GeoDataSource dataSource = (GeoDataSource) nigerInstance;
+
+		newDataSet = dataSource.getDataForApps().getDataObjectOriginal();
+		return newDataSet;
 	}
 
 	private void openShapefilePicker() {
