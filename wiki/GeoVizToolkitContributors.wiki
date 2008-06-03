@@ -24,7 +24,10 @@
 
 = Financial contributors: =
  * *[http://www.nsf.gov/ The National Science Foundation]*, through the  *[http://www.geovista.psu.edu/grants/dg-qg/intro.html Digital Government Quality Graphics]* grant.
-* *[http://www.dhs.gov/index.shtm The Department of Homeland Security] through the  *[http://www.geovista.psu.edu/NEVAC/index.html The North-East Visualization and Analytics Center]*
+* *[http://www.dhs.gov/index.shtm The Department of Homeland Security]* through the  *[http://www.geovista.psu.edu/NEVAC/index.html The North-East Visualization and Analytics Center]*
  * *[http://www.cancer.gov/ The National Cancer Institute]* through the *[http://www.geovista.psu.edu/grants/nci-esda/ Geovisualization and Spatial Analysis of Cancer Data]* grant.
  * *[http://www.scguard.com/ The Army National Guard of South Carolina]*
+
+
+If I have missed anyone, my apologies, please let me know at hardisty@psu.edu
  
