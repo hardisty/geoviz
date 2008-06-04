@@ -32,6 +32,7 @@ import java.util.logging.SimpleFormatter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -1162,6 +1163,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		try {
 			// UIManager.setLookAndFeel(new SubstanceLookAndFeel());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1238,4 +1240,21 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		 */
 	}
 
+	public static void main2(String[] args) {
+		JFrame app = new JFrame();
+		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		URL url = null;
+		JEditorPane ep = null;
+		try {
+			url = new URL("http://en.wikipedia.org/wiki/Philippines");
+			ep = new JEditorPane(url);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		app.add(ep);
+		app.setVisible(true);
+		// String html =
+
+	}
 }

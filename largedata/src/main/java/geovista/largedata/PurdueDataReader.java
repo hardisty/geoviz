@@ -128,7 +128,7 @@ public class PurdueDataReader implements GeoDataSource {
 	private DataSetForApps makeDataSetForApps() {
 
 		int nCounties = idName.size();
-		int periodicity = 30;
+		int periodicity = 60;
 		int minDay = 1;
 		int maxDay = 730;
 		if (nCases == null) {
@@ -204,7 +204,7 @@ public class PurdueDataReader implements GeoDataSource {
 		SpatialWeights weights = ShapeFileDataReader.getWeights(shpStream2);
 		DataSetForApps dataSet = new DataSetForApps(varNames, numericalArrays,
 				geoms, weights);
-		// transformStdDev(dataSet);
+		transformStdDev(dataSet);
 
 		return dataSet;
 	}

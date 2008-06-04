@@ -131,7 +131,7 @@ public class GTDReader implements GeoDataSource {
 		subString = input.substring(imonthStart - 1, imonthEnd);
 		subString = subString.trim();
 		// System.out.println("imonth:" + subString);
-		if (subString.equals("") || isNumeric(subString) == false) {
+		if (subString.equals("") || isInteger(subString) == false) {
 			imonth.add(Integer.MIN_VALUE);
 		} else {
 			imonth.add(Integer.valueOf(subString));
@@ -223,7 +223,7 @@ public class GTDReader implements GeoDataSource {
 		subString = subString.replaceAll(",", "");
 		subString = subString.replaceAll(" ", "");
 
-		if (isNumeric(subString) == false) {
+		if (isInteger(subString) == false) {
 			damamt.add(Integer.MIN_VALUE);
 
 		} else if (subString.equals("")) {
@@ -234,7 +234,7 @@ public class GTDReader implements GeoDataSource {
 		}
 	}
 
-	private static boolean isNumeric(String str) {
+	private static boolean isInteger(String str) {
 		try {
 			Integer.parseInt(str);
 			return true;
@@ -409,7 +409,7 @@ public class GTDReader implements GeoDataSource {
 			nextThing = sc.next();
 			// System.out.println(nextThing);
 			// logger.info(nextThing);
-			if (isNumeric(nextThing)) {
+			if (isInteger(nextThing)) {
 				if (id != null) {
 					name = removeQuotes(name);
 					name = name.trim();

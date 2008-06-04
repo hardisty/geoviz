@@ -44,9 +44,12 @@ import javax.swing.JProgressBar;
 import org.geotools.data.shapefile.Lock;
 import org.geotools.data.shapefile.shp.ShapefileWriter;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeneralPathLine;
+import geovista.geoviz.jts.Java2DConverter;
 import geovista.geoviz.scatterplot.LinearRegression;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
 import geovista.geoviz.shapefile.ShapeFileProjection;
@@ -59,8 +62,9 @@ public class MapGenFile {
 	protected final static Logger logger = Logger.getLogger(MapGenFile.class
 			.getName());
 	public static final String CARTGENFILE = "./cartogram.gen"; // Cartogram
-																// generate
-																// file.
+
+	// generate
+	// file.
 
 	public static GeneralPath[] readGenFile() throws IOException {
 		return MapGenFile.readGenFile(MapGenFile.CARTGENFILE);
@@ -95,8 +99,8 @@ public class MapGenFile {
 
 			// if (sscanf(line,"%s %f %f",&stringVal,&xcoord,&ycoord)==3)
 			if (secondToken != null && thirdToken != null) { // we have
-																// stringVal, x
-																// and y coords
+				// stringVal, x
+				// and y coords
 				try {
 					stringVal = firstToken;
 					xcoord = Float.parseFloat(secondToken);
@@ -116,11 +120,11 @@ public class MapGenFile {
 			}
 			// else if (sscanf(line,"%f %f",&xcoord,&ycoord)==2)
 			if (!usedFlag && secondToken != null && firstToken != null) { // we
-																			// have
-																			// just
-																			// x
-																			// and
-																			// y
+				// have
+				// just
+				// x
+				// and
+				// y
 				try {
 					xcoord = Float.parseFloat(firstToken);
 					ycoord = Float.parseFloat(secondToken);
@@ -139,7 +143,7 @@ public class MapGenFile {
 				stringVal = firstToken;
 				isFirstPoint = true; // the next point should be a "moveTo"
 				if (stringVal.compareToIgnoreCase("END") != 0) { // its not
-																	// end
+					// end
 					// close the current polygon (actually, don't, breaks
 					// shapefile)
 					// path.moveTo(firstXCoord, firstYCoord);
@@ -363,7 +367,7 @@ public class MapGenFile {
 			ShapefileWriter shpWriter = shpWriter = new ShapefileWriter(
 					shpChan, shxChan, lock);
 
-			// XXX write each point here
+			// shpWriter.wr
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -386,10 +390,13 @@ public class MapGenFile {
 			FileChannel shpChan = shpFis.getChannel();
 			FileChannel shxChan = shxFis.getChannel();
 			Lock lock = new Lock();
-			ShapefileWriter shpWriter = shpWriter = new ShapefileWriter(
-					shpChan, shxChan, lock);
+			ShapefileWriter shpWriter = new ShapefileWriter(shpChan, shxChan,
+					lock);
 
-			// XXX write each generalpath here
+			for (GeneralPath path : paths) {
+				Geometry geom = Java2DConverter.toMultiGon(path);
+				shpWriter.writeGeometry(geom);
+			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -411,8 +418,8 @@ public class MapGenFile {
 		 * ShapeFile.SHAPE_TYPE_POLYGON) { makePolygonRecord(paths, theShapes); }
 		 * else if (shapeType == ShapeFile.SHAPE_TYPE_POLYLINE) {
 		 * makePolylineRecord(paths, theShapes); } shapeFile.setData(theShapes);
-		 * try { shapeFile.write(fileName, baseName);
-		 *  } catch (Exception ex) { ex.printStackTrace(); }
+		 * try { shapeFile.write(fileName, baseName); } catch (Exception ex) {
+		 * ex.printStackTrace(); }
 		 */
 	}
 
@@ -570,9 +577,9 @@ public class MapGenFile {
 			datFile = File.createTempFile("census", ".dat");
 			datFileName = datFile.getPath();
 			polygonFile = File.createTempFile("polygon", ".gen"); // this will
-																	// be the
-																	// transformed
-																	// file
+			// be the
+			// transformed
+			// file
 			polygonFileName = polygonFile.getPath();
 
 		} catch (IOException ex2) {
@@ -592,7 +599,7 @@ public class MapGenFile {
 			if (trans == null) {
 				trans = new TransformsMain(genFileName, datFileName,
 						polygonFileName); // tranforms all the data, reading
-											// from the temp files
+				// from the temp files
 				logger.finest(trans.toString());
 			} else {
 				trans.setGenFileName(genFileName);
@@ -841,11 +848,11 @@ public class MapGenFile {
 				@SuppressWarnings("unused")
 				// side effect: does all the work
 				TransformsMain trans = new TransformsMain(true); // tranforms
-																	// all the
-																	// data,
-																	// reading
-																	// from
-																	// files
+				// all the
+				// data,
+				// reading
+				// from
+				// files
 			} catch (Exception ex1) {
 				ex1.printStackTrace();
 			}

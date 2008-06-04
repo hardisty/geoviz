@@ -49,6 +49,7 @@ import geovista.common.data.SpatialWeights;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.jts.Java2DConverter;
+import geovista.geoviz.jts.LiteShape;
 import geovista.readers.csv.GeogCSVReader;
 import geovista.readers.geog.AttributeDescriptionFile;
 
@@ -148,7 +149,7 @@ public class ShapeFileDataReader implements Serializable {
 
 	}
 
-	private static Geometry[] getGeoms(InputStream shpStream) {
+	public static Geometry[] getGeoms(InputStream shpStream) {
 		try {
 			ShapefileReader shpReader;
 			ReadableByteChannel shpChan = Channels.newChannel(shpStream);
@@ -181,9 +182,20 @@ public class ShapeFileDataReader implements Serializable {
 
 		Geometry[] simplerGeoms = makeSimplerGeoms(geoms, tolerance);
 
-		Shape[] shapes = geomsToShapes(simplerGeoms);
+		// Shape[] shapes = geomsToShapes(simplerGeoms);
+		Shape[] shapes = getLiteShapes(simplerGeoms);
 
 		return shapes;
+	}
+
+	private static LiteShape[] getLiteShapes(Geometry[] geoms) {
+		LiteShape[] liteShapes = new LiteShape[geoms.length];
+		AffineTransform xForm = new AffineTransform();
+		for (int i = 0; i < geoms.length; i++) {
+			LiteShape shp = new LiteShape(geoms[i], xForm, false);
+			liteShapes[i] = shp;
+		}
+		return liteShapes;
 	}
 
 	public static SpatialWeights getWeights(InputStream shpStream) {

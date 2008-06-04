@@ -277,7 +277,9 @@ public class GeoMapUni extends JPanel
 			// index++;//no longer, data set for apps has changed
 			mapCan.setCurrColorColumnX(index);
 			mapCan.setCurrColorColumnY(index);
-			histo.setData(dataSet.getNumericDataAsDouble(index));
+			if (histo != null) {
+				histo.setData(dataSet.getNumericDataAsDouble(index));
+			}
 			this.firePropertyChange("SelectedVariable", index, index);
 		}
 
