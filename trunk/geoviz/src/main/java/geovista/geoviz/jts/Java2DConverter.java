@@ -1,4 +1,3 @@
-
 /*
  * The Unified Mapping Platform (JUMP) is an extensible, interactive GUI 
  * for visualizing and manipulating spatial features with geometry and attributes.
@@ -34,17 +33,20 @@
 package geovista.geoviz.jts;
 
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList; 
-import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
@@ -55,27 +57,30 @@ import com.vividsolutions.jts.geom.Polygon;
  */
 public class Java2DConverter {
 	private static double POINT_MARKER_SIZE = 3.0;
-	private AffineTransform pointConverter;
+	private final AffineTransform pointConverter;
 
 	public Java2DConverter(AffineTransform pointConverter) {
 		this.pointConverter = pointConverter;
+	}
+
+	public Java2DConverter() {
+		pointConverter = new AffineTransform();
 	}
 
 	private Shape toShape(Polygon p) throws NoninvertibleTransformException {
 		ArrayList holeVertexCollection = new ArrayList();
 
 		for (int j = 0; j < p.getNumInteriorRing(); j++) {
-			holeVertexCollection.add(
-				toViewCoordinates(p.getInteriorRingN(j).getCoordinates()));
+			holeVertexCollection.add(toViewCoordinates(p.getInteriorRingN(j)
+					.getCoordinates()));
 		}
 
-		return new PolygonShape(
-			toViewCoordinates(p.getExteriorRing().getCoordinates()),
-			holeVertexCollection);
+		return new PolygonShape(toViewCoordinates(p.getExteriorRing()
+				.getCoordinates()), holeVertexCollection);
 	}
 
 	private Coordinate[] toViewCoordinates(Coordinate[] modelCoordinates)
-		throws NoninvertibleTransformException {
+			throws NoninvertibleTransformException {
 		Coordinate[] viewCoordinates = new Coordinate[modelCoordinates.length];
 
 		for (int i = 0; i < modelCoordinates.length; i++) {
@@ -87,11 +92,11 @@ public class Java2DConverter {
 	}
 
 	private Shape toShape(GeometryCollection gc)
-		throws NoninvertibleTransformException {
+			throws NoninvertibleTransformException {
 		GeometryCollectionShape shape = new GeometryCollectionShape();
 
 		for (int i = 0; i < gc.getNumGeometries(); i++) {
-			Geometry g = (Geometry) gc.getGeometryN(i);
+			Geometry g = gc.getGeometryN(i);
 			shape.add(toShape(g));
 		}
 
@@ -99,7 +104,7 @@ public class Java2DConverter {
 	}
 
 	private GeneralPath toShape(MultiLineString mls)
-		throws NoninvertibleTransformException {
+			throws NoninvertibleTransformException {
 		GeneralPath path = new GeneralPath();
 
 		for (int i = 0; i < mls.getNumGeometries(); i++) {
@@ -107,71 +112,65 @@ public class Java2DConverter {
 			path.append(toShape(lineString), false);
 		}
 
-		//BasicFeatureRenderer expects LineStrings and MultiLineStrings to be
-		//converted to GeneralPaths. [Jon Aquino]
+		// BasicFeatureRenderer expects LineStrings and MultiLineStrings to be
+		// converted to GeneralPaths. [Jon Aquino]
 		return path;
 	}
 
 	private GeneralPath toShape(LineString lineString)
-		throws NoninvertibleTransformException {
+			throws NoninvertibleTransformException {
 		GeneralPath shape = new GeneralPath();
 		Point2D viewPoint = toViewPoint(lineString.getCoordinateN(0));
-		shape.moveTo((double) viewPoint.getX(), (double) viewPoint.getY());
+		shape.moveTo(viewPoint.getX(), viewPoint.getY());
 
 		for (int i = 1; i < lineString.getNumPoints(); i++) {
 			viewPoint = toViewPoint(lineString.getCoordinateN(i));
-			shape.lineTo((double) viewPoint.getX(), (double) viewPoint.getY());
+			shape.lineTo(viewPoint.getX(), viewPoint.getY());
 		}
 
-		//BasicFeatureRenderer expects LineStrings and MultiLineStrings to be
-		//converted to GeneralPaths. [Jon Aquino]
+		// BasicFeatureRenderer expects LineStrings and MultiLineStrings to be
+		// converted to GeneralPaths. [Jon Aquino]
 		return shape;
 	}
 
 	private Shape toShape(Point point) throws NoninvertibleTransformException {
-		Rectangle2D.Double pointMarker =
-			new Rectangle2D.Double(
-				0.0,
-				0.0,
-				POINT_MARKER_SIZE,
-				POINT_MARKER_SIZE);
+		Rectangle2D.Double pointMarker = new Rectangle2D.Double(0.0, 0.0,
+				POINT_MARKER_SIZE, POINT_MARKER_SIZE);
 		Point2D viewPoint = toViewPoint(point.getCoordinate());
-		pointMarker.x = (double) (viewPoint.getX() - (POINT_MARKER_SIZE / 2));
-		pointMarker.y = (double) (viewPoint.getY() - (POINT_MARKER_SIZE / 2));
+		pointMarker.x = (viewPoint.getX() - (POINT_MARKER_SIZE / 2));
+		pointMarker.y = (viewPoint.getY() - (POINT_MARKER_SIZE / 2));
 
 		return pointMarker;
-	} 
+	}
 
-    private Point2D toViewPoint(Coordinate modelCoordinate)
-    throws NoninvertibleTransformException {
-        //Do the rounding now; don't rely on Java 2D rounding, because it
-        //seems to do it differently for drawing and filling, resulting in the draw
-        //being a pixel off from the fill sometimes. [Jon Aquino]
-    	double x = modelCoordinate.x;
-    	double y = modelCoordinate.y;
-    	//x = Math.round(x);
-    	//y = Math.round(y);
-    	
-    	Point2D modelPoint = new Point2D.Double(x,y);
-    	
-    	Point2D viewPoint = pointConverter.transform(modelPoint, null);
+	private Point2D toViewPoint(Coordinate modelCoordinate)
+			throws NoninvertibleTransformException {
+		// Do the rounding now; don't rely on Java 2D rounding, because it
+		// seems to do it differently for drawing and filling, resulting in the
+		// draw
+		// being a pixel off from the fill sometimes. [Jon Aquino]
+		double x = modelCoordinate.x;
+		double y = modelCoordinate.y;
+		// x = Math.round(x);
+		// y = Math.round(y);
 
+		Point2D modelPoint = new Point2D.Double(x, y);
 
-        return viewPoint;
-    }
+		Point2D viewPoint = pointConverter.transform(modelPoint, null);
 
-
+		return viewPoint;
+	}
 
 	/**
 	 * If you pass in a general GeometryCollection, note that a Shape cannot
-	 * preserve information about which elements are 1D and which are 2D.
-	 * For example, if you pass in a GeometryCollection containing a ring and a
-	 * disk, you cannot render them as such: if you use Graphics.fill, you'll get
-	 * two disks, and if you use Graphics.draw, you'll get two rings. Solution:
-	 * create Shapes for each element.
+	 * preserve information about which elements are 1D and which are 2D. For
+	 * example, if you pass in a GeometryCollection containing a ring and a
+	 * disk, you cannot render them as such: if you use Graphics.fill, you'll
+	 * get two disks, and if you use Graphics.draw, you'll get two rings.
+	 * Solution: create Shapes for each element.
 	 */
 	public Shape toShape(Geometry geometry)
-		throws NoninvertibleTransformException {
+			throws NoninvertibleTransformException {
 		if (geometry.isEmpty()) {
 			return new GeneralPath();
 		}
@@ -186,7 +185,7 @@ public class Java2DConverter {
 
 		if (geometry instanceof LineString) {
 			return toShape((LineString) geometry);
-		} 
+		}
 
 		if (geometry instanceof MultiLineString) {
 			return toShape((MultiLineString) geometry);
@@ -195,14 +194,58 @@ public class Java2DConverter {
 		if (geometry instanceof Point) {
 			return toShape((Point) geometry);
 		}
-		//as of JTS 1.8, the only thing that this might be is a jts.geom.MultiPoint, because
-		//MultiPolygon and MultiLineString are caught above. [Frank Hardisty]
+		// as of JTS 1.8, the only thing that this might be is a
+		// jts.geom.MultiPoint, because
+		// MultiPolygon and MultiLineString are caught above. [Frank Hardisty]
 		if (geometry instanceof GeometryCollection) {
 			return toShape((GeometryCollection) geometry);
 		}
 
-		throw new IllegalArgumentException(
-			"Unrecognized Geometry class: " + geometry.getClass());
+		throw new IllegalArgumentException("Unrecognized Geometry class: "
+				+ geometry.getClass());
 	}
-}
 
+	public static MultiPolygon toMultiGon(Shape shp) {
+		// let's start with multi-polygons...
+
+		PathIterator it = shp.getPathIterator(new AffineTransform());
+		float[] currSeg = new float[6];
+		boolean isFirst = true;
+		ArrayList<Polygon> gons = new ArrayList();
+		ArrayList<Coordinate> coords = new ArrayList();
+		GeometryFactory fact = new GeometryFactory();
+		while (!it.isDone()) {
+			int segType = it.currentSegment(currSeg);
+			if (segType == PathIterator.SEG_MOVETO) {
+
+				if (isFirst == false) {
+					// end of polygon //XXX do we need to close it?
+					Coordinate[] coordArray = new Coordinate[coords.size()];
+					coordArray = coords.toArray(coordArray);
+					LinearRing lr = fact.createLinearRing(coordArray);
+					Polygon poly = fact.createPolygon(lr, null);
+					gons.add(poly);
+				} else {
+					isFirst = false;
+				}
+				// first coordinates in new polygon
+				Coordinate coord = new Coordinate(currSeg[0], currSeg[1]);
+				coords.add(coord);
+				// outFile.write(pathNameString + "\n");
+				// outFile.write(currSeg[0] + " " + currSeg[1] + "\n");
+			} else if (segType == PathIterator.SEG_LINETO) {
+				// more coordinates in polygon
+				// outFile.write(currSeg[0] + " " + currSeg[1] + "\n");
+				Coordinate coord = new Coordinate(currSeg[0], currSeg[1]);
+				coords.add(coord);
+			}
+			it.next();
+		}
+
+		Polygon[] polyArray = new Polygon[gons.size()];
+		polyArray = gons.toArray(polyArray);
+
+		return fact.createMultiPolygon(polyArray);
+	}
+
+}
