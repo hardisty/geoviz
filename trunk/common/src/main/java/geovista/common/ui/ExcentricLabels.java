@@ -314,7 +314,7 @@ public class ExcentricLabels extends MouseAdapter implements Comparator,
 	/**
 	 * @see java.awt.event.MouseMotionListener#mouseDragged(MouseEvent)
 	 */
-	@Override
+	
 	public void mouseDragged(MouseEvent e) {
 	}
 
@@ -325,7 +325,7 @@ public class ExcentricLabels extends MouseAdapter implements Comparator,
 	/**
 	 * @see java.awt.event.MouseMotionListener#mouseMoved(MouseEvent)
 	 */
-	@Override
+	
 	public void mouseMoved(MouseEvent e) {
 		if (isVisible()) {
 			if (dist2(centerX - e.getX(), centerY - e.getY()) > threshold
