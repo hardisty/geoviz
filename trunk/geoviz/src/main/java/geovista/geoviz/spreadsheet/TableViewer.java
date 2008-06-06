@@ -55,7 +55,7 @@ public class TableViewer extends JPanel implements SelectionListener,
 		// table.setColumnSelectionAllowed(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setPreferredScrollableViewportSize(new Dimension(300, 70));
-		table.setFillsViewportHeight(true);
+		//table.setFillsViewportHeight(true);
 
 		// Create the scroll pane and add the table to it.
 		scrollPane = new JScrollPane(table,
