@@ -70,10 +70,10 @@ public class PolygonShape implements Shape {
         if (coordinates.length == 0){
         	return polygon;
         }
-        polygon.moveTo(coordinates[0].x, coordinates[0].y);
+        polygon.moveTo((float)coordinates[0].x, (float)coordinates[0].y);
         for (int i = 0; i < coordinates.length; i++) {
        
-            polygon.lineTo(coordinates[i].x, coordinates[i].y);
+            polygon.lineTo((float)coordinates[i].x, (float)coordinates[i].y);
         }
 
         return polygon;
