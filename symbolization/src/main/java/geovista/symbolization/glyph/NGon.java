@@ -136,7 +136,7 @@ public class NGon implements Glyph {
 		double step = Math.sin(Math.toRadians(angle / 2.0)); // sin(pi/N)
 		heading = angle / 2.0;
 		GeneralPath p = new GeneralPath();
-		p.moveTo(x, y);
+		p.moveTo((float)x, (float)y);
 		// System.out.println("x = " + x + ",y = " + y + " heading = " +
 		// heading);
 		// System.out.println("nSides = " + nSides);
@@ -145,7 +145,7 @@ public class NGon implements Glyph {
 			x += step * Math.cos(Math.toRadians(heading));
 
 			y += step * Math.sin(Math.toRadians(heading));
-			p.lineTo(x, y);
+			p.lineTo((float)x, (float)y);
 
 			heading += angle;
 			// System.out.println("x = " + x + ",y = " + y + " heading = "+
