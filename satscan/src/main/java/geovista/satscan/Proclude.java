@@ -9,9 +9,12 @@
 
 package geovista.satscan;
 
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
+import geovista.common.event.SelectionEvent;
+import geovista.common.event.SelectionListener;
 import geovista.geoviz.sample.GeoData48States;
 import geovista.proclude.AbstractGam;
 import geovista.proclude.BesagNewellGAM;
@@ -28,8 +31,12 @@ import geovista.proclude.StopAtNGens;
 import geovista.proclude.SurviveEliteN;
 import geovista.proclude.SystematicGam;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +47,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  *
@@ -54,6 +64,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
     JComboBox types = new JComboBox(typeNames);
     JButton runButton = new JButton("RUN");
     JPanel output = new JPanel();
+    JPanel[] genePanels;
     
     public final static int GENETIC_TYPE = 0;
     public final static int RANDOM_TYPE = 1;
@@ -77,6 +88,10 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
         topPanel.add(runButton);
         this.add(topPanel, BorderLayout.NORTH);
         this.add(output, BorderLayout.CENTER);
+        
+        GAMMouseListener gml = new GAMMouseListener();
+        output.addMouseListener(gml);
+        output.addMouseMotionListener(gml);
     }
 
     public void dataSetChanged(DataSetEvent e) {
@@ -205,10 +220,12 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
     private void updateOutputDisplay(){
         System.out.println("there are " + out.length + " clusters");
         output.removeAll();
+        genePanels = new JPanel[out.length];
         for (int i = 0; i < out.length; i++){  
             Gene next = out[i];
             JLabel[] labels = geneToLabels(next);
             JPanel thisGene = new JPanel();
+            genePanels[i] = thisGene;
             thisGene.setLayout(new BoxLayout(thisGene, BoxLayout.Y_AXIS));
             for (int x = 0; x < 9; x++){
                 thisGene.add(labels[x]);
@@ -238,5 +255,85 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
     private double roundToHundredths(double d){
         return ((double) Math.round(d * 100))/100;
     }    
+    
+    private void highlightLabelAt(int x, int y){
+        JPanel selected = (JPanel) output.getComponentAt(x, y);
+        int selectedIndex = -1;
+        for (int i = 0; i < genePanels.length; i++){
+            genePanels[i].setBorder(new EmptyBorder(3, 3, 3, 3));
+            if (genePanels[i].equals(selected)){
+                selectedIndex = i;
+            }
+        }
+        selected.setBorder(new LineBorder(Color.RED, 3, true));
+        this.revalidate();
+        this.repaint();
+        
+        //now send a selection event
+        if (selectedIndex == -1){
+            System.out.println("huh?  Why didn't this find the index?");
+        } else {
+            int[] selectedPoints = out[selectedIndex].getContainedPoints();
+            fireSelectionChanged(selectedPoints);
+        }
+        
+    }
+    
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	public void fireSelectionChanged(int[] newSelection) {
+            // Guaranteed to return a non-null array
+            Object[] listeners = listenerList.getListenerList();
+            SelectionEvent e = null;
+
+            // Process the listeners last to first, notifying
+            // those that are interested in this event
+            for (int i = listeners.length - 2; i >= 0; i -= 2) {
+                if (listeners[i] == SelectionListener.class) {
+                    // Lazily create the event:
+                    if (e == null) {
+                        e = new SelectionEvent(this, newSelection);
+                    }
+                    ((SelectionListener) listeners[i + 1]).selectionChanged(e);
+                }
+            } // next i
+	}    
+    
+    /**
+     * This inner class is a mouse listener that listens for events in the display
+     * panel and updates the display appropriately.  Adapted from the MyListener
+     * inner class in the SelectionDemo from the Java Tutorial.
+     *
+     * @author Jamison Conley
+     * @version 1.0
+     */
+    class GAMMouseListener extends MouseInputAdapter{
+        
+        public GAMMouseListener() {
+        }
+        
+        public void mousePressed(MouseEvent e) {
+            requestFocusInWindow();
+            int x = e.getX();
+            int y = e.getY();
+            System.out.println("I clicked at " + x + ", " + y);
+            highlightLabelAt(x, y);
+        }
+        
+        public void mouseDragged(MouseEvent e) {
+            //shrug
+        }
+        
+        public void mouseReleased(MouseEvent e) {
+            //eh.
+        }
+        
+
+    }  //END class GAMMouseListener    
     
 }
