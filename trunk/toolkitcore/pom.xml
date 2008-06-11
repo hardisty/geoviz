@@ -13,9 +13,9 @@
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>b9</version>
+			<groupId>geovista</groupId>
+			<artifactId>gam</artifactId>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>geovista</groupId>
