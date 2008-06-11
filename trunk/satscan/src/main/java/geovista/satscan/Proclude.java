@@ -19,6 +19,7 @@ import geovista.geoviz.sample.GeoData48States;
 import geovista.proclude.AbstractGam;
 import geovista.proclude.BesagNewellGAM;
 import geovista.proclude.CrossMidLine;
+import geovista.proclude.Fitness;
 import geovista.proclude.FitnessRelativePct;
 import geovista.proclude.Gene;
 import geovista.proclude.GeneticGAM;
@@ -27,6 +28,7 @@ import geovista.proclude.MutateLinearAmount;
 import geovista.proclude.RandomGam;
 import geovista.proclude.RelocateDifference;
 import geovista.proclude.SelectRandomElite;
+import geovista.proclude.SelectionGene;
 import geovista.proclude.StopAtNGens;
 import geovista.proclude.SurviveEliteN;
 import geovista.proclude.SystematicGam;
@@ -55,7 +57,7 @@ import javax.swing.event.MouseInputAdapter;
  *
  * @author jfc173
  */
-public class Proclude extends JPanel implements ActionListener, DataSetListener{
+public class Proclude extends JPanel implements ActionListener, DataSetListener, SelectionListener{
     
     InitGAMFile initializer;    
     int type = 0;
@@ -65,6 +67,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
     JButton runButton = new JButton("RUN");
     JPanel output = new JPanel();
     JPanel[] genePanels;
+    int[] selectedPoints;
     
     public final static int GENETIC_TYPE = 0;
     public final static int RANDOM_TYPE = 1;
@@ -273,7 +276,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
         if (selectedIndex == -1){
             System.out.println("huh?  Why didn't this find the index?");
         } else {
-            int[] selectedPoints = out[selectedIndex].getContainedPoints();
+            selectedPoints = out[selectedIndex].getContainedPoints();
             fireSelectionChanged(selectedPoints);
         }
         
@@ -303,6 +306,18 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener{
                 }
             } // next i
 	}    
+
+    public void selectionChanged(SelectionEvent e) {
+        selectedPoints = e.getSelection();
+        Fitness fit = new FitnessRelativePct(initializer.getDataSet());
+        SelectionGene sGene = new SelectionGene(selectedPoints, fit);
+        double out = fit.run(sGene);
+        System.out.println("fitness: " + out);  //sout for now, change output panel later.
+    }
+
+    public SelectionEvent getSelectionEvent() {
+        return new SelectionEvent(this, selectedPoints);
+    }
     
     /**
      * This inner class is a mouse listener that listens for events in the display
