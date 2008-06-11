@@ -89,6 +89,7 @@ import geovista.matrix.MapScatterplotTreemapMatrix;
 import geovista.matrix.MultiplotMatrix;
 import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
+import geovista.satscan.Proclude;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
 import geovista.toolkitcore.data.GeoDataCartogram;
@@ -987,6 +988,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(MoranMap.class);
 		// addToolToMenu(MoranMatrix.class);
 		addToolToMenu(SaTScan.class);
+		addToolToMenu(Proclude.class);
 		menuAddTool.addSeparator();
 
 		// other...
