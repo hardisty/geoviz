@@ -99,7 +99,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
 
     public void dataSetChanged(DataSetEvent e) {
         initializer.processDataSetForApps(e.getDataSetForApps());
-        run();
+//        run();
     }
         
     public void setDataSetForApps(DataSetForApps dsfa){
@@ -310,9 +310,13 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
     public void selectionChanged(SelectionEvent e) {
         selectedPoints = e.getSelection();
         Fitness fit = new FitnessRelativePct(initializer.getDataSet());
-        SelectionGene sGene = new SelectionGene(selectedPoints, fit);
-        double out = fit.run(sGene);
-        System.out.println("fitness: " + out);  //sout for now, change output panel later.
+        if (initializer.getDataSet()==null){
+            return;                   
+        } else {
+            SelectionGene sGene = new SelectionGene(selectedPoints, fit);
+            double out = fit.run(sGene);
+            System.out.println("fitness: " + out);  //sout for now, change output panel later.
+        }
     }
 
     public SelectionEvent getSelectionEvent() {
