@@ -39,6 +39,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -255,6 +256,25 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
         return labels;
     }    
     
+    private void createSelectionDisplay(double fitness, SelectionGene sGene){
+        output.removeAll();
+        JLabel ids = new JLabel("IDs: " + Arrays.toString(sGene.getContainedPoints()));
+        JLabel pop = new JLabel("Population: " + sGene.getPopulation());
+        JLabel count = new JLabel("Count: " + sGene.getCount());
+        JLabel fit = new JLabel("Fitness: " + roundToHundredths(fitness));
+        JPanel thisGene = new JPanel();
+        thisGene.setLayout(new BoxLayout(thisGene, BoxLayout.Y_AXIS));
+        thisGene.add(ids);
+        thisGene.add(pop);
+        thisGene.add(count);
+        thisGene.add(fit);
+        output.add(thisGene);
+        genePanels = new JPanel[]{thisGene};
+        out = new Gene[]{sGene};
+        revalidate();
+        repaint();
+    }
+    
     private double roundToHundredths(double d){
         return ((double) Math.round(d * 100))/100;
     }    
@@ -268,16 +288,18 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
                 selectedIndex = i;
             }
         }
-        selected.setBorder(new LineBorder(Color.RED, 3, true));
-        this.revalidate();
-        this.repaint();
-        
-        //now send a selection event
-        if (selectedIndex == -1){
-            System.out.println("huh?  Why didn't this find the index?");
-        } else {
-            selectedPoints = out[selectedIndex].getContainedPoints();
-            fireSelectionChanged(selectedPoints);
+        if (!(selected.equals(output))){  //if the selected object is the output panel, then the click didn't fall on any genePanel
+            selected.setBorder(new LineBorder(Color.RED, 3, true));
+            this.revalidate();
+            this.repaint();
+
+            //now send a selection event
+            if (selectedIndex == -1){
+                System.out.println("huh?  Why didn't this find the index?");
+            } else {
+                selectedPoints = out[selectedIndex].getContainedPoints();
+                fireSelectionChanged(selectedPoints);
+            }
         }
         
     }
@@ -290,6 +312,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
 	 * @see EventListenerList
 	 */
 	public void fireSelectionChanged(int[] newSelection) {
+//            System.out.println(Arrays.toString(newSelection));
             // Guaranteed to return a non-null array
             Object[] listeners = listenerList.getListenerList();
             SelectionEvent e = null;
@@ -307,6 +330,22 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
             } // next i
 	}    
 
+
+	/**
+	 * adds an SelectionListener
+	 */
+	public void addSelectionListener(SelectionListener l) {
+		listenerList.add(SelectionListener.class, l);
+	}
+
+	/**
+	 * removes an SelectionListener from the component
+	 */
+	public void removeSelectionListener(SelectionListener l) {
+		listenerList.remove(SelectionListener.class, l);
+	}
+        
+        
     public void selectionChanged(SelectionEvent e) {
         selectedPoints = e.getSelection();
         Fitness fit = new FitnessRelativePct(initializer.getDataSet());
@@ -314,8 +353,9 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
             return;                   
         } else {
             SelectionGene sGene = new SelectionGene(selectedPoints, fit);
+            System.out.println(Arrays.toString(selectedPoints));
             double out = fit.run(sGene);
-            System.out.println("fitness: " + out);  //sout for now, change output panel later.
+            createSelectionDisplay(out, sGene);
         }
     }
 
