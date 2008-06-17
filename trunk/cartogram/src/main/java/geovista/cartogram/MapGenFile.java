@@ -49,7 +49,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeneralPathLine;
-import geovista.geoviz.jts.Java2DConverter;
+import geovista.common.jts.Java2DConverter;
 import geovista.geoviz.scatterplot.LinearRegression;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
