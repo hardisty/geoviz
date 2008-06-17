@@ -14,10 +14,10 @@
 package geovista.geoviz.map;
 
 import geovista.coordination.CoordinationManager;
+import geovista.readers.example.GeoData48States;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
-import geovista.readers.shapefile.example.GeoData48States;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -92,7 +92,7 @@ public class GeoMapMain extends JFrame {
 		// SpatialExtentEvent ext = new SpatialExtentEvent(map,rect);
 
 		// ShapeFileProjection shpProj2 = new ShapeFileProjection();
-		// Projection proj = shpProj.getProj();
+		// OldProjection proj = shpProj.getProj();
 		// shpProj2.setProj(proj);
 		// shpProj2.setInputAuxiliaryData(stateData.getDataSet());
 

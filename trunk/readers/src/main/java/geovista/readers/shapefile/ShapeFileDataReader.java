@@ -266,8 +266,18 @@ public class ShapeFileDataReader implements Serializable {
 
 			InputStream isCSV = clazz.getResourceAsStream("resources/" + name
 					+ ".dbf");
+			if (isCSV == null) {
+				logger.severe("cannot find " + clazz.getName() + "/resources/"
+						+ name + ".dbf");
+				return null;
+			}
 			InputStream isSHP = clazz.getResourceAsStream("resources/" + name
 					+ ".shp");
+			if (isSHP == null) {
+				logger.severe("cannot find " + clazz.getName() + "/resources/"
+						+ name + ".shp");
+				return null;
+			}
 
 			shpData = ShapeFileDataReader.makeDataSetForApps(isSHP, isCSV);
 

@@ -72,10 +72,10 @@ import geovista.common.ui.MultiSlider;
 import geovista.common.ui.RangeSlider;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.visclass.VisualClassifier;
+import geovista.readers.example.GeoDataGeneralizedStates;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
-import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 import geovista.symbolization.BivariateColorSchemeVisualizer;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
@@ -912,7 +912,7 @@ public class GeoMap extends JPanel
 		// SpatialExtentEvent ext = new SpatialExtentEvent(map,rect);
 
 		// ShapeFileProjection shpProj2 = new ShapeFileProjection();
-		// Projection proj = shpProj.getProj();
+		// OldProjection proj = shpProj.getProj();
 		// shpProj2.setProj(proj);
 		// shpProj2.setInputAuxiliaryData(stateData.getDataSet());
 

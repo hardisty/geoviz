@@ -29,7 +29,7 @@ import java.awt.geom.Point2D;
 /**
  * A default projection that does nothing.
  */
-public class ProjectionIdentity implements Projection {
+public class ProjectionIdentity implements OldProjection {
 
     /*
      * This returns the data passed in as a point without otherwise changing it.

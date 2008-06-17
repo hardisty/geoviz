@@ -52,7 +52,7 @@ import org.geotools.data.shapefile.dbf.DbaseFileWriter;
 
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.visclass.VisualClassifier;
-import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
+import geovista.readers.example.GeoDataGeneralizedStates;
 import geovista.readers.util.MyFileFilter;
 
 // import org.davekeen.gis.shapefile.GeoESRIWriter;

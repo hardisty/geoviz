@@ -43,7 +43,7 @@ import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
-import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
+import geovista.readers.example.GeoDataGeneralizedStates;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
 
