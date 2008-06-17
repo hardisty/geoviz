@@ -1,11 +1,11 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ProjectionEquidistantConic
+ Java source file for the class OldProjectionEquidistantConic
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Authors: Frank Hardisty, Fritz Kessler
  $Author: hardisty $
- $Id: ProjectionEquidistantConic.java,v 1.7 2005/04/15 18:03:28 hardisty Exp $
+ $Id: OldProjectionEquidistantConic.java,v 1.7 2005/04/15 18:03:28 hardisty Exp $
  $Date: 2005/04/15 18:03:28 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -34,8 +34,8 @@ import geovista.common.data.GeneralPathLine;
  * Equidistant Conic projection, useful for reasonably large sections of the
  * United States, or other contries in similar latitudes.
  */
-public class ProjectionEquidistantConic implements OldProjection {
-	protected final static Logger logger = Logger.getLogger(ProjectionEquidistantConic.class.getName());
+public class OldProjectionEquidistantConic implements OldProjection {
+	protected final static Logger logger = Logger.getLogger(OldProjectionEquidistantConic.class.getName());
 	private double centralMeridian = Double.NaN;
 	private double standardParallelOne = Double.NaN;
 	private double standardParallelTwo = Double.NaN;
@@ -51,7 +51,7 @@ public class ProjectionEquidistantConic implements OldProjection {
 				|| Double.isNaN(standardParallelOne)
 				|| Double.isNaN(standardParallelOne)) {
 			throw new IllegalStateException(
-					"ProjectionEquidistantConic needs to have "
+					"OldProjectionEquidistantConic needs to have "
 							+ "member variables set.");
 		}
 
@@ -59,7 +59,7 @@ public class ProjectionEquidistantConic implements OldProjection {
 			pt = new Point2D.Double();
 		}
 
-		ProjectionEquidistantConic.projectLongitudeLatititudeRadians(longVal,
+		OldProjectionEquidistantConic.projectLongitudeLatititudeRadians(longVal,
 				lat, this.centralMeridian, this.standardParallelOne,
 				this.standardParallelTwo, this.centralLatitude, pt);
 
