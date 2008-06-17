@@ -1,4 +1,4 @@
-package geovista.readers.shapefile.example;
+package geovista.readers.example;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

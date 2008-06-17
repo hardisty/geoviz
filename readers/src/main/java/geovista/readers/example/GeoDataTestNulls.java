@@ -3,7 +3,7 @@
  see GNU LGPL for details.
  Original Author: Frank Hardisty
  */
-package geovista.readers.shapefile.example;
+package geovista.readers.example;
 
 import geovista.common.data.DataSetForApps;
 import geovista.readers.shapefile.ShapeFileDataReader;
