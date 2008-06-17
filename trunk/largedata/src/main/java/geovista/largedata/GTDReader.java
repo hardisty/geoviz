@@ -19,7 +19,7 @@ import java.util.zip.GZIPInputStream;
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeoDataSource;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileDataReader;
 
 public class GTDReader implements GeoDataSource {
 	int ingroupStart = 6;

@@ -32,8 +32,8 @@ import geovista.common.data.DataSetForApps;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.sample.GeoData48States;
-import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.geoviz.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileToShape;
 
 
 public class TextureMapMain

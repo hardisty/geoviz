@@ -7,7 +7,7 @@
 package geovista.geoviz.sample;
 
 import geovista.common.data.DataSetForApps;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileDataReader;
 
 /**
  * Reads shapefiles from included resources

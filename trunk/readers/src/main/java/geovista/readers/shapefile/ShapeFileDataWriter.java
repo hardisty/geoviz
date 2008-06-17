@@ -12,7 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-package geovista.geoviz.shapefile;
+package geovista.readers.shapefile;
 
 import java.awt.geom.GeneralPath;
 import java.io.File;

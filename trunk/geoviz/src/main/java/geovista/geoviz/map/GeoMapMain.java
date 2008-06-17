@@ -15,9 +15,9 @@ package geovista.geoviz.map;
 
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.sample.GeoData48States;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.geoviz.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileToShape;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

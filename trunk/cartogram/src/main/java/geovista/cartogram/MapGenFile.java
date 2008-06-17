@@ -51,8 +51,8 @@ import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeneralPathLine;
 import geovista.geoviz.jts.Java2DConverter;
 import geovista.geoviz.scatterplot.LinearRegression;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileProjection;
 
 /*
  * 

@@ -6,7 +6,7 @@ package geovista.toolkitcore.data;
 
 import geovista.common.data.DataSetForApps;
 import geovista.geoviz.sample.GeoDataClassResource;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileDataReader;
 
 /**
  * Reads shapefiles from included resources

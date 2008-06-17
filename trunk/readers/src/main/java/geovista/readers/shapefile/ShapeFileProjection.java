@@ -12,7 +12,7 @@
  ___                ___
  -------------------------------------------------------------------  *
  */
-package geovista.geoviz.shapefile;
+package geovista.readers.shapefile;
 
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
