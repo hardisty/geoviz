@@ -30,7 +30,7 @@
  * www.vividsolutions.com
  */
 
-package geovista.geoviz.jts;
+package geovista.common.jts;
 
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
