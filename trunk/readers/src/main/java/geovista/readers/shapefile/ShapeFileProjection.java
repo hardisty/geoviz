@@ -29,8 +29,8 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeneralPathLine;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.geoviz.map.OldProjection;
-import geovista.geoviz.map.OldProjectionEquidistantConic;
+import geovista.projection.OldProjection;
+import geovista.projection.OldProjectionEquidistantConic;
 import geovista.readers.example.GeoData48States;
 import geovista.readers.example.GeoDataWestCoast;
 

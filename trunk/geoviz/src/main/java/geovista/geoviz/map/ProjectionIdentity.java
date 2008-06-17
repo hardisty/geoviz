@@ -26,6 +26,8 @@ package  geovista.geoviz.map;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 
+import geovista.projection.OldProjection;
+
 /**
  * A default projection that does nothing.
  */
