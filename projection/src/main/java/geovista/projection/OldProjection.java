@@ -22,7 +22,7 @@
 
 
 
-package  geovista.geoviz.map;
+package  geovista.projection;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 

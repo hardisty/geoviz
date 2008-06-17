@@ -20,7 +20,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-package geovista.geoviz.map;
+package geovista.projection;
 
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
