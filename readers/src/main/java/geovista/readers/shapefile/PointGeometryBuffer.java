@@ -15,7 +15,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 import geovista.common.data.DataSetForApps;
-import geovista.geoviz.map.GeoMap;
 import geovista.readers.csv.GeogCSVReader;
 
 /**
@@ -87,20 +86,12 @@ public class PointGeometryBuffer {
 		DataSetForApps bufferData = buffer.makeBuffers(fileName);
 		JFrame app = new JFrame("testing buffers");
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GeoMap map = new GeoMap();
+
 		DataSetForApps paShps = ShapeFileDataReader
 				.makeDataSetForApps("C:\\temp\\pa_cnty");
 
 		shpProj.setInputDataSet(paShps.getDataObjectOriginal());
 
-		app.add(map);
-		app.pack();
-		app.setVisible(true);
-
-		map.setDataSet(shpProj.getOutputDataSetForApps());
-		shpProj.setInputAuxiliaryData(bufferData);
-		map.setAuxiliarySpatialData(shpProj
-				.getOutputAuxiliarySpatialDataForApps());
 	}
 
 }

@@ -48,8 +48,8 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.SpatialWeights;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.geoviz.jts.Java2DConverter;
-import geovista.geoviz.jts.LiteShape;
+import geovista.common.jts.Java2DConverter;
+import geovista.common.jts.LiteShape;
 import geovista.readers.csv.GeogCSVReader;
 import geovista.readers.geog.AttributeDescriptionFile;
 
