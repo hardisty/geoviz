@@ -41,9 +41,9 @@ import javax.swing.JProgressBar;
 
 import geovista.common.data.DataSetForApps;
 import geovista.geoviz.map.GeoMapUni;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.geoviz.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileToShape;
 
 //wizard
 

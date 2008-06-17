@@ -2,7 +2,7 @@
  see GNU LGPL for details.
  Original Author: Frank Hardisty */
 
-package geovista.geoviz.shapefile;
+package geovista.readers.shapefile;
 
 import java.awt.Shape;
 import java.io.FileInputStream;

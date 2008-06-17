@@ -24,7 +24,7 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeoDataSource;
 import geovista.common.data.SpatialWeights;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileDataReader;
 
 public class PurdueDataReader implements GeoDataSource {
 

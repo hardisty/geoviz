@@ -9,7 +9,7 @@ package geovista.geoviz.sample;
 import java.util.logging.Logger;
 
 import geovista.common.data.DataSetForApps;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileDataReader;
 
 /**
  * Reads shapefiles from included resources

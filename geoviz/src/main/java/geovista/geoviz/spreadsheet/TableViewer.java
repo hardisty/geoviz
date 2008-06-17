@@ -25,7 +25,7 @@ import geovista.common.event.SelectionListener;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.descriptive.DescriptiveStats;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
-import geovista.geoviz.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileProjection;
 
 public class TableViewer extends JPanel implements SelectionListener,
 		DataSetListener {

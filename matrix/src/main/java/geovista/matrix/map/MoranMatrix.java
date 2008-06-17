@@ -50,9 +50,9 @@ import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.map.OldSpatialWeights;
 import geovista.geoviz.sample.GeoData48States;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
-import geovista.geoviz.shapefile.ShapeFileDataReader;
-import geovista.geoviz.shapefile.ShapeFileProjection;
-import geovista.geoviz.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileToShape;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
 
