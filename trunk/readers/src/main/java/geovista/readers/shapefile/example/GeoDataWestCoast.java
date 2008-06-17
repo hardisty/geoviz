@@ -4,7 +4,7 @@
  Original Author: Frank Hardisty
  */
 
-package geovista.geoviz.sample;
+package geovista.readers.shapefile.example;
 
 import geovista.common.data.DataSetForApps;
 import geovista.readers.shapefile.ShapeFileDataReader;
@@ -19,12 +19,12 @@ import geovista.readers.shapefile.ShapeFileDataReader;
  * also see DBaseFile, ShapeFile
  * 
  */
-public class GeoDataUSCounties extends GeoDataClassResource {
+public class GeoDataWestCoast extends GeoDataClassResource {
 
 	@Override
 	protected DataSetForApps makeDataSetForApps() {
-		return ShapeFileDataReader.makeDataSetForApps(this.getClass(),
-				"USCounties");
+		return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(),
+				"westCoast");
 
 	}
 

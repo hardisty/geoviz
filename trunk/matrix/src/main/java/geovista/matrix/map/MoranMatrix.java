@@ -48,11 +48,11 @@ import geovista.common.event.SpatialExtentListener;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMapUni;
 import geovista.geoviz.map.OldSpatialWeights;
-import geovista.geoviz.sample.GeoData48States;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.example.GeoData48States;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
 

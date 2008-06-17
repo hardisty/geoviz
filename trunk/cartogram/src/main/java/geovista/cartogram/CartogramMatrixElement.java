@@ -27,9 +27,9 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
 import geovista.common.data.DataSetForApps;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.matrix.map.MapMatrixElement;
 import geovista.readers.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 

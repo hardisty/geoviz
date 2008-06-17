@@ -14,10 +14,10 @@
 package geovista.geoviz.map;
 
 import geovista.coordination.CoordinationManager;
-import geovista.geoviz.sample.GeoData48States;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.example.GeoData48States;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

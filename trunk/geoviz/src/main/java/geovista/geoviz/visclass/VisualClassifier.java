@@ -46,7 +46,7 @@ import geovista.common.event.DataSetModifiedEvent;
 import geovista.common.event.DataSetModifiedListener;
 import geovista.common.event.PaletteEvent;
 import geovista.common.event.PaletteListener;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 import geovista.symbolization.ColorRampPicker;
 import geovista.symbolization.ColorSymbolClassification;
 import geovista.symbolization.ColorSymbolClassificationSimple;

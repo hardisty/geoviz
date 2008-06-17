@@ -41,9 +41,9 @@ import geovista.common.ui.VariablePicker;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.GeoMapUni;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
 

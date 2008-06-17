@@ -31,8 +31,8 @@ import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.map.Projection;
 import geovista.geoviz.map.ProjectionEquidistantConic;
-import geovista.geoviz.sample.GeoData48States;
-import geovista.geoviz.sample.GeoDataWestCoast;
+import geovista.readers.shapefile.example.GeoData48States;
+import geovista.readers.shapefile.example.GeoDataWestCoast;
 
 /**
  * This class, when passed a ShapeFile, will project it using it's current

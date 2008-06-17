@@ -3,7 +3,8 @@
  see GNU LGPL for details.
  Original Author: Frank Hardisty
  */
-package geovista.geoviz.sample;
+
+package geovista.readers.shapefile.example;
 
 import geovista.common.data.DataSetForApps;
 import geovista.readers.shapefile.ShapeFileDataReader;
@@ -18,12 +19,12 @@ import geovista.readers.shapefile.ShapeFileDataReader;
  * also see DBaseFile, ShapeFile
  * 
  */
-public class GeoDataTestNulls extends GeoDataClassResource {
+public class GeoData48States extends GeoDataClassResource {
 
 	@Override
 	protected DataSetForApps makeDataSetForApps() {
 		return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(),
-				"test_nulls");
+				"states48");
 
 	}
 

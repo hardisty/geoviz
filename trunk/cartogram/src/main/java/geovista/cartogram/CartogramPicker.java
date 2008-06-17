@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import geovista.common.data.DataSetForApps;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 
 
 /*
