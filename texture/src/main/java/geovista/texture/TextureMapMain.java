@@ -31,9 +31,9 @@ import javax.swing.JFrame;
 import geovista.common.data.DataSetForApps;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
-import geovista.geoviz.sample.GeoData48States;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.example.GeoData48States;
 
 
 public class TextureMapMain

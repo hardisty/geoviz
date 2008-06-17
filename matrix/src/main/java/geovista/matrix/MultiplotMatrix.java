@@ -7,11 +7,11 @@ package geovista.matrix;
 import javax.swing.JFrame;
 
 import geovista.common.event.DataSetEvent;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.matrix.map.MapMatrixElement;
 import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 import geovista.matrix.spacefill.SpaceFillMatrixElement;
 import geovista.matrix.treemap.TreeMapMatrixElement;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 
 public class MultiplotMatrix extends FixedRowMatrix
 // implements DataSetListener, DataSetModifiedListener,

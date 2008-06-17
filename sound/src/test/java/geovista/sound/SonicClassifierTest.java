@@ -9,8 +9,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import geovista.coordination.CoordinationManager;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.readers.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 
 public class SonicClassifierTest extends TestCase {
 	protected SonicClassifier sClasser;

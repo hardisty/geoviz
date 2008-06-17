@@ -15,7 +15,6 @@ import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
-import geovista.geoviz.sample.GeoData48States;
 import geovista.proclude.AbstractGam;
 import geovista.proclude.BesagNewellGAM;
 import geovista.proclude.CrossMidLine;
@@ -32,6 +31,8 @@ import geovista.proclude.SelectionGene;
 import geovista.proclude.StopAtNGens;
 import geovista.proclude.SurviveEliteN;
 import geovista.proclude.SystematicGam;
+import geovista.readers.shapefile.example.GeoData48States;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

@@ -12,7 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-package geovista.geoviz.sample;
+package geovista.readers.shapefile.example;
 
 /**
  * Reads shapefiles from included resources

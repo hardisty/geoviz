@@ -9,8 +9,8 @@ package geovista.largedata;
 import java.util.logging.Logger;
 
 import geovista.common.data.DataSetForApps;
-import geovista.geoviz.sample.GeoDataClassResource;
 import geovista.readers.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.example.GeoDataClassResource;
 
 /**
  * Reads shapefiles from included resources

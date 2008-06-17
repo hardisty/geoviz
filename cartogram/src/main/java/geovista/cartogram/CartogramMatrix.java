@@ -23,8 +23,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
 import geovista.matrix.BiPlotMatrix;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 
 
 /**

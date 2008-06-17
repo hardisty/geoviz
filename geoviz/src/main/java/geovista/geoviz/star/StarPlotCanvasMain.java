@@ -29,10 +29,10 @@ import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
 import geovista.coordination.CoordinationManager;
-import geovista.geoviz.sample.GeoData48States;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
+import geovista.readers.shapefile.example.GeoData48States;
 
 /**
  * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n =

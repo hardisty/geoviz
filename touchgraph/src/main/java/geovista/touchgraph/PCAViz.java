@@ -30,7 +30,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.common.ui.VariablePicker;
-import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
 
 /**
  * 
