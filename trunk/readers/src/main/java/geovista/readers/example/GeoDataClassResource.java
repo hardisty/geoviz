@@ -4,7 +4,7 @@
  Original Author: Frank Hardisty
  */
 
-package geovista.readers.shapefile.example;
+package geovista.readers.example;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

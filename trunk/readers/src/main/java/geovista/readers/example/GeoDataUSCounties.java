@@ -4,9 +4,7 @@
  Original Author: Frank Hardisty
  */
 
-package geovista.readers.shapefile.example;
-
-import java.util.logging.Logger;
+package geovista.readers.example;
 
 import geovista.common.data.DataSetForApps;
 import geovista.readers.shapefile.ShapeFileDataReader;
@@ -21,15 +19,12 @@ import geovista.readers.shapefile.ShapeFileDataReader;
  * also see DBaseFile, ShapeFile
  * 
  */
-public class GeoDataGeneralizedStates extends GeoDataClassResource {
-
-	final static Logger logger = Logger
-			.getLogger(GeoDataGeneralizedStates.class.getName());
+public class GeoDataUSCounties extends GeoDataClassResource {
 
 	@Override
 	protected DataSetForApps makeDataSetForApps() {
-		return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(),
-				"48small");
+		return ShapeFileDataReader.makeDataSetForApps(this.getClass(),
+				"USCounties");
 
 	}
 
