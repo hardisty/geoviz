@@ -29,10 +29,10 @@ import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
 import geovista.coordination.CoordinationManager;
+import geovista.readers.example.GeoData48States;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
-import geovista.readers.shapefile.example.GeoData48States;
 
 /**
  * Main class for experimenting with starplots and maps that show starplots

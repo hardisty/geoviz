@@ -28,7 +28,7 @@ import javax.swing.JProgressBar;
 
 import geovista.common.data.DataSetForApps;
 import geovista.geoviz.map.GeoMap;
-import geovista.readers.shapefile.example.GeoData48States;
+import geovista.readers.example.GeoData48States;
 
 /*
  *

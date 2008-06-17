@@ -27,7 +27,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
-import geovista.readers.shapefile.example.GeoData48States;
+import geovista.readers.example.GeoData48States;
 import geovista.symbolization.ColorInterpolator;
 import geovista.touchgraph.graphelements.VisibleLocality;
 

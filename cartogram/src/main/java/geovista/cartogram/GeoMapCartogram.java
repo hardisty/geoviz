@@ -40,7 +40,7 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.geoviz.map.GeoMapUni;
-import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
+import geovista.readers.example.GeoDataGeneralizedStates;
 
 /*
  * This class like a GeoMap but it makes cartograms

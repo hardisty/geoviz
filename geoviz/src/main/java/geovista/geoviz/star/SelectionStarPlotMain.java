@@ -32,10 +32,10 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoMap;
+import geovista.readers.example.GeoData48States;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
-import geovista.readers.shapefile.example.GeoData48States;
 
 /**
  * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n =

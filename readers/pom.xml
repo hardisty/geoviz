@@ -18,5 +18,25 @@
 			<artifactId>common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+				<dependency>
+			<groupId>gt2</groupId>
+			<artifactId>gt2api</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>gt2</groupId>
+			<artifactId>gt2main</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>gt2</groupId>
+			<artifactId>gt2shapefile</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>gt2</groupId>
+			<artifactId>gt2metadata</artifactId>
+			<version>2.4</version>
+		</dependency>
 	</dependencies>
 </project>

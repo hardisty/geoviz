@@ -21,7 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 import geovista.common.classification.ClassifierPicker;
-import geovista.readers.shapefile.example.GeoData48States;
+import geovista.readers.example.GeoData48States;
 
 public class SonicClassifierMain {
 	protected SonicClassifier vc;

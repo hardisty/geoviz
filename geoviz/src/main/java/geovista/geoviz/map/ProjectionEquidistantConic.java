@@ -34,7 +34,7 @@ import geovista.common.data.GeneralPathLine;
  * Equidistant Conic projection, useful for reasonably large sections of the
  * United States, or other contries in similar latitudes.
  */
-public class ProjectionEquidistantConic implements Projection {
+public class ProjectionEquidistantConic implements OldProjection {
 	protected final static Logger logger = Logger.getLogger(ProjectionEquidistantConic.class.getName());
 	private double centralMeridian = Double.NaN;
 	private double standardParallelOne = Double.NaN;
@@ -232,11 +232,11 @@ public class ProjectionEquidistantConic implements Projection {
 
 			case PathIterator.SEG_QUADTO:
 				throw new IllegalArgumentException(
-						"Projection doesn't know what to do with this");
+						"OldProjection doesn't know what to do with this");
 
 			case PathIterator.SEG_CUBICTO:
 				throw new IllegalArgumentException(
-						"Projection doesn't know what to do with this");
+						"OldProjection doesn't know what to do with this");
 
 			case PathIterator.SEG_CLOSE:
 				p.closePath();

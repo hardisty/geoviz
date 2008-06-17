@@ -31,7 +31,7 @@ import geovista.proclude.SelectionGene;
 import geovista.proclude.StopAtNGens;
 import geovista.proclude.SurviveEliteN;
 import geovista.proclude.SystematicGam;
-import geovista.readers.shapefile.example.GeoData48States;
+import geovista.readers.example.GeoData48States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

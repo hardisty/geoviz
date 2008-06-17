@@ -29,7 +29,7 @@ import geovista.common.data.DataSetForApps;
 import geovista.common.data.GeneralPathLine;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.geoviz.map.Projection;
+import geovista.geoviz.map.OldProjection;
 import geovista.geoviz.map.ProjectionEquidistantConic;
 import geovista.readers.example.GeoData48States;
 import geovista.readers.example.GeoDataWestCoast;
@@ -46,7 +46,7 @@ public class ShapeFileProjection
   private transient DataSetForApps outputDataSetForApps;
   private transient DataSetForApps inputAuxSpatialData;
   private transient DataSetForApps outputAuxSpatialData;
-  private transient Projection proj;
+  private transient OldProjection proj;
   private transient ProjectionEquidistantConic projEQ;
   private EventListenerList listenerList;
   protected final static Logger logger = Logger.getLogger(ShapeFileProjection.class.getName());
@@ -137,7 +137,7 @@ public class ShapeFileProjection
     return returnNums;
   }
 
-  private Projection initProjection(Shape[] shp) {
+  private OldProjection initProjection(Shape[] shp) {
     double[] bBox = null;
 
     bBox = this.findBBox(shp);
@@ -267,11 +267,11 @@ public void setInputAuxiliaryData(DataSetForApps auxDataSet) {
     return this.outputAuxSpatialData;
   }
 
-  public void setProj(Projection proj) {
+  public void setProj(OldProjection proj) {
     this.proj = proj;
   }
 
-  public Projection getProj() {
+  public OldProjection getProj() {
     return this.proj;
   }
 

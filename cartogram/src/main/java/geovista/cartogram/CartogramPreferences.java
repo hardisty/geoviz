@@ -203,7 +203,7 @@ public class CartogramPreferences extends JFrame implements ActionListener,
         cbPanel.setLayout(new BoxLayout(cbPanel,
                                         BoxLayout.Y_AXIS));
         this.auxCheckBox = new JCheckBox("Transform Polygon as Auxilliary?");
-        this.projCheckBox = new JCheckBox("Use Map Projection?");
+        this.projCheckBox = new JCheckBox("Use Map OldProjection?");
         this.shapeFileCheckBox = new JCheckBox("Create Shapefile?");
         this.promptReplaceFile = new JCheckBox("Prompt on File Replace?");
         this.postScriptCheckBox = new JCheckBox("Create Postscript File?");

@@ -40,7 +40,7 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.geoviz.visclass.VisualClassifier;
-import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
+import geovista.readers.example.GeoDataGeneralizedStates;
 import geovista.symbolization.glyph.Glyph;
 import geovista.symbolization.glyph.GlyphComboBox;
 import geovista.symbolization.glyph.GlyphEvent;

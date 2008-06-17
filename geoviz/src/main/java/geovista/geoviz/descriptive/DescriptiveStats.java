@@ -40,7 +40,7 @@ import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
-import geovista.readers.shapefile.example.GeoData48States;
+import geovista.readers.example.GeoData48States;
 
 /**
  * Displays descriptive statistics about a current variable, including

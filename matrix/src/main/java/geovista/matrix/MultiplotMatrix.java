@@ -11,7 +11,7 @@ import geovista.matrix.map.MapMatrixElement;
 import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 import geovista.matrix.spacefill.SpaceFillMatrixElement;
 import geovista.matrix.treemap.TreeMapMatrixElement;
-import geovista.readers.shapefile.example.GeoDataGeneralizedStates;
+import geovista.readers.example.GeoDataGeneralizedStates;
 
 public class MultiplotMatrix extends FixedRowMatrix
 // implements DataSetListener, DataSetModifiedListener,

@@ -1,11 +1,11 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class Projection
+ Java source file for the class OldProjection
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: Projection.java,v 1.4 2004/05/05 17:23:10 hardisty Exp $
+ $Id: OldProjection.java,v 1.4 2004/05/05 17:23:10 hardisty Exp $
  $Date: 2004/05/05 17:23:10 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,7 @@ import java.awt.geom.Point2D;
 /**
  * Defines what projections must do.
  */
-public interface Projection {
+public interface OldProjection {
 
     /*
      * this is in radians unless the projection specifies otherwise.
