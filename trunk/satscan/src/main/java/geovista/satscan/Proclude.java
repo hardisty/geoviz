@@ -258,7 +258,10 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
     
     private void createSelectionDisplay(double fitness, SelectionGene sGene){
         output.removeAll();
-        JLabel ids = new JLabel("IDs: " + Arrays.toString(sGene.getContainedPoints()));
+//        JLabel ids = new JLabel("IDs: " + Arrays.toString(sGene.getContainedPoints()));
+        JLabel ids = new JLabel("n = " + sGene.getContainedPoints().length);
+        ids.setMaximumSize(new java.awt.Dimension(250, 50));
+        ids.setToolTipText(Arrays.toString(sGene.getContainedPoints()));
         JLabel pop = new JLabel("Population: " + sGene.getPopulation());
         JLabel count = new JLabel("Count: " + sGene.getCount());
         JLabel fit = new JLabel("Fitness: " + roundToHundredths(fitness));
@@ -268,6 +271,8 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
         thisGene.add(pop);
         thisGene.add(count);
         thisGene.add(fit);
+        thisGene.setMaximumSize(new java.awt.Dimension(260, 60));
+        System.out.println(thisGene.getSize().toString());
         output.add(thisGene);
         genePanels = new JPanel[]{thisGene};
         out = new Gene[]{sGene};
@@ -281,14 +286,15 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
     
     private void highlightLabelAt(int x, int y){
         JPanel selected = (JPanel) output.getComponentAt(x, y);
-        int selectedIndex = -1;
-        for (int i = 0; i < genePanels.length; i++){
-            genePanels[i].setBorder(new EmptyBorder(3, 3, 3, 3));
-            if (genePanels[i].equals(selected)){
-                selectedIndex = i;
-            }
-        }
+
         if (!(selected.equals(output))){  //if the selected object is the output panel, then the click didn't fall on any genePanel
+            int selectedIndex = -1;
+            for (int i = 0; i < genePanels.length; i++){
+                genePanels[i].setBorder(new EmptyBorder(3, 3, 3, 3));
+                if (genePanels[i].equals(selected)){
+                    selectedIndex = i;
+                }
+            }
             selected.setBorder(new LineBorder(Color.RED, 3, true));
             this.revalidate();
             this.repaint();
