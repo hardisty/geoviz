@@ -13,7 +13,7 @@
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *    Lesser General Public License for more details.
  */
-package geovista.geoviz.jts;
+package geovista.common.jts;
 
 import java.awt.geom.AffineTransform;
 

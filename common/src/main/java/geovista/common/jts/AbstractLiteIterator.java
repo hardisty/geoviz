@@ -1,4 +1,4 @@
-package geovista.geoviz.jts;
+package geovista.common.jts;
 
 
 import java.awt.geom.PathIterator;

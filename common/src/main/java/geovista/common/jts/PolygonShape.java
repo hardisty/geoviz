@@ -31,7 +31,7 @@
  * www.vividsolutions.com
  */
 
-package geovista.geoviz.jts;
+package geovista.common.jts;
  
 import java.awt.Rectangle;
 import java.awt.Shape;
