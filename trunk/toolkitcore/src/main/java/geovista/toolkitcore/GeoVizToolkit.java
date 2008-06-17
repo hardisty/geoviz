@@ -74,6 +74,7 @@ import geovista.geoviz.map.GraduatedSymbolsMap;
 import geovista.geoviz.parvis.ParallelPlot;
 import geovista.geoviz.radviz.RadViz;
 import geovista.geoviz.sample.GeoDataGeneralizedStates;
+import geovista.geoviz.sample.GeoDataUSCounties;
 import geovista.geoviz.scatterplot.SingleHistogram;
 import geovista.geoviz.scatterplot.SingleScatterPlot;
 import geovista.geoviz.shapefile.ShapeFileDataReader;
@@ -764,6 +765,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// GeoDataNCTC cartogramData = new GeoDataNCTC();
 			// newDataSet = cartogramData.getDataSet();
 
+		} else if (name.equals("USCounties")) {
+			GeoDataUSCounties countyData = new GeoDataUSCounties();
+			newDataSet = countyData.getDataSet();
+
 		}
 
 		else if (name.equals("Niger")) {
@@ -1159,7 +1164,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		boolean useProj = false;
 		boolean useAux = true;
-		double tolerance = 0.001;
+		double tolerance = 0.0001;
 		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 

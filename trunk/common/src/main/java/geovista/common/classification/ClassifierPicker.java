@@ -65,9 +65,9 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 		addComponentListener(this);
 		classers = new DescribedClassifier[6];
 
-		classers[1] = new ClassifierQuantiles();
-		classers[2] = new ClassifierModifiedQuantiles();
-		classers[0] = new ClassifierEqualIntervals();
+		classers[0] = new ClassifierQuantiles();
+		classers[1] = new ClassifierModifiedQuantiles();
+		classers[2] = new ClassifierEqualIntervals();
 		classers[3] = new ClassifierStdDev();
 		classers[4] = new ClassifierRawQuantiles();
 		classers[5] = new ClassifierCustom();
