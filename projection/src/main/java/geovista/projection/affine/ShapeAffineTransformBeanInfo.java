@@ -1,4 +1,4 @@
-package geovista.geoviz.transform;
+package geovista.projection.affine;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
