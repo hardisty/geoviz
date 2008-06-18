@@ -13,7 +13,7 @@
  */
 
 
-package geovista.geoviz.transform;
+package geovista.projection.affine;
 
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
