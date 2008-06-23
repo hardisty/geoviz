@@ -182,8 +182,8 @@ public class ShapeFileDataReader implements Serializable {
 
 		Geometry[] simplerGeoms = makeSimplerGeoms(geoms, tolerance);
 
-		// Shape[] shapes = geomsToShapes(simplerGeoms);
-		Shape[] shapes = getLiteShapes(simplerGeoms);
+		Shape[] shapes = geomsToShapes(simplerGeoms);
+		// Shape[] shapes = getLiteShapes(simplerGeoms);
 
 		return shapes;
 	}
