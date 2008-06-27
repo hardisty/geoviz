@@ -9,7 +9,6 @@
 
 package geovista.satscan;
 
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
@@ -36,6 +35,8 @@ import geovista.readers.example.GeoData48States;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -51,6 +52,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.MouseInputAdapter;
@@ -92,7 +94,8 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
         topPanel.add(types);
         topPanel.add(runButton);
         this.add(topPanel, BorderLayout.NORTH);
-        this.add(output, BorderLayout.CENTER);
+        JScrollPane jsp = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.add(jsp, BorderLayout.CENTER);
         
         GAMMouseListener gml = new GAMMouseListener();
         output.addMouseListener(gml);
@@ -113,6 +116,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
     }    
     
     public void run(){
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         double largeDimension = Math.max(initializer.getMaxX() - initializer.getMinX(),
                                          initializer.getMaxY() - initializer.getMinY());
         System.out.println("largeDimension is " + largeDimension);
@@ -225,6 +229,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
     private void updateOutputDisplay(){
         System.out.println("there are " + out.length + " clusters");
         output.removeAll();
+        output.setLayout(new GridLayout(0, 10));
         genePanels = new JPanel[out.length];
         for (int i = 0; i < out.length; i++){  
             Gene next = out[i];
@@ -232,7 +237,7 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
             JPanel thisGene = new JPanel();
             genePanels[i] = thisGene;
             thisGene.setLayout(new BoxLayout(thisGene, BoxLayout.Y_AXIS));
-            for (int x = 0; x < 9; x++){
+            for (int x = 0; x < labels.length; x++){
                 thisGene.add(labels[x]);
             }
             output.add(thisGene);
@@ -242,17 +247,18 @@ public class Proclude extends JPanel implements ActionListener, DataSetListener,
     }
     
     private JLabel[] geneToLabels(Gene g){
-        JLabel[] labels = new JLabel[9];
+        JLabel[] labels = new JLabel[10];
         labels[0] = new JLabel("Center X: " + roundToHundredths(g.getX()));
         labels[1] = new JLabel("Center Y: " + roundToHundredths(g.getY()));
         labels[2] = new JLabel("Major Radius: " + roundToHundredths(g.getMajorAxisRadius()));
         labels[3] = new JLabel("Minor Radius: " + roundToHundredths(g.getMinorAxisRadius()));
         labels[4] = new JLabel("Orientation: " + roundToHundredths(g.getOrientation()));
         labels[5] = new JLabel("Area: " + roundToHundredths(Math.PI * g.getMajorAxisRadius() * g.getMinorAxisRadius()));
-        labels[6] = new JLabel("Population: " + g.getPopulation());
-        labels[7] = new JLabel("Count: " + g.getCount());
-        labels[8] = new JLabel("Fitness: " + roundToHundredths(g.getFitness()));
-        labels[8].setBorder(BorderFactory.createEmptyBorder(0,0,5,0));
+        labels[6] = new JLabel("# Points: " + g.getContainedPoints().length);
+        labels[7] = new JLabel("Population: " + g.getPopulation());
+        labels[8] = new JLabel("Count: " + g.getCount());
+        labels[9] = new JLabel("Fitness: " + roundToHundredths(g.getFitness()));
+        labels[9].setBorder(BorderFactory.createEmptyBorder(0,0,5,0));
         labels[0].setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
         return labels;
     }    
