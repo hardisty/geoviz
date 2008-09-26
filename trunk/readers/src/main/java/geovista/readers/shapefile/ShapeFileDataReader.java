@@ -102,6 +102,7 @@ public class ShapeFileDataReader implements Serializable {
 	 * ex.printStackTrace(); } return dbData; }
 	 */
 	// return attribute names of the DB Data
+	@SuppressWarnings("unused")
 	private static String[] getFieldNames(String fileName) {
 
 		String dbFileName = fileName + ".dbf";
@@ -188,6 +189,7 @@ public class ShapeFileDataReader implements Serializable {
 		return shapes;
 	}
 
+	@SuppressWarnings("unused")
 	private static LiteShape[] getLiteShapes(Geometry[] geoms) {
 		LiteShape[] liteShapes = new LiteShape[geoms.length];
 		AffineTransform xForm = new AffineTransform();
@@ -430,6 +432,7 @@ public class ShapeFileDataReader implements Serializable {
 		return weights;
 	}
 
+	@SuppressWarnings("unused")
 	private static Object[] getDbfColumns(String fileName) {
 
 		String dbFileName = fileName + ".dbf";
@@ -624,7 +627,7 @@ public class ShapeFileDataReader implements Serializable {
 				shpData[i] = dbData[i];
 			}
 
-			shpData[dbData.length] = this.getGeoms(fileName);
+			shpData[dbData.length] = ShapeFileDataReader.getGeoms(fileName);
 
 			AttributeDescriptionFile desc = new AttributeDescriptionFile(
 					fileName + ".desc");
@@ -665,6 +668,10 @@ public class ShapeFileDataReader implements Serializable {
 	}
 
 	public Object[] getDataSet() {
+		if (dataForApps == null) {
+			logger.severe("returning null data");
+			return null;
+		}
 		return dataForApps.getDataObjectOriginal();
 	}
 

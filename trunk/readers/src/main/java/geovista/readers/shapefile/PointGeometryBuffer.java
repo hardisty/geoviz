@@ -84,6 +84,7 @@ public class PointGeometryBuffer {
 		String fileName = "C:\\temp\\buffers.csv";
 		PointGeometryBuffer buffer = new PointGeometryBuffer();
 		DataSetForApps bufferData = buffer.makeBuffers(fileName);
+		System.out.println("n shapes" + bufferData.getShapeData().length);
 		JFrame app = new JFrame("testing buffers");
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
