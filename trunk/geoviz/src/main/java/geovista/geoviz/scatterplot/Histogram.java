@@ -22,6 +22,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.BitSet;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,7 +77,10 @@ public class Histogram extends JPanel implements MouseListener,
 	int[] savedSelection;
 	transient private BitSet selectedRecords;
 	transient private int indicatedObs;
+
 	transient private int indicatedBin;
+	private final Set<Integer> indicatedNeighborBins;
+
 	transient private Vector<Integer>[] histRecords;
 	transient private Rectangle[] histRecs;
 	transient private double[] selectionArray; // the count of selected
@@ -83,8 +88,9 @@ public class Histogram extends JPanel implements MouseListener,
 	// bin.
 	transient private Color background;
 	transient private Color foreground;
-	private Color histFillColor = Color.gray;
-	private final Color indicationColor = Color.green;
+	private Color histFillColor = Color.GRAY;
+	private final Color neighborHistFillColor = Color.DARK_GRAY;
+	private final Color indicationColor = Color.GREEN;
 	private final float strokeSize = 3f;
 	BasicStroke stroke = new BasicStroke(strokeSize, BasicStroke.CAP_ROUND,
 			BasicStroke.JOIN_ROUND);
@@ -109,6 +115,7 @@ public class Histogram extends JPanel implements MouseListener,
 		setPreferredSize(size);
 		this.setSize(size);
 		indicatedBin = -1;// deslected
+		indicatedNeighborBins = new HashSet<Integer>();
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -381,12 +388,16 @@ public class Histogram extends JPanel implements MouseListener,
 		for (int i = 0; i < len - 1; i++) {
 			g.drawRect(exsInt[i], whyInt[i], exsInt[i + 1] - exsInt[i],
 					plotOriginY - whyInt[i]);
-			if (histFillColor != null) {
+
+			if (indicatedNeighborBins.contains(i)) {
+				g.setColor(neighborHistFillColor);
+			} else {
 				g.setColor(histFillColor);
-				g.fillRect(exsInt[i] + 1, whyInt[i] + 1, exsInt[i + 1]
-						- exsInt[i] - 1, plotOriginY - whyInt[i] - 1);
-				g.setColor(foreground);
 			}
+			g.fillRect(exsInt[i] + 1, whyInt[i] + 1, exsInt[i + 1] - exsInt[i]
+					- 1, plotOriginY - whyInt[i] - 1);
+			g.setColor(foreground);
+
 		}
 		g.drawRect(exsInt[len - 1], whyInt[len - 1],
 				plotEndX - exsInt[len - 1], plotOriginY - whyInt[len - 1]);
@@ -1143,6 +1154,7 @@ public class Histogram extends JPanel implements MouseListener,
 		if (data == null) {
 			return;
 		}
+		indicatedNeighborBins.clear();
 		if (indicatedObs < 0) {
 			indicatedBin = -1;
 			this.repaint();
@@ -1154,6 +1166,10 @@ public class Histogram extends JPanel implements MouseListener,
 				/ barWidth);
 		bin = ((binCount <= bin) ? binCount - 1 : bin);
 		indicatedBin = bin;
+
+		for (int obs : e.getNeighbors()) {
+			indicatedNeighborBins.add(obs);
+		}
 		this.repaint();
 	}
 

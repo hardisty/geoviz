@@ -13,17 +13,17 @@
 
 package geovista.geoviz.map;
 
-import geovista.coordination.CoordinationManager;
-import geovista.readers.example.GeoData48States;
-import geovista.readers.shapefile.ShapeFileDataReader;
-import geovista.readers.shapefile.ShapeFileProjection;
-import geovista.readers.shapefile.ShapeFileToShape;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+
+import geovista.coordination.CoordinationManager;
+import geovista.readers.example.GeoData48States;
+import geovista.readers.shapefile.ShapeFileDataReader;
+import geovista.readers.shapefile.ShapeFileProjection;
+import geovista.readers.shapefile.ShapeFileToShape;
 
 public class GeoMapMain extends JFrame {
 
@@ -75,7 +75,7 @@ public class GeoMapMain extends JFrame {
 			shpProj.setInputDataSetForApps(stateData.getDataForApps());
 		} else {
 			if (useProj) {
-				stateData.addActionListener(shpProj);
+				// stateData.addActionListener(shpProj);
 				shpProj.setInputDataSet(shpRead.getDataSet());
 			}
 		}

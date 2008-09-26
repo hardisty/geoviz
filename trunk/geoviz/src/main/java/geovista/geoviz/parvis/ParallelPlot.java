@@ -79,7 +79,7 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 	private JPanel optionsPanel;
 	private JToggleButton brushButton;
 	private JButton jButton1;
-	private geovista.geoviz.parvis.ParallelDisplay parallelDisplay;
+	private ParallelDisplay parallelDisplay;
 	private JCheckBox numberBox;
 	private JToggleButton scaleButton;
 	private JToggleButton translateButton;

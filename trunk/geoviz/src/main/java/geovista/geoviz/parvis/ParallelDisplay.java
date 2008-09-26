@@ -74,6 +74,10 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	public static final int INVERT = 3;
 	public static final int BRUSH = 4;
 
+	public int indication = -1;
+
+	public int[] indicationNeighbors;
+
 	/**
 	 * Whether we have to redraw the whole background. This is usually only
 	 * needed if the model changes.
@@ -90,6 +94,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	 */
 	public ParallelDisplay() {
 		init(null);
+
 	}
 
 	/**
@@ -111,6 +116,8 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	protected void init(ParallelSpaceModel model) {
 
 		logger.finest("Initializing ParallelDisplay Component");
+		int[] emptyArray = {};
+		indicationNeighbors = emptyArray;
 		setModel(model);
 
 		setMinimumSize(new Dimension(100, 100));
@@ -426,6 +433,8 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	public void indicationChanged(IndicationEvent e) {
 		int indication = e.getIndication();
 		this.indication = indication;
+		indicationNeighbors = e.getNeighbors();
+		logger.info("got indication, n bors = " + indicationNeighbors.length);
 		// model.
 		// BasicParallelDisplayUI bui =
 		// (BasicParallelDisplayUI)UIManager.getUI(this);
@@ -434,8 +443,6 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 		repaint();
 
 	}
-
-	public int indication = -1;
 
 	public void selectionChanged(SelectionEvent e) {
 		getUI().createBrushImage(this);

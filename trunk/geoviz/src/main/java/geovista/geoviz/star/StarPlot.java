@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import geovista.common.classification.ClassifierPicker;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
 import geovista.common.event.DataSetEvent;
@@ -54,7 +55,7 @@ import geovista.geoviz.visclass.VisualClassifier;
  */
 public class StarPlot extends JPanel implements DataSetListener,
 		DataSetModifiedListener, IndicationListener, SubspaceListener,
-		ColorArrayListener, TableModelListener {
+		ColorArrayListener, TableModelListener, ActionListener {
 
 	StarPlotCanvas starCan;
 	StarPlotLegend starLeg;
@@ -69,7 +70,7 @@ public class StarPlot extends JPanel implements DataSetListener,
 		vc = new VisualClassifier();
 		starCan = new StarPlotCanvas();
 		starLeg = new StarPlotLegend();
-
+		vc.getClassPick().addActionListener(this);
 		setLayout(new BorderLayout());
 		methodCombo = new JComboBox(StarPlotLayer.ScaleMethod.values());
 		// this.add(methodCombo, BorderLayout.WEST);
@@ -216,6 +217,16 @@ public class StarPlot extends JPanel implements DataSetListener,
 
 	public StarPlotCanvas getStarCan() {
 		return starCan;
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+		String actionCommand = arg0.getActionCommand();
+		if (actionCommand
+				.equals(ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED)) {
+			int varIndex = vc.getCurrVariableIndex();
+			starCan.setCurrentVar(varIndex);
+		}
+
 	}
 
 } // end class
