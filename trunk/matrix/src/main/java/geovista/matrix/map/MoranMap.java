@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -121,7 +120,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 		mainPanel.add(varSigPlot);
 
 		mainPanel.setPreferredSize(new Dimension(1000, 400));
-		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
+		// BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
 		// varSigMap = new GeoMap();
 		// sp = new SingleScatterPlot();
 		// varSigMap.addSelectionListener(sp);
