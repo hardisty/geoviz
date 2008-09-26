@@ -97,8 +97,8 @@ public class HerberiaDataReader implements GeoDataSource {
 			BufferedReader input = new BufferedReader(
 					new InputStreamReader(fis));
 			String line = "";
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date currDate = new Date();
+			// DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			// Date currDate = new Date();
 			Pattern tabPattern = Pattern.compile("\t");
 			long lineCount = 0;
 			long itemCount = 0;
@@ -205,6 +205,7 @@ public class HerberiaDataReader implements GeoDataSource {
 			env.init(env);
 			List geoms = qTree.query(env);
 			for (int i = 0; i < geoms.size(); i++) {
+				@SuppressWarnings("unused")
 				int answer = theIndexes[i].locate(coord);// XXX this would
 				// not work, just
 				// timing here...
@@ -354,6 +355,7 @@ public class HerberiaDataReader implements GeoDataSource {
 		return dataSet;
 	}
 
+	@SuppressWarnings("unused")
 	private void transformStdDev(DataSetForApps data) {
 		double[] rowData = new double[data.getNumberNumericAttributes()];
 
@@ -444,7 +446,7 @@ public class HerberiaDataReader implements GeoDataSource {
 	public static void main(String[] args) {
 
 		HerberiaDataReader reader = new HerberiaDataReader();
-		reader.printMemory();
+		HerberiaDataReader.printMemory();
 		// reader.readIsoCodes();
 		// reader.findCountryCodes();
 		// reader.readIDCodes();
@@ -454,7 +456,7 @@ public class HerberiaDataReader implements GeoDataSource {
 		long startTime = System.nanoTime();
 		reader.countAllHits();
 		long endTime = System.nanoTime();
-		reader.printMemory();
+		HerberiaDataReader.printMemory();
 		logger.info("finding hits took " + (endTime - startTime) / 1000000000f);
 		// DataSetForApps dataSet = reader.makeDataSetForApps();
 		startTime = System.nanoTime();
