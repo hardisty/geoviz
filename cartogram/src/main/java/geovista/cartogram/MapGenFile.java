@@ -364,10 +364,12 @@ public class MapGenFile {
 			FileChannel shpChan = shpFis.getChannel();
 			FileChannel shxChan = shxFis.getChannel();
 			Lock lock = new Lock();
-			ShapefileWriter shpWriter = shpWriter = new ShapefileWriter(
-					shpChan, shxChan, lock);
+			@SuppressWarnings("unused")
+			// XXX remove when writer works
+			ShapefileWriter shpWriter = new ShapefileWriter(shpChan, shxChan,
+					lock);
 
-			// shpWriter.wr
+			// shpWriter.write(arg0, arg1)
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -440,6 +442,7 @@ public class MapGenFile {
 	 * polygon.setPoints(thePoints); polygon.setNumPoints(thePoints.length);
 	 * theShapes.add(polygon); } }
 	 */
+	@SuppressWarnings("unused")
 	private static Object[] findPartsPoints(GeneralPath[] paths, int i) {
 		PathIterator pit = paths[i].getPathIterator(new AffineTransform());
 
@@ -476,6 +479,7 @@ public class MapGenFile {
 		return returns;
 	}
 
+	@SuppressWarnings("unused")
 	private static double[] findBbox(GeneralPath[] paths, int i) {
 		Rectangle2D bounds = paths[i].getBounds2D();
 		double[] bbox = { bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(),
