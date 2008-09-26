@@ -19,8 +19,10 @@ public abstract class JabberUtils {
 	public static final String SUBSPACE_ELEMENT_NAME = "Subspace";
 	public static final String SPATIAL_EXTENT_ELEMENT_NAME = "SpatialExtent";
 	public static final String MESSAGE_ELEMENT_NAME = "MessageElement";
+	public static final String MARSHALED_COMPONENT_ELEMENT_NAME = "MarshaledComponent";
 	public static final String DEFAULT_NAMESPACE = "geoviz";
 	public static final String LENGTH_STRING = "length";
+	public static final String MARSHALLED_COMPONENT_XML_STRING = "ComponentXML";
 	public static final String MESSAGE_BODY_STRING = "MessageBody";
 	public static final int STATE_LEADER = 2;// don't apply packets
 	public static final int STATE_FOLLOWER = 1;// automatically apply packets
@@ -150,6 +152,30 @@ public abstract class JabberUtils {
 			vals[i] = intVal;
 		}
 		return vals;
+	}
+
+	public static DefaultPacketExtension makeMarshaledComponentExtension(
+			String componentXML) {
+		DefaultPacketExtension ext = new DefaultPacketExtension(
+				JabberUtils.MARSHALED_COMPONENT_ELEMENT_NAME,
+				JabberUtils.DEFAULT_NAMESPACE);
+
+		ext.setValue(JabberUtils.MARSHALLED_COMPONENT_XML_STRING, "xml:"
+				+ componentXML);
+		logger.info("original component:" + componentXML);
+		logger.info("packet:" + ext.toXML());
+		return ext;
+	}
+
+	public static String getMarshaledComponent(DefaultPacketExtension ext) {
+		logger.info("ext:" + ext.toXML());
+
+		String componentXML = ext
+				.getValue(JabberUtils.MARSHALLED_COMPONENT_XML_STRING);
+		componentXML = componentXML.substring(4);
+		logger.info("componentXML:" + componentXML);
+		return componentXML;
+
 	}
 
 	public static DefaultPacketExtension makeSpatialExtentExtension(

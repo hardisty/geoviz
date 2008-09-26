@@ -11,7 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
+import java.util.EventListener;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,6 +70,8 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	JButton sendComponentButton;
 	EventListenerList listenerList;
 
+	ComponentProvider compProvider;
+
 	Object remoteListener;
 
 	String userName;
@@ -104,6 +106,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		buttonPanel = makeButtonPanel();
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		chatPanel = new ChatPanel();
+		chatPanel.sendMessageButton.setEnabled(false);
 
 		chatPanel.setMsgReciever(this);
 		this.add(chatPanel, BorderLayout.CENTER);
@@ -125,7 +128,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 			GeoJabberPreferences prefsFrame = new GeoJabberPreferences(conn);
 			prefsFrame.setVisible(true);
 		} else if (e.getSource() == fileTransferButton) {
-			File sendFile = new File("C:\\temp\\shapefiles\\east_asia.shp");
+			// File sendFile = new File("C:\\temp\\shapefiles\\east_asia.shp");
 			// how to get the fully qualified user name?
 			// org.jivesoftware.smack.Roster.getPresences(String user)
 			// -> org.jivesoftware.smack.packet.Presence.getFrom()
@@ -135,7 +138,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 			}
 			// GeoJabber.sendFile(conn, reciever, sendFile);
 		} else if (e.getSource() == sendComponentButton) {
-
+			sendComponent();
 		}
 
 		else {
@@ -143,6 +146,13 @@ public class GeoJabber extends JPanel implements SelectionListener,
 					+ " recieved unknown action");
 		}
 
+	}
+
+	private void sendComponent() {
+		String compXML = compProvider.marshalCurrentComponent();
+		logger.info(compXML);
+
+		sendExtension(JabberUtils.makeMarshaledComponentExtension(compXML));
 	}
 
 	/**
@@ -227,19 +237,34 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		sendVariables = new JButton("Send Variables");
 		sendSpatialExtent = new JButton("Send Spatial Extent");
 		fileTransferButton = new JButton("Transfer File");
+		sendComponentButton = new JButton("Send Current Component");
+
+		// default compProvider that does nothing. here to avoid null.
+		compProvider = new ComponentProvider() {
+			public String marshalCurrentComponent() {
+				return "";
+			}
+
+			public boolean componentProviderExists() {
+				return false;
+			}
+		};
+
 		buttonPanel.add(sendSelection);
 		buttonPanel.add(sendVariables);
 		buttonPanel.add(sendSpatialExtent);
-		// buttonPanel.add(fileTransferButton);
+		buttonPanel.add(sendComponentButton);
 
 		sendSelection.addActionListener(this);
 		sendVariables.addActionListener(this);
 		sendSpatialExtent.addActionListener(this);
 		fileTransferButton.addActionListener(this);
+		sendComponentButton.addActionListener(this);
 		buttonPanel.setBorder(new LineBorder(Color.black));
 		sendSelection.setEnabled(false);
 		sendVariables.setEnabled(false);
 		sendSpatialExtent.setEnabled(false);
+		sendComponentButton.setEnabled(false);
 		return buttonPanel;
 
 	}
@@ -259,8 +284,9 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
 			logger.finest(userName + " sending Remote Selection");
 		}
+		// XXX for testing, should be moved to unit test
 		// int[] someInts = { 1, 2, 4 };
-		// this.selection = someInts;
+		// selection = someInts;
 		if (selection == null) {
 			return;
 		}
@@ -339,15 +365,13 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 		Message msg = new Message(friend.getUser());
 		msg.setBody("extension");
-		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
-			logger.finest("msg before = " + msg.toXML());
+		if (GeoJabber.logger.isLoggable(Level.INFO)) {
+			logger.info("msg before = " + msg.toXML());
 		}
 		msg.addExtension(ext);
-		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
-			logger.finest("msg after = " + msg.toXML());
+		if (GeoJabber.logger.isLoggable(Level.INFO)) {
+			logger.info("msg after = " + msg.toXML());
 		}
-
-		// conn.sendPacket(msg);
 
 		try {
 			if (chat == null) {
@@ -463,6 +487,8 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		sendSelection.setEnabled(true);
 		sendVariables.setEnabled(true);
 		sendSpatialExtent.setEnabled(true);
+		sendComponentButton.setEnabled(true);
+		chatPanel.sendMessageButton.setEnabled(true);
 
 	}
 
@@ -547,6 +573,38 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	public void removeAnnotationListener(AnnotationListener l) {
 		listenerList.remove(AnnotationListener.class, l);
+	}
+
+	public void addMarshaledComponentListener(MarshaledComponentListener l) {
+		listenerList.add(MarshaledComponentListener.class, l);
+	}
+
+	public void removeMarshaledComponentListener(MarshaledComponentListener l) {
+		listenerList.remove(MarshaledComponentListener.class, l);
+	}
+
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	protected void fireMarshaledComponent(String marshaledXML) {
+
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == MarshaledComponentListener.class) {
+				((MarshaledComponentListener) listeners[i + 1])
+						.marshaledComponent(marshaledXML);
+
+			}
+		} // next i
+
 	}
 
 	/**
@@ -636,14 +694,14 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	public void processPacket(Packet pack) {
 		Message msg = null;
 		msg = (Message) pack;
-		if (GeoJabber.logger.isLoggable(Level.FINEST)) {
+		if (GeoJabber.logger.isLoggable(Level.INFO)) {
 
-			logger.finest("I'm " + nameField.getText() + "got packet, xml = "
+			logger.info("I'm " + nameField.getText() + " got packet, xml = "
 					+ pack.toXML());
-			logger.finest("packet from = " + pack.getFrom());
-			logger.finest("packet to = " + pack.getTo());
+			logger.info("packet from = " + pack.getFrom());
+			logger.info("packet to = " + pack.getTo());
 
-			logger.finest("Body = " + msg.getBody());
+			logger.info("Body = " + msg.getBody());
 		}
 		if (followerState == JabberUtils.STATE_LEADER
 				|| followerState == JabberUtils.STATE_NEITHER) {
@@ -676,6 +734,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 				DefaultPacketExtension ext = (DefaultPacketExtension) obj;
 				String elementName = ext.getElementName();
 				if (elementName.equals(JabberUtils.SELECTION_ELEMENT_NAME)) {
+					logger.info("got selection packet");
 					selection = JabberUtils.getSelection(ext);
 					fireSelectionChanged(selection);// send along to
 					// local listeners
@@ -693,6 +752,15 @@ public class GeoJabber extends JPanel implements SelectionListener,
 					// need to
 					// clobber this?
 					chatPanel.receiveMessage(friend.getName(), message);
+				} else if (elementName
+						.equals(JabberUtils.MARSHALED_COMPONENT_ELEMENT_NAME)) {
+					logger.info("got marshal packet:" + ext);
+					String componentXML = JabberUtils
+							.getMarshaledComponent(ext);
+
+					logger.info("got marshaled component:" + componentXML);
+					fireMarshaledComponent(componentXML);
+
 				}
 
 				String xml = ext.toXML();
@@ -716,7 +784,7 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	static public void main(String args[]) {
 		Logger logger = Logger.getLogger("geovista");
-		// logger.setLevel(Level.FINEST);
+		logger.setLevel(Level.FINEST);
 		XMPPConnection conn = JabberUtils.openConnection("satchmo");
 		try {
 
@@ -776,6 +844,17 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 	}
 
+	public ComponentProvider getCompProvider() {
+		return compProvider;
+	}
+
+	public void setCompProvider(ComponentProvider compProvider) {
+		this.compProvider = compProvider;
+	}
+
+	public interface MarshaledComponentListener extends EventListener {
+		public void marshaledComponent(String xml);
+	}
 	// public static boolean sendFile(XMPPConnection conn, String reciever,
 	// File file) {
 	// // Create the file transfer manager
