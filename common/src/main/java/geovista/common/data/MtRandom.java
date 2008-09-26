@@ -192,7 +192,7 @@ public final class MtRandom extends Random {
 
 			} while (r > 1.0D);
 		} else {
-			MtRandom random = new MtRandom();
+			// MtRandom random = new MtRandom();
 			for (int i = 0; i < n; i++) {
 				v[i] = gaussianRandom(1.0D);
 				r += v[i] * v[i];

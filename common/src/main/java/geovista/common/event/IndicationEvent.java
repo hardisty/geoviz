@@ -23,6 +23,7 @@ public class IndicationEvent extends EventObject {
 	private int xClass = -1;
 	private int yClass = -1;
 	private int highLevelIndication = -1;
+	private int[] neighbors;
 
 	/**
 	 * The constructor is the same as that for EventObject, except that the
@@ -32,6 +33,12 @@ public class IndicationEvent extends EventObject {
 	public IndicationEvent(Object source, int indication) {
 		super(source);
 		this.indication = indication;
+	}
+
+	public IndicationEvent(Object source, int indication, int[] neighbors) {
+		super(source);
+		this.indication = indication;
+		this.neighbors = neighbors;
 	}
 
 	public IndicationEvent(Object source, int indication, int highLevelInd) {
@@ -44,11 +51,13 @@ public class IndicationEvent extends EventObject {
 		return highLevelIndication;
 	}
 
-	public IndicationEvent(Object source, int indication, int xClass, int yClass) {
+	public IndicationEvent(Object source, int indication, int xClass,
+			int yClass, int[] neighbors) {
 		super(source);
 		this.indication = indication;
 		this.xClass = xClass;
 		this.yClass = yClass;
+		this.neighbors = neighbors;
 	}
 
 	// begin accessors
@@ -64,6 +73,17 @@ public class IndicationEvent extends EventObject {
 		return yClass;
 	}
 
+	/*
+	 * garunteed not to be null. May return empty array.
+	 */
+	public int[] getNeighbors() {
+		if (neighbors == null) {
+			int[] emptyArray = {};
+			return emptyArray;
+		} else {
+			return neighbors;
+		}
+	}
 	// end accessors
 
 }

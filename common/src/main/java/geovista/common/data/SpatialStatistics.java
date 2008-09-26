@@ -71,7 +71,8 @@ public abstract class SpatialStatistics {
 			SpatialWeights sw) {
 
 		ArrayList<double[]> monteVals = new ArrayList<double[]>();
-		for (double element : data) {
+		for (@SuppressWarnings("unused")
+		double element : data) {
 			double[] obsMonte = new double[iterations];
 			monteVals.add(obsMonte);
 		}

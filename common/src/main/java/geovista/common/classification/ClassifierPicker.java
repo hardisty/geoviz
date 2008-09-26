@@ -588,7 +588,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 		ClassifierEqualIntervals classer = new ClassifierEqualIntervals();
 		double[] data = { 1, 2, Double.NaN, 4, 3, 2, 1, 2, 3, 4, 66 };
 		int[] classes = classer.classify(data, 4);
-		double[] breaks = picker.findBreaks(data, classes, 4);
+		double[] breaks = ClassifierPicker.findBreaks(data, classes, 4);
 		for (double d : breaks) {
 			System.out.println(d);
 		}
