@@ -82,6 +82,7 @@ public class GlyphRenderer implements Glyph {
 		figureReady = true;
 	}
 
+	@SuppressWarnings("unused")
 	private void findPoints(int[] lengths) {
 		// need some trigonometry here
 		double nVals = lengths.length;
