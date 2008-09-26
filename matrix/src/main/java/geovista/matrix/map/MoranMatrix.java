@@ -256,7 +256,7 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 			shpProj.setInputDataSetForApps(stateData.getDataForApps());
 		} else {
 			if (useProj) {
-				stateData.addActionListener(shpProj);
+				// stateData.addActionListener(shpProj);
 				shpProj.setInputDataSet(shpRead.getDataSet());
 			}
 		}
