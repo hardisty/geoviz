@@ -119,10 +119,10 @@ public class NGonGroup implements DataSetListener, IndicationListener {
 	}
 
 	private void findSpikeLengths(int[] vars) {
-		int nVars = vars.length;
+		// int nVars = vars.length;
 		double[] varData = dataSet.getNumericDataAsDouble(vars[0]);
 		double minVal = DescriptiveStatistics.min(varData);
-		double maxVals = DescriptiveStatistics.max(varData);
+		// double maxVals = DescriptiveStatistics.max(varData);
 		double ranges = DescriptiveStatistics.range(varData);
 
 		int[] percentSize = new int[varData.length];

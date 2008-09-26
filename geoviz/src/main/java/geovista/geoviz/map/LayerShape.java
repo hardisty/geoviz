@@ -293,6 +293,7 @@ public abstract class LayerShape {
 
 	// just sets data
 	public void setSelectedObservations(int[] selectedObservations) {
+		logger.info(Arrays.toString(selectedObservations));
 		// check for error condition
 		int maxVal = DescriptiveStatistics.max(selectedObservations);
 		if (maxVal >= spatialData.length) {
@@ -859,4 +860,5 @@ public abstract class LayerShape {
 	public void setFillAux(boolean fillAux) {
 		this.fillAux = fillAux;
 	}
+
 }

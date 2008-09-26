@@ -235,6 +235,7 @@ public class MyRect extends Rectangle {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private String getLabel() {
 		String pinfo = info.toString();
 		if (obs > 0) {

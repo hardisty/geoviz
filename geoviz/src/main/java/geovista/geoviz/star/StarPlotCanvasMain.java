@@ -29,7 +29,6 @@ import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
 import geovista.coordination.CoordinationManager;
-import geovista.readers.example.GeoData48States;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
@@ -72,7 +71,7 @@ public class StarPlotCanvasMain {
 		boolean useResource = true;
 
 		CoordinationManager coord = new CoordinationManager();
-		GeoData48States stateData = new GeoData48States();
+		// GeoData48States stateData = new GeoData48States();
 		ShapeFileToShape shpToShape = new ShapeFileToShape();
 		ShapeFileProjection shpProj = new ShapeFileProjection();
 		// GeoMap map = new GeoMap();
@@ -82,7 +81,8 @@ public class StarPlotCanvasMain {
 		coord.addBean(shpProj);
 
 		if (useResource) {
-			shpProj.setInputDataSet(shpRead.getDataSet());//XXX will need help
+			shpProj.setInputDataSet(shpRead.getDataSet());// XXX will need
+															// help
 		} else {
 			Object[] dataSet = shpRead.getDataSet();
 

@@ -893,7 +893,7 @@ public class GeoMap extends JPanel
 			shpProj.setInputDataSetForApps(stateData.getDataForApps());
 		} else {
 			if (useProj) {
-				stateData.addActionListener(shpProj);
+				// stateData.addActionListener(shpProj);
 				shpProj.setInputDataSet(shpRead.getDataSet());
 			}
 		}

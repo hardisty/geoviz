@@ -72,6 +72,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 	private transient int nRows;
 	private transient int nColumns;
 	private transient float penWidth;
+
 	// private transient int[] obsList; //in case we want to subset for some
 	// reason, i.e. selection or conditioning
 	private transient int[] plotsOrder;// plotsOrder is used only when finding
@@ -82,6 +83,7 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 			.getName());
 
 	private final StarPlotLayer plotLayer;
+	private int varIndex;
 
 	public StarPlotCanvas() {
 		if (logger.isLoggable(Level.FINEST)) {
@@ -248,9 +250,21 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 		}// Just draw background
 		else {
 			g.fillRect(0, 0, getWidth(), getHeight());
+
 		}
 
 		g2.setColor(StarPlotRenderer.defaultIndicationColor);
+		if (indication >= 0) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			Rectangle indRect = plotLocations[indication];
+			g2.setColor(Color.black);
+			g.fillRect(indRect.x, indRect.y, indRect.width, indRect.height);
+			g2.setColor(StarPlotRenderer.defaultIndicationColor);
+			plotCircle(g2, indRect);
+
+		}
+
 		plotLayer.renderStar(g2, indication);
 
 	}
@@ -286,30 +300,35 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 		Rectangle[] plotLocs = plotLocations;
 
 		g2.setColor(Color.white);
-		int x = 0;
-		int y = 0;
-		int width = plotWidth;
-		int height = plotHeight;
+
 		for (Rectangle element : plotLocs) {
-			if (element == null) {
-				return;
-			}
-			x = element.x;
-			y = element.y;
-			width = element.width;
-			height = element.height;
-			if (plotWidth > plotHeight) {
-				x = x + ((width - height) / 2);
-				width = height;
-
-			} else if (plotHeight > plotWidth) {
-				y = y + ((height - width) / 2);
-				height = width;
-			}
-
-			g2.fillOval(x, y, width, height);
+			plotCircle(g2, element);
 
 		}
+	}
+
+	private void plotCircle(Graphics2D g2, Rectangle element) {
+		int x;
+		int y;
+		int width;
+		int height;
+		if (element == null) {
+			return;
+		}
+		x = element.x;
+		y = element.y;
+		width = element.width;
+		height = element.height;
+		if (plotWidth > plotHeight) {
+			x = x + ((width - height) / 2);
+			width = height;
+
+		} else if (plotHeight > plotWidth) {
+			y = y + ((height - width) / 2);
+			height = width;
+		}
+
+		g2.fillOval(x, y, width, height);
 	}
 
 	// start component event handling
@@ -567,5 +586,42 @@ public class StarPlotCanvas extends JPanel implements ComponentListener,
 
 	public StarPlotLayer getPlotLayer() {
 		return plotLayer;
+	}
+
+	public void setCurrentVar(int varIndex) {
+		this.varIndex = varIndex;
+
+	}
+
+	public int[] findNeighbors(int obs) {
+		int[] intArray = {};
+		double[] currVar = (double[]) dataSet.getNamedArrays()[varIndex];
+		double val = currVar[obs];
+		double upperNeighbor = Double.MAX_VALUE;
+		double lowerNeighbor = Double.MAX_VALUE * -1;
+		double upGap = upperNeighbor - val;
+		double downGap = val - lowerNeighbor;
+
+		for (int i = 0; i < currVar.length; i++) {
+			if (i != obs) {
+				double newVal = currVar[i];
+				if (newVal > val) {
+					double newUpGap = newVal - val;
+					if (newUpGap > upGap) {
+						upperNeighbor = newVal;
+						upGap = newUpGap;
+					}
+				} else if (newVal < val) {
+					double newDownGap = val - newVal;
+					if (newDownGap > downGap) {
+						lowerNeighbor = newVal;
+						downGap = newDownGap;
+					}
+				} else if (newVal == val) {
+
+				}
+			}
+		}
+		return intArray;
 	}
 } // end class

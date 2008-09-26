@@ -170,9 +170,9 @@ public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 
 		mapCan.setGlyphs(createGlyphs());
 
-		String[] varNames = ngonLayer.getVarNames();
+		// String[] varNames = ngonLayer.getVarNames();
 
-		double[] values = ngonLayer.getValues(indication);
+		// double[] values = ngonLayer.getValues(indication);
 
 		setLegendIndication(indication);
 	}

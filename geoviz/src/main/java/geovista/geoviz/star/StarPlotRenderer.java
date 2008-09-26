@@ -30,6 +30,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,12 +50,17 @@ import geovista.symbolization.glyph.Glyph;
  */
 public class StarPlotRenderer implements Glyph {
 
+	private static ArrayList<Color> spikeColors = createSpikeColors();
+
 	int[] lengths;
 	float[] xPoints;
 	float[] yPoints;
 	float[] renderedXPoints;
 	float[] renderedYPoints;
+
 	boolean figureReady;
+
+	boolean isPaintSpikes = false;
 
 	GeneralPath originalFigure;
 	GeneralPath originalSpikes;
@@ -89,6 +95,21 @@ public class StarPlotRenderer implements Glyph {
 		spikesColor = StarPlotRenderer.defaultSpikesColor;
 		figureReady = false;
 
+	}
+
+	private static ArrayList<Color> createSpikeColors() {
+		ArrayList<Color> colors = new ArrayList<Color>();
+
+		colors.add(Color.blue);
+		colors.add(Color.cyan);
+		colors.add(Color.green);
+		colors.add(Color.magenta);
+		colors.add(Color.orange);
+		colors.add(Color.pink);
+		colors.add(Color.red);
+		colors.add(Color.yellow);
+
+		return colors;
 	}
 
 	public StarPlotRenderer copy() {
@@ -175,11 +196,19 @@ public class StarPlotRenderer implements Glyph {
 				targetArea, true, true);
 		paintSpikes = originalSpikes.createTransformedShape(zoomForm);
 		paintFigure = originalFigure.createTransformedShape(zoomForm);
-		renderedXPoints = null; // reset
-		renderedYPoints = null;
+		// renderedXPoints = null; // reset
+		// renderedYPoints = null;
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("in StarPlotRenderer.projectFigure");
 		}
+		// if (renderedXPoints == null) {
+		// getRenderedXPoints();
+		// }
+		transformPoints();
+		// zoomForm.transform(renderedXPoints, 0, renderedXPoints, 0,
+		// xPoints.length - 1);
+		// zoomForm.transform(renderedYPoints, 0, renderedYPoints, 0,
+		// xPoints.length - 1);
 		figureReady = true;
 	}
 
@@ -198,6 +227,9 @@ public class StarPlotRenderer implements Glyph {
 		if (fill) {
 			target.setColor(fillColor);
 			target.fill(paintFigure);
+			if (isPaintSpikes) {
+				paintSpikeColors(target);
+			}
 			target.setColor(spikesColor);
 			target.setStroke(StarPlotRenderer.spikeStroke);
 			target.draw(paintSpikes);
@@ -211,6 +243,23 @@ public class StarPlotRenderer implements Glyph {
 		}
 
 		target.setStroke(st);
+
+	}
+
+	private void paintSpikeColors(Graphics2D g2) {
+		Stroke newStroke = new BasicStroke(3f, BasicStroke.CAP_BUTT,
+				BasicStroke.JOIN_BEVEL);
+		g2.setStroke(newStroke);
+		renderedXPoints = getRenderedXPoints();
+		renderedYPoints = getRenderedYPoints();
+		int midX = (targetArea.width / 2) + targetArea.x;
+		int midY = (targetArea.height / 2) + targetArea.y;
+		for (int i = 0; i < renderedXPoints.length; i++) {
+			int colorNum = i % spikeColors.size();
+			g2.setColor(spikeColors.get(colorNum));
+			g2.drawLine(midX, midY, (int) renderedXPoints[i],
+					(int) renderedYPoints[i]);
+		}
 
 	}
 
@@ -297,11 +346,17 @@ public class StarPlotRenderer implements Glyph {
 			srcPts[i * 2 + 1] = yPoints[i];
 		}
 		zoomForm.transform(srcPts, 0, dstPts, 0, nPts);
-		if (renderedXPoints == null) {
+		if (renderedXPoints == null || renderedXPoints.length != nPts) {
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("making new points");
+			}
 			renderedXPoints = new float[nPts];
 			renderedYPoints = new float[nPts];
 		}
 		for (int i = 0; i < nPts; i++) {
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("calculating points");
+			}
 			renderedXPoints[i] = dstPts[i * 2];
 			renderedYPoints[i] = dstPts[i * 2 + 1]; // +1 for the y
 			// points in x,y
@@ -312,11 +367,14 @@ public class StarPlotRenderer implements Glyph {
 
 	public float[] getRenderedXPoints() {
 
-		transformPoints();
+		if (renderedXPoints == null) {
+			transformPoints();
+		}
 		return renderedXPoints;
 	}
 
 	public float[] getRenderedYPoints() {
+
 		if (renderedYPoints == null) {
 			transformPoints();
 		}

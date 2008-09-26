@@ -30,6 +30,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -92,6 +93,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	private final Vector shapeLayers;
 	private int indication = Integer.MIN_VALUE;
+	private int[] indicationNeighbors;
 	private transient int activeLayer;
 	private transient ShapeTransformer transformer;
 
@@ -141,6 +143,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		mouseX1 = -2;
 		drawTip = true;
 		mode = MapCanvas.MODE_SELECT;
+		int[] emptyArray = {};
+		indicationNeighbors = emptyArray;
 
 		// int greyAmt = 0;
 		// Color bgColor = new Color(greyAmt, greyAmt, greyAmt);
@@ -922,9 +926,16 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		return currColorColumnY;
 	}
 
-	// jin: paint indication on map
+	private void setIndicationNeighbors(int[] neighbors) {
+		boolean areEqual = Arrays.equals(neighbors, indicationNeighbors);
+		if (areEqual == false) {
+			indicationNeighbors = neighbors;
+
+		}
+
+	}
+
 	public void setIndication(int indication) {
-		// if(true)return;
 
 		if (fisheyes != null) {
 			// if we have fisheyes, this is too expensive!!!
@@ -1039,6 +1050,12 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 		int indication = e.getIndication();
 		setIndication(indication);
+
+		int[] neighbors = e.getNeighbors();
+		if (neighbors.length > 0) {
+			setIndicationNeighbors(neighbors);
+		}
+		this.repaint();
 	}
 
 	public void glyphChanged(GlyphEvent e) {
@@ -1205,6 +1222,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		if (indic != indication) {
 			setIndication(indic);
 
+			int[] neighbors = getIndicationNeighbors(indic);
+			logger.info("found bors, n = " + neighbors.length);
+			setIndicationNeighbors(neighbors);
+			this.repaint();
 			int xClass = -1;
 			int yClass = -1;
 
@@ -1213,11 +1234,29 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				yClass = bivarColorClasser.getClassY(indic);
 			}
 
-			fireIndicationChanged(indic, xClass, yClass);
+			fireIndicationChanged(indic, xClass, yClass, neighbors);
+
 		}
 
 		mouseX2 = e.getX();
 		mouseY2 = e.getY();
+	}
+
+	public int[] getIndicationNeighbors(int indic) {
+		if (indic < 0) {
+			int[] emptyArray = {};
+			return emptyArray;
+		}
+
+		List<Integer> intList = dataSet.getSpatialWeights().getNeighborIDs(
+				indic);
+		Object[] intArray = intList.toArray();
+		int[] theInts = new int[intArray.length];
+		for (int i = 0; i < theInts.length; i++) {
+			theInts[i] = (Integer) intArray[i];
+
+		}
+		return theInts;
 	}
 
 	/**
@@ -1300,11 +1339,14 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		drawBox = false;
 		this.repaint();
 		setIndication(-1);
-		fireIndicationChanged(-1, 0, 0);
+		int[] emptyArray = {};
+		setIndicationNeighbors(emptyArray);
+		fireIndicationChanged(-1, 0, 0, emptyArray);
 
 		if (fisheyes != null) {
 			fisheyes.setFocus(-1000f, -1000f);
 		}
+		this.repaint();
 	}
 
 	/**
@@ -1524,10 +1566,16 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			g.fillRect(0, 0, getWidth(), getHeight());
 		}
 
+		LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
+		// draw indication neighbors
+
+		for (int bor : indicationNeighbors) {
+			ls.renderSecondaryIndication(g2, bor);
+		}
+
 		// Draw indication.
 		if ((indication != Integer.MIN_VALUE) && (shapeLayers.size() > 0)
 				&& (mode != MapCanvas.MODE_PAN) && (fisheyes == null)) {
-			LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
 
 			// System.out.println("*********************");
 			if (indication >= 0) {
@@ -1815,7 +1863,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	 * 
 	 * @see EventListenerList
 	 */
-	private void fireIndicationChanged(int newIndication, int xClass, int yClass) {
+	private void fireIndicationChanged(int newIndication, int xClass,
+			int yClass, int[] neighbors) {
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
 		IndicationEvent e = null;
@@ -1826,7 +1875,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			if (listeners[i] == IndicationListener.class) {
 				// Lazily create the event:
 				if (e == null) {
-					e = new IndicationEvent(this, newIndication, xClass, yClass);
+					e = new IndicationEvent(this, newIndication, xClass,
+							yClass, neighbors);
 				}
 
 				((IndicationListener) listeners[i + 1]).indicationChanged(e);

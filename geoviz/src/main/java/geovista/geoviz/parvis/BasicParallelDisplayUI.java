@@ -310,7 +310,14 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 
 		// hovering over record
 		// added Frank Hardisty 19 July 2002
-
+		logger.info("about to paint neighbors, n = "
+				+ comp.indicationNeighbors.length);
+		for (int obs : comp.indicationNeighbors) {
+			GeneralPath rPath = assemblePath(obs, 0, numDimensions - 1, comp);
+			g2.setStroke(new BasicStroke(1.0f));
+			g2.setColor(Color.green);
+			g2.draw(rPath);
+		}
 		boolean paintHoverNative = false;
 		boolean paintHoverComp = false;
 		int paintHoverRecord = -1;
