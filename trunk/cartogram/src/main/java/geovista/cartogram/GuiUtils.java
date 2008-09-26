@@ -221,9 +221,9 @@ public class GuiUtils extends JPanel {
 		newDir.mkdir();
 		MapGenFile.writeShapefile(stateData.getDataForApps()
 				.getGeneralPathData(), inputFileName);
-		Class cl = stateData.getClass();
+		// Class cl = stateData.getClass();
 
-		InputStream in = cl.getResourceAsStream("resources/states48.dbf");
+		// InputStream in = cl.getResourceAsStream("resources/states48.dbf");
 
 		try {
 
@@ -241,6 +241,7 @@ public class GuiUtils extends JPanel {
 			if (logger.isLoggable(Level.INFO)) {
 
 				logger.info("dBase length = " + dBaseHeader.getNumRecords());
+				logger.info("dbasewriter " + dBase.toString());
 			}
 
 		} catch (IOException ex) {
