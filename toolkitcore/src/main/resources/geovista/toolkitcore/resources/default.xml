@@ -165,7 +165,7 @@
       </ToolkitBean>
     </beanSet>
   </beanSet>
-  <dataSource>USCounties</dataSource>
+  <dataSource>48States</dataSource>
   <indication>-1</indication>
   <selectedBean>SingleHistogram</selectedBean>
   <listenerList serialization="custom">

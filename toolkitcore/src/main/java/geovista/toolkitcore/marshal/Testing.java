@@ -35,7 +35,7 @@ public class Testing {
 		String colXML = xstream.toXML(testCol);
 
 		Color newCol = (Color) xstream.fromXML(colXML);
-
+		System.out.println(newCol.getRGB());
 		System.out.println(colXML);
 
 		GeoMap map = new GeoMap();
@@ -77,7 +77,7 @@ public class Testing {
 		// int[] sel = { 3, 4, 5 };
 		// map.setSelectedObservations(sel);
 
-		Marshaller marsh = Marshaller.INSTANCE;
+		Marshaler marsh = Marshaler.INSTANCE;
 
 		VizState state = gvz.getVizState();
 
@@ -101,7 +101,7 @@ public class Testing {
 		// JAXBContext jc;
 		// try {
 		// jc = JAXBContext.newInstance("geovista.geoviz.map");
-		// Marshaller m = jc.createMarshaller();
+		// Marshaler m = jc.createMarshaller();
 		// m.marshal(map, System.out);
 		// } catch (JAXBException e2) {
 		// // TODO Auto-generated catch block

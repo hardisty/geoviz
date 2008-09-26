@@ -193,8 +193,4 @@ public class CalcStats {
 		System.out.println(String.valueOf(aObject));
 	}
 
-	private String quote(String aText) {
-		String QUOTE = "'";
-		return QUOTE + aText + QUOTE;
-	}
 }

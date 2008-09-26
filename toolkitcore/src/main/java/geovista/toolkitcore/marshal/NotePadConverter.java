@@ -20,11 +20,11 @@ public class NotePadConverter implements Converter {
 
 		writer.startNode("fieldText");
 		String text = frame.textField.getText();
-		context.convertAnother(Marshaller.newLinesToXML(text));
+		context.convertAnother(Marshaler.newLinesToXML(text));
 		writer.endNode();
 
 		writer.startNode("areaText");
-		context.convertAnother(Marshaller.newLinesToXML(frame.textArea
+		context.convertAnother(Marshaler.newLinesToXML(frame.textArea
 				.getText()));
 		writer.endNode();
 
@@ -37,11 +37,11 @@ public class NotePadConverter implements Converter {
 		reader.moveDown();
 
 		String fieldText = (String) context.convertAnother(frame, String.class);
-		frame.textField.setText(Marshaller.newLinesToJava(fieldText));
+		frame.textField.setText(Marshaler.newLinesToJava(fieldText));
 		reader.moveUp();
 		reader.moveDown();
 		String areaText = (String) context.convertAnother(frame, String.class);
-		frame.textArea.setText(Marshaller.newLinesToJava(areaText));
+		frame.textArea.setText(Marshaler.newLinesToJava(areaText));
 		reader.moveUp();
 
 		return frame;
