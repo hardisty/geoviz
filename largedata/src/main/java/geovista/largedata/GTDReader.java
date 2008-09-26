@@ -595,7 +595,8 @@ public class GTDReader implements GeoDataSource {
 		reader.simplifyAllNulls();
 		DataSetForApps dataSet = reader.makeDataSetForApps();
 
-		System.out.println("All done!");
+		System.out.println("All done! we have this many obs:"
+				+ dataSet.getNumObservations());
 
 	}
 
