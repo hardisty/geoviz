@@ -412,7 +412,7 @@ public class DataSetForApps extends AbstractTableModel {
 	}
 
 	/**
-	 * Returns the first instance of a Point2D[] found in the data set,
+	 * Returns the first instance of a Geometry[] found in the data set,
 	 * searching from last to first, or else null if none exists.
 	 */
 	public Geometry[] getGeomData() {
@@ -437,9 +437,45 @@ public class DataSetForApps extends AbstractTableModel {
 	// return null;
 	// }
 
+	public int[] getIntArrayDataByName(String name) {
+		int[] intData = new int[0];
+
+		for (int i = 0; i < attributeNames.length; i++) {
+			if (name.equals(attributeNames[i])) {
+				if (dataObjectOriginal[i + 1] instanceof int[]) { // +1 to
+					// skip
+					// names
+					intData = (int[]) dataObjectOriginal[i + 1];
+				}
+			}
+
+		}
+
+		return intData;
+
+	}
+
+	public String[] getStringArrayDataByName(String name) {
+		String[] stringData = new String[0];
+
+		for (int i = 0; i < attributeNames.length; i++) {
+			if (name.equals(attributeNames[i])) {
+				if (dataObjectOriginal[i + 1] instanceof String[]) {
+					// +1 to
+					// skip
+					// names
+					stringData = (String[]) dataObjectOriginal[i + 1];
+				}
+			}
+
+		}
+
+		return stringData;
+
+	}
+
 	/**
-	 * Returns the first instance of a ShapeFile found in the data set,
-	 * searching from last to first, or else null if none exists.
+	 * 
 	 * 
 	 * This first index is zero, the next one, and so on, the last being
 	 * getNumberNumericAttributes() -1

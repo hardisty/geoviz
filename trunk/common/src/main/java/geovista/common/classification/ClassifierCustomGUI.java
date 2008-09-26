@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -538,6 +539,7 @@ public class ClassifierCustomGUI extends JPanel implements ActionListener,
 		ClassifierEqualIntervals classer = new ClassifierEqualIntervals();
 		double[] data = { 1, 2, Double.NaN, 4, 3, 2, 1, 2, 3, 4, 6 };
 		int[] classes = classer.classify(data, 4);
+		logger.info(Arrays.toString(classes));
 		picker.setData(data);
 		// picker.setClassValues(breaks);
 
