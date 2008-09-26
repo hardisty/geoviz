@@ -38,7 +38,7 @@ import geovista.projection.OldProjectionEquidistantConic;
  * will be fired as well. It will also project and fire an ActionEvent on being
  * passed a new projection.
  */
-public class ShapeFileProjection implements ActionListener {
+public class ShapeFileProjection {
 	private transient DataSetForApps inputDataSetForApps;
 	private transient DataSetForApps outputDataSetForApps;
 	private transient DataSetForApps inputAuxSpatialData;
@@ -279,17 +279,6 @@ public class ShapeFileProjection implements ActionListener {
 
 	public EventListenerList getListenerList() {
 		return listenerList;
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
-
-		String className = obj.getClass().getName();
-
-		Package pack = obj.getClass().getPackage(); //
-		logger.finest(pack.getName()
-				+ "can't find package when we are an applet");
-
 	}
 
 	/**
