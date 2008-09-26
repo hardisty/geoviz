@@ -77,6 +77,7 @@ public class SonicRampSwatch extends JPanel implements MouseListener,
 		initSound();
 	}
 
+	@SuppressWarnings("unused")
 	private void initSound_old() {
 		try {
 			if (synthesizer == null) {
