@@ -56,7 +56,7 @@ import javax.swing.JPanel;
 import org.w3c.dom.NodeList;
 
 import geovista.readers.util.MyFileFilter;
-import geovista.toolkitcore.marshal.Marshaller;
+import geovista.toolkitcore.marshal.Marshaler;
 
 public class ToolkitIO {
 	protected final static Logger logger = Logger.getLogger(ToolkitIO.class
@@ -66,14 +66,16 @@ public class ToolkitIO {
 
 	public static final int FILE_TYPE_LAYOUT = 0;
 	public static final int FILE_TYPE_SHAPEFILE = 1;
+	public static final int FILE_TYPE_SEERSTAT = 2;
 
 	private static String LAYOUT_DIR = "LastGoodLayoutDirectory";
 	private static String SHAPEFILE_DIR = "LastGoodFileDirectory";
 	private static String IMAGE_DIR = "LastGoodImageDirectory";
+	private static String SEERSTAT_DIR = "LastGoodSeerStatDirectory";
 	public static String dataSetPathFromXML = " ";
 
 	public static void saveVizStateToFile(VizState state) {
-		Marshaller marsh = Marshaller.INSTANCE;
+		Marshaler marsh = Marshaler.INSTANCE;
 		String xml = marsh.toXML(state);
 		logger.info(xml);
 		try {
@@ -142,6 +144,9 @@ public class ToolkitIO {
 				defaultDir = gvPrefs.get(ToolkitIO.SHAPEFILE_DIR, "");
 				fileFilter = new MyFileFilter(new String[] { "shp", "dbf",
 						"csv" });
+			} else if (fileType == ToolkitIO.FILE_TYPE_SEERSTAT) {
+				defaultDir = gvPrefs.get(ToolkitIO.SEERSTAT_DIR, "");
+				fileFilter = new MyFileFilter(new String[] { "dic" });
 			}
 
 			JFileChooser fileChooser = new JFileChooser(defaultDir);
@@ -173,7 +178,7 @@ public class ToolkitIO {
 
 					if (erase == JOptionPane.NO_OPTION) {
 						GeoVizToolkit gvt = (GeoVizToolkit) parent;
-						String xml = Marshaller.INSTANCE.toXML(gvt);
+						String xml = Marshaler.INSTANCE.toXML(gvt);
 						ToolkitIO.writeLayout(gvt.getFileName(), xml, parent);
 					} else if (erase == JOptionPane.CANCEL_OPTION) {
 						return null;
@@ -192,6 +197,8 @@ public class ToolkitIO {
 					gvPrefs.put(ToolkitIO.LAYOUT_DIR, path);
 				} else if (fileType == ToolkitIO.FILE_TYPE_SHAPEFILE) {
 					gvPrefs.put(ToolkitIO.SHAPEFILE_DIR, path);
+				} else if (fileType == ToolkitIO.FILE_TYPE_SEERSTAT) {
+					gvPrefs.put(ToolkitIO.SEERSTAT_DIR, path);
 				}
 			}
 
@@ -288,7 +295,7 @@ public class ToolkitIO {
 		}
 		String xml = readCharStream(new InputStreamReader(inStream));
 		logger.info("getting mashaller");
-		Marshaller marsh = Marshaller.INSTANCE;
+		Marshaler marsh = Marshaler.INSTANCE;
 		logger.info("about to instantiate VizState");
 		VizState state = (VizState) marsh.fromXML(xml);
 		logger.info("instantiated VizState");
@@ -311,7 +318,7 @@ public class ToolkitIO {
 			return null;
 		}
 		logger.info("getting mashaller");
-		Marshaller marsh = Marshaller.INSTANCE;
+		Marshaler marsh = Marshaler.INSTANCE;
 		logger.info("about to instantiate VizState");
 		VizState state = (VizState) marsh.fromXML(xml);
 		logger.info("instantiated VizState");
@@ -355,7 +362,7 @@ public class ToolkitIO {
 	 * ImageIO.getImageWritersByFormatName("jpeg").next(); while
 	 * (writers.hasNext()) { writer = (ImageWriter) writers.next(); if
 	 * (writer.getClass().getName().startsWith( "javax_imageio_jpeg_image_1.0")) { //
-	 * Break on finding the core provider. break; } } if (writer == null) {
+	 * Break on finding the core compProvider. break; } } if (writer == null) {
 	 * System.err.println("Cannot find core JPEG writer!"); } // Set the
 	 * compression level. ImageWriteParam writeParam =
 	 * writer.getDefaultWriteParam();
@@ -428,7 +435,7 @@ public class ToolkitIO {
 		while (readers.hasNext()) {
 			reader = (ImageReader) readers.next();
 			if (reader.getClass().getName().startsWith("com.sun.imageio")) {
-				// Break on finding the core provider.
+				// Break on finding the core compProvider.
 				break;
 			}
 		}

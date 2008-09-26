@@ -41,12 +41,12 @@ import geovista.touchgraph.SubspaceLinkGraph;
  * @author localadmin
  * 
  */
-public class Marshaller {
+public class Marshaler {
 
 	XStream streamer;
-	public final static Marshaller INSTANCE = new Marshaller();
+	public final static Marshaler INSTANCE = new Marshaler();
 
-	private Marshaller() {
+	private Marshaler() {
 
 		streamer = new XStream();
 

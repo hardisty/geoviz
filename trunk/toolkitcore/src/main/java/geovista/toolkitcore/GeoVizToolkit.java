@@ -11,11 +11,13 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +49,9 @@ import javax.swing.event.InternalFrameListener;
 import geovista.animation.IndicationAnimator;
 import geovista.animation.SelectionAnimator;
 import geovista.cartogram.GeoMapCartogram;
+import geovista.collaboration.ComponentProvider;
 import geovista.collaboration.GeoJabber;
+import geovista.collaboration.GeoJabber.MarshaledComponentListener;
 import geovista.common.data.DataSetBroadcaster;
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DataSetModifiedBroadcaster;
@@ -88,16 +92,17 @@ import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
 import geovista.readers.example.GeoDataGeneralizedStates;
 import geovista.readers.example.GeoDataUSCounties;
+import geovista.readers.seerstat.SeerStatReader;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
-import geovista.satscan.Proclude;
 import geovista.satscan.SaTScan;
 import geovista.sound.SonicClassifier;
+import geovista.toolkitcore.GvDesktopPane.FrameListener;
 import geovista.toolkitcore.data.GeoDataCartogram;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
-import geovista.toolkitcore.marshal.Marshaller;
+import geovista.toolkitcore.marshal.Marshaler;
 import geovista.touchgraph.LinkGraph;
 import geovista.touchgraph.PCAViz;
 import geovista.touchgraph.SubspaceLinkGraph;
@@ -109,7 +114,8 @@ import geovista.touchgraph.SubspaceLinkGraph;
  */
 
 public class GeoVizToolkit extends JFrame implements ActionListener,
-		ComponentListener, InternalFrameListener, AnnotationListener {
+		ComponentListener, InternalFrameListener, AnnotationListener,
+		ComponentProvider, FrameListener, MarshaledComponentListener {
 
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
@@ -146,6 +152,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	JMenuItem menuItemLoadGTD;
 	JMenuItem menuItemLoadBackgroundShape;
 	JMenuItem menuItemLoadSCBackgroundShape;
+	JMenuItem menuItemImportSeerStatData;
+
 	JMenu menuRemoveTool;
 	JMenuItem menuItemRemoveAllTools;
 	JMenu menuAbout;
@@ -166,6 +174,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	JMenuItem menuItemCopySelectedWindowToClipboard;
 	JMenuItem menuItemSaveWholeImageToFile;
 	JMenuItem menuItemSaveSelectedWindowToFile;
+	JMenuItem menuItemSaveImageToGEX;
 
 	VizState vizState;
 	// how about svg and postscript?
@@ -182,6 +191,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 */
 	public GeoVizToolkit() {
 		super();
+
 		vizState = new VizState();
 	}
 
@@ -227,6 +237,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadGTD = new JMenuItem();
 		menuItemLoadBackgroundShape = new JMenuItem();
 		menuItemLoadSCBackgroundShape = new JMenuItem();
+		menuItemImportSeerStatData = new JMenuItem();
 		menuRemoveTool = new JMenu();
 		menuItemRemoveAllTools = new JMenuItem();
 		menuAbout = new JMenu();
@@ -247,9 +258,11 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemCopySelectedWindowToClipboard = new JMenuItem();
 		menuItemSaveWholeImageToFile = new JMenuItem();
 		menuItemSaveSelectedWindowToFile = new JMenuItem();
+		menuItemSaveImageToGEX = new JMenuItem();
 	}
 
 	public void init(String fileNameIn, boolean useProj) {
+
 		initMembers();
 		desktop.setBackground(new Color(20, 20, 80));
 		this.useProj = useProj;
@@ -423,6 +436,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		FiringBean newFBean = coord.addBean(newBean);
 		String uniqueName = newFBean.getBeanName();
 
+		if (className.equals(GeoJabber.class.getName())) {
+			GeoJabber jab = (GeoJabber) newBean;
+			jab.setCompProvider(this);
+			jab.addMarshaledComponentListener(this);
+		}
+
 		newToolkitBean = new ToolkitBean(newBean, uniqueName);
 
 		bInterFrame = newToolkitBean.getInternalFrame();
@@ -507,11 +526,24 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void fireNewBeanMethods(Object newBean) {
+		if (dataSet == null || dataSet.getDataObjectOriginal() == null) {
+			logger.severe("data set is null");
+			return;
+		}
+		fireDataSetToNewBean(newBean);
+		fireOtherNewBeanMethods(newBean);
+
+	}
+
+	private void fireDataSetToNewBean(Object newBean) {
 		if (newBean instanceof DataSetListener) {
 			DataSetListener dataListener = (DataSetListener) newBean;
 			dataListener.dataSetChanged(new DataSetEvent(dataSet, this));
 
 		}
+	}
+
+	private void fireOtherNewBeanMethods(Object newBean) {
 		if (newBean instanceof SubspaceListener) {
 			SubspaceListener selListener = (SubspaceListener) newBean;
 			SubspaceEvent e = vizState.getSubspaceEvent();
@@ -532,7 +564,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			IndicationEvent e = vizState.getIndicationEvent();
 			indListener.indicationChanged(e);
 		}
-
 	}
 
 	private void addToolkitBeanSet(ToolkitBeanSet beanSet) {
@@ -621,6 +652,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			openBackgroundShapeFilePicker();
 		} else if (e.getSource() == menuItemLoadSCBackgroundShape) {
 			loadBackgroundData("SC");
+		} else if (e.getSource() == menuItemImportSeerStatData) {
+			openSeerStatFilePicker();
 		}
 
 		else if (e.getSource() == menuItemOpenLayout) {
@@ -635,7 +668,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			logger.info("set VizState");
 
 		} else if (e.getSource() == menuItemSaveLayout) {
-			Marshaller marsh = Marshaller.INSTANCE;
+			Marshaler marsh = Marshaler.INSTANCE;
 			String xml = marsh.toXML(getVizState());
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest(xml);
@@ -676,15 +709,22 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			if (frame != null) {
 				ToolkitIO.saveImageToFile(frame);
 			}
+		} else if (e.getSource() == menuItemSaveImageToGEX) {
+			BufferedImage buff = new BufferedImage(desktop.getWidth(), desktop
+					.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			Graphics g = buff.getGraphics();
+			desktop.paint(g);
+			// GEXClient.uploadScreenshot(buff, "new test");
+
 		}
 
-		// else if (e.getSource() == this.menuItemDisableCollaboration) {
-		//
-		// } else if (e.getSource() == this.menuItemConnect) {
-		//
-		// } else if (e.getSource() == this.menuItemDisconnect) {
-		//
-		// }
+		else if (e.getSource() == menuItemDisableCollaboration) {
+
+		} else if (e.getSource() == menuItemConnect) {
+
+		} else if (e.getSource() == menuItemDisconnect) {
+
+		}
 	}
 
 	private void createAndAddBean(ActionEvent e) {
@@ -743,7 +783,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			GeoDataGeneralizedStates statesData = new GeoDataGeneralizedStates();
 			newDataSet = statesData.getDataSet();
 
-		} else if (name.equals("GTD")) {
+		} else if (name.equals("NZ")) {
+			String className = "geovista.largedata.GeoDataNZ";
+			newDataSet = geoDataFromName(className);
+		}
+
+		else if (name.equals("GTD")) {
 			String className = "geovista.largedata.GTDReader";
 			newDataSet = geoDataFromName(className);
 		} else if (name.equals("Purdue")) {
@@ -786,10 +831,16 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		} else {
 			shpRead.setFileName(name);
+			Object[] newDataArray = shpRead.getDataSet();
+			if (newDataArray == null) {
+				logger.severe("could not read:" + name);
+				return null;
+			}
 			if (useProj) {
 				shpProj.setInputDataSet(shpRead.getDataSet());
 				newDataSet = shpProj.getOutputDataSet();
 			} else {
+
 				newDataSet = shpRead.getDataSet();
 
 			}
@@ -820,7 +871,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		String fileName = ToolkitIO.getFileName(this, ToolkitIO.ACTION_OPEN,
 				ToolkitIO.FILE_TYPE_SHAPEFILE);
-
+		if (fileName == null) {
+			return;// user hit cancel
+		}
 		loadData(fileName);
 	}
 
@@ -831,6 +884,20 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		loadBackgroundData(fileName);
 		logger.finest("Background name = " + fileName);
 
+	}
+
+	private void openSeerStatFilePicker() {
+		String fileName = ToolkitIO.getFileName(this, ToolkitIO.ACTION_OPEN,
+				ToolkitIO.FILE_TYPE_SEERSTAT);
+		SeerStatReader reader = new SeerStatReader();
+		reader.setDicFileLocation(fileName);
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		this.repaint();
+		dataSet = reader.readFiles();
+		dataCaster.setAndFireDataSet(dataSet);
+		// XXX need to record file location....
+
+		setCursor(Cursor.getDefaultCursor());
 	}
 
 	/*
@@ -915,6 +982,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadGTD.addActionListener(this);
 		menuItemLoadBackgroundShape.addActionListener(this);
 		menuItemLoadSCBackgroundShape.addActionListener(this);
+		menuItemImportSeerStatData.addActionListener(this);
 		menuItemLoadStates.addActionListener(this);
 		menuItemOpenLayout.addActionListener(this);
 		menuItemSaveLayout.addActionListener(this);
@@ -929,6 +997,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemDisconnect.setEnabled(false);
 		menuItemSaveWholeImageToFile.addActionListener(this);
 		menuItemSaveSelectedWindowToFile.addActionListener(this);
+		menuItemSaveImageToGEX.addActionListener(this);
 		menuItemCopyApplicationToClipboard.addActionListener(this);
 		menuItemCopySelectedWindowToClipboard.addActionListener(this);
 
@@ -993,7 +1062,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(MoranMap.class);
 		// addToolToMenu(MoranMatrix.class);
 		addToolToMenu(SaTScan.class);
-		addToolToMenu(Proclude.class);
+		// addToolToMenu(Proclude.class);
 		menuAddTool.addSeparator();
 
 		// other...
@@ -1002,6 +1071,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void init() throws Exception {
+		desktop.fListener = this;
 		setJMenuBar(jMenuBar1);
 		menuFile.setText("File");
 		menuItemLoadShp.setText("Load Shapefile from disk");
@@ -1021,6 +1091,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemSaveLayout.setText("Save Layout");
 		menuItemLoadBackgroundShape.setText("Load Background Map from disk");
 		menuItemLoadSCBackgroundShape.setText("Load South Carolina Background");
+		menuItemImportSeerStatData.setText("Import Data");
 		menuCollaborate.setText("Remote Collaboration");
 		menuCollaborate.setEnabled(true);// until it works
 		menuItemEnableCollaboration.setText("Enable Collaboration");
@@ -1038,10 +1109,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemSaveSelectedWindowToFile
 				.setText("Save image of currently selected window to file");
 
+		menuItemSaveImageToGEX
+				.setText("Save image of main window to G-EX Portal");
 		jMenuBar1.add(menuFile);
 		jMenuBar1.add(menuAddTool);
 		jMenuBar1.add(menuRemoveTool);
-		// XXX until it works jMenuBar1.add(menuCollaborate);
+
+		// XXX should be just a bean jMenuBar1.add(menuCollaborate);
 		jMenuBar1.add(menuScreenShot);
 		jMenuBar1.add(menuAbout);
 		jMenuBar1.add(menuHelp);
@@ -1055,6 +1129,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuFile.add(menuItemLoadBackgroundShape);
 		menuFile.add(menuItemLoadSCBackgroundShape);
 
+		menuFile.addSeparator();
+		menuFile.add(menuItemImportSeerStatData);
 		menuFile.addSeparator();
 
 		menuFile.add(menuItemOpenLayout);
@@ -1070,6 +1146,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuScreenShot.add(menuItemCopySelectedWindowToClipboard);
 		menuScreenShot.add(menuItemSaveWholeImageToFile);
 		menuScreenShot.add(menuItemSaveSelectedWindowToFile);
+		menuScreenShot.addSeparator();
+		menuScreenShot.add(menuItemSaveImageToGEX);
 
 		menuAbout.add(menuItemAboutGeoviz);
 		menuAbout.add(menuItemAboutGeoVista);
@@ -1164,7 +1242,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		boolean useProj = false;
 		boolean useAux = true;
-		double tolerance = 0.0001;
+		double tolerance = 50;
+		// tolerance = 0.001;
 		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 
@@ -1263,5 +1342,52 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setVisible(true);
 		// String html =
 
+	}
+
+	public String marshalCurrentComponent() {
+		JInternalFrame intFrame = desktop.lastFrame;
+		ToolkitBean tBean = null;
+		tBean = tBeanSet.getToolkitBean(intFrame);
+		if (tBean == null) {
+			logger.info("selected frame is null, returning first one");
+			tBean = (ToolkitBean) tBeanSet.getBeanSet().iterator().next();
+		}
+
+		logger.info("selected toolkitBean = " + tBean.getUniqueName());
+		Marshaler marsh = Marshaler.INSTANCE;
+		String xml = marsh.toXML(tBean);
+		logger.info(xml);
+		return xml;
+	}
+
+	public boolean componentProviderExists() {
+		return true;
+	}
+
+	public void selectedFrameChanged(JInternalFrame f) {
+		ToolkitBean tBean = tBeanSet.getToolkitBean(f);
+		if (tBean != null) {
+			logger.info("selected internal frame of :" + tBean.getUniqueName());
+		}
+		if (tBean != null
+				&& (tBean.getObjectClass().equals(GeoJabber.class.getName()) == false)) {
+			desktop.lastFrame = f;
+		}
+
+	}
+
+	public void marshaledComponent(String xml) {
+		// XML of some component arrived here, we need to unmarshal and add
+		logger.info("got marshaled xml:" + xml);
+		Marshaler marsh = Marshaler.INSTANCE;
+		xml = "<ToolkitBean><objectClass>geovista.geoviz.map.GeoMap</objectClass><originalBean><selection><int>40</int></selection><backgroundColor><red>238</red><green>238</green><blue>238</blue><alpha>255</alpha></backgroundColor></originalBean><uniqueName>GeoMap</uniqueName><internalFrame><location><x>996</x><y>4</y></location><size><width>282</width><height>395</height></size></internalFrame><zOrder>4</zOrder></ToolkitBean>";
+		ToolkitBean tBean = (ToolkitBean) marsh.fromXML(xml);
+		addBeanToGui(tBean);
+		fireNewBeanMethods(tBean.getOriginalBean());
+		coord.addBean(tBean.getOriginalBean());
+		SelectionListener selListener = (SelectionListener) tBean
+				.getOriginalBean();
+		int[] sel = { 40 };
+		selListener.selectionChanged(new SelectionEvent(this, sel));
 	}
 }

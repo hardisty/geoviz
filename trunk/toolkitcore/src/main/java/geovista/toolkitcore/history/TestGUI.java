@@ -51,7 +51,7 @@ public class TestGUI extends JPanel {
 		app.add(gui);
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.pack();
-		app.show();
+		app.setVisible(true);
 
 	}
 

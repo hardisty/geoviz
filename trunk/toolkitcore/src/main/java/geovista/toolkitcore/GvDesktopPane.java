@@ -16,6 +16,7 @@ import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 
 /**
@@ -29,10 +30,23 @@ public class GvDesktopPane extends JDesktopPane implements
 	final static Logger logger = Logger
 			.getLogger(GvDesktopPane.class.getName());
 
+	JInternalFrame lastFrame;
+	FrameListener fListener;
+
 	public GvDesktopPane() {
 		super();
+		lastFrame = new JInternalFrame();
 		addBindings();
 
+	}
+
+	@Override
+	public void setSelectedFrame(JInternalFrame f) {
+		logger.info("set internal frame");
+		if (fListener != null) {
+			fListener.selectedFrameChanged(f);
+		}
+		super.setSelectedFrame(f);
 	}
 
 	protected void addBindings() {
@@ -90,6 +104,11 @@ public class GvDesktopPane extends JDesktopPane implements
 		logger.info("e.getNewValue() = " + e.getNewValue());
 		logger.info("e.getPropertyName() = " + e.getPropertyName());
 
+	}
+
+	interface FrameListener {
+
+		void selectedFrameChanged(JInternalFrame f);
 	}
 
 }
