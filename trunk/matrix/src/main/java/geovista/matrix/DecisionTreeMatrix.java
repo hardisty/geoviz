@@ -283,7 +283,7 @@ public class DecisionTreeMatrix extends AbstractMatrix implements
 
 						scatterPlot[indexCurrent].setBackground(background);
 						scatterPlot[indexCurrent]
-								.setElementPosition(dataIndices);
+								.setDataIndices(dataIndices);
 						scatterPlot[indexCurrent]
 								.setSelectionColor(selectionColor);
 						if (decisionTree != null) {
@@ -632,15 +632,15 @@ public class DecisionTreeMatrix extends AbstractMatrix implements
 			indicesLast1[0] = indicesNew1[0];
 			indicesLast2[1] = indicesNew2[1];
 			scatterPlot[i * plotNumber + lastPos - 1]
-					.setElementPosition(indicesLast1);
+					.setDataIndices(indicesLast1);
 			scatterPlot[(lastPos - 1) * plotNumber + i]
-					.setElementPosition(indicesLast2);
+					.setDataIndices(indicesLast2);
 			indicesNew1[0] = indicesRow;
 			indicesNew2[1] = indicesCol;
 			scatterPlot[i * plotNumber + newPos - 1]
-					.setElementPosition(indicesNew1);
+					.setDataIndices(indicesNew1);
 			scatterPlot[(newPos - 1) * plotNumber + i]
-					.setElementPosition(indicesNew2);
+					.setDataIndices(indicesNew2);
 
 			/*
 			 * this.remove((Component)this.element[i*plotNumber + lastPos - 1]);

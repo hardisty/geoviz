@@ -291,7 +291,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 						element[indexCurrent].setDataSet(dataSet);
 						element[indexCurrent].setSelectionColor(selectionColor);
 						element[indexCurrent].setBackground(background);
-						element[indexCurrent].setElementPosition(dataIndices);
+						element[indexCurrent].setDataIndices(dataIndices);
 						if (bivarColorClasser != null) {
 							element[indexCurrent].setBivarColorClasser(
 									bivarColorClasser, false);
@@ -445,10 +445,10 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 					.getElementPosition();
 			indicesLast1[0] = indicesNew1[0];
 			element[i * plotNumber + lastPos - 1]
-					.setElementPosition(indicesLast1);
+					.setDataIndices(indicesLast1);
 			indicesNew1[0] = indicesRow;
 			element[i * plotNumber + newPos - 1]
-					.setElementPosition(indicesNew1);
+					.setDataIndices(indicesNew1);
 		}
 	}
 
@@ -478,10 +478,10 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 					.getElementPosition();
 			indicesLast2[1] = indicesNew2[1];
 			element[(lastPos - 1) * plotNumber + i]
-					.setElementPosition(indicesLast2);
+					.setDataIndices(indicesLast2);
 			indicesNew2[1] = indicesCol;
 			element[(newPos - 1) * plotNumber + i]
-					.setElementPosition(indicesNew2);
+					.setDataIndices(indicesNew2);
 		}
 	}
 

@@ -70,7 +70,7 @@ public class TreeMapMatrixElement extends TreeMapCanvas implements
 		super.dataSetChanged(e);
 	}
 
-	public void setElementPosition(int[] dataIndices) {
+	public void setDataIndices(int[] dataIndices) {
 		elementPosition = dataIndices.clone();
 		super.setGroupingVarID(elementPosition[0] - 1); // grouping = x
 		// // why -1

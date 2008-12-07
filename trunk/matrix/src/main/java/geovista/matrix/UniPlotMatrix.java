@@ -237,7 +237,7 @@ public class UniPlotMatrix extends AbstractMatrix implements
 						element[indexCurrent].setAxisOn(false);
 						element[indexCurrent].setDataSet(dataSet);
 						element[indexCurrent].setBackground(background);
-						element[indexCurrent].setElementPosition(dataIndices);
+						element[indexCurrent].setDataIndices(dataIndices);
 						element[indexCurrent]
 								.setSelOriginalColorMode(selOriginalColorMode);
 						element[indexCurrent].setSelectionColor(selectionColor);

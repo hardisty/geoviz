@@ -137,7 +137,7 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 		// super.tickleColors();
 	}
 
-	public void setElementPosition(int[] dataIndices) {
+	public void setDataIndices(int[] dataIndices) {
 		this.elementPosition = dataIndices.clone();
 		// zero based or one based...
 		// well...

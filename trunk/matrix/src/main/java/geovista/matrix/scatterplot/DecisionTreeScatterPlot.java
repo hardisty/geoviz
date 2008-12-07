@@ -171,9 +171,9 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * put your documentation comment here
 	 * 
 	 * @param String
-	 *            attributeX
+	 *            attributeXName
 	 * @param String
-	 *            attributeY
+	 *            attributeYName
 	 * @param double[]
 	 *            dataX
 	 * @param double[]
@@ -246,26 +246,12 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	}
 
 	/**
-	 * Not used in dataObject version.
-	 * 
-	 * @param dataIndices
-	 */
-	public void setDataIndices(int[] dataIndices) {
-		this.dataIndices = dataIndices.clone();
-		dataX = doubleDataArrays[dataIndices[0]];
-		dataY = doubleDataArrays[dataIndices[1]];
-		attributeX = variableNames[dataIndices[0]];
-		attributeY = variableNames[dataIndices[1]];
-		initialize();
-	}
-
-	/**
 	 * Set up x and y axises in each element by setting the attributes
 	 * displayed.
 	 * 
 	 * @param indices
 	 */
-	public void setElementPosition(int[] indices) {
+	public void setDataIndices(int[] indices) {
 		dataIndices = indices;
 		AxisDataSetup();
 		initialize();
@@ -629,10 +615,10 @@ public class DecisionTreeScatterPlot extends JPanel implements
 			Font font = new Font("", Font.PLAIN, size / 8);
 			g.setFont(font);
 			/*
-			 * if (attributeX.length()>12){ g.drawString(attributeX, 2,
-			 * plotHeight/2); }else if (attributeX.length()<=7){
-			 * g.drawString(attributeX, plotWidth/4, plotHeight/2); }else {
-			 * g.drawString(attributeX, plotWidth/8, plotHeight/2); }
+			 * if (attributeXName.length()>12){ g.drawString(attributeXName, 2,
+			 * plotHeight/2); }else if (attributeXName.length()<=7){
+			 * g.drawString(attributeXName, plotWidth/4, plotHeight/2); }else {
+			 * g.drawString(attributeXName, plotWidth/8, plotHeight/2); }
 			 */
 			// font.this.getSize() = (int)plotWidth/12;
 			Font font1 = new Font("", Font.PLAIN, size / 12);
@@ -1339,7 +1325,7 @@ public class DecisionTreeScatterPlot extends JPanel implements
 				detailSP.setDataSet(dataSet);
 				detailSP.setAxisOn(true);
 				detailSP.setBackground(background);
-				detailSP.setElementPosition(dataIndices);
+				detailSP.setDataIndices(dataIndices);
 				detailSP.setBivarColorClasser(bivarColorClasser, false);
 				detailSP.setColorArrayForObs(colorArrayForObs);
 				detailSP.setSelectionColor(selectionColor);

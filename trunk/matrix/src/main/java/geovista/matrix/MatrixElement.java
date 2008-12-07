@@ -22,7 +22,7 @@ public interface MatrixElement {
 
 	public void setDataSet(DataSetForApps data);
 
-	public void setElementPosition(int[] dataIndices);
+	public void setDataIndices(int[] dataIndices);
 
 	public int[] getElementPosition();
 
