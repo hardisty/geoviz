@@ -12,10 +12,7 @@
  -------------------------------------------------------------------  *
  */
 
-
-
 package geovista.symbolization;
-
 
 import java.awt.Color;
 
@@ -23,19 +20,22 @@ import geovista.common.classification.Classifier;
 
 public interface BivariateColorSymbolClassification {
 
-    public Color[] symbolize(double[] dataX, double[] dataY);
+	public Color[] symbolize(double[] dataX, double[] dataY);
 
-    public ColorSymbolizer getXColorSymbolizer();
-    public ColorSymbolizer getYColorSymbolizer();
-    public Classifier getClasserX();
-    public Classifier getClasserY();
-    /**
-     * Returns an array of colors, Color[X][Y], where X = the Xth class,
-     * and Y = the Yth class;
-     *
-     * @return the colors
-     */
-    public Color[][] getClassColors();
+	public ColorSymbolizer getXColorSymbolizer();
 
+	public ColorSymbolizer getYColorSymbolizer();
+
+	public Classifier getClasserX();
+
+	public Classifier getClasserY();
+
+	/**
+	 * Returns an array of colors, Color[X][Y], where X = the Xth class, and Y =
+	 * the Yth class;
+	 * 
+	 * @return the colors
+	 */
+	public Color[][] getClassColors();
 
 }

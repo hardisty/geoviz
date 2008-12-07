@@ -124,8 +124,8 @@ public class BivariateColorSchemeVisualizer extends JPanel implements
 		for (int j = yColors.length - 1; j >= 0; j--) {
 			for (int i = 0; i < xColors.length; i++) {
 
-				Color mixedColor = ColorInterpolator.mixColorsRGB(xColors[i],
-						yColors[j]);
+				Color mixedColor = ColorInterpolator
+						.mixColorsRGBHighSaturation(xColors[i], yColors[j]);
 				swatches[counter].setBackground(mixedColor);
 				swatches[counter].setToolTipText("<html> " + "X class = "
 						+ (i + 1) + "<br>" + "Y class = " + (j + 1) + "<br>"
