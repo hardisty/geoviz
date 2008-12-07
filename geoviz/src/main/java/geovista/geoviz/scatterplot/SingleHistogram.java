@@ -32,10 +32,12 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 
 public class SingleHistogram extends JPanel implements DataSetListener,
 		SelectionListener, ActionListener, ChangeListener, TableModelListener,
-		IndicationListener {
+		IndicationListener, SubspaceListener {
 	Histogram histo;
 	JSlider binSlider;
 	JLabel nBins;
@@ -125,7 +127,7 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 			variableCombo.addItem(dataSet.getNumericArrayName(i));
 		}
 		variableCombo.addActionListener(this);
-		this.histo.selectionChanged(new SelectionEvent());
+		histo.selectionChanged(new SelectionEvent());
 	}
 
 	public void selectionChanged(SelectionEvent e) {
@@ -451,6 +453,12 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 
 	public void indicationChanged(IndicationEvent e) {
 		histo.indicationChanged(e);
+
+	}
+
+	public void subspaceChanged(SubspaceEvent e) {
+		int[] vars = e.getSubspace();
+		setSelectedVariable(vars[0]);
 
 	}
 
