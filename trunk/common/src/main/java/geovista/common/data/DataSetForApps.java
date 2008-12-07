@@ -370,6 +370,10 @@ public class DataSetForApps extends AbstractTableModel {
 		return spatialWeights;
 	}
 
+	public void setSpatialWeights(SpatialWeights weights) {
+		spatialWeights = weights;
+	}
+
 	/**
 	 * Returns the first instance of a GeneralPath[] found in the data set,
 	 * searching from last to first, or else null if none exists.
