@@ -160,6 +160,7 @@ public class Proclude extends JPanel implements ActionListener,
 			out[i] = (Gene) solutions.get(i);
 		}
 		updateOutputDisplay();
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	public Gene[] getOutput() {
