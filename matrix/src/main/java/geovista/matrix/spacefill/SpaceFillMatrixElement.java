@@ -55,7 +55,7 @@ public class SpaceFillMatrixElement extends SpaceFillCanvas implements
 		super.setDataSet(data);
 	}
 
-	public void setElementPosition(int[] dataIndices) {
+	public void setDataIndices(int[] dataIndices) {
 		elementPosition = dataIndices.clone();
 		super.setCurrOrderColumn(elementPosition[0]);// order = x
 		super.setCurrColorColumn(elementPosition[1]);// color = y

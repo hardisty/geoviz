@@ -49,7 +49,7 @@ public class StarPlotMatrixElement extends StarPlotCanvas implements
 
 	}
 
-	public void setElementPosition(int[] dataIndices) {
+	public void setDataIndices(int[] dataIndices) {
 		elementPosition = dataIndices;
 		// xxx update
 	}

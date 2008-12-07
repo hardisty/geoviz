@@ -694,15 +694,15 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 			indicesLast1[0] = indicesNew1[0];
 			indicesLast2[1] = indicesNew2[1];
 			element[i * plotNumber + lastPos - 1]
-					.setElementPosition(indicesLast1);
+					.setDataIndices(indicesLast1);
 			element[(lastPos - 1) * plotNumber + i]
-					.setElementPosition(indicesLast2);
+					.setDataIndices(indicesLast2);
 			indicesNew1[0] = indicesRow;
 			indicesNew2[1] = indicesCol;
 			element[i * plotNumber + newPos - 1]
-					.setElementPosition(indicesNew1);
+					.setDataIndices(indicesNew1);
 			element[(newPos - 1) * plotNumber + i]
-					.setElementPosition(indicesNew2);
+					.setDataIndices(indicesNew2);
 
 			/*
 			 * this.remove((Component)this.element[i*plotNumber + lastPos - 1]);

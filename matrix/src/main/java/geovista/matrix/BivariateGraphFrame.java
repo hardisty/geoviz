@@ -194,7 +194,7 @@ public class BivariateGraphFrame extends JPanel implements DataSetListener,
 		setXVariable(displayIndices[0]);
 		setYVariable(displayIndices[1]);
 		bivariateGraph.setAxisOn(true);
-		bivariateGraph.setElementPosition(displayIndices);
+		bivariateGraph.setDataIndices(displayIndices);
 	}
 
 	private void intialize() {
@@ -465,13 +465,13 @@ public class BivariateGraphFrame extends JPanel implements DataSetListener,
 			int index = visClassOne.getCurrVariableIndex();
 			index++;
 			displayIndices[0] = index;
-			bivariateGraph.setElementPosition(displayIndices);
+			bivariateGraph.setDataIndices(displayIndices);
 			// this.fireColorArrayChanged();
 		} else if ((src == visClassTwo) && command.equals(varChangedCommand)) {
 			int index = visClassTwo.getCurrVariableIndex();
 			index++;
 			displayIndices[1] = index;
-			bivariateGraph.setElementPosition(displayIndices);
+			bivariateGraph.setDataIndices(displayIndices);
 			// this.fireColorArrayChanged();
 		} else if ((src == bivariateGraph)
 				&& command.compareTo(ScatterPlotBasic.COMMAND_POINT_SELECTED) == 0) {
