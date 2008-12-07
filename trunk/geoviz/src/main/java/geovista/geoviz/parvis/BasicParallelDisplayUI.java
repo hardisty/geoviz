@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.plaf.ComponentUI;
 
 /**
@@ -46,6 +47,11 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 
 	protected final static Logger logger = Logger
 			.getLogger(BasicParallelDisplayUI.class.getName());
+
+	static JPanel observer = new JPanel();
+
+	boolean useSelectionFade = true;
+
 	// GeneralPath[] rPaths;
 	int numDimensions;
 	int numRecords;
@@ -87,6 +93,12 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 	int brushHoverEnd = 0;
 	int brushHoverX = 0;
 	boolean inBrush = false;
+
+	RenderThread renderThread = null;
+	RenderThread brushThread = null;
+
+	Color indicationColor = Color.YELLOW;
+	Color secondaryIndicationColor = Color.GREEN;
 
 	// ParallelDisplay comp;
 
@@ -135,9 +147,6 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		numRecords = 0;
 	}
 
-	RenderThread renderThread = null;
-	RenderThread brushThread = null;
-
 	/**
 	 * Renders the component on the screen.
 	 * 
@@ -152,7 +161,8 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		// start our renderThread
 		if (renderThread == null) {
 			renderThread = new RenderThread(this);
-			renderThread.setQuality(false, true);
+			renderThread.setQuality(false, false);// is a blur
+
 			renderThread.setStyle(new BasicStroke(.5f), new Color(0.0f, 0.0f,
 					0.0f, 0.7f));
 			renderThread.start();
@@ -163,7 +173,7 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 			brushThread.setQuality(false, true);
 			brushThread.setStyle(new BasicStroke(1.0f), new Color(0.0f, 0.0f,
 					0.0f, 0.8f));
-			brushThread.setBrushMode(true);
+			brushThread.setBrushThread(true);
 			brushThread.start();
 		}
 
@@ -205,7 +215,10 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 			needsDeepRepaint = true;
 
 			bufferImg = new BufferedImage(c.getWidth(), c.getHeight(),
-					BufferedImage.TYPE_3BYTE_BGR);
+					BufferedImage.TYPE_INT_ARGB);
+			// bufferImg = new BufferedImage(c.getWidth(), c.getHeight(),
+			// BufferedImage.TYPE_3BYTE_BGR);
+
 			Graphics2D ig = bufferImg.createGraphics();
 			ig.setColor(c.getBackground());
 			ig.fillRect(0, 0, c.getWidth(), c.getHeight());
@@ -245,22 +258,44 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 			ig.drawImage(renderThread.getRenderedImage(), 0, 0, comp);
 		}
 
+		// if (brushThread.getRenderedImage() != null) {
+		// brushThread.useSelectionBlur = false;
+		// // we cant do this becase the renderedImage is only a part of the
+		// // whole
+		// // bufferImg = (BufferedImage)renderThread.getRenderedImage();
+		// Graphics2D ig = bufferImg.createGraphics();
+		// // ig.setColor(comp.getBackground());
+		// int startAxis = brushThread.getRenderedRegionStart();
+		// int stopAxis = brushThread.getRenderedRegionStop();
+		//		
+		// // delete area that has been rendered
+		// ig.fillRect(startAxis * stepx, 0, (stopAxis - startAxis) * stepx,
+		// comp.getHeight());
+		// // and paint it new
+		// ig.drawImage(brushThread.getRenderedImage(), 0, 0, comp);
+		// }
+
 		if (brushThread.getRenderedImage() != null) {
 			brushImg = brushThread.getRenderedImage();
 		}
 
 		if (brushImg == null) {
 			synchronized (bufferImg) {
+				logger.finest("bufferImg null");
 				g2.drawImage(bufferImg, 0, 0, comp);
+
 			}
 		} else {
+			logger.finest("bufferImg not null");
+
 			Composite oldcomp = g2.getComposite();
+			if (useSelectionFade) {
+				AlphaComposite ac = AlphaComposite.getInstance(
+						AlphaComposite.SRC_OVER, 0.5f);// XXX fade
 
-			AlphaComposite ac = AlphaComposite.getInstance(
-					AlphaComposite.SRC_OVER, 0.5f);
-			// previous line changed by FAH 29 july 02 from .2 to .5
-			g2.setComposite(ac);
-
+				// previous line changed by FAH 29 july 02 from .2 to .5
+				g2.setComposite(ac);
+			}
 			g2.drawImage(bufferImg, 0, 0, comp);
 
 			g2.setComposite(oldcomp);
@@ -310,12 +345,19 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 
 		// hovering over record
 		// added Frank Hardisty 19 July 2002
-		logger.info("about to paint neighbors, n = "
-				+ comp.indicationNeighbors.length);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("about to paint neighbors, n = "
+					+ comp.indicationNeighbors.length);
+		}
 		for (int obs : comp.indicationNeighbors) {
 			GeneralPath rPath = assemblePath(obs, 0, numDimensions - 1, comp);
-			g2.setStroke(new BasicStroke(1.0f));
-			g2.setColor(Color.green);
+
+			g2.setColor(colors[obs]);
+			g2.setStroke(new BasicStroke(3.0f));
+			g2.draw(rPath);
+
+			g2.setStroke(new BasicStroke(.5f));
+			g2.setColor(secondaryIndicationColor);
 			g2.draw(rPath);
 		}
 		boolean paintHoverNative = false;
@@ -345,12 +387,12 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 			GeneralPath rPath = assemblePath(paintHoverRecord, 0,
 					numDimensions - 1, comp);
 			// float yval = getYValue(paintHoverRecord, 0, comp);
-
-			g2.setStroke(new BasicStroke(2.5f));
+			g2.setColor(colors[paintHoverRecord]);
+			g2.setStroke(new BasicStroke(3.5f));
 			g2.draw(rPath);
 
-			g2.setStroke(new BasicStroke(1.5f));
-			g2.setColor(Color.red);
+			g2.setStroke(new BasicStroke(1.0f));
+			g2.setColor(indicationColor);
 			g2.draw(rPath);
 
 			g2.setFont(oldfont);
@@ -414,6 +456,7 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		if (brushThread == null) {
 			return;
 		}
+		brushThread.useSelectionBlur = false;
 		brushThread.setRegion(0, numDimensions - 1);
 		brushThread.render();
 	}
@@ -1059,6 +1102,9 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 				float part = (x - i * stepx) / (float) stepx;
 
 				for (int j = 0; j < numRecords; j++) {
+					if (j >= comp.getNumRecords()) {
+						return -1;
+					}
 					float recVal = (1 - part) * getYValue(j, i, comp) + part
 							* getYValue(j, i + 1, comp);
 					if (logger.isLoggable(Level.FINEST)) {
@@ -1114,6 +1160,15 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		}
 
 		return null;
+	}
+
+	@Override
+	public RenderThread getRenderThread() {
+		return renderThread;
+	}
+
+	public RenderThread getBrushThread() {
+		return brushThread;
 	}
 
 }

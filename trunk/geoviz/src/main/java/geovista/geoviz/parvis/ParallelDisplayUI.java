@@ -17,15 +17,20 @@ import javax.swing.plaf.ComponentUI;
  * Abstract UI Delegate for the rendering of the ParallelDisplay component. This
  * is a swing guideline to provide an empty abstract class as a UI delegat base
  * class. See BasicParallelDisplayUI for the actual implementation.
- *
+ * 
  * @author Flo Ledermann flo@subnet.at
  * 
  */
 public abstract class ParallelDisplayUI extends ComponentUI {
 
-    public ParallelDisplayUI(){ }
+	public ParallelDisplayUI() {
+	}
 
-    //edited by FAH 30 July 02
-    public abstract void createBrushImage(ParallelDisplay comp);
-    public abstract void renderBrush();
+	// edited by FAH 30 July 02
+	public abstract void createBrushImage(ParallelDisplay comp);
+
+	public abstract void renderBrush();
+
+	public abstract RenderThread getRenderThread();
+
 }

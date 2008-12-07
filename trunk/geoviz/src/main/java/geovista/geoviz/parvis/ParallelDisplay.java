@@ -15,9 +15,11 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComponent;
@@ -31,6 +33,9 @@ import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.ui.ExcentricLabelClient;
+import geovista.common.ui.VisualSettingsPopupAdapter;
+import geovista.common.ui.VisualSettingsPopupListener;
+import geovista.common.ui.VisualSettingsPopupMenu;
 
 /**
  * The swing GUI Component for displaying a parallel coordinate visualisation.
@@ -42,10 +47,13 @@ import geovista.common.ui.ExcentricLabelClient;
  * 
  */
 public class ParallelDisplay extends JComponent implements ChangeListener,
-		IndicationListener, SelectionListener, ExcentricLabelClient {
+		IndicationListener, SelectionListener, ExcentricLabelClient,
+		VisualSettingsPopupListener {
 
 	protected final static Logger logger = Logger
 			.getLogger(ParallelDisplay.class.getName());
+
+	boolean useSelectionBlur = true;
 	/** Scale values for the axes. */
 	private float axisScale[] = null;
 	/** Offset values for the axes. */
@@ -114,6 +122,11 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	 *            The model to use.
 	 */
 	protected void init(ParallelSpaceModel model) {
+
+		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
+		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
+		popMenu.addMouseListener(listener);
+		addMouseListener(listener);
 
 		logger.finest("Initializing ParallelDisplay Component");
 		int[] emptyArray = {};
@@ -204,10 +217,30 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 			axisScale = null;
 
 		}
+		BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
+		if (pui != null && pui.getRenderThread() != null) {
 
+			pui.getRenderThread().doWork = false;
+			pui.getBrushThread().doWork = false;
+			// RenderThread.sleep(2000);
+
+			// pui.getRenderThread().stopAxis = model.getNumDimensions() - 1;
+
+		}
 		this.model = model;
 
 		if (model != null) {
+
+			pui = (BasicParallelDisplayUI) getUI();
+			if (pui.getRenderThread() != null) {
+				pui.getRenderThread()
+						.setRegion(0, model.getNumDimensions() - 1);
+				pui.getBrushThread().setRegion(0, model.getNumDimensions() - 1);
+				// pui.getRenderThread().stopAxis = model.getNumDimensions() -
+				// 1;
+				// pui.getBrushThread().stopAxis = model.getNumDimensions() - 1;
+
+			}
 			model.addChangeListener(this);
 
 			axisOffset = new float[model.getNumDimensions()];
@@ -215,9 +248,14 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 			axisOrder = new int[model.getNumDimensions()];
 			// fah -- trying this to fix the problem of selections breaking the
 			// model
+
 			if (brushValues == null
 					|| brushValues.length != model.getNumRecords()) {
 				brushValues = new float[model.getNumRecords()];
+				for (int selVal = 0; selVal < brushValues.length; selVal++) {
+					setBrushValue(selVal, 1f);
+				}
+				brushCount = brushValues.length;
 			}
 			for (int i = 0; i < model.getNumDimensions(); i++) {
 				// initialize scaling of axis to show maximum detail
@@ -227,7 +265,6 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 			}
 		}
 
-		brushCount = 0;
 		deepRepaint = true;
 		repaint();
 
@@ -434,12 +471,19 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 		int indication = e.getIndication();
 		this.indication = indication;
 		indicationNeighbors = e.getNeighbors();
-		logger.info("got indication, n bors = " + indicationNeighbors.length);
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("got indication, n bors = "
+					+ indicationNeighbors.length);
+		}
 		// model.
 		// BasicParallelDisplayUI bui =
 		// (BasicParallelDisplayUI)UIManager.getUI(this);
 		// can't use previous line b/c this makes a new UI when called
 		// bui.setHoverRecord(indication,this);
+		if (savedSelection != null && getUI().getRenderThread() != null
+				&& savedSelection.length > 0) {
+			getUI().getRenderThread().useSelectionBlur = useSelectionBlur;
+		}
 		repaint();
 
 	}
@@ -453,8 +497,13 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 		}
 
 		int[] selection = e.getSelection();
-		if (selection.length == 0) {
-			brushCount = 0;
+
+		if (selection.length <= 0) {
+
+			for (int i = 0; i < model.getNumRecords(); i++) {
+				setBrushValue(i, 1f);
+			}
+			brushCount = model.getNumRecords();
 			deepRepaint = true;
 			repaint();
 			return;
@@ -818,6 +867,66 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 				((SelectionListener) listeners[i + 1]).selectionChanged(e);
 			}
 		}// next i
+
+	}
+
+	public Color getIndicationColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Color getSelectionColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isSelectionBlur() {
+		return useSelectionBlur;
+	}
+
+	public boolean isSelectionFade() {
+		// BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
+		// return pui.useSelectionFade;
+		return true;
+	}
+
+	public void setIndicationColor(Color indColor) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setSelectionColor(Color selColor) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		if (selBlur != useSelectionBlur) {
+			useSelectionBlur = selBlur;
+
+			deepRepaint = true;
+
+			BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
+			pui.getRenderThread().useSelectionBlur = selBlur;
+
+			repaint();
+		}
+	}
+
+	public void useSelectionFade(boolean selFade) {
+
+		BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
+
+		if (selFade != pui.useSelectionFade) {
+			pui.useSelectionFade = selFade;
+			deepRepaint = true;
+			repaint();
+		}
 
 	}
 

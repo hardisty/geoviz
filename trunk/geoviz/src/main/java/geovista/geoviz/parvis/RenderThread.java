@@ -18,6 +18,8 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 
+import geovista.image_blur.image.BoxBlurFilter;
+
 /**
  * 
  * @author flo
@@ -26,10 +28,12 @@ import java.util.logging.Logger;
 class RenderThread extends Thread {
 	protected final static Logger logger = Logger.getLogger(RenderThread.class
 			.getName());
+
+	boolean useSelectionBlur = true;
 	/** flags to control rendering */
 	boolean quality = false;
 	boolean progressive = false;
-	boolean brushMode = false;
+	boolean isBrushThread = false;
 
 	/** flags to indicate thread state */
 	boolean isWorking = false;
@@ -62,8 +66,8 @@ class RenderThread extends Thread {
 		this.comp = comp;
 	}
 
-	void setBrushMode(boolean brushMode) {
-		this.brushMode = brushMode;
+	void setBrushThread(boolean brushMode) {
+		this.isBrushThread = brushMode;
 	}
 
 	void setQuality(boolean quality, boolean progressive) {
@@ -189,15 +193,15 @@ class RenderThread extends Thread {
 								+ modestr));
 
 				BufferedImage img = new BufferedImage(comp.getWidth(), comp
-						.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+						.getHeight(), BufferedImage.TYPE_INT_ARGB);
 				Graphics2D g2 = (Graphics2D) img.getGraphics();
 				setupRendering(g2, quality, stroke, color);
 
 				// render all records
 				int i = 0;
 				float brushVal = 0.0f;
-				if (brushMode) {
-					color = comp.getBrushedColor();// changed fah july 30 02
+				if (isBrushThread) {
+					// color = comp.getBrushedColor();// changed fah july 30 02
 				}
 
 				for (; i < comp.getNumRecords(); i++) {
@@ -207,14 +211,14 @@ class RenderThread extends Thread {
 										/ comp.getNumRecords(), "rendering "
 										+ modestr));
 					}
-					if (!brushMode || (brushVal = comp.getBrushValue(i)) > 0.0f) {
+					if (!isBrushThread || (brushVal = comp.getBrushValue(i)) > 0.0f) {
 						// select records in brushmode, render all in normal
 						// mode
 						// skip soft edges
-						if (!quality && brushMode && brushVal < 0.8) {
+						if (!quality && isBrushThread && brushVal < 0.8) {
 							continue;
 						}
-						if (brushMode && quality) {
+						if (isBrushThread && quality) {
 
 							Color col = new Color(color.getRed(), color
 									.getBlue(), color.getGreen(),
@@ -254,15 +258,50 @@ class RenderThread extends Thread {
 					wasInterrupted = false;
 
 					renderedImage = img;
+
 					if (secondPass) {
 						lastStart = progressiveStartAxis;
 						lastStop = progressiveStopAxis;
 						progressiveInterrupted = false;
+
 					} else {
 						lastStart = startAxis;
 						lastStop = stopAxis;
 					}
+					if (useSelectionBlur && (isBrushThread == false)) {
 
+						// drawSlections(g, pointColors,
+						// dataArrayX.length());
+						// g.fillRect(0, 0, this.getWidth(),
+						// this.getHeight());
+						BoxBlurFilter filter = new BoxBlurFilter();
+						filter.setHRadius(3);
+						filter.setVRadius(2);
+						filter.setIterations(2);
+						// maybe we could eliminate the use of the extra
+						// buffer?
+						// we could use the panel itself as one drawing
+						// surface
+						// and the drawingBuff as the other.
+
+						// OK, new theory. Grabbing bufferedimages this
+						// often is causing
+						// problems
+						// so we cache.
+						BufferedImage blurBuff = new BufferedImage(
+								renderedImage.getWidth(comp), renderedImage
+										.getHeight(comp),
+								BufferedImage.TYPE_INT_ARGB);
+						// VolatileImage blurBuff=
+						// this.getGraphicsConfiguration().createCompatibleVolatileImage(this.drawingBuff.getWidth(this),
+						// this.drawingBuff.getHeight(this));
+						blurBuff.getGraphics().drawImage(renderedImage, 0, 0,
+								comp);
+						filter.filter(blurBuff, blurBuff);
+						renderedImage = blurBuff;
+						// g2.drawImage(blurBuff, null, 0, 0);
+
+					}
 					comp.fireProgressEvent(new ProgressEvent(comp,
 							ProgressEvent.PROGRESS_FINISH, 1.0f, "rendering "
 									+ modestr));
