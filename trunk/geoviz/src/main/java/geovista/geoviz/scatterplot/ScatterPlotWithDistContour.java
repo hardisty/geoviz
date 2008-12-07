@@ -98,7 +98,7 @@ public class ScatterPlotWithDistContour extends ScatterPlot {
 		double xScale;
 		double yScale;
 		double[][] covarianceDisplay = new double[2][2];
-		if (attributeX.equals("pcincome")) {
+		if (attributeXName.equals("pcincome")) {
 			xScale = 0;
 		}
 		xScale = getScale(plotOriginX, plotEndX, xAxisExtents[0],

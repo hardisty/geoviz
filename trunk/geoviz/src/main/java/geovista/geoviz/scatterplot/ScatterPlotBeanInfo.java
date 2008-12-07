@@ -25,7 +25,7 @@ public class ScatterPlotBeanInfo extends SimpleBeanInfo {
     }
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            PropertyDescriptor _attributeArrays = new PropertyDescriptor("attributeArrays", beanClass, null, "setAttributeArrays");
+            PropertyDescriptor _attributeArrays = new PropertyDescriptor("attributeArrayNames", beanClass, null, "setAttributeArrays");
             PropertyDescriptor _axisOn = new PropertyDescriptor("axisOn", beanClass, "isAxisOn", "setAxisOn");
             PropertyDescriptor _elementPosition = new PropertyDescriptor("elementPosition", beanClass, "getElementPosition", "setElementPosition");
             PropertyDescriptor _doubleDataArrays = new PropertyDescriptor("doubleDataArrays", beanClass, null, "setDoubleDataArrays");

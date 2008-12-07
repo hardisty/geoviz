@@ -43,8 +43,8 @@ public class ScatterPlotWithBackground extends ScatterPlotBasic
 
     /**
      * put your documentation comment here
-     * @param 	String attributeX
-     * @param 	String attributeY
+     * @param 	String attributeXName
+     * @param 	String attributeYName
      * @param 	double[] dataX
      * @param 	double[] dataY
      * @param 	boolean axisOn
@@ -52,8 +52,8 @@ public class ScatterPlotWithBackground extends ScatterPlotBasic
 	public ScatterPlotWithBackground (Object[] dataObject, int[] dataIndices, boolean axisOn, Color c) {
           super();
 		this.dataObject = dataObject;
-		this.attributeArrays = (String[])dataObject[0];
-		int len = attributeArrays.length;
+		this.attributeArrayNames = (String[])dataObject[0];
+		int len = attributeArrayNames.length;
 		if (dataObject[len + 1] == null) {
 			this.observNames = null;
 		}
