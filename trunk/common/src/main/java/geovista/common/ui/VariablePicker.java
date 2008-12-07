@@ -129,8 +129,17 @@ public class VariablePicker extends JPanel implements DataSetListener,
 		listenerList.remove(SubspaceListener.class, l);
 	}
 
-	// Adds Variable Picker to a JFrame
 	public static void main(String[] args) {
+		JFrame app = new JFrame();
+		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		VisualSettingsMenuClientExample client = new VisualSettingsMenuClientExample();
+		app.add(client);
+		app.setVisible(true);
+	}
+
+	// Adds Variable Picker to a JFrame
+	public static void main2(String[] args) {
 		JFrame app = new JFrame();
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		FlowLayout flow = new FlowLayout();
