@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.EventListenerList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.DataSetEvent;
@@ -40,7 +42,7 @@ public class TableViewer extends JPanel implements SelectionListener,
 		// super(new GridLayout(1, 0));
 		super(new BorderLayout());
 		init();
-		setPreferredSize(new Dimension(300, 200));
+		setPreferredSize(new Dimension(300, 600));
 	}
 
 	private void init() {
@@ -50,8 +52,10 @@ public class TableViewer extends JPanel implements SelectionListener,
 
 		// clear out whatever was there before
 		removeAll();
+		ListSelectionReporter reporter = new ListSelectionReporter();
 
 		table = new JTable(dataSet);
+		table.getSelectionModel().addListSelectionListener(reporter);
 		// table.setColumnSelectionAllowed(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setPreferredScrollableViewportSize(new Dimension(300, 70));
@@ -236,6 +240,21 @@ public class TableViewer extends JPanel implements SelectionListener,
 		fram.getContentPane().add(table);
 		fram.pack();
 		// fram.setVisible(true);
+
+	}
+
+	class ListSelectionReporter implements ListSelectionListener {
+
+		public void valueChanged(ListSelectionEvent e) {
+			System.out.println("**********");
+			System.out.println();
+			System.out.println(e);
+			System.out.println(e.getFirstIndex());
+			System.out.println(e.getLastIndex());
+			System.out.println(e.toString());
+			System.out.println("*****");
+
+		}
 
 	}
 }
