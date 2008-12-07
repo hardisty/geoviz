@@ -12,7 +12,7 @@ package geovista.satscan;
 import java.beans.BeanInfo;
 import java.beans.SimpleBeanInfo;
 
-public class SaTScanBeanInfo extends SimpleBeanInfo {
+public class ProcludeBeanInfo extends SimpleBeanInfo {
 	Class beanClass = SaTScan.class;
 	String iconColor16x16Filename = "resources/satscan16.gif";
 	String iconColor32x32Filename = "resources/satscan32.gif";
