@@ -67,7 +67,7 @@ public class CartogramMatrixElement
   }
 
 
-  public void setElementPosition(int[] dataIndices) {
+  public void setDataIndices(int[] dataIndices) {
     //this happens first when a new data set comes down the pipe...before
     //setDataObject... what to do?
     
@@ -157,7 +157,7 @@ public class CartogramMatrixElement
     this.dataSet = new DataSetForApps();
 
     super.setDataSet(dataSet);
-    this.setElementPosition(this.elementPosition);//triggers cartogram creation
+    this.setDataIndices(this.elementPosition);//triggers cartogram creation
 
     //super.tickleColors();
   }
