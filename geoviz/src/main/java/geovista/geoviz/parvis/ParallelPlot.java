@@ -48,6 +48,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.readers.FileIO;
 
@@ -60,7 +61,7 @@ import geovista.readers.FileIO;
 public class ParallelPlot extends JPanel implements ProgressListener,
 		DataSetListener, IndicationListener, SelectionListener,
 		ColorArrayListener, SubspaceListener, PaletteListener,
-		ConditioningListener, TableModelListener {
+		ConditioningListener, TableModelListener, VisualSettingsPopupListener {
 	JToggleButton lastButton = null;
 	VisualClassifier vc = null;
 	int[] activeVariables = null;
@@ -600,6 +601,7 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 			vars[i] = i;
 		}
 		setSubspace(vars);
+
 		// we set selection here in case we got a selection before the data
 		if (savedSelection == null) {
 			return;
@@ -608,7 +610,6 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 		if (dataSet.getNumObservations() > maxN) {
 			selectionChanged(new SelectionEvent(this, savedSelection));
 		}
-
 	}
 
 	public void subspaceChanged(SubspaceEvent e) {
@@ -748,6 +749,47 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	}
 
+	public Color getIndicationColor() {
+		return parallelDisplay.getIndicationColor();
+	}
+
+	public Color getSelectionColor() {
+		return parallelDisplay.getSelectionColor();
+	}
+
+	public boolean isSelectionBlur() {
+		return parallelDisplay.isSelectionBlur();
+	}
+
+	public boolean isSelectionFade() {
+		return parallelDisplay.isSelectionFade();
+	}
+
+	public void setIndicationColor(Color indColor) {
+		parallelDisplay.setIndicationColor(indColor);
+
+	}
+
+	public void setSelectionColor(Color selColor) {
+		parallelDisplay.setSelectionColor(selColor);
+
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		parallelDisplay.useMultiIndication(useMultiIndic);
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		parallelDisplay.useSelectionBlur(selBlur);
+
+	}
+
+	public void useSelectionFade(boolean selFade) {
+		parallelDisplay.useSelectionFade(selFade);
+
+	}
+
 	/**
 	 * Main method for testing purposes.
 	 */
@@ -800,4 +842,5 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 			}
 		});
 	}
+
 }
