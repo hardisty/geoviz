@@ -246,6 +246,27 @@ public class StarPlotRenderer implements Glyph {
 
 	}
 
+	public void paintStarOutline(Graphics2D target, Color outlineColor,
+			float size) {
+		if (!figureReady || paintFigure == null) {
+			return;
+		}
+		Stroke st = target.getStroke();
+		float[] dash = { .5f };
+		BasicStroke outlineStroke = new BasicStroke(size, BasicStroke.CAP_BUTT,
+				BasicStroke.JOIN_ROUND, 1f, dash, 0);
+		outlineStroke = new BasicStroke(size);
+
+		target.setStroke(outlineStroke);
+
+		target.setColor(outlineColor);
+		target.draw(paintFigure);
+
+		target.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+
+	}
+
 	private void paintSpikeColors(Graphics2D g2) {
 		Stroke newStroke = new BasicStroke(3f, BasicStroke.CAP_BUTT,
 				BasicStroke.JOIN_BEVEL);
