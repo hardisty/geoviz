@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------
- Java source file for the class USCHelp
+ Java source file for the class GeoVizHelp
  Copyright (c), 2005 Aaron Myers
  $Author: myersat $
- $Id: USCHelp.java,v 1.6 2005/03/28 15:57:15 myersat Exp $
+ $Id: GeoVizHelp.java,v 1.6 2005/03/28 15:57:15 myersat Exp $
  $Date: 2005/03/28 15:57:15 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -35,7 +35,7 @@ import javax.swing.JSplitPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-public class USCHelp extends JInternalFrame {
+public class GeoVizHelp extends JInternalFrame {
     /**
 	 * 
 	 */
@@ -43,9 +43,9 @@ public class USCHelp extends JInternalFrame {
 	JEditorPane help;
     JEditorPane helpTOC;
     MyHyperlinkListener linkListener;
-    protected final static Logger logger = Logger.getLogger(USCHelp.class.getName());
+    protected final static Logger logger = Logger.getLogger(GeoVizHelp.class.getName());
 //create USC Help
-    public USCHelp() {
+    public GeoVizHelp() {
         //Sets Internal Frame Values and Icon
         super("Tutorial", true, true, true, true);
 
@@ -68,7 +68,7 @@ public class USCHelp extends JInternalFrame {
         linkListener = new MyHyperlinkListener();
         help.addHyperlinkListener(linkListener);
 
-        java.net.URL helpURL = USCHelp.class.getResource("resources/help.html");
+        java.net.URL helpURL = GeoVizHelp.class.getResource("resources/help.html");
         if (helpURL != null) {
             try {
                 help.setPage(helpURL);
@@ -87,7 +87,7 @@ public class USCHelp extends JInternalFrame {
         helpTOC.setLayout(new BorderLayout());
         helpTOC.addHyperlinkListener(this.linkListener);
 
-        java.net.URL helpTOCURL = USCHelp.class.getResource(
+        java.net.URL helpTOCURL = GeoVizHelp.class.getResource(
                 "resources/toc.html");
         if (helpTOCURL != null) {
             try {
@@ -168,7 +168,7 @@ public class USCHelp extends JInternalFrame {
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         FlowLayout flow = new FlowLayout();
         app.getContentPane().setLayout(flow);
-        USCHelp hp = new USCHelp();
+        GeoVizHelp hp = new GeoVizHelp();
         app.getContentPane().add(hp);
         app.setContentPane(hp);
         app.setEnabled(true);
