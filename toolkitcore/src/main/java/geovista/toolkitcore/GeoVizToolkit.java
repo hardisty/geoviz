@@ -91,7 +91,7 @@ import geovista.matrix.MapScatterplotTreemapMatrix;
 import geovista.matrix.MultiplotMatrix;
 import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
-import geovista.readers.example.GeoDataAnthonyElection;
+import geovista.readers.example.GeoData2008Election;
 import geovista.readers.example.GeoDataUSCounties;
 import geovista.readers.example.GoogleFluDataReader;
 import geovista.readers.seerstat.SeerStatReader;
@@ -806,7 +806,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			newDataSet = countyData.getDataSet();
 
 		} else if (name.equals("2008 Presidential Election")) {
-			GeoDataAnthonyElection countyData = new GeoDataAnthonyElection();
+			GeoData2008Election countyData = new GeoData2008Election();
 			ShapeFileProjection proj = new ShapeFileProjection();
 			proj.setInputDataSet(countyData.getDataSet());
 
