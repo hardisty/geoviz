@@ -104,6 +104,12 @@ public class Histogram extends JPanel implements MouseListener,
 	private final JTextField xAxisMinField = new JTextField(16);
 	private final JTextField xAxisMaxField = new JTextField(16);
 	private final EventListenerList listenerListAction = new EventListenerList();
+	private boolean drawBox;
+	private boolean drawTip;
+	private int mouseX2;
+	private int mouseY2;
+	private int mouseX1;
+	private int mouseY1;
 	protected final static Logger logger = Logger.getLogger(Histogram.class
 			.getName());
 
@@ -375,7 +381,65 @@ public class Histogram extends JPanel implements MouseListener,
 			drawClassBoundaries(g);
 		}
 		drawIndication(g);
+		drawSelectionBox((Graphics2D) g);
 
+	}
+
+	private void drawSelectionBox(Graphics2D g2) {
+		// draw selection box
+		if (!drawBox) {
+			return;
+		}
+
+		Stroke tempStroke = g2.getStroke();
+		float[] dash = new float[] { 5f, 7f, 5f };
+		Stroke boxStroke =
+
+		new BasicStroke((float) 2.0, BasicStroke.CAP_ROUND,
+				BasicStroke.JOIN_ROUND, (float) 10.0, dash, 0);
+
+		g2.setStroke(boxStroke);
+		g2.setPaintMode();
+		g2.setColor(Color.black);
+		// g2.setXORMode(Color.white);
+
+		// let's take drawing the selection rectangle by cases
+		// not elegant, but the alternative is introducing more class variables
+		int selectX = 0;
+		int selectY = 0;
+		int selectWidth = 0;
+		int selectHeight = 0;
+
+		if ((mouseX1 <= mouseX2) && (mouseY1 <= mouseY2)) {
+			selectX = mouseX1;
+			selectY = mouseY1;
+			selectWidth = mouseX2 - mouseX1;
+			selectHeight = mouseY2 - mouseY1;
+		}
+
+		if ((mouseX2 < mouseX1) && (mouseY1 <= mouseY2)) {
+			selectX = mouseX2;
+			selectY = mouseY1;
+			selectWidth = mouseX1 - mouseX2;
+			selectHeight = mouseY2 - mouseY1;
+		}
+
+		if ((mouseX1 <= mouseX2) && (mouseY2 < mouseY1)) {
+			selectX = mouseX1;
+			selectY = mouseY2;
+			selectWidth = mouseX2 - mouseX1;
+			selectHeight = mouseY1 - mouseY2;
+		}
+
+		if ((mouseX2 < mouseX1) && (mouseY2 < mouseY1)) {
+			selectX = mouseX2;
+			selectY = mouseY2;
+			selectWidth = mouseX1 - mouseX2;
+			selectHeight = mouseY1 - mouseY2;
+		}
+
+		g2.drawRect(selectX, selectY, selectWidth, selectHeight);
+		g2.setStroke(tempStroke);
 	}
 
 	private void drawBars(Graphics g) {
@@ -953,8 +1017,8 @@ public class Histogram extends JPanel implements MouseListener,
 
 	public void mouseClicked(MouseEvent e) {
 
-		// With shift pressed, it will continue to select.
-		if (!(e.isShiftDown())) {
+		// If shift not pressed, reset selection.
+		if (e.isShiftDown() == false) {
 			// this.selRecords.clear();
 			selectedRecords.clear();
 
@@ -967,9 +1031,8 @@ public class Histogram extends JPanel implements MouseListener,
 			}
 		}
 
-		// double click, select performed.//this is dog slow, why?
+		// select performed.
 
-		// if (count == 2) {
 		for (int i = 0; i < binCount; i++) {
 			if (e.getX() >= histRecs[i].x && e.getX() < histRecs[i].getMaxX()) {
 				// if (this.histRecs[i].contains(e.getX(),e.getY())){
@@ -978,13 +1041,15 @@ public class Histogram extends JPanel implements MouseListener,
 					selectedRecords.set(index, true);
 
 				}
-
-				// fireActionPerformed ();//slowness is here....
-				// continue;
 			}
 
 		}
 
+		updateSelection();
+
+	}
+
+	private void updateSelection() {
 		int counter = 0;
 		counter = selectedRecords.cardinality();
 		int[] selInts = new int[counter];
@@ -999,23 +1064,91 @@ public class Histogram extends JPanel implements MouseListener,
 		fireSelectionChanged(selInts);
 		setSelections(selectedRecords);
 		repaint();
-		// }
 	}
 
 	public void mousePressed(MouseEvent e) {
 		if (e.isPopupTrigger()) {
 			maybeShowPopup(e);
 		}
+		mouseX1 = e.getX();
+		mouseY1 = e.getY();
+		mouseX2 = e.getX();
+		mouseY2 = e.getY();
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		if (e.isPopupTrigger()) {
 			maybeShowPopup(e);
 		}
+
+		mouseX2 = e.getX();
+		mouseY2 = e.getY();
+
+		if (mouseX1 > mouseX2) {
+			int temp = mouseX1;
+			mouseX1 = mouseX2;
+			mouseX2 = temp;
+		}
+
+		if (mouseY1 > mouseY2) {
+			int temp = mouseY1;
+			mouseY1 = mouseY2;
+			mouseY2 = temp;
+		}
+
+		// If shift not pressed, reset selection.
+		if (e.isShiftDown() == false) {
+			// this.selRecords.clear();
+			selectedRecords.clear();
+
+			if (selectionArray == null || selectionArray.length != binCount) {
+				selectionArray = new double[binCount];
+			} else {
+				for (int i = 0; i < selectionArray.length; i++) {
+					selectionArray[i] = 0;
+				}
+			}
+		}
+
+		// select performed.
+		int width = mouseX2 - mouseX1;
+		int height = mouseY2 - mouseY1;
+		Rectangle selRect = new Rectangle(mouseX1, mouseY1, width, height);
+		for (int i = 0; i < binCount; i++) {
+
+			if (selRect.intersects(histRecs[i])) {
+				// if (this.histRecs[i].contains(e.getX(),e.getY())){
+				for (int j = 0; j < histRecords[i].size(); j++) {
+					int index = (histRecords[i].get(j)).intValue();
+					selectedRecords.set(index, true);
+
+				}
+			}
+
+		}
+		updateSelection();
+		drawBox = false;
+		repaint();
+	}
+
+	private void makeSelection(int mouseX12, int i, int mouseY12, int j) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void makeSelectionShift(int mouseX12, int i, int mouseY12, int j) {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void mouseDragged(MouseEvent e) {
+		drawBox = true;
+		drawTip = false;
 
+		mouseX2 = e.getX();
+		mouseY2 = e.getY();
+
+		repaint();
 	}
 
 	public void mouseMoved(MouseEvent e) {
@@ -1030,6 +1163,8 @@ public class Histogram extends JPanel implements MouseListener,
 			}
 		}
 		indicatedBin = -1;
+		mouseX2 = e.getX();
+		mouseY2 = e.getY();
 		this.repaint();
 	}
 
