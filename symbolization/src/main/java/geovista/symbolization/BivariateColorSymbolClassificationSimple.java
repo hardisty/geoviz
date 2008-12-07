@@ -17,9 +17,6 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  -------------------------------------------------------------------   */
 
-
-
-
 package geovista.symbolization;
 
 import java.awt.Color;
@@ -27,190 +24,206 @@ import java.awt.Color;
 import geovista.common.classification.Classifier;
 import geovista.common.classification.ClassifierRawQuantiles;
 
-public class BivariateColorSymbolClassificationSimple implements BivariateColorSymbolClassification {
+public class BivariateColorSymbolClassificationSimple implements
+		BivariateColorSymbolClassification {
 
-    private ColorSymbolizer colorerX;
-    private Classifier classerX;
-    private ColorSymbolizer colorerY;
-    private Classifier classerY;
-    private transient int numClassesX;
-    private transient int numClassesY;
-    transient int[] classesX;
-    transient int[] classesY;
+	private ColorSymbolizer colorerX;
+	private Classifier classerX;
+	private ColorSymbolizer colorerY;
+	private Classifier classerY;
+	private transient int numClassesX;
+	private transient int numClassesY;
+	transient int[] classesX;
+	transient int[] classesY;
 
-    public static final int DEFAULT_NUM_CLASSES = 3;
+	public static final int DEFAULT_NUM_CLASSES = 3;
 
-    public ColorSymbolizer getXColorSymbolizer(){
-     return colorerX;
-    }
+	public ColorSymbolizer getXColorSymbolizer() {
+		return colorerX;
+	}
 
-    public ColorSymbolizer getYColorSymbolizer(){
-     return colorerY;
-    }
+	public ColorSymbolizer getYColorSymbolizer() {
+		return colorerY;
+	}
 
-    public Color[][] getClassColors(){
-      Color[][] currColors = new Color[numClassesX][numClassesY];
-      Color[] xColors = colorerX.symbolize(numClassesX);
-      Color[] yColors = colorerY.symbolize(numClassesY);
+	public Color[][] getClassColors() {
+		Color[][] currColors = new Color[numClassesX][numClassesY];
+		Color[] xColors = colorerX.symbolize(numClassesX);
+		Color[] yColors = colorerY.symbolize(numClassesY);
 
-      for (int x = 0; x < currColors.length; x++){
-        for (int y = 0; y < currColors[0].length; y++){
-          Color colorX = xColors[x];
-          Color colorY = yColors[y];
+		for (int x = 0; x < currColors.length; x++) {
+			for (int y = 0; y < currColors[0].length; y++) {
+				Color colorX = xColors[x];
+				Color colorY = yColors[y];
 
-          currColors[x][y] = ColorInterpolator.mixColorsRGB(colorX,colorY);
-        }
-      }
+				currColors[x][y] = ColorInterpolator
+						.mixColorsRGBHighSaturation(colorX, colorY);
+			}
+		}
 
-      return currColors;
+		return currColors;
 
-    }
+	}
 
+	public BivariateColorSymbolClassificationSimple() {
+		// defaults
+		ColorSymbolizerLinear colX = new ColorSymbolizerLinear();
+		colX.setLowColor(ColorRampPicker.DEFAULT_LOW_COLOR);
+		colX.setHighColor(ColorRampPicker.DEFAULT_HIGH_COLOR_PURPLE);
+		colorerX = colX;
 
-    public BivariateColorSymbolClassificationSimple() {
-      //defaults
-      ColorSymbolizerLinear colX = new ColorSymbolizerLinear();
-      colX.setLowColor(ColorRampPicker.DEFAULT_LOW_COLOR);
-      colX.setHighColor(ColorRampPicker.DEFAULT_HIGH_COLOR_PURPLE);
-      colorerX = colX;
+		classerX = new ClassifierRawQuantiles();
 
-      classerX = new ClassifierRawQuantiles();
+		ColorSymbolizerLinear colY = new ColorSymbolizerLinear();
+		colY.setLowColor(ColorRampPicker.DEFAULT_LOW_COLOR);
+		colY.setHighColor(ColorRampPicker.DEFAULT_HIGH_COLOR_GREEN);
+		colorerY = colY;
 
-      ColorSymbolizerLinear colY = new ColorSymbolizerLinear();
-      colY.setLowColor(ColorRampPicker.DEFAULT_LOW_COLOR);
-      colY.setHighColor(ColorRampPicker.DEFAULT_HIGH_COLOR_GREEN);
-      colorerY = colY;
+		classerY = new ClassifierRawQuantiles();
+		numClassesX = BivariateColorSymbolClassificationSimple.DEFAULT_NUM_CLASSES;
+		numClassesY = BivariateColorSymbolClassificationSimple.DEFAULT_NUM_CLASSES;
 
-      classerY = new ClassifierRawQuantiles();
-      numClassesX = BivariateColorSymbolClassificationSimple.DEFAULT_NUM_CLASSES;
-      numClassesY = BivariateColorSymbolClassificationSimple.DEFAULT_NUM_CLASSES;
+	}
 
-    }
+	public Color[] symbolize(double[] dataX, double[] dataY) {
 
-    public Color[] symbolize(double[] dataX, double[] dataY){
+		if (dataX == null || dataY == null) {
+			return null;
+		}
 
-      if (dataX == null || dataY == null) {
-        return null;
-      }
+		if (dataX.length != dataY.length) {
+			// throw new
+			// IllegalArgumentException("BivariateColorSymbolClassificationSimple.symbolize"
+			// +
+			// " recieved input arrays of different length.");
+			System.err
+					.println("BivariateColorSymbolClassificationSimple.symbolize recieved input arrays of different length");
+			return null;
+		}
 
-      if (dataX.length != dataY.length) {
-//        throw new IllegalArgumentException("BivariateColorSymbolClassificationSimple.symbolize" +
-//                                            " recieved input arrays of different length.");
-        System.err.println("BivariateColorSymbolClassificationSimple.symbolize recieved input arrays of different length");
-        return null;
-      }
+		if (dataX == dataY) { // if they are the same object
+			return symbolizeUnivariate(dataX);
+		}
 
-      if (dataX == dataY) { //if they are the same object
-        return this.symbolizeUnivariate(dataX);
-      }
+		Color[] colorsX = colorerX.symbolize(numClassesX);
+		classesX = classerX.classify(dataX, numClassesX);
+		int myClassX = 0;
+		Color colorX = null;
 
-      Color[] colorsX = colorerX.symbolize(this.numClassesX);
-      classesX = classerX.classify(dataX,this.numClassesX);
-      int myClassX = 0;
-      Color colorX = null;
+		Color[] colorsY = colorerY.symbolize(numClassesY);
+		classesY = classerY.classify(dataY, numClassesY);
+		int myClassY = 0;
+		Color colorY = null;
 
-      Color[] colorsY = colorerY.symbolize(this.numClassesY);
-      classesY = classerY.classify(dataY,this.numClassesY);
-      int myClassY = 0;
-      Color colorY = null;
+		Color[] returnColors = new Color[dataX.length];
 
-      Color[] returnColors = new Color[dataX.length];
+		for (int i = 0; i < classesX.length; i++) {
+			myClassX = classesX[i];
+			myClassY = classesY[i];
 
-      for (int i = 0; i < classesX.length; i++) {
-        myClassX = classesX[i];
-        myClassY = classesY[i];
+			if (myClassX == Classifier.NULL_CLASS
+					|| myClassY == Classifier.NULL_CLASS
+					|| myClassX > colorsX.length || myClassY > colorsY.length) {
+				returnColors[i] = ColorSymbolizer.DEFAULT_NULL_COLOR;
+			} else {
+				colorX = colorsX[myClassX];
+				colorY = colorsY[myClassY];
+				returnColors[i] = ColorInterpolator.mixColorsRGBHighSaturation(
+						colorX, colorY);
+			}
+		}
+		return returnColors;
+	}
 
-        if (myClassX == Classifier.NULL_CLASS || myClassY == Classifier.NULL_CLASS
-        		|| myClassX > colorsX.length || myClassY > colorsY.length) {
-          returnColors[i] = ColorSymbolizer.DEFAULT_NULL_COLOR;
-        } else {
-          colorX = colorsX[myClassX];
-          colorY = colorsY[myClassY];
-          returnColors[i] = ColorInterpolator.mixColorsRGB(colorX,colorY);
-        }
-      }
-      return returnColors;
-    }
+	private Color[] symbolizeUnivariate(double[] dataX) {
+		Color[] colorsX = colorerX.symbolize(numClassesX);
+		classesX = classerX.classify(dataX, numClassesX);
+		int myClassX = 0;
+		Color colorX = null;
 
-    private Color[] symbolizeUnivariate(double[] dataX){
-        Color[] colorsX = colorerX.symbolize(this.numClassesX);
-        classesX = classerX.classify(dataX,this.numClassesX);
-        int myClassX = 0;
-        Color colorX = null;
+		Color[] returnColors = new Color[dataX.length];
 
-      Color[] returnColors = new Color[dataX.length];
+		for (int i = 0; i < classesX.length; i++) {
+			myClassX = classesX[i];
+			if (myClassX == Classifier.NULL_CLASS
+					|| classesX[i] > colorsX.length) {
+				returnColors[i] = ColorSymbolizer.DEFAULT_NULL_COLOR;
+			} else {
+				colorX = colorsX[classesX[i]];
+				// returnColors[i] =
+				// ColorInterpolator.mixColorsRGB(colorX,colorY);
+				returnColors[i] = colorX;
+			}
+		}
 
-      for (int i = 0; i < classesX.length; i++) {
-        myClassX = classesX[i];
-        if (myClassX == Classifier.NULL_CLASS || classesX[i] > colorsX.length) {
-          returnColors[i] = ColorSymbolizer.DEFAULT_NULL_COLOR;
-        } else {
-          colorX = colorsX[classesX[i]];
-          //returnColors[i] = ColorInterpolator.mixColorsRGB(colorX,colorY);
-          returnColors[i] = colorX;
-        }
-      }
+		// for the benefit of getClassY
+		classesY = classesX;
 
-      //for the benefit of getClassY
-      classesY = classesX;
+		return returnColors;
+	}
 
-      return returnColors;
-    }
+	public void setColorerY(ColorSymbolizer colorerY) {
+		this.colorerY = colorerY;
+		numClassesY = colorerY.getNumClasses();
+	}
 
-    public void setColorerY(ColorSymbolizer colorerY) {
-      this.colorerY = colorerY;
-      this.numClassesY = colorerY.getNumClasses();
-    }
-    public ColorSymbolizer getColorerY() {
-      return this.colorerY;
-    }
+	public ColorSymbolizer getColorerY() {
+		return colorerY;
+	}
 
-    public void setClasserY(Classifier classerY) {
-      this.classerY = classerY;
-    }
-    public Classifier getClasserY() {
-      return this.classerY;
-    }
+	public void setClasserY(Classifier classerY) {
+		this.classerY = classerY;
+	}
 
-    public void setColorerX(ColorSymbolizer colorerX) {
-      this.colorerX = colorerX;
-      this.numClassesX = colorerX.getNumClasses();
-    }
-    public ColorSymbolizer getColorerX() {
-      return this.colorerX;
-    }
+	public Classifier getClasserY() {
+		return classerY;
+	}
 
-    public void setClasserX(Classifier classerX) {
-      this.classerX = classerX;
-    }
-    public Classifier getClasserX() {
-      return this.classerX;
-    }
+	public void setColorerX(ColorSymbolizer colorerX) {
+		this.colorerX = colorerX;
+		numClassesX = colorerX.getNumClasses();
+	}
 
-    public int getClassX(int observation){
-      if (classesX == null) {
-        return -1;
-      }
-      return this.classesX[observation];
-    }
+	public ColorSymbolizer getColorerX() {
+		return colorerX;
+	}
 
-    public int getClassY(int observation){
-      if (classesY == null) {
-        return -1;
-      }
-      return this.classesY[observation];
-    }
-  public int getNumClassesX() {
-    return numClassesX;
-  }
-  public int getNumClassesY() {
-    return numClassesY;
-  }
-  public void setNumClassesX(int numClassesX) {
-    this.numClassesX = numClassesX;
-  }
-  public void setNumClassesY(int numClassesY) {
-    this.numClassesY = numClassesY;
-  }
+	public void setClasserX(Classifier classerX) {
+		this.classerX = classerX;
+	}
+
+	public Classifier getClasserX() {
+		return classerX;
+	}
+
+	public int getClassX(int observation) {
+		if (classesX == null) {
+			return -1;
+		}
+		return classesX[observation];
+	}
+
+	public int getClassY(int observation) {
+		if (classesY == null) {
+			return -1;
+		}
+		return classesY[observation];
+	}
+
+	public int getNumClassesX() {
+		return numClassesX;
+	}
+
+	public int getNumClassesY() {
+		return numClassesY;
+	}
+
+	public void setNumClassesX(int numClassesX) {
+		this.numClassesX = numClassesX;
+	}
+
+	public void setNumClassesY(int numClassesY) {
+		this.numClassesY = numClassesY;
+	}
 
 }
