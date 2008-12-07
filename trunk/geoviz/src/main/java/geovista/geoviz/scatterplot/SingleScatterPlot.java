@@ -37,12 +37,16 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 import geovista.common.event.VariableSelectionEvent;
 import geovista.common.event.VariableSelectionListener;
+import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.symbolization.BivariateColorSchemeVisualizer;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorRampPicker;
 import geovista.symbolization.ColorSymbolClassification;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
@@ -50,15 +54,15 @@ import geovista.symbolization.event.ColorClassifierListener;
 public class SingleScatterPlot extends JPanel implements DataSetListener,
 		ActionListener, ColorClassifierListener, SelectionListener,
 		IndicationListener, ColorArrayListener, VariableSelectionListener,
-		TableModelListener {
+		TableModelListener, SubspaceListener, VisualSettingsPopupListener {
 
 	public static final int VARIABLE_CHOOSER_MODE_ACTIVE = 0;
 	public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
 	public static final int VARIABLE_CHOOSER_MODE_HIDDEN = 2;
 	private final ScatterPlot scatterPlot;
 	private final int[] displayIndices = new int[2];
-	private final VisualClassifier visClassOne;
-	private final VisualClassifier visClassTwo;
+	private final VisualClassifier visClassX;
+	private final VisualClassifier visClassY;
 	private final JPanel topContent;
 	private final BivariateColorSchemeVisualizer biViz;
 	transient private Color backgroundColor;
@@ -75,19 +79,19 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 
 		JPanel vcPanel = new JPanel();
 		vcPanel.setLayout(new BoxLayout(vcPanel, BoxLayout.Y_AXIS));
-		visClassOne = new VisualClassifier();
-		visClassTwo = new VisualClassifier();
-		visClassOne.setAlignmentX(Component.LEFT_ALIGNMENT);
-		visClassTwo.setAlignmentX(Component.LEFT_ALIGNMENT);
-		visClassOne
+		visClassX = new VisualClassifier();
+		visClassY = new VisualClassifier();
+		visClassX.setAlignmentX(Component.LEFT_ALIGNMENT);
+		visClassY.setAlignmentX(Component.LEFT_ALIGNMENT);
+		visClassX
 				.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
-		visClassTwo
+		visClassY
 				.setVariableChooserMode(ClassifierPicker.VARIABLE_CHOOSER_MODE_ACTIVE);
-		visClassOne.addActionListener(this);
-		visClassTwo.addActionListener(this);
+		visClassX.addActionListener(this);
+		visClassY.addActionListener(this);
 
-		vcPanel.add(visClassTwo);
-		vcPanel.add(visClassOne);
+		vcPanel.add(visClassY);
+		vcPanel.add(visClassX);
 
 		JPanel legendPanel = new JPanel();
 		legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.X_AXIS));
@@ -106,10 +110,10 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 		scatterPlot.setRegressionClass(LinearRegression.class);
 		scatterPlot.addActionListener(this);
 		this.add(scatterPlot, BorderLayout.CENTER);
-		visClassOne.addColorClassifierListener(this);
-		visClassTwo.addColorClassifierListener(this);
+		visClassX.addColorClassifierListener(this);
+		visClassY.addColorClassifierListener(this);
 
-		visClassTwo.setHighColor(new Color(0, 150, 0));// Jin
+		visClassY.setHighColor(ColorRampPicker.DEFAULT_HIGH_COLOR_GREEN); // green
 
 	}
 
@@ -129,8 +133,8 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 
 	public void setDataSet(DataSetForApps data) {
 
-		visClassOne.setDataSet(data);
-		visClassTwo.setDataSet(data);
+		visClassX.setDataSet(data);
+		visClassY.setDataSet(data);
 
 		// set default data to get color from
 
@@ -142,20 +146,20 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 
 		selections = new int[data.getNumObservations()];
 
-		displayIndices[0] = 1;
-		displayIndices[1] = 2;
-		setXVariable(displayIndices[0] - 1);
-		setYVariable(displayIndices[1] - 1);
+		displayIndices[0] = 0;
+		displayIndices[1] = 1;
+		setXVariable(displayIndices[0]);
+		setYVariable(displayIndices[1]);
 		scatterPlot.setAxisOn(true);
-		scatterPlot.setElementPosition(displayIndices);
+		scatterPlot.setDataIndices(displayIndices);
 	}
 
 	public void setXVariable(int var) {
-		visClassOne.setCurrVariableIndex(var);
+		visClassX.setCurrVariableIndex(var);
 	}
 
 	public void setYVariable(int var) {
-		visClassTwo.setCurrVariableIndex(var);
+		visClassY.setCurrVariableIndex(var);
 	}
 
 	public void setBivarColorClasser(
@@ -180,9 +184,9 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 	}
 
 	public void colorClassifierChanged(ColorClassifierEvent e) {
-		if (e.getSource() == visClassOne) {
+		if (e.getSource() == visClassX) {
 			e.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_X);
-		} else if (e.getSource() == visClassTwo) {
+		} else if (e.getSource() == visClassY) {
 			e.setOrientation(ColorClassifierEvent.SOURCE_ORIENTATION_Y);
 		}
 
@@ -192,9 +196,9 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 			return;
 		}
 
-		ColorSymbolClassification colorSymbolizerX = visClassOne
+		ColorSymbolClassification colorSymbolizerX = visClassX
 				.getColorClasser();
-		ColorSymbolClassification colorSymbolizerY = visClassTwo
+		ColorSymbolClassification colorSymbolizerY = visClassY
 				.getColorClasser();
 
 		BivariateColorSymbolClassificationSimple biColorSymbolizer = new BivariateColorSymbolClassificationSimple();
@@ -220,20 +224,24 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 		String varChangedCommand = ClassifierPicker.COMMAND_SELECTED_VARIABLE_CHANGED;
 		String colorChangedCommand = VisualClassifier.COMMAND_COLORS_CHANGED;
 
-		if ((src == visClassOne) && command.equals(varChangedCommand)) {
-			int index = visClassOne.getCurrVariableIndex();
-			index++;
+		if ((src == visClassX) && command.equals(varChangedCommand)) {
+			int index = visClassX.getCurrVariableIndex();
+
 			displayIndices[0] = index;
-			scatterPlot.setElementPosition(displayIndices);
-		} else if ((src == visClassTwo) && command.equals(varChangedCommand)) {
-			int index = visClassTwo.getCurrVariableIndex();
-			index++;
+			scatterPlot.setDataIndices(displayIndices);
+		} else if ((src == visClassY) && command.equals(varChangedCommand)) {
+			int index = visClassY.getCurrVariableIndex();
+
 			displayIndices[1] = index;
-			scatterPlot.setElementPosition(displayIndices);
+			scatterPlot.setDataIndices(displayIndices);
 		} else if ((src == scatterPlot)
 				&& command.compareTo(ScatterPlot.COMMAND_POINT_SELECTED) == 0) {
 			selections = scatterPlot.getSelections();
-			fireSelectionChanged(getSelectedObvs());
+			int[] selObs = getSelectedObvs();
+			if (selObs.length == dataSet.getNumObservations()) {
+				selObs = new int[0];
+			}
+			fireSelectionChanged(selObs);
 		} else if (command.equals(colorChangedCommand)) {
 			fireColorArrayChanged();
 		}
@@ -299,7 +307,7 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 
 	public void setSelectedObvs(int[] selected) {
 
-		if (selected == null) {
+		if (selected == null || selections == null) {
 			return;
 		} else {
 			for (int i = 0; i < selections.length; i++) {
@@ -307,6 +315,11 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 			}
 			for (int i = 0; i < selected.length; i++) {
 				selections[selected[i]] = 1;
+			}
+			if (selected.length == 0) {
+				for (int i = 0; i < selections.length; i++) {
+					selections[i] = 1;
+				}
 			}
 		}
 		multipleSelectionColors = null;
@@ -428,12 +441,63 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 	}
 
 	public void variableSelectionChanged(VariableSelectionEvent e) {
-		visClassOne.setCurrVariableIndex(e.getVariableIndex() + 1);
+		visClassX.setCurrVariableIndex(e.getVariableIndex() + 1);
 	}
 
 	public void tableChanged(TableModelEvent e) {
-		visClassOne.setDataSet(dataSet);
-		visClassTwo.setDataSet(dataSet);
+		visClassX.setDataSet(dataSet);
+		visClassY.setDataSet(dataSet);
+
+	}
+
+	public void subspaceChanged(SubspaceEvent e) {
+		int[] vars = e.getSubspace();
+		visClassX.getClassPick().setCurrVariableIndex(vars[1]);
+		visClassY.getClassPick().setCurrVariableIndex(vars[0]);
+		displayIndices[0] = vars[1];
+		displayIndices[1] = vars[0];
+		scatterPlot.setDataIndices(displayIndices);
+
+	}
+
+	public Color getIndicationColor() {
+		return scatterPlot.getIndicationColor();
+	}
+
+	public Color getSelectionColor() {
+		return scatterPlot.getSelectionColor();
+	}
+
+	public boolean isSelectionBlur() {
+		return scatterPlot.isSelectionBlur();
+	}
+
+	public boolean isSelectionFade() {
+		return scatterPlot.isSelectionFade();
+	}
+
+	public void setIndicationColor(Color indColor) {
+		scatterPlot.setIndicationColor(indColor);
+
+	}
+
+	public void setSelectionColor(Color selColor) {
+		scatterPlot.setSelectionColor(selColor);
+
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		scatterPlot.useMultiIndication(useMultiIndic);
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		scatterPlot.useSelectionBlur(selBlur);
+
+	}
+
+	public void useSelectionFade(boolean selFade) {
+		scatterPlot.useSelectionFade(selFade);
 
 	}
 
