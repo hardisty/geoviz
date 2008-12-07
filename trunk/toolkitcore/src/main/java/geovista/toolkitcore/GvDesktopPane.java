@@ -5,11 +5,14 @@
 
 package geovista.toolkitcore;
 
+import java.awt.Color;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
@@ -19,6 +22,10 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 
+import geovista.common.ui.VisualSettingsPopupAdapter;
+import geovista.common.ui.VisualSettingsPopupListener;
+import geovista.common.ui.VisualSettingsPopupMenu;
+
 /**
  * Assumptions: 1. One dataset at a time. 2. Maximum coordination as a default.
  * 
@@ -26,15 +33,21 @@ import javax.swing.KeyStroke;
  */
 
 public class GvDesktopPane extends JDesktopPane implements
-		PropertyChangeListener {
+		PropertyChangeListener, VisualSettingsPopupListener {
 	final static Logger logger = Logger
 			.getLogger(GvDesktopPane.class.getName());
 
 	JInternalFrame lastFrame;
 	FrameListener fListener;
+	GeoVizToolkit parentKit;
 
 	public GvDesktopPane() {
 		super();
+		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
+		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
+		popMenu.addMouseListener(listener);
+		addMouseListener(listener);
+
 		lastFrame = new JInternalFrame();
 		addBindings();
 
@@ -42,7 +55,9 @@ public class GvDesktopPane extends JDesktopPane implements
 
 	@Override
 	public void setSelectedFrame(JInternalFrame f) {
-		logger.info("set internal frame");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("set internal frame");
+		}
 		if (fListener != null) {
 			fListener.selectedFrameChanged(f);
 		}
@@ -109,6 +124,68 @@ public class GvDesktopPane extends JDesktopPane implements
 	interface FrameListener {
 
 		void selectedFrameChanged(JInternalFrame f);
+	}
+
+	public Color getIndicationColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Color getSelectionColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isSelectionBlur() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean isSelectionFade() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public void setIndicationColor(Color indColor) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setSelectionColor(Color selColor) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		logger.info("selection blur = " + selBlur);
+
+		ToolkitBeanSet beanSet = parentKit.getTBeanSet();
+		for (ToolkitBean bean : beanSet.getBeanSet()) {
+			Object originalBean = bean.getOriginalBean();
+			if (originalBean instanceof VisualSettingsPopupListener) {
+				VisualSettingsPopupListener listener = (VisualSettingsPopupListener) originalBean;
+				listener.useSelectionBlur(selBlur);
+			}
+		}
+
+	}
+
+	public void useSelectionFade(boolean selFade) {
+		logger.info("selection fade = " + selFade);
+		ToolkitBeanSet beanSet = parentKit.getTBeanSet();
+		for (ToolkitBean bean : beanSet.getBeanSet()) {
+			Object originalBean = bean.getOriginalBean();
+			if (originalBean instanceof VisualSettingsPopupListener) {
+				VisualSettingsPopupListener listener = (VisualSettingsPopupListener) originalBean;
+				listener.useSelectionFade(selFade);
+			}
+		}
+
 	}
 
 }
