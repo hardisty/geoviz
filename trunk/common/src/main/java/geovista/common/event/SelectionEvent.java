@@ -6,6 +6,7 @@ package geovista.common.event;
 
 import java.awt.Color;
 import java.util.EventObject;
+import java.util.HashSet;
 
 /**
  * An SelectionEvent signals that a set of observations has been singled out.
@@ -23,6 +24,10 @@ public class SelectionEvent extends EventObject {
 	private transient Color[] multipleSlectionColors;
 	private transient double[] selectedPortions;
 
+	public enum SelectionCoverage {
+		NONE, ALL, PARTIAL
+	};
+
 	/**
 	 * The constructor is the same as that for EventObject, except that the
 	 * selection values are indicated.
@@ -37,6 +42,26 @@ public class SelectionEvent extends EventObject {
 		this.selection = selection;
 		higherLevelSelection = higherLevelSel;
 		selectedPortions = portions;
+	}
+
+	public static int[] makeAndSelection(int[] leftSel, int[] rightSel) {
+
+		HashSet<Integer> intSet = new HashSet<Integer>();
+		for (int i : leftSel) {
+			intSet.add(i);
+		}
+		for (int i : rightSel) {
+			intSet.add(i);
+		}
+		Object[] objArray = intSet.toArray();
+		int[] newSel = new int[objArray.length];
+		for (int i = 0; i < objArray.length; i++) {
+
+			Integer intNum = (Integer) objArray[i];
+			newSel[i] = intNum;
+		}
+
+		return newSel;
 	}
 
 	public SelectionEvent(Object source, int[] selection, int[] higherLevelSel) {
