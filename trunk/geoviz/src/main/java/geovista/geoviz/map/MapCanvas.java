@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -54,6 +55,9 @@ import geovista.common.event.SpatialExtentListener;
 import geovista.common.ui.ExcentricLabelClient;
 import geovista.common.ui.ExcentricLabels;
 import geovista.common.ui.Fisheyes;
+import geovista.common.ui.VisualSettingsPopupAdapter;
+import geovista.common.ui.VisualSettingsPopupListener;
+import geovista.common.ui.VisualSettingsPopupMenu;
 import geovista.geoviz.condition.ConditionManager;
 import geovista.image_blur.image.BoxBlurFilter;
 import geovista.projection.affine.ShapeAffineTransform;
@@ -77,7 +81,7 @@ import geovista.symbolization.glyph.GlyphEvent;
 public class MapCanvas extends JPanel implements ComponentListener,
 		ActionListener, MouseListener, MouseMotionListener, SelectionListener,
 		IndicationListener, DataSetListener, SpatialExtentListener,
-		ExcentricLabelClient {
+		ExcentricLabelClient, VisualSettingsPopupListener {
 	public final static int MODE_SELECT = 0; // default mode
 	public static final int MODE_ZOOM_IN = 1;
 	public static final int MODE_ZOOM_OUT = 2;
@@ -85,6 +89,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	public static final int MODE_EXCENTRIC = 4;
 	public static final int MODE_FISHEYE = 5;
 	public static final int MODE_MAGNIFYING = 6;
+
+	private boolean useSelectionFade = true;
+	private boolean useSelectionBlur = true;
+
 	private int mouseX1;
 	transient private int mouseX2;
 	transient private int mouseY1;
@@ -134,6 +142,12 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	public MapCanvas() {
 		super();
+
+		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
+		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
+		popMenu.addMouseListener(listener);
+		addMouseListener(listener);
+
 		setPreferredSize(new Dimension(300, 300));
 		shapeLayers = new Vector();
 		addComponentListener(this);
@@ -1223,7 +1237,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			setIndication(indic);
 
 			int[] neighbors = getIndicationNeighbors(indic);
-			logger.info("found bors, n = " + neighbors.length);
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.info("found bors, n = " + neighbors.length);
+			}
 			setIndicationNeighbors(neighbors);
 			this.repaint();
 			int xClass = -1;
@@ -1243,7 +1259,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	}
 
 	public int[] getIndicationNeighbors(int indic) {
-		if (indic < 0) {
+		if (indic < 0 || dataSet.getSpatialWeights() == null) {
 			int[] emptyArray = {};
 			return emptyArray;
 		}
@@ -1385,18 +1401,40 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	} // end method
 
 	private void makeSelection(int x1, int x2, int y1, int y2) {
+		int[] newSel = findSelectionInLayers(x1, x2, y1, y2);
+
+		updateSelection(newSel);
+	} // method
+
+	private void makeSelectionShift(int x1, int x2, int y1, int y2) {
+		int[] newSel = findSelectionInLayers(x1, x2, y1, y2);
+		int[] combinedSel = SelectionEvent.makeAndSelection(
+				selectedObservations, newSel);
+		updateSelection(combinedSel);
+	}
+
+	private int[] findSelectionInLayers(int x1, int x2, int y1, int y2) {
+		int[] selObs = new int[0];
 		int xDiff = Math.abs(x2 - x1);
 		int yDiff = Math.abs(y2 - y1);
 		int minPixels = 3;
 
 		if ((xDiff < minPixels) && (yDiff < minPixels)) {
-			return;
+			return selObs;
 		}
 
 		if (shapeLayers.size() > 0) {
 			LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
 			ls.findSelection(x1, x2, y1, y2);
-			selectedObservations = ls.getSelectedObservations();
+			selObs = ls.getSelectedObservations();
+		}
+		return selObs;
+	}
+
+	private void updateSelection(int[] newSel) {
+		selectedObservations = newSel;
+		if (shapeLayers.size() > 0) {
+			LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
 
 			// let's try just redrawing the selection
 			// for (int i = 0; i < selectedObservations.length; i++) {
@@ -1413,25 +1451,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			paintDrawingBuff();
 			this.repaint();
 		}
-	} // method
 
-	private void makeSelectionShift(int x1, int x2, int y1, int y2) {
-		if (shapeLayers.size() > 0) {
-			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-				LayerShape ls = (LayerShape) e.nextElement();
-				ls.findSelectionShift(x1, x2, y1, y2);
-				selectedObservations = ls.getSelectedObservations();
-			}
-
-			fireActionPerformed(LayerShape.COMMAND_SELECTION);
-			paintDrawingBuff();
-			this.repaint();
-		}
 	}
 
 	// end mouse event handling
-
-	private final boolean useBlur = true;
 
 	/**
 	 * Attention all layers! Paint yourselves onto the buffer. This can be an
@@ -1453,19 +1476,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				RenderingHints.VALUE_ANTIALIAS_OFF);
 		g.setColor(getBackground());
 		g.fillRect(0, 0, getWidth(), getHeight());
-		if (useBlur) {
-			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-				LayerShape ls = (LayerShape) e.nextElement();
-				if (ls == null) {
-					break;
-				}
-				Color beforeColor = new Color(ls.colorBlur.getRGB());
-				Color halfGrey = new Color(248, 248, 248, 230);
-				ls.colorBlur = halfGrey;
-				ls.renderBackground(g2); // paint your whole self (including
-				// selections)
-				ls.colorBlur = beforeColor;
-			} // next element
+		renderLayers(g2);
+		if (useSelectionBlur) {
 
 			// g.fillRect(0, 0, this.getWidth(), this.getHeight());
 			BoxBlurFilter filter = new BoxBlurFilter();
@@ -1489,6 +1501,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			filter.filter(blurBuff, blurBuff);
 			g2.drawImage(blurBuff, null, 0, 0);
 		}
+
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -1501,6 +1514,29 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			} // next element
 		} // end if
 
+	}
+
+	private void renderLayers(Graphics2D g2) {
+		for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
+			LayerShape ls = (LayerShape) e.nextElement();
+			if (ls == null) {
+				break;
+			}
+			if (useSelectionFade) {
+				Color beforeColor = new Color(ls.colorBlur.getRGB());
+				Color halfGrey = new Color(248, 248, 248, 230);
+				ls.colorBlur = halfGrey;
+				ls.renderBackground(g2); // paint your whole self
+				// (including
+				// selections)
+				ls.colorBlur = beforeColor;
+			} else {
+				ls.colorBlur = new Color(0, 0, 0, 0);
+				ls.renderBackground(g2);
+
+			}
+
+		} // next element
 	}
 
 	/**
@@ -1548,6 +1584,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
+		if (shapeLayers == null || shapeLayers.size() < 1) {
+			return;
+		}
 		Graphics2D g2 = (Graphics2D) g;
 
 		if ((drawingBuff == null) || (fisheyes != null)) {
@@ -1991,6 +2030,60 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	public void setAutofit(boolean autofit) {
 		this.autofit = autofit;
+	}
+
+	public Color getIndicationColor() {
+		return getActiveLayer().colorIndication;
+	}
+
+	private LayerShape getActiveLayer() {
+		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		return ls;
+	}
+
+	public Color getSelectionColor() {
+		return getActiveLayer().colorSelection;
+	}
+
+	public void setIndicationColor(Color indColor) {
+		getActiveLayer().colorIndication = indColor;
+
+	}
+
+	public void setSelectionColor(Color selColor) {
+		getActiveLayer().colorSelection = selColor;
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		if (useSelectionBlur != selBlur) {
+			useSelectionBlur = selBlur;
+			paintDrawingBuff();
+			this.repaint();
+		}
+
+	}
+
+	public void useSelectionFade(boolean selFade) {
+		if (useSelectionFade != selFade) {
+			useSelectionFade = selFade;
+			paintDrawingBuff();
+			this.repaint();
+		}
+
+	}
+
+	public boolean isSelectionBlur() {
+		return useSelectionBlur;
+	}
+
+	public boolean isSelectionFade() {
+		return useSelectionFade;
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		useMultiIndication(useMultiIndic);
+
 	}
 
 }
