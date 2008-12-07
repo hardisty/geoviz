@@ -211,7 +211,7 @@ public class ToolkitBeanSet {
 		return beanSet.size();
 	}
 
-	public HashSet getBeanSet() {
+	public HashSet<ToolkitBean> getBeanSet() {
 		return beanSet;
 	}
 
