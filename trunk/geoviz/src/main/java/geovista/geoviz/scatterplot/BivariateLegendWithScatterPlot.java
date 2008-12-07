@@ -44,9 +44,9 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 	 * put your documentation comment here
 	 * 
 	 * @param String
-	 *            attributeX
+	 *            attributeXName
 	 * @param String
-	 *            attributeY
+	 *            attributeYName
 	 * @param double[]
 	 *            dataX
 	 * @param double[]
@@ -58,8 +58,8 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 			int[] dataIndices, boolean axisOn, Color c) {
 		super();
 		this.dataObject = dataObject;
-		attributeArrays = (String[]) dataObject[0];
-		int len = attributeArrays.length;
+		attributeArrayNames = (String[]) dataObject[0];
+		int len = attributeArrayNames.length;
 		if (dataObject[len + 1] == null) {
 			observNames = null;
 		} else {
@@ -164,7 +164,7 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 		pointSize = (size < 360) ? size / 60 : 6;
 		pointSize = (pointSize < 3) ? 3 : pointSize;
 		if (logger.isLoggable(Level.FINEST)) {
-			logger.finest("attribute equal? " + attributeX.equals(attributeY));
+			logger.finest("attribute equal? " + attributeXName.equals(attributeYName));
 		}
 		int len = dataArrayX.length();
 		// draw color background
@@ -696,13 +696,13 @@ public class BivariateLegendWithScatterPlot extends ScatterPlotWithBackground {
 				resetButton_actionPerformed(e);
 			}
 		});
-		dialog.getContentPane().add(new JLabel((attributeX + " Min")));
+		dialog.getContentPane().add(new JLabel((attributeXName + " Min")));
 		dialog.getContentPane().add(xAxisMinField);
-		dialog.getContentPane().add(new JLabel((attributeX + " Max")));
+		dialog.getContentPane().add(new JLabel((attributeXName + " Max")));
 		dialog.getContentPane().add(xAxisMaxField);
-		dialog.getContentPane().add(new JLabel((attributeY + " Min")));
+		dialog.getContentPane().add(new JLabel((attributeYName + " Min")));
 		dialog.getContentPane().add(yAxisMinField);
-		dialog.getContentPane().add(new JLabel((attributeY + " Max")));
+		dialog.getContentPane().add(new JLabel((attributeYName + " Max")));
 		dialog.getContentPane().add(yAxisMaxField);
 		dialog.getContentPane().add(actionButton);
 		dialog.getContentPane().add(resetButton);
