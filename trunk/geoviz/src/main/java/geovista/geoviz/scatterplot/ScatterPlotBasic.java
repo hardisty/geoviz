@@ -26,12 +26,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -55,17 +57,25 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.ui.ExcentricLabelClient;
 import geovista.common.ui.ExcentricLabels;
+import geovista.common.ui.VisualSettingsPopupAdapter;
+import geovista.common.ui.VisualSettingsPopupListener;
+import geovista.common.ui.VisualSettingsPopupMenu;
+import geovista.image_blur.image.BoxBlurFilter;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorInterpolator;
 
 public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		MouseListener, MouseMotionListener, ExcentricLabelClient,
-		IndicationListener {
+		IndicationListener, VisualSettingsPopupListener {
+
+	private boolean useSelectionFade = true;
+	private boolean useSelectionBlur = true;
 
 	public static final double AXISSPACEPORTION = 1.0 / 6.0;
 	public static final String COMMAND_POINT_SELECTED = "cmdSel";
 	public static final String COMMAND_DATARANGE_SET = "cmdset";
-	protected final static int RADIUS = 3; // Glyph size
+	protected final static int RADIUS = 5; // Glyph size
 	protected int pointSize = RADIUS;
 	transient protected int plotOriginX;
 	transient protected int plotOriginY;
@@ -73,16 +83,16 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	transient protected int plotEndY;
 	transient protected Object[] dataObject;
 	transient protected DataSetForApps dataSet;
-	transient protected double[][] doubleDataArrays;
+
 	transient protected int[] dataIndices;
 	transient protected double[] dataX;
 	transient protected double[] dataY;
 	transient protected int[] exsint;
 	transient protected int[] whyint;
-	protected String[] attributeArrays;
+	protected String[] attributeArrayNames;
 	protected String[] observNames;
-	transient protected String attributeX;
-	transient protected String attributeY;
+	transient protected String attributeXName;
+	transient protected String attributeYName;
 	transient protected boolean axisOn;
 	transient protected Dimension size;
 	transient protected Color background;
@@ -149,7 +159,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	transient protected double rSquareForSelections;
 	transient protected double yStartPositionSelections;
 	transient protected double yEndPositionSelections;
-	private BufferedImage indicationStamp;
+	private final BufferedImage indicationStamp;
 	private final int stampSize = 80;
 	private transient Image drawingBuff;
 
@@ -164,6 +174,12 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	public ScatterPlotBasic() {
 
 		super();
+
+		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
+		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
+		popMenu.addMouseListener(listener);
+		addMouseListener(listener);
+
 		histogram = new Histogram();
 		isDoubleBuffered();
 		indicationStamp = GradientStamp.makeGradientStamp(stampSize);
@@ -174,51 +190,6 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		initialize();
-	}
-
-	/**
-	 * put your documentation comment here
-	 * 
-	 * @param String
-	 *            attributeX
-	 * @param String
-	 *            attributeY
-	 * @param double[]
-	 *            dataX
-	 * @param double[]
-	 *            dataY
-	 * @param boolean
-	 *            axisOn
-	 * @param boolean
-	 *            plotLine
-	 * @param double
-	 *            slope
-	 * @param double
-	 *            intercept
-	 */
-	public ScatterPlotBasic(Object[] dataObject, int[] dataIndices,
-			boolean axisOn, Color c) {
-		this.dataObject = dataObject;
-		attributeArrays = (String[]) dataObject[0];
-		int len = attributeArrays.length;
-		if (dataObject[len + 1] == null) {
-			observNames = null;
-		} else {
-			observNames = (String[]) dataObject[len + 1];
-		}
-		this.dataIndices = dataIndices;
-		// convert Object array to double arrays.
-		axisDataSetup();
-
-		this.axisOn = axisOn;
-
-		background = c;
-		if (c == Color.black) {
-			foreground = Color.white;
-		} else {
-			foreground = Color.black;
-		}
-
 	}
 
 	/**
@@ -243,9 +214,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		dataSet = data;
 		// XXX need to change this???
 		dataObject = data.getDataSetNumericAndSpatial();
-		attributeArrays = (String[]) dataObject[0];
+		attributeArrayNames = (String[]) dataObject[0];
 
-		int len = attributeArrays.length;
+		int len = attributeArrayNames.length;
 		if (dataObject[len + 1] == null) {
 			observNames = null;
 		} else {
@@ -253,52 +224,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		}
 
 		initExcentricLabels();
-		int nRows = data.getNumObservations();
-		int nColumns = data.getNumberNumericAttributes();
-		double[][] dArrays = new double[nColumns][nRows];
-		Object[] numberArrays = data.getDataSetNumeric();
-		for (int i = 0; i < numberArrays.length; i++) {
-			Object array = numberArrays[i];
-			if (array instanceof double[]) {
-				dArrays[i] = (double[]) array;
-			} else if (array instanceof int[]) {
-				int[] originalData = (int[]) array;
-				double[] newData = new double[originalData.length];
-				for (int j = 0; j < originalData.length; j++) {
-					newData[j] = originalData[j];
-				}
-				dArrays[i] = newData;
-			} else {
-				logger.severe("unexpected array type");
-			}
-
-		}
-		doubleDataArrays = dArrays;
 		initialize();
 		this.repaint();
-	}
-
-	/**
-	 * put your documentation comment here
-	 * 
-	 * @param doubleDataArrays
-	 */
-	public void setDoubleDataArrays(double[][] doubleDataArrays) {
-		this.doubleDataArrays = doubleDataArrays;
-	}
-
-	/**
-	 * Not used in dataObject version.
-	 * 
-	 * @param dataIndices
-	 */
-	public void setDataIndices(int[] dataIndices) {
-		this.dataIndices = dataIndices.clone();
-		dataX = doubleDataArrays[dataIndices[0]];
-		dataY = doubleDataArrays[dataIndices[1]];
-		attributeX = attributeArrays[dataIndices[0]];
-		attributeY = attributeArrays[dataIndices[1]];
-		initialize();
 	}
 
 	/**
@@ -307,7 +234,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 * 
 	 * @param indices
 	 */
-	public void setElementPosition(int[] indices) {
+	public void setDataIndices(int[] indices) {
 		dataIndices = indices;
 		axisDataSetup();
 		initialize();
@@ -317,61 +244,28 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		boolean[] dataBoolean;
 		int[] dataInt;
 		int len = 0;
-		if (dataObject[dataIndices[0]] instanceof double[]) {
-			dataX = (double[]) (dataObject[dataIndices[0]]);
-			len = dataX.length;
-		} else if (dataObject[dataIndices[0]] instanceof int[]) {
-			dataInt = (int[]) dataObject[dataIndices[0]];
-			len = dataInt.length;
-			dataX = new double[len];
-			for (int i = 0; i < len; i++) {
-				dataX[i] = dataInt[i];
-			}
-		} else if (dataObject[dataIndices[0]] instanceof boolean[]) {
-			dataBoolean = (boolean[]) dataObject[dataIndices[0]];
-			len = dataBoolean.length;
-			dataX = new double[len];
-			for (int i = 0; i < len; i++) {
-				if (dataBoolean[i] == true) {
-					dataX[i] = 1;
-				} else {
-					dataX[i] = 0;
-				}
-			}
-		}
-		if (dataObject[dataIndices[1]] instanceof double[]) {
-			dataY = (double[]) dataObject[dataIndices[1]];
-			len = dataY.length;
-		} else if (dataObject[dataIndices[1]] instanceof int[]) {
-			dataInt = (int[]) dataObject[dataIndices[1]];
-			len = dataInt.length;
-			dataY = new double[len];
-			for (int i = 0; i < len; i++) {
-				dataY[i] = dataInt[i];
-			}
-		} else if (dataObject[dataIndices[1]] instanceof boolean[]) {
-			dataBoolean = (boolean[]) dataObject[dataIndices[1]];
-			len = dataBoolean.length;
-			dataY = new double[len];
-			for (int i = 0; i < len; i++) {
-				if (dataBoolean[i] == true) {
-					dataY[i] = 1;
-				} else {
-					dataY[i] = 0;
-				}
-			}
-		}
-		attributeX = attributeArrays[dataIndices[0] - 1]; // Minus 1
-		// because
-		// dataObject[0]
-		// is attribute
-		// names.
-		attributeY = attributeArrays[dataIndices[1] - 1]; // and real data
-		// begin from
-		// dataObject[1].
+		dataX = dataSet.getNumericDataAsDouble(dataIndices[0]);
+		len = dataX.length;
+		dataY = dataSet.getNumericDataAsDouble(dataIndices[1]);
+
+		attributeXName = attributeArrayNames[dataIndices[0]];
+		attributeYName = attributeArrayNames[dataIndices[1]];
 		selections = new int[len];
 		exsint = new int[len];
 		whyint = new int[len];
+		if (dataX == null) {
+			return;
+		}
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("*************");
+			logger.info("Data 0 = " + dataIndices[0]);
+			logger.info("X var = " + attributeXName);
+			logger.info("X1 = " + dataX[0]);
+			logger.info("Data 1 = " + dataIndices[1]);
+			logger.info("y var = " + attributeYName);
+			logger.info("y1 = " + dataY[0]);
+			logger.info("*************");
+		}
 	}
 
 	/**
@@ -386,10 +280,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	/**
 	 * put your documentation comment here
 	 * 
-	 * @param attributeArrays
+	 * @param attributeArrayNames
 	 */
 	public void setAttributeArrays(String[] attributeArrays) {
-		this.attributeArrays = attributeArrays;
+		attributeArrayNames = attributeArrays;
 	}
 
 	/**
@@ -415,11 +309,11 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	}
 
 	public void setAttributeX(String attributeX) {
-		this.attributeX = attributeX;
+		attributeXName = attributeX;
 	}
 
 	public void setAttributeY(String attributeY) {
-		this.attributeY = attributeY;
+		attributeYName = attributeY;
 	}
 
 	public void setData(double[] dataX, double[] dataY) {
@@ -427,6 +321,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		this.dataY = dataY;
 		int len = dataX.length;
 		selections = new int[len];
+		for (int i : selections) {
+			selections[i] = 1;
+		}
 		exsint = new int[len];
 		whyint = new int[len];
 		if ((drawingBuff == null) && (getWidth() > 0) && (getHeight() > 0)) {
@@ -574,7 +471,11 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			yAxisExtents[0] = dataArrayY.getExtent()[0];
 			yAxisExtents[1] = dataArrayY.getExtent()[1];
 		}
-
+		if (dataIndices[0] == dataIndices[1]) {
+			histogram.setSize(this.getSize());
+			histogram.setVariableName(attributeXName);
+			histogram.setData(dataX);
+		}
 		size = this.getSize();
 
 		setBackground(background);
@@ -632,11 +533,42 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		g.setColor(foreground);
 		paintBorder(g);
 
+		if (useSelectionBlur) {
+			paintOnlyDeselected(g2);
+
+			// drawSlections(g, pointColors, dataArrayX.length());
+			// g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			BoxBlurFilter filter = new BoxBlurFilter();
+			filter.setHRadius(2);
+			filter.setVRadius(2);
+			filter.setIterations(2);
+			// maybe we could eliminate the use of the extra buffer?
+			// we could use the panel itself as one drawing surface
+			// and the drawingBuff as the other.
+
+			// OK, new theory. Grabbing bufferedimages this often is causing
+			// problems
+			// so we cache.
+			BufferedImage blurBuff = new BufferedImage(drawingBuff
+					.getWidth(this), drawingBuff.getHeight(this),
+					BufferedImage.TYPE_INT_ARGB);
+			// VolatileImage blurBuff=
+			// this.getGraphicsConfiguration().createCompatibleVolatileImage(this.drawingBuff.getWidth(this),
+			// this.drawingBuff.getHeight(this));
+			blurBuff.getGraphics().drawImage(drawingBuff, 0, 0, this);
+			filter.filter(blurBuff, blurBuff);
+			g2.drawImage(blurBuff, null, 0, 0);
+
+			paintOnlySelected(g2);
+
+		} else {
+			paintOnlyDeselected(g2);
+			paintOnlySelected(g2);
+		}
+
 		if (axisOn) {
 			drawAxis(g);
 		}
-
-		drawPlot(g);
 
 		if (exLabels != null && axisOn == true) {
 			setToolTipText("");
@@ -652,7 +584,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 				logger.finest("in scatterplotbasic, going to paint line.");
 			}
 
-			if (dataIndices[0] != dataIndices[1] && regressionClass != null) {
+			if (dataIndices != null && dataIndices[0] != dataIndices[1]
+					&& regressionClass != null) {
 				if (pointSelected == true && plotLineForSelections) {
 					g.setColor(Color.gray);
 				} else {
@@ -664,7 +597,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		}
 
 		if (plotLineForSelections) {
-			if (dataIndices[0] != dataIndices[1] && regressionClass != null) {
+			if (dataIndices != null && dataIndices[0] != dataIndices[1]
+					&& regressionClass != null) {
 				if (pointSelected == true) {
 					drawCorrelationValue(g, correlationForSelections,
 							rSquareForSelections);
@@ -672,6 +606,60 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 					drawPlotLine(g, yStartPositionSelections,
 							yEndPositionSelections);
 				}
+			}
+
+		}
+	}
+
+	private void paintOnlySelected(Graphics2D g2) {
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+
+		if (dataArrayX == null) {
+			return;
+		}
+		if (selections.length == 0) {
+			selections = new int[dataArrayX.length()];
+			for (int i : selections) {
+				selections[i] = 1;
+			}
+		}
+		for (int i = 0; i < dataArrayX.length(); i++) {
+			if (selections[i] == 1) {
+				Color drawColor = pointColors[i];
+
+				g2.setColor(drawColor);
+				g2.fillOval(exsint[i] - 2, whyint[i] - 2, pointSize, pointSize);
+			}
+
+		}
+	}
+
+	private void paintOnlyDeselected(Graphics2D g2) {
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_OFF);
+		Color colorBlur = new Color(248, 248, 248, 255);// half grey
+		if (dataArrayX == null || pointColors == null) {
+			return;
+		}
+		if (selections.length == 0) {
+			selections = new int[dataArrayX.length()];
+			for (int i : selections) {
+				selections[i] = 1;
+			}
+		}
+		if (pointColors.length != dataArrayX.length()) {
+			makeColors();
+		}
+		for (int i = 0; i < dataArrayX.length(); i++) {
+			if (selections[i] == 0) {
+				Color drawColor = pointColors[i];
+				if (useSelectionFade) {
+					drawColor = ColorInterpolator.mixColorsRGB(colorBlur,
+							drawColor);
+				}
+				g2.setColor(drawColor);
+				g2.fillOval(exsint[i] - 2, whyint[i] - 2, pointSize, pointSize);
 			}
 
 		}
@@ -740,7 +728,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		if (dataIndices[0] == dataIndices[1]) {
 			// draw histogram. need to move to matrices.
 			histogram.setAxisOn(false);
-			histogram.setVariableName(attributeX);
+			histogram.setVariableName(attributeXName);
 			histogram.setData(dataX);
 			histogram.setXAxisExtents(xAxisExtents);
 			histogram.setBackground(background);
@@ -759,10 +747,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			Font font = new Font("", Font.PLAIN, size / 8);
 			g.setFont(font);
 			/*
-			 * if (attributeX.length()>12){ g.drawString(attributeX, 2,
-			 * plotHeight/2); }else if (attributeX.length()<=7){
-			 * g.drawString(attributeX, plotWidth/4, plotHeight/2); }else {
-			 * g.drawString(attributeX, plotWidth/8, plotHeight/2); }
+			 * if (attributeXName.length()>12){ g.drawString(attributeXName, 2,
+			 * plotHeight/2); }else if (attributeXName.length()<=7){
+			 * g.drawString(attributeXName, plotWidth/4, plotHeight/2); }else {
+			 * g.drawString(attributeXName, plotWidth/8, plotHeight/2); }
 			 */
 
 			// font.this.getSize() = (int)plotWidth/12;
@@ -844,7 +832,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 				// pointSize);
 			}
 		}
-		if (pointSelected != false) {
+		if (pointSelected) {
 			for (int i = 0; i < len; i++) {
 				g.setColor(selectionColor);
 				if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
@@ -871,6 +859,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 * @param g
 	 */
 	protected void drawAxis(Graphics g) {
+		if (dataArrayY == null) {
+			return;
+		}
 		int plotWidth, plotHeight;
 		plotWidth = getWidth();
 		plotHeight = getHeight();
@@ -969,15 +960,15 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			font = new Font("", Font.PLAIN, fontSize + 3);
 			g.setFont(font);
 			// draw X axis attribute string
-			g.drawString(attributeX, plotOriginX + (plotEndX - plotOriginX) / 2
-					- plotWidth / 12, plotOriginY + plotHeight / 6 - 5);
+			g.drawString(attributeXName, plotOriginX + (plotEndX - plotOriginX)
+					/ 2 - plotWidth / 12, plotOriginY + plotHeight / 6 - 5);
 			// draw Y axis attribute string. Need rotation for drawing the
 			// string vertically.
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.rotate(-Math.PI / 2, plotOriginX - plotWidth / 9, plotOriginY
 					- (plotOriginY - plotEndY) / 3);
-			g2d.drawString(attributeY, plotOriginX - plotWidth / 9, plotOriginY
-					- (plotOriginY - plotEndY) / 3);
+			g2d.drawString(attributeYName, plotOriginX - plotWidth / 9,
+					plotOriginY - (plotOriginY - plotEndY) / 3);
 			g2d.rotate(+Math.PI / 2, plotOriginX - plotWidth / 9, plotOriginY
 					- (plotOriginY - plotEndY) / 3);
 		}
@@ -1002,6 +993,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	}
 
 	public void setSelections(int[] selectedObservations) {
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("sp sel " + Arrays.toString(selectedObservations));
+		}
 		if (selections == null || selectedObservations == null) {
 			return;
 		}
@@ -1012,6 +1006,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			for (int i = 0; i < selectedObservations.length; i++) {
 				selections[selectedObservations[i]] = -1;
 			}
+
 		} else {
 			selections = selectedObservations;
 		}
@@ -1131,10 +1126,12 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 
 		setVisibleAxis(axisOn);
 		if (dataArrayX == null) {
+			logger.info("ScatterPlotBasic null array");
 			return;
 		}
 		int len = dataArrayX.length();
 		if (len != dataArrayY.length()) {
+			logger.info("ScatterPlotBasic handed arrays of unequal length");
 			return;
 		}
 		// get positions on screen
@@ -1308,16 +1305,21 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 				// j++;
 			}
 		}
-		int j = 0;
+		int hitCount = 0;
+
 		for (int element : selections) {
 			if (element == 1) {
-				j++;
+				hitCount++;
 			}
 		}
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("hit count = " + hitCount + ", pointSelected = "
+					+ pointSelected);
+		}
 
-		if (j != 0) {
-			selectedDataX = new double[j];
-			selectedDataY = new double[j];
+		if (hitCount != 0) {
+			selectedDataX = new double[hitCount];
+			selectedDataY = new double[hitCount];
 			int selIndex = 0;
 			for (int i = 0; i < dataX.length; i++) {
 				if (selections[i] == 1) {
@@ -1333,6 +1335,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			setUpRegressionLine(slopeForSelections, interceptForSelections,
 					false);
 		} else {
+			for (int i = 0; i < selections.length; i++) {
+				selections[i] = 1;
+			}
+			hitCount = selections.length;
 			setVisiblePlotLine(dataX, dataY, true);
 		}
 		selectWidth = 0;
@@ -1418,12 +1424,12 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		}
 
 		int id = findCoveredDataId(e.getX(), e.getY());
-		if (id >= 0) {
-			setIndication(id);
-			this.repaint();
-			// fire indication event
-			fireIndicationChanged(id);
-		}
+		// if (id >= 0) {
+		setIndication(id);
+		this.repaint();
+		// fire indication event
+		fireIndicationChanged(id);
+		// }
 
 	}
 
@@ -1491,7 +1497,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 				detailSP = (ScatterPlotBasic) detailPlot.newInstance();
 				detailSP.setDataSet(dataSet);
 				detailSP.setAxisOn(true);
-				detailSP.setElementPosition(dataIndices);
+				detailSP.setDataIndices(dataIndices);
 
 				dlgSP = new JFrame("Detailed Scatter Plot");
 				dlgSP.setLocation(300, 300);
@@ -1554,7 +1560,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 
 		} else {
 			Histogram histogram = new Histogram();
-			histogram.setVariableName(attributeX);
+			histogram.setVariableName(attributeXName);
 			histogram.setData(dataX);
 			// histogram.setSelections(this.selections);
 			histogram.setBackground(background);
@@ -1682,8 +1688,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 				s = s + "Name = " + observNames[arrayIndex] + "<br>";
 			}
 
-			s = s + attributeX + " = " + xVal + "<br>" + attributeY + " = "
-					+ yVal + "</html>";
+			s = s + attributeXName + " = " + xVal + "<br>" + attributeYName
+					+ " = " + yVal + "</html>";
 
 			setToolTipText(s);
 		} // end if
@@ -1737,13 +1743,13 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			}
 		});
 		// dialog.getContentPane().add(new JLabel("X Range Min:"));
-		dialog.getContentPane().add(new JLabel((attributeX + " Min")));
+		dialog.getContentPane().add(new JLabel((attributeXName + " Min")));
 		dialog.getContentPane().add(xAxisMinField);
-		dialog.getContentPane().add(new JLabel((attributeX + " Max")));
+		dialog.getContentPane().add(new JLabel((attributeXName + " Max")));
 		dialog.getContentPane().add(xAxisMaxField);
-		dialog.getContentPane().add(new JLabel((attributeY + " Min")));
+		dialog.getContentPane().add(new JLabel((attributeYName + " Min")));
 		dialog.getContentPane().add(yAxisMinField);
-		dialog.getContentPane().add(new JLabel((attributeY + " Max")));
+		dialog.getContentPane().add(new JLabel((attributeYName + " Max")));
 		dialog.getContentPane().add(yAxisMaxField);
 		dialog.getContentPane().add(resetButton);
 		dialog.getContentPane().add(actionButton);
@@ -1763,7 +1769,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 */
 	protected void maybeShowPopup(MouseEvent e) {
 		{
-			getPopup().show(e.getComponent(), e.getX(), e.getY());
+
+			// getPopup().show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
 
@@ -2078,6 +2085,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		} else {
 			slopeTitle = "Cor: " + Double.toString(correlation);
 		}
+		// XXX until it's fixed
+		slopeTitle = "";
 
 		if ((Double.toString(rSquare)).length() > 7) {
 			rSquareTitle = "rSquare: "
@@ -2157,6 +2166,53 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 
 	public void setPopup(JPopupMenu popup) {
 		this.popup = popup;
+	}
+
+	public Color getIndicationColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isSelectionBlur() {
+		return useSelectionBlur;
+	}
+
+	public boolean isSelectionFade() {
+		return useSelectionFade;
+	}
+
+	public void setIndicationColor(Color indColor) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		if (useSelectionBlur != selBlur) {
+			useSelectionBlur = selBlur;
+			paintDrawingBuff();
+			this.repaint();
+		}
+
+	}
+
+	public void useSelectionFade(boolean selFade) {
+		if (useSelectionFade != selFade) {
+			useSelectionFade = selFade;
+			paintDrawingBuff();
+			this.repaint();
+		}
+
+	}
+
+	public void makeColors() {
+		if (dataX != null && dataY != null) {
+			pointColors = bivarColorClasser.symbolize(dataX, dataY);
+		}
 	}
 
 }
