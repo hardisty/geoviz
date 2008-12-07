@@ -6,7 +6,7 @@
     1. conotain cateogries for only one dimension (variable). That is, the classification is made independently only on the variable
     2. contain categories for multiple dimensions (variables). That is, the classification is made based on these variables.
  * @author: yunping liu
- * @date: Dec 7, 2004$
+ * @dates: Dec 7, 2004$
  * 
  */
 package geovista.common.classification;
