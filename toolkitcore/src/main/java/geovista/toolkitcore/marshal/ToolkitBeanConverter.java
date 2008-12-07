@@ -1,5 +1,8 @@
 package geovista.toolkitcore.marshal;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JInternalFrame;
 
 import com.thoughtworks.xstream.converters.Converter;
@@ -11,6 +14,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import geovista.toolkitcore.ToolkitBean;
 
 public class ToolkitBeanConverter implements Converter {
+	protected final static Logger logger = Logger
+			.getLogger(ToolkitBeanConverter.class.getName());
 
 	public ToolkitBeanConverter() {
 
@@ -62,7 +67,10 @@ public class ToolkitBeanConverter implements Converter {
 
 			else if ("objectClass".equals(reader.getNodeName())) {
 				className = (String) context.convertAnother(bean, String.class);
-				System.out.println(className);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest(className);
+				}
+
 				// originalBean = GeoVizToolkit.makeObject(className.trim());
 			}
 
