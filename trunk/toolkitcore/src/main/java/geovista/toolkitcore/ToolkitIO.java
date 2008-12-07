@@ -61,17 +61,21 @@ import geovista.toolkitcore.marshal.Marshaler;
 public class ToolkitIO {
 	protected final static Logger logger = Logger.getLogger(ToolkitIO.class
 			.getName());
-	public static final int ACTION_OPEN = 0;
-	public static final int ACTION_SAVE = 1;
 
-	public static final int FILE_TYPE_LAYOUT = 0;
-	public static final int FILE_TYPE_SHAPEFILE = 1;
-	public static final int FILE_TYPE_SEERSTAT = 2;
+	public enum Action {
+		OPEN, SAVE
+	};
 
+	public enum FileType {
+		LAYOUT, SHAPEFILE, SEERSTAT, CSV, XLS, GVT
+	};
+
+	// we need to keep these as strings to avoid breaking existing clients
 	private static String LAYOUT_DIR = "LastGoodLayoutDirectory";
 	private static String SHAPEFILE_DIR = "LastGoodFileDirectory";
 	private static String IMAGE_DIR = "LastGoodImageDirectory";
 	private static String SEERSTAT_DIR = "LastGoodSeerStatDirectory";
+	private static String CSV_DIR = "LastGoodCSVDirectory";
 	public static String dataSetPathFromXML = " ";
 
 	public static void saveVizStateToFile(VizState state) {
@@ -123,7 +127,8 @@ public class ToolkitIO {
 
 	}
 
-	public static String getFileName(Component parent, int action, int fileType) {
+	public static String getFileName(Component parent, Action action,
+			FileType fileType) {
 		logger.info("in get file name method");
 		Preferences gvPrefs = Preferences
 				.userNodeForPackage(ToolkitBeanSet.class);
@@ -137,26 +142,29 @@ public class ToolkitIO {
 			// we want to get the last good directory of the type we are looking
 			// for
 			logger.info("getting defaults");
-			if (fileType == ToolkitIO.FILE_TYPE_LAYOUT) {
+			if (fileType == ToolkitIO.FileType.LAYOUT) {
 				defaultDir = gvPrefs.get(ToolkitIO.LAYOUT_DIR, "");
 				fileFilter = new MyFileFilter("xml");
-			} else if (fileType == ToolkitIO.FILE_TYPE_SHAPEFILE) {
+			} else if (fileType == ToolkitIO.FileType.SHAPEFILE) {
 				defaultDir = gvPrefs.get(ToolkitIO.SHAPEFILE_DIR, "");
 				fileFilter = new MyFileFilter(new String[] { "shp", "dbf",
 						"csv" });
-			} else if (fileType == ToolkitIO.FILE_TYPE_SEERSTAT) {
+			} else if (fileType == ToolkitIO.FileType.SEERSTAT) {
 				defaultDir = gvPrefs.get(ToolkitIO.SEERSTAT_DIR, "");
 				fileFilter = new MyFileFilter(new String[] { "dic" });
+			} else if (fileType == FileType.CSV) {
+				defaultDir = gvPrefs.get(ToolkitIO.CSV_DIR, "");
+				fileFilter = new MyFileFilter(new String[] { "csv" });
 			}
 
 			JFileChooser fileChooser = new JFileChooser(defaultDir);
 			fileChooser.setFileFilter(fileFilter);
 			int returnVal = JFileChooser.CANCEL_OPTION;
-			if (action == ToolkitIO.ACTION_OPEN) {
+			if (action == ToolkitIO.Action.OPEN) {
 				logger.info("about to show open dialog");
 				returnVal = fileChooser.showOpenDialog(parent);
 
-			} else if (action == ToolkitIO.ACTION_SAVE) {
+			} else if (action == ToolkitIO.Action.SAVE) {
 				logger.info("about to show save dialog");
 				returnVal = fileChooser.showSaveDialog(parent);
 				if (returnVal == JFileChooser.CANCEL_OPTION) {
@@ -193,11 +201,11 @@ public class ToolkitIO {
 				logger.finest("path = " + path);
 				logger.finest("absolutePath = " + file.getAbsolutePath());
 
-				if (fileType == ToolkitIO.FILE_TYPE_LAYOUT) {
+				if (fileType == ToolkitIO.FileType.LAYOUT) {
 					gvPrefs.put(ToolkitIO.LAYOUT_DIR, path);
-				} else if (fileType == ToolkitIO.FILE_TYPE_SHAPEFILE) {
+				} else if (fileType == ToolkitIO.FileType.SHAPEFILE) {
 					gvPrefs.put(ToolkitIO.SHAPEFILE_DIR, path);
-				} else if (fileType == ToolkitIO.FILE_TYPE_SEERSTAT) {
+				} else if (fileType == ToolkitIO.FileType.SEERSTAT) {
 					gvPrefs.put(ToolkitIO.SEERSTAT_DIR, path);
 				}
 			}
@@ -214,7 +222,7 @@ public class ToolkitIO {
 	public static void writeLayout(String dataSetFullName, String xml,
 			Component parent) {
 		String xmlFullName = ToolkitIO.getFileName(parent,
-				ToolkitIO.ACTION_SAVE, ToolkitIO.FILE_TYPE_LAYOUT);
+				ToolkitIO.Action.SAVE, ToolkitIO.FileType.LAYOUT);
 		if (xmlFullName == null) {
 			return;
 		}
@@ -279,7 +287,7 @@ public class ToolkitIO {
 	}
 
 	public static VizState openDefaultLayout() {
-		String xmlName = "default";
+		String xmlName = "anthony";
 
 		return getVizStateFromResource(xmlName);
 	}
@@ -294,11 +302,17 @@ public class ToolkitIO {
 			ex.printStackTrace();
 		}
 		String xml = readCharStream(new InputStreamReader(inStream));
-		logger.info("getting mashaller");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("getting mashaller");
+		}
 		Marshaler marsh = Marshaler.INSTANCE;
-		logger.info("about to instantiate VizState");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("about to instantiate VizState");
+		}
 		VizState state = (VizState) marsh.fromXML(xml);
-		logger.info("instantiated VizState");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("instantiated VizState");
+		}
 		return state;
 	}
 
@@ -317,11 +331,17 @@ public class ToolkitIO {
 		if (xml == null) {
 			return null;
 		}
-		logger.info("getting mashaller");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("getting mashaller");
+		}
 		Marshaler marsh = Marshaler.INSTANCE;
-		logger.info("about to instantiate VizState");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("about to instantiate VizState");
+		}
 		VizState state = (VizState) marsh.fromXML(xml);
-		logger.info("instantiated VizState");
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.info("instantiated VizState");
+		}
 		return state;
 
 	}
@@ -329,7 +349,7 @@ public class ToolkitIO {
 	public static String makeVizStateXML(Component parent) {
 
 		String xmlFullName = ToolkitIO.getFileName(parent,
-				ToolkitIO.ACTION_OPEN, ToolkitIO.FILE_TYPE_LAYOUT);
+				ToolkitIO.Action.OPEN, ToolkitIO.FileType.LAYOUT);
 		if (xmlFullName == null) {
 			return null;
 		}
@@ -411,8 +431,7 @@ public class ToolkitIO {
 	 * nod.getNodeValue()); IIOMetadataNode iioNod = (IIOMetadataNode) nod;
 	 * logger.finest("new iiomnod comment " + iioNod.getAttribute("Comment")); }
 	 * logger.finest("***"); logger.finest("new root comment " +
-	 * newRoot.getAttribute("Comment")); logger.finest("***"); System.out
-	 * .println("new root text content " + root.getTextContent());
+	 * newRoot.getAttribute("Comment")); logger.finest("***");
 	 * logger.finest("***"); logger.finest("new root userObject " +
 	 * root.getUserObject()); } catch (Exception e) { // TODO Auto-generated
 	 * catch block e.printStackTrace(); } // Set the output stream, write the
