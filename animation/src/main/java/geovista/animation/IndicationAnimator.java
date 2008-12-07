@@ -213,11 +213,7 @@ public class IndicationAnimator extends JPanel implements ActionListener,
 		classPick.setDataSet(data);
 		classPick.addActionListener(this);
 
-		obs = new ClassedObs[data.getNumObservations()];
-		for (int i = 0; i < obs.length; i++) {
-			obs[i] = new ClassedObs();
-			obs[i].index = i;
-		}
+		initObs();
 		classPick.fireClassificationChanged();
 		subspace = new int[data.getNumberNumericAttributes()];
 		varNames = data.getAttributeNamesNumeric();
@@ -226,11 +222,25 @@ public class IndicationAnimator extends JPanel implements ActionListener,
 		}
 	}
 
+	private void initObs() {
+		obs = new ClassedObs[data.getNumObservations()];
+		for (int i = 0; i < obs.length; i++) {
+			obs[i] = new ClassedObs();
+			obs[i].index = i;
+		}
+	}
+
 	public void classificationChanged(ClassificationEvent e) {
 		classes = e.getClassification();
 		if (e.getSource() == classPick) {
 			values = data.getNumericDataAsDouble(classPick
 					.getCurrVariableIndex());
+			if (classes.length != values.length) {
+				return;
+			}
+			if (obs.length != values.length) {
+				initObs();
+			}
 			for (int i = 0; i < obs.length; i++) {
 				int index = obs[i].index;
 				obs[i].classed = classes[index];
