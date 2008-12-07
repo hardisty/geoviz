@@ -38,6 +38,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -90,15 +91,15 @@ import geovista.matrix.MapScatterplotTreemapMatrix;
 import geovista.matrix.MultiplotMatrix;
 import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
-import geovista.readers.example.GeoDataGeneralizedStates;
+import geovista.readers.example.GeoDataAnthonyElection;
 import geovista.readers.example.GeoDataUSCounties;
+import geovista.readers.example.GoogleFluDataReader;
 import geovista.readers.seerstat.SeerStatReader;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
-import geovista.satscan.SaTScan;
+import geovista.satscan.Proclude;
 import geovista.sound.SonicClassifier;
 import geovista.toolkitcore.GvDesktopPane.FrameListener;
-import geovista.toolkitcore.data.GeoDataCartogram;
 import geovista.toolkitcore.data.GeoDataPennaPCA;
 import geovista.toolkitcore.data.GeoDataSCarolina;
 import geovista.toolkitcore.data.GeoDataSCarolinaCities;
@@ -140,19 +141,24 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	CoordinationManager coord;
 	DataSetForApps dataSet;
 	Vector<DataSetForApps> backgroundDataSets;
-	JMenuBar jMenuBar1;
+	JMenuBar menuBar;
 	JMenu menuFile;
 	JMenuItem menuItemLoadShp;
 
 	JMenu menuAddTool;
 	JMenuItem menuItemLoadStates;
-	JMenuItem menuItemLoadSC;
-	JMenuItem menuItemLoadSCCities;
-	JMenuItem menuItemLoadCartogram;
-	JMenuItem menuItemLoadGTD;
-	JMenuItem menuItemLoadBackgroundShape;
+	JMenuItem menuItemLoadCounty;
+
+	JMenuItem menuItemLoadWorld;
+	JMenuItem menuItemLoadExcel;
 	JMenuItem menuItemLoadSCBackgroundShape;
 	JMenuItem menuItemImportSeerStatData;
+
+	JMenuItem menuItemLoadCsv;
+	JMenuItem menuItemExportData;
+	JMenuItem menuItemExportSelection;
+
+	JMenuItem menuItemExitProgram;
 
 	JMenu menuRemoveTool;
 	JMenuItem menuItemRemoveAllTools;
@@ -161,15 +167,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	JMenuItem menuItemAboutGeoviz;
 	JMenuItem menuItemAboutGeoVista;
 	JMenuItem menuItemHelp;
-	JMenuItem menuItemOpenLayout;
-	JMenuItem menuItemSaveLayout;
+	JMenuItem menuItemOpenProject;
+	JMenuItem menuItemSaveProject;
 	JMenuItem menuItemExit;
-	JMenu menuCollaborate;
-	JMenuItem menuItemEnableCollaboration;
-	JMenuItem menuItemDisableCollaboration;
-	JMenuItem menuItemConnect;
-	JMenuItem menuItemDisconnect;
-	JMenu menuScreenShot;
 	JMenuItem menuItemCopyApplicationToClipboard;
 	JMenuItem menuItemCopySelectedWindowToClipboard;
 	JMenuItem menuItemSaveWholeImageToFile;
@@ -179,7 +179,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	VizState vizState;
 	// how about svg and postscript?
 
-	USCHelp help;
+	GeoVizHelp help;
 
 	boolean useProj;
 
@@ -193,6 +193,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		super();
 
 		vizState = new VizState();
+		init("", false);
 	}
 
 	public GeoVizToolkit(String fileNameIn) {
@@ -209,6 +210,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void initMembers() {
+		// VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
+		// MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
+		// popMenu.addMouseListener(listener);
+		// addMouseListener(listener);
 
 		// collection of classes to add
 		toolMenuList = new ArrayList();
@@ -216,6 +221,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		// Create JDesktopPane to hold the internal frames
 		desktop = new GvDesktopPane();
+		desktop.parentKit = this;
 
 		// addBindings();
 		// managing our layouts
@@ -225,19 +231,23 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		dataCaster = new DataSetBroadcaster();
 		coord = new CoordinationManager();
 
-		jMenuBar1 = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuFile = new JMenu();
 		menuItemLoadShp = new JMenuItem();
 
 		menuAddTool = new JMenu();
 		menuItemLoadStates = new JMenuItem();
-		menuItemLoadSC = new JMenuItem();
-		menuItemLoadSCCities = new JMenuItem();
-		menuItemLoadCartogram = new JMenuItem();
-		menuItemLoadGTD = new JMenuItem();
-		menuItemLoadBackgroundShape = new JMenuItem();
+		menuItemLoadCounty = new JMenuItem();
+		menuItemExitProgram = new JMenuItem();
+		menuItemLoadWorld = new JMenuItem();
+
+		menuItemLoadExcel = new JMenuItem();
 		menuItemLoadSCBackgroundShape = new JMenuItem();
 		menuItemImportSeerStatData = new JMenuItem();
+		menuItemLoadCsv = new JMenuItem();
+		menuItemExportData = new JMenuItem();
+		menuItemExportSelection = new JMenuItem();
+
 		menuRemoveTool = new JMenu();
 		menuItemRemoveAllTools = new JMenuItem();
 		menuAbout = new JMenu();
@@ -245,20 +255,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemAboutGeoviz = new JMenuItem();
 		menuItemAboutGeoVista = new JMenuItem();
 		menuItemHelp = new JMenuItem();
-		menuItemOpenLayout = new JMenuItem();
-		menuItemSaveLayout = new JMenuItem();
+		menuItemOpenProject = new JMenuItem();
+		menuItemSaveProject = new JMenuItem();
 		menuItemExit = new JMenuItem();
-		menuCollaborate = new JMenu();
-		menuItemEnableCollaboration = new JMenuItem();
-		menuItemDisableCollaboration = new JMenuItem();
-		menuItemConnect = new JMenuItem();
-		menuItemDisconnect = new JMenuItem();
-		menuScreenShot = new JMenu();
 		menuItemCopyApplicationToClipboard = new JMenuItem();
 		menuItemCopySelectedWindowToClipboard = new JMenuItem();
 		menuItemSaveWholeImageToFile = new JMenuItem();
 		menuItemSaveSelectedWindowToFile = new JMenuItem();
 		menuItemSaveImageToGEX = new JMenuItem();
+
 	}
 
 	public void init(String fileNameIn, boolean useProj) {
@@ -309,6 +314,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// set.
 		if (vizState.beanSet == null) {
 			VizState state = ToolkitIO.openDefaultLayout();
+			this.useProj = true;
 			setVizState(state);
 		}
 
@@ -349,12 +355,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	public void addExternalBean(Object bean) {
 		coord.addBean(bean);
-		// XXX total hack for demo
+
 		DataSetModifiedBroadcaster localCaster = (DataSetModifiedBroadcaster) bean;
-		DataSetForApps dataSetOut = shpProj.getOutputDataSetForApps();
-		logger.finest("geovizdemo, addBean, dataSetIsNull ="
-				+ (dataSetOut == null));
-		localCaster.setDataSet(dataSetOut);
+
+		localCaster.setDataSet(dataSet);
 	}
 
 	/*
@@ -430,7 +434,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	private ToolkitBean instantiateBean(String className) {
 
 		ToolkitBean newToolkitBean = null;
-		JInternalFrame bInterFrame = null;
 
 		Object newBean = GeoVizToolkit.makeObject(className);
 		FiringBean newFBean = coord.addBean(newBean);
@@ -444,36 +447,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		newToolkitBean = new ToolkitBean(newBean, uniqueName);
 
-		bInterFrame = newToolkitBean.getInternalFrame();
-
-		// ############################################################################//
-		// TODO: replace with something a bit less "by hand"
-		// maybe use the bean's peferredSize if they are a java.awt.Component
-		bInterFrame.setLocation(25 * tBeanSet.size(), 25 * tBeanSet.size());
-
-		int place = className.lastIndexOf(".");
-		int length = className.length();
-		String shortClassName = className.substring(place + 1, length);
-
-		if (shortClassName.equalsIgnoreCase("LinkGraph")) {
-			bInterFrame.setSize(450, 450);
-		} else if (shortClassName.equalsIgnoreCase("StarPlot")) {
-			bInterFrame.setSize(400, 400);
-		} else if (shortClassName.equalsIgnoreCase("SubspaceLinkGraph")) {
-			bInterFrame.setSize(500, 450);
-		} else if (shortClassName.equalsIgnoreCase("TableBrowser")) {
-			bInterFrame.setSize(670, 530);
-		} else if (shortClassName.equalsIgnoreCase("SonicClassifier")) {
-
-			bInterFrame.setSize(350, 100);
-		} else if (shortClassName.equalsIgnoreCase("SelectionAnimator")) {
-			bInterFrame.setSize(885, 100);
-		} else if (shortClassName.equalsIgnoreCase("IndicationAnimator")) {
-			bInterFrame.setSize(780, 100);
-			// ############################################################################//
-
-		}
-		// newToolkitBean.setInternalFrame(bInterFrame);
 		return newToolkitBean;
 	}
 
@@ -483,12 +456,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		coord.removeBean(vizState);
 
 		vizState = newState;
-		// XXX may be a problem when connections can be cusomized by the user
+		// may be a problem when connections can be cusomized by the user
 
 		vizState.listenerList = new EventListenerList();
 		coord.addBean(vizState);
 
 		useProj = vizState.useProj;
+
 		loadData(vizState.dataSource);
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		addToolkitBeanSet(vizState.getBeanSet());
@@ -589,7 +563,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	private void showHelp() {
 		// lazy initialize
 		if (help == null) {
-			help = new USCHelp();
+			help = new GeoVizHelp();
 			help.pack();
 		}
 		boolean haveHelp = false;
@@ -633,30 +607,35 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} else if (e.getSource() == menuItemExit) {
 			// is this too weak? do we need a system exit?
 			setVisible(false);
-		} else if (e.getSource() == menuItemLoadSC) {
-			loadData("SC");
-		} else if (e.getSource() == menuItemLoadSCCities) {
-			loadData("SCCities");
+		} else if (e.getSource() == menuItemLoadCounty) {
+			loadData("County");
+		} else if (e.getSource() == menuItemExitProgram) {
+			logger.info("User quit from menu item, bye!");
+			System.exit(0);
 
 		} else if (e.getSource() == menuItemLoadShp) {
 			openShapefilePicker();
 		} else if (e.getSource() == menuItemLoadStates) {
 			loadData("48States");
-		} else if (e.getSource() == menuItemLoadCartogram) {
-			loadData("Cartogram");
+		} else if (e.getSource() == menuItemLoadWorld) {
+			loadData("World");
 
-		} else if (e.getSource() == menuItemLoadGTD) {
-			loadData("GTD");
-
-		} else if (e.getSource() == menuItemLoadBackgroundShape) {
-			openBackgroundShapeFilePicker();
+		} else if (e.getSource() == menuItemLoadExcel) {
+			openExcelFilePicker();
 		} else if (e.getSource() == menuItemLoadSCBackgroundShape) {
 			loadBackgroundData("SC");
 		} else if (e.getSource() == menuItemImportSeerStatData) {
 			openSeerStatFilePicker();
+		} else if (e.getSource() == menuItemLoadCsv) {
+			openCsvFilePicker();
+
+		} else if (e.getSource() == menuItemExportData) {
+
+		} else if (e.getSource() == menuItemExportSelection) {
+
 		}
 
-		else if (e.getSource() == menuItemOpenLayout) {
+		else if (e.getSource() == menuItemOpenProject) {
 			VizState state = ToolkitIO.getVizState(this);
 
 			if (state == null) {
@@ -667,7 +646,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			setVizState(state);
 			logger.info("set VizState");
 
-		} else if (e.getSource() == menuItemSaveLayout) {
+		} else if (e.getSource() == menuItemSaveProject) {
 			Marshaler marsh = Marshaler.INSTANCE;
 			String xml = marsh.toXML(getVizState());
 			if (logger.isLoggable(Level.FINEST)) {
@@ -718,13 +697,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		}
 
-		else if (e.getSource() == menuItemDisableCollaboration) {
-
-		} else if (e.getSource() == menuItemConnect) {
-
-		} else if (e.getSource() == menuItemDisconnect) {
-
-		}
 	}
 
 	private void createAndAddBean(ActionEvent e) {
@@ -743,6 +715,16 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		Object[] newDataSet = createData(name);
 		DataSetForApps auxData = new DataSetForApps(newDataSet);
 		dataCaster.fireAuxiliaryDataSet(auxData);
+	}
+
+	public void setDataSet(DataSetForApps dataSet) {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		this.repaint();
+
+		dataCaster.setAndFireDataSet(dataSet);
+
+		setCursor(Cursor.getDefaultCursor());
+
 	}
 
 	public void loadData(String name) {
@@ -780,8 +762,17 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 		Object[] newDataSet = null;
 		if (name.equals("48States")) {
-			GeoDataGeneralizedStates statesData = new GeoDataGeneralizedStates();
-			newDataSet = statesData.getDataSet();
+			// GeoDataGeneralizedStates statesData = new
+			// GeoDataGeneralizedStates();
+
+			GoogleFluDataReader statesData = new GoogleFluDataReader();
+			ShapeFileProjection proj = new ShapeFileProjection();
+			proj.setInputDataSetForApps(statesData.getDataForApps());
+			// newDataSet = statesData.getDataForApps().getDataObjectOriginal();
+
+			// proj.setInputDataSet(countyData.getDataSet());
+
+			newDataSet = proj.getOutputDataSet();
 
 		} else if (name.equals("NZ")) {
 			String className = "geovista.largedata.GeoDataNZ";
@@ -802,9 +793,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			GeoDataSCarolinaCities carolinaData = new GeoDataSCarolinaCities();
 			newDataSet = carolinaData.getDataSet();
 
-		} else if (name.equals("Cartogram")) {
-			GeoDataCartogram cartogramData = new GeoDataCartogram();
-			newDataSet = cartogramData.getDataSet();
+		} else if (name.equals("World")) {
+			// GeoDataWorld WorldData = new GeoDataWorld();
+			// newDataSet = WorldData.getDataSet();
 
 		} else if (name.equals("nctc")) {
 			// GeoDataNCTC cartogramData = new GeoDataNCTC();
@@ -813,6 +804,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} else if (name.equals("USCounties")) {
 			GeoDataUSCounties countyData = new GeoDataUSCounties();
 			newDataSet = countyData.getDataSet();
+
+		} else if (name.equals("2008 Presidential Election")) {
+			GeoDataAnthonyElection countyData = new GeoDataAnthonyElection();
+			ShapeFileProjection proj = new ShapeFileProjection();
+			proj.setInputDataSet(countyData.getDataSet());
+
+			newDataSet = proj.getOutputDataSet();
 
 		}
 
@@ -823,7 +821,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 
 		else if (name.equals("PennaPCA")) {
-			// XXX hack for testing
+			// vestigial, please remove when appropriate
 			GeoDataPennaPCA pennaPCAData = new GeoDataPennaPCA();
 			// GeoDataGeneralizedStates pennaPCAData = new
 			// GeoDataGeneralizedStates();
@@ -858,7 +856,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			nigerClass = Class.forName(className);
 			nigerInstance = nigerClass.newInstance();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			logger.severe("could not find geoData from class " + className);
 			e.printStackTrace();
 		}
 		GeoDataSource dataSource = (GeoDataSource) nigerInstance;
@@ -869,17 +867,17 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	private void openShapefilePicker() {
 
-		String fileName = ToolkitIO.getFileName(this, ToolkitIO.ACTION_OPEN,
-				ToolkitIO.FILE_TYPE_SHAPEFILE);
+		String fileName = ToolkitIO.getFileName(this, ToolkitIO.Action.OPEN,
+				ToolkitIO.FileType.SHAPEFILE);
 		if (fileName == null) {
 			return;// user hit cancel
 		}
 		loadData(fileName);
 	}
 
-	private void openBackgroundShapeFilePicker() {
-		String fileName = ToolkitIO.getFileName(this, ToolkitIO.ACTION_OPEN,
-				ToolkitIO.FILE_TYPE_SHAPEFILE);
+	private void openExcelFilePicker() {
+		String fileName = ToolkitIO.getFileName(this, ToolkitIO.Action.OPEN,
+				ToolkitIO.FileType.SHAPEFILE);
 
 		loadBackgroundData(fileName);
 		logger.finest("Background name = " + fileName);
@@ -887,17 +885,30 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void openSeerStatFilePicker() {
-		String fileName = ToolkitIO.getFileName(this, ToolkitIO.ACTION_OPEN,
-				ToolkitIO.FILE_TYPE_SEERSTAT);
+		String fileName = ToolkitIO.getFileName(this, ToolkitIO.Action.OPEN,
+				ToolkitIO.FileType.SEERSTAT);
+		if (fileName == null || fileName.equals("")) {
+			return;
+		}
 		SeerStatReader reader = new SeerStatReader();
 		reader.setDicFileLocation(fileName);
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		this.repaint();
 		dataSet = reader.readFiles();
 		dataCaster.setAndFireDataSet(dataSet);
-		// XXX need to record file location....
 
 		setCursor(Cursor.getDefaultCursor());
+	}
+
+	private void openCsvFilePicker() {
+		String fileName = ToolkitIO.getFileName(this, ToolkitIO.Action.OPEN,
+				ToolkitIO.FileType.CSV);
+		joinCsvData(fileName);
+
+	}
+
+	private void joinCsvData(String fileName) {
+
 	}
 
 	/*
@@ -975,26 +986,23 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemAboutGeoVista.addActionListener(this);
 		menuItemAboutGeoviz.addActionListener(this);
 		menuItemExit.addActionListener(this);
-		menuItemLoadSC.addActionListener(this);
-		menuItemLoadSCCities.addActionListener(this);
+		menuItemLoadCounty.addActionListener(this);
+		menuItemExitProgram.addActionListener(this);
 		menuItemLoadShp.addActionListener(this);
-		menuItemLoadCartogram.addActionListener(this);
-		menuItemLoadGTD.addActionListener(this);
-		menuItemLoadBackgroundShape.addActionListener(this);
+		menuItemLoadWorld.addActionListener(this);
+
+		menuItemLoadExcel.addActionListener(this);
 		menuItemLoadSCBackgroundShape.addActionListener(this);
 		menuItemImportSeerStatData.addActionListener(this);
+		menuItemLoadCsv.addActionListener(this);
+		menuItemExportData.addActionListener(this);
+		menuItemExportSelection.addActionListener(this);
+
 		menuItemLoadStates.addActionListener(this);
-		menuItemOpenLayout.addActionListener(this);
-		menuItemSaveLayout.addActionListener(this);
+		menuItemOpenProject.addActionListener(this);
+		menuItemSaveProject.addActionListener(this);
 		menuItemRemoveAllTools.addActionListener(this);
 		menuItemHelp.addActionListener(this);
-		menuItemEnableCollaboration.addActionListener(this);
-		menuItemDisableCollaboration.addActionListener(this);
-		menuItemConnect.addActionListener(this);
-		menuItemDisconnect.addActionListener(this);
-		menuItemDisableCollaboration.setEnabled(false);
-		menuItemConnect.setEnabled(false);
-		menuItemDisconnect.setEnabled(false);
 		menuItemSaveWholeImageToFile.addActionListener(this);
 		menuItemSaveSelectedWindowToFile.addActionListener(this);
 		menuItemSaveImageToGEX.addActionListener(this);
@@ -1004,17 +1012,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// components are organized by dimension of analysis
 		// then by commonality of usage
 
-		// Notepad!!!
-		addToolToMenu(NotePad.class);
-		menuAddTool.addSeparator();
-
-		// data handling components
+		menuAddTool.add(new JLabel(" ~~~~~ Data Handling ~~~~~ "));
 		addToolToMenu(VariablePicker.class);
 		addToolToMenu(TableViewer.class);
 		addToolToMenu(VariableTransformer.class);
 		menuAddTool.addSeparator();
 
-		// univariate data viz
+		menuAddTool.add(new JLabel(" ~~~~~ Univariate Visualization ~~~~~ "));
 		addToolToMenu(SingleHistogram.class);
 		addToolToMenu(GeoMapUni.class);
 		addToolToMenu(SpaceFill.class);
@@ -1022,12 +1026,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(GeoMapCartogram.class);
 		menuAddTool.addSeparator();
 
-		// bivariate data viz
+		menuAddTool.add(new JLabel(" ~~~~~ Bivariate Visualization ~~~~~ "));
 		addToolToMenu(SingleScatterPlot.class);
 		addToolToMenu(GeoMap.class);
 		menuAddTool.addSeparator();
 
-		// multivaraite data viz
+		menuAddTool.add(new JLabel(" ~~~~~ Multivariate Visualization ~~~~~ "));
 		addToolToMenu(LinkGraph.class);
 		addToolToMenu(ParallelPlot.class);
 		addToolToMenu(StarPlot.class);
@@ -1038,12 +1042,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// addToolToMenu(CartogramMatrix.class);
 		menuAddTool.addSeparator();
 
-		// tools that operate on variables
-		addToolToMenu(PCAViz.class);
-		addToolToMenu(SubspaceLinkGraph.class);
-		menuAddTool.addSeparator();
-
-		// matrix tools
+		menuAddTool.add(new JLabel(
+				" ~~~~~ Multiform Matrix Visualization ~~~~~ "));
 		// addToolToMenu(TreeMap.class);
 		addToolToMenu(MapAndScatterplotMatrix.class);
 		addToolToMenu(TreemapAndScatterplotMatrix.class);
@@ -1052,102 +1052,102 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(MultiplotMatrix.class);
 		menuAddTool.addSeparator();
 
-		// dynamic tools
+		menuAddTool.add(new JLabel(" ~~~~~ Dimensional Reduction ~~~~~ "));
+		addToolToMenu(PCAViz.class);
+		addToolToMenu(SubspaceLinkGraph.class);
+		menuAddTool.addSeparator();
+
+		menuAddTool.add(new JLabel(" ~~~~~ Animation and Conditioning ~~~~~ "));
 		addToolToMenu(SelectionAnimator.class);
 		addToolToMenu(IndicationAnimator.class);
 		addToolToMenu(ConditionManager.class);
 		menuAddTool.addSeparator();
 
-		// Spatial analysis tools
+		menuAddTool.add(new JLabel(
+				" ~~~~~ Spatial Analysis and Clustering ~~~~~ "));
 		addToolToMenu(MoranMap.class);
-		// addToolToMenu(MoranMatrix.class);
-		addToolToMenu(SaTScan.class);
-		// addToolToMenu(Proclude.class);
+		addToolToMenu(Proclude.class);
 		menuAddTool.addSeparator();
 
-		// other...
+		menuAddTool.add(new JLabel(" ~~~~~ Collaboration and Text ~~~~~ "));
 		addToolToMenu(GeoJabber.class);
+		addToolToMenu(NotePad.class);
 
 	}
 
 	private void init() throws Exception {
 		desktop.fListener = this;
-		setJMenuBar(jMenuBar1);
+		setJMenuBar(menuBar);
 		menuFile.setText("File");
-		menuItemLoadShp.setText("Load Shapefile from disk");
+		menuItemLoadShp.setText("Load Shapefile");
 		menuAddTool.setText("Add Tool");
 		menuItemLoadStates.setText("Load U.S. State Data");
-		menuItemLoadSC.setText("Load South Carolina County Data");
-		menuItemLoadSCCities.setText("Load South Carolina City Data");
-		menuItemLoadCartogram.setText("Load Population Cartogram");
-		menuItemLoadGTD.setText("Load GTD");
+		menuItemLoadCounty.setText("Load U.S. County Data");
+		menuItemLoadWorld.setText("Load World Country Data");
+
 		menuRemoveTool.setText("Remove Tool");
 		menuAbout.setText("About");
 		menuHelp.setText("Help");
 		menuItemAboutGeoviz.setText("About GeoViz Toolkit");
 		menuItemAboutGeoVista.setText("About GeoVISTA Studio");
 		menuItemHelp.setText("Tutorial");
-		menuItemOpenLayout.setText("Open Layout");
-		menuItemSaveLayout.setText("Save Layout");
-		menuItemLoadBackgroundShape.setText("Load Background Map from disk");
+		menuItemOpenProject.setText("Open Project");
+		menuItemSaveProject.setText("Save Project");
+		menuItemLoadExcel.setText("Load Data Table");
 		menuItemLoadSCBackgroundShape.setText("Load South Carolina Background");
-		menuItemImportSeerStatData.setText("Import Data");
-		menuCollaborate.setText("Remote Collaboration");
-		menuCollaborate.setEnabled(true);// until it works
-		menuItemEnableCollaboration.setText("Enable Collaboration");
-		menuItemDisableCollaboration.setText("Disable Collaboration");
-		menuItemConnect.setText("Connect");
-		menuItemDisconnect.setText("Disconnect");
+		menuItemImportSeerStatData.setText("Load SeerStat Data");
+		menuItemLoadCsv.setText("Load Comma-Delimited (*.csv) Data");
+		menuItemExportData.setText("Export Data Set");
+		menuItemExportSelection.setText("Export Selected Rows and Columns");
+
+		menuItemExitProgram.setText("Exit GeoViz Toolkit");
+
 		menuItemRemoveAllTools.setText("Remove All Tools");
-		menuScreenShot.setText("Save Images");
 		menuItemCopyApplicationToClipboard
 				.setText("Copy image of main window to clipboard");
 		menuItemCopySelectedWindowToClipboard
 				.setText("Copy image of currently selected window to clipboard");
 		menuItemSaveWholeImageToFile
-				.setText("Save image of main window to file");
+				.setText("Export image of main window to file");
 		menuItemSaveSelectedWindowToFile
-				.setText("Save image of currently selected window to file");
+				.setText("Export image of currently selected window to file");
 
 		menuItemSaveImageToGEX
-				.setText("Save image of main window to G-EX Portal");
-		jMenuBar1.add(menuFile);
-		jMenuBar1.add(menuAddTool);
-		jMenuBar1.add(menuRemoveTool);
+				.setText("Export image of main window to G-EX Portal");
 
-		// XXX should be just a bean jMenuBar1.add(menuCollaborate);
-		jMenuBar1.add(menuScreenShot);
-		jMenuBar1.add(menuAbout);
-		jMenuBar1.add(menuHelp);
+		menuBar.add(menuFile);
+		menuBar.add(menuAddTool);
+		menuBar.add(menuRemoveTool);
+		menuBar.add(menuAbout);
+		menuBar.add(menuHelp);
+
 		menuFile.add(menuItemLoadShp);
-		menuFile.add(menuItemLoadStates);
-		menuFile.add(menuItemLoadSC);
-		menuFile.add(menuItemLoadSCCities);
-		menuFile.add(menuItemLoadCartogram);
-		menuFile.add(menuItemLoadGTD);
 		menuFile.addSeparator();
-		menuFile.add(menuItemLoadBackgroundShape);
-		menuFile.add(menuItemLoadSCBackgroundShape);
-
-		menuFile.addSeparator();
+		menuFile.add(menuItemLoadCsv);
+		menuFile.add(menuItemLoadExcel);
 		menuFile.add(menuItemImportSeerStatData);
 		menuFile.addSeparator();
+		menuFile.add(menuItemLoadStates);
+		menuFile.add(menuItemLoadCounty);
 
-		menuFile.add(menuItemOpenLayout);
-		menuFile.add(menuItemSaveLayout);
+		menuFile.add(menuItemLoadWorld);
+
+		menuFile.addSeparator();
+		menuFile.add(menuItemExportData);
+		menuFile.add(menuItemExportSelection);
+		menuFile.addSeparator();
+		menuFile.add(menuItemCopyApplicationToClipboard);
+		menuFile.add(menuItemCopySelectedWindowToClipboard);
+		menuFile.add(menuItemSaveWholeImageToFile);
+		menuFile.add(menuItemSaveSelectedWindowToFile);
+		menuFile.addSeparator();
+		menuFile.add(menuItemSaveImageToGEX);
+		menuFile.addSeparator();
+		menuFile.add(menuItemOpenProject);
+		menuFile.add(menuItemSaveProject);
 		menuFile.addSeparator();
 
-		menuCollaborate.add(menuItemEnableCollaboration);
-		menuCollaborate.add(menuItemDisableCollaboration);
-		menuCollaborate.add(menuItemConnect);
-		menuCollaborate.add(menuItemDisconnect);
-
-		menuScreenShot.add(menuItemCopyApplicationToClipboard);
-		menuScreenShot.add(menuItemCopySelectedWindowToClipboard);
-		menuScreenShot.add(menuItemSaveWholeImageToFile);
-		menuScreenShot.add(menuItemSaveSelectedWindowToFile);
-		menuScreenShot.addSeparator();
-		menuScreenShot.add(menuItemSaveImageToGEX);
+		menuFile.add(menuItemExitProgram);
 
 		menuAbout.add(menuItemAboutGeoviz);
 		menuAbout.add(menuItemAboutGeoVista);
@@ -1243,7 +1243,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		boolean useProj = false;
 		boolean useAux = true;
 		double tolerance = 50;
-		// tolerance = 0.001;
+		tolerance = 0.0;
 		ShapeFileDataReader.tolerance = tolerance;
 		System.setProperty("swing.aatext", "true");
 
@@ -1294,36 +1294,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		app.setPreferredSize(new Dimension(800, 600));
 		app.setMinimumSize(new Dimension(800, 600));
 
-		// GeoVizToolkit app2 = new GeoVizToolkit(fileName, useProj, useAux);
-		// app2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// app.openAllComponents();
-
-		/*
-		 * until we get jts in maven String fileName2 =
-		 * "C:\\data\\grants\\nevac\\crimes\\cri.shp"; fileName2 =
-		 * "C:\\data\\grants\\esda 07\\oe_data\\race1_00.shp"; ShapefileReader
-		 * reader = new ShapefileReader(); DriverProperties dp = new
-		 * DriverProperties(fileName2); FeatureCollection featColl = null;
-		 * 
-		 * try { featColl = reader.read(dp); } catch (IllegalParametersException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); } catch
-		 * (Exception e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 * 
-		 * List<Feature> featList = featColl.getFeatures();
-		 * 
-		 * for (Feature feat : featList) {
-		 * 
-		 * Geometry geom = (Geometry) feat.getAttribute(0);
-		 * //System.out.println(geom.getClass().getName());
-		 * 
-		 * Java2DConverter converter = new Java2DConverter(new Viewport(app
-		 * .getGlassPane())); try { Shape shp = converter.toShape(geom);
-		 * Graphics g = app.desktop.getGraphics(); Graphics2D g2 = (Graphics2D)
-		 * g; g2.setColor(Color.yellow); g2.fill(shp); } catch
-		 * (NoninvertibleTransformException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); } }
-		 */
 	}
 
 	public static void main2(String[] args) {
@@ -1335,7 +1305,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			url = new URL("http://en.wikipedia.org/wiki/Philippines");
 			ep = new JEditorPane(url);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		app.add(ep);
@@ -1350,7 +1320,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		tBean = tBeanSet.getToolkitBean(intFrame);
 		if (tBean == null) {
 			logger.info("selected frame is null, returning first one");
-			tBean = (ToolkitBean) tBeanSet.getBeanSet().iterator().next();
+			tBean = tBeanSet.getBeanSet().iterator().next();
 		}
 
 		logger.info("selected toolkitBean = " + tBean.getUniqueName());
@@ -1367,7 +1337,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	public void selectedFrameChanged(JInternalFrame f) {
 		ToolkitBean tBean = tBeanSet.getToolkitBean(f);
 		if (tBean != null) {
-			logger.info("selected internal frame of :" + tBean.getUniqueName());
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.info("selected internal frame of :"
+						+ tBean.getUniqueName());
+			}
 		}
 		if (tBean != null
 				&& (tBean.getObjectClass().equals(GeoJabber.class.getName()) == false)) {
