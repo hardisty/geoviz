@@ -35,9 +35,9 @@ public class ScatterPlot extends ScatterPlotBasic
 	 * put your documentation comment here
 	 * 
 	 * @param String
-	 *            attributeX
+	 *            attributeXName
 	 * @param String
-	 *            attributeY
+	 *            attributeYName
 	 * @param double[]
 	 *            dataX
 	 * @param double[]
@@ -55,8 +55,8 @@ public class ScatterPlot extends ScatterPlotBasic
 			Color c) {
 		super();
 		this.dataObject = dataObject;
-		attributeArrays = (String[]) dataObject[0];
-		int len = attributeArrays.length;
+		attributeArrayNames = (String[]) dataObject[0];
+		int len = attributeArrayNames.length;
 		if (dataObject[len + 1] == null) {
 			observNames = null;
 		} else {
@@ -111,26 +111,6 @@ public class ScatterPlot extends ScatterPlotBasic
 		}
 
 	}
-
-	// /**
-	// * Draw pot (points) on the screen.
-	// * @param g
-	// */
-	// protected void drawPlot (Graphics g) {
-	// super.drawPlot(g);
-	// if (this.dataIndices[0] != this.dataIndices[1]) {
-	// if (this.multipleSelectionColors != null){
-	// for (int i = 0; i < this.dataX.length; i++) {
-	// if (this.multipleSelectionColors[i] != null){
-	// g.setColor(multipleSelectionColors[i]);
-	// g.drawOval(exsint[i] - 1, whyint[i] - 1, pointSize, pointSize);
-	// g.fillOval(exsint[i] - 1, whyint[i] -1 , pointSize, pointSize);
-	// }
-	// }
-	// }
-	//
-	// }
-	// }
 
 	@Override
 	protected void drawSlections(Graphics g, Color[] colorNonSelected, int len) {
@@ -205,13 +185,9 @@ public class ScatterPlot extends ScatterPlotBasic
 							g.setColor(colorNonSelected[i]);
 						}
 						if (selections[i] == 1) {
-							// g2.drawOval(exsint[i] - 1, whyint[i] - 1,
-							// pointSize, pointSize);
+
 							renderObs(g, i);
-							// g2.fillRect(exsint[i] - 1, whyint[i] - 1,
-							// pointSize, pointSize);
-							// g.drawOval(exsint[i] - 1, whyint[i] - 1,
-							// pointSize+1, pointSize+1);
+
 						}
 					}
 				}
@@ -248,12 +224,6 @@ public class ScatterPlot extends ScatterPlotBasic
 	@Override
 	public BivariateColorSymbolClassification getBivarColorClasser() {
 		return bivarColorClasser;
-	}
-
-	public void makeColors() {
-		if (dataX != null && dataY != null) {
-			pointColors = bivarColorClasser.symbolize(dataX, dataY);
-		}
 	}
 
 }
