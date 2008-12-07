@@ -65,11 +65,14 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
+import geovista.common.event.SubspaceEvent;
+import geovista.common.event.SubspaceListener;
 import geovista.common.event.VariableSelectionEvent;
 import geovista.common.event.VariableSelectionListener;
 import geovista.common.ui.Fisheyes;
 import geovista.common.ui.MultiSlider;
 import geovista.common.ui.RangeSlider;
+import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.readers.example.GeoDataGeneralizedStates;
@@ -79,6 +82,7 @@ import geovista.readers.shapefile.ShapeFileToShape;
 import geovista.symbolization.BivariateColorSchemeVisualizer;
 import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
+import geovista.symbolization.ColorRampPicker;
 import geovista.symbolization.ColorSymbolClassification;
 import geovista.symbolization.event.ColorClassifierEvent;
 import geovista.symbolization.event.ColorClassifierListener;
@@ -94,11 +98,13 @@ public class GeoMap extends JPanel
 		// MouseListener, MouseMotionListener,
 		ActionListener, SelectionListener, IndicationListener, DataSetListener,
 		AuxiliaryDataSetListener, ColorClassifierListener, ColorArrayListener,
-		SpatialExtentListener, ComponentListener, ConditioningListener,
+		SpatialExtentListener, ComponentListener,
+		ConditioningListener,
 		TableModelListener,
 		// the following line commented out until Glyph support improves
 		// GlyphListener,
-		VariableSelectionListener {
+		VariableSelectionListener, SubspaceListener,
+		VisualSettingsPopupListener {
 
 	public static final int VARIABLE_CHOOSER_MODE_ACTIVE = 0;
 	public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
@@ -211,7 +217,7 @@ public class GeoMap extends JPanel
 		visClassTwo.addColorClassifierListener(this);
 		addIndicationListener(biViz);
 
-		visClassTwo.setHighColor(new Color(0, 150, 0)); // green
+		visClassTwo.setHighColor(ColorRampPicker.DEFAULT_HIGH_COLOR_GREEN); // green
 		currSize = new Dimension(this.getSize());
 		fisheyes = new Fisheyes();
 		fisheyes.setLensType(Fisheyes.LENS_HEMISPHERE);
@@ -974,6 +980,56 @@ public class GeoMap extends JPanel
 
 	public SelectionEvent getSelectionEvent() {
 		return new SelectionEvent(this, getSelectedObservations());
+	}
+
+	public void subspaceChanged(SubspaceEvent e) {
+		int[] vars = e.getSubspace();
+		visClassOne.getClassPick().setCurrVariableIndex(vars[1]);
+		visClassTwo.getClassPick().setCurrVariableIndex(vars[0]);
+		mapCan.setCurrColorColumnX(vars[1]);
+		mapCan.setCurrColorColumnY(vars[0]);
+
+	}
+
+	public Color getIndicationColor() {
+		return mapCan.getIndicationColor();
+	}
+
+	public Color getSelectionColor() {
+		return mapCan.getSelectionColor();
+	}
+
+	public boolean isSelectionBlur() {
+		return mapCan.isSelectionBlur();
+	}
+
+	public boolean isSelectionFade() {
+		return mapCan.isSelectionFade();
+	}
+
+	public void setIndicationColor(Color indColor) {
+		mapCan.setIndicationColor(indColor);
+
+	}
+
+	public void setSelectionColor(Color selColor) {
+		mapCan.setSelectionColor(selColor);
+
+	}
+
+	public void useMultiIndication(boolean useMultiIndic) {
+		mapCan.useMultiIndication(useMultiIndic);
+
+	}
+
+	public void useSelectionBlur(boolean selBlur) {
+		mapCan.useSelectionBlur(selBlur);
+
+	}
+
+	public void useSelectionFade(boolean selFade) {
+		mapCan.useSelectionFade(selFade);
+
 	}
 
 }
