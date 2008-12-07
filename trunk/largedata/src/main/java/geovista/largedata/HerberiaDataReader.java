@@ -20,14 +20,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import com.vividsolutions.jts.algorithm.locate.IndexedPointInAreaLocator;
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Location;
 import com.vividsolutions.jts.index.quadtree.Quadtree;
@@ -69,12 +67,12 @@ public class HerberiaDataReader implements GeoDataSource {
 
 		theGeoms = ShapeFileDataReader.getGeoms(shpStream);
 		theIndexes = new IndexedPointInAreaLocator[theGeoms.length];
-		qTree = new Quadtree();
-		for (int i = 0; i < theGeoms.length; i++) {
-			Geometry geom = theGeoms[i];
-			theIndexes[i] = new IndexedPointInAreaLocator(geom);
-			qTree.insert(geom.getEnvelopeInternal(), geom);
-		}
+		// qTree = new Quadtree();
+		// for (int i = 0; i < theGeoms.length; i++) {
+		// Geometry geom = theGeoms[i];
+		// theIndexes[i] = new IndexedPointInAreaLocator(geom);
+		// qTree.insert(geom.getEnvelopeInternal(), geom);
+		// }
 
 	}
 
@@ -90,7 +88,7 @@ public class HerberiaDataReader implements GeoDataSource {
 	public void readHerberiaContents() {
 
 		try {
-			String fileName = "C:\\data\\geovista_data\\herberia\\herb.txt";
+			String fileName = "C:\\data\\geovista_data\\herberia\\herb_old.txt";
 			FileInputStream fis = new FileInputStream(fileName);
 			// use buffering, reading one line at a time
 			// FileReader always assumes default encoding is OK!
@@ -100,6 +98,7 @@ public class HerberiaDataReader implements GeoDataSource {
 			// DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			// Date currDate = new Date();
 			Pattern tabPattern = Pattern.compile("\t");
+
 			long lineCount = 0;
 			long itemCount = 0;
 			long geoItemCount = 0;
@@ -107,8 +106,12 @@ public class HerberiaDataReader implements GeoDataSource {
 			HashMap<Integer, Long> lengthHash = new HashMap();
 			HashSet<String> ganderSet = new HashSet();
 			int[] hits = new int[theGeoms.length];
+			int i = 0;
 			while ((line = input.readLine()) != null) {
-
+				if (i < 10) {
+					System.out.print(line);
+				}
+				i++;
 				String[] lineContents = tabPattern.split(line);
 				// Scanner sc = new Scanner(line).useDelimiter("\t");
 
@@ -128,7 +131,7 @@ public class HerberiaDataReader implements GeoDataSource {
 					Coordinate coord = new Coordinate(xCoord, yCoord);
 					locations.add(coord);
 
-					countHits(hits, coord);
+					// countHits(hits, coord);
 				}
 				Integer lengthInt = Integer.valueOf(lineContents.length);
 				if (lengthHash.containsKey(lengthInt)) {
@@ -194,23 +197,6 @@ public class HerberiaDataReader implements GeoDataSource {
 				break;
 			}
 
-		}
-	}
-
-	private void countQuadHits() {
-		Envelope env = new Envelope();
-
-		for (Coordinate coord : locations) {
-			env.init(coord);
-			env.init(env);
-			List geoms = qTree.query(env);
-			for (int i = 0; i < geoms.size(); i++) {
-				@SuppressWarnings("unused")
-				int answer = theIndexes[i].locate(coord);// XXX this would
-				// not work, just
-				// timing here...
-			}
-			// countHits(hitCount, coord);
 		}
 	}
 
@@ -454,13 +440,13 @@ public class HerberiaDataReader implements GeoDataSource {
 		reader.readHerberiaContents();
 		// 
 		long startTime = System.nanoTime();
-		reader.countAllHits();
+		// reader.countAllHits();
 		long endTime = System.nanoTime();
 		HerberiaDataReader.printMemory();
 		logger.info("finding hits took " + (endTime - startTime) / 1000000000f);
 		// DataSetForApps dataSet = reader.makeDataSetForApps();
 		startTime = System.nanoTime();
-		reader.countQuadHits();
+
 		endTime = System.nanoTime();
 		Object[] coords = reader.locations.toArray();
 		logger.info("finding quad hits took " + (endTime - startTime)
