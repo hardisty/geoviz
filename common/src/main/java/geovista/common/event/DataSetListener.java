@@ -17,4 +17,6 @@ public interface DataSetListener extends EventListener {
 
 	public void dataSetChanged(DataSetEvent e);
 
+	// public void columnAppended(ColumnAppendedEvent e);
+
 }

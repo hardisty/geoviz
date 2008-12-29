@@ -9,23 +9,23 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
+import geovista.common.event.ColumnAppendedEvent;
+import geovista.common.event.ColumnAppendedListener;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.common.event.DataSetModifiedEvent;
-import geovista.common.event.DataSetModifiedListener;
 
 /**
  * This class is able to accept modified data for rebroadcast.
  */
-public class DataSetModifiedBroadcaster implements DataSetListener {
+public class ColumnAppendedBroadcaster implements DataSetListener {
 	protected final static Logger logger = Logger
-			.getLogger(DataSetModifiedBroadcaster.class.getName());
+			.getLogger(ColumnAppendedBroadcaster.class.getName());
 	private transient DataSetForApps dataSet;
 	private transient EventListenerList listenerList;
 
 	double[] newData;
 
-	public DataSetModifiedBroadcaster() {
+	public ColumnAppendedBroadcaster() {
 		super();
 		listenerList = new EventListenerList();
 	}
@@ -46,17 +46,17 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	}
 
 	/**
-	 * implements DataSetModifiedListener
+	 * implements ColumnAppendedListener
 	 */
-	public void addDataSetModifiedListener(DataSetModifiedListener l) {
-		listenerList.add(DataSetModifiedListener.class, l);
+	public void addDataSetModifiedListener(ColumnAppendedListener l) {
+		listenerList.add(ColumnAppendedListener.class, l);
 	}
 
 	/**
-	 * removes an DataSetModifiedListener from the button
+	 * removes an ColumnAppendedListener from the button
 	 */
-	public void removeDataSetModifiedListener(DataSetModifiedListener l) {
-		listenerList.remove(DataSetModifiedListener.class, l);
+	public void removeDataSetModifiedListener(ColumnAppendedListener l) {
+		listenerList.remove(ColumnAppendedListener.class, l);
 	}
 
 	/**
@@ -72,18 +72,17 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 		}
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
-		DataSetModifiedEvent e = null;
+		ColumnAppendedEvent e = null;
 		// Process the listeners last to first, notifying
 		// those that are interested in this event
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
-			if (listeners[i] == DataSetModifiedListener.class) {
+			if (listeners[i] == ColumnAppendedListener.class) {
 				// Lazily create the event:
 				if (e == null) {
-					e = new DataSetModifiedEvent(this, dataSet
-							.getDataObjectOriginal(), newData);
+					// e = new ColumnAppendedEvent()
 
 				}
-				((DataSetModifiedListener) listeners[i + 1]).dataSetModified(e);
+				((ColumnAppendedListener) listeners[i + 1]).dataSetModified(e);
 			}
 		}
 	}

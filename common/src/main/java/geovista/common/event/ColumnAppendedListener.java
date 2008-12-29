@@ -13,8 +13,8 @@ import java.util.EventListener;
  * generate and broadcast DataSetEvents.
  * 
  */
-public interface DataSetModifiedListener extends EventListener {
+public interface ColumnAppendedListener extends EventListener {
 
-	public void dataSetModified(DataSetModifiedEvent e);
+	public void dataSetModified(ColumnAppendedEvent e);
 
 }
