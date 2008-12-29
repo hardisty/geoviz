@@ -34,6 +34,7 @@ public class SelectionEvent extends EventObject {
 	 */
 	public SelectionEvent() {
 		super(new Double(34d));
+
 	}
 
 	public SelectionEvent(Object source, int[] selection, int[] higherLevelSel,
@@ -52,6 +53,31 @@ public class SelectionEvent extends EventObject {
 		}
 		for (int i : rightSel) {
 			intSet.add(i);
+		}
+		Object[] objArray = intSet.toArray();
+		int[] newSel = new int[objArray.length];
+		for (int i = 0; i < objArray.length; i++) {
+
+			Integer intNum = (Integer) objArray[i];
+			newSel[i] = intNum;
+		}
+
+		return newSel;
+	}
+
+	public static int[] makeXORSelection(int[] leftSel, int[] rightSel) {
+
+		HashSet<Integer> intSet = new HashSet<Integer>();
+		for (int i : leftSel) {
+			intSet.add(i);
+		}
+		for (int i : rightSel) {
+			if (intSet.contains(i)) {
+				intSet.remove(i);
+			} else {
+				intSet.add(i);
+
+			}
 		}
 		Object[] objArray = intSet.toArray();
 		int[] newSel = new int[objArray.length];
