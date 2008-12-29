@@ -1,6 +1,6 @@
 /* Licensed under LGPL v. 2.1 or any later version;
  see GNU LGPL for details.
- Original Author: Frank Hardisty */
+ Authors: Hisaji ONO, James Macgill, Diansheng Guo, Frank Hardisty */
 
 /**
  * Hisaji ONO hi_ono2001 at ybb.ne.jp Fri Mar 3 18:04:05 CET 2006 As you
