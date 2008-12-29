@@ -26,7 +26,7 @@ import javax.swing.event.TableModelEvent;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ClassificationEvent;
 import geovista.common.event.ClassificationListener;
-import geovista.common.event.DataSetModifiedEvent;
+import geovista.common.event.ColumnAppendedEvent;
 
 public class ClassifierPicker extends JPanel implements ActionListener,
 		ComponentListener {
@@ -56,21 +56,22 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 	private transient int currOrientation = ClassifierPicker.X_AXIS;
 	private int variableChooserMode = ClassifierPicker.VARIABLE_CHOOSER_MODE_HIDDEN; // default
 	private ClassifierCustomGUI custGUI;
-	static int CLASSIFIER_CUSTOM = 5;
+	static int CLASSIFIER_CUSTOM = 6;
 
 	public ClassifierPicker() {
 		super();
 		classification = new int[0];
 		nClasses = 3;
 		addComponentListener(this);
-		classers = new DescribedClassifier[6];
+		classers = new DescribedClassifier[7];
 
 		classers[0] = new ClassifierQuantiles();
 		classers[1] = new ClassifierModifiedQuantiles();
 		classers[2] = new ClassifierEqualIntervals();
 		classers[3] = new ClassifierStdDev();
 		classers[4] = new ClassifierRawQuantiles();
-		classers[5] = new ClassifierCustom();
+		classers[5] = new ClassifierJenks();
+		classers[6] = new ClassifierCustom();
 
 		update = true;
 		init();
@@ -428,8 +429,8 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 		fireClassificationChanged(); // inserted fah 7 oct 03
 	}
 
-	public void dataSetModified(DataSetModifiedEvent e) {
-		if (e.getEventType() == DataSetModifiedEvent.TYPE_EXTENDED) {
+	public void dataSetModified(ColumnAppendedEvent e) {
+		if (e.getEventType() == ColumnAppendedEvent.ChangeType.TYPE_EXTENDED) {
 			// XXX unsafe, modifying for build only...
 			// Object[] newData = (Object[])e.getNewData();
 
