@@ -772,7 +772,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			if (dataArrayX != null) {
 				int len = dataArrayX.length();
 				// draw the points
-				drawSlections(g, pointColors, len);
+				drawSelections(g, pointColors, len);
 
 			}
 		}
@@ -820,7 +820,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		g2.fillOval(pointDrawX, pointDrawY, pointSize, pointSize);
 	}
 
-	protected void drawSlections(Graphics g, Color[] colorNonSelected, int len) {
+	protected void drawSelections(Graphics g, Color[] colorNonSelected, int len) {
 		logger.info("in scatterplotbasic, drawslections");
 		g.setColor(foreground);
 		for (int i = 0; i < len; i++) {
@@ -1056,9 +1056,14 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("indicate:" + indication);
 		}
+		if (dataIndices == null) {
+			return;
+		}
 		indiationId = indication;
 		IndicationEvent e = new IndicationEvent(this, indication);
-		histogram.indicationChanged(e);
+		if (dataIndices[0] == dataIndices[1]) {
+			histogram.indicationChanged(e);
+		}
 		this.repaint();
 
 	}
@@ -1262,7 +1267,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			return;
 		}
 		// With shift pressed, it will continue to select.
-		if (!(e.isShiftDown())) {
+		if (e.isShiftDown() == false && e.isControlDown() == false) {
 			// zero all selection indication to deselect them.
 			for (int i = 0; i < selections.length; i++) {
 				selections[i] = 0;
@@ -1298,11 +1303,17 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		// int j = 0;
 		for (int i = 0; i < dataX.length; i++) {
 			if (rec.contains(exsint[i], whyint[i]) && (conditionArray[i] > -1)) {
-				// Integer bigI = new Integer(i);
-				// selRecords.add(bigI);
-				selections[i] = 1;// new selection struction int[]
-				pointSelected = true;
-				// j++;
+				if (e.isControlDown()) {
+					if (selections[i] >= 1) {
+						selections[i] = 0;
+					} else {
+						selections[i] = 1;
+						pointSelected = true;
+					}
+				} else {
+					selections[i] = 1;// new selection struction int[]
+					pointSelected = true;
+				}
 			}
 		}
 		int hitCount = 0;
@@ -1414,6 +1425,9 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 * @param e
 	 */
 	public void mouseMoved(MouseEvent e) {
+		if (dataIndices == null) {
+			return;
+		}
 		if (dataIndices[0] == dataIndices[1]) {
 			histogram.mouseMoved(e);
 			return;
