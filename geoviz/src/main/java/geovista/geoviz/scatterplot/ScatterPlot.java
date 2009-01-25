@@ -113,7 +113,7 @@ public class ScatterPlot extends ScatterPlotBasic
 	}
 
 	@Override
-	protected void drawSlections(Graphics g, Color[] colorNonSelected, int len) {
+	protected void drawSelections(Graphics g, Color[] colorNonSelected, int len) {
 		logger.fine("in scatterplot, drawslections");
 		long startTime = System.nanoTime();
 
