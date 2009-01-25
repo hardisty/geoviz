@@ -1,10 +1,10 @@
 /* -------------------------------------------------------------------
- Java source file for the class DataSetModifiedBroadcaster
+ Java source file for the class ColumnAppendedBroadcaster
  Copyright (c), 2004, Frank Hardisty
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: DataSetModifiedBroadcaster.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
+ $Id: ColumnAppendedBroadcaster.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
  $Date: 2005/02/13 03:26:27 $
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
@@ -26,9 +26,9 @@ import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 
+import geovista.common.event.ColumnAppendedEvent;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.common.event.DataSetModifiedEvent;
 
 /**
  * This class is able to accept modified data for rebroadcast.
@@ -38,7 +38,8 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	private transient EventListenerList listenerList;
 
 	private transient Object[] newData;
-	final static Logger logger = Logger.getLogger(DataSetModifiedBroadcaster.class.getName());
+	final static Logger logger = Logger
+			.getLogger(DataSetModifiedBroadcaster.class.getName());
 
 	public DataSetModifiedBroadcaster() {
 		super();
@@ -50,21 +51,21 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	}
 
 	public EventListenerList getListenerList() {
-		return this.listenerList;
+		return listenerList;
 	}
 
 	public String fireDataSetModified() {
 		logger.finest("entering fireDataSetModified()");
-		if (this.newData == null) {
-			String message = "DataSetModifiedBroadcaster, fireDataSetModified called without new data";
+		if (newData == null) {
+			String message = "ColumnAppendedBroadcaster, fireDataSetModified called without new data";
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest(message);
 			}
 
 			return message;
 		}
-		this.fireDataSetModified(this.newData);
-		String message = "DataSetModifiedBroadcaster, fireDataSetModified called, ok";
+		this.fireDataSetModified(newData);
+		String message = "ColumnAppendedBroadcaster, fireDataSetModified called, ok";
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest(message);
 		}
@@ -81,8 +82,8 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	}
 
 	public String setVariableNames(String[] varNames) {
-		if (this.newData == null) {
-			this.newData = new Object[varNames.length];
+		if (newData == null) {
+			newData = new Object[varNames.length];
 		}
 		String message = "DataSetBroadcaster, setVariableNames, number of names = "
 				+ varNames.length;
@@ -96,7 +97,7 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	public String addData(Object data, int index) {
 
 		try {
-			this.newData[index] = data;
+			newData[index] = data;
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			return "index out of bounds thrown";
@@ -127,32 +128,32 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 			return "ClassCastException thrown " + cce.getMessage();
 		}
 		String returnString = "";
-		for (int i = 0; i < strings.length; i++) {
-			returnString = returnString + "," + strings[i];
+		for (String element : strings) {
+			returnString = returnString + "," + element;
 		}
 		return returnString;
 	}
 
 	/**
-	 * implements DataSetModifiedListener
+	 * implements ColumnAppendedListener
 	 */
 	public void addDataSetModifiedListener(DataSetModifiedListener l) {
 		listenerList.add(DataSetModifiedListener.class, l);
 		if (logger.isLoggable(Level.FINEST)) {
 			System.out
-					.println("listenerList.add(DataSetModifiedListener.class, l);");
+					.println("listenerList.add(ColumnAppendedListener.class, l);");
 		}
 
 	}
 
 	/**
-	 * removes an DataSetModifiedListener from the button
+	 * removes an ColumnAppendedListener from the button
 	 */
 	public void removeDataSetModifiedListener(DataSetModifiedListener l) {
 		listenerList.remove(DataSetModifiedListener.class, l);
 		if (logger.isLoggable(Level.FINEST)) {
 			System.out
-					.println("listenerList.remove(DataSetModifiedListener.class, l);");
+					.println("listenerList.remove(ColumnAppendedListener.class, l);");
 		}
 
 	}
@@ -167,7 +168,7 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 	protected void fireDataSetModified(Object[] newData) {
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
-		DataSetModifiedEvent e = null;
+		ColumnAppendedEvent e = null;
 		// Process the listeners last to first, notifying
 		// those that are interested in this event
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
@@ -176,7 +177,7 @@ public class DataSetModifiedBroadcaster implements DataSetListener {
 				if (e == null) {
 					// oi oi this is a problem, are we supposed to pass an
 					// Object[] or a double[], certainly not null
-					e = new DataSetModifiedEvent(this, this.newData, null);
+					// e = new ColumnAppendedEvent(this, this.newData, null);
 
 				}
 				((DataSetModifiedListener) listeners[i + 1]).dataSetModified(e);

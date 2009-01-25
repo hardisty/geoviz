@@ -8,7 +8,7 @@ import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 import geovista.matrix.treemap.TreeMapMatrixElement;
 
 public class TreemapAndScatterplotMatrix extends BiPlotMatrix
-// implements DataSetListener, DataSetModifiedListener,
+// implements DataSetListener, ColumnAppendedListener,
 // IndicationListener, SubspaceListener,
 // ColorArrayListener
 {

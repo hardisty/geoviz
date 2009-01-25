@@ -22,8 +22,8 @@ import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.common.event.DataSetModifiedEvent;
-import geovista.common.event.DataSetModifiedListener;
+import geovista.common.event.ColumnAppendedEvent;
+import geovista.common.event.ColumnAppendedListener;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SubspaceEvent;
@@ -41,7 +41,7 @@ import geovista.treemap.tm.TMView;
  * 
  */
 public class TreeMapCanvas extends JPanel implements DataSetListener,
-		DataSetModifiedListener, IndicationListener, SubspaceListener,
+		ColumnAppendedListener, IndicationListener, SubspaceListener,
 		ColorArrayListener, MouseListener, MouseMotionListener {
 	protected final static Logger logger = Logger.getLogger(TreeMapCanvas.class
 			.getName());
@@ -165,7 +165,7 @@ public class TreeMapCanvas extends JPanel implements DataSetListener,
 		initTMView();
 	}
 
-	public void dataSetModified(DataSetModifiedEvent e) {
+	public void dataSetModified(ColumnAppendedEvent e) {
 
 	}
 
