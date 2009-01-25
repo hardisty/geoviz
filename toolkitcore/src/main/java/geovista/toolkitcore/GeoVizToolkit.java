@@ -53,9 +53,9 @@ import geovista.cartogram.GeoMapCartogram;
 import geovista.collaboration.ComponentProvider;
 import geovista.collaboration.GeoJabber;
 import geovista.collaboration.GeoJabber.MarshaledComponentListener;
+import geovista.common.data.ColumnAppendedBroadcaster;
 import geovista.common.data.DataSetBroadcaster;
 import geovista.common.data.DataSetForApps;
-import geovista.common.data.DataSetModifiedBroadcaster;
 import geovista.common.data.GeoDataSource;
 import geovista.common.event.AnnotationEvent;
 import geovista.common.event.AnnotationListener;
@@ -92,8 +92,7 @@ import geovista.matrix.MultiplotMatrix;
 import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
 import geovista.readers.example.GeoData2008Election;
-import geovista.readers.example.GeoDataUSCounties;
-import geovista.readers.example.GoogleFluDataReader;
+import geovista.readers.example.TexasZoonoticDataReader;
 import geovista.readers.seerstat.SeerStatReader;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
@@ -133,7 +132,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	// managing our layouts
 
-	String filePath = "48States";
+	String filePath = "2008 Presidential Election";
 	JFileChooser fileChooser;
 	ShapeFileDataReader shpRead;
 	ShapeFileProjection shpProj;
@@ -150,7 +149,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	JMenuItem menuItemLoadCounty;
 
 	JMenuItem menuItemLoadWorld;
-	JMenuItem menuItemLoadExcel;
+	JMenuItem menuItemLoadDataTable;
 	JMenuItem menuItemLoadSCBackgroundShape;
 	JMenuItem menuItemImportSeerStatData;
 
@@ -241,7 +240,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemExitProgram = new JMenuItem();
 		menuItemLoadWorld = new JMenuItem();
 
-		menuItemLoadExcel = new JMenuItem();
+		menuItemLoadDataTable = new JMenuItem();
 		menuItemLoadSCBackgroundShape = new JMenuItem();
 		menuItemImportSeerStatData = new JMenuItem();
 		menuItemLoadCsv = new JMenuItem();
@@ -356,7 +355,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	public void addExternalBean(Object bean) {
 		coord.addBean(bean);
 
-		DataSetModifiedBroadcaster localCaster = (DataSetModifiedBroadcaster) bean;
+		ColumnAppendedBroadcaster localCaster = (ColumnAppendedBroadcaster) bean;
 
 		localCaster.setDataSet(dataSet);
 	}
@@ -608,7 +607,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// is this too weak? do we need a system exit?
 			setVisible(false);
 		} else if (e.getSource() == menuItemLoadCounty) {
-			loadData("County");
+			loadData("2008 Presidential Election");
 		} else if (e.getSource() == menuItemExitProgram) {
 			logger.info("User quit from menu item, bye!");
 			System.exit(0);
@@ -620,7 +619,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		} else if (e.getSource() == menuItemLoadWorld) {
 			loadData("World");
 
-		} else if (e.getSource() == menuItemLoadExcel) {
+		} else if (e.getSource() == menuItemLoadDataTable) {
 			openExcelFilePicker();
 		} else if (e.getSource() == menuItemLoadSCBackgroundShape) {
 			loadBackgroundData("SC");
@@ -712,7 +711,16 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	private void loadBackgroundData(String name) {
-		Object[] newDataSet = createData(name);
+		Object[] newDataSet = null;
+
+		try {
+			newDataSet = createData(name);
+		} catch (IOException e) {
+			JOptionPane
+					.showMessageDialog(this, "Sorry, could not load " + name);
+
+			e.printStackTrace();
+		}
 		DataSetForApps auxData = new DataSetForApps(newDataSet);
 		dataCaster.fireAuxiliaryDataSet(auxData);
 	}
@@ -735,7 +743,17 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		logger
 				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
-		Object[] newDataSet = createData(name);
+		Object[] newDataSet = null;
+
+		try {
+			newDataSet = createData(name);
+		} catch (IOException e) {
+			JOptionPane
+					.showMessageDialog(this, "Sorry, could not load " + name);
+
+			e.printStackTrace();
+		}
+
 		logger
 				.fine("geovizdemo, loadData, dataSetIsNull ="
 						+ (dataSet == null));
@@ -756,16 +774,22 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
-	private Object[] createData(String name) {
+	private Object[] createData(String name) throws IOException {
 		if (name == null) {
 			return null;
 		}
+		logger.info("creating data: " + name);
 		Object[] newDataSet = null;
 		if (name.equals("48States")) {
 			// GeoDataGeneralizedStates statesData = new
 			// GeoDataGeneralizedStates();
 
-			GoogleFluDataReader statesData = new GoogleFluDataReader();
+			// GoogleFluDataReader statesData = new GoogleFluDataReader();
+
+			TexasZoonoticDataReader statesData = new TexasZoonoticDataReader();
+
+			// geovista.largedata.GeoDataNiger statesData = new
+			// geovista.largedata.GeoDataNiger();
 			ShapeFileProjection proj = new ShapeFileProjection();
 			proj.setInputDataSetForApps(statesData.getDataForApps());
 			// newDataSet = statesData.getDataForApps().getDataObjectOriginal();
@@ -802,10 +826,11 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// newDataSet = cartogramData.getDataSet();
 
 		} else if (name.equals("USCounties")) {
-			GeoDataUSCounties countyData = new GeoDataUSCounties();
+			GeoData2008Election countyData = new GeoData2008Election();
 			newDataSet = countyData.getDataSet();
 
 		} else if (name.equals("2008 Presidential Election")) {
+
 			GeoData2008Election countyData = new GeoData2008Election();
 			ShapeFileProjection proj = new ShapeFileProjection();
 			proj.setInputDataSet(countyData.getDataSet());
@@ -991,7 +1016,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemLoadShp.addActionListener(this);
 		menuItemLoadWorld.addActionListener(this);
 
-		menuItemLoadExcel.addActionListener(this);
+		menuItemLoadDataTable.addActionListener(this);
 		menuItemLoadSCBackgroundShape.addActionListener(this);
 		menuItemImportSeerStatData.addActionListener(this);
 		menuItemLoadCsv.addActionListener(this);
@@ -1093,10 +1118,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuItemHelp.setText("Tutorial");
 		menuItemOpenProject.setText("Open Project");
 		menuItemSaveProject.setText("Save Project");
-		menuItemLoadExcel.setText("Load Data Table");
+		menuItemLoadDataTable.setText("Load Data Table");
 		menuItemLoadSCBackgroundShape.setText("Load South Carolina Background");
-		menuItemImportSeerStatData.setText("Load SeerStat Data");
-		menuItemLoadCsv.setText("Load Comma-Delimited (*.csv) Data");
+		menuItemImportSeerStatData.setText("Change Default Data");
+		menuItemLoadCsv.setText("Load Default Data: " + filePath);
 		menuItemExportData.setText("Export Data Set");
 		menuItemExportSelection.setText("Export Selected Rows and Columns");
 
@@ -1123,14 +1148,18 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		menuFile.add(menuItemLoadShp);
 		menuFile.addSeparator();
-		menuFile.add(menuItemLoadCsv);
-		menuFile.add(menuItemLoadExcel);
-		menuFile.add(menuItemImportSeerStatData);
+
+		menuFile.add(menuItemLoadDataTable);
+
 		menuFile.addSeparator();
 		menuFile.add(menuItemLoadStates);
 		menuFile.add(menuItemLoadCounty);
 
 		menuFile.add(menuItemLoadWorld);
+
+		menuFile.addSeparator();
+		menuFile.add(menuItemLoadCsv);
+		menuFile.add(menuItemImportSeerStatData);
 
 		menuFile.addSeparator();
 		menuFile.add(menuItemExportData);
@@ -1219,15 +1248,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		Logger logger = Logger.getLogger("geovista");
 		// Logger mapLogger = Logger.getLogger("geovista.geoviz.map.MapCanvas");
-		// logger.setLevel(Level.FINEST);
+		logger.setLevel(Level.INFO);
 		// mapLogger.setLevel(Level.FINEST);
 		// LogManager mng = LogManager.getLogManager();
 		// mng.addLogger(logger);
 		// mng.addLogger(mapLogger);
 
 		ConsoleHandler handler = new ConsoleHandler();
-		handler.setLevel(Level.FINEST);
-		// logger.addHandler(handler);
+		handler.setLevel(Level.INFO);
+		logger.addHandler(handler);
 
 		try {
 			// Create a file handler that write log record to a file called
