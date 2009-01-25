@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 import geovista.common.data.DataSetForApps;
 import geovista.readers.example.GeoDataUSCounties;
-import geovista.toolkitcore.GeoVizToolkit;
 
 /**
  * @author Frank Hardisty
@@ -556,9 +555,9 @@ public class SeerStatReader {
 
 		DataSetForApps dataSet = reader.readFiles();
 
-		GeoVizToolkit gvt = new GeoVizToolkit();
+		// GeoVizToolkit gvt = new GeoVizToolkit();
 
-		gvt.setDataSet(dataSet);
+		// gvt.setDataSet(dataSet);
 
 		logger.info("All done!!!");
 		logger.finest(dataSet.getNumberNumericAttributes() + " attributes");
