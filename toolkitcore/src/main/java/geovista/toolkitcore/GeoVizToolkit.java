@@ -92,7 +92,7 @@ import geovista.matrix.MultiplotMatrix;
 import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
 import geovista.readers.example.GeoData2008Election;
-import geovista.readers.example.TexasZoonoticDataReader;
+import geovista.readers.example.GoogleFluDataReader;
 import geovista.readers.seerstat.SeerStatReader;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
@@ -784,9 +784,10 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// GeoDataGeneralizedStates statesData = new
 			// GeoDataGeneralizedStates();
 
-			// GoogleFluDataReader statesData = new GoogleFluDataReader();
+			GoogleFluDataReader statesData = new GoogleFluDataReader();
 
-			TexasZoonoticDataReader statesData = new TexasZoonoticDataReader();
+			// TexasZoonoticDataReader statesData = new
+			// TexasZoonoticDataReader();
 
 			// geovista.largedata.GeoDataNiger statesData = new
 			// geovista.largedata.GeoDataNiger();
