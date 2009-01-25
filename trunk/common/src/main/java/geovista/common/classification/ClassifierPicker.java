@@ -60,6 +60,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 
 	public ClassifierPicker() {
 		super();
+
 		classification = new int[0];
 		nClasses = 3;
 		addComponentListener(this);
