@@ -309,7 +309,7 @@ public class Proclude extends JPanel implements ActionListener,
 		return ((double) Math.round(d * 100)) / 100;
 	}
 
-	private void highlightLabelAt(int x, int y) {
+	private void highlightLabelAt(int x, int y, MouseEvent e) {
 		JPanel selected = (JPanel) output.getComponentAt(x, y);
 
 		if (!(selected.equals(output))) { // if the selected object is the
@@ -330,7 +330,18 @@ public class Proclude extends JPanel implements ActionListener,
 			if (selectedIndex == -1) {
 				System.out.println("huh?  Why didn't this find the index?");
 			} else {
-				selectedPoints = out[selectedIndex].getContainedPoints();
+				int[] newSelectedPoints = out[selectedIndex]
+						.getContainedPoints();
+				if (e.isShiftDown()) {
+					selectedPoints = SelectionEvent.makeAndSelection(
+							selectedPoints, newSelectedPoints);
+				} else if (e.isControlDown()) {
+					selectedPoints = SelectionEvent.makeXORSelection(
+							selectedPoints, newSelectedPoints);
+				} else {
+					selectedPoints = newSelectedPoints;
+				}
+
 				fireSelectionChanged(selectedPoints);
 			}
 		}
@@ -413,7 +424,7 @@ public class Proclude extends JPanel implements ActionListener,
 			int x = e.getX();
 			int y = e.getY();
 			System.out.println("I clicked at " + x + ", " + y);
-			highlightLabelAt(x, y);
+			highlightLabelAt(x, y, e);
 		}
 
 		@Override
