@@ -35,7 +35,7 @@ import javax.swing.JPanel;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetModifiedEvent;
+import geovista.common.event.ColumnAppendedEvent;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
@@ -161,7 +161,7 @@ public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 		return ngonLayer.findGlyphs();
 	}
 
-	public void dataSetModified(DataSetModifiedEvent e) {
+	public void dataSetModified(ColumnAppendedEvent e) {
 
 	}
 
