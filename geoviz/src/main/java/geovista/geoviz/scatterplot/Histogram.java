@@ -1017,8 +1017,8 @@ public class Histogram extends JPanel implements MouseListener,
 
 	public void mouseClicked(MouseEvent e) {
 
-		// If shift not pressed, reset selection.
-		if (e.isShiftDown() == false) {
+		// If shift and cntrl not pressed, reset selection.
+		if (e.isShiftDown() == false && e.isControlDown() == false) {
 			// this.selRecords.clear();
 			selectedRecords.clear();
 
@@ -1038,8 +1038,14 @@ public class Histogram extends JPanel implements MouseListener,
 				// if (this.histRecs[i].contains(e.getX(),e.getY())){
 				for (int j = 0; j < histRecords[i].size(); j++) {
 					int index = (histRecords[i].get(j)).intValue();
-					selectedRecords.set(index, true);
+					if (e.isControlDown() && selectedRecords.get(index)) {
 
+						selectedRecords.set(index, false);
+					} else {
+						// new selection, shift selection, ctrl selection if not
+						// previosly true
+						selectedRecords.set(index, true);
+					}
 				}
 			}
 
@@ -1097,8 +1103,8 @@ public class Histogram extends JPanel implements MouseListener,
 		}
 
 		// If shift not pressed, reset selection.
-		if (e.isShiftDown() == false) {
-			// this.selRecords.clear();
+		if (e.isShiftDown() == false && e.isControlDown() == false) {
+
 			selectedRecords.clear();
 
 			if (selectionArray == null || selectionArray.length != binCount) {
@@ -1120,8 +1126,15 @@ public class Histogram extends JPanel implements MouseListener,
 				// if (this.histRecs[i].contains(e.getX(),e.getY())){
 				for (int j = 0; j < histRecords[i].size(); j++) {
 					int index = (histRecords[i].get(j)).intValue();
-					selectedRecords.set(index, true);
-
+					if (e.isControlDown()) {
+						if (selectedRecords.get(index)) {
+							selectedRecords.set(index, false);
+						} else {
+							selectedRecords.set(index, true);
+						}
+					} else {
+						selectedRecords.set(index, true);
+					}
 				}
 			}
 
