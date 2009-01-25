@@ -50,7 +50,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 		SelectionListener, IndicationListener, DataSetListener,
 		ConditioningListener {
 
-	private final SpaceFillCanvas spat;
+	private final SpaceFillCanvas spatCan;
 	private final VisualClassifier vc;
 
 	private String[] variableNames;
@@ -83,15 +83,15 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 		allTop.setPreferredSize(new Dimension(200, 50));
 		allTop.getContentPanel().add(topPane);
 		this.add(allTop, BorderLayout.NORTH);
-		spat = makeSpat();
-		spat.addActionListener(this);
-		// spat.setPreferredSize(new Dimension(2000,2000));
-		spat.setMaximumSize(new Dimension(20000, 20000));
-		this.add(spat, BorderLayout.CENTER);
+		spatCan = makeSpat();
+		spatCan.addActionListener(this);
+		// spatCan.setPreferredSize(new Dimension(2000,2000));
+		spatCan.setMaximumSize(new Dimension(20000, 20000));
+		this.add(spatCan, BorderLayout.CENTER);
 		Color[] colors = vc.getColors();
-		spat.setColors(colors);
+		spatCan.setColors(colors);
 
-		spat.setColorSymbolizer(vc.getColorSymbolClassification());
+		spatCan.setColorSymbolizer(vc.getColorSymbolClassification());
 		setPreferredSize(new Dimension(400, 400));
 
 		// orders to implement (in order): scan, bostrophedon, spiral, Morton,
@@ -101,15 +101,15 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if (command.equals(VisualClassifier.COMMAND_COLORS_CHANGED)) {
-			spat.setColorSymbolizer(vc.getColorSymbolClassification());
+			spatCan.setColorSymbolizer(vc.getColorSymbolClassification());
 			fireActionPerformed(SpaceFillCanvas.COMMAND_COLOR_CLASSFICIATION);
 			// this.spat.setColors(colors);
 		}
 		if (command.equals(SpaceFillCanvas.COMMAND_SELECTION)
-				&& e.getSource() == spat) {
+				&& e.getSource() == spatCan) {
 			// pass it along
 			fireActionPerformed(SpaceFillCanvas.COMMAND_SELECTION);
-			fireSelectionChanged(spat.getSelectedObservationsInt());
+			fireSelectionChanged(spatCan.getSelectedObservationsInt());
 		}
 
 	}
@@ -204,7 +204,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 
 	private SpaceFillCanvas makeSpat() {
 		SpaceFillCanvas spat = new SpaceFillCanvas();
-		// spat.setPreferredSize(new Dimension(400,350));
+		// spatCan.setPreferredSize(new Dimension(400,350));
 		return spat;
 	}
 
@@ -225,86 +225,86 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	// start accessors
 	public void setDataSet(DataSetForApps dataSet) {
 		Color[] colors = vc.getColors();
-		spat.setColors(colors);
+		spatCan.setColors(colors);
 
-		spat.setColorSymbolizer(vc.getColorSymbolClassification());
+		spatCan.setColorSymbolizer(vc.getColorSymbolClassification());
 		setVariableNames(dataSet.getAttributeNamesNumeric());
-		spat.setDataSet(dataSet);
+		spatCan.setDataSet(dataSet);
 		if (dataSet.getNumberNumericAttributes() > 2) {
 			colorColumnCombo.setSelectedIndex(1);
 			orderColumnCombo.setSelectedIndex(0);
 		}
 
-		spat.setObservationNames(dataSet.getObservationNames());
+		spatCan.setObservationNames(dataSet.getObservationNames());
 	}
 
 	public Object[] getData() {
-		return spat.getData();
+		return spatCan.getData();
 	}
 
 	public void setCurrOrderColumn(int currOrderColumn) {
 		orderColumnCombo.setSelectedIndex(currOrderColumn - 1);
 
-		spat.setCurrOrderColumn(currOrderColumn);
+		spatCan.setCurrOrderColumn(currOrderColumn);
 	}
 
 	public int getCurrOrderColumn() {
-		return spat.getCurrOrderColumn();
+		return spatCan.getCurrOrderColumn();
 	}
 
 	public void setCurrColorColumn(int currColorColumn) {
 		colorColumnCombo.setSelectedIndex(currColorColumn - 1);
-		spat.setCurrColorColumn(currColorColumn);
+		spatCan.setCurrColorColumn(currColorColumn);
 	}
 
 	public int getCurrColorColumn() {
-		return spat.getCurrColorColumn();
+		return spatCan.getCurrColorColumn();
 	}
 
 	public void setColorSelection(Color colorSelection) {
-		spat.setColorSelection(colorSelection);
+		spatCan.setColorSelection(colorSelection);
 	}
 
 	public Color getColorSelection() {
-		return spat.getColorSelection();
+		return spatCan.getColorSelection();
 	}
 
 	public void setColorIndication(Color colorIndication) {
-		spat.setColorIndication(colorIndication);
+		spatCan.setColorIndication(colorIndication);
 	}
 
 	public Color getColorIndication() {
-		return spat.getColorIndication();
+		return spatCan.getColorIndication();
 	}
 
 	public void setColorNull(Color colorNull) {
-		spat.setColorNull(colorNull);
+		spatCan.setColorNull(colorNull);
 	}
 
 	public Color getColorNull() {
-		return spat.getColorNull();
+		return spatCan.getColorNull();
 	}
 
 	public void setColorOutOfFocus(Color colorOutOfFocus) {
-		spat.setColorOutOfFocus(colorOutOfFocus);
+		spatCan.setColorOutOfFocus(colorOutOfFocus);
 	}
 
 	public Color getColorOutOfFocus() {
-		return spat.getColorOutOfFocus();
+		return spatCan.getColorOutOfFocus();
 	}
 
 	public void setColorNotInStudyArea(Color colorNotInStudyArea) {
-		spat.setColorNotInStudyArea(colorNotInStudyArea);
+		spatCan.setColorNotInStudyArea(colorNotInStudyArea);
 	}
 
 	public Color getColorNotInStudyArea() {
-		return spat.getColorNotInStudyArea();
+		return spatCan.getColorNotInStudyArea();
 	}
 
 	public void setVariableNames(String[] variableNames) {
 
 		this.variableNames = variableNames;
-		spat.setVariableNames(variableNames);
+		spatCan.setVariableNames(variableNames);
 		colorColumnCombo.removeAllItems();
 		orderColumnCombo.removeAllItems();
 		for (String element : variableNames) {
@@ -318,15 +318,15 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	}
 
 	public void setSelectedObservations(Vector selectedObservations) {
-		spat.setSelectedObservations(selectedObservations);
+		spatCan.setSelectedObservations(selectedObservations);
 	}
 
 	public Vector getSelectedObservations() {
-		return spat.getSelectedObservations();
+		return spatCan.getSelectedObservations();
 	}
 
 	public void setSelectedObservationsInt(int[] selectedObservations) {
-		spat.setSelectedObservationsInt(selectedObservations);
+		spatCan.setSelectedObservationsInt(selectedObservations);
 	}
 
 	public void selectionChanged(SelectionEvent e) {
@@ -335,7 +335,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	}
 
 	public SelectionEvent getSelectionEvent() {
-		return new SelectionEvent(this, spat.getSelectedObservationsInt());
+		return new SelectionEvent(this, spatCan.getSelectedObservationsInt());
 	}
 
 	public void indicationChanged(IndicationEvent e) {
@@ -343,7 +343,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 		if (indic < 0) {
 			return;
 		}
-		spat.setIndication(indic);
+		spatCan.setIndication(indic);
 	}
 
 	public void dataSetChanged(DataSetEvent e) {
@@ -352,11 +352,11 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	}
 
 	public void conditioningChanged(ConditioningEvent e) {
-		spat.setConditionArray(e.getConditioning());
+		spatCan.setConditionArray(e.getConditioning());
 	}
 
 	public int[] getSelectedObservationsInt() {
-		return spat.getSelectedObservationsInt();
+		return spatCan.getSelectedObservationsInt();
 	}
 
 	public void setTopPane(FoldupPanel topPane) {
@@ -390,7 +390,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 						"Fill order outside legal range defined in FillOrder");
 			} else {
 				this.fillOrder = fillOrder;
-				spat.setFillOrder(fillOrder);
+				spatCan.setFillOrder(fillOrder);
 			}
 		}//
 	}// end method
@@ -401,7 +401,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 
 	public void setUseDrawingShapes(boolean useDrawingShapes) {
 		this.useDrawingShapes = useDrawingShapes;
-		spat.setUseDrawingShapes(useDrawingShapes);
+		spatCan.setUseDrawingShapes(useDrawingShapes);
 	}
 
 	public boolean getUseDrawingShapes() {
@@ -409,7 +409,7 @@ public class SpaceFill extends JPanel implements ActionListener, Serializable,
 	}
 
 	public BivariateColorSymbolClassification getBivarColorClasser() {
-		return spat.getBivarColorClasser();
+		return spatCan.getBivarColorClasser();
 	}
 
 	// end accessors
