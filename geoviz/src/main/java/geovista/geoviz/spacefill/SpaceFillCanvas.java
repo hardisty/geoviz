@@ -574,7 +574,10 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 
 			if (e.isShiftDown()) {
 				makeSelectionShift(x1, x2, y1, y2);
+			} else if (e.isControlDown()) {
+				makeSelectionCtrl(x1, x2, y1, y2);
 			} else {
+
 				makeSelection(x1, x2, y1, y2);
 			}
 
@@ -756,7 +759,34 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 		this.makeToolTip(arrayIndex);
 	}
 
+	private void makeSelectionShift(int x1, int x2, int y1, int y2) {
+		int[] newSel = findSelObs(x1, x2, y1, y2);
+
+		int[] andSel = SelectionEvent.makeAndSelection(newSel,
+				selectedObservations);
+
+		setSelectedObservationsInt(andSel);
+		fireActionPerformed(COMMAND_SELECTION);
+	}
+
+	private void makeSelectionCtrl(int x1, int x2, int y1, int y2) {
+		int[] newSel = findSelObs(x1, x2, y1, y2);
+
+		int[] andSel = SelectionEvent.makeXORSelection(newSel,
+				selectedObservations);
+
+		setSelectedObservationsInt(andSel);
+		fireActionPerformed(COMMAND_SELECTION);
+	}
+
 	private void makeSelection(int x1, int x2, int y1, int y2) {
+		int[] newSel = findSelObs(x1, x2, y1, y2);
+
+		setSelectedObservationsInt(newSel);
+		fireActionPerformed(COMMAND_SELECTION);
+	} // method
+
+	private int[] findSelObs(int x1, int x2, int y1, int y2) {
 		if (x1 > pixelIndex[0].length) {
 			x1 = pixelIndex[0].length;
 		}
@@ -838,12 +868,7 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 			// this.selectedObservationsOld[counter] = i;
 			counter++;
 		}
-
-		setSelectedObservationsInt(newSel);
-		fireActionPerformed(COMMAND_SELECTION);
-	} // method
-
-	private void makeSelectionShift(int x1, int x2, int y1, int y2) {
+		return newSel;
 	}
 
 	// end mouse event handling
