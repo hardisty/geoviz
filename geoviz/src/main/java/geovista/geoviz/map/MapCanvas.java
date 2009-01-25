@@ -1321,6 +1321,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 			if (e.isShiftDown()) {
 				makeSelectionShift(mouseX1, mouseX2 + 1, mouseY1, mouseY2 + 1);
+			} else if (e.isControlDown()) {
+				makeSelectionCtrl(mouseX1, mouseX2 + 1, mouseY1, mouseY2 + 1);
 			} else {
 				makeSelection(mouseX1, mouseX2 + 1, mouseY1, mouseY2 + 1);
 			}
@@ -1384,6 +1386,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		} else if (mode == MapCanvas.MODE_SELECT) {
 			if (e.isShiftDown()) {
 				makeSelectionShift(x, x + 3, y, y + 3);
+			} else if (e.isControlDown()) {
+				makeSelectionCtrl(x, x + 3, y, y + 3);
 			} else {
 				makeSelection(x, x + 3, y, y + 3);
 			}
@@ -1409,6 +1413,13 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	private void makeSelectionShift(int x1, int x2, int y1, int y2) {
 		int[] newSel = findSelectionInLayers(x1, x2, y1, y2);
 		int[] combinedSel = SelectionEvent.makeAndSelection(
+				selectedObservations, newSel);
+		updateSelection(combinedSel);
+	}
+
+	private void makeSelectionCtrl(int x1, int x2, int y1, int y2) {
+		int[] newSel = findSelectionInLayers(x1, x2, y1, y2);
+		int[] combinedSel = SelectionEvent.makeXORSelection(
 				selectedObservations, newSel);
 		updateSelection(combinedSel);
 	}
