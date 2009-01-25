@@ -150,7 +150,7 @@ public class ScatterPlotWithBackground extends ScatterPlotBasic
 
     }
 
-	protected void drawSlections(Graphics g, Color[] colorNonSelected, int len){
+	protected void drawSelections(Graphics g, Color[] colorNonSelected, int len){
 		if (this.pointSelected == false){ //only draw original points.
 			for (int i = 0; i < len; i++) {
 				if ((exsint[i] <= this.plotEndX) && (exsint[i] >= plotOriginX) && (whyint[i] <= plotOriginY)
