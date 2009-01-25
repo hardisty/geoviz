@@ -40,10 +40,10 @@ import geovista.common.color.Palette;
 import geovista.common.data.DataSetForApps;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
+import geovista.common.event.ColumnAppendedEvent;
+import geovista.common.event.ColumnAppendedListener;
 import geovista.common.event.DataSetEvent;
 import geovista.common.event.DataSetListener;
-import geovista.common.event.DataSetModifiedEvent;
-import geovista.common.event.DataSetModifiedListener;
 import geovista.common.event.PaletteEvent;
 import geovista.common.event.PaletteListener;
 import geovista.readers.example.GeoDataGeneralizedStates;
@@ -60,7 +60,7 @@ import geovista.symbolization.event.ColorClassifierListener;
 // public class VisualClassifier extends JPanel implements ActionListener {
 public class VisualClassifier extends JPanel implements ActionListener,
 		ComponentListener, PaletteListener, DataSetListener,
-		DataSetModifiedListener, TableModelListener {
+		ColumnAppendedListener, TableModelListener {
 	// Jin Chen: for extending purpose, change private to protected for
 	// following fields:
 	// symbolizationPanel,colors,dataColors,colorerLinear,colorClasser,classPick
@@ -751,8 +751,8 @@ public class VisualClassifier extends JPanel implements ActionListener,
 		setData(e.getDataSet());
 	}
 
-	public void dataSetModified(DataSetModifiedEvent e) {
-		if (e.getEventType() == DataSetModifiedEvent.TYPE_EXTENDED) {
+	public void dataSetModified(ColumnAppendedEvent e) {
+		if (e.getEventType() == ColumnAppendedEvent.ChangeType.TYPE_EXTENDED) {
 			// Object[] newData = e.getNewData();
 			// DataSetForApps newDataSet = new DataSetForApps(newData);
 			classPick.dataSetModified(e);

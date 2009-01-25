@@ -1,11 +1,11 @@
 /* -------------------------------------------------------------------
  GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class DataSetModifiedListener
+ Java source file for the class ColumnAppendedListener
  Copyright (c), 2002, GeoVISTA Center
  All Rights Reserved.
  Original Author: Frank Hardisty
  $Author: hardisty $
- $Id: DataSetModifiedListener.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
+ $Id: ColumnAppendedListener.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
  $Date: 2005/02/13 03:26:27 $
  This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -26,7 +26,7 @@ package geovista.rjava;
 
 import java.util.EventListener;
 
-import geovista.common.event.DataSetModifiedEvent;
+import geovista.common.event.ColumnAppendedEvent;
 
 
 /**
@@ -39,7 +39,7 @@ import geovista.common.event.DataSetModifiedEvent;
 public interface DataSetModifiedListener extends EventListener {
 
 
-  public void dataSetModified(DataSetModifiedEvent e);
+  public void dataSetModified(ColumnAppendedEvent e);
 
 
 }
