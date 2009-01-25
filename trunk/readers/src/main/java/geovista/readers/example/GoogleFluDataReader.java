@@ -8,6 +8,8 @@ import java.awt.Shape;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,50 +47,53 @@ public class GoogleFluDataReader implements GeoDataSource {
 	HashMap<String, Integer> idName = new HashMap<String, Integer>();
 	HashMap<Integer, String> nameID = new HashMap();
 
-	public GoogleFluDataReader() {
+	public GoogleFluDataReader() throws IOException {
 		readContents();
 		makeMonthyData();
 	}
 
-	public void readContents() {
+	public void readContents() throws IOException {
 
-		try {
-			Scanner sc = null;
-			String fileName = "C:\\data\\geovista_data\\syndromic\\google_trends\\historic1.csv";
-			FileInputStream fis = new FileInputStream(fileName);
-			// use buffering, reading one line at a time
-			// FileReader always assumes default encoding is OK!
-			BufferedReader input = new BufferedReader(
-					new InputStreamReader(fis));
-			String namesLine = input.readLine();
-			extractNames(namesLine);
-			initiLIData();
-			String subString = "";
-			String line = "";
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Scanner sc = null;
+		String fileName = "C:\\datap\\geovista_data\\syndromic\\google_trends\\historic1.csv";
+		InputStream is = this.getClass().getResourceAsStream(
+				"resources/historic1.csv");
+		// FileInputStream fis = new FileInputStream(fileName);
+		// use buffering, reading one line at a time
+		// FileReader always assumes default encoding is OK!
+		BufferedReader input = new BufferedReader(new InputStreamReader(is));
+		String namesLine = input.readLine();
+		extractNames(namesLine);
+		initiLIData();
+		String subString = "";
+		String line = "";
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-			while ((line = input.readLine()) != null) {
+		while ((line = input.readLine()) != null) {
 
-				sc = new Scanner(line).useDelimiter(",");
+			sc = new Scanner(line).useDelimiter(",");
 
-				subString = sc.next();
+			subString = sc.next();
 
-				Date d = format.parse(subString);
+			Date d = null;
+			try {
+				d = format.parse(subString);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-				dates.add(d);
-				int counter = 0;
-				while (sc.hasNext()) {
-					Double num = Double.valueOf(sc.next());
-					String place = names.get(counter);
-					counter++;
-					ArrayList<Double> placeData = iLIData.get(place);
-					placeData.add(num);
-
-				}
+			dates.add(d);
+			int counter = 0;
+			while (sc.hasNext()) {
+				Double num = Double.valueOf(sc.next());
+				String place = names.get(counter);
+				counter++;
+				ArrayList<Double> placeData = iLIData.get(place);
+				placeData.add(num);
 
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+
 		}
 
 	}
@@ -368,7 +373,13 @@ public class GoogleFluDataReader implements GeoDataSource {
 
 	public static void main(String[] args) {
 
-		GoogleFluDataReader reader = new GoogleFluDataReader();
+		GoogleFluDataReader reader = null;
+		try {
+			reader = new GoogleFluDataReader();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// reader.readIsoCodes();
 		// reader.findCountryCodes();
 
