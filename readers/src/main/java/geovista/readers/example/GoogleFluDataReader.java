@@ -4,10 +4,7 @@
 
 package geovista.readers.example;
 
-import java.awt.Shape;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,12 +21,10 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import geovista.common.data.DataSetForApps;
-import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeoDataSource;
 import geovista.common.data.SpatialWeights;
 import geovista.readers.join.JoinPoint;
 import geovista.readers.join.Joiner;
-import geovista.readers.shapefile.ShapeFileDataReader;
 
 public class GoogleFluDataReader implements GeoDataSource {
 
@@ -55,7 +50,8 @@ public class GoogleFluDataReader implements GeoDataSource {
 	public void readContents() throws IOException {
 
 		Scanner sc = null;
-		String fileName = "C:\\datap\\geovista_data\\syndromic\\google_trends\\historic1.csv";
+		// String fileName =
+		// "C:\\datap\\geovista_data\\syndromic\\google_trends\\historic1.csv";
 		InputStream is = this.getClass().getResourceAsStream(
 				"resources/historic1.csv");
 		// FileInputStream fis = new FileInputStream(fileName);
@@ -109,8 +105,10 @@ public class GoogleFluDataReader implements GeoDataSource {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void makeMonthyData() {
 		int month = dates.get(0).getMonth();
+
 		ArrayList<Integer> datePlaces = new ArrayList<Integer>();
 		// here we summarize by month
 		int monthCounter = 0;
@@ -169,146 +167,6 @@ public class GoogleFluDataReader implements GeoDataSource {
 			System.out.println("names = " + aName);
 			names.add(aName);
 		}
-
-	}
-
-	private DataSetForApps makeDataSetForApps() {
-
-		int nCounties = idName.size();
-		int periodicity = 60;
-		int minDay = 1;
-		int maxDay = 730;
-		if (nCases == null) {
-			logger.severe("data not loaded");
-			return null;
-		}
-		int numBins = (maxDay - minDay) / periodicity;
-		numBins++; // count from one
-		int varTypes = 1;
-		// cases, respetory cases
-		Object[] numericalArrays = new Object[(numBins * varTypes) + 1];
-		for (int i = 0; i < numBins * varTypes; i++) {
-			double[] data = new double[nCounties];
-			numericalArrays[i] = data;
-		}
-		ArrayList<String> yearHeadings = makeYearHeadings(periodicity, minDay,
-				maxDay);
-
-		for (int i = 0; i < dates.size(); i++) {
-			int day = this.day.get(i);
-			// System.out.println(year);
-			// int day = minDay;
-			int bin = day / periodicity;
-			double[] killedYear = (double[]) numericalArrays[bin];
-			// double[] woundedYear = (double[]) numericalArrays[bin + numBins];
-
-			String name = names.get(i);
-			int rowID = idName.get(name);
-
-			if (rowID >= 0) {
-				Integer nCase = nCases.get(i);
-				if (nCase != null && nCase.equals(Integer.MIN_VALUE) == false) {
-					// logger.info(nKillInt.toString());
-					killedYear[rowID] = killedYear[rowID] + nCase;
-				}
-				Integer nCaseResp = nRespCases.get(i);
-				if (nCaseResp != null
-						&& nCaseResp.equals(Integer.MIN_VALUE) == false) {
-					// woundedYear[rowID] = woundedYear[rowID] + nCaseResp;
-				}
-
-			}
-
-		}
-
-		String[] varNames = new String[numericalArrays.length];
-
-		// String[] obsNames = makeObsNames(nCounties);
-		// numericalArrays[numericalArrays.length - 1] = obsNames;
-		for (int i = 0; i < numBins; i++) {
-			varNames[i] = yearHeadings.get(i);
-			// varNames[i + numBins] = "nResp_" + yearHeadings.get(i);
-
-		}
-		varNames[varNames.length - 1] = "names";
-		FileInputStream shpStream = null;
-		try {
-			shpStream = new FileInputStream(
-					"C:\\data\\grants\\nevac\\purdue\\IN.shp");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Shape[] geoms = ShapeFileDataReader.getShapes(shpStream);
-		FileInputStream shpStream2 = null;
-		try {
-			shpStream2 = new FileInputStream(
-					"C:\\data\\grants\\nevac\\purdue\\IN.shp");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		SpatialWeights weights = ShapeFileDataReader.getWeights(shpStream2);
-		DataSetForApps dataSet = new DataSetForApps(varNames, numericalArrays,
-				geoms, weights);
-		transformStdDev(dataSet);
-
-		return dataSet;
-	}
-
-	private void transformStdDev(DataSetForApps data) {
-		double[] rowData = new double[data.getNumberNumericAttributes()];
-
-		for (int obs = 0; obs < data.getNumObservations(); obs++) {
-			for (int var = 0; var < data.getNumberNumericAttributes(); var++) {
-				rowData[var] = data.getNumericValueAsDouble(var, obs);
-			}
-			double[] zScores = DescriptiveStatistics.calculateZScores(rowData);
-			for (int var = 0; var < data.getNumberNumericAttributes(); var++) {
-				double[] numericVar = data.getNumericDataAsDouble(var);
-				numericVar[obs] = zScores[var];
-			}
-		}
-
-	}
-
-	private ArrayList<String> makeYearHeadings(int periodicity, int minVal,
-			int maxVal) {
-		int numBins = (maxVal - minVal) / periodicity;
-		ArrayList<String> headings = new ArrayList<String>();
-		Date firstDay = dates.get(0);
-		DateFormat varNameformat = new SimpleDateFormat("yy-MM");
-		DateFormat baseFormat = new SimpleDateFormat("yyy-MM-ddd");
-		Calendar cal = Calendar.getInstance();
-
-		cal.setTime(firstDay);
-		int originalDay = cal.get(Calendar.DAY_OF_MONTH);
-		int originalMonth = cal.get(Calendar.MONTH);
-		int originalYear = cal.get(Calendar.YEAR);
-		System.out.println(varNameformat.format(firstDay));
-		for (int i = 0; i <= numBins; i++) {// note the <= in the loop
-			int binMin = (periodicity * i) + minVal;
-			int binMax = binMin + periodicity;
-			if (binMax > maxVal) {
-				binMax = maxVal;
-			}
-			int day = originalDay + binMax;
-			String dateString = originalYear + "-" + originalMonth + "-" + day;
-			Date newDate = null;
-			try {
-				newDate = baseFormat.parse(dateString);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			cal.setTime(newDate);
-			String label = varNameformat.format(cal.getTime());
-			System.out.println(label);
-			headings.add(label);
-
-		}
-
-		return headings;
 
 	}
 
