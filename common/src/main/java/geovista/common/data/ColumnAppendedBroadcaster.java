@@ -95,4 +95,9 @@ public class ColumnAppendedBroadcaster implements DataSetListener {
 	public void setDataSet(DataSetForApps dataSet) {
 		this.dataSet = dataSet;
 	}
+
+	public DataSetForApps getDataSet() {
+		return dataSet;
+	}
+
 }

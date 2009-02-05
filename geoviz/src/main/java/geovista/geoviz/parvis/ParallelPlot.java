@@ -573,15 +573,6 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	int transparency = 30;
 
-	private Color[] makeTranslucent(Color[] colors) {
-		for (int i = 0; i < colors.length; i++) {
-			Color c = colors[i];
-			c = new Color(c.getRed(), c.getGreen(), c.getBlue(), transparency);
-			colors[i] = c;
-		}
-		return colors;
-	}
-
 	public void setColors(Color[] colors) {
 		BasicParallelDisplayUI ui = (BasicParallelDisplayUI) parallelDisplay
 				.getUI();
