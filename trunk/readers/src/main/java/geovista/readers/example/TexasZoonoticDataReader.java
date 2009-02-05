@@ -19,7 +19,6 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import geovista.common.data.DataSetForApps;
-import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeoDataSource;
 import geovista.common.data.SpatialWeights;
 import geovista.readers.join.JoinPoint;
@@ -40,7 +39,6 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 	private final ArrayList<String> lymeHispanics = new ArrayList<String>();
 
 	ArrayList<Integer> wnYears = new ArrayList<Integer>();
-	private final ArrayList<String> wnVarNames = new ArrayList<String>();
 
 	private final ArrayList<String> wnCountyNames = new ArrayList<String>();
 	private final ArrayList<Double> wnAges = new ArrayList<Double>();
@@ -55,6 +53,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 
 	String basePath = "C:\\data\\grants\\nevac\\zoonotic\\";
 
+	@SuppressWarnings("unused")
 	public void readLymeContents() throws IOException {
 
 		Scanner sc = null;
@@ -79,6 +78,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 			String yearString = sc.next();
 			Integer year = Integer.valueOf(yearString);
 			lymeYears.add(year);
+
 			String condition = sc.next();
 			String onset = sc.next();
 			String city = sc.next();
@@ -125,14 +125,10 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 			String yearString = sc.next();
 			Integer year = Integer.valueOf(yearString);
 			wnYears.add(year);
-			String condition = sc.next();
-			String wnDeath = sc.next();
 
 			String county = sc.next();
 			county = county.trim();
 			wnCountyNames.add(county);
-
-			String onset = sc.next();
 
 			String ageString = sc.next(); // age
 			Double age = getDoubleVal(ageString);
@@ -172,22 +168,6 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 			String aName = scan.next();
 			System.out.println("names = " + aName);
 			lymeVarNames.add(aName);
-		}
-
-	}
-
-	private void transformStdDev(DataSetForApps data) {
-		double[] rowData = new double[data.getNumberNumericAttributes()];
-
-		for (int obs = 0; obs < data.getNumObservations(); obs++) {
-			for (int var = 0; var < data.getNumberNumericAttributes(); var++) {
-				rowData[var] = data.getNumericValueAsDouble(var, obs);
-			}
-			double[] zScores = DescriptiveStatistics.calculateZScores(rowData);
-			for (int var = 0; var < data.getNumberNumericAttributes(); var++) {
-				double[] numericVar = data.getNumericDataAsDouble(var);
-				numericVar[obs] = zScores[var];
-			}
 		}
 
 	}
