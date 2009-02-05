@@ -71,7 +71,6 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	// transient private Object[] dataObject;//XXX eliminate this data structure
 	transient private DataSetForApps dataSet;
 
-	transient private double[][] doubleDataArrays;
 	transient private int[] dataIndices;
 	transient private double[] dataX;
 	transient private double[] dataY;
@@ -242,7 +241,6 @@ public class DecisionTreeScatterPlot extends JPanel implements
 	 * @param doubleDataArrays
 	 */
 	public void setDoubleDataArrays(double[][] doubleDataArrays) {
-		this.doubleDataArrays = doubleDataArrays;
 	}
 
 	/**
