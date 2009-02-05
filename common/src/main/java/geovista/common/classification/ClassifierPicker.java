@@ -586,7 +586,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 	}
 
 	public static void main(String[] args) {
-		ClassifierPicker picker = new ClassifierPicker();
+
 		ClassifierEqualIntervals classer = new ClassifierEqualIntervals();
 		double[] data = { 1, 2, Double.NaN, 4, 3, 2, 1, 2, 3, 4, 66 };
 		int[] classes = classer.classify(data, 4);
