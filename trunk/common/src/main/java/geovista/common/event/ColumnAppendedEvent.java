@@ -17,7 +17,7 @@ import geovista.common.data.DataSetForApps;
 public class ColumnAppendedEvent extends EventObject {
 
 	private transient final DataSetForApps newDataSet;
-	private transient final DataSetForApps oldDataSet;
+	// private transient final DataSetForApps oldDataSet;
 
 	private final ChangeType eventType;
 
@@ -38,7 +38,7 @@ public class ColumnAppendedEvent extends EventObject {
 		super(source);
 		eventType = ColumnAppendedEvent.ChangeType.TYPE_EXTENDED;
 		this.newDataSet = newDataSet;
-		this.oldDataSet = oldDataSet;
+		// this.oldDataSet = oldDataSet;
 
 		// XXX question: should we check for the appropriate array length
 		// here???
