@@ -154,11 +154,7 @@ public class ClassifierJenks implements DescribedClassifier {
 			data[i] = (int) (rand.nextDouble() * 1000);
 		}
 		long start = System.nanoTime();
-		// Arrays.sort(data);
-		double[] breaks = ClassifierJenks.getJenksBreaks(data, 4);
-		for (double element : breaks) {
-			// System.out.println(i + " " + breaks[i]);
-		}
+
 		ClassifierJenks jenk = new ClassifierJenks();
 		int[] classes = jenk.classify(data, 4);
 		long end = System.nanoTime();
