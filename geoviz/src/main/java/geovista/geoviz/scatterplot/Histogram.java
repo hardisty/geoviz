@@ -105,7 +105,6 @@ public class Histogram extends JPanel implements MouseListener,
 	private final JTextField xAxisMaxField = new JTextField(16);
 	private final EventListenerList listenerListAction = new EventListenerList();
 	private boolean drawBox;
-	private boolean drawTip;
 	private int mouseX2;
 	private int mouseY2;
 	private int mouseX1;
@@ -1144,20 +1143,8 @@ public class Histogram extends JPanel implements MouseListener,
 		repaint();
 	}
 
-	private void makeSelection(int mouseX12, int i, int mouseY12, int j) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void makeSelectionShift(int mouseX12, int i, int mouseY12, int j) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void mouseDragged(MouseEvent e) {
 		drawBox = true;
-		drawTip = false;
-
 		mouseX2 = e.getX();
 		mouseY2 = e.getY();
 
