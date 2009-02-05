@@ -251,7 +251,7 @@ public class StarPlotRenderer implements Glyph {
 		if (!figureReady || paintFigure == null) {
 			return;
 		}
-		Stroke st = target.getStroke();
+
 		float[] dash = { .5f };
 		BasicStroke outlineStroke = new BasicStroke(size, BasicStroke.CAP_BUTT,
 				BasicStroke.JOIN_ROUND, 1f, dash, 0);
