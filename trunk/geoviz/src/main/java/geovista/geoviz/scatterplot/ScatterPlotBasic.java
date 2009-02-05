@@ -241,8 +241,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	}
 
 	protected void axisDataSetup() {
-		boolean[] dataBoolean;
-		int[] dataInt;
+
 		int len = 0;
 		dataX = dataSet.getNumericDataAsDouble(dataIndices[0]);
 		len = dataX.length;
@@ -615,7 +614,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		if (dataArrayX == null) {
+		if (dataArrayX == null || pointColors == null) {
 			return;
 		}
 		if (selections.length == 0) {
