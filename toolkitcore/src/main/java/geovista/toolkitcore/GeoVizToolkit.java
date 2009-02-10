@@ -1,6 +1,9 @@
 /* 
  Licensed under LGPL v. 2.1 or any later version;
  see GNU LGPL for details.
+ 
+ Original Author: Frank Hardisty
+ 
  */
 
 package geovista.toolkitcore;
@@ -225,6 +228,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// addBindings();
 		// managing our layouts
 		filePath = "48States";
+
 		shpRead = new ShapeFileDataReader();
 		shpProj = new ShapeFileProjection();
 		dataCaster = new DataSetBroadcaster();
@@ -362,7 +366,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	/*
 	 * deleting all beans
-	 * 
 	 */
 
 	public void removeAllBeans() {
@@ -381,7 +384,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	/*
 	 * deleting named bean
-	 * 
 	 */
 
 	public void deleteBean(ToolkitBean oldBean) {
@@ -484,7 +486,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	/*
 	 * adds bean to coordinator. Adds bean to the main gui area, also to the
 	 * remove bean menu
-	 * 
 	 */
 	public void addBeanToGui(ToolkitBean newToolkitBean) {
 
@@ -780,6 +781,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 		logger.info("creating data: " + name);
 		Object[] newDataSet = null;
+		// name = "GTD";
 		if (name.equals("48States")) {
 			// GeoDataGeneralizedStates statesData = new
 			// GeoDataGeneralizedStates();
