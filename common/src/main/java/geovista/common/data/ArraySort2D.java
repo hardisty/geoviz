@@ -5,8 +5,10 @@
 package geovista.common.data;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 public class ArraySort2D {
+	final static Logger logger = Logger.getLogger(ArraySort2D.class.getName());
 
 	private class IndexedDouble implements Comparable<IndexedDouble> {
 		double data;
@@ -111,8 +113,8 @@ public class ArraySort2D {
 		ArraySort2D sorter = new ArraySort2D();
 		int[] results = sorter.getSortedIndex(someData);
 
-		System.out.println(Arrays.toString(results));
-		System.out.println(Double.NaN == Double.NaN);// false
+		logger.info(Arrays.toString(results));
+		logger.info("" + (Double.NaN == Double.NaN));// false
 
 	}
 }// end class

@@ -161,7 +161,7 @@ public class SeerStatReader {
 
 				ArrayList<Double> nums = txtData.get(fip);
 				tempNums.add(nums);
-				// System.out.println("nums " + nums);
+				// logger.info("nums " + nums);
 
 			}
 		}

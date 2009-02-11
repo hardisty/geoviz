@@ -59,7 +59,7 @@ public class DbfFile implements DbfConsts {
             */
     public DbfFile(String file) throws java.io.IOException, DbfFileException {
         if (DEBUG) {
-            System.out.println(
+            logger.info(
                 "---->uk.ac.leeds.ccg.dbffile.DbfFile constructed. Will identify itself as DbFi>");
         }
 
@@ -68,7 +68,7 @@ public class DbfFile implements DbfConsts {
         rFile = new RandomAccessFile(new File(file), "r");
 
         if (DEBUG) {
-            System.out.println("Dbf file has initinalized");
+            logger.info("Dbf file has initinalized");
         }
 
         init(sfile);
@@ -165,7 +165,7 @@ public class DbfFile implements DbfConsts {
         int widthsofar;
 
         if (DEBUG) {
-            System.out.println("Dbf file has initinalized");
+            logger.info("Dbf file has initinalized");
         }
 
         dFile = sfile;
@@ -298,19 +298,19 @@ public class DbfFile implements DbfConsts {
 
         for (int i = 0; i < numfields; i++) {
             if (DEBUG) {
-                System.out.println("DbFi>type " + fielddef[i].fieldtype);
+                logger.info("DbFi>type " + fielddef[i].fieldtype);
             }
 
             if (DEBUG) {
-                System.out.println("DbFi>start " + fielddef[i].fieldstart);
+                logger.info("DbFi>start " + fielddef[i].fieldstart);
             }
 
             if (DEBUG) {
-                System.out.println("DbFi>len " + fielddef[i].fieldlen);
+                logger.info("DbFi>len " + fielddef[i].fieldlen);
             }
 
             if (DEBUG) {
-                System.out.println(t.substring(fielddef[i].fieldstart,
+                logger.info(t.substring(fielddef[i].fieldstart,
                         fielddef[i].fieldstart + fielddef[i].fieldlen));
             }
 
@@ -620,7 +620,7 @@ public class DbfFile implements DbfConsts {
             }
 
             if (DEBUG) {
-                System.out.println(dbf_id);
+                logger.info(dbf_id);
             }
 
             if (dbf_id == 3) {
@@ -654,7 +654,7 @@ public class DbfFile implements DbfConsts {
             }
 
             if (DEBUG) {
-                System.out.println(last_update_y);
+                logger.info(last_update_y);
             }
 
             last_rec = file.readIntLE();
@@ -664,20 +664,20 @@ public class DbfFile implements DbfConsts {
             }
 
             if (DEBUG) {
-                System.out.println(last_rec);
+                logger.info(last_rec);
             }
 
             data_offset = file.readShortLE();
 
             //data_offset=0;
-            //System.out.println("x = "+file.readUnsignedByte()+" " +
+            //logger.info("x = "+file.readUnsignedByte()+" " +
             //file.readUnsignedByte());
             if (DEBUG) {
                 System.out.print("DbFi>data offset ");
             }
 
             if (DEBUG) {
-                System.out.println(data_offset);
+                logger.info(data_offset);
             }
 
             rec_size = file.readShortLE();
@@ -687,7 +687,7 @@ public class DbfFile implements DbfConsts {
             }
 
             if (DEBUG) {
-                System.out.println(rec_size);
+                logger.info(rec_size);
             }
 
             filesize = (rec_size * last_rec) + data_offset + 1;
@@ -698,7 +698,7 @@ public class DbfFile implements DbfConsts {
             }
 
             if (DEBUG) {
-                System.out.println(numfields);
+                logger.info(numfields);
             }
 
             if (DEBUG) {
@@ -706,7 +706,7 @@ public class DbfFile implements DbfConsts {
             }
 
             if (DEBUG) {
-                System.out.println(filesize);
+                logger.info(filesize);
             }
 
             file.skipBytes(20);
@@ -748,7 +748,7 @@ public class DbfFile implements DbfConsts {
     private DateFormat lastFormat = dateParser;
 
     public static void main(String[] args) throws Exception {
-        System.out.println(new SimpleDateFormat("yyyymmdd") {
+        logger.info(new SimpleDateFormat("yyyymmdd") {
             {
                 setLenient(false);
             }

@@ -138,7 +138,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 				Set<String> keySet = iLIData.keySet();
 				for (String placeName : keySet) {
 					if (monthCounter == 5) {
-						System.out.println("watchit");
+						logger.info("watchit");
 					}
 					ArrayList<Double> sumData = monthlyILIData.get(placeName);
 					Double avg = sumData.get(monthCounter);
@@ -164,7 +164,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 		scan.next();// skip "date"
 		while (scan.hasNext()) {
 			String aName = scan.next();
-			System.out.println("names = " + aName);
+			logger.info("names = " + aName);
 			names.add(aName);
 		}
 
@@ -182,7 +182,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 
 		for (JoinPoint pt : join) {
 			if (pt.getRight() == JoinPoint.NO_COORDINATE) {
-				System.out.println("ark ark, missed " + pt.getValue());
+				logger.info("ark ark, missed " + pt.getValue());
 			}
 		}
 		Object[] doubleData = new Object[iLIData.get("United States").size()];
@@ -196,7 +196,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 			varNames[i + 1] = cal.get(Calendar.DAY_OF_MONTH) + "-"
 					+ (cal.get(Calendar.MONTH) + 1) + "-"
 					+ cal.get(Calendar.YEAR);
-			System.out.println("var = " + varNames[i]);
+			logger.info("var = " + varNames[i]);
 		}
 		varNames[0] = "ST_NAME";
 
@@ -243,7 +243,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 
 		DataSetForApps dataSet = reader.getDataForApps();
 
-		System.out.println("All done! we have this many obs:"
+		logger.info("All done! we have this many obs:"
 				+ dataSet.getNumObservations());
 
 	}

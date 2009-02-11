@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 class SocketServer {
+	final static Logger logger = Logger.getLogger(SocketServer.class.getName());
 
 	public static void main(String args[]) throws Exception {
 
@@ -21,7 +23,7 @@ class SocketServer {
 		try {
 			welcomeSocket = new ServerSocket(80);
 		} catch (IOException ioe) {
-			System.out.println("Could not listen on port: 80");
+			logger.info("Could not listen on port: 80");
 			System.exit(1);
 		}
 
@@ -39,23 +41,23 @@ class SocketServer {
 					new InputStreamReader(connectionSocket.getInputStream()));
 			BufferedOutputStream outToClient = new BufferedOutputStream(
 					connectionSocket.getOutputStream());
-			System.out.println(inFromClient.readLine());
+			logger.info(inFromClient.readLine());
 
 			int totalSizeTransferred = 0;
 			int totalSizeRead;
 			int PACKET_SIZE = 20480;
 			byte[] packet = new byte[PACKET_SIZE];
 
-			System.out.println("reading file...");
+			logger.info("reading file...");
 			FileInputStream fis = new FileInputStream("6meg.pdf");
 
 			while ((totalSizeRead = fis.read(packet, 0, packet.length)) >= 0) {
 				outToClient.write(packet, 0, totalSizeRead);
 				totalSizeTransferred = totalSizeTransferred + totalSizeRead;
-				System.out.println(totalSizeTransferred);
+				logger.info("" + totalSizeTransferred);
 			}
 
-			System.out.println("done reading file...");
+			logger.info("done reading file...");
 			outToClient.close();
 			fis.close();
 		}

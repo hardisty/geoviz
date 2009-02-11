@@ -57,9 +57,9 @@ public class MaxPrecisionOverlayOp {
     }
 
     private void printBits(double x) {
-        System.out.println("double value = " + x);
-        System.out.println(Long.toBinaryString(Double.doubleToLongBits(x)));
-        System.out.println(Long.toHexString(Double.doubleToLongBits(x)));
+        logger.info("double value = " + x);
+        logger.info(Long.toBinaryString(Double.doubleToLongBits(x)));
+        logger.info(Long.toHexString(Double.doubleToLongBits(x)));
     }
 
     public Geometry intersection(Geometry g0, Geometry g1) {
@@ -97,12 +97,12 @@ public class MaxPrecisionOverlayOp {
         printBits(g1Copy.getCoordinate().x);
         printBits(2345.626654971);
 
-        System.out.println(g0Copy);
-        System.out.println(g1Copy);
+        logger.info(g0Copy);
+        logger.info(g1Copy);
 
         Geometry result = g0Copy.intersection(g1Copy);
 
-        System.out.println(result.getArea() / g0Copy.getArea());
+        logger.info(result.getArea() / g0Copy.getArea());
 
         trans.translate(minPt);
         trans.apply(result);

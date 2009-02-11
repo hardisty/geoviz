@@ -232,7 +232,7 @@ public class MoranMap extends JPanel implements SelectionListener,
 		MoranMap varSigMap = new MoranMap();
 		double[] vals = { 0, 1, 2, 3 };
 		double along = DescriptiveStatistics.percentAbove(vals, 2.9);
-		System.out.println(along);
+		logger.info("" + along);
 
 		JFrame frame = new JFrame("Moran Map");
 		frame.add(varSigMap);

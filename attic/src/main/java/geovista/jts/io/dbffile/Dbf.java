@@ -45,7 +45,7 @@ public class Dbf implements DbfConsts{
      * @exception DbfFileException If there is an error reading header.
      */
     public Dbf(URL url) throws java.io.IOException,DbfFileException{
-        if(DEBUG)System.out.println("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
+        if(DEBUG)logger.info("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
         URLConnection uc = url.openConnection();
         InputStream in = uc.getInputStream();
         EndianDataInputStream sfile = new EndianDataInputStream(in);
@@ -53,13 +53,13 @@ public class Dbf implements DbfConsts{
     }
     
     public Dbf(InputStream in) throws java.io.IOException,DbfFileException{
-        if(DEBUG)System.out.println("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
+        if(DEBUG)logger.info("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
         EndianDataInputStream sfile = new EndianDataInputStream(in);
         init(sfile);
     }
     
     public Dbf(String name) throws java.io.IOException,DbfFileException{
-        if(DEBUG)System.out.println("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
+        if(DEBUG)logger.info("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
         URL url = new URL(name);
         URLConnection uc = url.openConnection();
         InputStream in = uc.getInputStream();
@@ -68,7 +68,7 @@ public class Dbf implements DbfConsts{
     }
     
     public Dbf(File file) throws java.io.IOException,DbfFileException{
-        if(DEBUG)System.out.println("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
+        if(DEBUG)logger.info("---->uk.ac.leeds.ccg.dbffile.Dbf constructed. Will identify itself as "+DBC);
         InputStream in = new FileInputStream(file);
         EndianDataInputStream sfile = new EndianDataInputStream(in);
         rFile=new RandomAccessFile(file,"r");
@@ -109,7 +109,7 @@ public class Dbf implements DbfConsts{
      */
     public int getFieldNumber(String name){
         for(int i=0;i<numfields;i++){
-            //System.out.println(i);
+            //logger.info(i);
             if(name.equalsIgnoreCase(fielddef[i].fieldname.toString())){
                 return i;
             }
@@ -173,7 +173,7 @@ public class Dbf implements DbfConsts{
             
 
             dbf_id=(int)file.readUnsignedByteLE();
-            if(DEBUG)System.out.println(DBC+"Header id "+dbf_id);
+            if(DEBUG)logger.info(DBC+"Header id "+dbf_id);
             if(dbf_id==3) hasmemo=true;
             else hasmemo=false;
             
@@ -185,30 +185,30 @@ public class Dbf implements DbfConsts{
             if(DEBUG)System.out.print("/");
             if(DEBUG)System.out.print(last_update_m);
             if(DEBUG)System.out.print("/");
-            if(DEBUG)System.out.println(last_update_y);
+            if(DEBUG)logger.info(last_update_y);
             
             last_rec=file.readIntLE();
             if(DEBUG)System.out.print(DBC+"last rec ");
-            if(DEBUG)System.out.println(last_rec);
+            if(DEBUG)logger.info(last_rec);
             
             data_offset=file.readShortLE();
             //data_offset=0;
-            //System.out.println("x = "+file.readUnsignedByte()+" " +
+            //logger.info("x = "+file.readUnsignedByte()+" " +
             //file.readUnsignedByte());
             if(DEBUG)System.out.print(DBC+"data offset ");
-            if(DEBUG)System.out.println(data_offset);
+            if(DEBUG)logger.info(data_offset);
             
             rec_size=file.readShortLE();
             if(DEBUG)System.out.print(DBC+"rec_size ");
-            if(DEBUG)System.out.println(rec_size);
+            if(DEBUG)logger.info(rec_size);
             
             filesize=(rec_size * last_rec) + data_offset+1;
             numfields = (data_offset - DBF_BUFFSIZE -1)/DBF_BUFFSIZE;
             
             if(DEBUG)System.out.print(DBC+"num fields ");
-            if(DEBUG)System.out.println(numfields);
+            if(DEBUG)logger.info(numfields);
             if(DEBUG)System.out.print(DBC+"file size ");
-            if(DEBUG)System.out.println(filesize);
+            if(DEBUG)logger.info(filesize);
             file.skipBytes(20);
         }
         
@@ -292,10 +292,10 @@ public class Dbf implements DbfConsts{
 
         t = rec.toString();
         for(int i=0;i<numfields;i++){
-            if(DEBUG)System.out.println(DBC+"type "+fielddef[i].fieldtype);
-            if(DEBUG)System.out.println(DBC+"start "+fielddef[i].fieldstart);
-            if(DEBUG)System.out.println(DBC+"len "+fielddef[i].fieldlen);
-            if(DEBUG)System.out.println(DBC+""+t.substring(fielddef[i].fieldstart,
+            if(DEBUG)logger.info(DBC+"type "+fielddef[i].fieldtype);
+            if(DEBUG)logger.info(DBC+"start "+fielddef[i].fieldstart);
+            if(DEBUG)logger.info(DBC+"len "+fielddef[i].fieldlen);
+            if(DEBUG)logger.info(DBC+""+t.substring(fielddef[i].fieldstart,
             fielddef[i].fieldstart+fielddef[i].fieldlen));
             switch(fielddef[i].fieldtype){
                 case 'C':
@@ -321,7 +321,7 @@ public class Dbf implements DbfConsts{
                     
                     break;
                 default:
-                    if(DEBUG)System.out.println(DBC+"Oh - don't know how to parse "
+                    if(DEBUG)logger.info(DBC+"Oh - don't know how to parse "
                     +fielddef[i].fieldtype);
             }
         }
@@ -367,7 +367,7 @@ public class Dbf implements DbfConsts{
                 sb.setLength(0);
                 sb=GetDbfRec(i);
                 record=sb.toString();
-                if(DEBUG)System.out.println(DBC+record.substring(fielddef[col].fieldstart,
+                if(DEBUG)logger.info(DBC+record.substring(fielddef[col].fieldstart,
                 fielddef[col].fieldstart+fielddef[col].fieldlen).trim()+"*");
                 column[i-start]=new Integer(record.substring(fielddef[col].fieldstart,
                 fielddef[col].fieldstart+fielddef[col].fieldlen).trim());

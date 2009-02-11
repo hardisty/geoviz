@@ -39,7 +39,7 @@ public class CoordinationManagerTest extends TestCase {
 	 */
 	public void testCoordinateObject() {
 
-		System.out.println("testing coordination.....");
+		logger.info("testing coordination.....");
 
 		ExampleBean coorBean = new ExampleBean();
 		ExampleBean coorBean2 = new ExampleBean();

@@ -1,22 +1,14 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class CoordinationManagerGUI
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: CoordinationManagerGUI.java,v 1.3 2005/02/12 17:42:36 hardisty Exp $
- $Date: 2005/02/12 17:42:36 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.coordination;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -25,118 +17,121 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * this class maintains the GUI it examines beans on the way in and out to make
+ * changes to itself CoordinationManager maintains the state of the beans and
+ * their connections it gets messages from the GUI if the user requests changes
+ * to the connections
+ */
 
-/**this class maintains the GUI
-* it examines beans on the way in and out to make changes to itself
-* CoordinationManager maintains the state of the beans and their connections
-* it gets messages from the GUI if the user requests changes to the connections
-*/
+public class CoordinationManagerGUI extends JScrollPane implements
+		ActionListener {
 
-public class CoordinationManagerGUI extends JScrollPane implements ActionListener{
-  private transient CoordinationManager cm;
-  transient private JPanel boxHolder;
-  transient private JPanel shortcutsHolder;
-  transient private JPanel allHolder;
+	final static Logger logger = Logger.getLogger(CoordinationManager.class
+			.getName());
+	private transient CoordinationManager cm;
+	transient private JPanel boxHolder;
+	transient private JPanel shortcutsHolder;
+	transient private JPanel allHolder;
 
-  //private
-  public CoordinationManagerGUI() {
-    super();
+	// private
+	public CoordinationManagerGUI() {
+		super();
 
-    try {
-      jbInit();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+		try {
+			jbInit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-  public void createShortCuts() {
-    //this.shortcutsHolder = new JPanel();
+	public void createShortCuts() {
+		// this.shortcutsHolder = new JPanel();
 
-    FiringBean[] fBeans = null;
-    	
-    fBeans = (FiringBean[]) cm.getFiringBeans().toArray(fBeans);
-    
-    FiringBean newBean = fBeans[fBeans.length - 1];
-    Icon ic = newBean.getIcon();
-    BeanShortcutsGUI bGUI = new BeanShortcutsGUI(newBean.getBeanName(), ic);
-    this.shortcutsHolder.add(bGUI);
-    bGUI.addActionListener(this);
-    this.revalidate();
+		FiringBean[] fBeans = null;
 
-  }
+		fBeans = cm.getFiringBeans().toArray(fBeans);
 
-  public void createBoxes() {
-    this.boxHolder.removeAll();
-    
-    FiringBean[] fBeans = null;
-	
-    fBeans = (FiringBean[]) cm.getFiringBeans().toArray(fBeans);
-    for (int i = 0; i < fBeans.length; i++){
-      Object whichBean = fBeans[i].getOriginalBean();
-      ListeningBean lBean = new ListeningBean();
-      lBean.setOriginalBean(whichBean);
-      ListeningBeanGUI lGUI = new ListeningBeanGUI(lBean,cm);
-      this.boxHolder.add(lGUI);
-    }
+		FiringBean newBean = fBeans[fBeans.length - 1];
+		Icon ic = newBean.getIcon();
+		BeanShortcutsGUI bGUI = new BeanShortcutsGUI(newBean.getBeanName(), ic);
+		shortcutsHolder.add(bGUI);
+		bGUI.addActionListener(this);
+		revalidate();
 
-  }
+	}
 
-  public void validateBoxes() {
-  }
+	public void createBoxes() {
+		boxHolder.removeAll();
 
-  public void addBean(Object beanIn) {
-    this.cm.addBean(beanIn);
+		FiringBean[] fBeans = null;
 
-    //XXXthese are being commented out because gui creation is too expensive
-    //TODO: replace the functionality represented by the three lines of
-    //code below with something more efficient.
+		fBeans = cm.getFiringBeans().toArray(fBeans);
+		for (FiringBean bean : fBeans) {
+			Object whichBean = bean.getOriginalBean();
+			ListeningBean lBean = new ListeningBean();
+			lBean.setOriginalBean(whichBean);
+			ListeningBeanGUI lGUI = new ListeningBeanGUI(lBean, cm);
+			boxHolder.add(lGUI);
+		}
 
-    //createShortCuts();
-    //createBoxes();
-    //validateBoxes();
-  }
+	}
 
-  public void removeBean(Object oldBean) {
-    this.cm.removeBean(oldBean);
-  }
+	public void validateBoxes() {
+	}
 
-  private void jbInit() throws Exception {
-    this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    this.setViewportBorder(BorderFactory.createLineBorder(Color.black));
-    this.allHolder = new JPanel();
-    this.allHolder.setLayout(new BoxLayout(this.allHolder,BoxLayout.Y_AXIS));
+	public void addBean(Object beanIn) {
+		cm.addBean(beanIn);
 
+		// XXXthese are being commented out because gui creation is too
+		// expensive
+		// TODO: replace the functionality represented by the three lines of
+		// code below with something more efficient.
 
+		// createShortCuts();
+		// createBoxes();
+		// validateBoxes();
+	}
 
+	public void removeBean(Object oldBean) {
+		cm.removeBean(oldBean);
+	}
 
-    this.cm = new CoordinationManager();
-    this.boxHolder = new JPanel();
-    boxHolder.setLayout(new BoxLayout(this.boxHolder, BoxLayout.Y_AXIS));
-    this.allHolder.add(boxHolder);
-    this.getViewport().add(allHolder);
-    this.setPreferredSize(new Dimension(120, 200));
-    this.setMinimumSize(new Dimension(120, 200));
+	private void jbInit() throws Exception {
+		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		setViewportBorder(BorderFactory.createLineBorder(Color.black));
+		allHolder = new JPanel();
+		allHolder.setLayout(new BoxLayout(allHolder, BoxLayout.Y_AXIS));
 
-    this.shortcutsHolder = new JPanel();
-    this.shortcutsHolder.setLayout(new BoxLayout(this.shortcutsHolder,BoxLayout.Y_AXIS));
-    this.shortcutsHolder.add(new JLabel("Shortcuts Holder"));
-    this.allHolder.add(shortcutsHolder);
-  }
+		cm = new CoordinationManager();
+		boxHolder = new JPanel();
+		boxHolder.setLayout(new BoxLayout(boxHolder, BoxLayout.Y_AXIS));
+		allHolder.add(boxHolder);
+		getViewport().add(allHolder);
+		setPreferredSize(new Dimension(120, 200));
+		setMinimumSize(new Dimension(120, 200));
 
-  public void actionPerformed(ActionEvent e){
-    String cmd = e.getActionCommand();
-    if (cmd == BeanShortcutsGUI.EVENT_INCOMING_ON){
-      System.out.println(BeanShortcutsGUI.EVENT_INCOMING_ON);
-    } else if (cmd == BeanShortcutsGUI.EVENT_INCOMING_OFF){
-      System.out.println(BeanShortcutsGUI.EVENT_INCOMING_OFF);
-    } else if(cmd == BeanShortcutsGUI.EVENT_OUTGOING_ON){
-      System.out.println(BeanShortcutsGUI.EVENT_OUTGOING_ON);
-    } else if(cmd == BeanShortcutsGUI.EVENT_OUTGOING_OFF){
-      System.out.println(BeanShortcutsGUI.EVENT_OUTGOING_OFF);
-    }
-  }
+		shortcutsHolder = new JPanel();
+		shortcutsHolder.setLayout(new BoxLayout(shortcutsHolder,
+				BoxLayout.Y_AXIS));
+		shortcutsHolder.add(new JLabel("Shortcuts Holder"));
+		allHolder.add(shortcutsHolder);
+	}
 
-  public CoordinationManager getCm() {
-    return cm;
-  }
+	public void actionPerformed(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if (cmd == BeanShortcutsGUI.EVENT_INCOMING_ON) {
+			logger.info(BeanShortcutsGUI.EVENT_INCOMING_ON);
+		} else if (cmd == BeanShortcutsGUI.EVENT_INCOMING_OFF) {
+			logger.info(BeanShortcutsGUI.EVENT_INCOMING_OFF);
+		} else if (cmd == BeanShortcutsGUI.EVENT_OUTGOING_ON) {
+			logger.info(BeanShortcutsGUI.EVENT_OUTGOING_ON);
+		} else if (cmd == BeanShortcutsGUI.EVENT_OUTGOING_OFF) {
+			logger.info(BeanShortcutsGUI.EVENT_OUTGOING_OFF);
+		}
+	}
+
+	public CoordinationManager getCm() {
+		return cm;
+	}
 }

@@ -95,7 +95,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(ingroupStart - 1, ingroupEnd);
 		subString = subString.trim();
-		// System.out.println("ingroup:" + subString);
+		// logger.info("ingroup:" + subString);
 		if (subString.equals("")) {
 			ingroup.add(Integer.MIN_VALUE);
 		} else {
@@ -112,7 +112,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(typeStart - 1, typeEnd);
 		subString = subString.trim();
-		// System.out.println("type:" + subString);
+		// logger.info("type:" + subString);
 		if (subString.equals("")) {
 			type.add(Integer.MIN_VALUE);
 		} else {
@@ -121,7 +121,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(iyearStart - 1, iyearEnd);
 		subString = subString.trim();
-		// System.out.println("iyear:" + subString);
+		// logger.info("iyear:" + subString);
 		if (subString.equals("")) {
 			iyear.add(Integer.MIN_VALUE);
 		} else {
@@ -130,7 +130,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(imonthStart - 1, imonthEnd);
 		subString = subString.trim();
-		// System.out.println("imonth:" + subString);
+		// logger.info("imonth:" + subString);
 		if (subString.equals("") || isInteger(subString) == false) {
 			imonth.add(Integer.MIN_VALUE);
 		} else {
@@ -139,7 +139,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(idayStart - 1, idayEnd);
 		subString = subString.trim();
-		// System.out.println("iday:" + subString);
+		// logger.info("iday:" + subString);
 		if (subString.equals("")) {
 			iday.add(Integer.MIN_VALUE);
 		} else {
@@ -148,7 +148,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(successStart - 1, successEnd);
 		subString = subString.trim();
-		// System.out.println("success:" + subString);
+		// logger.info("success:" + subString);
 		if (subString.equals("")) {
 			success.add(Integer.MIN_VALUE);
 		} else {
@@ -157,7 +157,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(regionStart - 1, regionEnd);
 		subString = subString.trim();
-		// System.out.println("region:" + subString);
+		// logger.info("region:" + subString);
 		if (subString.equals("")) {
 			region.add(Integer.MIN_VALUE);
 		} else {
@@ -166,7 +166,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(entityStart - 1, entityEnd);
 		subString = subString.trim();
-		// System.out.println("entity:" + subString);
+		// logger.info("entity:" + subString);
 		if (subString.equals("")) {
 			entity.add(Integer.MIN_VALUE);
 		} else {
@@ -174,7 +174,7 @@ public class GTDReader implements GeoDataSource {
 		}
 		subString = input.substring(countryStart - 1, countryEnd);
 		subString = subString.trim();
-		// System.out.println("country:" + subString);
+		// logger.info("country:" + subString);
 		if (subString.equals("")) {
 			country.add(Integer.MIN_VALUE);
 		} else {
@@ -183,7 +183,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(stateStart - 1, stateEnd);
 		subString = subString.trim();
-		// System.out.println("state:" + subString);
+		// logger.info("state:" + subString);
 		if (subString.equals("")) {
 			state.add(Integer.MIN_VALUE);
 		} else {
@@ -192,7 +192,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(nperpsStart - 1, nperpsEnd);
 		subString = subString.trim();
-		// System.out.println("nperps:" + subString);
+		// logger.info("nperps:" + subString);
 		if (subString.equals("")) {
 			nperps.add(Integer.MIN_VALUE);
 		} else {
@@ -201,7 +201,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(nkillStart - 1, nkillEnd);
 		subString = subString.trim();
-		// System.out.println("nkill:" + subString);
+		// logger.info("nkill:" + subString);
 		if (subString.equals("")) {
 			nkill.add(Integer.MIN_VALUE);
 		} else {
@@ -210,7 +210,7 @@ public class GTDReader implements GeoDataSource {
 
 		subString = input.substring(nwoundStart - 1, nwoundEnd);
 		subString = subString.trim();
-		// System.out.println("nwound:" + subString);
+		// logger.info("nwound:" + subString);
 		if (subString.equals("")) {
 			nwound.add(Integer.MIN_VALUE);
 		} else {
@@ -229,7 +229,7 @@ public class GTDReader implements GeoDataSource {
 		} else if (subString.equals("")) {
 			damamt.add(Integer.MIN_VALUE);
 		} else {
-			// System.out.println("damamt:" + subString);
+			// logger.info("damamt:" + subString);
 			damamt.add(Integer.valueOf(subString));
 		}
 	}
@@ -407,13 +407,13 @@ public class GTDReader implements GeoDataSource {
 		while (sc.hasNext()) {
 
 			nextThing = sc.next();
-			// System.out.println(nextThing);
+			// logger.info(nextThing);
 			// logger.info(nextThing);
 			if (isInteger(nextThing)) {
 				if (id != null) {
 					name = removeQuotes(name);
 					name = name.trim();
-					// System.out.println("id = " + id + ",name = " + name);
+					// logger.info("id = " + id + ",name = " + name);
 					if (isoGtdCountry.containsKey(name) == false) {
 						// logger.severe("Can't find:" + name);
 					}
@@ -476,7 +476,7 @@ public class GTDReader implements GeoDataSource {
 
 		for (int i = 0; i < country.size(); i++) {
 			int year = iyear.get(i);
-			// System.out.println(year);
+			// logger.info(year);
 			year = year - minYear;
 			int bin = year / periodicity;
 			double[] killedYear = (double[]) numericalArrays[bin];
@@ -564,7 +564,7 @@ public class GTDReader implements GeoDataSource {
 			}
 			String label = String.valueOf(binMin).substring(2) + "-"
 					+ String.valueOf(binMax).substring(2);
-			System.out.println(label);
+			logger.info(label);
 			headings.add(label);
 
 		}
@@ -595,7 +595,7 @@ public class GTDReader implements GeoDataSource {
 		reader.simplifyAllNulls();
 		DataSetForApps dataSet = reader.makeDataSetForApps();
 
-		System.out.println("All done! we have this many obs:"
+		logger.info("All done! we have this many obs:"
 				+ dataSet.getNumObservations());
 
 	}

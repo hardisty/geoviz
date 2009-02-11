@@ -57,13 +57,13 @@ public class DebugTimer {
     }
 
     public void start(String msg) {
-        System.out.println("Started    " + msg);
+        logger.info("Started    " + msg);
         sw.start();
     }
 
     public void logEvent(String msg) {
         String elapsedStr = formatTime(sw.getTimeString());
-        System.out.println("Elapsed: " + elapsedStr + "    " + msg);
+        logger.info("Elapsed: " + elapsedStr + "    " + msg);
         sw.start();
     }
 

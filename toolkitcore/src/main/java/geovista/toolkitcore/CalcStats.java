@@ -1,3 +1,7 @@
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.toolkitcore;
 
 import java.io.File;
@@ -7,10 +11,12 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import geovista.common.data.DescriptiveStatistics;
 
 public class CalcStats {
+	final static Logger logger = Logger.getLogger(CalcStats.class.getName());
 
 	/**
 	 * @param args
@@ -25,7 +31,7 @@ public class CalcStats {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		log("done!");
+		logger.info("done!");
 	}
 
 	/**
@@ -111,8 +117,8 @@ public class CalcStats {
 				}
 			}
 
-			log(meanVals);
-			log(varianceVals);
+			logger.info("" + meanVals);
+			logger.info("" + varianceVals);
 
 		} finally {
 			// ensure the underlying stream is always closed
@@ -143,8 +149,7 @@ public class CalcStats {
 	 * <P>
 	 * This simple default implementation expects simple name-value pairs,
 	 * separated by an '=' sign. Examples of valid input :
-	 * <tt>height = 167cm</tt>
-	 * <tt>mass =  65kg</tt>
+	 * <tt>height = 167cm</tt> <tt>mass =  65kg</tt>
 	 * <tt>disposition =  "grumpy"</tt>
 	 * <tt>this is the name = this is the value</tt>
 	 */
@@ -166,7 +171,7 @@ public class CalcStats {
 			// quote(value.trim()));
 
 		}
-		log(values);
+		logger.info("" + values);
 		// (no need for finally here, since String is source)
 		scanner.close();
 		return values;
@@ -188,9 +193,5 @@ public class CalcStats {
 	private final File outFile;
 	private FileOutputStream outStream;
 	private OutputStreamWriter outWriter;
-
-	private static void log(Object aObject) {
-		System.out.println(String.valueOf(aObject));
-	}
 
 }

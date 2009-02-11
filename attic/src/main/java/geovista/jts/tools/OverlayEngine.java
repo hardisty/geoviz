@@ -125,8 +125,8 @@ public class OverlayEngine {
                     b.getGeometry());
         } catch (Exception ex) {
             monitor.report(ex);
-            System.out.println(a.getGeometry());
-            System.out.println(b.getGeometry());
+            logger.info(a.getGeometry());
+            logger.info(b.getGeometry());
         }
 
         if ((intersection == null) || intersection.isEmpty()) {

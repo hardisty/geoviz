@@ -64,8 +64,8 @@ public class SRGB2XYZ {
   public static void main(String[] args) {
     SRGB2XYZ SRGB2XYZ1 = new SRGB2XYZ(115, 80, 64);
 
-    System.out.println("X = " + SRGB2XYZ1.X);
-    System.out.println("Y = " + SRGB2XYZ1.Y);
-    System.out.println("Z = " + SRGB2XYZ1.Z);
+    logger.info("X = " + SRGB2XYZ1.X);
+    logger.info("Y = " + SRGB2XYZ1.Y);
+    logger.info("Z = " + SRGB2XYZ1.Z);
   }
 }

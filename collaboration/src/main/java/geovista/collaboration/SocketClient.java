@@ -27,8 +27,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.logging.Logger;
 
 class SocketClient {
+	final static Logger logger = Logger.getLogger(SocketClient.class.getName());
 
 	public static void main(String args[]) throws Exception {
 		String sentence;
@@ -64,15 +66,15 @@ class SocketClient {
 		int DATA_SIZE = 20480;
 		byte[] inData = new byte[DATA_SIZE];
 
-		System.out.println("Begin");
+		logger.info("Begin");
 
 		while ((totalDataRead = inFromServer.read(inData, 0, inData.length)) >= 0) {
 			fos.write(inData, 0, totalDataRead);
 			totalSizeWritten = totalSizeWritten + totalDataRead;
-			System.out.println(totalSizeWritten);
+			logger.info("" + totalSizeWritten);
 		}
 
-		System.out.println("Done");
+		logger.info("Done");
 		fos.close();
 		clientSocket.close();
 

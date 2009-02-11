@@ -203,8 +203,8 @@ public class XYZ2CIECAM02 {
   public static void main(String[] args) {
     XYZ2CIECAM02 XYZ2CIECAM021 = new XYZ2CIECAM02(19.31, 23.93, 10.14, 95.05, 100.00, 108.88, 20.0, 63.6619, 1.0, 0.69, 1.0);
 
-    System.out.println("J = " + XYZ2CIECAM021.J);
-    System.out.println("C = " + XYZ2CIECAM021.C);
-    System.out.println("h = " + XYZ2CIECAM021.h);
+    logger.info("J = " + XYZ2CIECAM021.J);
+    logger.info("C = " + XYZ2CIECAM021.C);
+    logger.info("h = " + XYZ2CIECAM021.h);
   }
 }

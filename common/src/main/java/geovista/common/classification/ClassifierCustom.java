@@ -4,6 +4,8 @@
 
 package geovista.common.classification;
 
+import java.util.logging.Logger;
+
 import geovista.common.data.DescriptiveStatistics;
 
 public class ClassifierCustom implements DescribedClassifier,
@@ -14,6 +16,8 @@ public class ClassifierCustom implements DescribedClassifier,
 	transient private int[] classification;
 	double[] breaks;
 	boolean inverse;
+	final static Logger logger = Logger.getLogger(ClassifierCustom.class
+			.getName());
 
 	public ClassifierCustom() {
 
@@ -101,14 +105,14 @@ public class ClassifierCustom implements DescribedClassifier,
 		double[] data = { 1, 6, 3, 4, 3, 2, 1, 2, 3, 4, 6 };
 		double[] boundaries = cust.getEqualBoundaries(data, 3);
 		for (double d : boundaries) {
-			System.out.println(d);
+			logger.info("" + d);
 		}
-		System.out.println("***************");
+		logger.info("" + "***************");
 		cust.breaks = boundaries;
 
 		int[] classes = cust.classify(data, 3);
 		for (int i : classes) {
-			System.out.println(i);
+			logger.info("" + i);
 		}
 		cust.inverse = true;
 		double[] newBoundaries = new double[boundaries.length];
@@ -118,14 +122,14 @@ public class ClassifierCustom implements DescribedClassifier,
 		}
 		cust.breaks = newBoundaries;
 
-		System.out.println("***************");
+		logger.info("" + "***************");
 		for (double d : boundaries) {
-			System.out.println(d);
+			logger.info("" + d);
 		}
-		System.out.println("***************");
+		logger.info("" + "***************");
 		int[] invclasses = cust.classify(data, 3);
 		for (int i : invclasses) {
-			System.out.println(i);
+			logger.info("" + i);
 		}
 
 	}

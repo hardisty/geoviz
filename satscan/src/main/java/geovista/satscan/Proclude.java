@@ -125,7 +125,7 @@ public class Proclude extends JPanel implements ActionListener,
 		double largeDimension = Math.max(initializer.getMaxX()
 				- initializer.getMinX(), initializer.getMaxY()
 				- initializer.getMinY());
-		System.out.println("largeDimension is " + largeDimension);
+		logger.info("largeDimension is " + largeDimension);
 		AbstractGam gam;
 		switch (type) {
 		case GENETIC_TYPE:
@@ -234,12 +234,12 @@ public class Proclude extends JPanel implements ActionListener,
 			int selected = types.getSelectedIndex();
 			setType(selected);
 		} else {
-			System.out.println("snuh?");
+			logger.info("snuh?");
 		}
 	}
 
 	private void updateOutputDisplay() {
-		System.out.println("there are " + out.length + " clusters");
+		logger.info("there are " + out.length + " clusters");
 		output.removeAll();
 		output.setLayout(new GridLayout(0, 10));
 		genePanels = new JPanel[out.length];
@@ -297,7 +297,7 @@ public class Proclude extends JPanel implements ActionListener,
 		thisGene.add(count);
 		thisGene.add(fit);
 		thisGene.setMaximumSize(new java.awt.Dimension(260, 60));
-		System.out.println(thisGene.getSize().toString());
+		logger.info(thisGene.getSize().toString());
 		output.add(thisGene);
 		genePanels = new JPanel[] { thisGene };
 		out = new Gene[] { sGene };
@@ -328,7 +328,7 @@ public class Proclude extends JPanel implements ActionListener,
 
 			// now send a selection event
 			if (selectedIndex == -1) {
-				System.out.println("huh?  Why didn't this find the index?");
+				logger.info("huh?  Why didn't this find the index?");
 			} else {
 				int[] newSelectedPoints = out[selectedIndex]
 						.getContainedPoints();
@@ -356,7 +356,7 @@ public class Proclude extends JPanel implements ActionListener,
 	 * @see EventListenerList
 	 */
 	public void fireSelectionChanged(int[] newSelection) {
-		// System.out.println(Arrays.toString(newSelection));
+		// logger.info(Arrays.toString(newSelection));
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
 		SelectionEvent e = null;
@@ -395,7 +395,7 @@ public class Proclude extends JPanel implements ActionListener,
 			return;
 		} else {
 			SelectionGene sGene = new SelectionGene(selectedPoints, fit);
-			System.out.println(Arrays.toString(selectedPoints));
+			logger.info(Arrays.toString(selectedPoints));
 			double out = fit.run(sGene);
 			createSelectionDisplay(out, sGene);
 		}
@@ -423,7 +423,7 @@ public class Proclude extends JPanel implements ActionListener,
 			requestFocusInWindow();
 			int x = e.getX();
 			int y = e.getY();
-			System.out.println("I clicked at " + x + ", " + y);
+			logger.info("I clicked at " + x + ", " + y);
 			highlightLabelAt(x, y, e);
 		}
 

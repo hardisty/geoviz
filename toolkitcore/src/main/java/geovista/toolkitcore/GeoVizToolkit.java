@@ -96,6 +96,7 @@ import geovista.matrix.TreemapAndScatterplotMatrix;
 import geovista.matrix.map.MoranMap;
 import geovista.readers.example.GeoData2008Election;
 import geovista.readers.example.GoogleFluDataReader;
+import geovista.readers.example.TexasZoonoticDataReader;
 import geovista.readers.seerstat.SeerStatReader;
 import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
@@ -132,7 +133,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	// Create JDesktopPane to hold the internal frames
 	GvDesktopPane desktop = new GvDesktopPane();
-
+	GvGlassPane glassPane;
 	// managing our layouts
 
 	String filePath = "2008 Presidential Election";
@@ -217,6 +218,16 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// popMenu.addMouseListener(listener);
 		// addMouseListener(listener);
 
+		// addMouseMotionListener(desktop);
+		glassPane = new GvGlassPane(this);
+		// setGlassPane(glassPane);
+		glassPane.setVisible(true);
+		glassPane.setSize(getSize());
+		addImpl(glassPane, null, 0);
+		// desktop.add(glassPane, null, 0);
+
+		// addMouseMotionListener(glassPane);
+		// desktop.addMouseMotionListener(glassPane);
 		// collection of classes to add
 		toolMenuList = new ArrayList();
 		toolClassHash = new HashMap();
@@ -781,15 +792,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 		logger.info("creating data: " + name);
 		Object[] newDataSet = null;
-		// name = "GTD";
+		name = "TX";
 		if (name.equals("48States")) {
 			// GeoDataGeneralizedStates statesData = new
 			// GeoDataGeneralizedStates();
 
 			GoogleFluDataReader statesData = new GoogleFluDataReader();
-
-			// TexasZoonoticDataReader statesData = new
-			// TexasZoonoticDataReader();
 
 			// geovista.largedata.GeoDataNiger statesData = new
 			// geovista.largedata.GeoDataNiger();
@@ -801,7 +809,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 			newDataSet = proj.getOutputDataSet();
 
-		} else if (name.equals("NZ")) {
+		} else if (name.equals("TX")) {
+			TexasZoonoticDataReader statesData = new TexasZoonoticDataReader();
+
+			ShapeFileProjection proj = new ShapeFileProjection();
+			proj.setInputDataSetForApps(statesData.getDataForApps());
+			newDataSet = proj.getOutputDataSet();
+		}
+
+		else if (name.equals("NZ")) {
 			String className = "geovista.largedata.GeoDataNZ";
 			newDataSet = geoDataFromName(className);
 		}
@@ -993,6 +1009,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void componentResized(ComponentEvent e) {
+		glassPane.setSize(getSize());
 		if (logger.isLoggable(Level.FINEST)) {
 			if (e.getSource() instanceof JInternalFrame
 					&& tBeanSet.contains((JInternalFrame) e.getSource())) {

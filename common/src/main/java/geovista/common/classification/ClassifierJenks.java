@@ -53,8 +53,7 @@ public class ClassifierJenks implements DescribedClassifier {
 	 * (or constraints) imposed by the user.
 	 * 
 	 * @return double[] - breaks--from smallest to largest
-	 * @param double[]
-	 *            data_
+	 * @param double[] data_
 	 * @param numclass
 	 *            int
 	 */
@@ -106,17 +105,17 @@ public class ClassifierJenks implements DescribedClassifier {
 		}
 		;
 
-		// System.out.println("\nmat1:\n");
+		// logger.info("\nmat1:\n");
 		// for (int i=0; i< mat1.length; i++)
 		// {
-		// System.out.println();
+		// logger.info();
 		// for (int k=0; k< mat1[0].length; k++)
 		// System.out.print((float)mat1[i][k]+ "\t\t");
 		// }
-		// System.out.println("\nmat2:\n");
+		// logger.info("\nmat2:\n");
 		// for (int i=0; i< mat2.length; i++)
 		// {
-		// System.out.println();
+		// logger.info();
 		// for (int k=0; k< mat2[0].length; k++)
 		// System.out.print((float)mat2[i][k]+ "\t\t");
 		// }
@@ -159,9 +158,9 @@ public class ClassifierJenks implements DescribedClassifier {
 		int[] classes = jenk.classify(data, 4);
 		long end = System.nanoTime();
 		for (int i = 0; i < classes.length; i++) {
-			System.out.println(i + " " + classes[i]);
+			logger.info(i + " " + classes[i]);
 		}
-		System.out.println("classifying " + data.length + " observations took "
+		logger.info("classifying " + data.length + " observations took "
 				+ ((end - start) / 1000000000f) + " seconds");
 	}
 

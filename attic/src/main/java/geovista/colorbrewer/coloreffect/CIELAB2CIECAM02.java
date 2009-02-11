@@ -26,8 +26,8 @@ public class CIELAB2CIECAM02 {
   public static void main(String[] args) {
     CIELAB2CIECAM02 CIELAB2CIECAM021 = new CIELAB2CIECAM02(80, 50, 40);
 
-    System.out.println("J = " + CIELAB2CIECAM021.J);
-    System.out.println("C = " + CIELAB2CIECAM021.C);
-    System.out.println("h = " + CIELAB2CIECAM021.h);
+    logger.info("J = " + CIELAB2CIECAM021.J);
+    logger.info("C = " + CIELAB2CIECAM021.C);
+    logger.info("h = " + CIELAB2CIECAM021.h);
   }
 }

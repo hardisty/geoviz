@@ -82,7 +82,7 @@ public class FormatedString {
 	  String start = s.substring(0,e);
 
     int pow = Integer.parseInt(last);
-	  //System.out.println(start +" e "+last+" "+pow);
+	  //logger.info(start +" e "+last+" "+pow);
 	  int i = start.indexOf('.');
 	  if(i>0){
 	    int d = start.length()-i-1;
@@ -98,14 +98,14 @@ public class FormatedString {
 		}
     if(pow<0){
       int lp = start.length()+pow;
-			//System.out.println(start+" x "+lp+" "+pow);
+			//logger.info(start+" x "+lp+" "+pow);
       start = start.substring(0,lp)+"."+start.substring(lp);
     }
-    //System.out.println("->"+start);
+    //logger.info("->"+start);
     
     return start.trim();
   }
   public static void main(String args[]){
-    System.out.println(args[0]+" "+FormatedString.format(args[0],6));
+    logger.info(args[0]+" "+FormatedString.format(args[0],6));
   }
 }

@@ -7,9 +7,12 @@ package geovista.toolkitcore;
 
 import java.awt.Color;
 import java.awt.Event;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
@@ -33,7 +36,8 @@ import geovista.common.ui.VisualSettingsPopupMenu;
  */
 
 public class GvDesktopPane extends JDesktopPane implements
-		PropertyChangeListener, VisualSettingsPopupListener {
+		PropertyChangeListener, VisualSettingsPopupListener,
+		MouseMotionListener {
 	final static Logger logger = Logger
 			.getLogger(GvDesktopPane.class.getName());
 
@@ -43,6 +47,7 @@ public class GvDesktopPane extends JDesktopPane implements
 
 	public GvDesktopPane() {
 		super();
+		// addMouseMotionListener(this);
 		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
 		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
 		popMenu.addMouseListener(listener);
@@ -68,7 +73,7 @@ public class GvDesktopPane extends JDesktopPane implements
 		InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
 		MyAction act = new MyAction();
-		this.getActionMap().put("do something", act);
+		getActionMap().put("do something", act);
 		act.addPropertyChangeListener(this);
 
 		// Ctrl-b to go backward one character
@@ -185,6 +190,33 @@ public class GvDesktopPane extends JDesktopPane implements
 				listener.useSelectionFade(selFade);
 			}
 		}
+
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		// super.paintChildren(g);
+		// drawStuff(g);
+	}
+
+	private void drawStuff(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.drawOval(100, 100, 100, 100);
+		g.setFont(getFont().deriveFont(70));
+		g.drawString("BLE", 100, 100);
+		logger.info("painting dvDP");
+	}
+
+	public void mouseDragged(MouseEvent e) {
+		// drawStuff(getGraphics());
+		logger.info("mouse dragged dvDP");
+
+	}
+
+	public void mouseMoved(MouseEvent e) {
+		drawStuff(getGraphics());
+		logger.info("mouse moved gvDP");
 
 	}
 

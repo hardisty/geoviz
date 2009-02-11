@@ -607,7 +607,7 @@ public class Fmt {
         /// Test program.
         public static void main( String[] args )
             {
-            System.out.println( "Starting tests." );
+            logger.info( "Starting tests." );
             show( Fmt.fmt( "Hello there." ) );
             show( Fmt.fmt( 123 ) );
             show( Fmt.fmt( 123, 10 ) );
@@ -666,12 +666,12 @@ public class Fmt {
             show( Fmt.fmt( Double.NEGATIVE_INFINITY ) );
             show( Fmt.fmt( 1.0F / 8.0F ) );
             show( Fmt.fmt( 1.0D / 8.0D ) );
-            System.out.println( "Done with tests." );
+            logger.info( "Done with tests." );
             }
 
         private static void show( String str )
             {
-            System.out.println( "#" + str + "#" );
+            logger.info( "#" + str + "#" );
             }
     ******************************************************************************/
 }

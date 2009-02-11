@@ -27,8 +27,8 @@ public class SRGB2CIECAM02 {
   public static void main(String[] args) {
     SRGB2CIECAM02 SRGB2CIECAM021 = new SRGB2CIECAM02(255, 204, 128);
 
-    System.out.println("J = " + SRGB2CIECAM021.J);
-    System.out.println("C = " + SRGB2CIECAM021.C);
-    System.out.println("h = " + SRGB2CIECAM021.h);
+    logger.info("J = " + SRGB2CIECAM021.J);
+    logger.info("C = " + SRGB2CIECAM021.C);
+    logger.info("h = " + SRGB2CIECAM021.h);
   }
 }

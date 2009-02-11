@@ -28,76 +28,76 @@ package geovista.treemap.tm.demo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
 import geovista.treemap.tm.TMView;
 import geovista.treemap.tm.TreeMap;
 
-
-
 /**
- * The DemoModel class implements a demo for Treemap.
- * It's the same than the Demo class, but it use TMModelNode
- * instead of TMNode to describe the user's tree.
- *
+ * The DemoModel class implements a demo for Treemap. It's the same than the
+ * Demo class, but it use TMModelNode instead of TMNode to describe the user's
+ * tree.
+ * 
  * @author Christophe Bouthier [bouthier@loria.fr]
  * 
  */
 public class DemoModel {
 
-    private static int             count   = 1;    // to have unique view name
+	private static int count = 1; // to have unique view name
 
-    private static TMFileModelNode model   = null; // the model of the demo tree
-    private static TreeMap         treeMap = null; // the geovista.matrix.treemap.tm builded
-    private static String          name    = null; // name for this demo
+	private static TMFileModelNode model = null; // the model of the demo tree
+	private static TreeMap treeMap = null; // the geovista.matrix.treemap.tm
+											// builded
+	private static String name = null; // name for this demo
+	final static Logger logger = Logger.getLogger(DemoModel.class.getName());
 
-    /**
-     * Display a demo TreeMap.
-     */
-    public static void main(String[] args) {
-        String pathRoot = null;
+	/**
+	 * Display a demo TreeMap.
+	 */
+	public static void main(String[] args) {
+		String pathRoot = null;
 
-        if (args.length > 0) {
-            pathRoot = args[0];
-        } else {
-            pathRoot = File.separator;
-        }
+		if (args.length > 0) {
+			pathRoot = args[0];
+		} else {
+			pathRoot = File.separator;
+		}
 
-        File rootFile = new File(pathRoot);
-        try {
-            System.out.println("Starting the geovista.matrix.treemap.tm from " + 
-                                rootFile.getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } 
+		File rootFile = new File(pathRoot);
+		try {
+			logger.info("Starting the geovista.matrix.treemap.tm from "
+					+ rootFile.getCanonicalPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 
-        if (! rootFile.exists()) {
-            System.out.println("Can't start geovista.matrix.treemap.tm : " + rootFile.getName() + 
-                               " does not exist.");
-            return;
-        }
+		if (!rootFile.exists()) {
+			logger.info("Can't start geovista.matrix.treemap.tm : "
+					+ rootFile.getName() + " does not exist.");
+			return;
+		}
 
+		model = new TMFileModelNode(rootFile);
+		if (model == null) {
+			System.err
+					.println("Error : can't start geovista.matrix.treemap.tm from "
+							+ rootFile.getAbsolutePath());
+			return;
+		}
 
-        model = new TMFileModelNode(rootFile);
-        if (model == null) {
-            System.err.println("Error : can't start geovista.matrix.treemap.tm from " + 
-                                rootFile.getAbsolutePath());
-            return;
-        }
+		treeMap = new TreeMap(model);
+		name = rootFile.getAbsolutePath();
 
-        treeMap = new TreeMap(model);
-        name = rootFile.getAbsolutePath();
+		TMFileModelSize fSize = new TMFileModelSize();
+		TMFileModelDraw fDraw = new TMFileModelDraw();
+		TMView view = treeMap.getView(fSize, fDraw);
 
-        TMFileModelSize fSize = new TMFileModelSize();
-        TMFileModelDraw fDraw = new TMFileModelDraw();
-        TMView view = treeMap.getView(fSize, fDraw);
-        
-        JFrame viewFrame = new JFrame(name + " : " + count);
-        viewFrame.setContentPane(view);
-        viewFrame.pack();
-        viewFrame.setVisible(true);
-    }
+		JFrame viewFrame = new JFrame(name + " : " + count);
+		viewFrame.setContentPane(view);
+		viewFrame.pack();
+		viewFrame.setVisible(true);
+	}
 }
-

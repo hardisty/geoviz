@@ -24,6 +24,7 @@ package geovista.matrix.map;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -72,6 +73,7 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 	DataSetForApps dataSetZ;
 	DataSetForApps dataSetMoran;
 	OldSpatialWeights spatialWeights;
+	final static Logger logger = Logger.getLogger(MoranMatrix.class.getName());
 
 	public MoranMatrix() {
 		super();
@@ -283,8 +285,8 @@ public class MoranMatrix extends JPanel implements SelectionListener,
 		}
 
 		long endTime = System.currentTimeMillis();
-		System.out.println("that took = " + (endTime - startTime));
-		System.out.println(count);
+		logger.info("that took = " + (endTime - startTime));
+		logger.info("" + count);
 
 	}
 

@@ -52,8 +52,8 @@ public class CIELabToSRGB {
   public static void main(String[] args) throws IOException {
     CIELabToSRGB cIELabToSRGB1 = new CIELabToSRGB(6.19, -7.43, 1.55);
 
-    System.out.println("R255 = " + cIELabToSRGB1.R255);
-    System.out.println("G255 = " + cIELabToSRGB1.G255);
-    System.out.println("B255 = " + cIELabToSRGB1.B255);
+    logger.info("R255 = " + cIELabToSRGB1.R255);
+    logger.info("G255 = " + cIELabToSRGB1.G255);
+    logger.info("B255 = " + cIELabToSRGB1.B255);
   }
 }

@@ -250,8 +250,8 @@ public class CIECAM02toXYZ {
   public static void main(String[] args) {
     CIECAM02toXYZ CIECAM02toXYZ1 = new CIECAM02toXYZ(50.0, 40.0, 170, 95.05, 100.00, 108.88, 20.0, 63.6619, 1.0, 0.69, 1.0);
 
-    System.out.println("X = " + CIECAM02toXYZ1.X);
-    System.out.println("Y = " + CIECAM02toXYZ1.Y);
-    System.out.println("Z = " + CIECAM02toXYZ1.Z);
+    logger.info("X = " + CIECAM02toXYZ1.X);
+    logger.info("Y = " + CIECAM02toXYZ1.Y);
+    logger.info("Z = " + CIECAM02toXYZ1.Z);
   }
 }
