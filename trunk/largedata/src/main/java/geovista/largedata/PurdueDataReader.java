@@ -149,7 +149,7 @@ public class PurdueDataReader implements GeoDataSource {
 
 		for (int i = 0; i < date.size(); i++) {
 			int day = this.day.get(i);
-			// System.out.println(year);
+			// logger.info(year);
 			// int day = minDay;
 			int bin = day / periodicity;
 			double[] killedYear = (double[]) numericalArrays[bin];
@@ -237,7 +237,7 @@ public class PurdueDataReader implements GeoDataSource {
 		int originalDay = cal.get(Calendar.DAY_OF_MONTH);
 		int originalMonth = cal.get(Calendar.MONTH);
 		int originalYear = cal.get(Calendar.YEAR);
-		System.out.println(varNameformat.format(firstDay));
+		logger.info(varNameformat.format(firstDay));
 		for (int i = 0; i <= numBins; i++) {// note the <= in the loop
 			int binMin = (periodicity * i) + minVal;
 			int binMax = binMin + periodicity;
@@ -255,7 +255,7 @@ public class PurdueDataReader implements GeoDataSource {
 			}
 			cal.setTime(newDate);
 			String label = varNameformat.format(cal.getTime());
-			System.out.println(label);
+			logger.info(label);
 			headings.add(label);
 
 		}
@@ -293,7 +293,7 @@ public class PurdueDataReader implements GeoDataSource {
 
 		DataSetForApps dataSet = reader.makeDataSetForApps();
 
-		System.out.println("All done! we have this many obs:"
+		logger.info("All done! we have this many obs:"
 				+ dataSet.getNumObservations());
 
 	}

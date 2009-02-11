@@ -31,9 +31,9 @@ public class CIELUVtoSRGB {
 
     CIELUVtoSRGB cIELUVtoSRGB1 = new CIELUVtoSRGB(40.37, 97.24, 16.60);
 
-    System.out.println("R255 = " + cIELUVtoSRGB1.R255);
-    System.out.println("G255 = " + cIELUVtoSRGB1.G255);
-    System.out.println("B255 = " + cIELUVtoSRGB1.B255);
+    logger.info("R255 = " + cIELUVtoSRGB1.R255);
+    logger.info("G255 = " + cIELUVtoSRGB1.G255);
+    logger.info("B255 = " + cIELUVtoSRGB1.B255);
 
 
   }

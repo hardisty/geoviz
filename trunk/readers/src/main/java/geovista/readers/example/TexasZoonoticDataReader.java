@@ -46,7 +46,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 	private final ArrayList<String> wnHispanics = new ArrayList<String>();
 
 	public TexasZoonoticDataReader() throws IOException {
-		basePath = "C:\\temp\\data\\";
+		// basePath = "C:\\temp\\data\\";
 		readLymeContents();
 		readWestNileContents();
 	}
@@ -125,6 +125,8 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 			String yearString = sc.next();
 			Integer year = Integer.valueOf(yearString);
 			wnYears.add(year);
+			sc.next();// condition
+			sc.next();// WN death
 
 			String county = sc.next();
 			county = county.trim();
@@ -155,7 +157,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 		try {
 			age = Double.valueOf(ageString);
 		} catch (NumberFormatException e) {
-			System.out.println(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return age;
 	}
@@ -166,7 +168,8 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 		scan.next();// skip "date"
 		while (scan.hasNext()) {
 			String aName = scan.next();
-			System.out.println("names = " + aName);
+			logger.fine("names = " + aName);
+
 			lymeVarNames.add(aName);
 		}
 
@@ -216,7 +219,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 
 		for (JoinPoint pt : lymeJoin) {
 			if (pt.getRight() == JoinPoint.NO_COORDINATE) {
-				System.out.println("ark ark, missed " + pt.getValue());
+				logger.info("ark ark, missed " + pt.getValue());
 			}
 		}
 
@@ -225,7 +228,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 
 		for (JoinPoint pt : wnJoin) {
 			if (pt.getRight() == JoinPoint.NO_COORDINATE) {
-				System.out.println("ark ark, missed " + pt.getValue());
+				logger.info("ark ark, missed " + pt.getValue());
 			}
 		}
 
@@ -309,7 +312,8 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 			int columnIndex = year - 2002;
 			double[] dat = (double[]) doubleData[columnIndex];
 			String name = wnCountyNames.get(i);
-			System.out.println(name);
+			logger.fine(name);
+
 			if (name.equals("")) {
 				continue;
 			}
@@ -317,7 +321,8 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 				int rowIndex = nameToIdHash.get(name.toLowerCase());
 				dat[rowIndex]++;
 			} catch (NullPointerException ex) {
-				ex.printStackTrace();
+				logger.info("bad name:" + name);
+				// ex.printStackTrace();
 			}
 
 		}
@@ -337,7 +342,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 
 		DataSetForApps dataSet = reader.getDataForApps();
 
-		System.out.println("All done! we have this many obs:"
+		logger.info("All done! we have this many obs:"
 				+ dataSet.getNumObservations());
 
 	}

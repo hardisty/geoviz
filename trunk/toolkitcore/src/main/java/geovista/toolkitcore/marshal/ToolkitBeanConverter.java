@@ -86,7 +86,7 @@ public class ToolkitBeanConverter implements Converter {
 				originalBean = clazz.cast(context.convertAnother(bean, clazz));
 				// Object originalBean = (String) context.convertAnother(bean,
 				// String.class);
-				// System.out.println(className);
+				// logger.info(className);
 				// originalBean = GeoVizToolkit.makeObject(className.trim());
 			} else if ("internalFrame".equals(reader.getNodeName())) {
 				internalFrame = (JInternalFrame) context.convertAnother(bean,

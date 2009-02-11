@@ -44,8 +44,8 @@ public class CIELUV2XYZ {
   public static void main(String[] args) {
     CIELUV2XYZ CIELUV2XYZ1 = new CIELUV2XYZ(40.37, 97.24, 16.60);
 
-    System.out.println("X = " + CIELUV2XYZ1.X);
-    System.out.println("Y = " + CIELUV2XYZ1.Y);
-    System.out.println("Z = " + CIELUV2XYZ1.Z);
+    logger.info("X = " + CIELUV2XYZ1.X);
+    logger.info("Y = " + CIELUV2XYZ1.Y);
+    logger.info("Z = " + CIELUV2XYZ1.Z);
   }
 }

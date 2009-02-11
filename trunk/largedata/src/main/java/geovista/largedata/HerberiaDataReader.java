@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
 import com.vividsolutions.jts.algorithm.locate.IndexedPointInAreaLocator;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Location;
 import com.vividsolutions.jts.index.quadtree.Quadtree;
 
 import geovista.common.data.DataSetForApps;
@@ -118,7 +117,7 @@ public class HerberiaDataReader implements GeoDataSource {
 				itemCount = itemCount + lineContents.length;
 
 				if (lineContents.length >= 14) {
-					// System.out.println(lineContents[12] + lineContents[13]);
+					// logger.info(lineContents[12] + lineContents[13]);
 					String yString = lineContents[12];
 					String xString = lineContents[13];
 					double yCoord = isDouble(yString);
@@ -145,10 +144,10 @@ public class HerberiaDataReader implements GeoDataSource {
 				}
 				if (lineContents.length > 3) {
 					String speciesName = lineContents[1];
-					// System.out.println(speciesName);
+					// logger.info(speciesName);
 					species.add(speciesName);
 					String observerName = lineContents[2];
-					// System.out.println(observerName);
+					// logger.info(observerName);
 					if (observerName.contains("gander")
 							|| observerName.contains("Gander")) {
 						ganderSet.add(observerName);
@@ -162,24 +161,24 @@ public class HerberiaDataReader implements GeoDataSource {
 				// subString = sc.next();
 				lineCount++;
 
-				// System.out.println(subString);
+				// logger.info(subString);
 			}
 			long endTime = System.currentTimeMillis();
-			System.out.println((endTime - startTime) / 1000 + " seconds");
-			System.out.println(lineCount + " lines ");
-			System.out.println(itemCount + " items ");
-			System.out.println(geoItemCount + " geoitems ");
-			System.out.println(lengthHash.keySet());
-			System.out.println(lengthHash.values());
-			System.out.println("n observers = " + observers.size());
-			System.out.println("n species = " + species.size());
-			System.out.println(ganderSet);
+			logger.info((endTime - startTime) / 1000 + " seconds");
+			logger.info(lineCount + " lines ");
+			logger.info(itemCount + " items ");
+			logger.info(geoItemCount + " geoitems ");
+			logger.info("" + lengthHash.keySet());
+			logger.info("" + lengthHash.values());
+			logger.info("n observers = " + observers.size());
+			logger.info("n species = " + species.size());
+			logger.info("" + ganderSet);
 
 			Iterator ganderIt = ganderSet.iterator();
 			while (ganderIt.hasNext()) {
-				System.out.println(ganderIt.next());
+				logger.info("" + ganderIt.next());
 			}
-			System.out.println(Arrays.toString(hits));
+			logger.info(Arrays.toString(hits));
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -190,12 +189,17 @@ public class HerberiaDataReader implements GeoDataSource {
 	private void countHits(int[] hits, Coordinate coord) {
 
 		for (int i = 0; i < theGeoms.length; i++) {
-			// Geometry geom = theGeoms[i];
-			int answer = theIndexes[i].locate(coord);
-			if (answer == Location.INTERIOR) {
+			Geometry geom = theGeoms[i];
+			if (geom.contains(geom)) {
 				hits[i]++;
-				break;
+				// break;
 			}
+			// int answer = theIndexes[i].locate(coord);
+			//			
+			// if (answer == Location.INTERIOR) {
+			// hits[i]++;
+			// break;
+			// }
 
 		}
 	}
@@ -281,7 +285,7 @@ public class HerberiaDataReader implements GeoDataSource {
 
 		for (int i = 0; i < date.size(); i++) {
 			int day = this.day.get(i);
-			// System.out.println(year);
+			// logger.info(year);
 			// int day = minDay;
 			int bin = day / periodicity;
 			double[] killedYear = (double[]) numericalArrays[bin];
@@ -370,7 +374,7 @@ public class HerberiaDataReader implements GeoDataSource {
 		int originalDay = cal.get(Calendar.DAY_OF_MONTH);
 		int originalMonth = cal.get(Calendar.MONTH);
 		int originalYear = cal.get(Calendar.YEAR);
-		System.out.println(varNameformat.format(firstDay));
+		logger.info(varNameformat.format(firstDay));
 		for (int i = 0; i <= numBins; i++) {// note the <= in the loop
 			int binMin = (periodicity * i) + minVal;
 			int binMax = binMin + periodicity;
@@ -388,7 +392,7 @@ public class HerberiaDataReader implements GeoDataSource {
 			}
 			cal.setTime(newDate);
 			String label = varNameformat.format(cal.getTime());
-			System.out.println(label);
+			logger.info(label);
 			headings.add(label);
 
 		}
@@ -422,10 +426,10 @@ public class HerberiaDataReader implements GeoDataSource {
 		long allocatedMemory = runtime.totalMemory();
 		long freeMemory = runtime.freeMemory();
 
-		System.out.println("free memory: " + freeMemory / 1024);
-		System.out.println("allocated memory: " + allocatedMemory / 1024);
-		System.out.println("max memory: " + maxMemory / 1024);
-		System.out.println("total free memory: "
+		logger.info("free memory: " + freeMemory / 1024);
+		logger.info("allocated memory: " + allocatedMemory / 1024);
+		logger.info("max memory: " + maxMemory / 1024);
+		logger.info("total free memory: "
 				+ (freeMemory + (maxMemory - allocatedMemory)) / 1024);
 	}
 
@@ -458,7 +462,7 @@ public class HerberiaDataReader implements GeoDataSource {
 
 		logger.info("finding quad hits took " + (endTime - startTime)
 				/ 1000000000f);
-		System.out.println("All done!");
+		logger.info("All done!");
 
 	}
 

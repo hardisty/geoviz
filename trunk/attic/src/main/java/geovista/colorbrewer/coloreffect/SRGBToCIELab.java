@@ -32,8 +32,8 @@ public class SRGBToCIELab {
   public static void main(String[] args) throws IOException {
     SRGBToCIELab SRGBToCIELab1 = new SRGBToCIELab(238, 200, 27);
 
-    System.out.println("L = " + SRGBToCIELab1.L);
-    System.out.println("A = " + SRGBToCIELab1.A);
-    System.out.println("B = " + SRGBToCIELab1.B);
+    logger.info("L = " + SRGBToCIELab1.L);
+    logger.info("A = " + SRGBToCIELab1.A);
+    logger.info("B = " + SRGBToCIELab1.B);
   }
 }

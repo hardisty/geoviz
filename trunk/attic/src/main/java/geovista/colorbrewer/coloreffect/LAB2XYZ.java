@@ -31,8 +31,8 @@ public class LAB2XYZ {
   public static void main(String[] args) {
     LAB2XYZ LAB2XYZ1 = new LAB2XYZ(55.52, -41.06, 34.95);
 
-    System.out.println("X = " + LAB2XYZ1.X);
-    System.out.println("Y = " + LAB2XYZ1.Y);
-    System.out.println("Z = " + LAB2XYZ1.Z);
+    logger.info("X = " + LAB2XYZ1.X);
+    logger.info("Y = " + LAB2XYZ1.Y);
+    logger.info("Z = " + LAB2XYZ1.Z);
   }
 }

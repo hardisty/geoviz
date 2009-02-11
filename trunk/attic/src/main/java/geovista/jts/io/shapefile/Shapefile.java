@@ -96,7 +96,7 @@ public class Shapefile  {
     }
     
     private EndianDataOutputStream getOutputStream() throws IOException{
-       // System.out.println(baseURL.getFile());
+       // logger.info(baseURL.getFile());
         //URLConnection connection = baseURL.openConnection();
         //connection.setUseCaches(false);
        // connection.setDoInput(true);
@@ -139,17 +139,17 @@ public class Shapefile  {
                 try{
                     body = handler.read(file,geometryFactory,contentLength); 
                     list.add(body);
-                   // System.out.println("Done record: " + recordNumber);
+                   // logger.info("Done record: " + recordNumber);
                 }catch(IllegalArgumentException r2d2){
-                    //System.out.println("Record " +recordNumber+ " has is NULL Shape");
+                    //logger.info("Record " +recordNumber+ " has is NULL Shape");
                     list.add(new GeometryCollection(null,null,-1));
                 }catch(Exception c3p0){
-                    System.out.println("Error processing record (a):" +recordNumber);
-                    System.out.println(c3p0.getMessage());
+                    logger.info("Error processing record (a):" +recordNumber);
+                    logger.info(c3p0.getMessage());
                     c3p0.printStackTrace();
                     list.add(new GeometryCollection(null,null,-1));
                 }
-               // System.out.println("processing:" +recordNumber);
+               // logger.info("processing:" +recordNumber);
             }
         }catch(EOFException e){
             

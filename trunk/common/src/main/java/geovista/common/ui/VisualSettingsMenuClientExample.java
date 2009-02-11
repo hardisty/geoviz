@@ -7,6 +7,7 @@ package geovista.common.ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -14,6 +15,8 @@ public class VisualSettingsMenuClientExample extends JPanel implements
 		VisualSettingsPopupListener {
 
 	VisualSettingsPopupMenu popMenu;
+	final static Logger logger = Logger
+			.getLogger(VisualSettingsMenuClientExample.class.getName());
 
 	public VisualSettingsMenuClientExample() {
 
@@ -39,7 +42,7 @@ public class VisualSettingsMenuClientExample extends JPanel implements
 	}
 
 	public void useSelectionBlur(boolean selBlur) {
-		System.out.println("got :" + selBlur);
+		logger.info("got :" + selBlur);
 
 	}
 

@@ -45,8 +45,8 @@ public class XYZ2LUV {
   public static void main(String[] args) {
     XYZ2LUV XYZ2LUV1 = new XYZ2LUV(19.78, 11.47, 4.88);
 
-    System.out.println("L = " + XYZ2LUV1.L);
-    System.out.println("U = " + XYZ2LUV1.U);
-    System.out.println("V = " + XYZ2LUV1.V);
+    logger.info("L = " + XYZ2LUV1.L);
+    logger.info("U = " + XYZ2LUV1.U);
+    logger.info("V = " + XYZ2LUV1.V);
   }
 }

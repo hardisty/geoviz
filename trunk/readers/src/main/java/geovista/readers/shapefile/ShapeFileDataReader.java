@@ -353,7 +353,7 @@ public class ShapeFileDataReader implements Serializable {
 		// stringFips = "00" + stringFips;
 		// int len = stringFips.length();
 		// stringFips = stringFips.substring(len - 5, len);
-		// System.out.println(stringFips + "," + geoms[i].getCoordinate().x
+		// logger.info(stringFips + "," + geoms[i].getCoordinate().x
 		// + "," + geoms[i].getCoordinate().y);
 		// }
 

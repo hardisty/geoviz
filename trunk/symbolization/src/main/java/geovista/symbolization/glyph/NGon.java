@@ -37,6 +37,7 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -58,6 +59,7 @@ public class NGon implements Glyph {
 	int size;
 	Point location;
 	static int defaultSize = 30;
+	final static Logger logger = Logger.getLogger(NGon.class.getName());
 
 	public NGon(int nSides) {
 		this.nSides = nSides;
@@ -136,19 +138,19 @@ public class NGon implements Glyph {
 		double step = Math.sin(Math.toRadians(angle / 2.0)); // sin(pi/N)
 		heading = angle / 2.0;
 		GeneralPath p = new GeneralPath();
-		p.moveTo((float)x, (float)y);
-		// System.out.println("x = " + x + ",y = " + y + " heading = " +
+		p.moveTo((float) x, (float) y);
+		// logger.info("x = " + x + ",y = " + y + " heading = " +
 		// heading);
-		// System.out.println("nSides = " + nSides);
+		// logger.info("nSides = " + nSides);
 		for (int i = 0; i < nSides; i++) {
 
 			x += step * Math.cos(Math.toRadians(heading));
 
 			y += step * Math.sin(Math.toRadians(heading));
-			p.lineTo((float)x, (float)y);
+			p.lineTo((float) x, (float) y);
 
 			heading += angle;
-			// System.out.println("x = " + x + ",y = " + y + " heading = "+
+			// logger.info("x = " + x + ",y = " + y + " heading = "+
 			// heading);
 		}
 
@@ -212,7 +214,7 @@ public class NGon implements Glyph {
 			if (e.getSource().equals(sizeSlider)) {
 				JSlider slider = (JSlider) e.getSource();
 				size = 5 * slider.getValue();
-				System.out.println("size = " + size);
+				logger.info("size = " + size);
 				this.repaint();
 			}
 		}

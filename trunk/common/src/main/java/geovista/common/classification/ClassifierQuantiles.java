@@ -127,7 +127,7 @@ public class ClassifierQuantiles implements DescribedClassifier,
 		ClassifierQuantiles classer = new ClassifierQuantiles();
 		int[] results = classer.classify(someData, 4);
 
-		System.out.println(Arrays.toString(results));
+		logger.info(Arrays.toString(results));
 
 	}
 }

@@ -21,17 +21,17 @@ public class GeoVizToolkitTest extends TestCase {
 
 	public void testMain() {
 
-		System.out.println("I did done test main!");
+		logger.info("I did done test main!");
 
 	}
 
 	public void testRemoveAllBeans() {
 		// GeoVizToolkit newKit = new GeoVizToolkit("");
 		// int numBeans = newKit.coord.getFiringBeans().length;
-		// System.out.println(numBeans);
+		// logger.info(numBeans);
 		// newKit.removeAllBeans();
 		// numBeans = newKit.coord.getFiringBeans().length;
-		// System.out.println(numBeans);
+		// logger.info(numBeans);
 		// assert(newKit.coord.getFiringBeans().length == 0);
 
 	}

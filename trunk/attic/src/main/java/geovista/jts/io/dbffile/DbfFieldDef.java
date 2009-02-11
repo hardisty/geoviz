@@ -47,7 +47,7 @@ public class DbfFieldDef implements DbfConsts{
 
   fieldname.append(name.trim()); // <- append byte array to String Buffer 
 
-  if(DEBUG)System.out.println("Fieldname "+fieldname);
+  if(DEBUG)logger.info("Fieldname "+fieldname);
   fieldtype=(char)dFile.readUnsignedByteLE();
   fieldstart=pos;
   dFile.skipBytes(4);
@@ -70,9 +70,9 @@ public class DbfFieldDef implements DbfConsts{
       fieldnumdec=(int)dFile.readUnsignedByteLE();
       break;
     default:
-      System.out.println("Help - wrong field type: "+fieldtype);
+      logger.info("Help - wrong field type: "+fieldtype);
   }
-  if(DEBUG)System.out.println("Fieldtype "+fieldtype+" width "+fieldlen+
+  if(DEBUG)logger.info("Fieldtype "+fieldtype+" width "+fieldlen+
     "."+fieldnumdec);
 
   dFile.skipBytes(14);

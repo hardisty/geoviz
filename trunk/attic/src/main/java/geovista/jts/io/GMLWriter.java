@@ -282,7 +282,7 @@ public class GMLWriter implements JUMPWriter {
             column = token.substring(6);
             column = column.trim();
 
-            //  System.out.println("column = " + column);
+            //  logger.info("column = " + column);
             result = toString(f, column);
 
             //need to ensure that the output is XML okay

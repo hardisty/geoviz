@@ -27,8 +27,8 @@ public class SRGB2CIELUV {
   public static void main(String[] args) {
     SRGB2CIELUV SRGB2CIELUV1 = new SRGB2CIELUV(230, 163, 42);
 
-    System.out.println("L = " + SRGB2CIELUV1.L);
-    System.out.println("U = " + SRGB2CIELUV1.U);
-    System.out.println("V = " + SRGB2CIELUV1.V);
+    logger.info("L = " + SRGB2CIELUV1.L);
+    logger.info("U = " + SRGB2CIELUV1.U);
+    logger.info("V = " + SRGB2CIELUV1.V);
   }
 }

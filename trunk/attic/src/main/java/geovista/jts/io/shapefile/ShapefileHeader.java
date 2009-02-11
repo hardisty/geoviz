@@ -31,7 +31,7 @@ public class ShapefileHeader{
     public ShapefileHeader(EndianDataInputStream file) throws IOException {
       //  file.setLittleEndianMode(false);
         fileCode = file.readIntBE();
-       // if(DEBUG)System.out.println("Sfh->Filecode "+fileCode);
+       // if(DEBUG)logger.info("Sfh->Filecode "+fileCode);
         if ( fileCode != Shapefile.SHAPEFILE_ID )
             System.err.println("Sfh->WARNING filecode "+fileCode+" not a match for documented shapefile code "+Shapefile.SHAPEFILE_ID);
         
@@ -116,7 +116,7 @@ public class ShapefileHeader{
             pos+=8;
         }
         
-        if(DEBUG)System.out.println("Sfh->Position "+pos);
+        if(DEBUG)logger.info("Sfh->Position "+pos);
     }
     
     public void writeToIndex(EndianDataOutputStream file)throws IOException {
@@ -156,7 +156,7 @@ public class ShapefileHeader{
             file.writeDoubleLE(0.0);//Skip unused part of header
             pos+=8;
         }
-        if(DEBUG)System.out.println("Sfh->Index Position "+pos);
+        if(DEBUG)logger.info("Sfh->Index Position "+pos);
     }
     
     public int getShapeType(){

@@ -4,6 +4,7 @@
 package geovista.toolkitcore.marshal;
 
 import java.awt.Color;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -19,6 +20,7 @@ import geovista.toolkitcore.VizState;
  * 
  */
 public class Testing {
+	final static Logger logger = Logger.getLogger(Testing.class.getName());
 
 	/**
 	 * @param args
@@ -35,8 +37,8 @@ public class Testing {
 		String colXML = xstream.toXML(testCol);
 
 		Color newCol = (Color) xstream.fromXML(colXML);
-		System.out.println(newCol.getRGB());
-		System.out.println(colXML);
+		logger.info("" + newCol.getRGB());
+		logger.info(colXML);
 
 		GeoMap map = new GeoMap();
 		System.out
@@ -44,15 +46,15 @@ public class Testing {
 		System.out
 				.println("map instanceof JPanel = " + (map instanceof JPanel));
 
-		System.out.println("(map.getClass().isAssignableFrom(Object.class)) = "
+		logger.info("(map.getClass().isAssignableFrom(Object.class)) = "
 				+ (map.getClass().isAssignableFrom(Object.class)));
-		System.out.println("(map.getClass().isAssignableFrom(JPanel.class)) = "
+		logger.info("(map.getClass().isAssignableFrom(JPanel.class)) = "
 				+ (map.getClass().isAssignableFrom(JPanel.class)));
 
-		// System.out.println("(map.getClass().isAssignableFrom(Object.class)) =
+		// logger.info("(map.getClass().isAssignableFrom(Object.class)) =
 		// "
 		// + (map.getClass().isAssignableFrom(Object.class)));
-		// System.out.println("(map.getClass().isAssignableFrom(JPanel.class)) =
+		// logger.info("(map.getClass().isAssignableFrom(JPanel.class)) =
 		// "
 		// + (map.getClass().isAssignableFrom(JPanel.class)));
 
@@ -83,7 +85,7 @@ public class Testing {
 
 		String xml = marsh.toXML(state);
 
-		System.out.println(xml);
+		logger.info(xml);
 
 		// gvz = null;
 		// state = null;
@@ -122,12 +124,12 @@ public class Testing {
 		 * ByteArrayInputStream(outStream.toByteArray()); SAXBuilder builder =
 		 * new SAXBuilder();
 		 * 
-		 * Document doc = builder.build(inStream);
-		 * System.out.println(doc.toString()); prefs.exportNode(System.out); }
-		 * catch (IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (BackingStoreException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }catch (JDOMException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 * Document doc = builder.build(inStream); logger.info(doc.toString());
+		 * prefs.exportNode(System.out); } catch (IOException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch
+		 * (BackingStoreException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }catch (JDOMException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
 		 */
 
 		/*
@@ -152,7 +154,7 @@ public class Testing {
 		 * catch block e.printStackTrace(); } Iterator it =
 		 * doc.getDescendants(); while (it.hasNext()){
 		 * 
-		 * //System.out.println(it.next()); }
+		 * //logger.info(it.next()); }
 		 */
 
 		// GeoVizToolkit gvz2 = (GeoVizToolkit)streamer.fromXML(xml);

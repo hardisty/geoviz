@@ -12,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -57,6 +58,8 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 	private int variableChooserMode = ClassifierPicker.VARIABLE_CHOOSER_MODE_HIDDEN; // default
 	private ClassifierCustomGUI custGUI;
 	static int CLASSIFIER_CUSTOM = 6;
+	final static Logger logger = Logger.getLogger(ClassifierPicker.class
+			.getName());
 
 	public ClassifierPicker() {
 		super();
@@ -256,8 +259,9 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 	/**
 	 * @param dataIn
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed. Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed. Please use
+	 *            setDataSet instead.
 	 */
 	@Deprecated
 	public void setData(Object[] dataIn) {
@@ -562,8 +566,9 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 			 * (e.getStateChange() == ItemEvent.SELECTED &&
 			 * ClassifierPicker.this.setupFinished){
 			 * ClassifierPicker.this.update = true;
-			 * ClassifierPicker.this.fireActionPerformed(ClassifierPicker.COMMAND_CLASSES_CHANGED); }
-			 * else if (e.getStateChange() == ItemEvent.DESELECTED){
+			 * ClassifierPicker.this.fireActionPerformed
+			 * (ClassifierPicker.COMMAND_CLASSES_CHANGED); } else if
+			 * (e.getStateChange() == ItemEvent.DESELECTED){
 			 * 
 			 * ClassifierPicker.this.update = false; } }
 			 */
@@ -592,7 +597,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 		int[] classes = classer.classify(data, 4);
 		double[] breaks = ClassifierPicker.findBreaks(data, classes, 4);
 		for (double d : breaks) {
-			System.out.println(d);
+			logger.info("" + d);
 		}
 
 	}

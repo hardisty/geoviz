@@ -46,7 +46,7 @@ public class CylindricalProjection extends Projection {
 		GeneralPath r1 = new GeneralPath();
 		GeneralPath r2 = new GeneralPath();
 		GeneralPath r = r1;
-//System.out.println("lon0 "+lon0);
+//logger.info("lon0 "+lon0);
 		boolean moved2 = false;
 		float moveX = 0, moveY = 0;
 
@@ -57,7 +57,7 @@ public class CylindricalProjection extends Projection {
 				moveX = lastX = points[0];
 				moveY = lastY = points[1];
 				r1.moveTo( lastX, lastY );
-//System.out.println("r1.moveto "+lastX+" "+lastY);
+//logger.info("r1.moveto "+lastX+" "+lastY);
 				r = r1;
 				lastX = normalizeLongitude( lastX-lon0 );
 				break;
@@ -71,26 +71,26 @@ if ( type == PathIterator.SEG_CLOSE ) {
 	y = moveY;
 }
 				x = normalizeLongitude( x-lon0 );
-//System.out.println(" "+lastX+" "+x);
+//logger.info(" "+lastX+" "+x);
 				if ( wrapAround( x, lastX ) ) {
 					float crossY = (lastY + y)/2;// FIXME - need to calculate proper crossing point
-//System.out.println("wrap "+x+" "+lastX);
+//logger.info("wrap "+x+" "+lastX);
 					if ( x < lastX ) {
 						// Gone off right edge
 						if ( r == r1 ) {
 							r1.lineTo( right, crossY );
 							if ( moved2 ) r2.lineTo( left, crossY ); else r2.moveTo( left, crossY ); moved2 = true;
 							r2.lineTo( x+lon0, y );
-//System.out.println("a r1.lineto right "+crossY);
-//System.out.println("b r2.moveto left "+crossY);
+//logger.info("a r1.lineto right "+crossY);
+//logger.info("b r2.moveto left "+crossY);
 							r = r2;
 						} else {
 							if ( moved2 ) r2.lineTo( right, crossY ); else r2.moveTo( right, crossY ); moved2 = true;
 //							r2.lineTo( right, crossY );
 //							r1.moveTo( left, crossY );
 							r1.lineTo( x+lon0, y );
-//System.out.println("c r1.lineto left "+crossY);
-//System.out.println("d r2.moveto right "+crossY);
+//logger.info("c r1.lineto left "+crossY);
+//logger.info("d r2.moveto right "+crossY);
 							r = r1;
 						}
 					} else {
@@ -101,17 +101,17 @@ if ( type == PathIterator.SEG_CLOSE ) {
 							if ( moved2 ) r2.lineTo( right, crossY ); else r2.moveTo( right, crossY ); moved2 = true;
 //							r2.moveTo( right, crossY );
 							r2.lineTo( x+lon0, y );
-//System.out.println("e r1.lineto left "+crossY);
-//System.out.println("f r2.moveto right "+crossY);
+//logger.info("e r1.lineto left "+crossY);
+//logger.info("f r2.moveto right "+crossY);
 							r = r2;
 						} else {
 							if ( moved2 ) r2.lineTo( left, crossY ); else r2.moveTo( left, crossY ); moved2 = true;
 //							r2.lineTo( left, crossY );
 							r1.lineTo( right, crossY );
 							r1.lineTo( x+lon0, y );
-//System.out.println("g r2.lineto right "+crossY);
-//System.out.println("h r1.lineto right "+crossY);
-//System.out.println("k r1.lineto "+(x+lon0)+" "+y);
+//logger.info("g r2.lineto right "+crossY);
+//logger.info("h r1.lineto right "+crossY);
+//logger.info("k r1.lineto "+(x+lon0)+" "+y);
 							r = r1;
 						}
 					}
@@ -119,9 +119,9 @@ if ( type == PathIterator.SEG_CLOSE ) {
 {
 					r.lineTo( x+lon0, y );
 //if ( r == r1 )
-//	System.out.println("i r1.lineto "+(x+lon0)+" "+y);
+//	logger.info("i r1.lineto "+(x+lon0)+" "+y);
 //else
-//	System.out.println("j r2.lineto "+(x+lon0)+" "+y);
+//	logger.info("j r2.lineto "+(x+lon0)+" "+y);
 }
 				lastX = x;
 				lastY = y;

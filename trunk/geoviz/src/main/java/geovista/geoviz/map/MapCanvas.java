@@ -350,7 +350,6 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	/*
 	 * This resets all shapes, thus it might be expensive.
-	 * 
 	 */
 	public void zoomFullExtent() {
 		Rectangle2D dest = new Rectangle2D.Float(0, 0, getWidth(), getHeight());
@@ -786,10 +785,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setDataSet(Object[] data) {
@@ -1627,7 +1626,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		if ((indication != Integer.MIN_VALUE) && (shapeLayers.size() > 0)
 				&& (mode != MapCanvas.MODE_PAN) && (fisheyes == null)) {
 
-			// System.out.println("*********************");
+			// logger.info("*********************");
 			if (indication >= 0) {
 				// Color indicationColor = ls.colorIndication;
 				SpatialWeights sw = dataSet.getSpatialWeights();
@@ -1636,11 +1635,11 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 					for (Integer obsBor : bors) {
 						ls.renderSecondaryIndication(g2, obsBor);
-						// System.out.println("obsBor = " + obsBor);
+						// logger.info("obsBor = " + obsBor);
 					}
 				}
 				ls.renderObservation(indication, g2);
-				// System.out.println("indication = " + indication);
+				// logger.info("indication = " + indication);
 
 			}
 		}

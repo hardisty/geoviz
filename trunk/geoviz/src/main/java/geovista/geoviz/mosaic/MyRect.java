@@ -6,8 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 public class MyRect extends Rectangle {
+
+	final static Logger logger = Logger.getLogger(MyRect.class.getName());
 	private final int x, y;
 	final int w, h;
 	private int plusX = 0;
@@ -82,7 +85,7 @@ public class MyRect extends Rectangle {
 		for (int i = 0; i < Colors.length - 1; i++) {
 			Colors[Colors.length - 1] -= Colors[i];
 			// for( int i=0; i<Colors.length; i++)
-			// System.out.println("i: "+i+" Count: "+Colors[i]);
+			// logger.info("i: "+i+" Count: "+Colors[i]);
 		}
 	}
 
@@ -95,7 +98,7 @@ public class MyRect extends Rectangle {
 			colorBreakdown();
 		}
 
-		// System.out.println(residual);
+		// logger.info(residual);
 		if (obs > 0) {
 			if (dir != 'f') {
 				if (info.indexOf("¥") == -1
@@ -162,7 +165,7 @@ public class MyRect extends Rectangle {
 		if (mode.equals("Expected")) {
 			int high = (int) (192 + 63 * (0.15 + Stat.pnorm((1 - p - 0.9) * 10)));
 			int low = (int) (192 * (0.85 - Stat.pnorm((1 - p - 0.9) * 10)));
-			// System.out.println(Stat.pnorm((1-p-0.9)*15));
+			// logger.info(Stat.pnorm((1-p-0.9)*15));
 			if (obs - exp > 0.00001) {
 				g.setColor(new Color(low, low, high));
 			} else if (obs - exp < -0.00001) {
@@ -171,7 +174,7 @@ public class MyRect extends Rectangle {
 				g.setColor(Color.lightGray);
 			}
 			double resid = Math.abs((obs - exp) / Math.sqrt(exp));
-			// System.out.println("Cell: "+getLabel()+" resid: "+resid+" max
+			// logger.info("Cell: "+getLabel()+" resid: "+resid+" max
 			// "+max+ " scale "+scale);
 			if (dir == 'x') {
 				g.fillRect(x, y, (int) (w * resid / max), h);
@@ -189,7 +192,7 @@ public class MyRect extends Rectangle {
 			// ...
 			Color c = g.getColor();
 			// g.setColor(DragBox.hiliteColor);
-			// System.out.println("w: "+w+" hilite:"+hilite+"wh:
+			// logger.info("w: "+w+" hilite:"+hilite+"wh:
 			// "+(int)((double)w*hilite));
 			if (Math.min(w, width) > 2 && Math.min(h, height) > 2) { // Mit
 				// Rahmen
@@ -274,7 +277,7 @@ public class MyRect extends Rectangle {
 		}
 		while (votes[--stop] == 0) {
 		}
-		// System.out.println("Start: "+start+" Stop: "+stop);
+		// logger.info("Start: "+start+" Stop: "+stop);
 		int k = 1;
 		double eps = 0;
 		int sum = 0;
@@ -294,7 +297,7 @@ public class MyRect extends Rectangle {
 				}
 				sum += rounds[i];
 			}
-			// System.out.println("k: "+k+" eps: "+eps+" sum: "+sum+" pie:
+			// logger.info("k: "+k+" eps: "+eps+" sum: "+sum+" pie:
 			// "+pie);
 			if (sum > pie) {
 				eps -= 1 / Math.pow(2, k);
@@ -303,7 +306,7 @@ public class MyRect extends Rectangle {
 			}
 		}
 		if (sum != pie) {
-			System.out.println(" Rounding Failed !!!");
+			logger.info(" Rounding Failed !!!");
 		}
 
 		return rounds;

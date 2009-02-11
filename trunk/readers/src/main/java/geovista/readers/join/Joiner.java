@@ -7,8 +7,10 @@ package geovista.readers.join;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Joiner {
+	final static Logger logger = Logger.getLogger(Joiner.class.getName());
 
 	public static List<JoinPoint> innerJoin(String[] leftValues,
 			String[] rightValues) {
@@ -140,12 +142,12 @@ public class Joiner {
 
 		List<JoinPoint> join = Joiner.innerJoin(leftVals, rightVals);
 		for (JoinPoint j : join) {
-			System.out.println(j);
+			logger.info("" + j);
 		}
 
 		join = Joiner.leftOuterJoin(leftVals, rightVals);
 		for (JoinPoint j : join) {
-			System.out.println(j);
+			logger.info("" + j);
 		}
 
 	}

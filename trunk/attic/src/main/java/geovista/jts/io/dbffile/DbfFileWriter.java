@@ -38,7 +38,7 @@ public class DbfFileWriter implements DbfConsts{
 
   public DbfFileWriter(String file) throws IOException{
 
-	if(DEBUG)System.out.println("---->uk.ac.leeds.ccg.dbffile.DbfFileWriter constructed. Will identify itself as "+DBC);
+	if(DEBUG)logger.info("---->uk.ac.leeds.ccg.dbffile.DbfFileWriter constructed. Will identify itself as "+DBC);
 
 	ls = new EndianDataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
 
@@ -85,7 +85,7 @@ public class DbfFileWriter implements DbfConsts{
 
     recLength++; // delete flag
 
-    if(DEBUG)System.out.println(DBC+"rec length "+recLength);
+    if(DEBUG)logger.info(DBC+"rec length "+recLength);
 
     ls.writeIntLE(NoRecs);
 
@@ -135,7 +135,7 @@ public class DbfFileWriter implements DbfConsts{
 
     try{
 
-			if(DEBUG)System.out.println(DBC+":writeRecords writing "+recs.length+" records");
+			if(DEBUG)logger.info(DBC+":writeRecords writing "+recs.length+" records");
 
       for(i=0;i<recs.length;i++){
 

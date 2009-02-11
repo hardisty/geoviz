@@ -279,7 +279,7 @@ public class GMLOutputTemplate {
             footerText = footerText + line + "\n";
         }
 
-        //System.out.println(this.asString());
+        //logger.info(this.asString());
     }
 
     /**

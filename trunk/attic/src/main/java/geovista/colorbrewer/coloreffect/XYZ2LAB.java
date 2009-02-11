@@ -50,9 +50,9 @@ public class XYZ2LAB {
   public static void main(String[] args) {
     XYZ2LAB XYZ2LAB1 = new XYZ2LAB(14.51, 23.44, 9.39);
 
-    System.out.println("L = " + XYZ2LAB1.L);
-    System.out.println("A = " + XYZ2LAB1.A);
-    System.out.println("B = " + XYZ2LAB1.B);
+    logger.info("L = " + XYZ2LAB1.L);
+    logger.info("A = " + XYZ2LAB1.A);
+    logger.info("B = " + XYZ2LAB1.B);
   }
 
 }

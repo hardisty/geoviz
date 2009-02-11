@@ -213,7 +213,7 @@ public class PolygonHandler implements ShapeHandler{
             
             if (minShell == null)
             {
-                System.out.println("polygon found with a hole thats not inside a shell");
+                logger.info("polygon found with a hole thats not inside a shell");
             }
             else
             {
@@ -238,7 +238,7 @@ public class PolygonHandler implements ShapeHandler{
 
         Geometry result =  geometryFactory.createMultiPolygon(polygons);
      //   if (!(result.isValid()  ))
-     //   	System.out.println("geom isnt valid");
+     //   	logger.info("geom isnt valid");
         return result;        
     }
   //XXX TODO un-suppress warnings and use factory

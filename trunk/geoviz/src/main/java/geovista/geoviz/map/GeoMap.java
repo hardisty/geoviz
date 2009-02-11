@@ -695,10 +695,10 @@ public class GeoMap extends JPanel
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setData(Object[] data) {
@@ -880,14 +880,12 @@ public class GeoMap extends JPanel
 		 * for (Feature feat : featList) {
 		 * 
 		 * Geometry geom = (Geometry) feat.getAttribute(0);
-		 * System.out.println(geom.getClass().getName());
+		 * logger.info(geom.getClass().getName());
 		 * 
 		 * Java2DConverter converter = new Java2DConverter(new Viewport(app
 		 * .getGlassPane())); try { Shape shp = converter.toShape(geom);
-		 * System.out.println(shp); } catch (NoninvertibleTransformException e) { //
+		 * logger.info(shp); } catch (NoninvertibleTransformException e) { //
 		 * TODO Auto-generated catch block e.printStackTrace(); } }
-		 * 
-		 * 
 		 */
 
 		// coord.addBean(map2);

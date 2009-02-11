@@ -185,7 +185,7 @@ public class FlexibleDateParser {
         //The deprecated Date#parse method is actually pretty flexible. [Jon Aquino]
         try {
             if (verbose) {
-                System.out.println(s + " -- Date constructor");
+                logger.info(s + " -- Date constructor");
             }
             return new Date(s);
         } catch (Exception e) {
@@ -212,7 +212,7 @@ public class FlexibleDateParser {
             SimpleDateFormat formatter = (SimpleDateFormat) i.next();
 
             if (verbose) {
-                System.out.println(
+                logger.info(
                     s
                         + " -- "
                         + formatter.toPattern()
@@ -323,7 +323,7 @@ public class FlexibleDateParser {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(DateFormat.getDateInstance().parse("03-Mar-1998"));
+        logger.info(DateFormat.getDateInstance().parse("03-Mar-1998"));
     }
 
     public void setVerbose(boolean b) {

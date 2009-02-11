@@ -79,8 +79,8 @@ public class ColorInterpolator {
 		Color.RGBtoHSB(mixedColor.getRed(), mixedColor.getGreen(), mixedColor
 				.getBlue(), hsb);
 
-		// System.out.println("****");
-		// System.out.println("s " + sat);
+		// logger.info("****");
+		// logger.info("s " + sat);
 
 		float[] leftVals;
 		leftVals = Color.RGBtoHSB(leftColor.getRed(), leftColor.getGreen(),

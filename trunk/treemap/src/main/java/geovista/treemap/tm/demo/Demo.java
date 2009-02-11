@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -49,355 +50,336 @@ import javax.swing.border.Border;
 import geovista.treemap.tm.TMView;
 import geovista.treemap.tm.TreeMap;
 
-
-
 /**
- * The Demo class implements a demo for Treemap. It display a geovista.matrix.treemap.tm
- * view of a demo tree, and a configuration frame.
- * The demo tree is build from a file tree, passed in parameter.
- * Demo use TMFileNode as TMNode, draw and size algorithm in the geovista.matrix.treemap.tm.demo
- * package. Demo could take an argument, the path from which
- * start the representing of files.
- * If no arguments is given, the geovista.matrix.treemap.tm start from the root.
- *
+ * The Demo class implements a demo for Treemap. It display a
+ * geovista.matrix.treemap.tm view of a demo tree, and a configuration frame.
+ * The demo tree is build from a file tree, passed in parameter. Demo use
+ * TMFileNode as TMNode, draw and size algorithm in the
+ * geovista.matrix.treemap.tm.demo package. Demo could take an argument, the
+ * path from which start the representing of files. If no arguments is given,
+ * the geovista.matrix.treemap.tm start from the root.
+ * 
  * @author Christophe Bouthier [bouthier@loria.fr]
  * 
  */
 public class Demo {
 
-    private static int        count   = 1;    // to have unique view name
+	private static int count = 1; // to have unique view name
 
-    private static TMFileNode root    = null; // the root of the demo tree
-    private static TreeMap    treeMap = null; // the geovista.matrix.treemap.tm builded
+	private static TMFileNode root = null; // the root of the demo tree
+	private static TreeMap treeMap = null; // the geovista.matrix.treemap.tm
+											// builded
 
+	final static Logger logger = Logger.getLogger(Demo.class.getName());
 
-    /**
-     * Display a demo TreeMap.
-     */
-    public static void main(String[] args) {
-        String pathRoot = null;
+	/**
+	 * Display a demo TreeMap.
+	 */
+	public static void main(String[] args) {
+		String pathRoot = null;
 
-        if (args.length > 0) {
-            pathRoot = args[0];
-        } else {
-            pathRoot = ".";
-        }
-        pathRoot = "C:\\geovista\\geovista.matrix.treemap.tm\\src";
-        pathRoot = "C:\\geovista\\geovistastudio\\Applications\\GeoVizToolkit\\src\\edu\\sc";
-        File rootFile = new File(pathRoot);
-        try {
-            System.out.println("Starting the geovista.matrix.treemap.tm from " +
-                                rootFile.getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+		if (args.length > 0) {
+			pathRoot = args[0];
+		} else {
+			pathRoot = ".";
+		}
+		pathRoot = "C:\\geovista\\geovista.matrix.treemap.tm\\src";
+		pathRoot = "C:\\geovista\\geovistastudio\\Applications\\GeoVizToolkit\\src\\edu\\sc";
+		File rootFile = new File(pathRoot);
+		try {
+			logger.info("Starting the geovista.matrix.treemap.tm from "
+					+ rootFile.getCanonicalPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 
-        if (! rootFile.exists()) {
-            System.out.println("Can't start geovista.matrix.treemap.tm : " + rootFile.getName() +
-                               " does not exist.");
-            return;
-        }
+		if (!rootFile.exists()) {
+			logger.info("Can't start geovista.matrix.treemap.tm : "
+					+ rootFile.getName() + " does not exist.");
+			return;
+		}
 
+		root = new TMFileNode(rootFile);
+		if (root == null) {
+			System.err
+					.println("Error : can't start geovista.matrix.treemap.tm from "
+							+ rootFile.getAbsolutePath());
+			return;
+		}
 
-        root = new TMFileNode(rootFile);
-        if (root == null) {
-            System.err.println("Error : can't start geovista.matrix.treemap.tm from " +
-                                rootFile.getAbsolutePath());
-            return;
-        }
+		treeMap = new TreeMap(root);
+		TMView view = buildNewView();
 
-        treeMap = new TreeMap(root);
-        TMView view = buildNewView();
+		Demo demo = new Demo();
+		ConfFrame confFrame = demo.new ConfFrame();
+		ConfView confView = demo.new ConfView(view);
+		confFrame.addConfView(confView);
+		confFrame.pack();
+		confFrame.setVisible(true);
+	}
 
-        Demo demo = new Demo();
-        ConfFrame confFrame = demo. new ConfFrame();
-        ConfView  confView = demo. new ConfView(view);
-        confFrame.addConfView(confView);
-        confFrame.pack();
-        confFrame.setVisible(true);
-    }
+	/**
+	 * Build a new TMView, shows it in a frame, and return the TMView.
+	 */
+	static TMView buildNewView() {
+		TMFileSize fSize = new TMFileSize();
+		TMFileDraw fDraw = new TMFileDraw();
+		TMView view = treeMap.getView(fSize, fDraw);
+		JFrame viewFrame = new JFrame(root.getFullName() + " : " + count);
+		count++;
+		viewFrame.setContentPane(view);
+		viewFrame.pack();
+		viewFrame.setVisible(true);
+		return view;
+	}
 
+	/* --- Inner conf class --- */
 
-    /**
-     * Build a new TMView, shows it in a frame, and return the TMView.
-     */
-    static TMView buildNewView() {
-        TMFileSize fSize = new TMFileSize();
-        TMFileDraw fDraw = new TMFileDraw();
-        TMView view = treeMap.getView(fSize, fDraw);
-        JFrame viewFrame = new JFrame(root.getFullName() + " : " + count);
-        count++;
-        viewFrame.setContentPane(view);
-        viewFrame.pack();
-        viewFrame.setVisible(true);
-        return view;
-    }
+	/**
+	 * The ConfFrame class implements a configuration frame containing ConfView
+	 * for geovista.matrix.treemap.tm's views.
+	 */
+	class ConfFrame extends JFrame {
 
+		private JTabbedPane tabbedPane = null; // one tab per view
 
+		/**
+		 * Constructor.
+		 */
+		ConfFrame() {
+			super("Configuration");
 
-  /* --- Inner conf class --- */
+			JPanel panel = new JPanel(new BorderLayout());
+			setContentPane(panel);
+			tabbedPane = new JTabbedPane();
+			panel.add(tabbedPane, BorderLayout.CENTER);
+			JButton button = new JButton("Create new view");
+			JPanel buttonPane = new JPanel(new FlowLayout());
+			buttonPane.add(button);
+			panel.add(buttonPane, BorderLayout.NORTH);
 
-    /**
-     * The ConfFrame class implements a configuration frame
-     * containing ConfView for geovista.matrix.treemap.tm's views.
-     */
-    class ConfFrame
-        extends JFrame {
+			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        private JTabbedPane tabbedPane = null; // one tab per view
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TMView view = buildNewView();
+					ConfView confV = Demo.this.new ConfView(view);
+					addConfView(confV);
+				}
+			});
 
+		}
 
-        /**
-         * Constructor.
-         */
-        ConfFrame() {
-            super("Configuration");
+		/**
+		 * Adds a tab pane.
+		 */
+		void addConfView(ConfView view) {
+			tabbedPane.addTab(view.getName(), view);
+		}
+	}
 
-            JPanel panel = new JPanel(new BorderLayout());
-            setContentPane(panel);
-            tabbedPane = new JTabbedPane();
-            panel.add(tabbedPane, BorderLayout.CENTER);
-            JButton button = new JButton("Create new view");
-            JPanel buttonPane = new JPanel(new FlowLayout());
-            buttonPane.add(button);
-            panel.add(buttonPane, BorderLayout.NORTH);
+	/**
+	 * The ConfView class implements a configuration view for a
+	 * geovista.matrix.treemap.tm view.
+	 */
+	class ConfView extends JPanel {
 
-            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		private TMView view = null; // the TMView to configure
+		private TMFileDraw fDraw = null; // compute draw with color
+		private TMFileDrawPattern fDrawP = null; // compute draw with pattern
+		private TMFileSize fSize = null; // compute size with file size
+		private TMFileSizeDate fSizeD = null; // compute size with file date
 
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    TMView view = buildNewView();
-                    ConfView confV = Demo.this. new ConfView(view);
-                    addConfView(confV);
-                }
-            });
+		private JRadioButton AlgoClassic = null; // algo classic choice
+		private JRadioButton AlgoSquar = null; // algo squartified choice
+		private JRadioButton DrawColor = null; // compute draw color choice
+		private JRadioButton DrawPattern = null; // compute draw pattern choice
+		private JRadioButton SizeSize = null; // compute size size choice
+		private JRadioButton SizeDate = null; // compute size date choice
 
-        }
+		private JCheckBox TitleBox = null; // draw or not nodes titles
 
+		private JPanel AlgoPanel = null; // the algorithm choice panel
+		private JPanel AlgoConfView = null; // the algorithm conf view
 
-        /**
-         * Adds a tab pane.
-         */
-        void addConfView(ConfView view) {
-            tabbedPane.addTab(view.getName(), view);
-        }
-    }
+		/**
+		 * Constructor.
+		 * 
+		 * @param view
+		 *            the TMView to configure
+		 */
+		ConfView(TMView view) {
+			super(new BorderLayout());
+			this.view = view;
+			setName("View " + (count - 1));
+			fDraw = new TMFileDraw();
+			fDrawP = new TMFileDrawPattern();
+			fSize = new TMFileSize();
+			fSizeD = new TMFileSizeDate();
 
+			Border etchedBorder = BorderFactory.createEtchedBorder();
 
-    /**
-     * The ConfView class implements a configuration view
-     * for a geovista.matrix.treemap.tm view.
-     */
-    class ConfView
-        extends JPanel {
+			// NORTH
+			AlgoPanel = new JPanel(new BorderLayout());
+			AlgoPanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
+					"Algorithm"));
+			add(AlgoPanel, BorderLayout.NORTH);
 
-        private TMView            view    = null; // the TMView to configure
-        private TMFileDraw        fDraw   = null; // compute draw with color
-        private TMFileDrawPattern fDrawP  = null; // compute draw with pattern
-        private TMFileSize        fSize   = null; // compute size with file size
-        private TMFileSizeDate    fSizeD  = null; // compute size with file date
+			// CENTER
+			JPanel CenterPanel = new JPanel(new GridLayout(3, 1));
+			add(CenterPanel, BorderLayout.CENTER);
 
-        private JRadioButton AlgoClassic  = null; // algo classic choice
-        private JRadioButton AlgoSquar    = null; // algo squartified choice
-        private JRadioButton DrawColor    = null; // compute draw color choice
-        private JRadioButton DrawPattern  = null; // compute draw pattern choice
-        private JRadioButton SizeSize     = null; // compute size size choice
-        private JRadioButton SizeDate     = null; // compute size date choice
+			JPanel DrawPanel = new JPanel(new GridLayout(1, 2));
+			DrawPanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
+					"Draw"));
+			CenterPanel.add(DrawPanel);
 
-        private JCheckBox    TitleBox     = null; // draw or not nodes titles
+			JPanel SizePanel = new JPanel(new GridLayout(1, 2));
+			SizePanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
+					"Size"));
+			CenterPanel.add(SizePanel);
 
-        private JPanel       AlgoPanel    = null; // the algorithm choice panel
-        private JPanel       AlgoConfView = null; // the algorithm conf view
+			JPanel TitlePanel = new JPanel(new FlowLayout());
+			TitlePanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
+					"Titles"));
+			CenterPanel.add(TitlePanel);
 
-        /**
-         * Constructor.
-         *
-         * @param view    the TMView to configure
-         */
-        ConfView(TMView view) {
-            super(new BorderLayout());
-            this.view = view;
-            setName("View " + (count - 1));
-            fDraw = new TMFileDraw();
-            fDrawP = new TMFileDrawPattern();
-            fSize = new TMFileSize();
-            fSizeD = new TMFileSizeDate();
+			// SOUTH
+			JPanel SouthPanel = new JPanel(new FlowLayout());
+			JLabel statusLabel = new JLabel("Status : ");
+			SouthPanel.add(statusLabel);
+			SouthPanel.add(view.getStatusView());
+			add(SouthPanel, BorderLayout.SOUTH);
 
+			// AlgoPanel
+			JPanel choicePanel = new JPanel(new GridLayout(1, 2));
+			AlgoPanel.add(choicePanel, BorderLayout.NORTH);
+			AlgoClassic = new JRadioButton("Classic", true);
+			AlgoSquar = new JRadioButton("Squarified");
+			ButtonGroup bg = new ButtonGroup();
+			bg.add(AlgoClassic);
+			bg.add(AlgoSquar);
+			choicePanel.add(AlgoClassic);
+			choicePanel.add(AlgoSquar);
+			AlgoConfView = view.getAlgorithm().getConfiguringView();
+			AlgoPanel.add(AlgoConfView, BorderLayout.SOUTH);
+			AlgoClassic.addActionListener(new AlgoClassicListener());
+			AlgoSquar.addActionListener(new AlgoSquarListener());
 
-            Border etchedBorder = BorderFactory.createEtchedBorder();
+			// DrawPanel
+			DrawColor = new JRadioButton("Color", true);
+			DrawPattern = new JRadioButton("Pattern");
+			ButtonGroup bgD = new ButtonGroup();
+			bgD.add(DrawColor);
+			bgD.add(DrawPattern);
+			DrawPanel.add(DrawColor);
+			DrawPanel.add(DrawPattern);
+			DrawColor.addActionListener(new DrawColorListener());
+			DrawPattern.addActionListener(new DrawPatternListener());
 
-         // NORTH
-            AlgoPanel = new JPanel(new BorderLayout());
-            AlgoPanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
-                                                                 "Algorithm"));
-            add(AlgoPanel, BorderLayout.NORTH);
+			// SizePanel
+			SizeSize = new JRadioButton("File Size", true);
+			SizeDate = new JRadioButton("File Date");
+			ButtonGroup bgS = new ButtonGroup();
+			bgS.add(SizeSize);
+			bgS.add(SizeDate);
+			SizePanel.add(SizeSize);
+			SizePanel.add(SizeDate);
+			SizeSize.addActionListener(new SizeSizeListener());
+			SizeDate.addActionListener(new SizeDateListener());
 
-         // CENTER
-            JPanel CenterPanel = new JPanel(new GridLayout(3, 1));
-            add(CenterPanel, BorderLayout.CENTER);
+			// TitlePanel
+			TitleBox = new JCheckBox("Draw Titles", view.isDrawingTitle());
+			TitlePanel.add(TitleBox);
+			TitleBox.addActionListener(new TitleBoxListener());
+		}
 
-            JPanel DrawPanel = new JPanel(new GridLayout(1, 2));
-            DrawPanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
-                                                                 "Draw"));
-            CenterPanel.add(DrawPanel);
+		/* --- Inner's Inner action listener --- */
 
-            JPanel SizePanel = new JPanel(new GridLayout(1, 2));
-            SizePanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
-                                                                 "Size"));
-            CenterPanel.add(SizePanel);
+		/**
+		 * Algo classic radio button listener.
+		 */
+		class AlgoClassicListener implements ActionListener {
 
-            JPanel TitlePanel = new JPanel(new FlowLayout());
-            TitlePanel.setBorder(BorderFactory.createTitledBorder(etchedBorder,
-                                                                  "Titles"));
-            CenterPanel.add(TitlePanel);
+			public void actionPerformed(ActionEvent e) {
+				view.setAlgorithm(TMView.CLASSIC);
+				AlgoPanel.remove(AlgoConfView);
+				AlgoConfView = view.getAlgorithm().getConfiguringView();
+				TitleBox.setSelected(view.isDrawingTitle());
+				AlgoPanel.add(AlgoConfView, BorderLayout.SOUTH);
+				AlgoPanel.revalidate();
+			}
+		}
 
-         // SOUTH
-            JPanel SouthPanel = new JPanel(new FlowLayout());
-            JLabel statusLabel = new JLabel("Status : ");
-            SouthPanel.add(statusLabel);
-            SouthPanel.add(view.getStatusView());
-            add(SouthPanel, BorderLayout.SOUTH);
+		/**
+		 * Algo squar radio button listener.
+		 */
+		class AlgoSquarListener implements ActionListener {
 
+			public void actionPerformed(ActionEvent e) {
+				view.setAlgorithm(TMView.SQUARIFIED);
+				AlgoPanel.remove(AlgoConfView);
+				AlgoConfView = view.getAlgorithm().getConfiguringView();
+				TitleBox.setSelected(view.isDrawingTitle());
+				AlgoPanel.add(AlgoConfView, BorderLayout.SOUTH);
+				AlgoPanel.revalidate();
+			}
+		}
 
-         // AlgoPanel
-            JPanel choicePanel = new JPanel(new GridLayout(1, 2));
-            AlgoPanel.add(choicePanel, BorderLayout.NORTH);
-            AlgoClassic = new JRadioButton("Classic", true);
-            AlgoSquar = new JRadioButton("Squarified");
-            ButtonGroup bg = new ButtonGroup();
-            bg.add(AlgoClassic);
-            bg.add(AlgoSquar);
-            choicePanel.add(AlgoClassic);
-            choicePanel.add(AlgoSquar);
-            AlgoConfView = view.getAlgorithm().getConfiguringView();
-            AlgoPanel.add(AlgoConfView, BorderLayout.SOUTH);
-            AlgoClassic.addActionListener(new AlgoClassicListener());
-            AlgoSquar.addActionListener(new AlgoSquarListener());
+		/**
+		 * Draw color radio button listener.
+		 */
+		class DrawColorListener implements ActionListener {
 
-         // DrawPanel
-            DrawColor = new JRadioButton("Color", true);
-            DrawPattern = new JRadioButton("Pattern");
-            ButtonGroup bgD = new ButtonGroup();
-            bgD.add(DrawColor);
-            bgD.add(DrawPattern);
-            DrawPanel.add(DrawColor);
-            DrawPanel.add(DrawPattern);
-            DrawColor.addActionListener(new DrawColorListener());
-            DrawPattern.addActionListener(new DrawPatternListener());
+			public void actionPerformed(ActionEvent e) {
+				view.changeTMComputeDraw(fDraw);
+			}
+		}
 
-         // SizePanel
-            SizeSize = new JRadioButton("File Size", true);
-            SizeDate = new JRadioButton("File Date");
-            ButtonGroup bgS = new ButtonGroup();
-            bgS.add(SizeSize);
-            bgS.add(SizeDate);
-            SizePanel.add(SizeSize);
-            SizePanel.add(SizeDate);
-            SizeSize.addActionListener(new SizeSizeListener());
-            SizeDate.addActionListener(new SizeDateListener());
+		/**
+		 * Draw pattern radio button listener.
+		 */
+		class DrawPatternListener implements ActionListener {
 
-         // TitlePanel
-            TitleBox = new JCheckBox("Draw Titles", view.isDrawingTitle());
-            TitlePanel.add(TitleBox);
-            TitleBox.addActionListener(new TitleBoxListener());
-        }
+			public void actionPerformed(ActionEvent e) {
+				view.changeTMComputeDraw(fDrawP);
+			}
+		}
 
+		/**
+		 * Size file size radio button listener.
+		 */
+		class SizeSizeListener implements ActionListener {
 
-      /* --- Inner's Inner action listener --- */
+			public void actionPerformed(ActionEvent e) {
+				view.changeTMComputeSize(fSize);
+			}
+		}
 
-        /**
-         * Algo classic radio button listener.
-         */
-        class AlgoClassicListener
-            implements ActionListener {
+		/**
+		 * Size file date radio button listener.
+		 */
+		class SizeDateListener implements ActionListener {
 
-            public void actionPerformed(ActionEvent e) {
-                view.setAlgorithm(TMView.CLASSIC);
-                AlgoPanel.remove(AlgoConfView);
-                AlgoConfView = view.getAlgorithm().getConfiguringView();
-                TitleBox.setSelected(view.isDrawingTitle());
-                AlgoPanel.add(AlgoConfView, BorderLayout.SOUTH);
-                AlgoPanel.revalidate();
-            }
-        }
+			public void actionPerformed(ActionEvent e) {
+				view.changeTMComputeSize(fSizeD);
+			}
+		}
 
-        /**
-         * Algo squar radio button listener.
-         */
-        class AlgoSquarListener
-            implements ActionListener {
+		/**
+		 * Title checkbox listener.
+		 */
+		class TitleBoxListener implements ActionListener {
 
-            public void actionPerformed(ActionEvent e) {
-                view.setAlgorithm(TMView.SQUARIFIED);
-                AlgoPanel.remove(AlgoConfView);
-                AlgoConfView = view.getAlgorithm().getConfiguringView();
-                TitleBox.setSelected(view.isDrawingTitle());
-                AlgoPanel.add(AlgoConfView, BorderLayout.SOUTH);
-                AlgoPanel.revalidate();
-            }
-        }
-
-        /**
-         * Draw color radio button listener.
-         */
-        class DrawColorListener
-            implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-                view.changeTMComputeDraw(fDraw);
-            }
-        }
-
-        /**
-         * Draw pattern radio button listener.
-         */
-        class DrawPatternListener
-            implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-                view.changeTMComputeDraw(fDrawP);
-            }
-        }
-
-        /**
-         * Size file size radio button listener.
-         */
-        class SizeSizeListener
-            implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-                view.changeTMComputeSize(fSize);
-            }
-        }
-
-        /**
-         * Size file date radio button listener.
-         */
-        class SizeDateListener
-            implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-                view.changeTMComputeSize(fSizeD);
-            }
-        }
-
-        /**
-         * Title checkbox listener.
-         */
-        class TitleBoxListener
-            implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-                if (TitleBox.isSelected()) {
-                    view.DrawTitles(true);
-                } else {
-                    view.DrawTitles(false);
-                }
-            }
-        }
-    }
-
+			public void actionPerformed(ActionEvent e) {
+				if (TitleBox.isSelected()) {
+					view.DrawTitles(true);
+				} else {
+					view.DrawTitles(false);
+				}
+			}
+		}
+	}
 
 }
-

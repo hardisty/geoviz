@@ -408,7 +408,7 @@ public class ShapefileWriter implements JUMPWriter {
  
         DbfFile dbfFile = new DbfFile("");//to get dateparser
         for (t = 0; t < num; t++) {
-            //System.out.println("dbf: record "+t);
+            //logger.info("dbf: record "+t);
             Feature feature = (Feature) features.get(t);
             Vector DBFrow = new Vector();
 

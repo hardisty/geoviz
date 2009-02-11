@@ -9,6 +9,7 @@ package geovista.geoviz.spreadsheet;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,6 +38,7 @@ public class TableViewer extends JPanel implements SelectionListener,
 
 	private JTable table;
 	JScrollPane scrollPane;
+	final static Logger logger = Logger.getLogger(TableViewer.class.getName());
 
 	public TableViewer() {
 		// super(new GridLayout(1, 0));
@@ -176,16 +178,16 @@ public class TableViewer extends JPanel implements SelectionListener,
 		 * numObs = dataSet.getNumObservations(); Object[][] tablesData = new
 		 * Object[numObs][attributeNames.length];
 		 * 
-		 * double[] doubleData = null; int[] intData = null; String[] stringData =
-		 * null; boolean[] boolData = null;
+		 * double[] doubleData = null; int[] intData = null; String[] stringData
+		 * = null; boolean[] boolData = null;
 		 * 
 		 * for (int column = 0; column < attributeNames.length; column++) { //
 		 * Object datum = data[column+1]; Object datum =
 		 * dataSet.getNamedArrays()[column];// XXX is this the // right
 		 * accessor? if (datum instanceof double[]) { doubleData = (double[])
 		 * datum; for (int row = 0; row < numObs; row++) { double dat =
-		 * doubleData[row]; Double d = new Double(dat); tablesData[row][column] =
-		 * d; } }
+		 * doubleData[row]; Double d = new Double(dat); tablesData[row][column]
+		 * = d; } }
 		 * 
 		 * if (datum instanceof int[]) { intData = (int[]) datum; for (int row =
 		 * 0; row < numObs; row++) { int dat = intData[row]; Integer d = new
@@ -193,8 +195,8 @@ public class TableViewer extends JPanel implements SelectionListener,
 		 * 
 		 * if (datum instanceof String[]) {
 		 * 
-		 * stringData = (String[]) datum; for (int row = 0; row < numObs; row++) {
-		 * String dat = stringData[row]; tablesData[row][column] = dat; } }
+		 * stringData = (String[]) datum; for (int row = 0; row < numObs; row++)
+		 * { String dat = stringData[row]; tablesData[row][column] = dat; } }
 		 * 
 		 * if (datum instanceof boolean[]) { boolData = (boolean[]) datum; for
 		 * (int row = 0; row < numObs; row++) { boolean dat = boolData[row];
@@ -224,8 +226,8 @@ public class TableViewer extends JPanel implements SelectionListener,
 		for (int row = 0; row < dataSet.getRowCount(); row++) {
 			for (int column = 0; column < dataSet.getColumnCount(); column++) {
 				Object obj = dataSet.getValueAt(row, column);
-				System.out.println("row = " + row + ", col = " + column
-						+ ", obj = " + obj);
+				logger.info("row = " + row + ", col = " + column + ", obj = "
+						+ obj);
 			}
 		}
 
@@ -246,13 +248,13 @@ public class TableViewer extends JPanel implements SelectionListener,
 	class ListSelectionReporter implements ListSelectionListener {
 
 		public void valueChanged(ListSelectionEvent e) {
-			System.out.println("**********");
-			System.out.println();
-			System.out.println(e);
-			System.out.println(e.getFirstIndex());
-			System.out.println(e.getLastIndex());
-			System.out.println(e.toString());
-			System.out.println("*****");
+			logger.info("**********");
+			logger.info("");
+			logger.info(e.toString());
+			logger.info("" + e.getFirstIndex());
+			logger.info("" + e.getLastIndex());
+
+			logger.info("*****");
 
 		}
 

@@ -720,8 +720,8 @@ public abstract class DescriptiveStatistics {
 	 * less than 3 is a flatter distribution; a kurtosis of greater than 3 is a
 	 * peaky disribution.
 	 * 
-	 * kurtosis = { [n(n+1) / (n -1)(n - 2)(n-3)] sum[(x_i - mean)^4] / std^4 } -
-	 * [3(n-1)^2 / (n-2)(n-3)]
+	 * kurtosis = { [n(n+1) / (n -1)(n - 2)(n-3)] sum[(x_i - mean)^4] / std^4 }
+	 * - [3(n-1)^2 / (n-2)(n-3)]
 	 * 
 	 */
 	public static double kurtosis(double[] doubleArray, boolean sample) {
@@ -766,7 +766,7 @@ public abstract class DescriptiveStatistics {
 	public static void main(String[] args) {
 		double[] vals = { 3, 2, 3, 3, 3, 3, 3, 3, 3, 2 };
 		double kurtosis = DescriptiveStatistics.kurtosis(vals, true);
-		System.out.println("kurtosis = " + kurtosis);
+		logger.info("kurtosis = " + kurtosis);
 	}
 
 	/**

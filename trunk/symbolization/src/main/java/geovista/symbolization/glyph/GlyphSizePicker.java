@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -30,6 +31,8 @@ public class GlyphSizePicker extends JPanel implements ComponentListener {
 	public static final int DEFAULT_LOW_SIZE = 10;
 	// grey
 	public static final int DEFAULT_HIGH_SIZE = 50;
+	final static Logger logger = Logger.getLogger(GlyphSizePicker.class
+			.getName());
 
 	public GlyphSizePicker() {
 		minSize = DEFAULT_LOW_SIZE;
@@ -56,7 +59,7 @@ public class GlyphSizePicker extends JPanel implements ComponentListener {
 		for (int i = 0; i < gyphButts.size(); i++) {
 			int size = (step * i) + minSize;
 
-			System.out.println("size = " + size);
+			logger.info("size = " + size);
 			gyphButts.get(i).setGlyphSize(size);
 
 		}

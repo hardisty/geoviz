@@ -138,9 +138,9 @@ public class XYZ2SRGB {
   public static void main(String[] args) throws IOException {
     XYZ2SRGB xYZ2SRGB1 = new XYZ2SRGB(56.27, 59.75, 9.61);
 
-    System.out.println("R = " + xYZ2SRGB1.R255);
-    System.out.println("G = " + xYZ2SRGB1.G255);
-    System.out.println("B = " + xYZ2SRGB1.B255);
+    logger.info("R = " + xYZ2SRGB1.R255);
+    logger.info("G = " + xYZ2SRGB1.G255);
+    logger.info("B = " + xYZ2SRGB1.B255);
 
     /*
     // write the data out

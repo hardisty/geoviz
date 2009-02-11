@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ public class GlyphSwatch extends JPanel implements ComponentListener {
 	int size;
 	static Glyph DEFAULT_glyph = new NGon(3);
 	static int DEFAULT_SIZE = 200;
+	final static Logger logger = Logger.getLogger(GlyphSwatch.class.getName());
 
 	public GlyphSwatch() {
 		glyph = DEFAULT_glyph;
@@ -120,10 +122,10 @@ public class GlyphSwatch extends JPanel implements ComponentListener {
 	public void setGlyphSize(int size) {
 		this.size = size;
 		glyph.setTargetArea(new Rectangle(0, 0, size, size));
-		System.out.println("glyph size = " + size);
+		logger.info("glyph size = " + size);
 		NGon gon = (NGon) glyph;
 		Shape drawShape = gon.getDrawPath();
-		System.out.println("bounds = " + drawShape.getBounds());
+		logger.info("bounds = " + drawShape.getBounds());
 		this.repaint();
 
 	}
