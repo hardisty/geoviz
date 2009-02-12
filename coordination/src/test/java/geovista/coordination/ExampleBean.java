@@ -4,6 +4,8 @@
 
 package geovista.coordination;
 
+import java.util.logging.Logger;
+
 import javax.swing.event.EventListenerList;
 
 import geovista.common.event.IndicationEvent;
@@ -28,6 +30,7 @@ public class ExampleBean implements IndicationListener {
 	private int result;
 	private int indication;
 	private EventListenerList listenerList = new EventListenerList();
+	final static Logger logger = Logger.getLogger(ExampleBean.class.getName());
 
 	// null constructor
 	public ExampleBean() {
