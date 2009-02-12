@@ -4,9 +4,13 @@
 
 package geovista.toolkitcore;
 
+import java.util.logging.Logger;
+
 import junit.framework.TestCase;
 
 public class GeoVizToolkitTest extends TestCase {
+	final static Logger logger = Logger.getLogger(GeoVizToolkitTest.class
+			.getName());
 
 	// ;// = new GeoVizToolkit("");
 	public GeoVizToolkitTest(String name) {
