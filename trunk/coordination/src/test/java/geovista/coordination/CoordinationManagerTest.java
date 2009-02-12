@@ -4,7 +4,12 @@
 
 package geovista.coordination;
 
+import java.util.logging.Logger;
+
 import junit.framework.TestCase;
+
+import geovista.coordination.CoordinationManager;
+import geovista.coordination.ExampleBean;
 
 /**
  * @author localadmin
@@ -12,6 +17,8 @@ import junit.framework.TestCase;
  */
 public class CoordinationManagerTest extends TestCase {
 	protected CoordinationManager coord;
+	final static Logger logger = Logger.getLogger(CoordinationManager.class
+			.getName());
 
 	/**
 	 * @param name
@@ -33,9 +40,10 @@ public class CoordinationManagerTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link geovista.coordination.CoordinationManager#addBean(java.lang.Object)}.
-	 * Test method for
-	 * {@link geovista.coordination.CoordinationManager#removeBean(java.lang.Object)}.
+	 * {@link geovista.coordination.CoordinationManager#addBean(java.lang.Object)}
+	 * . Test method for
+	 * {@link geovista.coordination.CoordinationManager#removeBean(java.lang.Object)}
+	 * .
 	 */
 	public void testCoordinateObject() {
 
@@ -87,7 +95,8 @@ public class CoordinationManagerTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link geovista.coordination.CoordinationManager#getFiringMethods(geovista.coordination.ListeningBean)}.
+	 * {@link geovista.coordination.CoordinationManager#getFiringMethods(geovista.coordination.ListeningBean)}
+	 * .
 	 */
 	public void testGetFiringMethods() {
 		// fail("Not yet implemented"); // TODO
@@ -103,7 +112,8 @@ public class CoordinationManagerTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link geovista.coordination.CoordinationManager#disconnectBeans(geovista.coordination.FiringMethod, geovista.coordination.ListeningBean)}.
+	 * {@link geovista.coordination.CoordinationManager#disconnectBeans(geovista.coordination.FiringMethod, geovista.coordination.ListeningBean)}
+	 * .
 	 */
 	public void testDisconnectBeans() {
 		// fail("Not yet implemented"); // TODO
@@ -111,7 +121,8 @@ public class CoordinationManagerTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link geovista.coordination.CoordinationManager#reconnectBeans(geovista.coordination.FiringMethod, geovista.coordination.ListeningBean)}.
+	 * {@link geovista.coordination.CoordinationManager#reconnectBeans(geovista.coordination.FiringMethod, geovista.coordination.ListeningBean)}
+	 * .
 	 */
 	public void testReconnectBeans() {
 		// fail("Not yet implemented"); // TODO
