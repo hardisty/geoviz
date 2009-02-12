@@ -41,9 +41,9 @@ public class GeoVizToolkitTest extends TestCase {
 	}
 
 	public void testOpenAllComponents() {
-		GeoVizToolkit newKit = new GeoVizToolkit("");
+		// GeoVizToolkit newKit = new GeoVizToolkit("");
 		// newKit.openAllComponents();
-		newKit = null;
+		// newKit = null;
 	}
 
 }
