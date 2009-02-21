@@ -26,6 +26,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,6 +73,7 @@ import geovista.common.event.VariableSelectionListener;
 import geovista.common.ui.Fisheyes;
 import geovista.common.ui.MultiSlider;
 import geovista.common.ui.RangeSlider;
+import geovista.common.ui.ShapeReporter;
 import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.coordination.CoordinationManager;
 import geovista.geoviz.visclass.VisualClassifier;
@@ -104,7 +106,7 @@ public class GeoMap extends JPanel
 		// the following line commented out until Glyph support improves
 		// GlyphListener,
 		VariableSelectionListener, SubspaceListener,
-		VisualSettingsPopupListener {
+		VisualSettingsPopupListener, ShapeReporter {
 
 	public static final int VARIABLE_CHOOSER_MODE_ACTIVE = 0;
 	public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
@@ -513,8 +515,9 @@ public class GeoMap extends JPanel
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("GeoMap, got a data set, id = "
 					+ e.getDataSetForApps().hashCode());
+			logger.info(e.getDataSetForApps().getDataSourceName());
 		}
-		logger.info(e.getDataSetForApps().getDataSourceName());
+
 		setDataSet(e.getDataSetForApps());
 	}
 
@@ -1028,6 +1031,15 @@ public class GeoMap extends JPanel
 	public void useSelectionFade(boolean selFade) {
 		mapCan.useSelectionFade(selFade);
 
+	}
+
+	public Shape reportShape() {
+		Shape s = mapCan.reportShape();
+		return s;
+	}
+
+	public Component renderingComponent() {
+		return mapCan;
 	}
 
 }
