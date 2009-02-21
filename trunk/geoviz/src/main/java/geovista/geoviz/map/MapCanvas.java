@@ -7,6 +7,7 @@ package geovista.geoviz.map;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -52,9 +53,11 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SpatialExtentEvent;
 import geovista.common.event.SpatialExtentListener;
+import geovista.common.jts.NullShape;
 import geovista.common.ui.ExcentricLabelClient;
 import geovista.common.ui.ExcentricLabels;
 import geovista.common.ui.Fisheyes;
+import geovista.common.ui.ShapeReporter;
 import geovista.common.ui.VisualSettingsPopupAdapter;
 import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.common.ui.VisualSettingsPopupMenu;
@@ -81,7 +84,7 @@ import geovista.symbolization.glyph.GlyphEvent;
 public class MapCanvas extends JPanel implements ComponentListener,
 		ActionListener, MouseListener, MouseMotionListener, SelectionListener,
 		IndicationListener, DataSetListener, SpatialExtentListener,
-		ExcentricLabelClient, VisualSettingsPopupListener {
+		ExcentricLabelClient, VisualSettingsPopupListener, ShapeReporter {
 	public final static int MODE_SELECT = 0; // default mode
 	public static final int MODE_ZOOM_IN = 1;
 	public static final int MODE_ZOOM_OUT = 2;
@@ -92,6 +95,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	private boolean useSelectionFade = true;
 	private boolean useSelectionBlur = true;
+	private final boolean useNeighbors = false;
 
 	private int mouseX1;
 	transient private int mouseX2;
@@ -99,7 +103,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	transient private int mouseY2;
 	private transient DataSetForApps dataSet;
 
-	private final Vector shapeLayers;
+	private final List<LayerShape> shapeLayers;
 	private int indication = Integer.MIN_VALUE;
 	private int[] indicationNeighbors;
 	private transient int activeLayer;
@@ -176,7 +180,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("MapCanvas, got glyphs at setGlyphs");
 		}
-		LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		if (ls == null) {
 			return;
 		}
@@ -188,7 +192,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	}
 
 	public void setTextures(TexturePaint[] textures) {
-		LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		ls.setTextures(textures);
 		paintDrawingBuff();
 		this.repaint();
@@ -218,7 +222,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 		objectColors = obsColors;
 
-		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		ls.setObjectColors(objectColors);
 
 		paintDrawingBuff();
@@ -243,7 +247,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		if (shapeLayers.size() == 0) {
 			return;
 		}
-		LayerShape currLayer = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape currLayer = shapeLayers.get(activeLayer);
 		if (currLayer == null) {
 			return;
 		}
@@ -262,20 +266,20 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 		AffineTransform xForm = AffineTransformModifier
 				.makeGeogAffineTransform(src, dest, true, true);
-		for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-			LayerShape shapeLayer = (LayerShape) e.nextElement();
-			Shape[] originalShapes = shapeLayer.getOriginalSpatialData();
+		for (LayerShape ls : shapeLayers) {
+
+			Shape[] originalShapes = ls.getOriginalSpatialData();
 			Shape[] returnShapes = originalShapes;// just for now, to make
 			// findbugs happy
 			transformer.setXForm(xForm);
-			if (shapeLayer instanceof LayerPolygon) {
+			if (ls instanceof LayerPolygon) {
 				returnShapes = transformer.makeTransformedShapes(
 						originalShapes, xForm);
-			} else if (shapeLayer instanceof LayerLine) {
+			} else if (ls instanceof LayerLine) {
 				returnShapes = transformer.makeTransformedShapes(
 						originalShapes, xForm);
-			} else if (shapeLayer instanceof LayerPoint) {
-				LayerPoint lp = (LayerPoint) shapeLayer;
+			} else if (ls instanceof LayerPoint) {
+				LayerPoint lp = (LayerPoint) ls;
 				Point2D[] userSpacePoints = transformer.makeTransformedPoints(
 						dataSet.getPoint2DData(), xForm);
 				Shape[] circleShapes = lp.findShapesForPoints(userSpacePoints);
@@ -284,9 +288,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			} else {
 				System.out
 						.println("Unsupported shape type encountered, shape type = "
-								+ shapeLayer.getClass().getName());
+								+ ls.getClass().getName());
 			}
-			sendSpatialDataToLayer(shapeLayer, returnShapes);
+			sendSpatialDataToLayer(ls, returnShapes);
 
 		}
 	}
@@ -436,8 +440,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				.makeGeogAffineTransform(src, dest, false, false);
 		xForm.concatenate(transformer.getXForm());
 		transformer.setXForm(xForm);
-		for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-			LayerShape ls = (LayerShape) e.nextElement();
+		for (LayerShape ls : shapeLayers) {
 			// start print centroids
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("Centroids:");
@@ -478,7 +481,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		paintDrawingBuff();
 		this.repaint();
 
-		LayerShape activeLayer = (LayerShape) shapeLayers.get(this.activeLayer);
+		LayerShape activeLayer = shapeLayers.get(this.activeLayer);
 		Rectangle2D rect = findFullExtentRect(activeLayer.getSpatialData());
 		fireSpatialExtentChanged(rect);
 
@@ -522,7 +525,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 		objectColors = bivarColorClasser.symbolize(dataColorX, dataColorY);
 
-		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		if (ls == null) {
 			return;
 		}
@@ -643,7 +646,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			drawingBuff = this.createImage(getWidth(), getHeight());
 
 			for (int i = 0; i < shapeLayers.size(); i++) {
-				LayerShape ls = (LayerShape) shapeLayers.get(i);
+				LayerShape ls = shapeLayers.get(i);
 				if (ls == null) {
 					return;
 				}
@@ -667,7 +670,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				// ArrayIndexOutOfBoundsException:
 				// Array index out of range:
 				// 0
-				LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+				LayerShape ls = shapeLayers.get(activeLayer);
 				ls.setObjectColors(objectColors);
 				// previous line results in sending colors to layers
 				paintDrawingBuff();
@@ -899,7 +902,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			return new Color[0];
 		}
 
-		LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 
 		return ls.getColors();
 	}
@@ -941,14 +944,14 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	private void setIndicationNeighbors(int[] neighbors) {
 		boolean areEqual = Arrays.equals(neighbors, indicationNeighbors);
-		if (areEqual == false) {
+		if (areEqual == false && useNeighbors) {
 			indicationNeighbors = neighbors;
 
 		}
 
 	}
 
-	public void setIndication(int indication) {
+	protected void setIndication(int indication) {
 
 		if (fisheyes != null) {
 			// if we have fisheyes, this is too expensive!!!
@@ -956,11 +959,27 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			return;
 		}
 
+		int buffer = 50;
 		if (indication != this.indication) {
+			// Rectangle currIndRect = new Rectangle(0, 0, 0, 0);
+			// Rectangle newIndRect = new Rectangle(0, 0, 0, 0);
+			int currInd = this.indication;
+
 			this.indication = indication;
 
 			if (shapeLayers.size() > 0) {
-				LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+				// currIndRect = getShapeAt(currInd).getBounds();
+				// newIndRect = getShapeAt(indication).getBounds();
+				// currIndRect = new Rectangle(currIndRect.x - buffer,
+				// currIndRect.y - buffer, currIndRect.width + buffer,
+				// currIndRect.height + buffer);
+				//
+				// newIndRect = new Rectangle(newIndRect.x - buffer,
+				// newIndRect.y
+				// - buffer, newIndRect.width + buffer, newIndRect.height
+				// + buffer);
+
+				LayerShape ls = shapeLayers.get(activeLayer);
 				if (ls == null) {
 					return;
 				}
@@ -984,6 +1003,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			} // if we have at least one layer
 
 			// paintDrawingBuff();
+			// this.repaint(currIndRect);
+			// this.repaint(newIndRect);
 			this.repaint();
 		} // if indication is new
 	}
@@ -1065,17 +1086,17 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		setIndication(indication);
 
 		int[] neighbors = e.getNeighbors();
-		if (neighbors.length > 0) {
+		if (neighbors.length > 0 && useNeighbors) {
 			setIndicationNeighbors(neighbors);
 		}
-		this.repaint();
+		// this.repaint();
 	}
 
 	public void glyphChanged(GlyphEvent e) {
 		if (dataSet == null) {
 			return;
 		}
-		LayerShape layer = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape layer = shapeLayers.get(activeLayer);
 		layer.setGlyphs(e.getGlyphs());
 		paintDrawingBuff();
 		this.repaint();
@@ -1096,7 +1117,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		}
 
 		if ((shapeLayers.size() > 0) && (drawingBuff != null)) {
-			LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+			LayerShape ls = shapeLayers.get(activeLayer);
 			ls.setSelectedObservations(this.selectedObservations);
 			paintDrawingBuff();
 			this.repaint();
@@ -1106,7 +1127,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			// not visible
 			// yet
 
-			LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+			LayerShape ls = shapeLayers.get(activeLayer);
 			ls.setSelectedObservations(this.selectedObservations);
 		}
 	}
@@ -1118,8 +1139,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	public void setColorSelection(Color colorSelection) {
 
 		if (shapeLayers.size() > 0) {
-			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-				LayerShape ls = (LayerShape) e.nextElement();
+			for (LayerShape ls : shapeLayers) {
+
 				ls.setColorSelection(colorSelection);
 			}
 
@@ -1134,8 +1155,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		if (shapeLayers == null) {
 			return;
 		}
-		for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-			LayerShape ls = (LayerShape) e.nextElement();
+		for (LayerShape ls : shapeLayers) {
 			ls.setColorBackground(c);
 		}
 
@@ -1146,7 +1166,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	// set clustering color
 	public void setClusteringColor(Color[] clusteringColor) {
-		LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		ls.setObjectColors(clusteringColor);
 		paintDrawingBuff();
 		this.repaint();
@@ -1159,8 +1179,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	 */
 	public void setConditionArray(int[] conditionArray) {
 		if (shapeLayers.size() > 0 && drawingBuff != null) {
-			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-				LayerShape ls = (LayerShape) e.nextElement();
+			for (LayerShape ls : shapeLayers) {
 				ls.setConditionArray(conditionArray);
 			}
 
@@ -1226,7 +1245,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			repaint();
 		}
 
-		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		if (ls == null) {
 			return;
 		}
@@ -1234,12 +1253,14 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 		if (indic != indication) {
 			setIndication(indic);
-
-			int[] neighbors = getIndicationNeighbors(indic);
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.info("found bors, n = " + neighbors.length);
+			int[] neighbors = {};
+			if (useNeighbors) {
+				neighbors = getIndicationNeighbors(indic);
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.info("found bors, n = " + neighbors.length);
+				}
+				setIndicationNeighbors(neighbors);
 			}
-			setIndicationNeighbors(neighbors);
 			this.repaint();
 			int xClass = -1;
 			int yClass = -1;
@@ -1434,7 +1455,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		}
 
 		if (shapeLayers.size() > 0) {
-			LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+			LayerShape ls = shapeLayers.get(activeLayer);
 			ls.findSelection(x1, x2, y1, y2);
 			selObs = ls.getSelectedObservations();
 		}
@@ -1444,7 +1465,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	private void updateSelection(int[] newSel) {
 		selectedObservations = newSel;
 		if (shapeLayers.size() > 0) {
-			LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+			LayerShape ls = shapeLayers.get(activeLayer);
 
 			// let's try just redrawing the selection
 			// for (int i = 0; i < selectedObservations.length; i++) {
@@ -1516,8 +1537,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		if (shapeLayers.size() > 0) {
-			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-				LayerShape ls = (LayerShape) e.nextElement();
+			for (LayerShape ls : shapeLayers) {
 				ls.fisheyes = fisheyes;
 				ls.render(g2); // paint your whole self, selected observations
 				// only
@@ -1527,8 +1547,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	}
 
 	private void renderLayers(Graphics2D g2) {
-		for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-			LayerShape ls = (LayerShape) e.nextElement();
+		for (LayerShape ls : shapeLayers) {
+
 			if (ls == null) {
 				break;
 			}
@@ -1564,8 +1584,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 		if (shapeLayers.size() > 0) {
 			int layerNum = 0;
-			for (Enumeration e = shapeLayers.elements(); e.hasMoreElements();) {
-				LayerShape ls = (LayerShape) e.nextElement();
+			for (LayerShape ls : shapeLayers) {
 				if (logger.isLoggable(Level.FINEST)) {
 					logger.finest("layerNum = " + layerNum + ", activeLayer = "
 							+ activeLayer);
@@ -1615,11 +1634,12 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			g.fillRect(0, 0, getWidth(), getHeight());
 		}
 
-		LayerShape ls = (LayerShape) shapeLayers.elementAt(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		// draw indication neighbors
-
-		for (int bor : indicationNeighbors) {
-			ls.renderSecondaryIndication(g2, bor);
+		if (useNeighbors) {
+			for (int bor : indicationNeighbors) {
+				ls.renderSecondaryIndication(g2, bor);
+			}
 		}
 
 		// Draw indication.
@@ -1629,13 +1649,15 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			// logger.info("*********************");
 			if (indication >= 0) {
 				// Color indicationColor = ls.colorIndication;
-				SpatialWeights sw = dataSet.getSpatialWeights();
-				if (sw != null) {
-					List<Integer> bors = sw.getNeighborIDs(indication);
+				if (useNeighbors) {
+					SpatialWeights sw = dataSet.getSpatialWeights();
+					if (sw != null) {
+						List<Integer> bors = sw.getNeighborIDs(indication);
 
-					for (Integer obsBor : bors) {
-						ls.renderSecondaryIndication(g2, obsBor);
-						// logger.info("obsBor = " + obsBor);
+						for (Integer obsBor : bors) {
+							ls.renderSecondaryIndication(g2, obsBor);
+							// logger.info("obsBor = " + obsBor);
+						}
 					}
 				}
 				ls.renderObservation(indication, g2);
@@ -1835,14 +1857,17 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	}
 
 	public Shape getShapeAt(int i) {
-		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		if (i < 0) {
+			return NullShape.INSTANCE;
+		}
+		LayerShape ls = shapeLayers.get(activeLayer);
 		Shape shp = ls.getSpatialData()[i];
 
 		return shp;
 	}
 
 	public int[] pickAll(Rectangle2D hitBox) {
-		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		int[] selObs = ls.findSelection(hitBox);
 
 		return selObs;
@@ -2025,12 +2050,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 		int numlayers = getNumberOfLayers();
 		if (numlayers > 0 && idx < numlayers) {
 			activeLayer = idx;
-			((LayerShape) shapeLayers.elementAt(activeLayer))
-					.setIsAuxiliary(false);
+			(shapeLayers.get(activeLayer)).setIsAuxiliary(false);
 			for (int i = 0; i < numlayers; i++) {
 				if (i != activeLayer) {
-					((LayerShape) shapeLayers.elementAt(i))
-							.setIsAuxiliary(true);
+					(shapeLayers.get(i)).setIsAuxiliary(true);
 				}
 			}
 			validate();
@@ -2047,7 +2070,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 	}
 
 	private LayerShape getActiveLayer() {
-		LayerShape ls = (LayerShape) shapeLayers.get(activeLayer);
+		LayerShape ls = shapeLayers.get(activeLayer);
 		return ls;
 	}
 
@@ -2096,4 +2119,14 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	}
 
+	public Shape reportShape() {
+		if (indication < 0) {
+			return NullShape.INSTANCE;
+		}
+		return getShapeAt(indication);
+	}
+
+	public Component renderingComponent() {
+		return this;
+	}
 }
