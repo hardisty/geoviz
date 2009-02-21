@@ -39,7 +39,8 @@ import com.vividsolutions.jts.geom.impl.PackedCoordinateSequenceFactory;
  * 
  * @author Andrea Aime
  * @source $URL:
- *         http://svn.geotools.org/geotools/trunk/gt/modules/library/main/src/main/java/org/geotools/geometry/jts/LiteShape.java $
+ *         http://svn.geotools.org/geotools/trunk/gt/modules/library/main/src
+ *         /main/java/org/geotools/geometry/jts/LiteShape.java $
  * 
  */
 public class LiteShape implements Shape, Cloneable {
@@ -64,33 +65,34 @@ public class LiteShape implements Shape, Cloneable {
 	/**
 	 * Creates a new LiteShape object.
 	 * 
-	 * @param geom -
-	 *            the wrapped geometry
-	 * @param at -
-	 *            the transformation applied to the geometry in order to get to
-	 *            the shape points
-	 * @param generalize -
-	 *            set to true if the geometry need to be generalized during
+	 * @param geom
+	 *            - the wrapped geometry
+	 * @param at
+	 *            - the transformation applied to the geometry in order to get
+	 *            to the shape points
+	 * @param generalize
+	 *            - set to true if the geometry need to be generalized during
 	 *            rendering
-	 * @param maxDistance -
-	 *            distance used in the generalization process
+	 * @param maxDistance
+	 *            - distance used in the generalization process
 	 */
 	public LiteShape(Geometry geom, AffineTransform at, boolean generalize,
 			double maxDistance) {
 		this(geom, at, generalize);
 		this.maxDistance = maxDistance;
+
 	}
 
 	/**
 	 * Creates a new LiteShape object.
 	 * 
-	 * @param geom -
-	 *            the wrapped geometry
-	 * @param at -
-	 *            the transformation applied to the geometry in order to get to
-	 *            the shape points
-	 * @param generalize -
-	 *            set to true if the geometry need to be generalized during
+	 * @param geom
+	 *            - the wrapped geometry
+	 * @param at
+	 *            - the transformation applied to the geometry in order to get
+	 *            to the shape points
+	 * @param generalize
+	 *            - set to true if the geometry need to be generalized during
 	 *            rendering
 	 * 
 	 */
@@ -134,18 +136,17 @@ public class LiteShape implements Shape, Cloneable {
 	 * return <code>false</code> when:
 	 * 
 	 * <ul>
-	 * <li> the <code>intersect</code> method returns <code>true</code> and
-	 * </li>
-	 * <li> the calculations to determine whether or not the <code>Shape</code>
+	 * <li>the <code>intersect</code> method returns <code>true</code> and</li>
+	 * <li>the calculations to determine whether or not the <code>Shape</code>
 	 * entirely contains the <code>Rectangle2D</code> are prohibitively
-	 * expensive. </li>
+	 * expensive.</li>
 	 * </ul>
 	 * 
 	 * This means that this method might return <code>false</code> even though
 	 * the <code>Shape</code> contains the <code>Rectangle2D</code>. The
-	 * <code>Area</code> class can be used to perform more accurate
-	 * computations of geometric intersection for any <code>Shape</code>
-	 * object if a more precise answer is required.
+	 * <code>Area</code> class can be used to perform more accurate computations
+	 * of geometric intersection for any <code>Shape</code> object if a more
+	 * precise answer is required.
 	 * 
 	 * @param r
 	 *            The specified <code>Rectangle2D</code>
@@ -154,8 +155,8 @@ public class LiteShape implements Shape, Cloneable {
 	 *         entirely contains the <code>Rectangle2D</code>;
 	 *         <code>false</code> otherwise or, if the <code>Shape</code>
 	 *         contains the <code>Rectangle2D</code> and the
-	 *         <code>intersects</code> method returns <code>true</code> and
-	 *         the containment calculations would be too expensive to perform.
+	 *         <code>intersects</code> method returns <code>true</code> and the
+	 *         containment calculations would be too expensive to perform.
 	 * 
 	 * @see #contains(double, double, double, double)
 	 */
@@ -172,9 +173,9 @@ public class LiteShape implements Shape, Cloneable {
 	 * @param p
 	 *            a specified <code>Point2D</code>
 	 * 
-	 * @return <code>true</code> if the specified <code>Point2D</code> is
-	 *         inside the boundary of the <code>Shape</code>;
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if the specified <code>Point2D</code> is inside
+	 *         the boundary of the <code>Shape</code>; <code>false</code>
+	 *         otherwise.
 	 */
 	public boolean contains(Point2D p) {
 		Coordinate coord = new Coordinate(p.getX(), p.getY());
@@ -212,17 +213,16 @@ public class LiteShape implements Shape, Cloneable {
 	 * This method might conservatively return <code>false</code> when:
 	 * 
 	 * <ul>
-	 * <li> the <code>intersect</code> method returns <code>true</code> and
-	 * </li>
-	 * <li> the calculations to determine whether or not the <code>Shape</code>
-	 * entirely contains the rectangular area are prohibitively expensive. </li>
+	 * <li>the <code>intersect</code> method returns <code>true</code> and</li>
+	 * <li>the calculations to determine whether or not the <code>Shape</code>
+	 * entirely contains the rectangular area are prohibitively expensive.</li>
 	 * </ul>
 	 * 
 	 * This means that this method might return <code>false</code> even though
 	 * the <code>Shape</code> contains the rectangular area. The
-	 * <code>Area</code> class can be used to perform more accurate
-	 * computations of geometric intersection for any <code>Shape</code>
-	 * object if a more precise answer is required.
+	 * <code>Area</code> class can be used to perform more accurate computations
+	 * of geometric intersection for any <code>Shape</code> object if a more
+	 * precise answer is required.
 	 * </p>
 	 * 
 	 * @param x
@@ -238,8 +238,8 @@ public class LiteShape implements Shape, Cloneable {
 	 *         entirely contains the specified rectangular area;
 	 *         <code>false</code> otherwise or, if the <code>Shape</code>
 	 *         contains the rectangular area and the <code>intersects</code>
-	 *         method returns <code>true</code> and the containment
-	 *         calculations would be too expensive to perform.
+	 *         method returns <code>true</code> and the containment calculations
+	 *         would be too expensive to perform.
 	 * 
 	 * @see java.awt.geom.Area
 	 * @see #intersects
@@ -254,13 +254,12 @@ public class LiteShape implements Shape, Cloneable {
 	 * Returns an integer {@link Rectangle} that completely encloses the
 	 * <code>Shape</code>. Note that there is no guarantee that the returned
 	 * <code>Rectangle</code> is the smallest bounding box that encloses the
-	 * <code>Shape</code>, only that the <code>Shape</code> lies entirely
-	 * within the indicated <code>Rectangle</code>. The returned
-	 * <code>Rectangle</code> might also fail to completely enclose the
-	 * <code>Shape</code> if the <code>Shape</code> overflows the limited
-	 * range of the integer data type. The <code>getBounds2D</code> method
-	 * generally returns a tighter bounding box due to its greater flexibility
-	 * in representation.
+	 * <code>Shape</code>, only that the <code>Shape</code> lies entirely within
+	 * the indicated <code>Rectangle</code>. The returned <code>Rectangle</code>
+	 * might also fail to completely enclose the <code>Shape</code> if the
+	 * <code>Shape</code> overflows the limited range of the integer data type.
+	 * The <code>getBounds2D</code> method generally returns a tighter bounding
+	 * box due to its greater flexibility in representation.
 	 * 
 	 * @return an integer <code>Rectangle</code> that completely encloses the
 	 *         <code>Shape</code>.
@@ -322,16 +321,16 @@ public class LiteShape implements Shape, Cloneable {
 	 * Returns a high precision and more accurate bounding box of the
 	 * <code>Shape</code> than the <code>getBounds</code> method. Note that
 	 * there is no guarantee that the returned {@link Rectangle2D} is the
-	 * smallest bounding box that encloses the <code>Shape</code>, only that
-	 * the <code>Shape</code> lies entirely within the indicated
+	 * smallest bounding box that encloses the <code>Shape</code>, only that the
+	 * <code>Shape</code> lies entirely within the indicated
 	 * <code>Rectangle2D</code>. The bounding box returned by this method is
 	 * usually tighter than that returned by the <code>getBounds</code> method
 	 * and never fails due to overflow problems since the return value can be an
 	 * instance of the <code>Rectangle2D</code> that uses double precision
 	 * values to store the dimensions.
 	 * 
-	 * @return an instance of <code>Rectangle2D</code> that is a
-	 *         high-precision bounding box of the <code>Shape</code>.
+	 * @return an instance of <code>Rectangle2D</code> that is a high-precision
+	 *         bounding box of the <code>Shape</code>.
 	 * 
 	 * @see #getBounds
 	 */
@@ -348,17 +347,17 @@ public class LiteShape implements Shape, Cloneable {
 	 * coordinates returned in the iteration are transformed accordingly.
 	 * 
 	 * <p>
-	 * Each call to this method returns a fresh <code>PathIterator</code>
-	 * object that traverses the geometry of the <code>Shape</code> object
-	 * independently from any other <code>PathIterator</code> objects in use
-	 * at the same time.
+	 * Each call to this method returns a fresh <code>PathIterator</code> object
+	 * that traverses the geometry of the <code>Shape</code> object
+	 * independently from any other <code>PathIterator</code> objects in use at
+	 * the same time.
 	 * </p>
 	 * 
 	 * <p>
 	 * It is recommended, but not guaranteed, that objects implementing the
-	 * <code>Shape</code> interface isolate iterations that are in process
-	 * from any changes that might occur to the original object's geometry
-	 * during such iterations.
+	 * <code>Shape</code> interface isolate iterations that are in process from
+	 * any changes that might occur to the original object's geometry during
+	 * such iterations.
 	 * </p>
 	 * 
 	 * <p>
@@ -369,8 +368,8 @@ public class LiteShape implements Shape, Cloneable {
 	 * </p>
 	 * 
 	 * @param at
-	 *            an optional <code>AffineTransform</code> to be applied to
-	 *            the coordinates as they are returned in the iteration, or
+	 *            an optional <code>AffineTransform</code> to be applied to the
+	 *            coordinates as they are returned in the iteration, or
 	 *            <code>null</code> if untransformed coordinates are desired
 	 * 
 	 * @return a new <code>PathIterator</code> object, which independently
@@ -438,8 +437,8 @@ public class LiteShape implements Shape, Cloneable {
 	 * </p>
 	 * 
 	 * <p>
-	 * If an optional <code>AffineTransform</code> is specified, the
-	 * coordinates returned in the iteration are transformed accordingly.
+	 * If an optional <code>AffineTransform</code> is specified, the coordinates
+	 * returned in the iteration are transformed accordingly.
 	 * </p>
 	 * 
 	 * <p>
@@ -453,17 +452,16 @@ public class LiteShape implements Shape, Cloneable {
 	 * </p>
 	 * 
 	 * <p>
-	 * Each call to this method returns a fresh <code>PathIterator</code>
-	 * object that traverses the <code>Shape</code> object geometry
-	 * independently from any other <code>PathIterator</code> objects in use
-	 * at the same time.
+	 * Each call to this method returns a fresh <code>PathIterator</code> object
+	 * that traverses the <code>Shape</code> object geometry independently from
+	 * any other <code>PathIterator</code> objects in use at the same time.
 	 * </p>
 	 * 
 	 * <p>
 	 * It is recommended, but not guaranteed, that objects implementing the
-	 * <code>Shape</code> interface isolate iterations that are in process
-	 * from any changes that might occur to the original object's geometry
-	 * during such iterations.
+	 * <code>Shape</code> interface isolate iterations that are in process from
+	 * any changes that might occur to the original object's geometry during
+	 * such iterations.
 	 * </p>
 	 * 
 	 * <p>
@@ -473,16 +471,16 @@ public class LiteShape implements Shape, Cloneable {
 	 * </p>
 	 * 
 	 * @param at
-	 *            an optional <code>AffineTransform</code> to be applied to
-	 *            the coordinates as they are returned in the iteration, or
+	 *            an optional <code>AffineTransform</code> to be applied to the
+	 *            coordinates as they are returned in the iteration, or
 	 *            <code>null</code> if untransformed coordinates are desired
 	 * @param flatness
 	 *            the maximum distance that the line segments used to
 	 *            approximate the curved segments are allowed to deviate from
 	 *            any point on the original curve
 	 * 
-	 * @return a new <code>PathIterator</code> that independently traverses
-	 *         the <code>Shape</code> geometry.
+	 * @return a new <code>PathIterator</code> that independently traverses the
+	 *         <code>Shape</code> geometry.
 	 */
 	public PathIterator getPathIterator(AffineTransform at, double flatness) {
 		return getPathIterator(at);
@@ -490,14 +488,14 @@ public class LiteShape implements Shape, Cloneable {
 
 	/**
 	 * Tests if the interior of the <code>Shape</code> intersects the interior
-	 * of a specified <code>Rectangle2D</code>. This method might
-	 * conservatively return <code>true</code> when:
+	 * of a specified <code>Rectangle2D</code>. This method might conservatively
+	 * return <code>true</code> when:
 	 * 
 	 * <ul>
-	 * <li> there is a high probability that the <code>Rectangle2D</code> and
-	 * the <code>Shape</code> intersect, but </li>
-	 * <li> the calculations to accurately determine this intersection are
-	 * prohibitively expensive. </li>
+	 * <li>there is a high probability that the <code>Rectangle2D</code> and the
+	 * <code>Shape</code> intersect, but</li>
+	 * <li>the calculations to accurately determine this intersection are
+	 * prohibitively expensive.</li>
 	 * </ul>
 	 * 
 	 * This means that this method might return <code>true</code> even though
@@ -506,10 +504,10 @@ public class LiteShape implements Shape, Cloneable {
 	 * @param r
 	 *            the specified <code>Rectangle2D</code>
 	 * 
-	 * @return <code>true</code> if the interior of the <code>Shape</code>
-	 *         and the interior of the specified <code>Rectangle2D</code>
-	 *         intersect, or are both highly likely to intersect and
-	 *         intersection calculations would be too expensive to perform;
+	 * @return <code>true</code> if the interior of the <code>Shape</code> and
+	 *         the interior of the specified <code>Rectangle2D</code> intersect,
+	 *         or are both highly likely to intersect and intersection
+	 *         calculations would be too expensive to perform;
 	 *         <code>false</code> otherwise.
 	 * 
 	 * @see #intersects(double, double, double, double)
@@ -530,10 +528,10 @@ public class LiteShape implements Shape, Cloneable {
 	 * This method might conservatively return <code>true</code> when:
 	 * 
 	 * <ul>
-	 * <li> there is a high probability that the rectangular area and the
-	 * <code>Shape</code> intersect, but </li>
-	 * <li> the calculations to accurately determine this intersection are
-	 * prohibitively expensive. </li>
+	 * <li>there is a high probability that the rectangular area and the
+	 * <code>Shape</code> intersect, but</li>
+	 * <li>the calculations to accurately determine this intersection are
+	 * prohibitively expensive.</li>
 	 * </ul>
 	 * 
 	 * This means that this method might return <code>true</code> even though
@@ -552,8 +550,8 @@ public class LiteShape implements Shape, Cloneable {
 	 * @param h
 	 *            the height of the specified rectangular area
 	 * 
-	 * @return <code>true</code> if the interior of the <code>Shape</code>
-	 *         and the interior of the rectangular area intersect, or are both
+	 * @return <code>true</code> if the interior of the <code>Shape</code> and
+	 *         the interior of the rectangular area intersect, or are both
 	 *         highly likely to intersect and intersection calculations would be
 	 *         too expensive to perform; <code>false</code> otherwise.
 	 * 
