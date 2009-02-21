@@ -461,7 +461,7 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		brushThread.render();
 	}
 
-	private GeneralPath assemblePath(int num, int startAxis, int stopAxis,
+	GeneralPath assemblePath(int num, int startAxis, int stopAxis,
 			ParallelDisplay comp) {
 		GeneralPath rPath = new GeneralPath();
 		float val = getYValue(num, startAxis, comp);

@@ -6,6 +6,7 @@ package geovista.geoviz.scatterplot;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,6 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,10 +46,12 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.jts.NullShape;
+import geovista.common.ui.ShapeReporter;
 
 public class Histogram extends JPanel implements MouseListener,
 		MouseMotionListener, ComponentListener, DataSetListener,
-		SelectionListener, IndicationListener {
+		SelectionListener, IndicationListener, ShapeReporter {
 	private static double AXISSPACEPORTION = 1.0 / 6.0;
 	private static int DEFAULT_HIST_NUM = 20;
 	transient private double[] data;
@@ -263,8 +267,7 @@ public class Histogram extends JPanel implements MouseListener,
 	 * Minimum and maximum values for xAxis. xAxisExtents[0] = min,
 	 * xAxisExtents[1] = max.
 	 * 
-	 * @param double[]
-	 *            xAxisExtents
+	 * @param double[] xAxisExtents
 	 */
 	public void setXAxisExtents(double[] xAxisExtents) {
 		if (logger.isLoggable(Level.FINEST)) {
@@ -1306,6 +1309,17 @@ public class Histogram extends JPanel implements MouseListener,
 			indicatedNeighborBins.add(obs);
 		}
 		this.repaint();
+	}
+
+	public Component renderingComponent() {
+		return this;
+	}
+
+	public Shape reportShape() {
+		if (indicatedBin < 0) {
+			return NullShape.INSTANCE;
+		}
+		return histRecs[indicatedBin];
 	}
 
 }

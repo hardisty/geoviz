@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -41,6 +42,7 @@ import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.common.event.VariableSelectionEvent;
 import geovista.common.event.VariableSelectionListener;
+import geovista.common.ui.ShapeReporter;
 import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.symbolization.BivariateColorSchemeVisualizer;
@@ -54,7 +56,8 @@ import geovista.symbolization.event.ColorClassifierListener;
 public class SingleScatterPlot extends JPanel implements DataSetListener,
 		ActionListener, ColorClassifierListener, SelectionListener,
 		IndicationListener, ColorArrayListener, VariableSelectionListener,
-		TableModelListener, SubspaceListener, VisualSettingsPopupListener {
+		TableModelListener, SubspaceListener, VisualSettingsPopupListener,
+		ShapeReporter {
 
 	public static final int VARIABLE_CHOOSER_MODE_ACTIVE = 0;
 	public static final int VARIABLE_CHOOSER_MODE_FIXED = 1;
@@ -120,10 +123,10 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setData(Object[] data) {
@@ -499,6 +502,16 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 	public void useSelectionFade(boolean selFade) {
 		scatterPlot.useSelectionFade(selFade);
 
+	}
+
+	public Component renderingComponent() {
+
+		return scatterPlot;
+	}
+
+	public Shape reportShape() {
+		// TODO Auto-generated method stub
+		return scatterPlot.reportShape();
 	}
 
 }

@@ -12,10 +12,13 @@
 package geovista.geoviz.parvis;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -32,7 +35,9 @@ import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
+import geovista.common.jts.NullShape;
 import geovista.common.ui.ExcentricLabelClient;
+import geovista.common.ui.ShapeReporter;
 import geovista.common.ui.VisualSettingsPopupAdapter;
 import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.common.ui.VisualSettingsPopupMenu;
@@ -48,7 +53,7 @@ import geovista.common.ui.VisualSettingsPopupMenu;
  */
 public class ParallelDisplay extends JComponent implements ChangeListener,
 		IndicationListener, SelectionListener, ExcentricLabelClient,
-		VisualSettingsPopupListener {
+		VisualSettingsPopupListener, ShapeReporter {
 
 	protected final static Logger logger = Logger
 			.getLogger(ParallelDisplay.class.getName());
@@ -930,4 +935,20 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 
 	}
 
+	public Component renderingComponent() {
+		return this;
+	}
+
+	public Shape reportShape() {
+		if (indication < 0) {
+			return NullShape.INSTANCE;
+		}
+
+		BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
+		GeneralPath path = pui.assemblePath(indication, 2, 3, this);
+		AffineTransform xForm = new AffineTransform();
+		xForm.translate(0, 32);
+		Shape transPath = path.createTransformedShape(xForm);
+		return transPath;
+	}
 }

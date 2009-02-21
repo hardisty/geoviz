@@ -11,8 +11,10 @@
 package geovista.geoviz.parvis;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Logger;
@@ -48,6 +50,7 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.common.ui.ShapeReporter;
 import geovista.common.ui.VisualSettingsPopupListener;
 import geovista.geoviz.visclass.VisualClassifier;
 import geovista.readers.FileIO;
@@ -61,7 +64,8 @@ import geovista.readers.FileIO;
 public class ParallelPlot extends JPanel implements ProgressListener,
 		DataSetListener, IndicationListener, SelectionListener,
 		ColorArrayListener, SubspaceListener, PaletteListener,
-		ConditioningListener, TableModelListener, VisualSettingsPopupListener {
+		ConditioningListener, TableModelListener, VisualSettingsPopupListener,
+		ShapeReporter {
 	JToggleButton lastButton = null;
 	VisualClassifier vc = null;
 	int[] activeVariables = null;
@@ -162,7 +166,8 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 		 * label.setText("url:"); openPanel.add(label);
 		 * 
 		 * urlField.setToolTipText("Type in URL to load. Press enter.");
-		 * urlField.setText("file:///D:/Uni/visualisierung/datasets/cameras.stf");
+		 * urlField
+		 * .setText("file:///D:/Uni/visualisierung/datasets/cameras.stf");
 		 * urlField.setPreferredSize(new java.awt.Dimension(300, 21));
 		 * urlField.addActionListener(new java.awt.event.ActionListener() {
 		 * public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -476,10 +481,10 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setDataSet(Object[] data) {
@@ -844,6 +849,14 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 				System.exit(0);
 			}
 		});
+	}
+
+	public Component renderingComponent() {
+		return parallelDisplay;
+	}
+
+	public Shape reportShape() {
+		return parallelDisplay.reportShape();
 	}
 
 }

@@ -10,14 +10,19 @@ package geovista.geoviz.scatterplot;
  * 
  */
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
+import geovista.common.jts.NullShape;
+import geovista.common.ui.ShapeReporter;
 import geovista.symbolization.BivariateColorSymbolClassification;
 
 /**
  * put your documentation comment here
  */
-public class ScatterPlot extends ScatterPlotBasic
+public class ScatterPlot extends ScatterPlotBasic implements ShapeReporter
 
 {
 	public static final Color COLOR_NOSELECTED = new Color(204, 204, 204);
@@ -38,18 +43,12 @@ public class ScatterPlot extends ScatterPlotBasic
 	 *            attributeXName
 	 * @param String
 	 *            attributeYName
-	 * @param double[]
-	 *            dataX
-	 * @param double[]
-	 *            dataY
-	 * @param boolean
-	 *            axisOn
-	 * @param boolean
-	 *            plotLine
-	 * @param double
-	 *            slope
-	 * @param double
-	 *            intercept
+	 * @param double[] dataX
+	 * @param double[] dataY
+	 * @param boolean axisOn
+	 * @param boolean plotLine
+	 * @param double slope
+	 * @param double intercept
 	 */
 	public ScatterPlot(Object[] dataObject, int[] dataIndices, boolean axisOn,
 			Color c) {
@@ -224,6 +223,18 @@ public class ScatterPlot extends ScatterPlotBasic
 	@Override
 	public BivariateColorSymbolClassification getBivarColorClasser() {
 		return bivarColorClasser;
+	}
+
+	public Component renderingComponent() {
+		return this;
+	}
+
+	public Shape reportShape() {
+		if (indiationId >= 0) {
+			return new Ellipse2D.Float(exsint[indiationId],
+					whyint[indiationId], pointSize, pointSize);
+		}
+		return NullShape.INSTANCE;
 	}
 
 }
