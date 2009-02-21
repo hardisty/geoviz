@@ -61,12 +61,12 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	transient private GeoCursors cursors;
 
 	private Color selectionColor;
-	private Histogram histogram = new Histogram();
+	private final Histogram histogram = new Histogram();
 
 	public MapMatrixElement() {
 		super();
-		this.autofit = true;
-		this.setBorder(BorderFactory.createLineBorder(Color.gray));
+		autofit = true;
+		setBorder(BorderFactory.createLineBorder(Color.gray));
 
 		// super.exLabels = null;
 		// super.fisheyes = new geovista.common.ui.Fisheyes();
@@ -94,11 +94,10 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 			// don't want to pop up one from the
 			// diagonal if we are a scatterplot
 			GeoMap detailMap = new GeoMap();
-			detailMap.setBackground(this.getBackground());
-			detailMap.setDataSet(this.dataSet);
-			detailMap.setBivarColorClasser(this.bivarColorClasser);
-			detailMap
-					.setSelectedObservations(this.getSelectedObservationsInt()); // need
+			detailMap.setBackground(getBackground());
+			detailMap.setDataSet(dataSet);
+			detailMap.setBivarColorClasser(bivarColorClasser);
+			detailMap.setSelectedObservations(getSelectedObservationsInt()); // need
 			// to
 			// do
 			// this
@@ -130,27 +129,27 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	} // end method
 
 	public void setDataObject(DataSetForApps data) {
-		this.dataSet = data;
+		dataSet = data;
 		super.setDataSet(data);
-		this.setHistogramData();
+		setHistogramData();
 
 		// super.tickleColors();
 	}
 
 	public void setDataIndices(int[] dataIndices) {
-		this.elementPosition = dataIndices.clone();
+		elementPosition = dataIndices.clone();
 		// zero based or one based...
 		// well...
 		// i know...
 		// let's keep changing our minds!
 		// then we'll never get it straight!
-		super.setCurrColorColumnX(this.elementPosition[0] - 1);
-		super.setCurrColorColumnY(this.elementPosition[1] - 1);
-		this.setHistogramData();
+		super.setCurrColorColumnX(elementPosition[0] - 1);
+		super.setCurrColorColumnY(elementPosition[1] - 1);
+		setHistogramData();
 	}
 
 	public int[] getElementPosition() {
-		return this.elementPosition;
+		return elementPosition;
 	}
 
 	// For axes of scatter plot.
@@ -169,24 +168,26 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	}
 
 	public double[] getXAxisExtents() {
-		return this.xAxisExtents;
+		return xAxisExtents;
 	}
 
 	public double[] getYAxisExtents() {
-		return this.yAxisExtents;
+		return yAxisExtents;
 	}
 
 	public String getShortDiscription() {
 		return "MAP";
 	}
 
+	@Override
 	public void setSelectionColor(Color c) {
-		this.selectionColor = c;
+		selectionColor = c;
 		super.setColorSelection(c);
 	}
 
+	@Override
 	public Color getSelectionColor() {
-		return this.selectionColor;
+		return selectionColor;
 	}
 
 	public void setMultipleSelectionColors(Color[] c) {
@@ -200,13 +201,13 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	}
 
 	private void setHistogramData() {
-		if (this.data == null || this.elementPosition == null) {
+		if (data == null || elementPosition == null) {
 			return;
 		}
-		String[] atts = (String[]) this.data[0];
+		String[] atts = (String[]) data[0];
 
-		this.attributeX = atts[elementPosition[0] - 1];
-		int index = this.elementPosition[0];
+		attributeX = atts[elementPosition[0] - 1];
+		int index = elementPosition[0];
 		// XXX getNumericDataAsDouble has changed...
 		dataX = dataSet.getNumericDataAsDouble(index - 1);
 		double[] extent = histogram.getXAxisExtents();
@@ -214,7 +215,7 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 		extent = new double[2];
 		extent[0] = geovista.common.data.DescriptiveStatistics.min(dataX);
 		extent[1] = geovista.common.data.DescriptiveStatistics.max(dataX);
-		this.xAxisExtents = extent;
+		xAxisExtents = extent;
 
 	}
 
@@ -225,18 +226,18 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		if (this.elementPosition == null) {
+		if (elementPosition == null) {
 			return;
 		}
-		if (this.elementPosition[0] != this.elementPosition[1]) {
+		if (elementPosition[0] != elementPosition[1]) {
 			super.paintComponent(g);
 		}
 
-		if (this.elementPosition == null) {
+		if (elementPosition == null) {
 			return;
 		}
 
-		if (this.elementPosition[0] == this.elementPosition[1]) {
+		if (elementPosition[0] == elementPosition[1]) {
 			super.paintComponent(g);
 			// this.drawHistogram(g);
 
@@ -419,6 +420,11 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 			BivariateColorSymbolClassification bivarColorClasser,
 			boolean reverseColor) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void setIndication(int indication) {
+		super.setIndication(indication);
 
 	}
 }
