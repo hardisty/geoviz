@@ -195,10 +195,10 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setData(Object[] data) {
@@ -1129,7 +1129,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	protected void setupDataforDisplay() {
 
 		setVisibleAxis(axisOn);
-		if (dataArrayX == null) {
+		if (dataArrayX == null || dataArrayY == null) {
 			logger.info("ScatterPlotBasic null array");
 			return;
 		}

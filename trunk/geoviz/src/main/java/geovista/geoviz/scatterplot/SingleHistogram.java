@@ -7,7 +7,9 @@ package geovista.geoviz.scatterplot;
  */
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.BitSet;
@@ -34,10 +36,11 @@ import geovista.common.event.SelectionEvent;
 import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
+import geovista.common.ui.ShapeReporter;
 
 public class SingleHistogram extends JPanel implements DataSetListener,
 		SelectionListener, ActionListener, ChangeListener, TableModelListener,
-		IndicationListener, SubspaceListener {
+		IndicationListener, SubspaceListener, ShapeReporter {
 	Histogram histo;
 	JSlider binSlider;
 	JLabel nBins;
@@ -460,6 +463,15 @@ public class SingleHistogram extends JPanel implements DataSetListener,
 		int[] vars = e.getSubspace();
 		setSelectedVariable(vars[0]);
 
+	}
+
+	public Component renderingComponent() {
+		return histo;
+	}
+
+	public Shape reportShape() {
+
+		return histo.reportShape();
 	}
 
 }
