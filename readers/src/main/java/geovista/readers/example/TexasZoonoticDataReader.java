@@ -157,7 +157,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 		try {
 			age = Double.valueOf(ageString);
 		} catch (NumberFormatException e) {
-			logger.info(e.getMessage());
+			logger.fine(e.getMessage());
 		}
 		return age;
 	}
@@ -321,7 +321,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 				int rowIndex = nameToIdHash.get(name.toLowerCase());
 				dat[rowIndex]++;
 			} catch (NullPointerException ex) {
-				logger.info("bad name:" + name);
+				logger.fine("bad name:" + name);
 				// ex.printStackTrace();
 			}
 
