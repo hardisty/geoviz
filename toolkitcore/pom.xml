@@ -56,6 +56,11 @@
 			<groupId>geovista</groupId>
 			<artifactId>collaboration</artifactId>
 			<version>${project.version}</version>
-		</dependency>		
+		</dependency>	
+		<dependency>
+			<groupId>org.jdesktop</groupId>
+			<artifactId>jxlayer</artifactId>
+			<version>${project.version}</version>
+		</dependency>			
 	</dependencies>
 </project>
