@@ -32,7 +32,6 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.TexturePaint;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
@@ -63,12 +62,10 @@ public abstract class LayerShape {
 	public static final int LAYER_TYPE_RASTER = 3;
 	public static final int LAYER_TYPE_SYMBOL = 4;
 	public static final int FILL_ORDER_MAX = 3;
-	// private transient Rectangle extent;
 	protected transient Shape[] spatialData; // in user space
 	protected transient Shape[] originalSpatialData; // originalCoordinates
 	protected transient Rectangle[] boundingBoxes;
 	protected transient int indication;
-	protected transient AffineTransform xform;
 	protected transient int[] classification;
 	protected transient int[] focus;
 	protected transient int[] selectedObservations;
@@ -123,7 +120,7 @@ public abstract class LayerShape {
 	public LayerShape() {
 		indication = Integer.MIN_VALUE;
 		selectedObservations = new int[0];
-		xform = new AffineTransform();
+
 		defaultStroke = new BasicStroke(1f);
 		selectionStroke = new BasicStroke(2f);
 		deselectionStroke = new BasicStroke(2f);
@@ -188,24 +185,25 @@ public abstract class LayerShape {
 		 * whichShape = 0; int numSkipped = 0;
 		 * logger.finest(spatialData.length); for (int i = 0; i <
 		 * spatialData.length; i++) { logger.finest(i); //special thing: if
-		 * points are identical to previous points, we skip 'em PathIterator pi =
-		 * spatialData[i].getPathIterator(new AffineTransform()); int numPolys =
-		 * 0; while (!pi.isDone()) { float[] coords = new float[6]; int segType =
-		 * pi.currentSegment(coords); x = (int)coords[0]; y = (int)coords[1]; if
-		 * (segType == PathIterator.SEG_MOVETO) { x = Integer.MAX_VALUE; y =
-		 * Integer.MAX_VALUE; numPolys++; numPoints[numPolys] = 0; } if (x ==
-		 * prevX && y == prevY) { numSkipped++; } else { numPoints[numPolys]++;
-		 * prevX = x; prevY = y; } pi.next(); }//wend pi =
-		 * spatialData[i].getPathIterator(new AffineTransform());
-		 * logger.finest(observationNames[i]); logger.finest(numPolys); numPolys =
-		 * 0; while (!pi.isDone()) { float[] coords = new float[6]; int segType =
-		 * pi.currentSegment(coords); x = (int)coords[0]; y = (int)coords[1]; if
-		 * (segType == PathIterator.SEG_MOVETO) { x = Integer.MAX_VALUE; y =
+		 * points are identical to previous points, we skip 'em PathIterator pi
+		 * = spatialData[i].getPathIterator(new AffineTransform()); int numPolys
+		 * = 0; while (!pi.isDone()) { float[] coords = new float[6]; int
+		 * segType = pi.currentSegment(coords); x = (int)coords[0]; y =
+		 * (int)coords[1]; if (segType == PathIterator.SEG_MOVETO) { x =
+		 * Integer.MAX_VALUE; y = Integer.MAX_VALUE; numPolys++;
+		 * numPoints[numPolys] = 0; } if (x == prevX && y == prevY) {
+		 * numSkipped++; } else { numPoints[numPolys]++; prevX = x; prevY = y; }
+		 * pi.next(); }//wend pi = spatialData[i].getPathIterator(new
+		 * AffineTransform()); logger.finest(observationNames[i]);
+		 * logger.finest(numPolys); numPolys = 0; while (!pi.isDone()) { float[]
+		 * coords = new float[6]; int segType = pi.currentSegment(coords); x =
+		 * (int)coords[0]; y = (int)coords[1]; if (segType ==
+		 * PathIterator.SEG_MOVETO) { x = Integer.MAX_VALUE; y =
 		 * Integer.MAX_VALUE; numPolys++; logger.finest(numPoints[numPolys]); }
 		 * if (x == prevX && y == prevY) { numSkipped++; } else {
 		 * logger.finest(coords[0] +","+ coords[1]); prevX = x; prevY = y; }
-		 * pi.next(); }//wend } //next spatialData logger.finest("num skipped " +
-		 * numSkipped); } //end if aux //end special stuff for chaomei
+		 * pi.next(); }//wend } //next spatialData logger.finest("num skipped "
+		 * + numSkipped); } //end if aux //end special stuff for chaomei
 		 */
 		this.spatialData = spatialData;
 
@@ -251,24 +249,8 @@ public abstract class LayerShape {
 		return objectColors;
 	}
 
-	public void setBoundingBoxes(Rectangle[] boundingBoxes) {
-		this.boundingBoxes = boundingBoxes;
-	}
-
 	public void setIndication(int indication) {
 		this.indication = indication;
-	}
-
-	public void setXform(AffineTransform xform) {
-		this.xform = xform;
-	}
-
-	public void setClassification(int[] classification) {
-		this.classification = classification;
-	}
-
-	public void setFocus(int[] focus) {
-		this.focus = focus;
 	}
 
 	public void setGlyphs(Glyph[] glyphs) {
