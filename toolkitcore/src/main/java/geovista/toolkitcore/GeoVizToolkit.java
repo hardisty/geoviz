@@ -16,6 +16,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -37,6 +39,7 @@ import java.util.logging.SimpleFormatter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -46,9 +49,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.ext.IndicationConnectUI;
 
 import geovista.animation.IndicationAnimator;
 import geovista.animation.SelectionAnimator;
@@ -71,6 +78,7 @@ import geovista.common.event.SelectionListener;
 import geovista.common.event.SubspaceEvent;
 import geovista.common.event.SubspaceListener;
 import geovista.common.ui.NotePad;
+import geovista.common.ui.ShapeReporter;
 import geovista.common.ui.VariablePicker;
 import geovista.coordination.CoordinationManager;
 import geovista.coordination.CoordinationUtils;
@@ -119,11 +127,14 @@ import geovista.touchgraph.SubspaceLinkGraph;
 
 public class GeoVizToolkit extends JFrame implements ActionListener,
 		ComponentListener, InternalFrameListener, AnnotationListener,
-		ComponentProvider, FrameListener, MarshaledComponentListener {
+		ComponentProvider, FrameListener, MarshaledComponentListener,
+		IndicationListener {
 
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
 	private static String VERSION_NUM = "0.8.5";
+
+	IndicationConnectUI<JComponent> indUI;
 	// collection of classes to add
 	ArrayList toolMenuList;
 	HashMap toolClassHash;
@@ -234,6 +245,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		// Create JDesktopPane to hold the internal frames
 		desktop = new GvDesktopPane();
+
 		desktop.parentKit = this;
 
 		// addBindings();
@@ -244,6 +256,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		shpProj = new ShapeFileProjection();
 		dataCaster = new DataSetBroadcaster();
 		coord = new CoordinationManager();
+		coord.addBean(this);// to catch indications
 
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
@@ -285,9 +298,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		initMembers();
 		desktop.setBackground(new Color(20, 20, 80));
 		this.useProj = useProj;
-		getContentPane().add(desktop, BorderLayout.CENTER);
-		coord.addBean(dataCaster);
 
+		JXLayer<JComponent> layer = new JXLayer<JComponent>(desktop);
+
+		getContentPane().add(layer, BorderLayout.CENTER);
+
+		indUI = new IndicationConnectUI<JComponent>();
+		layer.setUI(indUI);
+
+		coord.addBean(dataCaster);
 		coord.addBean(vizState);
 		try {
 			this.init();
@@ -507,6 +526,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		item.addActionListener(this);
 
 		menuRemoveTool.add(item, 0); // add at the top
+
+		// XXX hack for testing
+		if (newToolkitBean.getOriginalBean().getClass().equals(GeoMap.class)) {
+			logger.info("geo geo");
+
+		}
 
 	}
 
@@ -790,9 +815,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		if (name == null) {
 			return null;
 		}
-		logger.info("creating data: " + name);
+		logger.fine("creating data: " + name);
 		Object[] newDataSet = null;
-		name = "TX";
+		// name = "TX";
 		if (name.equals("48States")) {
 			// GeoDataGeneralizedStates statesData = new
 			// GeoDataGeneralizedStates();
@@ -1276,7 +1301,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setLevel(Level.INFO);
-		logger.addHandler(handler);
+		// logger.addHandler(handler);
 
 		try {
 			// Create a file handler that write log record to a file called
@@ -1411,5 +1436,41 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 				.getOriginalBean();
 		int[] sel = { 40 };
 		selListener.selectionChanged(new SelectionEvent(this, sel));
+	}
+
+	public void indicationChanged(IndicationEvent e) {
+
+		indUI.clear();
+		if (e.getIndication() < 0) {
+			return;
+		}
+		Object src = e.getSource();
+		// logger.info(src.getClass().getName());
+
+		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
+		for (ToolkitBean tBean : beans) {
+			Object obj = tBean.getOriginalBean();
+
+			if (obj instanceof ShapeReporter) {
+				ShapeReporter shpR = (ShapeReporter) obj;
+				Component srcComp = ((ShapeReporter) obj).renderingComponent();
+
+				indUI.addShape(shpR.reportShape(), shpR.renderingComponent());
+
+				Rectangle rect = shpR.reportShape().getBounds();
+				logger.finest("adding shape ");
+				logger.finest("x " + rect.x);
+				logger.finest("y " + rect.y);
+				logger.finest("w " + rect.width);
+				logger.finest("h " + rect.height);
+
+				Point pt = SwingUtilities.convertPoint((Component) obj, rect.x,
+						rect.y, desktop);
+				logger.finest("pt x = " + pt.x);
+				logger.finest("pt y = " + pt.y);
+				logger.finest("BleBleBle");
+			}
+		}
+
 	}
 }
