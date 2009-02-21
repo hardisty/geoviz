@@ -22,6 +22,8 @@ package geovista.toolkitcore;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.logging.Logger;
@@ -33,6 +35,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.event.EventListenerList;
 
+import geovista.common.jts.NullShape;
+import geovista.common.ui.ShapeReporter;
 import geovista.coordination.CoordinationUtils;
 
 /*
@@ -43,7 +47,7 @@ import geovista.coordination.CoordinationUtils;
  * 
  */
 
-public class ToolkitBean implements ComponentListener {
+public class ToolkitBean implements ComponentListener, ShapeReporter {
 	final static Logger logger = Logger.getLogger(ToolkitBean.class.getName());
 	private Object originalBean;
 	private transient JMenuItem removeMenuItem;
@@ -56,6 +60,7 @@ public class ToolkitBean implements ComponentListener {
 	// private static String defaultName = "bean";
 
 	public ToolkitBean() {
+		Shape s;
 
 	}
 
@@ -205,6 +210,35 @@ public class ToolkitBean implements ComponentListener {
 
 	public void setObjectClass(String objectClass) {
 		this.objectClass = objectClass;
+	}
+
+	public Shape reportShape() {
+		if (originalBean instanceof ShapeReporter) {
+			ShapeReporter sr = (ShapeReporter) originalBean;
+			return sr.reportShape();
+		}
+		return NullShape.INSTANCE;
+	}
+
+	public Point reportShapeOffset() {
+		if (originalBean instanceof ShapeReporter) {
+			// ShapeReporter sr = (ShapeReporter) originalBean;
+			// Point contentPt = internalFrame.getContentPane().getLocation();
+			// Point offsetPoint = sr.reportShapeOffset();
+			// Point newOffset = new Point(contentPt.x + offsetPoint.x,
+			// contentPt.y + offsetPoint.y);
+			//
+			// return newOffset;
+		}
+		return new Point();
+	}
+
+	public Component renderingComponent() {
+		if (originalBean instanceof ShapeReporter) {
+			ShapeReporter sr = (ShapeReporter) originalBean;
+			return sr.renderingComponent();
+		}
+		return null;
 	}
 
 }
