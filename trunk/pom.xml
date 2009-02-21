@@ -42,6 +42,7 @@
     <module>sound</module>
     <module>touchgraph</module>
     <module>satscan</module> 
+    <module>jxlayer</module> 
     <module>toolkitcore</module>
 
   </modules>
