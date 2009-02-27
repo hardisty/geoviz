@@ -46,7 +46,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToolBar;
-import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -82,7 +81,6 @@ import geovista.readers.shapefile.ShapeFileDataReader;
 import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
 import geovista.symbolization.BivariateColorSchemeVisualizer;
-import geovista.symbolization.BivariateColorSymbolClassification;
 import geovista.symbolization.BivariateColorSymbolClassificationSimple;
 import geovista.symbolization.ColorRampPicker;
 import geovista.symbolization.ColorSymbolClassification;
@@ -150,7 +148,7 @@ public class GeoMap extends JPanel
 	// classifier.
 	transient private boolean visualClassifierNeeded = true;
 
-	public GeoMap(boolean needVisualClassifier) {
+	private GeoMap(boolean needVisualClassifier) {
 		super();
 		visualClassifierNeeded = needVisualClassifier;
 		init();
@@ -228,7 +226,7 @@ public class GeoMap extends JPanel
 		// ColorClassifierEvent(visClassTwo,visClassTwo.getColorSymbolClassification()));
 	}
 
-	public JPanel makeAnimationPanel() {
+	private JPanel makeAnimationPanel() {
 		JPanel animationPanel = new JPanel();
 		Dimension prefSize = new Dimension(100, 50);
 		animationPanel.setSize(prefSize);
@@ -250,7 +248,7 @@ public class GeoMap extends JPanel
 		return animationPanel;
 	}
 
-	public void makeToolbar() {
+	private void makeToolbar() {
 		mapTools = new JToolBar();
 
 		// Dimension prefSize = new Dimension(100,10);
@@ -454,11 +452,11 @@ public class GeoMap extends JPanel
 
 	}
 
-	public boolean isVisualClassifierNeeded() {
+	private boolean isVisualClassifierNeeded() {
 		return visualClassifierNeeded;
 	}
 
-	public void setVisualClassifierNeeded(boolean b) {
+	private void setVisualClassifierNeeded(boolean b) {
 		visualClassifierNeeded = b;
 		topContent.removeAll();
 		if (visualClassifierNeeded) {
@@ -540,7 +538,7 @@ public class GeoMap extends JPanel
 		mapCan.setTextures(textures);
 	}
 
-	public void zoomFullExtent() {
+	private void zoomFullExtent() {
 		mapCan.zoomFullExtent();// sometimes we need to do this...
 		// the map should figure out for itself when it need to redisplay, but
 		// it doesnt
@@ -590,45 +588,8 @@ public class GeoMap extends JPanel
 		mapCan.setBivarColorClasser(biColorSymbolizer);
 	}
 
-	public void setXVariable(int var) {
-		visClassOne.setCurrVariableIndex(var);
-	}
-
-	public void setYVariable(int var) {
-		visClassTwo.setCurrVariableIndex(var);
-	}
-
-	public void setXChooserMode(int chooserMode) {
-		visClassOne.setVariableChooserMode(chooserMode);
-	}
-
-	public void setYChooserMode(int chooserMode) {
-		visClassTwo.setVariableChooserMode(chooserMode);
-	}
-
-	public void setBivarColorClasser(
-			BivariateColorSymbolClassification bivarColorClasser) {
-		mapCan.setBivarColorClasser(bivarColorClasser);
-	}
-
-	public void setSelectedObservations(int[] selObs) {
-		mapCan.setSelectedObservationsInt(selObs);
-	}
-
-	public void setClusteringColor(Color[] clusteringColor) {
-	}
-
 	public int[] getSelectedObservations() {
 		return mapCan.getSelectedObservationsInt();
-	}
-
-	public Color[] getColors() {
-		return mapCan.getColors();
-	}
-
-	public BivariateColorSymbolClassification getBivariateColorSymbolClassification() {
-		// return biViz.getBivariateColorClassification();
-		return null;
 	}
 
 	public void setDataSet(DataSetForApps dataSet) {
@@ -704,7 +665,7 @@ public class GeoMap extends JPanel
 	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
-	public void setData(Object[] data) {
+	private void setData(Object[] data) {
 		setDataSet(new DataSetForApps(data));
 
 	}
@@ -778,54 +739,11 @@ public class GeoMap extends JPanel
 		mapCan.removeSpatialExtentListener(l);
 	}
 
-	// /**
-	// * implements ColorClassifierListener
-	// */
-	// public void addColorClassifierListener(ColorClassifierListener l) {
-	// this.visClassOne.addColorClassifierListener(l);
-	// this.visClassTwo.addColorClassifierListener(l);
-	//
-	// }
-	//
-	// /**
-	// * removes an ColorClassifierListener from the component
-	// */
-	// public void removeColorClassifierListener(ColorClassifierListener l) {
-	// this.visClassOne.removeColorClassifierListener(l);
-	// this.visClassTwo.removeColorClassifierListener(l);
-	// }
-
-	public void setActiveLayerIdx(int idx) {
+	private void setActiveLayerIdx(int idx) {
 		if (mapCan != null) {
 			mapCan.setActiveLayerIdx(idx);
 			// this.setDataSet(this.mapCan.get); //frank: commented out
 		}
-	}
-
-	/**
-	 * Notify all listeners that have registered interest for notification on
-	 * this event type. The event instance is lazily created using the
-	 * parameters passed into the fire method.
-	 * 
-	 * @see EventListenerList
-	 */
-	public void fireSelectionChanged(int[] newSelection) {
-		// Guaranteed to return a non-null array
-		Object[] listeners = listenerList.getListenerList();
-		SelectionEvent e = null;
-
-		// Process the listeners last to first, notifying
-		// those that are interested in this event
-		for (int i = listeners.length - 2; i >= 0; i -= 2) {
-			if (listeners[i] == SelectionListener.class) {
-				// Lazily create the event:
-				if (e == null) {
-					e = new SelectionEvent(this, newSelection);
-				}
-
-				((SelectionListener) listeners[i + 1]).selectionChanged(e);
-			}
-		} // next i
 	}
 
 	public static void main(String[] args) {
@@ -968,11 +886,12 @@ public class GeoMap extends JPanel
 
 	}
 
-	public Color getBackgroundColor() {
+	private Color getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	public void setBackgroundColor(Color backgroundColor) {
+	private void setBackgroundColor(Color backgroundColor) {
+
 		setBackground(backgroundColor);
 		this.backgroundColor = backgroundColor;
 		mapCan.setBackground(backgroundColor);
