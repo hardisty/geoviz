@@ -22,7 +22,6 @@
 
 package geovista.matrix.map;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -34,14 +33,10 @@ import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
 import geovista.common.data.DataSetForApps;
-import geovista.coordination.CoordinationManager;
 import geovista.geoviz.map.GeoCursors;
-import geovista.geoviz.map.GeoMap;
 import geovista.geoviz.map.MapCanvas;
 import geovista.geoviz.scatterplot.Histogram;
 import geovista.matrix.MatrixElement;
@@ -86,43 +81,6 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if ((e.getSource() == this) && (e.getClickCount() > 1)) { // This is a
-			// double-click
-			// or
-			// triple...
-
-			// if (dataIndices[0] != dataIndices[1]) { //why this??? I guess we
-			// don't want to pop up one from the
-			// diagonal if we are a scatterplot
-			GeoMap detailMap = new GeoMap();
-			detailMap.setBackground(getBackground());
-			detailMap.setDataSet(dataSet);
-			detailMap.setBivarColorClasser(bivarColorClasser);
-			detailMap.setSelectedObservations(getSelectedObservationsInt()); // need
-			// to
-			// do
-			// this
-			// here
-			// because
-
-			// otherwise the selection won't "take"
-			detailMap.setXVariable(super.currColorColumnX);
-			detailMap.setXChooserMode(GeoMap.VARIABLE_CHOOSER_MODE_FIXED);
-			detailMap.setYVariable(super.currColorColumnY);
-			detailMap.setYChooserMode(GeoMap.VARIABLE_CHOOSER_MODE_FIXED);
-
-			JFrame dummyFrame = new JFrame();
-			JDialog detailMapFrame = new JDialog(dummyFrame, "Detail Map", true);
-
-			detailMapFrame.setLocation(300, 300);
-			detailMapFrame.setSize(300, 300);
-			detailMapFrame.getContentPane().setLayout(new BorderLayout());
-			detailMapFrame.getContentPane().add(detailMap, BorderLayout.CENTER);
-
-			CoordinationManager cm = new CoordinationManager();
-			cm.addBean(this);
-			cm.addBean(detailMap);
-			// XXX we should only do the following when we are a matrix element
-			detailMapFrame.setVisible(true);
 
 			// }//end dataIndeces
 		} // end if doubleclick
@@ -423,6 +381,7 @@ public class MapMatrixElement extends MapCanvas implements MatrixElement {
 
 	}
 
+	@Override
 	public void setIndication(int indication) {
 		super.setIndication(indication);
 

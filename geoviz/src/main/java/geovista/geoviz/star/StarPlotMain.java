@@ -77,7 +77,7 @@ public class StarPlotMain {
 
 		if (useResource) {
 			shpProj.setInputDataSet(shpRead.getDataSet());// XXX will need
-															// help
+			// help
 		} else {
 			shpRead.setFileName(fileName);
 			Object[] dataSet = shpRead.getDataSet();
@@ -93,7 +93,7 @@ public class StarPlotMain {
 		app.setVisible(true);
 		// IndicationEvent indE = new IndicationEvent(sp, 0);
 		// sp.indicationChanged(indE);
-		map.zoomFullExtent();
+
 	}
 
 }
