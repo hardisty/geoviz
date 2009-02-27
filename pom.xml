@@ -59,11 +59,6 @@
   </reporting>
     <dependencies>
     <dependency>
-    <groupId>org.prefuse</groupId>
-    <artifactId>prefuse</artifactId>
-    <version>beta-20071021</version>
-</dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
@@ -82,6 +77,23 @@
                    <target>1.5</target>
                </configuration>
            </plugin>
+	                     <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>
+                            jar-with-dependencies
+                </descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>
+			geovista.toolkitcore.GeoVizToolkit
+                        </mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
      </build>
 </project>
