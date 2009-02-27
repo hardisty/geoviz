@@ -56,11 +56,11 @@ public abstract class LayerShape {
 	public static final String COMMAND_SELECTION = "cmdSel";
 	protected static final int STATUS_NOT_SELECTED = 0; // default
 	protected static final int STATUS_SELECTED = 1;
-	public static final int LAYER_TYPE_POINT = 0;
-	public static final int LAYER_TYPE_LINE = 1;
-	public static final int LAYER_TYPE_POLYGON = 2;
-	public static final int LAYER_TYPE_RASTER = 3;
-	public static final int LAYER_TYPE_SYMBOL = 4;
+
+	public enum LayerType {
+		POINT, LINE, POLYGON, RASTER, SYMBOL
+	}
+
 	public static final int FILL_ORDER_MAX = 3;
 	protected transient Shape[] spatialData; // in user space
 	protected transient Shape[] originalSpatialData; // originalCoordinates
@@ -73,7 +73,6 @@ public abstract class LayerShape {
 	protected transient int[] selectedObservationsOld;
 	protected transient int[] selectedObservationsOldFullIndex;
 	protected transient Color[] objectColors;
-	protected transient double[][] data; // column, row
 	protected transient String[] variableNames;
 	protected transient BufferedImage buff;
 	protected transient int currOrderColumn;
@@ -427,22 +426,6 @@ public abstract class LayerShape {
 		colorsRecieved = true;
 	}
 
-	public void setData(double[][] data) {
-		this.data = data;
-	}
-
-	public void setVariableNames(String[] variableNames) {
-		this.variableNames = variableNames;
-	}
-
-	public void setCurrOrderColumn(int currOrderColumn) {
-		this.currOrderColumn = currOrderColumn;
-	}
-
-	public void setCurrColorColumn(int currColorColumn) {
-		this.currColorColumn = currColorColumn;
-	}
-
 	public void setColorSelection(Color colorSelection) {
 		this.colorSelection = colorSelection;
 		makeTextures();
@@ -453,18 +436,6 @@ public abstract class LayerShape {
 		makeTextures();
 	}
 
-	public void setColorNull(Color colorNull) {
-		this.colorNull = colorNull;
-	}
-
-	public void setColorOutOfFocus(Color colorOutOfFocus) {
-		this.colorOutOfFocus = colorOutOfFocus;
-	}
-
-	public void setColorNotInStudyArea(Color colorNotInStudyArea) {
-		this.colorNotInStudyArea = colorNotInStudyArea;
-	}
-
 	/**
 	 * put your documentation comment here
 	 * 
@@ -472,15 +443,6 @@ public abstract class LayerShape {
 	 */
 	public void setConditionArray(int[] conditionArray) {
 		this.conditionArray = conditionArray;
-	}
-
-	/**
-	 * put your documentation comment here
-	 * 
-	 * @param conditionArray
-	 */
-	public int[] getConditionArray() {
-		return conditionArray;
 	}
 
 	// end accessors
