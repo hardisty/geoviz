@@ -143,6 +143,13 @@ public class DataSetForApps extends AbstractTableModel {
 		setDataObject(originalData);
 	}
 
+	public DataSetForApps(double[] data) {
+		String[] varName = { "Data" };
+
+		Object[] theData = { varName, data };
+		setDataObject(theData);
+	}
+
 	/**
 	 * This method accepts the input Object[] and intializes all member
 	 * variables. In general, member variables do not change after
@@ -928,9 +935,7 @@ public class DataSetForApps extends AbstractTableModel {
 	 * this event type. The event instance is lazily created using the
 	 * parameters passed into the fire method.
 	 * 
-	 * @see EventListenerList
-	 * 
-	 * note: at this point, always fires an insertion
+	 * @see EventListenerList note: at this point, always fires an insertion
 	 */
 	public void fireTableChanged() {
 		if (logger.isLoggable(Level.FINEST)) {
@@ -961,13 +966,13 @@ public class DataSetForApps extends AbstractTableModel {
 
 	@Override
 	public void addTableModelListener(TableModelListener l) {
-		listenerList.add(TableModelListener.class, l);
+		// listenerList.add(TableModelListener.class, l);
 
 	}
 
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
-		listenerList.remove(TableModelListener.class, l);
+		// listenerList.remove(TableModelListener.class, l);
 
 	}
 
