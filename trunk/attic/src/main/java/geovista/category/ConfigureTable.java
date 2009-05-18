@@ -1,13 +1,6 @@
-/*
- * GeoVISTA Center (Penn State, Dept. of Geography)
- * Copyright (c), 1999 - 2002, GeoVISTA Center
- * All Rights Researved.
- *
- * The table serves only for configuring purpose. It means the table will hold only a small number of row and column.
- * @author: jin Chen
- * @date: Aug 13, 2003$
- * 
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Jin Chen*/
 package geovista.category;
 
 
