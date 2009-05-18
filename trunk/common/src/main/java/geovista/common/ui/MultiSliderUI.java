@@ -1,28 +1,6 @@
-/* -------------------------------------------------------------------
- * GeoVISTA Center (Penn State, Dept. of Geography)
- * 
- * Java source file for the class MultiSliderUI
- * 
- * Copyright (c), 2002, Masahiro Takatsuka & GeoVISTA Center
- * All Rights Reserved.
- * 
- * This is a copy from jh9gpz.ui.slider.MtMultiSliderUI.java 
- * originally written by Masahiro Takatsuka
- *
- * Original Author: Masahiro Takatsuka
- * $Author: jmacgill $
- * 
- * $Date: 2003/02/28 14:54:07 $
- * 
- * Reference:		Document no:
- * ___				___
- * 
- * To Do:
- * ___
- * 
-------------------------------------------------------------------- */
-
-/* --------------------------- Package ---------------------------- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Masahiro Takatsuka*/
 package geovista.common.ui;
 
 /* ------------------ Import classes (packages) ------------------- */

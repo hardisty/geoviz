@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class NDimensionalMST
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: jmacgill $
- $Id: NDimensionalMST.java 1319 2004-12-03 19:28:23Z jmacgill $
- $Date: 2004-12-03 14:28:23 -0500 (Fri, 03 Dec 2004) $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.common.cluster;
 
 import java.awt.event.ActionEvent;
@@ -166,7 +156,7 @@ public class NDimensionalMST {
 	 * for (int i = 0; i < data.getNumObservations(); i++) { points[i] = new
 	 * SpatialPoint(i); //set the id = implicit index }
 	 * 
-	 * int nEdges = data.getNumObservations() * data.getNumObservations();
+	 * int nEdges = data.getNumObservations() data.getNumObservations();
 	 * //matrix, so square it nEdges = nEdges - data.getNumObservations();
 	 * //take diagonal away (no distances from points to themselves) nEdges =
 	 * nEdges / 2;
@@ -192,8 +182,8 @@ public class NDimensionalMST {
 	 * 
 	 * logger.finest("origin = " + origin); //long mem =
 	 * Runtime.getRuntime().freeMemory(); logger.finest("free mem = " + mem);
-	 * for (int dest = 0; dest < data.getNumObservations(); dest++) { if (origin <
-	 * dest) { SpatialPoint destPoint = points[dest];
+	 * for (int dest = 0; dest < data.getNumObservations(); dest++) { if (origin
+	 * < dest) { SpatialPoint destPoint = points[dest];
 	 * 
 	 * for (int i = 0; i < selectedIndicies.length; i++) { double[] doubleDat =
 	 * (double[]) doubleData[i]; destinationLocation[i] = doubleDat[dest]; }
@@ -202,11 +192,12 @@ public class NDimensionalMST {
 	 * //mem = Runtime.getRuntime().freeMemory(); logger.finest("detail: free
 	 * mem = " + mem); } boolean foundAnyPoint = false; boolean foundThisPoint =
 	 * false; for (int testPoint = 0; testPoint < data.getNumObservations();
-	 * testPoint++) { if (testPoint != origin && testPoint != dest) { for (int i =
-	 * 0; i < selectedIndicies.length; i++) { double[] doubleDat = (double[])
+	 * testPoint++) { if (testPoint != origin && testPoint != dest) { for (int i
+	 * = 0; i < selectedIndicies.length; i++) { double[] doubleDat = (double[])
 	 * doubleData[i]; testLocation[i] = doubleDat[testPoint]; } foundThisPoint =
-	 * (this.withinHyperSphere(originLocation,destinationLocation,testLocation)); }
-	 * if (foundThisPoint){ foundAnyPoint = true; break; } foundThisPoint =
+	 * (
+	 * this.withinHyperSphere(originLocation,destinationLocation,testLocation));
+	 * } if (foundThisPoint){ foundAnyPoint = true; break; } foundThisPoint =
 	 * false; } if (!foundAnyPoint){ dist =
 	 * this.manhattanDistance(originLocation, destinationLocation);
 	 * edges[edgeCount] = new SpatialEdge(originPoint, destPoint, dist);
@@ -239,7 +230,8 @@ public class NDimensionalMST {
 			points[i] = i; // set the id = implicit index
 		}
 
-		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix,
+		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix
+																			// ,
 		// so
 		// square
 		// it
@@ -328,7 +320,8 @@ public class NDimensionalMST {
 			points[i] = i; // set the id = implicit index
 		}
 
-		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix,
+		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix
+																			// ,
 		// so
 		// square
 		// it

@@ -1,9 +1,8 @@
-package geovista.common.ui;
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
-/**
- GeoVISTA Center (Penn State, Dept. of Geography)
- Original Author: Frank Hardisty
- */
+package geovista.common.ui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
