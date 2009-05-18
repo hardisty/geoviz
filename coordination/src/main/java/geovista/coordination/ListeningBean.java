@@ -1,96 +1,92 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ListeningBean
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ListeningBean.java,v 1.2 2003/04/25 17:58:13 hardisty Exp $
- $Date: 2003/04/25 17:58:13 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.coordination;
 
 import java.awt.Image;
 
-
 /**
- * This class represents the event receiving role of an object being managed 
- * by a coordination manager.
+ * This class represents the event receiving role of an object being managed by
+ * a coordination manager.
  * 
- * A particular object will be represented as both a FiringBean and as a ListeningBean.
+ * A particular object will be represented as both a FiringBean and as a
+ * ListeningBean.
  * 
  * @see CoordinationManager
  * @author Frank Hardisty
  */
 public class ListeningBean {
-  public static final int STATUS_LISTENING = 0;
-  public static final int STATUS_CANT_LISTEN = 1; //this is a non-listening state
-  public static final int STATUS_WONT_LISTEN = 2; //this is a non-listening state
-  private int position = -1; //position in array of FiringBeans held by DefaultCoordinator
-  private String beanName;
-  private Object originalBean;
-  private int listeningStatus;
-  private Image icon;
+	public static final int STATUS_LISTENING = 0;
+	public static final int STATUS_CANT_LISTEN = 1; // this is a non-listening
+													// state
+	public static final int STATUS_WONT_LISTEN = 2; // this is a non-listening
+													// state
+	private int position = -1; // position in array of FiringBeans held by
+								// DefaultCoordinator
+	private String beanName;
+	private Object originalBean;
+	private int listeningStatus;
+	private Image icon;
 
-  /**
+	/**
    *
   */
-  public ListeningBean() {
-  }
+	public ListeningBean() {
+	}
 
-  public String getBeanName() {
-    return beanName;
-  }
-  //for those boolean times
-  public boolean isListening(){
-    return listeningStatus > 0;
-  }
-  public int getListeningStatus() {
-    int i = this.listeningStatus;
-    return i;
-  }
+	public String getBeanName() {
+		return beanName;
+	}
 
-  public Object getOriginalBean() {
-    return originalBean;
-  }
+	// for those boolean times
+	public boolean isListening() {
+		return listeningStatus > 0;
+	}
 
-  public int getPosition() {
-    return position;
-  }
+	public int getListeningStatus() {
+		int i = listeningStatus;
+		return i;
+	}
 
-  public void setBeanName(String beanName) {
-    this.beanName = beanName;
-  }
+	public Object getOriginalBean() {
+		return originalBean;
+	}
 
-  public void setListeningStatus(int listeningStatus) {
-    this.listeningStatus = listeningStatus;
-  }
+	public int getPosition() {
+		return position;
+	}
 
-  public void setOriginalBean(Object originalBean) {
-    this.originalBean = originalBean;
+	public void setBeanName(String beanName) {
+		this.beanName = beanName;
+	}
 
-    String name = originalBean.getClass().getName();
+	public void setListeningStatus(int listeningStatus) {
+		this.listeningStatus = listeningStatus;
+	}
 
-    //name = name.substring(clazz.getPackage().getName().length() + 1);//no finding package in applets!
-    //look for nearest period
-    int periodPlace = name.lastIndexOf(".");
-    name = name.substring(periodPlace + 1);
-    this.setBeanName(name);
-    this.icon = CoordinationUtils.findIcon(originalBean);
-  }
+	public void setOriginalBean(Object originalBean) {
+		this.originalBean = originalBean;
 
-  public void setPosition(int position) {
-    this.position = position;
-  }
+		String name = originalBean.getClass().getName();
 
-  public Image getIcon() {
-    return icon;
-  }
+		// name = name.substring(clazz.getPackage().getName().length() + 1);//no
+		// finding package in applets!
+		// look for nearest period
+		int periodPlace = name.lastIndexOf(".");
+		name = name.substring(periodPlace + 1);
+		setBeanName(name);
+		icon = CoordinationUtils.findIcon(originalBean);
+	}
 
-  public void setIcon(Image icon) {
-    this.icon = icon;
-  }
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public Image getIcon() {
+		return icon;
+	}
+
+	public void setIcon(Image icon) {
+		this.icon = icon;
+	}
 }
