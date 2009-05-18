@@ -1137,5 +1137,5 @@ public abstract class DescriptiveStatistics {
 			} // end if
 		} // next i
 
-	} // end method
-} // end class
+	}
+}

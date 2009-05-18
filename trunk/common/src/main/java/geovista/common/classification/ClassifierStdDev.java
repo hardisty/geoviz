@@ -226,4 +226,4 @@ public class ClassifierStdDev implements DescribedClassifier,
 
 		return classification;
 	} // end classify
-} // end ClassifierStdDev
+}
