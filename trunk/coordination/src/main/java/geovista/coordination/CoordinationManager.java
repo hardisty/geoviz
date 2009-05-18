@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class CoordinationManager
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: CoordinationManager.java,v 1.5 2005/03/24 20:34:05 hardisty Exp $
- $Date: 2005/03/24 20:34:05 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.coordination;
 
 import java.util.ArrayList;
@@ -32,8 +22,8 @@ import java.util.Set;
  * java.awt.event and javax.swing.event).
  */
 public class CoordinationManager {
-	private transient HashSet<FiringBean> firingBeans;
-	private transient HashSet<ListeningBean> listeningBeans;
+	private transient final HashSet<FiringBean> firingBeans;
+	private transient final HashSet<ListeningBean> listeningBeans;
 
 	// these two arrays should maintain the
 	// same length and "originalBean"
@@ -95,7 +85,6 @@ public class CoordinationManager {
 	// this.firingBeans = tempBeans;
 	// this.listeningBeans = tempLBeans;
 	// }
-
 	private boolean containsOriginalBean(Object beanIn) {
 
 		Iterator<FiringBean> it = firingBeans.iterator();
@@ -104,9 +93,9 @@ public class CoordinationManager {
 
 		while (it.hasNext()) {
 			FiringBean fBean = it.next();
-			//we use == instead of object.equals() because
-			//== refers to memory locations, which is what we want. 
-			//Normally, object.equals is preferred, but not here.
+			// we use == instead of object.equals() because
+			// == refers to memory locations, which is what we want.
+			// Normally, object.equals is preferred, but not here.
 			if (fBean.getOriginalBean() == beanIn) {
 				inThere = true;
 			}
@@ -124,7 +113,7 @@ public class CoordinationManager {
 	 */
 	public FiringBean addBean(Object beanIn) {
 
-		if (beanIn == null || this.containsOriginalBean(beanIn)) {
+		if (beanIn == null || containsOriginalBean(beanIn)) {
 			return null;
 		}
 		FiringBean newBean = new FiringBean();
@@ -140,7 +129,7 @@ public class CoordinationManager {
 
 		// how many instances of this class already?
 		int numFound = 0;
-		Iterator<FiringBean> fIt = this.firingBeans.iterator();
+		Iterator<FiringBean> fIt = firingBeans.iterator();
 		while (fIt.hasNext()) {
 			FiringBean fBean = fIt.next();
 
@@ -169,7 +158,7 @@ public class CoordinationManager {
 	private void removeOldBean(Object oldBean) {
 
 		// remove this bean as a listener from all existing firing beans
-		Iterator<FiringBean> fireIt = this.firingBeans.iterator();
+		Iterator<FiringBean> fireIt = firingBeans.iterator();
 		while (fireIt.hasNext()) {
 			FiringBean fBean = fireIt.next();
 			fBean.removeListeningBean(oldBean);
@@ -177,8 +166,8 @@ public class CoordinationManager {
 		}
 
 		// update sets
-		Iterator<FiringBean> fIt = this.firingBeans.iterator();
-		
+		Iterator<FiringBean> fIt = firingBeans.iterator();
+
 		FiringBean removeBean = null;
 		while (fIt.hasNext()) {
 			FiringBean fBean = fIt.next();
@@ -187,12 +176,12 @@ public class CoordinationManager {
 			}
 
 		}
-		if (removeBean != null){
-			this.firingBeans.remove(removeBean);
+		if (removeBean != null) {
+			firingBeans.remove(removeBean);
 			removeBean = null;
 		}
-		
-		Iterator<ListeningBean> lIt = this.listeningBeans.iterator();
+
+		Iterator<ListeningBean> lIt = listeningBeans.iterator();
 		ListeningBean removeListener = null;
 		while (lIt.hasNext()) {
 			ListeningBean lBean = lIt.next();
@@ -200,7 +189,7 @@ public class CoordinationManager {
 				removeListener = lBean;
 			}
 		}
-		this.listeningBeans.remove(removeListener);
+		listeningBeans.remove(removeListener);
 		removeListener = null;
 
 	}
@@ -212,14 +201,14 @@ public class CoordinationManager {
 		newListener.setOriginalBean(newBean.getOriginalBean());
 
 		// add this bean as a listener to all existing firing beans
-		Iterator<FiringBean> it = this.firingBeans.iterator();
+		Iterator<FiringBean> it = firingBeans.iterator();
 		while (it.hasNext()) {
 			FiringBean fBean = it.next();
 			fBean.addListeningBean(newListener);
 		}
 		// next add all existing beans as listeners of the new one
 		// is it OK if we share listening bean instances? Let's go for it
-		Iterator<ListeningBean> itL = this.listeningBeans.iterator();
+		Iterator<ListeningBean> itL = listeningBeans.iterator();
 
 		while (itL.hasNext()) {
 			newBean.addListeningBean(itL.next());
@@ -235,16 +224,15 @@ public class CoordinationManager {
 	 * This method returns a list of all FiringMethods which reference the
 	 * ListeningBean passed in.
 	 */
-	 FiringMethod[] getFiringMethods(ListeningBean lBean) {
+	FiringMethod[] getFiringMethods(ListeningBean lBean) {
 		ArrayList li = new ArrayList();
-		Iterator<FiringBean> fIt = this.firingBeans.iterator();
+		Iterator<FiringBean> fIt = firingBeans.iterator();
 		while (fIt.hasNext()) {
-			
+
 			FiringBean fireBean = fIt.next();
 			FiringMethod[] meths = fireBean.getMethods();
 
-			for (int j = 0; j < meths.length; j++) {
-				FiringMethod meth = meths[j];
+			for (FiringMethod meth : meths) {
 				boolean occurs = meth.listeningBeanOccurs(lBean);
 
 				if (occurs) {
@@ -262,8 +250,8 @@ public class CoordinationManager {
 		return allMeths;
 	}
 
-	public Set<FiringBean> getFiringBeans(){
-		return this.firingBeans;
+	public Set<FiringBean> getFiringBeans() {
+		return firingBeans;
 	}
 
 	public void disconnectBeans(FiringMethod meth, ListeningBean lBean) {
