@@ -400,12 +400,19 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		}
 		if (friend == null) {
 			this.findFriend();
+			if (friend == null) {
+				logger.severe("I'm " + userName + ", could not find friend");
+			}
 		}
 		if (chat == null) {
 			makeChat();
 		}
 		try {
-			Message newMessage = new Message(friend.getName());
+			String name = friend.getName();
+			if (name == null) {
+				name = friend.getUser();
+			}
+			Message newMessage = new Message(name);
 			newMessage.setBody(msg);
 			// message.setProperty("favoriteColor", "red");
 			if (logger.isLoggable(Level.FINEST)) {
@@ -677,7 +684,9 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jivesoftware.smack.ConnectionListener#connectionClosedOnError(java.lang.Exception)
+	 * @see
+	 * org.jivesoftware.smack.ConnectionListener#connectionClosedOnError(java
+	 * .lang.Exception)
 	 */
 	public void connectionClosedOnError(Exception arg0) {
 		// TODO Auto-generated method stub
@@ -687,7 +696,9 @@ public class GeoJabber extends JPanel implements SelectionListener,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jivesoftware.smack.PacketListener#processPacket(org.jivesoftware.smack.packet.Packet)
+	 * @see
+	 * org.jivesoftware.smack.PacketListener#processPacket(org.jivesoftware.
+	 * smack.packet.Packet)
 	 * 
 	 * External event, send along to listeners in the local JVM
 	 */
@@ -790,13 +801,13 @@ public class GeoJabber extends JPanel implements SelectionListener,
 
 			conn.connect();
 			// conn.loginAnonymously();
-			conn.login("Frank", "password");
+			// conn.login("Frank", "password");
 			// conn.getRoster().createEntry("HyangJa", "HyangJa Hardisty",
 			// groups);
 			conn.disconnect();
 
 			conn.connect();
-			conn.login("HyangJa", "password");
+			// conn.login("HyangJa", "password");
 			// conn.getRoster().createEntry("Frank", "Frank Hardisty", groups);
 			conn.disconnect();
 
@@ -813,13 +824,13 @@ public class GeoJabber extends JPanel implements SelectionListener,
 		GeoJabber rc2 = new GeoJabber();
 		rc2.setPreferredSize(new Dimension(450, 400));
 		rc2.setBorder(new LineBorder(Color.black));
-		rc2.nameField.setText("HyangJa");
+		rc2.nameField.setText("Bob");
 		app.getContentPane().add(rc2);
 
 		GeoJabber rc = new GeoJabber();
 		rc.setPreferredSize(new Dimension(450, 400));
 		rc.setBorder(new LineBorder(Color.black));
-		rc.nameField.setText("Frank");
+		rc.nameField.setText("Alice");
 		app.getContentPane().add(rc);
 
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
