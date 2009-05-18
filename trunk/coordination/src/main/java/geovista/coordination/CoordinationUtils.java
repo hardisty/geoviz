@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class CoordinationUtils
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: CoordinationUtils.java,v 1.4 2005/02/12 17:42:36 hardisty Exp $
- $Date: 2005/02/12 17:42:36 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.coordination;
 
 import java.awt.Image;
@@ -23,112 +13,111 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 /**
- *  Utility functions for the coordinator package. 
- *  
+ * Utility functions for the coordinator package.
+ * 
  */
 public final class CoordinationUtils {
-  /*
-     This version does not require an instantiated object.
-   */
-  public static Image findIcon(Class clazz) {
-    BeanInfo info = null;
-    try {
-      info = Introspector.getBeanInfo(clazz);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
-    Image img = info.getIcon(BeanInfo.ICON_COLOR_32x32);
+	/*
+	 * This version does not require an instantiated object.
+	 */
+	public static Image findIcon(Class clazz) {
+		BeanInfo info = null;
+		try {
+			info = Introspector.getBeanInfo(clazz);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Image img = info.getIcon(BeanInfo.ICON_COLOR_32x32);
 
-    if (img == null) {
-      CoordinationUtils dc = new CoordinationUtils();
-      Class cl = dc.getClass();
-      URL urlGif = cl.getResource("resources/GenericBean32.gif");
-      ImageIcon icon = new ImageIcon(urlGif, "generic bean image");
-      img = icon.getImage();
-    }
+		if (img == null) {
+			CoordinationUtils dc = new CoordinationUtils();
+			Class cl = dc.getClass();
+			URL urlGif = cl.getResource("resources/GenericBean32.gif");
+			ImageIcon icon = new ImageIcon(urlGif, "generic bean image");
+			img = icon.getImage();
+		}
 
-    return img;
+		return img;
 
-  }
+	}
 
-  /*
-   This method extracts the class from the object, then calls the Class version.
-   */
+	/*
+	 * This method extracts the class from the object, then calls the Class
+	 * version.
+	 */
 
-  public static Image findIcon(Object originalBean) {
+	public static Image findIcon(Object originalBean) {
 
-    Class clazz = originalBean.getClass();
-    return CoordinationUtils.findIcon(clazz);
-  }
-  /*
-     This version does not require an instantiated object.
-   */
-  public static Image findSmallIcon(Class clazz) {
+		Class clazz = originalBean.getClass();
+		return CoordinationUtils.findIcon(clazz);
+	}
 
-    BeanInfo info = null;
-    try {
-      info = Introspector.getBeanInfo(clazz);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
+	/*
+	 * This version does not require an instantiated object.
+	 */
+	public static Image findSmallIcon(Class clazz) {
 
-    Image img = info.getIcon(BeanInfo.ICON_COLOR_16x16);
+		BeanInfo info = null;
+		try {
+			info = Introspector.getBeanInfo(clazz);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    if (img == null) { //we don't have a small icon
-      Image bigImg = CoordinationUtils.findIcon(clazz);
+		Image img = info.getIcon(BeanInfo.ICON_COLOR_16x16);
 
-      if (bigImg != null) { //but we do have a big icon
-        img = bigImg.getScaledInstance(16, 16, Image.SCALE_DEFAULT);
-      }
-      else { // we don't have any icon
-        CoordinationUtils dc = new CoordinationUtils();
-        Class cl = dc.getClass();
-        URL urlGif = cl.getResource("resources/GenericBean16.gif");
-        ImageIcon icon = new ImageIcon(urlGif, "generic bean image");
-        img = icon.getImage();
-      }
-    }
+		if (img == null) { // we don't have a small icon
+			Image bigImg = CoordinationUtils.findIcon(clazz);
 
-    return img;
+			if (bigImg != null) { // but we do have a big icon
+				img = bigImg.getScaledInstance(16, 16, Image.SCALE_DEFAULT);
+			} else { // we don't have any icon
+				CoordinationUtils dc = new CoordinationUtils();
+				Class cl = dc.getClass();
+				URL urlGif = cl.getResource("resources/GenericBean16.gif");
+				ImageIcon icon = new ImageIcon(urlGif, "generic bean image");
+				img = icon.getImage();
+			}
+		}
 
-  }
+		return img;
 
-  public static Image findSmallIcon(Object originalBean) {
-    Class clazz = originalBean.getClass();
-    return CoordinationUtils.findSmallIcon(clazz);
-  }
+	}
 
-  static Vector findMethods(Class clazz, Vector v) {
-    if (clazz == Object.class) {
-      return v;
-    }
+	public static Image findSmallIcon(Object originalBean) {
+		Class clazz = originalBean.getClass();
+		return CoordinationUtils.findSmallIcon(clazz);
+	}
 
-    Method[] meths = clazz.getMethods();
+	static Vector findMethods(Class clazz, Vector v) {
+		if (clazz == Object.class) {
+			return v;
+		}
 
-    for (int i = 0; i < meths.length; i++) {
-      v.add(meths[i]);
-    }
+		Method[] meths = clazz.getMethods();
 
-    Class base = clazz.getSuperclass();
+		for (Method meth : meths) {
+			v.add(meth);
+		}
 
-    if (base != null) {
-      findMethods(base, v);
-    }
+		Class base = clazz.getSuperclass();
 
-    return v;
-  }
+		if (base != null) {
+			findMethods(base, v);
+		}
 
-  static String findInterfaceName(Class clazz) {
-    String name = clazz.getName();
-    int periodPlace = name.lastIndexOf(".");
-    name = name.substring(periodPlace + 1);
+		return v;
+	}
 
-    if (name.endsWith("Listener")) {
-      name = name.substring(0, name.lastIndexOf("Listener"));
-    }
+	static String findInterfaceName(Class clazz) {
+		String name = clazz.getName();
+		int periodPlace = name.lastIndexOf(".");
+		name = name.substring(periodPlace + 1);
 
-    return name;
-  }
+		if (name.endsWith("Listener")) {
+			name = name.substring(0, name.lastIndexOf("Listener"));
+		}
+
+		return name;
+	}
 }
