@@ -30,6 +30,8 @@ public interface VisualSettingsPopupListener {
 
 	public void useMultiIndication(boolean useMultiIndic);
 
+	public void processCustomCheckBox(boolean value, String text);
+
 	// public void setSelectionFadeAmount(float fadeAmount)
 	// public void setSelectionBlurAmount(float blurAmount)
 

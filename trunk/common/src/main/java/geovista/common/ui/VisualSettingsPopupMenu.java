@@ -28,9 +28,12 @@ public class VisualSettingsPopupMenu extends JPopupMenu implements
 
 	private JMenuItem itemIndColor;
 
+	private JMenuItem itemLeaderColor;
+
 	private JCheckBoxMenuItem itemBoxUseSelectionFade;
 
 	private JCheckBoxMenuItem itemBoxUseSelectionBlur;
+
 	final static Logger logger = Logger.getLogger(VisualSettingsPopupMenu.class
 			.getName());
 
@@ -41,6 +44,14 @@ public class VisualSettingsPopupMenu extends JPopupMenu implements
 		super();
 		this.settingsListener = settingsListener;
 		makeItems();
+
+	}
+
+	public void addCheckBoxItem(String text, boolean selected) {
+		JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(text);
+		this.add(menuItem);
+		menuItem.setSelected(selected);
+		menuItem.addActionListener(this);
 
 	}
 
@@ -57,6 +68,12 @@ public class VisualSettingsPopupMenu extends JPopupMenu implements
 		itemIndColor.setEnabled(false);
 		this.add(itemIndColor);
 		itemIndColor.addActionListener(this);
+
+		itemLeaderColor = new JMenuItem("Choose leader line color");
+		itemLeaderColor.setEnabled(false);
+		this.add(itemLeaderColor);
+		itemLeaderColor.addActionListener(this);
+
 		addSeparator();
 		itemBoxUseSelectionFade = new JCheckBoxMenuItem(
 				"Use fade in selections?");
@@ -102,12 +119,24 @@ public class VisualSettingsPopupMenu extends JPopupMenu implements
 					"Pick an indication color", settingsListener
 							.getIndicationColor());
 			settingsListener.setIndicationColor(bgColor);
+
+		} else if (e.getSource() == itemLeaderColor) {
+			Color bgColor = JColorChooser.showDialog(this,
+					"Pick an leader line color", settingsListener
+							.getIndicationColor());
+			settingsListener.setIndicationColor(bgColor);
+
 		} else if (e.getSource() == itemBoxUseSelectionBlur) {
 			boolean value = itemBoxUseSelectionBlur.isSelected();
 			settingsListener.useSelectionBlur(value);
 		} else if (e.getSource() == itemBoxUseSelectionFade) {
 			boolean value = itemBoxUseSelectionFade.isSelected();
 			settingsListener.useSelectionFade(value);
+		} else if (e.getSource() instanceof JCheckBoxMenuItem) {
+			logger.info("hit custom checkbox");
+			JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+			boolean value = item.isSelected();
+			settingsListener.processCustomCheckBox(value, item.getText());
 		} else {
 			logger.severe("unknown action performed");
 		}

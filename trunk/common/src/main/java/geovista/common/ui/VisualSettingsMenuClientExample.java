@@ -15,12 +15,14 @@ public class VisualSettingsMenuClientExample extends JPanel implements
 		VisualSettingsPopupListener {
 
 	VisualSettingsPopupMenu popMenu;
+	String textCheckBoxText = "Test this checkbox?";
 	final static Logger logger = Logger
 			.getLogger(VisualSettingsMenuClientExample.class.getName());
 
 	public VisualSettingsMenuClientExample() {
 
 		popMenu = new VisualSettingsPopupMenu(this);
+		popMenu.addCheckBoxItem(textCheckBoxText, true);
 
 		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
 		popMenu.addMouseListener(listener);
@@ -73,6 +75,13 @@ public class VisualSettingsMenuClientExample extends JPanel implements
 
 	public void useMultiIndication(boolean useMultiIndic) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		if (text.equals(textCheckBoxText)) {
+			logger.info("got custom box, value = " + value);
+		}
 
 	}
 
