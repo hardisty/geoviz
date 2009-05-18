@@ -1,19 +1,9 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ThumbPanel
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: jmacgill $
- $Id: ThumbPanel.java,v 1.1.1.1 2003/02/28 14:53:56 jmacgill Exp $
- $Date: 2003/02/28 14:53:56 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
- */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.common.ui;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -28,150 +18,164 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.EventListenerList;
+
 /**
  * ThumbPanel is used in FoldupPanel to toggle its state.
- *
- *  Currently, the component only "folds up" vertically.
+ * 
+ * Currently, the component only "folds up" vertically.
  */
-public class ThumbPanel extends JPanel implements MouseListener{
+public class ThumbPanel extends JPanel implements MouseListener {
 
-  public static final int SIZE_WIDTH_UNFOLDED = 10;
-  public static final int SIZE_HEIGHT_FOLDED = 8;
-  public static final int SIZE_WIDTH_FOLDED = 60;
-  private static final int heightUnfolded = 60;
-  transient boolean folded = false;
-  private static final Dimension unfoldedSize = new Dimension(ThumbPanel.SIZE_WIDTH_UNFOLDED,heightUnfolded);
-  private static final Dimension foldedSize = new Dimension(ThumbPanel.SIZE_WIDTH_FOLDED,ThumbPanel.SIZE_HEIGHT_FOLDED);
-  /**
+	public static final int SIZE_WIDTH_UNFOLDED = 10;
+	public static final int SIZE_HEIGHT_FOLDED = 8;
+	public static final int SIZE_WIDTH_FOLDED = 60;
+	private static final int heightUnfolded = 60;
+	transient boolean folded = false;
+	private static final Dimension unfoldedSize = new Dimension(
+			ThumbPanel.SIZE_WIDTH_UNFOLDED, heightUnfolded);
+	private static final Dimension foldedSize = new Dimension(
+			ThumbPanel.SIZE_WIDTH_FOLDED, ThumbPanel.SIZE_HEIGHT_FOLDED);
+
+	/**
 	 * null ctr
 	 */
-  public ThumbPanel(){
-    super();
-    this.setMinimumSize(unfoldedSize);
-    this.setPreferredSize(unfoldedSize);
-    this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    this.addMouseListener(this);
-  }
+	public ThumbPanel() {
+		super();
+		setMinimumSize(unfoldedSize);
+		setPreferredSize(unfoldedSize);
+		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		addMouseListener(this);
+	}
 
-//start mouse events
-    /**
-     * noop
-     * @param e
-     */
-	public void mousePressed (MouseEvent e) {
+	// start mouse events
+	/**
+	 * noop
+	 * 
+	 * @param e
+	 */
+	public void mousePressed(MouseEvent e) {
 
-  }
+	}
 
-    /**
-     * noop
-     * @param e
-     */
-	public void mouseReleased (MouseEvent e) {}
+	/**
+	 * noop
+	 * 
+	 * @param e
+	 */
+	public void mouseReleased(MouseEvent e) {
+	}
 
-    /**
-     * noop
-     * @param e
-     */
-	public void mouseEntered (MouseEvent e) {
-  }
+	/**
+	 * noop
+	 * 
+	 * @param e
+	 */
+	public void mouseEntered(MouseEvent e) {
+	}
 
-    /**
-     * noop
-     * @param e
-     */
-	public void mouseExited (MouseEvent e) {}
+	/**
+	 * noop
+	 * 
+	 * @param e
+	 */
+	public void mouseExited(MouseEvent e) {
+	}
 
-    /**
-     * toggle our state and let any listening classes know.
-     * @param e
-     */
-	public void mouseClicked (MouseEvent e) {
+	/**
+	 * toggle our state and let any listening classes know.
+	 * 
+	 * @param e
+	 */
+	public void mouseClicked(MouseEvent e) {
 
-    if (this.folded) {
-      this.folded = false;
-      this.setMinimumSize(unfoldedSize);
-      this.setPreferredSize(unfoldedSize);
-      this.setMaximumSize(unfoldedSize);
-      fireActionPerformed("unfold");
-    } else {
-      this.folded = true;
-      this.setMinimumSize(foldedSize);
-      this.setPreferredSize(foldedSize);
-      this.setMaximumSize(foldedSize);
-      fireActionPerformed("fold");
-    }
-  }
-//end mouse events
+		if (folded) {
+			folded = false;
+			setMinimumSize(unfoldedSize);
+			setPreferredSize(unfoldedSize);
+			setMaximumSize(unfoldedSize);
+			fireActionPerformed("unfold");
+		} else {
+			folded = true;
+			setMinimumSize(foldedSize);
+			setPreferredSize(foldedSize);
+			setMaximumSize(foldedSize);
+			fireActionPerformed("fold");
+		}
+	}
 
-  /**
-   * implements ActionListener
-   */
-  public void addActionListener(ActionListener l) {
-    listenerList.add(ActionListener.class, l);
-  }
+	// end mouse events
 
-  /**
-   * removes an ActionListener from the button
-   */
-  public void removeActionListener(ActionListener l) {
-    listenerList.remove(ActionListener.class, l);
-  }
+	/**
+	 * implements ActionListener
+	 */
+	public void addActionListener(ActionListener l) {
+		listenerList.add(ActionListener.class, l);
+	}
 
-  /**
-   * Notify all listeners that have registered interest for
-   * notification on this event type. The event instance
-   * is lazily created using the parameters passed into
-   * the fire method.
-   * @see EventListenerList
-   */
-  protected void fireActionPerformed(String command) {
-   // Guaranteed to return a non-null array
-   Object[] listeners = listenerList.getListenerList();
-   ActionEvent e = null;
-   // Process the listeners last to first, notifying
-   // those that are interested in this event
-   for (int i = listeners.length - 2; i >= 0; i -= 2) {
-     if (listeners[i] == ActionListener.class) {
-       // Lazily create the event:
-       if (e == null) {
-         e = new ActionEvent(this,
-                    ActionEvent.ACTION_PERFORMED,
-                    command);
-       }
-       ((ActionListener)listeners[i + 1]).actionPerformed(e);
-      }
-    }
-  }
-    /**
-     * put your documentation comment here
-     * @param g
-     */
-  public void paintComponent (Graphics g) {
-    if (folded) {
-      Polygon tri = new Polygon();
-      tri.addPoint(2,2);
-      tri.addPoint(2,8);
-      tri.addPoint(6,5);
-      g.setColor(Color.white);
-      g.fillPolygon(tri);
-      g.setColor(Color.black);
-      g.drawPolygon(tri);
-    } else { //not folded
-      Polygon tri = new Polygon();
-      tri.addPoint(2,2);
-      tri.addPoint(8,6);
-      tri.addPoint(2,10);
-      Graphics2D g2 = (Graphics2D)g;
-      double down = 10;
-      double accross = 0;
-      for (int i = 0; i < 3; i++) {
-        g2.setColor(Color.white);
-        g2.fillPolygon(tri);
-        g2.setColor(Color.black);
-        g2.drawPolygon(tri);
-        g2.translate(accross,down);
-      }
-      g2.translate(accross * -3, down * -3);
-    } //end if
-  }//end method
+	/**
+	 * removes an ActionListener from the button
+	 */
+	public void removeActionListener(ActionListener l) {
+		listenerList.remove(ActionListener.class, l);
+	}
+
+	/**
+	 * Notify all listeners that have registered interest for notification on
+	 * this event type. The event instance is lazily created using the
+	 * parameters passed into the fire method.
+	 * 
+	 * @see EventListenerList
+	 */
+	protected void fireActionPerformed(String command) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		ActionEvent e = null;
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == ActionListener.class) {
+				// Lazily create the event:
+				if (e == null) {
+					e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED,
+							command);
+				}
+				((ActionListener) listeners[i + 1]).actionPerformed(e);
+			}
+		}
+	}
+
+	/**
+	 * put your documentation comment here
+	 * 
+	 * @param g
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		if (folded) {
+			Polygon tri = new Polygon();
+			tri.addPoint(2, 2);
+			tri.addPoint(2, 8);
+			tri.addPoint(6, 5);
+			g.setColor(Color.white);
+			g.fillPolygon(tri);
+			g.setColor(Color.black);
+			g.drawPolygon(tri);
+		} else { // not folded
+			Polygon tri = new Polygon();
+			tri.addPoint(2, 2);
+			tri.addPoint(8, 6);
+			tri.addPoint(2, 10);
+			Graphics2D g2 = (Graphics2D) g;
+			double down = 10;
+			double accross = 0;
+			for (int i = 0; i < 3; i++) {
+				g2.setColor(Color.white);
+				g2.fillPolygon(tri);
+				g2.setColor(Color.black);
+				g2.drawPolygon(tri);
+				g2.translate(accross, down);
+			}
+			g2.translate(accross * -3, down * -3);
+		} // end if
+	}// end method
 }
