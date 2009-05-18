@@ -108,4 +108,4 @@ public abstract class SpatialStatistics {
 		return pVals;
 	}
 
-} // end class
+}

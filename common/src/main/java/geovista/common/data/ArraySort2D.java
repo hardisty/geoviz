@@ -117,4 +117,4 @@ public class ArraySort2D {
 		logger.info("" + (Double.NaN == Double.NaN));// false
 
 	}
-}// end class
+}
