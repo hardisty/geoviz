@@ -1489,7 +1489,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	/**
 	 * Attention all layers! Paint yourselves onto the buffer. This can be an
-	 * expensive operation, so this method is normally called by a RenderThread.
+	 * expensive operation, so this method should be called by a RenderThread.
 	 */
 	private void paintDrawingBuff() {
 
@@ -1526,7 +1526,8 @@ public class MapCanvas extends JPanel implements ComponentListener,
 					.getWidth(this), drawingBuff.getHeight(this),
 					BufferedImage.TYPE_INT_ARGB);
 			// VolatileImage blurBuff=
-			// this.getGraphicsConfiguration().createCompatibleVolatileImage(this.drawingBuff.getWidth(this),
+			//this.getGraphicsConfiguration().createCompatibleVolatileImage(this
+			// .drawingBuff.getWidth(this),
 			// this.drawingBuff.getHeight(this));
 			blurBuff.getGraphics().drawImage(drawingBuff, 0, 0, this);
 			filter.filter(blurBuff, blurBuff);
@@ -2128,5 +2129,10 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	public Component renderingComponent() {
 		return this;
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		// TODO Auto-generated method stub
+
 	}
 }

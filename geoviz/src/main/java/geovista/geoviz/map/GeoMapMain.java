@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class GeoMapMain
- Copyright (c), 2000, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: GeoMapMain.java,v 1.2 2005/09/15 15:01:29 hardisty Exp $
- $Date: 2005/09/15 15:01:29 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------   */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.geoviz.map;
 
 import java.awt.event.WindowAdapter;
@@ -96,7 +86,7 @@ public class GeoMapMain extends JFrame {
 		// shpProj2.setProj(proj);
 		// shpProj2.setInputAuxiliaryData(stateData.getDataSet());
 
-		// shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
+		//shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
