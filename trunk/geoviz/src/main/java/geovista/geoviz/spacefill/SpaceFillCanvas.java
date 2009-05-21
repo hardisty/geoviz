@@ -1,17 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class SpaceFillCanvas
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: xpdai $
- $Id: SpaceFillCanvas.java,v 1.6 2003/09/05 13:02:45 xpdai Exp $
- $Date: 2003/09/05 13:02:45 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.geoviz.spacefill;
 
 import java.awt.BasicStroke;
@@ -959,10 +948,10 @@ public class SpaceFillCanvas extends JPanel implements MouseListener,
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setData(Object[] data) {
