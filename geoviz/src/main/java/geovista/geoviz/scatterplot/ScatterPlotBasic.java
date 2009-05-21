@@ -235,6 +235,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 * @param indices
 	 */
 	public void setDataIndices(int[] indices) {
+
 		dataIndices = indices;
 		axisDataSetup();
 		initialize();
@@ -552,7 +553,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 					.getWidth(this), drawingBuff.getHeight(this),
 					BufferedImage.TYPE_INT_ARGB);
 			// VolatileImage blurBuff=
-			// this.getGraphicsConfiguration().createCompatibleVolatileImage(this.drawingBuff.getWidth(this),
+			//this.getGraphicsConfiguration().createCompatibleVolatileImage(this
+			// .drawingBuff.getWidth(this),
 			// this.drawingBuff.getHeight(this));
 			blurBuff.getGraphics().drawImage(drawingBuff, 0, 0, this);
 			filter.filter(blurBuff, blurBuff);
@@ -676,6 +678,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 			return;
 		}
 		if (dataIndices[0] == dataIndices[1]) {
+			logger.info("painting histogram inside SP");
 			histogram.paintComponent(g);// XXX not the whole thing, please!
 
 			return;
@@ -2226,6 +2229,11 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 		if (dataX != null && dataY != null) {
 			pointColors = bivarColorClasser.symbolize(dataX, dataY);
 		}
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
