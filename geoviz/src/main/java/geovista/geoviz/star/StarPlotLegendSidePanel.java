@@ -1,24 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class StarPlotLegendSidePanel
- Copyright (c), 2003, Frank Hardisty
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: StarPlotLegendSidePanel.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
- $Date: 2005/02/13 03:26:27 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.geoviz.star;
 
 import java.awt.Color;
@@ -58,22 +40,23 @@ public class StarPlotLegendSidePanel extends JPanel implements
 	SpringLayout sl;
 	double[] values;
 	String[] variableNames;
-	final static Logger logger = Logger.getLogger(StarPlotLegendSidePanel.class.getName());
+	final static Logger logger = Logger.getLogger(StarPlotLegendSidePanel.class
+			.getName());
 
 	public StarPlotLegendSidePanel() {
 
-		this.setBackground(Color.lightGray);
-		this.addComponentListener(this);
+		setBackground(Color.lightGray);
+		addComponentListener(this);
 
-		this.addMouseMotionListener(this);
-		this.addMouseListener(this);
-		this.alignment = StarPlotLegendSidePanel.ALIGNMENT_LEFT;
-		this.setFont(this.getFont().deriveFont(Font.PLAIN, 8f));
+		addMouseMotionListener(this);
+		addMouseListener(this);
+		alignment = StarPlotLegendSidePanel.ALIGNMENT_LEFT;
+		setFont(getFont().deriveFont(Font.PLAIN, 8f));
 		labelHolder = new JPanel();
 
 		// this.setLayout(new BorderLayout());
 		// note to self, replace with spring layout
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		// sl = new SpringLayout();
 		// this.setLayout(sl);
 
@@ -82,33 +65,33 @@ public class StarPlotLegendSidePanel extends JPanel implements
 		labelHolder.setLayout(lay);
 
 		Dimension size = new Dimension(125, 100);
-		this.setMinimumSize(size);
-		this.setPreferredSize(size);
+		setMinimumSize(size);
+		setPreferredSize(size);
 		if (logger.isLoggable(Level.FINEST)) {
 			labelHolder.setBorder(new LineBorder(Color.pink)); // for debugging
-																// layout
-			this.setBorder(new LineBorder(Color.blue)); // for debugging layout
+			// layout
+			setBorder(new LineBorder(Color.blue)); // for debugging layout
 		}
-		this.setOpaque(false);
+		setOpaque(false);
 
 	}
 
 	private void makeLabels() {
 		int nVars = variableNames.length;
-		this.labels = new JLabel[nVars];
+		labels = new JLabel[nVars];
 		labelHolder.removeAll();
 		if (nVars < 1) {
 			return;// bail else div by zero
 		}
 		// these next fontsize values assume the height is fixed at 125
 		if (nVars == 10) {
-			this.setFont(this.getFont().deriveFont(Font.PLAIN, 8f));
+			setFont(getFont().deriveFont(Font.PLAIN, 8f));
 		} else if (nVars == 9) {
-			this.setFont(this.getFont().deriveFont(Font.PLAIN, 9f));
+			setFont(getFont().deriveFont(Font.PLAIN, 9f));
 		} else if (nVars == 8) {
-			this.setFont(this.getFont().deriveFont(Font.PLAIN, 9f));
+			setFont(getFont().deriveFont(Font.PLAIN, 9f));
 		} else if (nVars == 7) {
-			this.setFont(this.getFont().deriveFont(Font.PLAIN, 11f));
+			setFont(getFont().deriveFont(Font.PLAIN, 11f));
 		}
 		// else if (nVars == 6) {
 		// this.setFont(this.getFont().deriveFont(Font.PLAIN, 12f));
@@ -120,28 +103,27 @@ public class StarPlotLegendSidePanel extends JPanel implements
 		// }
 
 		else {
-			this.setFont(this.getFont().deriveFont(Font.PLAIN, 12f));
+			setFont(getFont().deriveFont(Font.PLAIN, 12f));
 		}
 
-		labelHolder.setAlignmentX(this.alignment);
-		int maxHeight = this.getHeight() / nVars;
+		labelHolder.setAlignmentX(alignment);
+		int maxHeight = getHeight() / nVars;
 
-		int maxWidth = this.getWidth();
+		int maxWidth = getWidth();
 		Dimension maxLabelSize = new Dimension(maxWidth, maxHeight);
 		int align = SwingConstants.LEFT;
-		if (this.alignment == StarPlotLegendSidePanel.ALIGNMENT_RIGHT) {
+		if (alignment == StarPlotLegendSidePanel.ALIGNMENT_RIGHT) {
 			align = SwingConstants.RIGHT;
 		}
 
 		for (int i = 0; i < nVars; i++) {
-			this.labels[i] = new JLabel(this.variableNames[i] + " = "
-					+ this.values[i]);
-			this.labels[i].setMaximumSize(maxLabelSize);
-			this.labels[i].setFont(this.getFont());
+			labels[i] = new JLabel(variableNames[i] + " = " + values[i]);
+			labels[i].setMaximumSize(maxLabelSize);
+			labels[i].setFont(getFont());
 			if (logger.isLoggable(Level.FINEST)) {
-				this.labels[i].setBorder(new LineBorder(Color.white)); // for
-																		// debugging
-																		// layout
+				labels[i].setBorder(new LineBorder(Color.white)); // for
+				// debugging
+				// layout
 			}
 			labels[i].setHorizontalAlignment(align);
 			labelHolder.add(labels[i]);
@@ -161,8 +143,8 @@ public class StarPlotLegendSidePanel extends JPanel implements
 
 	public void componentResized(ComponentEvent e) {
 		if (logger.isLoggable(Level.FINEST)) {
-			logger.finest("height = " + this.getHeight());
-			logger.finest("wid " + this.getWidth());
+			logger.finest("height = " + getHeight());
+			logger.finest("wid " + getWidth());
 		}
 		this.repaint();
 
@@ -222,12 +204,11 @@ public class StarPlotLegendSidePanel extends JPanel implements
 
 	public void setVariableNames(String[] variableNames) {
 		this.variableNames = variableNames;
-		this.makeLabels();
+		makeLabels();
 
 	}
 
 	public void alignLabelsLeft(boolean left) {
-
 
 	}
 
@@ -243,19 +224,18 @@ public class StarPlotLegendSidePanel extends JPanel implements
 		Point2D.Float pt = new Point2D.Float();
 
 		boolean left = false;
-		if (this.alignment == 0f) {
+		if (alignment == 0f) {
 			left = true;
 		}
-		if (this.labels == null || this.labels.length <= label
-				|| this.labels[label] == null) {
+		if (labels == null || labels.length <= label || labels[label] == null) {
 			return null;
 		}
-		double intY = this.labels[label].getY();
+		double intY = labels[label].getY();
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("label Y = " + intY);
 		}
-		intY = intY + this.labels[label].getHeight() / 2;
-		intY = intY + this.labelHolder.getY();
+		intY = intY + labels[label].getHeight() / 2;
+		intY = intY + labelHolder.getY();
 		float y = (float) intY;
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest(" label " + label + ", return y = " + y);
@@ -263,7 +243,7 @@ public class StarPlotLegendSidePanel extends JPanel implements
 		float x = 0;
 		if (left) {
 
-			x = (float) this.labels[label].getX();
+			x = labels[label].getX();
 		} else {
 
 			x = (float) labels[label].getX() + labels[label].getWidth();
@@ -274,4 +254,4 @@ public class StarPlotLegendSidePanel extends JPanel implements
 
 	// end mouse events
 
-} // end class
+}

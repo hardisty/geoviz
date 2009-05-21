@@ -1,24 +1,7 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class StarPlotCanvas
- Copyright (c), 2003, Frank Hardisty
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: StarPlotExampleViewer.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
- $Date: 2005/02/13 03:26:27 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.geoviz.star;
 
 import java.awt.Color;
@@ -34,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
-
+ * 
  * 
  * @author Frank Hardisty
  * 
@@ -54,12 +37,14 @@ public class StarPlotExampleViewer extends JPanel implements ComponentListener {
 	double[] minVals;
 
 	double[] maxVals;
-	protected final static Logger logger = Logger.getLogger(StarPlotExampleViewer.class.getName());
+	protected final static Logger logger = Logger
+			.getLogger(StarPlotExampleViewer.class.getName());
+
 	public StarPlotExampleViewer() {
 
 		fillColor = Color.black;
 		outlineColor = Color.white;
-		this.addComponentListener(this);
+		addComponentListener(this);
 
 	}
 
@@ -83,12 +68,12 @@ public class StarPlotExampleViewer extends JPanel implements ComponentListener {
 
 	public StarPlot sp;
 
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		Rectangle targetArea = new Rectangle();
-		targetArea.setBounds(this.getX(), this.getY(), this.getWidth(), this
-				.getHeight());
+		targetArea.setBounds(getX(), getY(), getWidth(), getHeight());
 
 		// sp.paintStar(g2, targetArea);
 
@@ -107,13 +92,14 @@ public class StarPlotExampleViewer extends JPanel implements ComponentListener {
 	}
 
 	public void componentResized(ComponentEvent e) {
-		logger.finest("width = " + this.getWidth());
-		logger.finest("height = " + this.getHeight());
+		logger.finest("width = " + getWidth());
+		logger.finest("height = " + getHeight());
 		logger.finest("besos a frank");
 	}
 
 	public void componentShown(ComponentEvent e) {
-		logger.finest("componentShown event from " + e.getComponent().getClass().getName());
+		logger.finest("componentShown event from "
+				+ e.getComponent().getClass().getName());
 	}
 
 	// end component handling
