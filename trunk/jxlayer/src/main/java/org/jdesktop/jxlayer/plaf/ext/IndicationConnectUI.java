@@ -61,11 +61,15 @@ public class IndicationConnectUI<V extends JComponent> extends
 	private final List<Shape> shapeList = new ArrayList<Shape>();
 	private final List<Component> srcCompList = new ArrayList<Component>();
 
-	private List<Point> currentPath;
-
 	private Point mousePoint;
 
 	private GeneralPath indicationGlyph;
+
+	private float penWidth = 3f;
+
+	public void setPenWidth(float penWidth) {
+		this.penWidth = penWidth;
+	}
 
 	@Override
 	public void installUI(JComponent c) {
@@ -74,16 +78,22 @@ public class IndicationConnectUI<V extends JComponent> extends
 		this.indicationGlyph = new GeneralPath();
 	}
 
+	public boolean paintIndication;
+
 	// override paintLayer(), not paint()
 	@Override
 	protected void paintLayer(Graphics2D g2, JXLayer<V> l) {
 		// this paints layer as is
 		super.paintLayer(g2, l);
+		if (this.paintIndication == false) {
+			return;
+		}
 		// custom painting is here
 		this.indicationGlyph = new GeneralPath();
 		g2.setColor(new Color(255, 0, 0, 125));
 
-		BasicStroke capStroke = new BasicStroke(1f, BasicStroke.CAP_ROUND, 0);
+		BasicStroke capStroke = new BasicStroke(this.penWidth,
+				BasicStroke.CAP_ROUND, 0);
 		g2.setStroke(capStroke);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -160,6 +170,9 @@ public class IndicationConnectUI<V extends JComponent> extends
 	@Override
 	protected void processMouseMotionEvent(MouseEvent e, JXLayer<V> l) {
 		super.processMouseMotionEvent(e, l);
+		if (this.paintIndication == false) {
+			return;
+		}
 		Point pt = e.getPoint();
 		pt = SwingUtilities.convertPoint((Component) e.getSource(), e
 				.getPoint(), l);
