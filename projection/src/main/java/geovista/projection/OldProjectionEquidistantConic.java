@@ -1,24 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class OldProjectionEquidistantConic
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Authors: Frank Hardisty, Fritz Kessler
- $Author: hardisty $
- $Id: OldProjectionEquidistantConic.java,v 1.7 2005/04/15 18:03:28 hardisty Exp $
- $Date: 2005/04/15 18:03:28 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.projection;
 
@@ -35,7 +17,8 @@ import geovista.common.data.GeneralPathLine;
  * United States, or other contries in similar latitudes.
  */
 public class OldProjectionEquidistantConic implements OldProjection {
-	protected final static Logger logger = Logger.getLogger(OldProjectionEquidistantConic.class.getName());
+	protected final static Logger logger = Logger
+			.getLogger(OldProjectionEquidistantConic.class.getName());
 	private double centralMeridian = Double.NaN;
 	private double standardParallelOne = Double.NaN;
 	private double standardParallelTwo = Double.NaN;
@@ -59,9 +42,9 @@ public class OldProjectionEquidistantConic implements OldProjection {
 			pt = new Point2D.Double();
 		}
 
-		OldProjectionEquidistantConic.projectLongitudeLatititudeRadians(longVal,
-				lat, this.centralMeridian, this.standardParallelOne,
-				this.standardParallelTwo, this.centralLatitude, pt);
+		OldProjectionEquidistantConic.projectLongitudeLatititudeRadians(
+				longVal, lat, centralMeridian, standardParallelOne,
+				standardParallelTwo, centralLatitude, pt);
 
 		// pt.setLocation(longVal, lat);
 		return pt;
@@ -69,7 +52,6 @@ public class OldProjectionEquidistantConic implements OldProjection {
 
 	/*
 	 * array[0] = X array[1] = Y
-	 * 
 	 */
 	public static void projectLongitudeLatititudeRadians(
 			double longitudeRadians, double latitudeRadians,
@@ -146,7 +128,7 @@ public class OldProjectionEquidistantConic implements OldProjection {
 	}
 
 	public double getCentralMeridian() {
-		return this.centralMeridian;
+		return centralMeridian;
 	}
 
 	public void setStandardParallelOne(double standardParallelOne) {
@@ -154,7 +136,7 @@ public class OldProjectionEquidistantConic implements OldProjection {
 	}
 
 	public double getStandardParallelOne() {
-		return this.standardParallelOne;
+		return standardParallelOne;
 	}
 
 	public void setStandardParallelTwo(double standardParallelTwo) {
@@ -162,7 +144,7 @@ public class OldProjectionEquidistantConic implements OldProjection {
 	}
 
 	public double getStandardParallelTwo() {
-		return this.standardParallelTwo;
+		return standardParallelTwo;
 	}
 
 	public void setCentralLatitude(double centralLatitude) {
@@ -170,7 +152,7 @@ public class OldProjectionEquidistantConic implements OldProjection {
 	}
 
 	public double getCentralLatitude() {
-		return this.centralLatitude;
+		return centralLatitude;
 	}
 
 	// XXX this method does not do anything
