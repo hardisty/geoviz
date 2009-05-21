@@ -1,18 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ColorSymbolizerLinear
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ColorSymbolizerLinear.java,v 1.2 2003/04/25 18:08:50 hardisty Exp $
- $Date: 2003/04/25 18:08:50 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.symbolization;
 
@@ -22,86 +10,90 @@ import java.awt.Color;
 
 public class ColorSymbolizerLinear implements ColorSymbolizer {
 
+	private Color lowColor; // associated with low values
+	private Color highColor; // associated with high values
+	// private ColorRamp ramper;
+	private boolean[] anchors;
+	private Color[] rampingColors;
 
-    private Color lowColor; //associated with low values
-    private Color highColor; //associated with high values
-    //private ColorRamp ramper;
-    private boolean[] anchors;
-    private Color[] rampingColors;
+	public ColorSymbolizerLinear() {
+		// defaults
+		lowColor = ColorRampPicker.DEFAULT_LOW_COLOR;
+		highColor = ColorRampPicker.DEFAULT_HIGH_COLOR_PURPLE;
+		initColors(3);
 
-    public ColorSymbolizerLinear() {
-        //defaults
-        lowColor = ColorRampPicker.DEFAULT_LOW_COLOR;
-        highColor = ColorRampPicker.DEFAULT_HIGH_COLOR_PURPLE;
-        this.initColors(3);
+	}
 
-    }
+	private void initColors(int numColors) {
+		rampingColors = new Color[numColors];
+		rampingColors[0] = lowColor; // anchor first and last colors
+		rampingColors[numColors - 1] = highColor;
+		if (rampingColors.length > 2) {
+			for (int i = 1; i < numColors - 2; i++) {
+				rampingColors[i] = Color.black;
+			}
+		}
+	}
 
+	public Color getLowColor() {
+		return lowColor;
+	}
 
-    private void initColors(int numColors) {
-          rampingColors = new Color[numColors];
-          rampingColors[0] = this.lowColor; //anchor first and last colors
-          rampingColors[numColors - 1] = this.highColor;
-          if (rampingColors.length > 2) {
-            for (int i = 1; i < numColors - 2; i++) {
-              rampingColors[i] = Color.black;
-            }
-          }
-    }
-    public Color getLowColor() {
-      return this.lowColor;
-    }
-    public void setLowColor(Color aColor) {
-      this.lowColor = aColor;
-      this.rampingColors[0] = aColor;
-    }
-    public Color getHighColor() {
-      return this.highColor;
-    }
-    public void setHighColor(Color aColor) {
-      this.highColor = aColor;
-      if (rampingColors.length > 1) {
-        rampingColors[rampingColors.length -1] = aColor;
-      }
-    }
+	public void setLowColor(Color aColor) {
+		lowColor = aColor;
+		rampingColors[0] = aColor;
+	}
 
-    public boolean[] getAnchors() {
-      return this.anchors;
-    }
-    public void setAnchors(boolean[] anchors) {
-      this.anchors = anchors;
-    }
+	public Color getHighColor() {
+		return highColor;
+	}
 
-    public int getNumClasses() {
-      return this.rampingColors.length;
-    }
+	public void setHighColor(Color aColor) {
+		highColor = aColor;
+		if (rampingColors.length > 1) {
+			rampingColors[rampingColors.length - 1] = aColor;
+		}
+	}
 
-    public Color[] getRampingColors() {
-      return this.rampingColors;
+	public boolean[] getAnchors() {
+		return anchors;
+	}
 
-    }
-    public void setRampingColors(Color[] rampingColors) {
-      this.rampingColors = rampingColors;
-      this.lowColor = rampingColors[0];
-      this.highColor = rampingColors[rampingColors.length - 1];
+	public void setAnchors(boolean[] anchors) {
+		this.anchors = anchors;
+	}
 
-    }
+	public int getNumClasses() {
+		return rampingColors.length;
+	}
 
-    public Color[] symbolize(int numColors){
-        if (anchors == null || anchors.length != numColors) {
-          anchors = new boolean[numColors];
-          anchors[0] = true; //anchor first and last colors
-          anchors[numColors - 1] = true;
-        }
-        if (rampingColors == null || rampingColors.length != numColors) {
-          this.initColors(numColors);
-        }
+	public Color[] getRampingColors() {
+		return rampingColors;
 
-        ColorRamp ramp = new ColorRamp();
+	}
 
-        ramp.rampColors(rampingColors,anchors);
+	public void setRampingColors(Color[] rampingColors) {
+		this.rampingColors = rampingColors;
+		lowColor = rampingColors[0];
+		highColor = rampingColors[rampingColors.length - 1];
 
-      return rampingColors;
-    }
+	}
+
+	public Color[] symbolize(int numColors) {
+		if (anchors == null || anchors.length != numColors) {
+			anchors = new boolean[numColors];
+			anchors[0] = true; // anchor first and last colors
+			anchors[numColors - 1] = true;
+		}
+		if (rampingColors == null || rampingColors.length != numColors) {
+			initColors(numColors);
+		}
+
+		ColorRamp ramp = new ColorRamp();
+
+		ramp.rampColors(rampingColors, anchors);
+
+		return rampingColors;
+	}
 
 }

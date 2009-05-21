@@ -1,17 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class AffineTransformModifier
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: AffineTransformModifier.java,v 1.2 2003/04/25 18:08:49 hardisty Exp $
- $Date: 2003/04/25 18:08:49 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.symbolization;
 
@@ -52,12 +41,12 @@ public class AffineTransformModifier {
 			xForm.translate(
 					(source.getWidth() * sFactor) + (target.getX() * 2),
 					(source.getHeight() * sFactor) + (target.getY() * 2)); // fix
-																			// problems
-																			// generated
-																			// by
-																			// turning
-																			// upside
-																			// down
+			// problems
+			// generated
+			// by
+			// turning
+			// upside
+			// down
 			xForm.rotate(rotation);// turn upside down
 		}
 		// step 5: if flipVertical, flip then fix
@@ -65,12 +54,12 @@ public class AffineTransformModifier {
 		if (mirror) {
 			xForm.translate(
 					(source.getWidth() * sFactor) + (target.getX() * 2), 0); // fix
-																				// problem
-																				// created
-																				// by
-																				// flipping
-																				// mirror
-																				// image
+			// problem
+			// created
+			// by
+			// flipping
+			// mirror
+			// image
 			xForm.scale(-1, 1);// flip mirror image
 		}
 		// step 4: if this is a mirror, flip then fix
