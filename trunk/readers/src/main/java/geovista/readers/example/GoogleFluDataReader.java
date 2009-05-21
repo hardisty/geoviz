@@ -138,7 +138,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 				Set<String> keySet = iLIData.keySet();
 				for (String placeName : keySet) {
 					if (monthCounter == 5) {
-						logger.info("watchit");
+						logger.finest("watchit");
 					}
 					ArrayList<Double> sumData = monthlyILIData.get(placeName);
 					Double avg = sumData.get(monthCounter);
@@ -164,7 +164,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 		scan.next();// skip "date"
 		while (scan.hasNext()) {
 			String aName = scan.next();
-			logger.info("names = " + aName);
+			logger.finest("names = " + aName);
 			names.add(aName);
 		}
 
@@ -196,7 +196,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 			varNames[i + 1] = cal.get(Calendar.DAY_OF_MONTH) + "-"
 					+ (cal.get(Calendar.MONTH) + 1) + "-"
 					+ cal.get(Calendar.YEAR);
-			logger.info("var = " + varNames[i]);
+			logger.finest("var = " + varNames[i]);
 		}
 		varNames[0] = "ST_NAME";
 

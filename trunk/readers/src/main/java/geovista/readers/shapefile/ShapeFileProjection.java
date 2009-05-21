@@ -1,17 +1,7 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ShapeFileProjection
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
-          Jin Chen
- $Id: ShapeFileProjection.java,v 1.3 2005/04/15 18:03:28 hardisty Exp $
- $Date: 2005/04/15 18:03:28 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.readers.shapefile;
 
 import java.awt.Shape;

@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ShapeFileDataReader
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ShapeFileDataReader.java,v 1.3 2005/04/11 17:37:47 hardisty Exp $
- $Date: 2005/04/11 17:37:47 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.readers.shapefile;
 
@@ -93,8 +83,8 @@ public class ShapeFileDataReader implements Serializable {
 	 * data without attribute names public Object[] getDBData() { Object[]
 	 * dbData = null;
 	 * 
-	 * try { String dbFileName = fileName + ".dbf"; DbaseFileReader dBaseReader =
-	 * null;
+	 * try { String dbFileName = fileName + ".dbf"; DbaseFileReader dBaseReader
+	 * = null;
 	 * 
 	 * DBaseFile dbf = new DBaseFile(dbFileName); dbData = new
 	 * Object[dbf.getDataSet().length]; for (int i = 0; i < dbData.length - 1;
@@ -325,7 +315,8 @@ public class ShapeFileDataReader implements Serializable {
 
 		// this.fireActionPerformed(COMMAND_DATA_SET_MADE);
 		// int type =
-		// this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType());
+		//this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType
+		// ());
 		DataSetForApps dataForApps = new DataSetForApps(allData);
 		// this.dataForApps.setSpatialType(type);
 		return dataForApps;
@@ -383,7 +374,8 @@ public class ShapeFileDataReader implements Serializable {
 
 		// this.fireActionPerformed(COMMAND_DATA_SET_MADE);
 		// int type =
-		// this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType());
+		//this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType
+		// ());
 		DataSetForApps dataForApps = new DataSetForApps(allData);
 		// this.dataForApps.setSpatialType(type);
 		return dataForApps;
@@ -752,8 +744,9 @@ public class ShapeFileDataReader implements Serializable {
 	/**
 	 * we now allow jts geometries in datasetforapps public Object[]
 	 * convertShpToShape(Object[] dataIn) { if (dataIn[dataIn.length - 1]
-	 * instanceof ShapeFile) { ShapeFile shp = (ShapeFile) dataIn[dataIn.length -
-	 * 1]; dataIn[dataIn.length - 1] = this.makeShapes(shp); } return dataIn; }
+	 * instanceof ShapeFile) { ShapeFile shp = (ShapeFile) dataIn[dataIn.length
+	 * - 1]; dataIn[dataIn.length - 1] = this.makeShapes(shp); } return dataIn;
+	 * }
 	 */
 
 	/**
@@ -828,8 +821,8 @@ public class ShapeFileDataReader implements Serializable {
 	 * double[][] dataOld = polyOld.getPoints(); // XXX next line pointCount =
 	 * pointCount + dataOld.length; int[] parts = polyOld.getParts(); int part =
 	 * 0; GeneralPath newShape = new GeneralPath(); for (int counter = 0;
-	 * counter < dataOld.length; counter++) { if (part < parts.length && counter ==
-	 * parts[part]) { newShape.moveTo((float) dataOld[counter][0], (float)
+	 * counter < dataOld.length; counter++) { if (part < parts.length && counter
+	 * == parts[part]) { newShape.moveTo((float) dataOld[counter][0], (float)
 	 * dataOld[counter][1]); part++; } else { newShape.lineTo((float)
 	 * dataOld[counter][0], (float) dataOld[counter][1]); } }
 	 * newShapes[currShape] = newShape; currShape++; }

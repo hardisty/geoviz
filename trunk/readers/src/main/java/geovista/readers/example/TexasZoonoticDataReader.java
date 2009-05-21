@@ -51,7 +51,7 @@ public class TexasZoonoticDataReader implements GeoDataSource {
 		readWestNileContents();
 	}
 
-	String basePath = "C:\\data\\grants\\nevac\\zoonotic\\";
+	String basePath = "C:\\temp\\zoonotic\\";
 
 	@SuppressWarnings("unused")
 	public void readLymeContents() throws IOException {

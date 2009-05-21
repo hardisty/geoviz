@@ -38,4 +38,4 @@ public class JoinPoint {
 	public String toString() {
 		return left + ", " + right;
 	}
-}// end class
+}

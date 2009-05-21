@@ -1,16 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ShapeFileDataWriter
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ShapeFileDataWriter.java,v 1.2 2005/02/12 21:37:47 hardisty Exp $
- $Date: 2005/02/12 21:37:47 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.readers.shapefile;
 
@@ -82,8 +72,8 @@ public class ShapeFileDataWriter {
 	 * double[] bbox = {bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(),
 	 * bounds.getMaxY()}; polygon.setBox(bbox); PathIterator pit =
 	 * paths[i].getPathIterator(new AffineTransform()); int nPoints = 0; int
-	 * nParts = 0; float[] coords = {0, 1, 2, 3, 4, 5, 6}; while (!pit.isDone()) {
-	 * int segType = pit.currentSegment(coords); if (segType ==
+	 * nParts = 0; float[] coords = {0, 1, 2, 3, 4, 5, 6}; while (!pit.isDone())
+	 * { int segType = pit.currentSegment(coords); if (segType ==
 	 * PathIterator.SEG_MOVETO) { nParts++; } nPoints++; pit.next(); }
 	 * logger.finest("nParts = " + nParts); logger.finest("nPoints = " +
 	 * nPoints); int[] parts = new int[nParts]; double[][] thePoints = new
@@ -108,9 +98,10 @@ public class ShapeFileDataWriter {
 	 * ShapeFileDataReader(); reader.setFileName(shapeFile);
 	 * //reader.setFileName("./Export_Output.shp");
 	 * shpProj.setInputDataSet(reader.getDataSet());
-	 * //shpProj.setInputDataSet(reader.convertShpToShape(statesData.getDataSet()));
-	 * Object[] dataSet = shpProj.getOutputDataSet(); DataSetForApps dataSetApps =
-	 * new DataSetForApps(dataSet);
+	 * //shpProj.setInputDataSet(reader
+	 * .convertShpToShape(statesData.getDataSet())); Object[] dataSet =
+	 * shpProj.getOutputDataSet(); DataSetForApps dataSetApps = new
+	 * DataSetForApps(dataSet);
 	 * 
 	 * Shape[] paths = dataSetApps.getShapeData(); GeneralPath[] newPaths = new
 	 * GeneralPath[paths.length]; for (int i = 0; i < paths.length; i++) {
