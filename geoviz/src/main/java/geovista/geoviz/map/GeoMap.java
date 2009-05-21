@@ -1,23 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class GeoMap
- Copyright (c), 2002, GeoVISTA Center
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: GeoMap.java,v 1.20 2005/08/19 19:17:32 hardisty Exp $
- $Date: 2005/08/19 19:17:32 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.geoviz.map;
 
@@ -223,7 +206,8 @@ public class GeoMap extends JPanel
 		fisheyes.setLensType(Fisheyes.LENS_HEMISPHERE);
 
 		// this.colorClassifierChanged(new
-		// ColorClassifierEvent(visClassTwo,visClassTwo.getColorSymbolClassification()));
+		// ColorClassifierEvent(visClassTwo,visClassTwo.
+		// getColorSymbolClassification()));
 	}
 
 	private JPanel makeAnimationPanel() {
@@ -841,7 +825,7 @@ public class GeoMap extends JPanel
 		// shpProj2.setProj(proj);
 		// shpProj2.setInputAuxiliaryData(stateData.getDataSet());
 
-		// shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
+		//shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
@@ -959,6 +943,11 @@ public class GeoMap extends JPanel
 
 	public Component renderingComponent() {
 		return mapCan;
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
