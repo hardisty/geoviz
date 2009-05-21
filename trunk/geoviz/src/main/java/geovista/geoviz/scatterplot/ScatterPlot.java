@@ -17,7 +17,6 @@ import java.awt.geom.Ellipse2D;
 
 import geovista.common.jts.NullShape;
 import geovista.common.ui.ShapeReporter;
-import geovista.symbolization.BivariateColorSymbolClassification;
 
 /**
  * put your documentation comment here
@@ -76,19 +75,12 @@ public class ScatterPlot extends ScatterPlotBasic implements ShapeReporter
 		initialize();
 	}
 
-	@Override
-	public void setColorArrayForObs(Color[] colorArray) {
-		// this.colorArrayForObs = colorArray;
-		if (colorArray != null) {
-			pointColors = colorArray;
-			externalColor = true;
-		}
-		if (pointColors == null) {
-			logger.finest("In SP... pointColors null");
-		}
-		this.repaint();
-	}
-
+	/*
+	 * @Override public void setColorArrayForObs(Color[] colorArray) { //
+	 * this.colorArrayForObs = colorArray; if (colorArray != null) { pointColors
+	 * = colorArray; externalColor = true; } if (pointColors == null) {
+	 * logger.finest("In SP... pointColors null"); } this.repaint(); }
+	 */
 	public Color[] getColors() {
 		return pointColors;
 	}
@@ -111,96 +103,51 @@ public class ScatterPlot extends ScatterPlotBasic implements ShapeReporter
 
 	}
 
-	@Override
-	protected void drawSelections(Graphics g, Color[] colorNonSelected, int len) {
-		logger.fine("in scatterplot, drawslections");
-		long startTime = System.nanoTime();
-
-		if (colorNonSelected != null && colorNonSelected.length != len) {
-			return;
-		}
-		if (pointSelected == false) { // only draw original points.
-			for (int i = 0; i < len; i++) {
-				if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
-						&& (whyint[i] <= plotOriginY)
-						&& (whyint[i] >= plotEndY) && (conditionArray[i] > -1)) {
-					if (colorNonSelected != null) {
-						g.setColor(colorNonSelected[i]);
-					}
-					renderObs(g, i);
-				}
-			}
-		} else { // draw original points and selected points.
-			// according to the color mode, draw selected points and
-			// non-selected points.
-			if (selOriginalColorMode == false) {
-				for (int i = 0; i < len; i++) {
-					if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
-							&& (whyint[i] <= plotOriginY)
-							&& (whyint[i] >= plotEndY)
-							&& (conditionArray[i] > -1)) {
-
-						g.setColor(colorNonSelected[i]);
-						renderObs(g, i);
-					}
-				}
-				for (int i = 0; i < len; i++) {
-					g.setColor(selectionColor);
-					if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
-							&& (whyint[i] <= plotOriginY)
-							&& (whyint[i] >= plotEndY)
-							&& (conditionArray[i] > -1)) {
-
-						if (selections[i] == 1) {
-							renderObs(g, i);
-						}
-					}
-				}
-			} else {
-				for (int i = 0; i < len; i++) {
-					if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
-							&& (whyint[i] <= plotOriginY)
-							&& (whyint[i] >= plotEndY)
-							&& (conditionArray[i] > -1)) {
-						/*
-						 * if (colorNonSelected != null) { final Color c =
-						 * colorNonSelected[i];
-						 * 
-						 * g.setColor(c); }
-						 */
-						g.setColor(new Color(61, 3, 87));// distinguish
-						// selected and
-						// non-selected
-						g.drawOval(exsint[i] - 2, whyint[i] - 2, pointSize - 2,
-								pointSize - 2);
-					}
-				}
-				for (int i = 0; i < len; i++) {
-					if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
-							&& (whyint[i] <= plotOriginY)
-							&& (whyint[i] >= plotEndY)
-							&& (conditionArray[i] > -1)) {
-						if (colorNonSelected != null) {
-							g.setColor(colorNonSelected[i]);
-						}
-						if (selections[i] == 1) {
-
-							renderObs(g, i);
-
-						}
-					}
-				}
-			}
-		}
-		long endTime = System.nanoTime();
-		long diffTime = endTime - startTime;
-		double seconds = (diffTime) / 1000000000d;
-		logger.fine("scatterplot draw time = " + seconds);
-
-	}
-
+	/*
+	 * @Override protected void drawSelections(Graphics g, Color[]
+	 * colorNonSelected, int len) {
+	 * logger.fine("in scatterplot, drawslections"); long startTime =
+	 * System.nanoTime();
+	 * 
+	 * if (colorNonSelected != null && colorNonSelected.length != len) { return;
+	 * } if (pointSelected == false) { // only draw original points. for (int i
+	 * = 0; i < len; i++) { if ((exsint[i] <= plotEndX) && (exsint[i] >=
+	 * plotOriginX) && (whyint[i] <= plotOriginY) && (whyint[i] >= plotEndY) &&
+	 * (conditionArray[i] > -1)) { if (colorNonSelected != null) {
+	 * g.setColor(colorNonSelected[i]); } renderObs(g, i); } } } else { // draw
+	 * original points and selected points. // according to the color mode, draw
+	 * selected points and // non-selected points. if (selOriginalColorMode ==
+	 * false) { for (int i = 0; i < len; i++) { if ((exsint[i] <= plotEndX) &&
+	 * (exsint[i] >= plotOriginX) && (whyint[i] <= plotOriginY) && (whyint[i] >=
+	 * plotEndY) && (conditionArray[i] > -1)) {
+	 * 
+	 * g.setColor(colorNonSelected[i]); renderObs(g, i); } } for (int i = 0; i <
+	 * len; i++) { g.setColor(selectionColor); if ((exsint[i] <= plotEndX) &&
+	 * (exsint[i] >= plotOriginX) && (whyint[i] <= plotOriginY) && (whyint[i] >=
+	 * plotEndY) && (conditionArray[i] > -1)) {
+	 * 
+	 * if (selections[i] == 1) { renderObs(g, i); } } } } else { for (int i = 0;
+	 * i < len; i++) { if ((exsint[i] <= plotEndX) && (exsint[i] >= plotOriginX)
+	 * && (whyint[i] <= plotOriginY) && (whyint[i] >= plotEndY) &&
+	 * (conditionArray[i] > -1)) {
+	 * 
+	 * g.setColor(new Color(61, 3, 87));// distinguish // selected and //
+	 * non-selected g.drawOval(exsint[i] - 2, whyint[i] - 2, pointSize - 2,
+	 * pointSize - 2); } } for (int i = 0; i < len; i++) { if ((exsint[i] <=
+	 * plotEndX) && (exsint[i] >= plotOriginX) && (whyint[i] <= plotOriginY) &&
+	 * (whyint[i] >= plotEndY) && (conditionArray[i] > -1)) { if
+	 * (colorNonSelected != null) { g.setColor(colorNonSelected[i]); } if
+	 * (selections[i] == 1) {
+	 * 
+	 * renderObs(g, i);
+	 * 
+	 * } } } } } long endTime = System.nanoTime(); long diffTime = endTime -
+	 * startTime; double seconds = (diffTime) / 1000000000d;
+	 * logger.fine("scatterplot draw time = " + seconds);
+	 * 
+	 * }
+	 */
 	// GeneralPath path = NGon.findNGon(150);
-
 	private void renderObs(Graphics g, int i) {
 
 		g.fillOval(exsint[i] - 2, whyint[i] - 2, pointSize, pointSize);
@@ -211,20 +158,15 @@ public class ScatterPlot extends ScatterPlotBasic implements ShapeReporter
 	/**
 	 * Sets colors for the current data.
 	 */
-	@Override
-	public void setBivarColorClasser(
-			BivariateColorSymbolClassification bivarColorClasser,
-			boolean reverseColor) {
-		this.bivarColorClasser = bivarColorClasser;
-		makeColors();
-		repaint();
-	}
-
-	@Override
-	public BivariateColorSymbolClassification getBivarColorClasser() {
-		return bivarColorClasser;
-	}
-
+	/*
+	 * @Override public void setBivarColorClasser(
+	 * BivariateColorSymbolClassification bivarColorClasser, boolean
+	 * reverseColor) { this.bivarColorClasser = bivarColorClasser; makeColors();
+	 * repaint(); }
+	 * 
+	 * @Override public BivariateColorSymbolClassification
+	 * getBivarColorClasser() { return bivarColorClasser; }
+	 */
 	public Component renderingComponent() {
 		return this;
 	}
