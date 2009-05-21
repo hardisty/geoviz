@@ -45,10 +45,13 @@ public class GvDesktopPane extends JDesktopPane implements
 	FrameListener fListener;
 	GeoVizToolkit parentKit;
 
+	String useIndicationUI = "Use leader lines?";
+
 	public GvDesktopPane() {
 		super();
 		// addMouseMotionListener(this);
 		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
+		popMenu.addCheckBoxItem(useIndicationUI, true);
 		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
 		popMenu.addMouseListener(listener);
 		addMouseListener(listener);
@@ -217,6 +220,13 @@ public class GvDesktopPane extends JDesktopPane implements
 	public void mouseMoved(MouseEvent e) {
 		drawStuff(getGraphics());
 		logger.info("mouse moved gvDP");
+
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		if (text.equals(useIndicationUI)) {
+			parentKit.setIndicationUI(value);
+		}
 
 	}
 
