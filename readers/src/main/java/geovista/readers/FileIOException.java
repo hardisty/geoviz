@@ -1,39 +1,17 @@
-/* -------------------------------------------------------------------
- * GeoVISTA Center (Penn State, Dept. of Geography)
- * 
- * Java source file for the class FileIOException
- * 
- * Copyright (c), 2002, Masahiro Takatsuka & GeoVISTA Center
- * All Rights Reserved.
- *
- * This is a copy of jh9gpz.io.MtFileIOException originally written by
- * Masahiro Takatsuka
- *
- * Original Author: Masahiro Takatsuka
- * $Author: hardisty $
- * 
- * $Date: 2003/04/25 18:24:59 $
- * 
- * Reference:		Document no:
- * ___				___
- * 
- * To Do:
- * ___
- * 
-------------------------------------------------------------------- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Masahiro Takatsuka*/
 
-/* --------------------------- Package ---------------------------- */
 package geovista.readers;
 
 /* ------------------ Import classes (packages) ------------------- */
 import java.io.IOException;
 
 /*====================================================================
-               Implementation of class FileIOException                
-====================================================================*/
+ Implementation of class FileIOException                
+ ====================================================================*/
 /**
- * FileIOException is used for all geovista.readers package
- * related exceptions.
+ * FileIOException is used for all geovista.readers package related exceptions.
  * 
  * 
  * @author Masahiro Takatsuka (masa@psu.edu)
@@ -41,11 +19,11 @@ import java.io.IOException;
  */
 
 public class FileIOException extends IOException {
-    public FileIOException(){
+	public FileIOException() {
 		super();
 	}
 
-    public FileIOException(String string) {
-        super(string);
-    }
+	public FileIOException(String string) {
+		super(string);
+	}
 }
