@@ -8,9 +8,7 @@ import geovista.matrix.map.MapMatrixElement;
 import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 
 public class MapAndScatterplotMatrix extends BiPlotMatrix
-// implements DataSetListener, ColumnAppendedListener,
-// IndicationListener, SubspaceListener,
-// ColorArrayListener
+
 {
 
 	public MapAndScatterplotMatrix() {
@@ -20,4 +18,4 @@ public class MapAndScatterplotMatrix extends BiPlotMatrix
 
 	}
 
-} // end class
+}

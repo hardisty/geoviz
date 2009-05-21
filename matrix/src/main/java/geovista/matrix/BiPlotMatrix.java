@@ -53,8 +53,7 @@ public class BiPlotMatrix extends AbstractMatrix implements
 
 	public BiPlotMatrix() {
 		super();
-		// configButton = new JButton();
-		// configButton.setIcon(this.matrixIcon);
+
 	}
 
 	/**
@@ -263,7 +262,8 @@ public class BiPlotMatrix extends AbstractMatrix implements
 						font = font.deriveFont(trans);
 						// rowLabel.setFont(font);
 						// BufferedImage labelImage = new
-						// BufferedImage(rowLabel.getWidth()+1,rowLabel.getHeight()+1,BufferedImage.TYPE_INT_ARGB);
+						//BufferedImage(rowLabel.getWidth()+1,rowLabel.getHeight
+						// ()+1,BufferedImage.TYPE_INT_ARGB);
 						// Graphics2D g2 = labelImage.createGraphics();
 						// rowButton[i-1].paint(g2);
 						rowButton[i - 1].setFont(font);

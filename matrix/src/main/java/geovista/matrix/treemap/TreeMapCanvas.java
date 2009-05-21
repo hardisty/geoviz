@@ -20,10 +20,10 @@ import geovista.common.data.DescriptiveStatistics;
 import geovista.common.event.ClassificationEvent;
 import geovista.common.event.ColorArrayEvent;
 import geovista.common.event.ColorArrayListener;
-import geovista.common.event.DataSetEvent;
-import geovista.common.event.DataSetListener;
 import geovista.common.event.ColumnAppendedEvent;
 import geovista.common.event.ColumnAppendedListener;
+import geovista.common.event.DataSetEvent;
+import geovista.common.event.DataSetListener;
 import geovista.common.event.IndicationEvent;
 import geovista.common.event.IndicationListener;
 import geovista.common.event.SubspaceEvent;
@@ -357,4 +357,4 @@ public class TreeMapCanvas extends JPanel implements DataSetListener,
 		return groupingVarID;
 	}
 
-} // end class
+}

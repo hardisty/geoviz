@@ -9,9 +9,6 @@ import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 import geovista.matrix.treemap.TreeMapMatrixElement;
 
 public class MapScatterplotTreemapMatrix extends FixedRowMatrix
-// implements DataSetListener, ColumnAppendedListener,
-// IndicationListener, SubspaceListener,
-// ColorArrayListener
 
 {
 
@@ -23,4 +20,4 @@ public class MapScatterplotTreemapMatrix extends FixedRowMatrix
 
 	}
 
-} // end class
+}

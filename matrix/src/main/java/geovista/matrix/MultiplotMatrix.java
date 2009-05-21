@@ -14,9 +14,7 @@ import geovista.matrix.treemap.TreeMapMatrixElement;
 import geovista.readers.example.GeoDataGeneralizedStates;
 
 public class MultiplotMatrix extends FixedRowMatrix
-// implements DataSetListener, ColumnAppendedListener,
-// IndicationListener, SubspaceListener,
-// ColorArrayListener
+
 {
 
 	public MultiplotMatrix() {
@@ -40,4 +38,4 @@ public class MultiplotMatrix extends FixedRowMatrix
 		map.dataSetChanged(e);
 
 	}
-} // end class
+}

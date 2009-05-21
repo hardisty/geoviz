@@ -17,4 +17,4 @@ public class MapMatrix extends BiPlotMatrix
 
 	}
 
-} // end class
+}
