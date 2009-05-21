@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 
 import geovista.animation.ConditioningAnimator;
 import geovista.animation.IndicationAnimator;
@@ -48,7 +49,7 @@ public class Marshaler {
 
 	private Marshaler() {
 
-		streamer = new XStream();
+		streamer = new XStream(new PureJavaReflectionProvider());
 
 		streamer.alias("NotePad", NotePad.class);
 		streamer.registerConverter(new NotePadConverter());

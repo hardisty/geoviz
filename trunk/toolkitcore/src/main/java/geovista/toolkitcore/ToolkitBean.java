@@ -22,7 +22,6 @@ package geovista.toolkitcore;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -60,7 +59,6 @@ public class ToolkitBean implements ComponentListener, ShapeReporter {
 	// private static String defaultName = "bean";
 
 	public ToolkitBean() {
-		Shape s;
 
 	}
 
@@ -85,11 +83,11 @@ public class ToolkitBean implements ComponentListener, ShapeReporter {
 		return originalBean;
 	}
 
-	public JMenuItem getRemoveMenuItem() {
+	JMenuItem getRemoveMenuItem() {
 		return removeMenuItem;
 	}
 
-	public void setOriginalBean(Object originalBean, String uniqueName) {
+	private void setOriginalBean(Object originalBean, String uniqueName) {
 		Image im = CoordinationUtils.findSmallIcon(originalBean);
 		Icon ic = new ImageIcon(im);
 		this.originalBean = originalBean;
@@ -187,29 +185,16 @@ public class ToolkitBean implements ComponentListener, ShapeReporter {
 		}
 	}
 
-	public void addComponentListener(ComponentListener l) {
+	void addComponentListener(ComponentListener l) {
 		listenerList.add(ComponentListener.class, l);
 	}
 
-	public void removeComponentListener(ComponentListener l) {
-		listenerList.remove(ComponentListener.class, l);
-	}
-
-	public void setOriginalBean(Object originalBean) {
+	void setOriginalBean(Object originalBean) {
 		this.originalBean = originalBean;
-	}
-
-	public void setUniqueName(String uniqueName) {
-		this.uniqueName = uniqueName;
-
 	}
 
 	public String getObjectClass() {
 		return objectClass;
-	}
-
-	public void setObjectClass(String objectClass) {
-		this.objectClass = objectClass;
 	}
 
 	public Shape reportShape() {
@@ -218,19 +203,6 @@ public class ToolkitBean implements ComponentListener, ShapeReporter {
 			return sr.reportShape();
 		}
 		return NullShape.INSTANCE;
-	}
-
-	public Point reportShapeOffset() {
-		if (originalBean instanceof ShapeReporter) {
-			// ShapeReporter sr = (ShapeReporter) originalBean;
-			// Point contentPt = internalFrame.getContentPane().getLocation();
-			// Point offsetPoint = sr.reportShapeOffset();
-			// Point newOffset = new Point(contentPt.x + offsetPoint.x,
-			// contentPt.y + offsetPoint.y);
-			//
-			// return newOffset;
-		}
-		return new Point();
 	}
 
 	public Component renderingComponent() {
