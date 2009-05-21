@@ -1,17 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class SonicClassifier
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: SonicClassifier.java,v 1.9 2005/05/31 17:42:53 hardisty Exp $
- $Date: 2005/05/31 17:42:53 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.sound;
 
@@ -633,8 +622,9 @@ public class SonicClassifier extends JPanel implements ActionListener,
 	/**
 	 * @param dataIn
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed. Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed. Please use
+	 *            setDataSet instead.
 	 */
 	@Deprecated
 	public void setData(Object[] data) {

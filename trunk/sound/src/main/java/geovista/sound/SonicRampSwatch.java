@@ -1,17 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class SonicRampSwatch
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: SonicRampSwatch.java,v 1.3 2005/05/31 17:42:53 hardisty Exp $
- $Date: 2005/05/31 17:42:53 $
- Reference:                Document no:
- ___                                ___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.sound;
 
 import java.awt.Color;
