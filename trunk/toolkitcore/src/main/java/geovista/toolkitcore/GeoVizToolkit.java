@@ -18,6 +18,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -50,6 +51,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -132,9 +134,11 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
-	private static String VERSION_NUM = "0.8.5";
+	private static String VERSION_NUM = "0.8.7";
 
+	JComponent regularUI;
 	IndicationConnectUI<JComponent> indUI;
+
 	// collection of classes to add
 	ArrayList toolMenuList;
 	HashMap toolClassHash;
@@ -144,7 +148,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	// Create JDesktopPane to hold the internal frames
 	GvDesktopPane desktop = new GvDesktopPane();
-	GvGlassPane glassPane;
+
 	// managing our layouts
 
 	String filePath = "2008 Presidential Election";
@@ -216,7 +220,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		init(fileNameIn, useProj);
 	}
 
-	public GeoVizToolkit(String fileNameIn, boolean useProj, boolean useAux) {
+	private GeoVizToolkit(String fileNameIn, boolean useProj, boolean useAux) {
 
 		super("GeoViz Toolkit");
 		vizState = new VizState();
@@ -230,11 +234,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		// addMouseListener(listener);
 
 		// addMouseMotionListener(desktop);
-		glassPane = new GvGlassPane(this);
-		// setGlassPane(glassPane);
-		glassPane.setVisible(true);
-		glassPane.setSize(getSize());
-		addImpl(glassPane, null, 0);
+
+		// XXX we are replacing with JXLayer for now
+		// addImpl(glassPane, null, 0);
 		// desktop.add(glassPane, null, 0);
 
 		// addMouseMotionListener(glassPane);
@@ -293,18 +295,25 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
+	void setIndicationUI(boolean indicationUI) {
+		if (indicationUI) {
+			indUI.paintIndication = true;
+		} else {
+			indUI.paintIndication = false;
+		}
+	}
+
 	public void init(String fileNameIn, boolean useProj) {
 
 		initMembers();
 		desktop.setBackground(new Color(20, 20, 80));
 		this.useProj = useProj;
-
 		JXLayer<JComponent> layer = new JXLayer<JComponent>(desktop);
-
-		getContentPane().add(layer, BorderLayout.CENTER);
-
 		indUI = new IndicationConnectUI<JComponent>();
+		getContentPane().add(layer, BorderLayout.CENTER);
 		layer.setUI(indUI);
+
+		setIndicationUI(true);
 
 		coord.addBean(dataCaster);
 		coord.addBean(vizState);
@@ -386,7 +395,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		ToolkitIO.saveVizStateToFile(vizState);
 	}
 
-	public void addExternalBean(Object bean) {
+	private void addExternalBean(Object bean) {
 		coord.addBean(bean);
 
 		ColumnAppendedBroadcaster localCaster = (ColumnAppendedBroadcaster) bean;
@@ -398,7 +407,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 * deleting all beans
 	 */
 
-	public void removeAllBeans() {
+	private void removeAllBeans() {
 		if (tBeanSet == null) {
 			return;
 		}
@@ -416,7 +425,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 * deleting named bean
 	 */
 
-	public void deleteBean(ToolkitBean oldBean) {
+	private void deleteBean(ToolkitBean oldBean) {
 		removeBeanFromGui(oldBean);
 		tBeanSet.remove(oldBean);
 		oldBean = null;
@@ -445,7 +454,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
-	public static Object makeObject(String className) {
+	private static Object makeObject(String className) {
 		Object obj = null;
 		try {
 
@@ -517,7 +526,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	 * adds bean to coordinator. Adds bean to the main gui area, also to the
 	 * remove bean menu
 	 */
-	public void addBeanToGui(ToolkitBean newToolkitBean) {
+	private void addBeanToGui(ToolkitBean newToolkitBean) {
 
 		desktop.add(newToolkitBean.getInternalFrame(), 0); // add on top
 		newToolkitBean.addComponentListener(this);
@@ -592,7 +601,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
-	// public void dataSetChanged(DataSetEvent e) {
+	// private void dataSetChanged(DataSetEvent e) {
 	// dataSet = e.getDataSetForApps();
 	// }
 
@@ -762,7 +771,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		dataCaster.fireAuxiliaryDataSet(auxData);
 	}
 
-	public void setDataSet(DataSetForApps dataSet) {
+	private void setDataSet(DataSetForApps dataSet) {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		this.repaint();
 
@@ -772,7 +781,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	}
 
-	public void loadData(String name) {
+	private void loadData(String name) {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		this.repaint();
 		vizState.setDataSource(name);
@@ -1034,7 +1043,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void componentResized(ComponentEvent e) {
-		glassPane.setSize(getSize());
+
 		if (logger.isLoggable(Level.FINEST)) {
 			if (e.getSource() instanceof JInternalFrame
 					&& tBeanSet.contains((JInternalFrame) e.getSource())) {
@@ -1108,8 +1117,6 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(StarPlotMap.class);
 		addToolToMenu(GraduatedSymbolsMap.class);
 		addToolToMenu(RadViz.class);
-		// addToolToMenu(CartogramAndScatterplotMatrix.class);
-		// addToolToMenu(CartogramMatrix.class);
 		menuAddTool.addSeparator();
 
 		menuAddTool.add(new JLabel(
@@ -1120,6 +1127,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(MapScatterplotTreemapMatrix.class);
 		addToolToMenu(MapMatrix.class);
 		addToolToMenu(MultiplotMatrix.class);
+		// addToolToMenu(CartogramAndScatterplotMatrix.class);
+		// addToolToMenu(CartogramMatrix.class);
 		menuAddTool.addSeparator();
 
 		menuAddTool.add(new JLabel(" ~~~~~ Dimensional Reduction ~~~~~ "));
@@ -1281,7 +1290,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		return useProj;
 	}
 
-	public void setUseProj(boolean useProj) {
+	private void setUseProj(boolean useProj) {
 		this.useProj = useProj;
 	}
 
@@ -1322,9 +1331,19 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		System.setProperty("swing.aatext", "true");
 
 		try {
-			// UIManager.setLookAndFeel(new SubstanceLookAndFeel());
+			// UIManager
+			// .setLookAndFeel(new
+			// org.jvnet.substance.skin.BusinessBlackSteelSkin());
+
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+
+			// UIManager
+			// .setLookAndFeel(
+			// "org.jvnet.substance.skin.SubstanceTwilightLookAndFeel");
 
 		} catch (Exception e) {
+			logger.info("couldn't find look and feel, continue");
 			e.printStackTrace();
 		}
 		/*
@@ -1345,7 +1364,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// fileName = "GTD";
 			// fileName = "c:\\temp\\shapefiles\\ca_cities.shp";
 			// fileName =
-			// "C:\\data\\geovista_data\\Historical-Demographic\\census\\census80_90_00.shp";
+			// "C:\\data\\geovista_data\\Historical-Demographic\\census\\census80_90_00.shp"
+			// ;
 		} else {
 			fileName = args[0];
 		}
@@ -1439,12 +1459,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 	}
 
 	public void indicationChanged(IndicationEvent e) {
-
+		if (indUI.paintIndication == false) {
+			return;
+		}
 		indUI.clear();
 		if (e.getIndication() < 0) {
 			return;
 		}
 		Object src = e.getSource();
+		logger.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		// logger.info(src.getClass().getName());
 
 		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
@@ -1454,21 +1477,42 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			if (obj instanceof ShapeReporter) {
 				ShapeReporter shpR = (ShapeReporter) obj;
 				Component srcComp = ((ShapeReporter) obj).renderingComponent();
-
-				indUI.addShape(shpR.reportShape(), shpR.renderingComponent());
-
+				Shape reportedShape = shpR.reportShape();
 				Rectangle rect = shpR.reportShape().getBounds();
+				Point pt = SwingUtilities.convertPoint((Component) obj, rect.x,
+						rect.y, desktop);
+				logger.info(obj.getClass().getName());
+				Component comp = desktop.getComponentAt(pt);
+
+				if (comp == null) {
+					continue;
+				}
+				logger.info("comp at pt = " + comp.getClass().getName());
+
+				if (comp instanceof JInternalFrame) {
+					JInternalFrame iFrame = (JInternalFrame) comp;
+					ToolkitBean tBeanA = tBeanSet.getToolkitBean(iFrame);
+					Object originalBean = tBeanA.getOriginalBean();
+					logger.info("originalBean = "
+							+ originalBean.getClass().getName());
+					if (obj == originalBean) {
+						indUI.addShape(shpR.reportShape(), shpR
+								.renderingComponent());
+					}
+				}
+
+				logger.info("pt x = " + pt.x);
+				logger.info("pt y = " + pt.y);
+				logger.info(">>>>>");
+
+				// if (desktop.getComponentAt(pt) == obj) {
+
 				logger.finest("adding shape ");
 				logger.finest("x " + rect.x);
 				logger.finest("y " + rect.y);
 				logger.finest("w " + rect.width);
 				logger.finest("h " + rect.height);
 
-				Point pt = SwingUtilities.convertPoint((Component) obj, rect.x,
-						rect.y, desktop);
-				logger.finest("pt x = " + pt.x);
-				logger.finest("pt y = " + pt.y);
-				logger.finest("BleBleBle");
 			}
 		}
 
