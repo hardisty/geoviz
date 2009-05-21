@@ -1,16 +1,7 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ConditioningAnimator
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ConditioningAnimator.java,v 1.2 2003/07/10 00:24:56 hardisty Exp $
- $Date: 2003/07/10 00:24:56 $
- Reference:        Document no:
- ___                ___
- -------------------------------------------------------------------  *
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
+
 package geovista.satscan;
 
 import java.awt.BorderLayout;
@@ -51,8 +42,8 @@ import geovista.readers.example.GeoData48States;
  * 
  */
 public class SaTScan extends JPanel implements ActionListener, DataSetListener {
-	private String saTScanFile = "C:/Program Files/SaTScan/SaTScanBatch.exe";
-	private String saTScanDir = "C:/Program Files/SaTScan/";
+	private final String saTScanFile = "C:/Program Files/SaTScan/SaTScanBatch.exe";
+	private final String saTScanDir = "C:/Program Files/SaTScan/";
 	DataSetForApps dataSet;
 	JComboBox caseBox;
 	JComboBox popBox;
@@ -67,26 +58,28 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 	static final int PVALUE_COLUMN = 2;
 	private int caseVariable;
 	private int popVariable;
-	private JButton sendClustersButton;
-	private JButton sendPValuesButton;
-	protected final static Logger logger = Logger.getLogger(SaTScan.class.getName());
+	private final JButton sendClustersButton;
+	private final JButton sendPValuesButton;
+	protected final static Logger logger = Logger.getLogger(SaTScan.class
+			.getName());
+
 	/**
 	 * null ctr
 	 */
 	public SaTScan() {
 
-		this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.X_AXIS));
-		middlePanel.add(this.constructVariablePanel());
-		middlePanel.add(this.constructExecutablePanel());
+		middlePanel.add(constructVariablePanel());
+		middlePanel.add(constructExecutablePanel());
 		middlePanel.setPreferredSize(new Dimension(500, 150));
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(middlePanel, BorderLayout.CENTER);
 		JLabel overallLabel = new JLabel("SaTScan Poisson Analysis");
 		this.add(overallLabel, BorderLayout.NORTH);
-		this.runButt = new JButton("Run!");
-		this.runButt.addActionListener(this);
+		runButt = new JButton("Run!");
+		runButt.addActionListener(this);
 		JPanel southPanel = new JPanel();
 
 		resultsTable = new JTable(4, 3);
@@ -98,29 +91,27 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 		southPanel.add(runButt);
 		southPanel.add(new JLabel("Sample Results:"));
 		southPanel.add(resultsTable);
-		
+
 		JPanel sendBPanel = new JPanel();
-		sendBPanel.setLayout(new BoxLayout(sendBPanel,BoxLayout.Y_AXIS));
-		this.sendClustersButton = new JButton("Send Clusters");
-		this.sendClustersButton.addActionListener(this);
-		this.sendPValuesButton = new JButton("Send P-Values");
-		this.sendPValuesButton.addActionListener(this);
-		sendBPanel.add(this.sendClustersButton);
-		sendBPanel.add(this.sendPValuesButton);
+		sendBPanel.setLayout(new BoxLayout(sendBPanel, BoxLayout.Y_AXIS));
+		sendClustersButton = new JButton("Send Clusters");
+		sendClustersButton.addActionListener(this);
+		sendPValuesButton = new JButton("Send P-Values");
+		sendPValuesButton.addActionListener(this);
+		sendBPanel.add(sendClustersButton);
+		sendBPanel.add(sendPValuesButton);
 		southPanel.add(sendBPanel);
-		
-		
-		
+
 		this.add(southPanel, BorderLayout.SOUTH);
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.runButt) {
-			this.findCluster(this.dataSet);
-		} else if (e.getSource() == this.chooseButt) {
+		if (e.getSource() == runButt) {
+			findCluster(dataSet);
+		} else if (e.getSource() == chooseButt) {
 			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setSelectedFile(new File(this.saTScanFile));
+			fileChooser.setSelectedFile(new File(saTScanFile));
 			int returnVal = fileChooser.showOpenDialog(this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -128,27 +119,27 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 						+ fileChooser.getSelectedFile().getName());
 
 			}
-		} else if (e.getSource() == this.popBox) {
-			this.popVariable = this.popBox.getSelectedIndex();
-		} else if (e.getSource() == this.caseBox) {
-			this.caseVariable = this.caseBox.getSelectedIndex();
-		} else if (e.getSource() == this.sendClustersButton){
+		} else if (e.getSource() == popBox) {
+			popVariable = popBox.getSelectedIndex();
+		} else if (e.getSource() == caseBox) {
+			caseVariable = caseBox.getSelectedIndex();
+		} else if (e.getSource() == sendClustersButton) {
 			double[] newData = new double[dataSet.getNumObservations()];
 			int counter = 0;
-			for (Integer i: this.idList){
-				newData[i] = this.clusterList.get(counter); 
+			for (Integer i : idList) {
+				newData[i] = clusterList.get(counter);
 				counter++;
 			}
-			this.dataSet.addColumn("Cluster",newData);
-			
-		} else if (e.getSource()== this.sendPValuesButton){
+			dataSet.addColumn("Cluster", newData);
+
+		} else if (e.getSource() == sendPValuesButton) {
 			double[] newData = new double[dataSet.getNumObservations()];
 			int counter = 0;
-			for (Integer i: this.idList){
-				newData[i] = this.pValueList.get(counter); 
+			for (Integer i : idList) {
+				newData[i] = pValueList.get(counter);
 				counter++;
 			}
-			this.dataSet.addColumn("P Values",newData);
+			dataSet.addColumn("P Values", newData);
 		}
 
 	}
@@ -159,11 +150,11 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 				.setBorder(BorderFactory.createTitledBorder("Select Variables"));
 		JLabel casLabel = new JLabel("Choose case variable:");
 		JLabel popLabel = new JLabel("Choose pop. variable:");
-		this.caseBox = new JComboBox();
-		this.caseBox.addActionListener(this);
+		caseBox = new JComboBox();
+		caseBox.addActionListener(this);
 
-		this.popBox = new JComboBox();
-		this.popBox.addActionListener(this);
+		popBox = new JComboBox();
+		popBox.addActionListener(this);
 		JPanel casPanel = new JPanel();
 		casPanel.add(casLabel);
 		casPanel.add(caseBox);
@@ -182,8 +173,8 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 				.createTitledBorder("SaTScan Executable"));
 		JLabel firstLabel = new JLabel("Location of SaTScan program:");
 		JLabel secondLabel = new JLabel("C:\\Program Files\\SaTScan");
-		this.chooseButt = new JButton("Choose new location");
-		this.chooseButt.addActionListener(this);
+		chooseButt = new JButton("Choose new location");
+		chooseButt.addActionListener(this);
 		JLabel thirdLabel = new JLabel("Status: OK");
 
 		exePanel.setLayout(new BoxLayout(exePanel, BoxLayout.Y_AXIS));
@@ -196,12 +187,12 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 	}
 
 	private void findCluster(DataSetForApps data) {
-		File exe = new File(this.saTScanFile);
+		File exe = new File(saTScanFile);
 		if (!exe.exists()) {
 			logger.finest("couldn't find SaTScan exe");
 			return;
 		}
-		this.dataSet = data;
+		dataSet = data;
 		// just to get this going, let's assign a crude centroid
 		Shape[] shapes = data.getShapeData();
 		double[] xLocs = new double[shapes.length];
@@ -214,26 +205,25 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 			ids[i] = String.valueOf(i);
 		}
 
-		double[] nCases = data.getNumericDataAsDouble(this.caseVariable);
-		double[] covariate = data.getNumericDataAsDouble(this.popVariable);
-		this.writePrmFile();
-		File resultsFile = new File(this.saTScanDir + "test.gis.txt");
-		if (resultsFile.exists()){
-			//resultsFile.delete();
+		double[] nCases = data.getNumericDataAsDouble(caseVariable);
+		double[] covariate = data.getNumericDataAsDouble(popVariable);
+		writePrmFile();
+		File resultsFile = new File(saTScanDir + "test.gis.txt");
+		if (resultsFile.exists()) {
+			// resultsFile.delete();
 		}
-		SaTScan.writeGeoFile(this.saTScanDir + "test.geo", ids, yLocs, xLocs);
-		SaTScan.writeCasFile(this.saTScanDir + "test.cas", ids, nCases,
-				covariate);
+		SaTScan.writeGeoFile(saTScanDir + "test.geo", ids, yLocs, xLocs);
+		SaTScan.writeCasFile(saTScanDir + "test.cas", ids, nCases, covariate);
 
 		String[] commands = { "cmd", "/c", "start", "SaTScanBatch.exe",
 				"test.prm" };
 		try {
 			ProcessBuilder pb = new ProcessBuilder(commands);
-			pb.directory(new File(this.saTScanDir));
+			pb.directory(new File(saTScanDir));
 			pb.redirectErrorStream(true);
 			pb.start();
 			logger.finest(pb.directory().getPath());
-			this.readResultsFile(this.saTScanDir + "test.gis.txt");
+			readResultsFile(saTScanDir + "test.gis.txt");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -248,7 +238,7 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 				"resources/test.prm");
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(this.saTScanDir + "test.prm");
+			fos = new FileOutputStream(saTScanDir + "test.prm");
 
 			int oneChar, count = 0;
 
@@ -342,7 +332,7 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 		clusterList = new ArrayList();
 		pValueList = new ArrayList();
 		int lineNum = 1;// we start at 1 to skip title row, at row 0
-		
+
 		while (!fio.hasReachedEOF()) {
 			String line = null;
 			try {
@@ -364,12 +354,11 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 				Double pValue = Double.valueOf(toker.nextToken());
 				pValueList.add(pValue);
 
-				if (lineNum < this.resultsTable.getRowCount()) {
-					this.resultsTable
-							.setValueAt(id, lineNum, SaTScan.ID_COLUMN);
-					this.resultsTable.setValueAt(cluster, lineNum,
+				if (lineNum < resultsTable.getRowCount()) {
+					resultsTable.setValueAt(id, lineNum, SaTScan.ID_COLUMN);
+					resultsTable.setValueAt(cluster, lineNum,
 							SaTScan.CLUSTER_COLUMN);
-					this.resultsTable.setValueAt(pValue, lineNum,
+					resultsTable.setValueAt(pValue, lineNum,
 							SaTScan.PVALUE_COLUMN);
 				}
 
@@ -385,13 +374,13 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 			e.printStackTrace();
 		}
 
-		
 	}
 
 	public static void main(String[] args) {
 		GeoData48States states = new GeoData48States();
-		if(logger.isLoggable(Level.FINEST)){
-			logger.finest("n num atts" + states.getDataForApps().getNumberNumericAttributes());
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.finest("n num atts"
+					+ states.getDataForApps().getNumberNumericAttributes());
 		}
 		SaTScan scanner = new SaTScan();
 
@@ -404,11 +393,11 @@ public class SaTScan extends JPanel implements ActionListener, DataSetListener {
 
 	public void dataSetChanged(DataSetEvent e) {
 		// hello, data!
-		this.dataSet = e.getDataSetForApps();
-		String[] varNames = this.dataSet.getAttributeNamesNumeric();
+		dataSet = e.getDataSetForApps();
+		String[] varNames = dataSet.getAttributeNamesNumeric();
 		for (String name : varNames) {
-			this.caseBox.addItem(name);
-			this.popBox.addItem(name);
+			caseBox.addItem(name);
+			popBox.addItem(name);
 		}
 
 	}
