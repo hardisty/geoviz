@@ -223,7 +223,9 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 
 		}
 		BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
-		if (pui != null && pui.getRenderThread() != null) {
+
+		if (pui != null && pui.getRenderThread() != null
+				&& pui.getBrushThread() != null) {
 
 			pui.getRenderThread().doWork = false;
 			pui.getBrushThread().doWork = false;
@@ -945,10 +947,16 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 		}
 
 		BasicParallelDisplayUI pui = (BasicParallelDisplayUI) getUI();
-		GeneralPath path = pui.assemblePath(indication, 2, 3, this);
+		GeneralPath path = pui.assemblePath(indication, 0, 1, this);
+
 		AffineTransform xForm = new AffineTransform();
-		xForm.translate(0, 32);
+		xForm.translate(0, 37);
 		Shape transPath = path.createTransformedShape(xForm);
 		return transPath;
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		// TODO Auto-generated method stub
+
 	}
 }
