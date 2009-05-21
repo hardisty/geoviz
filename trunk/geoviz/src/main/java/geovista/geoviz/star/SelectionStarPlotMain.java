@@ -1,24 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class SelectionStarPlotMain
- Copyright (c), 2003, Frank Hardisty
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: SelectionStarPlotMain.java,v 1.1 2005/02/13 03:26:27 hardisty Exp $
- $Date: 2005/02/13 03:26:27 $
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public
- License as published by the Free Software Foundation; either
- version 2.1 of the License, or (at your option) any later version.
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- -------------------------------------------------------------------   */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 package geovista.geoviz.star;
 
 import java.awt.Color;
@@ -37,8 +19,8 @@ import geovista.readers.shapefile.ShapeFileProjection;
 import geovista.readers.shapefile.ShapeFileToShape;
 
 /**
- * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n =
- * the number of values set. The values are expected to range from 0 to 100.
+ * Paint a multi-dimensional "star display". We draw an n-"rayed" figure, with n
+ * = the number of values set. The values are expected to range from 0 to 100.
  * Each ray is a line that extends from the origin outword, proportionately in
  * length to the value it represents. The end points of each ray are connected,
  * and the figure filled.
@@ -84,7 +66,7 @@ public class SelectionStarPlotMain {
 		if (useResource) {
 
 			shpProj.setInputDataSet(shpRead.getDataSet());// XXX will need
-															// help
+			// help
 		} else {
 			Object[] dataSet = shpRead.getDataSet();
 
