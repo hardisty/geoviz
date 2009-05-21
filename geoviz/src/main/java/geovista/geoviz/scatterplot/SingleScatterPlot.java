@@ -514,4 +514,9 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 		return scatterPlot.reportShape();
 	}
 
+	public void processCustomCheckBox(boolean value, String text) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
