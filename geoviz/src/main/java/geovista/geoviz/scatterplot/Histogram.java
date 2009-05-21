@@ -445,10 +445,11 @@ public class Histogram extends JPanel implements MouseListener,
 	}
 
 	private void drawBars(Graphics g) {
+		logger.finest("drawing bars: " + binCount);
 		int len = binCount;
 		if (exsInt == null) {
 			logger
-					.fine("Histogram, drawBars, trying to draw data without x data");
+					.info("Histogram, drawBars, trying to draw data without x data");
 			return;
 		}
 		for (int i = 0; i < len - 1; i++) {
