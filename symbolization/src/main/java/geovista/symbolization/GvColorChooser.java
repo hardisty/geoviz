@@ -1,18 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class GvColorChooser
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: GvColorChooser.java,v 1.2 2003/04/25 18:08:50 hardisty Exp $
- $Date: 2003/04/25 18:08:50 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
-
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.symbolization;
 
@@ -39,190 +27,198 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
-
 //import javax.swing.colorchooser.*;
 
 public class GvColorChooser extends JColorChooser {
 
-    public GvColorChooser(Color c){
-      super(c);
-      init();
-    }
-    public GvColorChooser() {
-    //AbstractColorChooserPanel panels[] = { new MunsellChooserPanel() };
-      super();
-      init();
-    }
-    public void init(){
-      AbstractColorChooserPanel[] panels = this.getChooserPanels();
-     AbstractColorChooserPanel[] newPanels = new AbstractColorChooserPanel[panels.length + 1];
-     //this.removeall
-     newPanels[0] = new MunsellChooserPanel();
-     for (int i = 1; i < newPanels.length; i++) {
-       newPanels[i] = panels[i-1];
-     }
-     this.setChooserPanels(newPanels);
-      //this.remo
-    }
-    public Color showGvDialog(Component component,
-        String title, Color initialColor) {
+	public GvColorChooser(Color c) {
+		super(c);
+		init();
+	}
 
-        final GvColorChooser pane = new GvColorChooser(initialColor != null?
-                                               initialColor : Color.white);
+	public GvColorChooser() {
+		// AbstractColorChooserPanel panels[] = { new MunsellChooserPanel() };
+		super();
+		init();
+	}
 
-        ColorTracker ok = new ColorTracker(pane);
-        JDialog dialog = createDialog(component, title, true, pane, ok, null);
-        //dialog.addWindowListener(new ColorChooserDialog.Closer());
-        //dialog.addComponentListener(new ColorChooserDialog.DisposeOnClose());
+	public void init() {
+		AbstractColorChooserPanel[] panels = getChooserPanels();
+		AbstractColorChooserPanel[] newPanels = new AbstractColorChooserPanel[panels.length + 1];
+		// this.removeall
+		newPanels[0] = new MunsellChooserPanel();
+		for (int i = 1; i < newPanels.length; i++) {
+			newPanels[i] = panels[i - 1];
+		}
+		setChooserPanels(newPanels);
+		// this.remo
+	}
 
-        dialog.setVisible(true); // blocks until user brings dialog down...
+	public Color showGvDialog(Component component, String title,
+			Color initialColor) {
 
-        return ok.getColor();
-    }
-    /**
-     * Main method for testing.
-     */
-    public static void main (String[] args) {
-        JFrame app = new JFrame();
-        //app.getContentPane().setLayout(new BorderLayout());
-        app.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        GvColorChooser swat = new GvColorChooser();
-        app.getContentPane().add(swat);
+		final GvColorChooser pane = new GvColorChooser(initialColor != null
+				? initialColor : Color.white);
 
-        //app.getContentPane().add(swatchesPanel,BorderLayout.SOUTH);
+		ColorTracker ok = new ColorTracker(pane);
+		JDialog dialog = createDialog(component, title, true, pane, ok, null);
+		// dialog.addWindowListener(new ColorChooserDialog.Closer());
+		// dialog.addComponentListener(new ColorChooserDialog.DisposeOnClose());
 
+		dialog.setVisible(true); // blocks until user brings dialog down...
 
-        //app.getContentPane().add(setColorsPan);
+		return ok.getColor();
+	}
 
-        app.pack();
-        app.setVisible(true);
+	/**
+	 * Main method for testing.
+	 */
+	public static void main(String[] args) {
+		JFrame app = new JFrame();
+		// app.getContentPane().setLayout(new BorderLayout());
+		app.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		GvColorChooser swat = new GvColorChooser();
+		app.getContentPane().add(swat);
 
-    }
-/*
- * Class which builds a color chooser dialog consisting of
- * a GvColorChooser with "Ok", "Cancel", and "Reset" buttons.
- *
- * Note: This needs to be fixed to deal with localization!
- */
-class ColorChooserDialog extends JDialog {
-    private transient Color initialColor;
-    private transient GvColorChooser chooserPane;
+		// app.getContentPane().add(swatchesPanel,BorderLayout.SOUTH);
 
-    public ColorChooserDialog(Component c, String title, boolean modal,
-        GvColorChooser chooserPane,
-        ActionListener okListener, ActionListener cancelListener)
-         {
-        super(JOptionPane.getFrameForComponent(c), title, modal);
-        //setResizable(false);
+		// app.getContentPane().add(setColorsPan);
 
-        this.chooserPane = chooserPane;
+		app.pack();
+		app.setVisible(true);
 
-        String okString = UIManager.getString("ColorChooser.okText");
-        String cancelString = UIManager.getString("ColorChooser.cancelText");
-        String resetString = UIManager.getString("ColorChooser.resetText");
+	}
 
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add(chooserPane, BorderLayout.CENTER);
+	/*
+	 * Class which builds a color chooser dialog consisting of a GvColorChooser
+	 * with "Ok", "Cancel", and "Reset" buttons.
+	 * 
+	 * Note: This needs to be fixed to deal with localization!
+	 */
+	class ColorChooserDialog extends JDialog {
+		private transient Color initialColor;
+		private transient final GvColorChooser chooserPane;
 
-        /*
-         * Create Lower button panel
-         */
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JButton okButton = new JButton(okString);
-        getRootPane().setDefaultButton(okButton);
-        okButton.setActionCommand("OK");
-        if (okListener != null) {
-            okButton.addActionListener(okListener);
-        }
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
-        buttonPane.add(okButton);
+		public ColorChooserDialog(Component c, String title, boolean modal,
+				GvColorChooser chooserPane, ActionListener okListener,
+				ActionListener cancelListener) {
+			super(JOptionPane.getFrameForComponent(c), title, modal);
+			// setResizable(false);
 
-        JButton cancelButton = new JButton(cancelString);
+			this.chooserPane = chooserPane;
 
+			String okString = UIManager.getString("ColorChooser.okText");
+			String cancelString = UIManager
+					.getString("ColorChooser.cancelText");
+			String resetString = UIManager.getString("ColorChooser.resetText");
 
-        cancelButton.setActionCommand("cancel");
-        if (cancelListener != null) {
-            cancelButton.addActionListener(cancelListener);
-        }
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
-        buttonPane.add(cancelButton);
+			Container contentPane = getContentPane();
+			contentPane.setLayout(new BorderLayout());
+			contentPane.add(chooserPane, BorderLayout.CENTER);
 
-        JButton resetButton = new JButton(resetString);
-        resetButton.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-               reset();
-           }
-        });
+			/*
+			 * Create Lower button panel
+			 */
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+			JButton okButton = new JButton(okString);
+			getRootPane().setDefaultButton(okButton);
+			okButton.setActionCommand("OK");
+			if (okListener != null) {
+				okButton.addActionListener(okListener);
+			}
+			okButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+				}
+			});
+			buttonPane.add(okButton);
 
-        buttonPane.add(resetButton);
-        contentPane.add(buttonPane, BorderLayout.SOUTH);
-//below taken out for 1.3 compatiblity
-//        if (JDialog.isDefaultLookAndFeelDecorated()) {
-//            boolean supportsWindowDecorations =
-//            UIManager.getLookAndFeel().getSupportsWindowDecorations();
-//            if (supportsWindowDecorations) {
-//                getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG);
-//            }
-//        }
-//        applyComponentOrientation(((c == null) ? getRootPane() : c).getComponentOrientation());
+			JButton cancelButton = new JButton(cancelString);
 
-        pack();
-        setLocationRelativeTo(c);
-    }
+			cancelButton.setActionCommand("cancel");
+			if (cancelListener != null) {
+				cancelButton.addActionListener(cancelListener);
+			}
+			cancelButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+				}
+			});
+			buttonPane.add(cancelButton);
 
-    public void show() {
-        initialColor = chooserPane.getColor();
-        super.setVisible(true);
-    }
+			JButton resetButton = new JButton(resetString);
+			resetButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reset();
+				}
+			});
 
-    public void reset() {
-        chooserPane.setColor(initialColor);
-    }
+			buttonPane.add(resetButton);
+			contentPane.add(buttonPane, BorderLayout.SOUTH);
+			// below taken out for 1.3 compatiblity
+			// if (JDialog.isDefaultLookAndFeelDecorated()) {
+			// boolean supportsWindowDecorations =
+			// UIManager.getLookAndFeel().getSupportsWindowDecorations();
+			// if (supportsWindowDecorations) {
+			// getRootPane().setWindowDecorationStyle(JRootPane.
+			// COLOR_CHOOSER_DIALOG);
+			// }
+			// }
+			// applyComponentOrientation(((c == null) ? getRootPane() :
+			// c).getComponentOrientation());
 
-    class Closer extends WindowAdapter implements Serializable{
-        public void windowClosing(WindowEvent e) {
-            Window w = e.getWindow();
-            w.setVisible(false);
-        }
-    }
+			pack();
+			setLocationRelativeTo(c);
+		}
 
-    class DisposeOnClose extends ComponentAdapter implements Serializable{
-        public void componentHidden(ComponentEvent e) {
-            Window w = (Window)e.getComponent();
-            w.dispose();
-        }
-    }
+		@Override
+		public void show() {
+			initialColor = chooserPane.getColor();
+			super.setVisible(true);
+		}
 
-}
+		public void reset() {
+			chooserPane.setColor(initialColor);
+		}
 
-class ColorTracker implements ActionListener, Serializable {
-    transient GvColorChooser chooser;
-    transient Color color;
+		class Closer extends WindowAdapter implements Serializable {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Window w = e.getWindow();
+				w.setVisible(false);
+			}
+		}
 
-    public ColorTracker(GvColorChooser c) {
-        chooser = c;
-    }
+		class DisposeOnClose extends ComponentAdapter implements Serializable {
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				Window w = (Window) e.getComponent();
+				w.dispose();
+			}
+		}
 
-    public void actionPerformed(ActionEvent e) {
-        color = chooser.getColor();
-    }
+	}
 
-    public Color getColor() {
-        return color;
-    }
-}
+	class ColorTracker implements ActionListener, Serializable {
+		transient GvColorChooser chooser;
+		transient Color color;
+
+		public ColorTracker(GvColorChooser c) {
+			chooser = c;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			color = chooser.getColor();
+		}
+
+		public Color getColor() {
+			return color;
+		}
+	}
 }

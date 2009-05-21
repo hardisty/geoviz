@@ -1,17 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class ColorRampSwatch
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: hardisty $
- $Id: ColorRampSwatch.java,v 1.3 2005/02/12 20:30:47 hardisty Exp $
- $Date: 2005/02/12 20:30:47 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.symbolization;
 
@@ -48,8 +37,8 @@ public class ColorRampSwatch extends JPanel implements MouseListener {
 		makeImage();
 		this.parent = parent;
 		swatchColor = Color.white;
-		this.setBackground(swatchColor);
-		this.addMouseListener(this);
+		setBackground(swatchColor);
+		addMouseListener(this);
 		setAnchored(anchored);
 		isEnd = end;
 	}
@@ -71,7 +60,7 @@ public class ColorRampSwatch extends JPanel implements MouseListener {
 
 	public void setSwatchColor(Color newColor) {
 		swatchColor = newColor;
-		this.setBackground(newColor);
+		setBackground(newColor);
 	}
 
 	public Color getSwatchColor() {
@@ -81,9 +70,9 @@ public class ColorRampSwatch extends JPanel implements MouseListener {
 	public void setAnchored(boolean anchor) {
 		anchored = anchor;
 		if (anchor || isEnd) {
-			this.setBorder(BorderFactory.createLoweredBevelBorder());
+			setBorder(BorderFactory.createLoweredBevelBorder());
 		} else {
-			this.setBorder(BorderFactory.createRaisedBevelBorder());
+			setBorder(BorderFactory.createRaisedBevelBorder());
 		}
 	}
 
@@ -105,16 +94,17 @@ public class ColorRampSwatch extends JPanel implements MouseListener {
 
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() > 1) { // double or more clicks
-			// this.swatch.setBorder(BorderFactory.createLineBorder(Color.black));
+			//this.swatch.setBorder(BorderFactory.createLineBorder(Color.black))
+			// ;
 			logger.finest("Mouse clicked (# of clicks: " + e.getClickCount()
 					+ ")");
 			GvColorChooser chooser = new GvColorChooser();
 			Color newColor = chooser.showGvDialog(ColorRampSwatch.this,
-					"Pick a Color", this.getBackground());
+					"Pick a Color", getBackground());
 			if (newColor != null) {
 				this.requestFocus();
 				setSwatchColor(newColor);
-				this.setToolTipText("<html> " + "Red = " + newColor.getRed()
+				setToolTipText("<html> " + "Red = " + newColor.getRed()
 						+ "<br>" + "Green = " + newColor.getGreen() + "<br>"
 						+ "Blue = " + newColor.getBlue());
 
@@ -137,23 +127,24 @@ public class ColorRampSwatch extends JPanel implements MouseListener {
 		}// end if doubleclick
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
-		g.setColor(this.getBackground());
+		g.setColor(getBackground());
 
 		// adding support for textures
 		if (texPaint != null) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setPaint(texPaint);
-			g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g2.fillRect(0, 0, getWidth(), getHeight());
 		} else {
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g.fillRect(0, 0, getWidth(), getHeight());
 		}
 
 		if (getAnchored()) {
-			int midX = this.getWidth() / 2;
-			int midY = this.getHeight() / 2;
+			int midX = getWidth() / 2;
+			int midY = getHeight() / 2;
 
-			Color c = this.getBackground();
+			Color c = getBackground();
 			int colorValue = c.getRed() + c.getBlue() + c.getGreen();
 			Image ico = null;
 			if (colorValue > 200) { // pulled this out of my hat

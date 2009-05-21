@@ -1,17 +1,6 @@
-/* -------------------------------------------------------------------
- GeoVISTA Center (Penn State, Dept. of Geography)
- Java source file for the class BivariateColorSchemeVisualizer
- Copyright (c), 2002, GeoVISTA Center
- All Rights Reserved.
- Original Author: Frank Hardisty
- $Author: jmacgill $
- $Id: BivariateColorSchemeVisualizer.java,v 1.4 2004/12/03 20:04:00 jmacgill Exp $
- $Date: 2004/12/03 20:04:00 $
- Reference:		Document no:
- ___				___
- -------------------------------------------------------------------  *
-
- */
+/* Licensed under LGPL v. 2.1 or any later version;
+ see GNU LGPL for details.
+ Original Author: Frank Hardisty */
 
 package geovista.symbolization;
 
