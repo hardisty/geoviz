@@ -147,43 +147,8 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 		renderProgressBar = new JProgressBar();
 		timeLabel = new JLabel();
 
-		// fileMenu.setText("File");
-		// openFileItem.setText("Open File...");
-		// fileMenu.add(openFileItem);
-		// openLocationItem.setText("Open URL...");
-		// fileMenu.add(openLocationItem);
-		// mainMenuBar.add(fileMenu);
-		// editMenu.setText("Menu");
-		// mainMenuBar.add(editMenu);
 		setLayout(new java.awt.GridBagLayout());
 
-		// openPanel.setLayout(new
-		// java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-		/*
-		 * openPanel.setBorder(new border.TitledBorder(new
-		 * border.EtchedBorder(), "Datasource",
-		 * border.TitledBorder.DEFAULT_JUSTIFICATION, border.TitledBorder.TOP));
-		 * label.setText("url:"); openPanel.add(label);
-		 * 
-		 * urlField.setToolTipText("Type in URL to load. Press enter.");
-		 * urlField
-		 * .setText("file:///D:/Uni/visualisierung/datasets/cameras.stf");
-		 * urlField.setPreferredSize(new java.awt.Dimension(300, 21));
-		 * urlField.addActionListener(new java.awt.event.ActionListener() {
-		 * public void actionPerformed(java.awt.event.ActionEvent evt) {
-		 * urlFieldActionPerformed(evt); } });
-		 * 
-		 * openPanel.add(urlField);
-		 * 
-		 * load.setToolTipText("Press to choose a file from your local HD.");
-		 * load.setText("open File..."); load.setBorder(new
-		 * border.EtchedBorder()); load.addActionListener(new
-		 * java.awt.event.ActionListener() { public void
-		 * actionPerformed(java.awt.event.ActionEvent evt) {
-		 * loadActionPerformed(evt); } });
-		 * 
-		 * openPanel.add(load);
-		 */
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
@@ -386,13 +351,20 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	// GEN-END:initComponents
 
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+																			// FIRST
+																			// :
+																			// event_jButton1ActionPerformed
 
 	}
 
 	// GEN-LAST:event_jButton1ActionPerformed
 
-	private void brushButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_brushButtonActionPerformed
+	private void brushButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN
+																				// -
+																				// FIRST
+																				// :
+																				// event_brushButtonActionPerformed
 
 		if (lastButton != null) {
 			lastButton.setSelected(false);
@@ -410,7 +382,11 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 		parallelDisplay.minMaxAbsScale();
 	}
 
-	private void varMinMaxButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_minMaxAbsButtonActionPerformed
+	private void varMinMaxButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN
+																					// -
+																					// FIRST
+																					// :
+																					// event_minMaxAbsButtonActionPerformed
 
 		int var = vc.getCurrVariableIndex();
 		parallelDisplay.varMinMaxScale(var);
@@ -418,25 +394,40 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	// GEN-LAST:event_minMaxAbsButtonActionPerformed
 
-	private void minMaxButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_minMaxButtonActionPerformed
+	private void minMaxButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN
+																				// -
+																				// FIRST
+																				// :
+																				// event_minMaxButtonActionPerformed
 		parallelDisplay.minMaxScale();
 	}
 
 	// GEN-LAST:event_minMaxButtonActionPerformed
 
-	private void zeroMaxButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_zeroMaxButtonActionPerformed
+	private void zeroMaxButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN
+																				// -
+																				// FIRST
+																				// :
+																				// event_zeroMaxButtonActionPerformed
 		parallelDisplay.zeroMaxScale();
 	}
 
 	// GEN-LAST:event_zeroMaxButtonActionPerformed
 
-	private void numberBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_numberBoxActionPerformed
+	private void numberBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+																			// FIRST
+																			// :
+																			// event_numberBoxActionPerformed
 		parallelDisplay.setBoolPreference("hoverText", numberBox.isSelected());
 	}
 
 	// GEN-LAST:event_numberBoxActionPerformed
 
-	private void translateButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_translateButtonActionPerformed
+	private void translateButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN
+																					// -
+																					// FIRST
+																					// :
+																					// event_translateButtonActionPerformed
 
 		if (lastButton != null) {
 			lastButton.setSelected(false);
@@ -450,7 +441,11 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	// GEN-LAST:event_translateButtonActionPerformed
 
-	private void scaleButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_scaleButtonActionPerformed
+	private void scaleButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN
+																				// -
+																				// FIRST
+																				// :
+																				// event_scaleButtonActionPerformed
 
 		if (lastButton != null) {
 			lastButton.setSelected(false);
@@ -464,7 +459,8 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	// GEN-LAST:event_scaleButtonActionPerformed
 
-	private void reorderPressed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_reorderPressed
+	private void reorderPressed(java.awt.event.ActionEvent evt) {// GEN-FIRST:
+																	// event_reorderPressed
 
 		if (lastButton != null) {
 			lastButton.setSelected(false);
@@ -495,7 +491,8 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 	public void setDataSet(DataSetForApps dataSet) {
 		vc.setDataSet(dataSet);
 
-		STFDataSet ds = new STFDataSet(dataSet.getDataObjectOriginal());// hmmm.....
+		STFDataSet ds = new STFDataSet(dataSet.getDataObjectOriginal());//hmmm...
+																		// ..
 
 		parallelDisplay.setModel(ds);
 
@@ -857,6 +854,11 @@ public class ParallelPlot extends JPanel implements ProgressListener,
 
 	public Shape reportShape() {
 		return parallelDisplay.reportShape();
+	}
+
+	public void processCustomCheckBox(boolean value, String text) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
