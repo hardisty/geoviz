@@ -29,19 +29,19 @@ class RenderThread extends Thread {
 	protected final static Logger logger = Logger.getLogger(RenderThread.class
 			.getName());
 
-	boolean useSelectionBlur = true;
+	volatile boolean useSelectionBlur = true;
 	/** flags to control rendering */
-	boolean quality = false;
-	boolean progressive = false;
-	boolean isBrushThread = false;
+	volatile boolean quality = false;
+	volatile boolean progressive = false;
+	volatile boolean isBrushThread = false;
 
 	/** flags to indicate thread state */
-	boolean isWorking = false;
-	boolean doWork = false;
-	boolean wasInterrupted = false;
-	boolean progressiveInterrupted = false;
-	boolean secondPass = false;
-	boolean qualitychanged = false;
+	volatile boolean isWorking = false;
+	volatile boolean doWork = false;
+	volatile boolean wasInterrupted = false;
+	volatile boolean progressiveInterrupted = false;
+	volatile boolean secondPass = false;
+	volatile boolean qualitychanged = false;
 
 	int startAxis, stopAxis;
 	int progressiveStartAxis, progressiveStopAxis;
@@ -67,7 +67,7 @@ class RenderThread extends Thread {
 	}
 
 	void setBrushThread(boolean brushMode) {
-		this.isBrushThread = brushMode;
+		isBrushThread = brushMode;
 	}
 
 	void setQuality(boolean quality, boolean progressive) {
@@ -211,7 +211,8 @@ class RenderThread extends Thread {
 										/ comp.getNumRecords(), "rendering "
 										+ modestr));
 					}
-					if (!isBrushThread || (brushVal = comp.getBrushValue(i)) > 0.0f) {
+					if (!isBrushThread
+							|| (brushVal = comp.getBrushValue(i)) > 0.0f) {
 						// select records in brushmode, render all in normal
 						// mode
 						// skip soft edges
