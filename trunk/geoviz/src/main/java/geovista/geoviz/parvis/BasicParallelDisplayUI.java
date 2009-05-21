@@ -50,7 +50,7 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 
 	static JPanel observer = new JPanel();
 
-	boolean useSelectionFade = true;
+	volatile boolean useSelectionFade = true;
 
 	// GeneralPath[] rPaths;
 	int numDimensions;
@@ -79,7 +79,7 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 	int dragX = 0;
 
 	BufferedImage bufferImg = null;
-	BufferedImage brushImg = null;
+	volatile BufferedImage brushImg = null;
 
 	boolean needsDeepRepaint = true;
 
