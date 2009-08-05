@@ -13,6 +13,7 @@
   * *[http://www.spatial.ucsb.edu/people/research-associates.php#li Linna Li]* helped to develop the GeoJabber (XMPP) classes. 
   * *[http://www.personal.psu.edu/users/j/x/jxc93/ Jin Chen]* contributed bug fixes to various parts of the toolkit.
   * *[http://docs.codehaus.org/display/~jmacgill James Macgill]* improved the structure of many classes and packages. 
+  * * [http://www.facebook.com/jamison.conley Jamison Conley]* added the Proclude -- GeoViz Toolkit integration. 
 
 
 = Design contributors: =
