@@ -22,6 +22,9 @@
   * *[http://www.sges.auckland.ac.nz/the_school/our_people/gahegan_mark/index.shtm Mark Gahegan]* provided funding, ideas behind the software, and contributed to many design decisions.
   * *[http://www.vislab.usyd.edu.au/?q=wiki/masas_homepage Masahiro Takatsuka]* authored GeoVISTA Studio which was the framework originally used for these components, and was directly inspirational in the design and functionality of the GeoViz Toolkit.
   * *[http://docs.codehaus.org/display/~jmacgill James Macgill]* "Maven-ized" much of the code.
+  * *[http://www.personal.psu.edu/acr181/ Anthony Robinson]* came up with the ideas for the nifty highlighting options, including fade, blur, and leader lines.
+  * *[http://www.geog.psu.edu/people/kahler/ Krista Kahler]* maintains the GeoViz Toolkit website at the GeoVISTA Center, and has generated other useful documentation. 
+
 
 = Financial contributors: =
  * *[http://www.nsf.gov/ The National Science Foundation]*, through the        *[http://www.geovista.psu.edu/grants/dg-qg/intro.html Digital Government Quality Graphics]* grant.
