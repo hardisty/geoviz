@@ -141,7 +141,7 @@
       </ToolkitBean>
     </beanSet>
   </beanSet>
-  <dataSource>48States</dataSource>
+  <dataSource>USCounties</dataSource>
   <indication>-1</indication>
   <subspace>
     <int>0</int>

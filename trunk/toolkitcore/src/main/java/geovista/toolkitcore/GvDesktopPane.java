@@ -51,7 +51,7 @@ public class GvDesktopPane extends JDesktopPane implements
 		super();
 		// addMouseMotionListener(this);
 		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
-		popMenu.addCheckBoxItem(useIndicationUI, true);
+		popMenu.addCheckBoxItem(useIndicationUI, false);
 		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
 		popMenu.addMouseListener(listener);
 		addMouseListener(listener);
