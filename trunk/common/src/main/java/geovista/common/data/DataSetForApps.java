@@ -913,7 +913,7 @@ public class DataSetForApps extends AbstractTableModel {
 
 	public void addColumn(String columnName, double[] columnData) {
 		// I guess we add the new data in at the end....
-		// note that clients with refrences to the primitve arrays will
+		// note that clients with references to the primitive arrays will
 		// not experience disruption if this method is called,
 		// but those with a reference to a derived array wouldn't
 		// be happy.
@@ -927,6 +927,20 @@ public class DataSetForApps extends AbstractTableModel {
 		DataSetForApps newDataSet = prependDataSet(dataSet);
 		setDataObject(newDataSet.getDataObjectOriginal());
 		fireTableChanged();
+
+	}
+
+	public DataSetForApps makeNewDataSet(String columnName, double[] columnData) {
+		String[] name = new String[1];
+		name[0] = columnName;
+		Object[] allData = new Object[2];
+		allData[0] = name;
+		allData[1] = columnData;
+
+		DataSetForApps dataSet = new DataSetForApps(allData);
+		DataSetForApps newDataSet = prependDataSet(dataSet);
+
+		return newDataSet;
 
 	}
 
