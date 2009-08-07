@@ -4,19 +4,26 @@
 
 package geovista.readers.shapefile;
 
-import java.awt.geom.GeneralPath;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.util.logging.Logger;
 
 import org.geotools.data.shapefile.Lock;
+import org.geotools.data.shapefile.dbf.DbaseFileHeader;
+import org.geotools.data.shapefile.dbf.DbaseFileWriter;
 import org.geotools.data.shapefile.shp.ShapeType;
 import org.geotools.data.shapefile.shp.ShapefileWriter;
 
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.GeometryFactory;
+
+import geovista.common.data.DataSetForApps;
+import geovista.readers.example.GeoDataGeneralizedStates;
 
 /**
  * Takes a file name and a set of shapes, and writes out a shapefile.
@@ -28,12 +35,14 @@ public class ShapeFileDataWriter {
 	protected final static Logger logger = Logger
 			.getLogger(ShapeFileDataWriter.class.getName());
 
-	public static void writeShapefile(GeneralPath[] paths, String fileName) {
+	public static void writeShapefile(Geometry[] paths, String fileNameRoot) {
 
 		try {
+			GeometryFactory geomFact = new GeometryFactory();
 			GeometryCollection geoms = null;
-			File shp = new File("myshape.shp");
-			File shx = new File("myshape.shx");
+			geoms = new GeometryCollection(paths, geomFact);
+			File shp = new File(fileNameRoot + ".shp");
+			File shx = new File(fileNameRoot + ".shx");
 			FileInputStream shpStream = new FileInputStream(shp);
 			FileInputStream shxStream = new FileInputStream(shx);
 
@@ -49,6 +58,77 @@ public class ShapeFileDataWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	public static int findMaxLeftSide(double[] array) {
+		int len = 0;
+		for (double num : array) {
+			double leftNum = Math.floor(num);
+			Double dNum = new Double(leftNum);
+
+			String numString = String.valueOf(leftNum);
+			if (numString.length() > len) {
+				len = numString.length();
+			}
+		}
+		return len;
+	}
+
+	public static int findMaxStringLen(String[] array) {
+		int len = 0;
+		for (String str : array) {
+			if (str.length() > len) {
+				len = str.length();
+			}
+		}
+
+		return len;
+	}
+
+	public static void writeDBFile(String[] columnNames, Object[] data,
+			String fileNameRoot) {
+
+		try {
+			DbaseFileHeader header = new DbaseFileHeader();
+			for (int i = 0; i < columnNames.length; i++) {
+				Object array = data[i];
+				String name = columnNames[i];
+				if (array instanceof double[]) {
+					header.addColumn(name, 'N', 20, 4);
+				} else if (array instanceof String[]) {
+					header.addColumn(name, 'C',
+							findMaxStringLen((String[]) array), 0);
+				} else if (array instanceof int[]) {
+					header.addColumn(name, 'N', 20, 0);
+				} else {
+					logger.severe("hit unknown array type, "
+							+ array.getClass().getName());
+				}
+			}
+			File dbf = new File(fileNameRoot + ".dbf");
+			FileOutputStream dbfStream = new FileOutputStream(dbf);
+			FileChannel dbfChan = dbfStream.getChannel();
+			DbaseFileWriter writer = new DbaseFileWriter(header, dbfChan);
+			writer.write(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void writeDataSetForApps(DataSetForApps dsa, String fileName) {
+		String[] varNames = dsa.getAttributeNamesOriginal();
+		Object[] data = dsa.getNamedArrays();
+		writeDBFile(varNames, data, fileName);
+
+	}
+
+	public static void main(String[] args) {
+		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
+		String fileName = "C:\\temp\\test2";
+		writeDataSetForApps(stateData.getDataForApps(), fileName);
 
 	}
 	/**
