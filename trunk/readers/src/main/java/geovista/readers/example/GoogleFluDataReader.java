@@ -37,10 +37,12 @@ public class GoogleFluDataReader implements GeoDataSource {
 	private final ArrayList<String> names = new ArrayList();
 	HashMap<String, ArrayList<Double>> iLIData = new HashMap<String, ArrayList<Double>>();
 	HashMap<String, ArrayList<Double>> monthlyILIData = new HashMap<String, ArrayList<Double>>();
-	ArrayList<Integer> nCases = new ArrayList();
-	ArrayList<Integer> nRespCases = new ArrayList();
+	ArrayList<Integer> nCases = new ArrayList<Integer>();
+	ArrayList<Integer> nRespCases = new ArrayList<Integer>();
 	HashMap<String, Integer> idName = new HashMap<String, Integer>();
-	HashMap<Integer, String> nameID = new HashMap();
+	HashMap<Integer, String> nameID = new HashMap<Integer, String>();
+	HashMap<String, Integer> admissionsData = new HashMap<String, Integer>();
+	HashMap<String, Integer> populationData = new HashMap<String, Integer>();
 
 	public GoogleFluDataReader() throws IOException {
 		readContents();
@@ -49,7 +51,31 @@ public class GoogleFluDataReader implements GeoDataSource {
 
 	public void readContents() throws IOException {
 
+		String subString = "";
+		String line = "";
 		Scanner sc = null;
+
+		InputStream admissionsIs = this.getClass().getResourceAsStream(
+				"resources/admissions.csv");
+		BufferedReader admissionsInput = new BufferedReader(
+				new InputStreamReader(admissionsIs));
+		logger.info(admissionsInput.readLine());
+		while ((line = admissionsInput.readLine()) != null) {
+			sc = new Scanner(line).useDelimiter(",");
+			String stateName = sc.next();
+			subString = sc.next();// hosp per 1000
+			subString = sc.next();// pop08
+			Integer popVal = new Integer(subString);
+			populationData.put(stateName, popVal);
+			logger.finest("pop: " + popVal);
+			subString = sc.next();// admissions
+			Double doubleVal = new Double(subString);
+			Long longVal = Math.round(doubleVal);
+			Integer intVal = longVal.intValue();
+			logger.finest("admissions: " + intVal);
+			admissionsData.put(stateName, intVal);
+		}
+
 		// String fileName =
 		// "C:\\datap\\geovista_data\\syndromic\\google_trends\\historic1.csv";
 		InputStream is = this.getClass().getResourceAsStream(
@@ -61,8 +87,7 @@ public class GoogleFluDataReader implements GeoDataSource {
 		String namesLine = input.readLine();
 		extractNames(namesLine);
 		initiLIData();
-		String subString = "";
-		String line = "";
+
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 		while ((line = input.readLine()) != null) {
@@ -86,8 +111,12 @@ public class GoogleFluDataReader implements GeoDataSource {
 				String place = names.get(counter);
 				counter++;
 				ArrayList<Double> placeData = iLIData.get(place);
-				placeData.add(num);
-
+				Integer admits = admissionsData.get(place);
+				if (admits == null) {
+					logger.info(place);
+				} else {
+					placeData.add(num * admits);
+				}
 			}
 
 		}
@@ -122,15 +151,32 @@ public class GoogleFluDataReader implements GeoDataSource {
 						ArrayList<Double> originalData = iLIData.get(placeName);
 						ArrayList<Double> sumData = monthlyILIData
 								.get(placeName);
+						// if (sumData.size() == 0) {
+						// logger.info(placeName + " data size is zero.");
+						// continue;
+						// }
 
 						if (i == 0) {
-							sumData.add(originalData.get(i));
+							try {
+								sumData.add(originalData.get(i));
+							} catch (IndexOutOfBoundsException e) {
+								logger.severe(placeName);
+								logger.severe(sumData.toString());
+								continue;
+								// e.printStackTrace();
+							}
 
 						} else {
-
-							Double sum = sumData.get(monthCounter);
-							sum = sum + originalData.get(i);
-							sumData.set(monthCounter, sum);
+							try {
+								Double sum = sumData.get(monthCounter);
+								sum = sum + originalData.get(i);
+								sumData.set(monthCounter, sum);
+							} catch (IndexOutOfBoundsException e) {
+								logger.severe(placeName);
+								logger.severe(sumData.toString());
+								continue;
+								// e.printStackTrace();
+							}
 						}
 
 					}
@@ -141,7 +187,16 @@ public class GoogleFluDataReader implements GeoDataSource {
 						logger.finest("watchit");
 					}
 					ArrayList<Double> sumData = monthlyILIData.get(placeName);
-					Double avg = sumData.get(monthCounter);
+					Double avg = null;
+					try {
+						avg = sumData.get(monthCounter);
+					} catch (IndexOutOfBoundsException e) {
+						logger.severe(monthCounter + "");
+
+						continue;
+						// e.printStackTrace();
+					}
+
 					avg = avg / datePlaces.size();
 					sumData.set(monthCounter, avg);
 				}
@@ -223,10 +278,28 @@ public class GoogleFluDataReader implements GeoDataSource {
 		objectData[objectData.length - 1] = sw;
 
 		DataSetForApps newDataSet = new DataSetForApps(objectData);
+		double[] popData = makePopData(stateNames);
+		DataSetForApps newerDataSet = newDataSet.makeNewDataSet("Pop", popData);
 
-		newDataSet.setSpatialWeights(sw);
+		newerDataSet.setSpatialWeights(sw);
 
-		return newDataSet;
+		return newerDataSet;
+	}
+
+	public double[] makePopData(String[] stateNames) {
+
+		double[] pop = new double[stateNames.length];
+		for (int i = 0; i < stateNames.length; i++) {
+			Integer popVal = populationData.get(stateNames[i]);
+			if (popVal == null) {
+				logger.severe("couldn't find " + stateNames[i]);
+			} else {
+				pop[i] = popVal;
+			}
+		}
+
+		return pop;
+
 	}
 
 	public static void main(String[] args) {
