@@ -134,7 +134,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 	final static Logger logger = Logger
 			.getLogger(GeoVizToolkit.class.getName());
-	private static String VERSION_NUM = "0.8.7";
+	private static String VERSION_NUM = "0.8.8";
 
 	JComponent regularUI;
 	IndicationConnectUI<JComponent> indUI;
@@ -308,12 +308,13 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		initMembers();
 		desktop.setBackground(new Color(20, 20, 80));
 		this.useProj = useProj;
+		useProj = false;
 		JXLayer<JComponent> layer = new JXLayer<JComponent>(desktop);
 		indUI = new IndicationConnectUI<JComponent>();
 		getContentPane().add(layer, BorderLayout.CENTER);
 		layer.setUI(indUI);
 
-		setIndicationUI(true);
+		setIndicationUI(false);
 
 		coord.addBean(dataCaster);
 		coord.addBean(vizState);
@@ -879,9 +880,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// newDataSet = cartogramData.getDataSet();
 
 		} else if (name.equals("USCounties")) {
-			GeoData2008Election countyData = new GeoData2008Election();
-			newDataSet = countyData.getDataSet();
 
+			GeoData2008Election countyData = new GeoData2008Election();
+			ShapeFileProjection proj = new ShapeFileProjection();
+			proj.setInputDataSet(countyData.getDataSet());
+
+			newDataSet = proj.getOutputDataSet();
 		} else if (name.equals("2008 Presidential Election")) {
 
 			GeoData2008Election countyData = new GeoData2008Election();
@@ -1056,6 +1060,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			}
 
 		}
+		logger.info("Width = " + getWidth() + ", Height = " + getHeight());
 
 	}
 
@@ -1209,15 +1214,15 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		menuFile.add(menuItemLoadStates);
 		menuFile.add(menuItemLoadCounty);
 
-		menuFile.add(menuItemLoadWorld);
+		// menuFile.add(menuItemLoadWorld);
 
-		menuFile.addSeparator();
-		menuFile.add(menuItemLoadCsv);
-		menuFile.add(menuItemImportSeerStatData);
+		// menuFile.addSeparator();
+		// menuFile.add(menuItemLoadCsv);
+		// menuFile.add(menuItemImportSeerStatData);
 
-		menuFile.addSeparator();
-		menuFile.add(menuItemExportData);
-		menuFile.add(menuItemExportSelection);
+		// menuFile.addSeparator();
+		// menuFile.add(menuItemExportData);
+		// menuFile.add(menuItemExportSelection);
 		menuFile.addSeparator();
 		menuFile.add(menuItemCopyApplicationToClipboard);
 		menuFile.add(menuItemCopySelectedWindowToClipboard);
@@ -1386,7 +1391,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setPreferredSize(new Dimension(800, 600));
-		app.setMinimumSize(new Dimension(800, 600));
+		app.setMinimumSize(new Dimension(480, 320));
 
 	}
 
