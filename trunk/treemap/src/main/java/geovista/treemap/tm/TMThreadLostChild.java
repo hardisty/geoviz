@@ -26,61 +26,69 @@
 
 package geovista.treemap.tm;
 
+import java.util.logging.Logger;
 
 /**
- * The TMThreadLostChild implements a thread that removes a child to a 
+ * The TMThreadLostChild implements a thread that removes a child to a
  * TMNodeModel.
- *
+ * 
  * @author Christophe Bouthier [bouthier@loria.fr]
  * 
  */
-class TMThreadLostChild
-    extends TMThreadModel {
+class TMThreadLostChild extends TMThreadModel {
 
-    private TMNode parent = null; // the node which losts a child
-    private TMNode child  = null; // the lost child node 
+	private TMNode parent = null; // the node which losts a child
+	private TMNode child = null; // the lost child node
 
+	final static Logger logger = Logger.getLogger(TMThreadLostChild.class
+			.getName());
 
-    /**
-     * Constructor.
-     *
-     * @param status         the status view for feedback
-     * @param model          the TMNodeModelRoot 
-     * @param view           the view to update
-     * @param parent         the parent node
-     * @param child          the child node
-     */
-    TMThreadLostChild(TMStatusView status, TMNodeModelRoot model, TMView view,
-                      TMNode parent, TMNode child) {
-        super(status, model, view);
-        this.parent = parent;
-        this.child = child;
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param status
+	 *            the status view for feedback
+	 * @param model
+	 *            the TMNodeModelRoot
+	 * @param view
+	 *            the view to update
+	 * @param parent
+	 *            the parent node
+	 * @param child
+	 *            the child node
+	 */
+	TMThreadLostChild(TMStatusView status, TMNodeModelRoot model, TMView view,
+			TMNode parent, TMNode child) {
+		super(status, model, view);
+		this.parent = parent;
+		this.child = child;
+	}
 
-    /**
-     * Removess the new child.
-     */
-    void task() {
-        status.setStatus(new TMSDSimple("Removing a child ..."));
-        TMNodeModel parentCandidate = model.nodeContaining(parent);
-        if (parentCandidate == null) {
-            throw new TMExceptionUnknownTMNode(parent);
-        } else if (!(parentCandidate instanceof TMNodeModelComposite)) {
-            throw new TMExceptionLeafTMNode(parent); 
-        }
-        TMNodeModelComposite parentNode = 
-                                        (TMNodeModelComposite) parentCandidate;
+	/**
+	 * Removess the new child.
+	 */
+	@Override
+	void task() {
+		status.setStatus(new TMSDSimple("Removing a child ..."));
+		TMNodeModel parentCandidate = model.nodeContaining(parent);
+		if (parentCandidate == null) {
+			logger.info("can't remove from null parent");
+			return;
+			// throw new TMExceptionUnknownTMNode(parent);
+		} else if (!(parentCandidate instanceof TMNodeModelComposite)) {
+			throw new TMExceptionLeafTMNode(parent);
+		}
+		TMNodeModelComposite parentNode = (TMNodeModelComposite) parentCandidate;
 
-        TMNodeModel childNode = model.nodeContaining(child);
-        if (childNode == null) {
-            throw new TMExceptionUnknownTMNode(child);
-        }
+		TMNodeModel childNode = model.nodeContaining(child);
+		if (childNode == null) {
+			throw new TMExceptionUnknownTMNode(child);
+		}
 
-        parentNode.lostChild(childNode);
+		parentNode.lostChild(childNode);
 
-        model.computeSize();
-        status.setStatus(new TMSDSimple("Child removed"));
-    }
+		model.computeSize();
+		status.setStatus(new TMSDSimple("Child removed"));
+	}
 
 }
-
