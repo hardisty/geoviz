@@ -553,7 +553,7 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 					.getWidth(this), drawingBuff.getHeight(this),
 					BufferedImage.TYPE_INT_ARGB);
 			// VolatileImage blurBuff=
-			//this.getGraphicsConfiguration().createCompatibleVolatileImage(this
+			// this.getGraphicsConfiguration().createCompatibleVolatileImage(this
 			// .drawingBuff.getWidth(this),
 			// this.drawingBuff.getHeight(this));
 			blurBuff.getGraphics().drawImage(drawingBuff, 0, 0, this);
@@ -785,7 +785,8 @@ public class ScatterPlotBasic extends JPanel implements ComponentListener,
 	 * indication specific code by frank hardisty
 	 */
 	protected void drawIndication(Graphics2D g, int i) {
-		if (pointColors == null || pointColors[i] == null) {
+		if (pointColors == null || pointColors.length <= i
+				|| pointColors[i] == null) {
 			return;
 		}
 		Graphics2D g2 = g;
