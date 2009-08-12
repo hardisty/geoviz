@@ -25,11 +25,16 @@ public class GeoDataGeneralizedStates extends GeoDataClassResource {
 
 	final static Logger logger = Logger
 			.getLogger(GeoDataGeneralizedStates.class.getName());
+	static DataSetForApps dsa;
 
 	@Override
 	protected DataSetForApps makeDataSetForApps() {
-		return ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(),
-				"48small");
+		if (dsa == null) {
+			logger.info("making new DSA of states");
+			dsa = ShapeFileDataReader.makeDataSetForAppsCsv(this.getClass(),
+					"48small");
+		}
+		return dsa;
 
 	}
 
