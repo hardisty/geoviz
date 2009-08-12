@@ -8,9 +8,6 @@ import java.util.logging.Logger;
 
 import junit.framework.TestCase;
 
-import geovista.coordination.CoordinationManager;
-import geovista.coordination.ExampleBean;
-
 /**
  * @author localadmin
  * 
@@ -47,7 +44,7 @@ public class CoordinationManagerTest extends TestCase {
 	 */
 	public void testCoordinateObject() {
 
-		logger.info("testing coordination.....");
+		logger.finest("testing coordination.....");
 
 		ExampleBean coorBean = new ExampleBean();
 		ExampleBean coorBean2 = new ExampleBean();
