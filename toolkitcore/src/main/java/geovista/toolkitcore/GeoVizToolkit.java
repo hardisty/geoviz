@@ -1122,11 +1122,12 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		addToolToMenu(StarPlotMap.class);
 		addToolToMenu(GraduatedSymbolsMap.class);
 		addToolToMenu(RadViz.class);
+		// addToolToMenu(TreeMap.class);
 		menuAddTool.addSeparator();
 
 		menuAddTool.add(new JLabel(
 				" ~~~~~ Multiform Matrix Visualization ~~~~~ "));
-		// addToolToMenu(TreeMap.class);
+
 		addToolToMenu(MapAndScatterplotMatrix.class);
 		addToolToMenu(TreemapAndScatterplotMatrix.class);
 		addToolToMenu(MapScatterplotTreemapMatrix.class);
