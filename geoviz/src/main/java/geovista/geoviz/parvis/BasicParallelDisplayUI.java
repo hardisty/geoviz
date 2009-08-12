@@ -513,6 +513,9 @@ public class BasicParallelDisplayUI extends ParallelDisplayUI implements
 		if (conditioning[num] < 0) {
 			return;
 		}
+		if (num >= colors.length) {
+			return;
+		}
 		GeneralPath rPath = null;
 		// if (startAxis == 0 && stopAxis == this.numDimensions-1){
 		// rPath = this.rPaths[num];

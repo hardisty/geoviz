@@ -1128,6 +1128,9 @@ public class RadViz extends JPanel implements ActionListener,
 	 *            the height of this RadViz panel
 	 */
 	protected void drawRadviz(Graphics2D g, int w, int h) {
+		if (data == null || data.length == 0) {
+			return;
+		}
 		int numAtt = visibleAttIdx.length;
 		int numData = data[0].length;
 		String[] attNames = getAttNamesNumeric();

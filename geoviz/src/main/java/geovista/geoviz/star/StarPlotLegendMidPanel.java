@@ -116,7 +116,7 @@ public class StarPlotLegendMidPanel extends JPanel implements
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (sp == null || obsName == null) {
+		if (sp == null || obsName == null || penWidth < 0) {
 			return;
 		}
 		Graphics2D g2 = (Graphics2D) g.create();

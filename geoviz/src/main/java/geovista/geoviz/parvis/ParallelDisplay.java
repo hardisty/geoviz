@@ -340,7 +340,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	}
 
 	public float getValue(int recordNum, int axisNum) {
-		if (model != null) {
+		if (model != null && axisOrder.length > axisNum) {
 			return model.getValue(recordNum, axisOrder[axisNum]);
 		} else {
 			return 0;
@@ -538,7 +538,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	 * @return The offset value.
 	 */
 	public float getAxisOffset(int num) {
-		if (axisOffset != null) {
+		if (axisOffset != null && axisOrder.length > num) {
 			return axisOffset[axisOrder[num]];
 		} else {
 			return 0;
@@ -554,7 +554,7 @@ public class ParallelDisplay extends JComponent implements ChangeListener,
 	 * @return The scale value.
 	 */
 	public float getAxisScale(int num) {
-		if (axisScale != null) {
+		if (axisScale != null && axisOrder.length > num) {
 			return axisScale[axisOrder[num]];
 		} else {
 			return 0;
