@@ -132,8 +132,10 @@ public class NDimensionalMST {
 		logger.finest("num edges before mst = " + edges.length);
 		// dgMST.setEdges(edges);
 		// XXX fix me
-		mstEdges = (MSTEdge[]) MinimumSpanningTree.kruskal(null, null, null, 0)
-				.toArray();
+		mstEdges = MinimumSpanningTree.kruskalArray(edges);
+		// mstEdges = (MSTEdge[]) MinimumSpanningTree.kruskal(null, null, null,
+		// 0)
+		// .toArray();
 		int medianPlace = mstEdges.length / 2;
 		mstMedian = mstEdges[medianPlace].getWeight();
 
@@ -231,7 +233,7 @@ public class NDimensionalMST {
 		}
 
 		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix
-																			// ,
+		// ,
 		// so
 		// square
 		// it
@@ -321,7 +323,7 @@ public class NDimensionalMST {
 		}
 
 		int nEdges = data.getNumObservations() * data.getNumObservations(); // matrix
-																			// ,
+		// ,
 		// so
 		// square
 		// it
