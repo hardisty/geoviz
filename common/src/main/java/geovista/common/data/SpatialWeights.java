@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.TopologyException;
 
 public class SpatialWeights {
 
@@ -73,6 +74,15 @@ public class SpatialWeights {
 
 			for (int j = i + 1; j < geoms.size(); j++) {
 				Geometry geom2 = geoms.get(j);
+				boolean touches = false;
+				try {
+					touches = geom.touches(geom2);
+				} catch (TopologyException te) {
+					logger.info("buffing " + i + " and " + j);
+					geom = geom.buffer(0);
+					geom2 = geom2.buffer(0);
+					touches = geom.touches(geom2);
+				}
 				if (geom.touches(geom2)) {
 					addNeighbor(i, j);
 					nTouches++;
@@ -81,5 +91,4 @@ public class SpatialWeights {
 		}// next i
 		logger.info("Number of touches = " + nTouches);
 	}
-
 }
