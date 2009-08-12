@@ -34,7 +34,7 @@ public class ExampleBean implements IndicationListener {
 
 	// null constructor
 	public ExampleBean() {
-		logger.info("ExampleBean, result = " + result);
+		logger.finest("ExampleBean, result = " + result);
 	}
 
 	public void setListenerList(EventListenerList listenerList) {
