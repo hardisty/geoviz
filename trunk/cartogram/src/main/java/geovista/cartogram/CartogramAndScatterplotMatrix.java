@@ -3,8 +3,8 @@
  Original Author: Frank Hardisty */
 package geovista.cartogram;
 
-import geovista.geoviz.scatterplot.ScatterPlot;
 import geovista.matrix.BiPlotMatrix;
+import geovista.matrix.scatterplot.ScatterPlotMatrixElement;
 
 public class CartogramAndScatterplotMatrix extends BiPlotMatrix
 
@@ -12,7 +12,7 @@ public class CartogramAndScatterplotMatrix extends BiPlotMatrix
 
 	public CartogramAndScatterplotMatrix() {
 		super();
-		this.setElementClass1(ScatterPlot.class);
+		this.setElementClass1(ScatterPlotMatrixElement.class);
 		this.setElementClass2(CartogramMatrixElement.class);
 
 	}
