@@ -443,7 +443,7 @@ public class SeerStatReader {
 
 	enum VarDimension {
 		PAGE, COLUMN, ROW, NONE
-	};
+	}
 
 	private class Variable {
 		String name;

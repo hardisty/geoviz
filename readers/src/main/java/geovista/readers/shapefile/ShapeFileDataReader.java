@@ -62,7 +62,7 @@ public class ShapeFileDataReader implements Serializable {
 	protected transient String fileName;
 	protected transient EventListenerList listenerList;
 
-	public static double tolerance = .001;
+	public static double tolerance = .1;
 
 	public ShapeFileDataReader() {
 		super();
@@ -151,7 +151,9 @@ public class ShapeFileDataReader implements Serializable {
 				Geometry geom = (Geometry) shpReader.nextRecord().shape();
 				// this helps ensure valid topology
 				// geom = geom.buffer(0);
+
 				shapes.add(geom);
+
 			}
 			Geometry[] geomArray = new Geometry[shapes.size()];
 			for (int i = 0; i < geomArray.length; i++) {
@@ -164,6 +166,14 @@ public class ShapeFileDataReader implements Serializable {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	public static Geometry[] getGeoms(InputStream shpStream, double tolerance) {
+		ShapeFileDataReader.tolerance = tolerance;
+		Geometry[] simplerGeoms = makeSimplerGeoms(ShapeFileDataReader
+				.getGeoms(shpStream), tolerance);
+
+		return simplerGeoms;
 	}
 
 	public static Shape[] getShapes(InputStream shpStream) {
@@ -315,7 +325,7 @@ public class ShapeFileDataReader implements Serializable {
 
 		// this.fireActionPerformed(COMMAND_DATA_SET_MADE);
 		// int type =
-		//this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType
+		// this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType
 		// ());
 		DataSetForApps dataForApps = new DataSetForApps(allData);
 		// this.dataForApps.setSpatialType(type);
@@ -374,7 +384,7 @@ public class ShapeFileDataReader implements Serializable {
 
 		// this.fireActionPerformed(COMMAND_DATA_SET_MADE);
 		// int type =
-		//this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType
+		// this.getDataSetForAppsSpatialType(shpFile.getFileHeader().getShapeType
 		// ());
 		DataSetForApps dataForApps = new DataSetForApps(allData);
 		// this.dataForApps.setSpatialType(type);
@@ -403,6 +413,7 @@ public class ShapeFileDataReader implements Serializable {
 
 	public static Geometry[] makeSimplerGeoms(Geometry[] geoms,
 			double distanceTolerance) {
+		logger.info("simplifying geoms");
 		Geometry[] simplerGeoms = new Geometry[geoms.length];
 
 		for (int i = 0; i < geoms.length; i++) {
