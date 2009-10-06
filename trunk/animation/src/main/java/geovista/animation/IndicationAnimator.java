@@ -243,14 +243,14 @@ public class IndicationAnimator extends JPanel implements ActionListener,
 			}
 			for (int i = 0; i < obs.length; i++) {
 				int index = obs[i].index;
-				obs[i].classed = classes[index];
+
 				double aVal = values[index];
 				obs[i].value = aVal;
 			}
 		} else {
 			for (int i = 0; i < obs.length; i++) {
 				int index = obs[i].index;
-				obs[i].classed = classes[index];
+
 				obs[i].value = classes[index];
 			}
 		}
@@ -351,7 +351,7 @@ public class IndicationAnimator extends JPanel implements ActionListener,
 
 	private class ClassedObs implements Comparable {
 		int index;
-		int classed;
+
 		double value;
 
 		// we compare by value

@@ -199,7 +199,6 @@ public class VariableSequenceAnimator extends JPanel implements ActionListener,
 	}
 
 	private class ClassedObs implements Comparable {
-		int index;
 
 		double value;
 
