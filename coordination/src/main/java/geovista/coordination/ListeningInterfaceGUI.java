@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 /**
@@ -41,7 +42,7 @@ public class ListeningInterfaceGUI extends JPanel implements ActionListener {
 		this.add(preTitle);
 		String interfaceName = CoordinationUtils.findInterfaceName(meths[0]
 				.getListeningInterface());
-		JLabel title = new JLabel(interfaceName, JLabel.CENTER);
+		JLabel title = new JLabel(interfaceName, SwingConstants.CENTER);
 		title.setAlignmentX(Component.LEFT_ALIGNMENT);
 		this.add(title);
 		boxenPanel = new JPanel();

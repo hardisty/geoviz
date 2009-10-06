@@ -15,6 +15,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 /**
@@ -48,7 +49,7 @@ public class BeanShortcutsGUI extends JPanel implements ActionListener {
 		JLabel preTitle = new JLabel("Shortcuts for:");
 		preTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 		this.add(preTitle);
-		JLabel title = new JLabel(beanName, icon, JLabel.CENTER);
+		JLabel title = new JLabel(beanName, icon, SwingConstants.CENTER);
 		title.setAlignmentX(Component.LEFT_ALIGNMENT);
 		this.add(title);
 

@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * This subclass of JPanel is responsible for communicating between the user and
@@ -38,7 +39,7 @@ public class BeanConnectionGUI extends JPanel implements ItemListener {
 		cBox.setSelected(true);
 
 		JLabel lab = new JLabel(fBean.getBeanName(), fBean.getSmallIcon(),
-				JLabel.LEFT);
+				SwingConstants.LEFT);
 
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(cBox);
