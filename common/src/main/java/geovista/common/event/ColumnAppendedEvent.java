@@ -23,7 +23,7 @@ public class ColumnAppendedEvent extends EventObject {
 
 	public static enum ChangeType {
 		TYPE_MODIFIED, TYPE_REDUCED, TYPE_EXTENDED
-	};
+	}
 
 	/**
 	 * The constructor is the same as that for EventObject, except that the

@@ -259,11 +259,8 @@ public class StatisticsVectors {
 		double[][] covarianceMatrix = new double[n][n];
 
 		int covDivident;
-		if (true) {
-			covDivident = len - 1;
-		} else {
-			covDivident = len;
-		}
+
+		covDivident = len - 1;
 
 		// covariance matrix
 		for (int i = 0; i < n; i++) {

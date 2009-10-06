@@ -114,7 +114,6 @@ public class ArraySort2D {
 		int[] results = sorter.getSortedIndex(someData);
 
 		logger.info(Arrays.toString(results));
-		logger.info("" + (Double.NaN == Double.NaN));// false
 
 	}
 }

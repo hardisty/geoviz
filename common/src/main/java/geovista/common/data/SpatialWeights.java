@@ -6,6 +6,7 @@ package geovista.common.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -77,6 +78,9 @@ public class SpatialWeights {
 				boolean touches = false;
 				try {
 					touches = geom.touches(geom2);
+					if (logger.isLoggable(Level.FINEST)) {
+						logger.finest("" + touches);
+					}
 				} catch (TopologyException te) {
 					logger.info("buffing " + i + " and " + j);
 					geom = geom.buffer(0);

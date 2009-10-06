@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
@@ -72,7 +73,7 @@ public class RangeSliderLegend extends JPanel implements ChangeListener {
 	// //
 	protected void initializeDefaults() {
 
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane.addChangeListener(this);
 		this.add(tabbedPane);
 		setBackground(Color.black);
@@ -94,7 +95,7 @@ public class RangeSliderLegend extends JPanel implements ChangeListener {
 	 * Initializes the rangeSliders
 	 */
 	protected void initialize() {
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane.addChangeListener(this);
 		this.add(tabbedPane);
 		setBackground(Color.black);

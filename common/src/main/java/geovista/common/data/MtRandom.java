@@ -214,8 +214,9 @@ public final class MtRandom extends Random {
 	public static double geometricRandom(double p) {
 		if (p > 0.20000000000000001D) {
 			int n;
+
 			for (n = 1; Math.random() > p; n++) {
-				;
+
 			}
 			return n;
 		} else {

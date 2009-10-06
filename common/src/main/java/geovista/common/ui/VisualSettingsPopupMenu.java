@@ -132,6 +132,7 @@ public class VisualSettingsPopupMenu extends JPopupMenu implements
 		} else if (e.getSource() == itemBoxUseSelectionFade) {
 			boolean value = itemBoxUseSelectionFade.isSelected();
 			settingsListener.useSelectionFade(value);
+
 		} else if (e.getSource() instanceof JCheckBoxMenuItem) {
 			logger.info("hit custom checkbox");
 			JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
