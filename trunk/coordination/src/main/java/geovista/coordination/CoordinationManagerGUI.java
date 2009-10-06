@@ -16,6 +16,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * this class maintains the GUI it examines beans on the way in and out to make
@@ -98,7 +99,7 @@ public class CoordinationManagerGUI extends JScrollPane implements
 	}
 
 	private void jbInit() throws Exception {
-		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setViewportBorder(BorderFactory.createLineBorder(Color.black));
 		allHolder = new JPanel();
 		allHolder.setLayout(new BoxLayout(allHolder, BoxLayout.Y_AXIS));

@@ -16,6 +16,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 /**
@@ -46,7 +47,7 @@ public class ListeningBeanGUI extends JPanel implements ActionListener {
 
 		String beanName = lBean.getBeanName();
 		Icon icon = new ImageIcon(lBean.getIcon());
-		JLabel title = new JLabel(beanName, icon, JLabel.CENTER);
+		JLabel title = new JLabel(beanName, icon, SwingConstants.CENTER);
 		title.setAlignmentX(Component.LEFT_ALIGNMENT);
 		this.add(title);
 
