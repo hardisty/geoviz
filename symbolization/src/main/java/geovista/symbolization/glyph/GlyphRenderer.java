@@ -43,7 +43,6 @@ public class GlyphRenderer implements Glyph {
 	public static final Color defaultFillColor = Color.white;
 	public static final Color defaultIndicationColor = Color.green;
 
-	;
 	private static Stroke outlineStroke = new BasicStroke(0.8f);
 
 	public static final Color defaultOutlineColor = Color.black;
@@ -170,17 +169,19 @@ public class GlyphRenderer implements Glyph {
 		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
 		 * sineAns); logger.finest("Cosine = " + cosAns);
 		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/4; sineAns =
-		 * Math.sin(radians); cosAns = Math.cos(radians); logger.finest("Radians = " +
-		 * radians); logger.finest("Sine = " + sineAns); logger.finest("Cosine = " +
-		 * cosAns); logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/2;
-		 * sineAns = Math.sin(radians); cosAns = Math.cos(radians);
+		 * Math.sin(radians); cosAns = Math.cos(radians);
+		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
+		 * sineAns); logger.finest("Cosine = " + cosAns);
+		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI/2; sineAns =
+		 * Math.sin(radians); cosAns = Math.cos(radians);
 		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
 		 * sineAns); logger.finest("Cosine = " + cosAns);
 		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI; sineAns =
-		 * Math.sin(radians); cosAns = Math.cos(radians); logger.finest("Radians = " +
-		 * radians); logger.finest("Sine = " + sineAns); logger.finest("Cosine = " +
-		 * cosAns); logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI +
-		 * Math.PI / 2; sineAns = Math.sin(radians); cosAns = Math.cos(radians);
+		 * Math.sin(radians); cosAns = Math.cos(radians);
+		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
+		 * sineAns); logger.finest("Cosine = " + cosAns);
+		 * logger.finest("~~~~~~~~~~~~~~~~~~ "); radians = Math.PI + Math.PI /
+		 * 2; sineAns = Math.sin(radians); cosAns = Math.cos(radians);
 		 * logger.finest("Radians = " + radians); logger.finest("Sine = " +
 		 * sineAns); logger.finest("Cosine = " + cosAns);
 		 * logger.finest("~~~~~~~~~~~~~~~~~~ ");

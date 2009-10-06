@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -183,7 +184,7 @@ public class NGon implements Glyph {
 
 			sizeSlider = new JSlider();
 			sizeSlider.addChangeListener(this);
-			sizeSlider.setOrientation(JSlider.VERTICAL);
+			sizeSlider.setOrientation(SwingConstants.VERTICAL);
 			this.add(sizeSlider, BorderLayout.WEST);
 			setMinimumSize(new Dimension(200, 200));
 			setPreferredSize(new Dimension(200, 200));
