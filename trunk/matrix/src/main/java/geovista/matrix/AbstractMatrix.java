@@ -98,7 +98,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	protected transient SPGridBagConstraints c;
 	protected static ImageIcon leftRightArrow;
 	protected static ImageIcon topDownArrow;
-	protected static final Insets nullInsets = new Insets(0, 0, 0, 0);;
+	protected static final Insets nullInsets = new Insets(0, 0, 0, 0);
 	private transient Vector indicListeners;
 	protected String[] varTags;
 	protected SPTagButton[] columnButton;
@@ -136,10 +136,10 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	/**
 	 * @param data
 	 * 
-	 * This method is deprecated becuase it wants to create its very own pet
-	 * DataSetForApps. This is no longer allowed, to allow for a mutable, common
-	 * data set. Use of this method may lead to unexpected program behavoir.
-	 * Please use setDataSet instead.
+	 *            This method is deprecated becuase it wants to create its very
+	 *            own pet DataSetForApps. This is no longer allowed, to allow
+	 *            for a mutable, common data set. Use of this method may lead to
+	 *            unexpected program behavoir. Please use setDataSet instead.
 	 */
 	@Deprecated
 	public void setDataObject(Object[] data) {
@@ -195,6 +195,9 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	protected void registerIndicationListeners() {
 		// register "this" with each element
 		for (MatrixElement otherElement : element) {
+			if (otherElement == null) {
+				continue;
+			}
 			otherElement.addIndicationListener(this);
 		}
 		// register all added indication listeners
@@ -582,7 +585,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 		 * @param e
 		 */
 		public void mouseExited(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -591,7 +594,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 		 * @param e
 		 */
 		public void mouseMoved(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -600,7 +603,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 		 * @param e
 		 */
 		public void mouseEntered(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -609,7 +612,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 		 * @param e
 		 */
 		public void mouseClicked(MouseEvent e) {
-			;
+
 		}
 	}
 
@@ -693,16 +696,13 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 					+ indicesNew1[1]);
 			indicesLast1[0] = indicesNew1[0];
 			indicesLast2[1] = indicesNew2[1];
-			element[i * plotNumber + lastPos - 1]
-					.setDataIndices(indicesLast1);
+			element[i * plotNumber + lastPos - 1].setDataIndices(indicesLast1);
 			element[(lastPos - 1) * plotNumber + i]
 					.setDataIndices(indicesLast2);
 			indicesNew1[0] = indicesRow;
 			indicesNew2[1] = indicesCol;
-			element[i * plotNumber + newPos - 1]
-					.setDataIndices(indicesNew1);
-			element[(newPos - 1) * plotNumber + i]
-					.setDataIndices(indicesNew2);
+			element[i * plotNumber + newPos - 1].setDataIndices(indicesNew1);
+			element[(newPos - 1) * plotNumber + i].setDataIndices(indicesNew2);
 
 			/*
 			 * this.remove((Component)this.element[i*plotNumber + lastPos - 1]);
@@ -744,7 +744,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	 * @param e
 	 */
 	public void mouseExited(MouseEvent e) {
-		;
+
 	}
 
 	/**
@@ -761,7 +761,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	 * @param e
 	 */
 	public void mouseMoved(MouseEvent e) {
-		;
+
 	}
 
 	/**
@@ -770,7 +770,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	 * @param e
 	 */
 	public void mouseEntered(MouseEvent e) {
-		;
+
 	}
 
 	/**
@@ -779,7 +779,7 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	 * @param e
 	 */
 	public void mouseClicked(MouseEvent e) {
-		;
+
 	}
 
 	public void selectionChanged(SelectionEvent e) {
@@ -1015,8 +1015,8 @@ public abstract class AbstractMatrix extends JPanel implements MouseListener,
 	 * put your documentation comment here
 	 * 
 	 * @param ois
-	 * @exception ClassNotFoundException,
-	 *                IOException
+	 * @exception ClassNotFoundException
+	 *                , IOException
 	 */
 	private void readObject(ObjectInputStream ois)
 			throws ClassNotFoundException, IOException {
