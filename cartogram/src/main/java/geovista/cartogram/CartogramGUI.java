@@ -42,6 +42,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import geovista.common.data.DataSetForApps;
@@ -245,7 +246,7 @@ public class CartogramGUI extends JPanel implements ActionListener {
         JPanel runPanel = new JPanel();
         JPanel messagesPanel = new JPanel();
         messagesPanel.setLayout(new BorderLayout());
-        progressBar = new JProgressBar(JProgressBar.HORIZONTAL);
+        progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
 
         runPanel.add(runButton);
         runPanel.add(progressBar);

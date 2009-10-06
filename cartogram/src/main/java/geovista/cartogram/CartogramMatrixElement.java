@@ -37,153 +37,152 @@ import geovista.symbolization.BivariateColorSymbolClassificationSimple;
  *
  */
 
-public class CartogramMatrixElement
-    extends MapMatrixElement {
+public class CartogramMatrixElement extends MapMatrixElement {
 
-  DataSetForApps dataSet;
-  String inputFileName;
-  CartogramPreferences preferencesFrame;
-  boolean DEBUG = false;
-  TransformsMain trans;
+	DataSetForApps dataSet;
+	String inputFileName;
+	CartogramPreferences preferencesFrame;
+	boolean DEBUG = false;
+	TransformsMain trans;
 
-  Object[] cartogramData;
+	Object[] cartogramData;
 
-  public CartogramMatrixElement() {
-    super();
+	public CartogramMatrixElement() {
+		super();
 
-    this.trans = new TransformsMain(false);
+		trans = new TransformsMain(false);
 
-    try {
-      //initGui();
-      @SuppressWarnings("unused")
-	Preferences gvPrefs = Preferences.userNodeForPackage(this.getClass());
-      this.preferencesFrame = new CartogramPreferences(
-          "Cartogram Preferences", this, this.trans);
+		try {
+			// initGui();
+			@SuppressWarnings("unused")
+			Preferences gvPrefs = Preferences.userNodeForPackage(this
+					.getClass());
+			preferencesFrame = new CartogramPreferences(
+					"Cartogram Preferences", this, trans);
 
-    }
-    catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
+	@Override
+	public void setDataIndices(int[] dataIndices) {
+		// this happens first when a new data set comes down the pipe...before
+		// setDataObject... what to do?
 
-  public void setDataIndices(int[] dataIndices) {
-    //this happens first when a new data set comes down the pipe...before
-    //setDataObject... what to do?
-    
+		if (dataIndices == null) {
+			return;
+		}
 
-    if (dataIndices == null ){
-      return;
-    }
+		elementPosition = dataIndices.clone();
+		// zero based or one based...
+		// well...
+		// i know...
+		// let's keep changing our minds!
+		// then we'll never get it straight!
+		// super.setCurrColorColumnX(this.elementPosition[1]-1);//y position
+		// super.setCurrColorColumnY(this.elementPosition[1]-1);//y position
+		int colorVar = elementPosition[1] - 1;
 
-    this.elementPosition = (int[]) dataIndices.clone();
-    //zero based or one based...
-    //well...
-    //i know...
-    //let's keep changing our minds!
-    //then we'll never get it straight!
-    //super.setCurrColorColumnX(this.elementPosition[1]-1);//y position
-    //super.setCurrColorColumnY(this.elementPosition[1]-1);//y position
-    int colorVar = this.elementPosition[1]-1;
+		super.dataColorY = dataSet.getNumericDataAsDouble(colorVar);// y
+																	// position
+		super.dataColorX = dataColorY;// y position, having same data objects
+										// triggers univariate coloring
+		super.sendColorsToLayers(dataColorX.length);
+		if (dataSet != null
+				&& dataSet.getSpatialType() == DataSetForApps.SPATIAL_TYPE_POLYGON) {
+			createCartogram();
+			// sendColorsToLayers(this.dataSet.getNumObservations());
+		}
+		// this.setHistogramData();
+	}
 
-    super.dataColorY = dataSet.getNumericDataAsDouble(colorVar);//y position
-    super.dataColorX = dataColorY;//y position, having same data objects triggers univariate coloring
-    super.sendColorsToLayers(dataColorX.length);
-    if(this.dataSet != null && this.dataSet.getSpatialType() == DataSetForApps.SPATIAL_TYPE_POLYGON){
-      createCartogram();
-      //sendColorsToLayers(this.dataSet.getNumObservations());
-    }
-    //this.setHistogramData();
-  }
-  /*
-   * This method actually creates the temporary files and creates
-    a TransformsMain to do the work.
-   */
-  public void createCartogram() {
-    Preferences gvPrefs = Preferences.userNodeForPackage(this.getClass());
+	/*
+	 * This method actually creates the temporary files and creates a
+	 * TransformsMain to do the work.
+	 */
+	public void createCartogram() {
+		Preferences gvPrefs = Preferences.userNodeForPackage(this.getClass());
 
+		trans = new TransformsMain(false);
+		preferencesFrame.setTransformParams(trans);
 
-    this.trans = new TransformsMain(false);
-    this.preferencesFrame.setTransformParams(this.trans);
+		JProgressBar pBar = new JProgressBar();
+		int currentVar = elementPosition[0] - 1;// x var
+		CartogramShapeCache cache = CartogramShapeCache.getInstance();
+		ComparableCartogram compare = new ComparableCartogram(dataSet, trans
+				.getMaxNSquareLog(), trans.getBlurWidth(), trans
+				.getBlurWidthFactor(), currentVar);
+		ComparableCartogram previousOne = cache.findCartogram(compare);
+		DataSetForApps newData = null;
+		if (previousOne == null) {
+			newData = MapGenFile.createCartogram(pBar, dataSet, gvPrefs,
+					currentVar, trans);
+			compare.setCartogramShapes(newData.getShapeData());
+			cache.addComparableCartogram(compare);
+		} else {
+			newData = MapGenFile.createNewDataSet(dataSet, previousOne
+					.getCartogramShapes());
+		}
+		super.setDataSet(newData);
 
-    JProgressBar pBar = new JProgressBar();
-    int currentVar = this.elementPosition[0]-1;//x var
-    CartogramShapeCache cache = CartogramShapeCache.getInstance();
-    ComparableCartogram compare = new ComparableCartogram(this.dataSet, trans.getMaxNSquareLog(), trans.getBlurWidth(),trans.getBlurWidthFactor(), currentVar);
-    ComparableCartogram previousOne = cache.findCartogram(compare);
-    DataSetForApps newData = null;
-    if (previousOne == null){
-      newData = MapGenFile.createCartogram(pBar, this.dataSet, gvPrefs,
-          currentVar, this.trans);
-      compare.setCartogramShapes(newData.getShapeData());;
-      cache.addComparableCartogram(compare);
-    } else{
-      newData = MapGenFile.createNewDataSet(this.dataSet,previousOne.getCartogramShapes());
-    }
-    super.setDataSet(newData);
+	}
 
-  }
-  public void setBivarColorClasser(BivariateColorSymbolClassification
-                                   bivarColorClasser) {
-    BivariateColorSymbolClassificationSimple biColorSymbolizer =
-        (BivariateColorSymbolClassificationSimple)
-        bivarColorClasser;
+	@Override
+	public void setBivarColorClasser(
+			BivariateColorSymbolClassification bivarColorClasser) {
+		BivariateColorSymbolClassificationSimple biColorSymbolizer = (BivariateColorSymbolClassificationSimple) bivarColorClasser;
 
+		// biColorSymbolizer.setClasserX(bivarColorClasser.getClasserX());
+		// biColorSymbolizer.setColorerX(bivarColorClasser.getXColorSymbolizer());
+		// biColorSymbolizer.setClasserY(bivarColorClasser.getClasserX());
+		// biColorSymbolizer.setColorerY(bivarColorClasser.getXColorSymbolizer());
 
-//   biColorSymbolizer.setClasserX(bivarColorClasser.getClasserX());
-//   biColorSymbolizer.setColorerX(bivarColorClasser.getXColorSymbolizer());
-//    biColorSymbolizer.setClasserY(bivarColorClasser.getClasserX());
-//    biColorSymbolizer.setColorerY(bivarColorClasser.getXColorSymbolizer());
+		this.bivarColorClasser = biColorSymbolizer;
+		if (dataSet != null) {
+			sendColorsToLayers(dataSet.getNumObservations());
+		}
+	}
 
-    this.bivarColorClasser = biColorSymbolizer;
-    if (this.dataSet != null) {
-      sendColorsToLayers(this.dataSet.getNumObservations());
-    }
-  }
-  
-  
-  
-//  public void setDataSet(Object[] data) {
-//
-//    super.setDataSet(data);
-//    this.cartogramData = null;//reset in case we already have this
-//
-//    DataSetForApps dataSet = new DataSetForApps(data);
-//    this.dataSet = dataSet;
-//
-//  }
-  public void setDataObject(DataSetForApps dataSet) {
+	// public void setDataSet(Object[] data) {
+	//
+	// super.setDataSet(data);
+	// this.cartogramData = null;//reset in case we already have this
+	//
+	// DataSetForApps dataSet = new DataSetForApps(data);
+	// this.dataSet = dataSet;
+	//
+	// }
+	@Override
+	public void setDataObject(DataSetForApps dataSet) {
 
-    this.dataSet = new DataSetForApps();
+		this.dataSet = new DataSetForApps();
 
-    super.setDataSet(dataSet);
-    this.setDataIndices(this.elementPosition);//triggers cartogram creation
+		super.setDataSet(dataSet);
+		setDataIndices(elementPosition);// triggers cartogram creation
 
-    //super.tickleColors();
-  }
+		// super.tickleColors();
+	}
 
+	public static void main(String[] args) {
 
+		GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
 
+		CartogramMatrixElement gui = new CartogramMatrixElement();
+		JFrame frame = new JFrame("Cartogram GeoMap");
+		frame.getContentPane().add(gui);
+		ShapeFileProjection shpProj = new ShapeFileProjection();
+		shpProj.setInputDataSetForApps(stateData.getDataForApps());
+		gui.setDataSet(shpProj.getOutputDataSetForApps());
+		frame.pack();
+		frame.setVisible(true);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 
-  public static void main(String[] args) {
-
-    GeoDataGeneralizedStates stateData = new GeoDataGeneralizedStates();
-
-    CartogramMatrixElement gui = new CartogramMatrixElement();
-    JFrame frame = new JFrame(
-        "Cartogram GeoMap");
-    frame.getContentPane().add(gui);
-    ShapeFileProjection shpProj = new ShapeFileProjection();
-    shpProj.setInputDataSetForApps(stateData.getDataForApps());
-    gui.setDataSet(shpProj.getOutputDataSetForApps());
-    frame.pack();
-    frame.setVisible(true);
-    frame.addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent e) {
-        System.exit(0);
-      }
-    });
-
-  }
+	}
 
 }
