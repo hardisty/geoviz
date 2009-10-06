@@ -65,7 +65,6 @@ public class ShapeFileDataWriter {
 		int len = 0;
 		for (double num : array) {
 			double leftNum = Math.floor(num);
-			Double dNum = new Double(leftNum);
 
 			String numString = String.valueOf(leftNum);
 			if (numString.length() > len) {

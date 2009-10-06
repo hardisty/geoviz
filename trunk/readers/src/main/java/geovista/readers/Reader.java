@@ -307,7 +307,7 @@ public final class Reader extends java.io.Reader {
 		String line = null;
 		while ((line = br.readLine()) != null
 				&& commentchars.indexOf(line.charAt(0)) >= 0) {
-			;
+
 		}
 		if (line == null) {
 			eof = true;
@@ -330,7 +330,7 @@ public final class Reader extends java.io.Reader {
 	public final String readLine(char commentchar) throws IOException {
 		String line = null;
 		while ((line = br.readLine()) != null && commentchar == line.charAt(0)) {
-			;
+
 		}
 		if (line == null) {
 			eof = true;
