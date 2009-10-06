@@ -4,11 +4,13 @@
 package geovista.geoviz;
 
 import java.awt.Component;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
+import geovista.common.data.DataSetForApps;
 import geovista.common.event.ConditioningEvent;
 import geovista.common.event.ConditioningListener;
 import geovista.common.event.DataSetEvent;
@@ -30,8 +32,10 @@ public class Exerciser {
 	ArrayList beans;
 	Object beanIn;
 
+	// GeoDataGeneralizedStates geoData;
 	GeoDataGeneralizedStates geoData;
 	final static Logger logger = Logger.getLogger(Exerciser.class.getName());
+	static DataSetForApps dsa;
 
 	public enum Event {
 		Selection, Indication, DataSet, Subspace, SpatialExtent, ColorArray, Conditioning
@@ -40,7 +44,7 @@ public class Exerciser {
 
 	public Exerciser() {
 		geoData = new GeoDataGeneralizedStates();
-
+		// geoData = new GeoData2008Election();
 		coord = new CoordinationManager();
 		beans = new ArrayList();
 
@@ -52,11 +56,36 @@ public class Exerciser {
 		coord.addBean(beanIn);
 		if (beanIn instanceof DataSetListener) {
 			DataSetListener dataListener = (DataSetListener) beanIn;
-			dataListener.dataSetChanged(new DataSetEvent(geoData
-					.getDataForApps(), this));
+			if (dsa == null) {
+				logger.info("getting data for tests");
+				dsa = geoData.getDataForApps();
+				takeFirstVars(6);
+			}
+			dataListener.dataSetChanged(new DataSetEvent(dsa, this));
 
 		}
 		beans.add(beanIn);
+
+	}
+
+	void takeFirstVars(int howMany) {
+		String[] varNames = new String[howMany];
+		Object[] originalDataArrays = new Object[howMany];
+		for (int i = 0; i < howMany; i++) {
+			varNames[i] = dsa.getColumnName(i);
+			originalDataArrays[i] = dsa.getDataObjectOriginal()[i + 1];
+		}
+		Shape[] shapeData = dsa.getShapeData();
+
+		Object[] newDataArray = new Object[howMany + 2];
+		newDataArray[0] = varNames;
+
+		for (int i = 0; i < howMany; i++) {
+			newDataArray[i + 1] = originalDataArrays[i];
+
+		}
+		newDataArray[howMany + 1] = shapeData;
+		dsa = new DataSetForApps(newDataArray);
 
 	}
 
@@ -118,5 +147,9 @@ public class Exerciser {
 		app.pack();
 		addBean(comp);
 		testAllEvents();
+		app.setVisible(false);
+		comp = null;
+		app = null;
+
 	}
 }
