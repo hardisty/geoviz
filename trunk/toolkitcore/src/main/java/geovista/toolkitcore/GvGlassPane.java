@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.AWTEventListener;
 import java.awt.event.MouseEvent;
 
@@ -27,16 +26,11 @@ import javax.swing.SwingUtilities;
 
 public class GvGlassPane extends JPanel implements AWTEventListener {
 	private final JFrame frame;
-	private Point point = new Point();
 
 	public GvGlassPane(JFrame frame) {
 		super(null);
 		this.frame = frame;
 		setOpaque(false);
-	}
-
-	public void setPoint(Point point) {
-		this.point = point;
 	}
 
 	@Override
@@ -60,14 +54,7 @@ public class GvGlassPane extends JPanel implements AWTEventListener {
 			if (!SwingUtilities.isDescendingFrom(me.getComponent(), frame)) {
 				return;
 			}
-			if (me.getID() == MouseEvent.MOUSE_EXITED
-					&& me.getComponent() == frame) {
-				point = null;
-			} else {
-				MouseEvent converted = SwingUtilities.convertMouseEvent(me
-						.getComponent(), me, frame.getGlassPane());
-				point = converted.getPoint();
-			}
+
 			repaint();
 		}
 	}

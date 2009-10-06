@@ -46,12 +46,16 @@ public class GvDesktopPane extends JDesktopPane implements
 	GeoVizToolkit parentKit;
 
 	String useIndicationUI = "Use leader lines?";
+	String pinUI = "Pin components to desktop?";
+	boolean allPinned;
 
 	public GvDesktopPane() {
 		super();
+		allPinned = false;
 		// addMouseMotionListener(this);
 		VisualSettingsPopupMenu popMenu = new VisualSettingsPopupMenu(this);
 		popMenu.addCheckBoxItem(useIndicationUI, false);
+		popMenu.addCheckBoxItem(pinUI, false);
 		MouseAdapter listener = new VisualSettingsPopupAdapter(popMenu);
 		popMenu.addMouseListener(listener);
 		addMouseListener(listener);
@@ -226,8 +230,26 @@ public class GvDesktopPane extends JDesktopPane implements
 	public void processCustomCheckBox(boolean value, String text) {
 		if (text.equals(useIndicationUI)) {
 			parentKit.setIndicationUI(value);
+		} else if (text.equals(pinUI)) {
+			setPin(value);
 		}
 
+	}
+
+	public void setPin(boolean pin) {
+		ToolkitBeanSet tbeans = parentKit.getTBeanSet();
+		if (pin) {
+			for (ToolkitBean tBean : tbeans.getBeanSet()) {
+				parentKit.pinBean(tBean);
+			}
+		}
+		if (pin == false) {
+
+			for (ToolkitBean tBean : tbeans.getBeanSet()) {
+				parentKit.unPinBean(tBean);
+			}
+		}
+		parentKit.validate();
 	}
 
 }

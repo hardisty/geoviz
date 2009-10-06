@@ -18,7 +18,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -235,7 +234,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		// addMouseMotionListener(desktop);
 
-		// XXX we are replacing with JXLayer for now
+		// we are replacing with JXLayer for now
 		// addImpl(glassPane, null, 0);
 		// desktop.add(glassPane, null, 0);
 
@@ -247,7 +246,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		// Create JDesktopPane to hold the internal frames
 		desktop = new GvDesktopPane();
-
+		desktop.setBackground(Color.white);
 		desktop.parentKit = this;
 
 		// addBindings();
@@ -396,7 +395,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		ToolkitIO.saveVizStateToFile(vizState);
 	}
 
-	private void addExternalBean(Object bean) {
+	public void addExternalBean(Object bean) {
 		coord.addBean(bean);
 
 		ColumnAppendedBroadcaster localCaster = (ColumnAppendedBroadcaster) bean;
@@ -537,12 +536,37 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 		menuRemoveTool.add(item, 0); // add at the top
 
-		// XXX hack for testing
 		if (newToolkitBean.getOriginalBean().getClass().equals(GeoMap.class)) {
 			logger.info("geo geo");
 
 		}
 
+	}
+
+	void pinBean(ToolkitBean beanToPin) {
+
+		Point location = beanToPin.getInternalFrame().getLocation();
+		int index = desktop.getIndexOf(beanToPin.getInternalFrame());
+		Dimension size = beanToPin.getInternalFrame().getSize();
+		desktop.remove(beanToPin.getInternalFrame());
+		Component comp = (Component) beanToPin.getOriginalBean();
+		desktop.add(comp, index);
+		comp.setSize(size);
+		comp.setLocation(location);
+
+	}
+
+	void unPinBean(ToolkitBean unPinBean) {
+		Component comp = (Component) unPinBean.getOriginalBean();
+		Point location = comp.getLocation();
+		int index = desktop.getIndexOf(comp);
+		Dimension size = comp.getSize();
+		desktop.remove(comp);
+		JInternalFrame fram = unPinBean.getInternalFrame();
+		fram.add(comp);
+		desktop.add(fram, index);
+		fram.setSize(size);
+		fram.setLocation(location);
 	}
 
 	private void fireNewBeanMethods(Object newBean) {
@@ -757,6 +781,26 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		setCursor(Cursor.getDefaultCursor());
 	}
 
+	private void loadAdditionalTable(String name) {
+		Object[] newDataSet = null;
+
+		try {
+			newDataSet = createData(name);
+		} catch (IOException e) {
+			JOptionPane
+					.showMessageDialog(this, "Sorry, could not load " + name);
+
+			e.printStackTrace();
+		}
+		DataSetForApps auxData = new DataSetForApps(newDataSet);
+		Object viewer = GeoVizToolkit.makeObject(TableViewer.class.getName());
+		ToolkitBean newToolkitBean = new ToolkitBean(viewer, "viewer");
+		TableViewer tv = (TableViewer) viewer;
+		tv.setDataSet(auxData);
+		addBeanToGui(newToolkitBean);
+
+	}
+
 	private void loadBackgroundData(String name) {
 		Object[] newDataSet = null;
 
@@ -772,7 +816,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		dataCaster.fireAuxiliaryDataSet(auxData);
 	}
 
-	private void setDataSet(DataSetForApps dataSet) {
+	public void setDataSet(DataSetForApps dataSet) {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		this.repaint();
 
@@ -961,7 +1005,8 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		String fileName = ToolkitIO.getFileName(this, ToolkitIO.Action.OPEN,
 				ToolkitIO.FileType.SHAPEFILE);
 
-		loadBackgroundData(fileName);
+		// loadBackgroundData(fileName);
+		loadAdditionalTable(fileName);
 		logger.finest("Background name = " + fileName);
 
 	}
@@ -1296,7 +1341,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		return useProj;
 	}
 
-	private void setUseProj(boolean useProj) {
+	public void setUseProj(boolean useProj) {
 		this.useProj = useProj;
 	}
 
@@ -1317,7 +1362,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setLevel(Level.INFO);
 		// logger.addHandler(handler);
-
+		logger.info(System.getProperty("java.version"));
 		try {
 			// Create a file handler that write log record to a file called
 			// my.log
@@ -1349,7 +1394,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 			// "org.jvnet.substance.skin.SubstanceTwilightLookAndFeel");
 
 		} catch (Exception e) {
-			logger.info("couldn't find look and feel, continue");
+			logger.info("couldn't find Nimbus look and feel, continue");
 			e.printStackTrace();
 		}
 		/*
@@ -1474,7 +1519,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 		}
 		Object src = e.getSource();
 		logger.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-		// logger.info(src.getClass().getName());
+		logger.finest(src.getClass().getName());
 
 		HashSet<ToolkitBean> beans = tBeanSet.getBeanSet();
 		for (ToolkitBean tBean : beans) {
@@ -1482,8 +1527,9 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 
 			if (obj instanceof ShapeReporter) {
 				ShapeReporter shpR = (ShapeReporter) obj;
-				Component srcComp = ((ShapeReporter) obj).renderingComponent();
-				Shape reportedShape = shpR.reportShape();
+				// Component srcComp = ((ShapeReporter)
+				// obj).renderingComponent();
+				// Shape reportedShape = shpR.reportShape();
 				Rectangle rect = shpR.reportShape().getBounds();
 				Point pt = SwingUtilities.convertPoint((Component) obj, rect.x,
 						rect.y, desktop);

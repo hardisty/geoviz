@@ -64,11 +64,11 @@ public class ToolkitIO {
 
 	public enum Action {
 		OPEN, SAVE
-	};
+	}
 
 	public enum FileType {
 		LAYOUT, SHAPEFILE, SEERSTAT, CSV, XLS, GVT
-	};
+	}
 
 	// we need to keep these as strings to avoid breaking existing clients
 	private static String LAYOUT_DIR = "LastGoodLayoutDirectory";
@@ -372,18 +372,18 @@ public class ToolkitIO {
 	 * BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
 	 * Graphics g = buff.getGraphics(); c.paint(g);
 	 * 
-	 * String outputFileName = "C:\\test.jpg"; InputStream inStream = null; try {
-	 * Class cl = ToolkitIO.class;
+	 * String outputFileName = "C:\\test.jpg"; InputStream inStream = null; try
+	 * { Class cl = ToolkitIO.class;
 	 * 
 	 * inStream = cl.getResourceAsStream("resources/default.xml"); } catch
 	 * (Exception ex) { ex.printStackTrace(); } Document doc =
 	 * ToolkitIO.readDocument(inStream); // Get core JPEG writer. Iterator
-	 * writers = ImageIO.getImageWritersByFormatName("jpeg"); ImageWriter writer =
-	 * ImageIO.getImageWritersByFormatName("jpeg").next(); while
+	 * writers = ImageIO.getImageWritersByFormatName("jpeg"); ImageWriter writer
+	 * = ImageIO.getImageWritersByFormatName("jpeg").next(); while
 	 * (writers.hasNext()) { writer = (ImageWriter) writers.next(); if
-	 * (writer.getClass().getName().startsWith( "javax_imageio_jpeg_image_1.0")) { //
-	 * Break on finding the core compProvider. break; } } if (writer == null) {
-	 * System.err.println("Cannot find core JPEG writer!"); } // Set the
+	 * (writer.getClass().getName().startsWith( "javax_imageio_jpeg_image_1.0"))
+	 * { // Break on finding the core compProvider. break; } } if (writer ==
+	 * null) { System.err.println("Cannot find core JPEG writer!"); } // Set the
 	 * compression level. ImageWriteParam writeParam =
 	 * writer.getDefaultWriteParam();
 	 * writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
@@ -396,8 +396,8 @@ public class ToolkitIO {
 	 * IIOMetadata imageMetadata = new JPEGMetadata(); // add something...
 	 * IIOMetadataNode commentNode = new IIOMetadataNode("com");
 	 * commentNode.setAttribute("comment", doc.toString());
-	 * logger.finest(""+imageMetadata.isStandardMetadataFormatSupported()); try {
-	 * IIOMetadataNode root = (IIOMetadataNode) imageMetadata
+	 * logger.finest(""+imageMetadata.isStandardMetadataFormatSupported()); try
+	 * { IIOMetadataNode root = (IIOMetadataNode) imageMetadata
 	 * .getAsTree("javax_imageio_jpeg_image_1.0"); //
 	 * root.setAttribute("comment", "Anthony is in trouble"); //
 	 * root.setTextContent("this is text content");
@@ -410,10 +410,11 @@ public class ToolkitIO {
 	 * rootnl = root.getChildNodes(); //
 	 * root.getLastChild().appendChild(commentNode); for (int i = 0; i <
 	 * rootnl.getLength(); i++) { Node nod = rootnl.item(i);
-	 * logger.finest("***"); logger.finest("nod " + i); logger.finest("nod name " +
-	 * nod.getNodeName()); logger.finest("nod value " + nod.getNodeValue());
-	 * IIOMetadataNode iioNod = (IIOMetadataNode) nod; logger.finest("iiomnod
-	 * comment " + iioNod.getAttribute("comment")); } logger.finest("***");
+	 * logger.finest("***"); logger.finest("nod " + i);
+	 * logger.finest("nod name " + nod.getNodeName());
+	 * logger.finest("nod value " + nod.getNodeValue()); IIOMetadataNode iioNod
+	 * = (IIOMetadataNode) nod; logger.finest("iiomnod comment
+	 * " + iioNod.getAttribute("comment")); } logger.finest("***");
 	 * logger.finest("root comment " + root.getAttribute("Comment"));
 	 * logger.finest("***"); logger.finest("root text content " +
 	 * root.getTextContent()); logger.finest("***"); logger.finest("root
@@ -437,8 +438,8 @@ public class ToolkitIO {
 	 * catch block e.printStackTrace(); } // Set the output stream, write the
 	 * image try {
 	 * 
-	 * writer .setOutput(new FileImageOutputStream(new File( outputFileName))); //
-	 * writer.replaceImageMetadata(0,imageMetadata); writer.write(null, new
+	 * writer .setOutput(new FileImageOutputStream(new File( outputFileName)));
+	 * // writer.replaceImageMetadata(0,imageMetadata); writer.write(null, new
 	 * IIOImage(image, null, imageMetadata), writeParam); writer.dispose(); }
 	 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
 	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
