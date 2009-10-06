@@ -31,6 +31,7 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
@@ -93,7 +94,7 @@ public class GrandTourPanel extends JPanel implements ActionListener, ChangeList
         animationSubPanel.add(new JLabel("seconds"));
         animationPanel.add(animationSubPanel);
         //Create the slider.
-        animationLengthSlider = new JSlider(JSlider.HORIZONTAL, LEN_MIN, LEN_MAX, LEN_INIT);
+        animationLengthSlider = new JSlider(SwingConstants.HORIZONTAL, LEN_MIN, LEN_MAX, LEN_INIT);
         animationLengthSlider.addChangeListener(this);
         //Turn on labels at major tick marks.
         animationLengthSlider.setMajorTickSpacing(30);

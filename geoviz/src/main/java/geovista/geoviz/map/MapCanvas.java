@@ -95,7 +95,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 
 	private boolean useSelectionFade = true;
 	private boolean useSelectionBlur = true;
-	private final boolean useNeighbors = false;
+	boolean useNeighbors = false;
 
 	private int mouseX1;
 	transient private int mouseX2;
@@ -643,6 +643,14 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			return;
 		}
 		if ((shapeLayers.size() > 0) && (getWidth() > 0) && (getHeight() > 0)) {
+			// find dimension of minimum change
+			int widthDiff = getWidth() - drawingBuff.getWidth(this);
+			int heightDiff = getHeight() - drawingBuff.getHeight(this);
+			if (Math.abs(widthDiff) <= Math.abs(heightDiff)) {
+				// XXX do width zoom
+			} else {
+				// XXX do height soom
+			}
 			drawingBuff = this.createImage(getWidth(), getHeight());
 
 			for (int i = 0; i < shapeLayers.size(); i++) {
@@ -959,11 +967,9 @@ public class MapCanvas extends JPanel implements ComponentListener,
 			return;
 		}
 
-		int buffer = 50;
 		if (indication != this.indication) {
 			// Rectangle currIndRect = new Rectangle(0, 0, 0, 0);
 			// Rectangle newIndRect = new Rectangle(0, 0, 0, 0);
-			int currInd = this.indication;
 
 			this.indication = indication;
 
@@ -1526,7 +1532,7 @@ public class MapCanvas extends JPanel implements ComponentListener,
 					.getWidth(this), drawingBuff.getHeight(this),
 					BufferedImage.TYPE_INT_ARGB);
 			// VolatileImage blurBuff=
-			//this.getGraphicsConfiguration().createCompatibleVolatileImage(this
+			// this.getGraphicsConfiguration().createCompatibleVolatileImage(this
 			// .drawingBuff.getWidth(this),
 			// this.drawingBuff.getHeight(this));
 			blurBuff.getGraphics().drawImage(drawingBuff, 0, 0, this);

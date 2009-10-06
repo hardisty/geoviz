@@ -163,7 +163,7 @@ public class GraduatedSymbolsMap extends GeoMap implements GlyphListener,
 
 	@Override
 	public void colorArrayChanged(ColorArrayEvent e) {
-		if (GraduatedSymbolsMap.logger.isLoggable(Level.FINEST)) {
+		if (GeoMap.logger.isLoggable(Level.FINEST)) {
 			logger
 					.finest("in GraduatedSymbolsMap colorarraychanged, got colors");
 		}

@@ -37,6 +37,7 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
@@ -303,7 +304,7 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
         startSubPanel.add(startWeightText);
         startPanel.add(startSubPanel);
         //Create the slider.
-        startWeightSlider = new JSlider(JSlider.HORIZONTAL, WT_MIN, WT_MAX, WT_INIT);
+        startWeightSlider = new JSlider(SwingConstants.HORIZONTAL, WT_MIN, WT_MAX, WT_INIT);
         startWeightSlider.addChangeListener(this);
         //Turn on labels at major tick marks.
         startWeightSlider.setMajorTickSpacing(50);
@@ -353,7 +354,7 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
         endSubPanel.add(endWeightText);
         endPanel.add(endSubPanel);
         //Create the slider.
-        endWeightSlider = new JSlider(JSlider.HORIZONTAL, WT_MIN, WT_MAX, WT_INIT);
+        endWeightSlider = new JSlider(SwingConstants.HORIZONTAL, WT_MIN, WT_MAX, WT_INIT);
         endWeightSlider.addChangeListener(this);
         //Turn on labels at major tick marks.
         endWeightSlider.setMajorTickSpacing(50);
@@ -405,7 +406,7 @@ public class AttWeightsAnimationPanel extends JPanel implements ActionListener, 
         animationSubPanel.add(new JLabel("seconds"));
         animationPanel.add(animationSubPanel);
         //Create the slider.
-        animationLengthSlider = new JSlider(JSlider.HORIZONTAL, LEN_MIN, LEN_MAX, LEN_INIT);
+        animationLengthSlider = new JSlider(SwingConstants.HORIZONTAL, LEN_MIN, LEN_MAX, LEN_INIT);
         animationLengthSlider.addChangeListener(this);
         //Turn on labels at major tick marks.
         animationLengthSlider.setMajorTickSpacing(60);

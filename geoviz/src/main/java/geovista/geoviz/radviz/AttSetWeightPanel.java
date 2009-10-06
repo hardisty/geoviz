@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
@@ -51,7 +52,7 @@ public class AttSetWeightPanel extends JPanel implements ActionListener, ChangeL
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         
         //Create the label.
-        JLabel sliderLabel = new JLabel("Attribute Weight: ", JLabel.CENTER);
+        JLabel sliderLabel = new JLabel("Attribute Weight: ", SwingConstants.CENTER);
         sliderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Create the formatted text field and its formatter.
@@ -83,7 +84,7 @@ public class AttSetWeightPanel extends JPanel implements ActionListener, ChangeL
         });
 
         //Create the slider.
-        weightSlider = new JSlider(JSlider.HORIZONTAL, WT_MIN, WT_MAX, WT_INIT);
+        weightSlider = new JSlider(SwingConstants.HORIZONTAL, WT_MIN, WT_MAX, WT_INIT);
         weightSlider.addChangeListener(this);
 
         //Turn on labels at major tick marks.

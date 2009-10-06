@@ -768,14 +768,11 @@ public class Histogram extends JPanel implements MouseListener,
 						.finest("In setup data for display ..."
 								+ xAxisExtents[0]);
 			}
-		} else {
-			logger
-					.info("Histogram trying to setupDataFordisplay and xAxisExtents = null");
-			return;
 		}
 		if (yAxisExtents == null) {
 			logger
 					.info("Histogram trying to setupDataFordisplay and yAxisExtents = null");
+			return;
 		}
 		if (axisOn) {
 			plotOriginX = (int) (getWidth() * AXISSPACEPORTION);
