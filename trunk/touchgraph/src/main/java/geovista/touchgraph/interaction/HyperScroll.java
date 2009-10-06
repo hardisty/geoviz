@@ -49,6 +49,7 @@
 
 package geovista.touchgraph.interaction;
 
+import java.awt.Adjustable;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -73,16 +74,17 @@ public class HyperScroll implements GraphListener {
 	transient private final TGPanel tgPanel;
 	transient HyperLens hyperLens;
 	transient double inverseArray[] = new double[200]; // Helps calculate the
-														// inverse of the
-														// Hyperbolic function
+	// inverse of the
+	// Hyperbolic function
 	transient double width; // Initially was intended to change the function of
-							// the lens depending on screen size,
+
+	// the lens depending on screen size,
 
 	// but now functions as a constant.
 
 	public HyperScroll(TGPanel tgp) {
 		tgPanel = tgp;
-		hyperSB = new JScrollBar(JScrollBar.HORIZONTAL, 0, 8, 0, 108);
+		hyperSB = new JScrollBar(Adjustable.HORIZONTAL, 0, 8, 0, 108);
 		hyperSB.addAdjustmentListener(new hyperAdjustmentListener());
 
 		hyperLens = new HyperLens();
@@ -122,7 +124,8 @@ public class HyperScroll implements GraphListener {
 		return Math.log(dist / (Math.pow(1.5, (70 - hyperV) / 40) * 80) + 1);
 		/*
 		 * double hyperD =
-		 * Math.sqrt(dist+(10.1-Math.sqrt(hyperV)))-Math.sqrt(10.1-Math.sqrt(hyperV));
+		 * Math.sqrt(dist+(10.1-Math.sqrt(hyperV)))-Math.sqrt(10.1
+		 * -Math.sqrt(hyperV));
 		 */
 
 	}
@@ -144,10 +147,10 @@ public class HyperScroll implements GraphListener {
 		double x;
 		for (int i = 0; i < 200; i++) {
 			x = width * i / 200; // Points within a radius of 'width' will
-									// have exact inverses.
+			// have exact inverses.
 			inverseArray[i] = hyperDist(x);
 		}
-	};
+	}
 
 	int findInd(int min, int max, double dist) {
 		int mid = (min + max) / 2;
@@ -219,7 +222,8 @@ public class HyperScroll implements GraphListener {
 	 * protected void undoLens(TGPoint2D p) {
 	 * 
 	 * p.x=(p.x/Math.sqrt(tgPanel.getSize().width/2)); p.x=p.x*Math.abs(p.x);
-	 * p.y=(p.y/Math.sqrt(tgPanel.getSize().height/2)); p.y=p.y*Math.abs(p.y); } }
+	 * p.y=(p.y/Math.sqrt(tgPanel.getSize().height/2)); p.y=p.y*Math.abs(p.y); }
+	 * }
 	 */
 
 } // end com.touchgraph.graphlayout.interaction.HyperScroll

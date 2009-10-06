@@ -51,6 +51,7 @@ package geovista.touchgraph.interaction;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -170,7 +171,7 @@ public class GLEditUI extends TGUserInterface {
             Node select = tgPanel.getSelect();
 
 
-            if (e.getModifiers() == MouseEvent.BUTTON1_MASK) {
+            if (e.getModifiers() == InputEvent.BUTTON1_MASK) {
                 if (mouseOverN != null) {
                     if(mouseOverN!=select)
                         dragNodeUI.activate(e);
@@ -184,7 +185,7 @@ public class GLEditUI extends TGUserInterface {
         }
 
         public void mouseClicked(MouseEvent e) {
-            if (e.getModifiers() == MouseEvent.BUTTON1_MASK)
+            if (e.getModifiers() == InputEvent.BUTTON1_MASK)
                 switchSelectUI.activate(e);
 
         }

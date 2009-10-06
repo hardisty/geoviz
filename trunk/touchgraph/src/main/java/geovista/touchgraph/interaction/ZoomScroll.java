@@ -49,6 +49,7 @@
 
 package geovista.touchgraph.interaction;
 
+import java.awt.Adjustable;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -76,7 +77,7 @@ public class ZoomScroll implements GraphListener {
      */
     public ZoomScroll( TGPanel tgp ) {
         tgPanel=tgp;
-        zoomSB = new JScrollBar(JScrollBar.HORIZONTAL, -10, 4, -30, 19);
+        zoomSB = new JScrollBar(Adjustable.HORIZONTAL, -10, 4, -30, 19);
         zoomSB.addAdjustmentListener(new zoomAdjustmentListener());
         zoomLens=new ZoomLens();
         tgPanel.addGraphListener(this);

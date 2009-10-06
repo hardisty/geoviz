@@ -49,6 +49,7 @@
 
 package geovista.touchgraph.interaction;
 
+import java.awt.Adjustable;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
@@ -86,7 +87,7 @@ public class RotateScroll implements GraphListener {
         rotateAngle=0;
         rotateLens=new RotateLens();
          rotateDragUI = new RotateDragUI();
-         rotateSB = new DScrollBar(JScrollBar.HORIZONTAL, 0, 4, -314, 318);
+         rotateSB = new DScrollBar(Adjustable.HORIZONTAL, 0, 4, -314, 318);
          rotateSB.addAdjustmentListener(new rotateAdjustmentListener());
          adjustmentIsInternal=false;
          tgPanel.addGraphListener(this);

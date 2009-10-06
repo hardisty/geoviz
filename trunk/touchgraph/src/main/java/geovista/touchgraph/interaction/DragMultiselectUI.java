@@ -57,88 +57,96 @@ import geovista.touchgraph.TGPaintListener;
 import geovista.touchgraph.TGPanel;
 import geovista.touchgraph.TGPoint2D;
 
-/** DragMultiselectUI contains code for selecting a group on nodes
-  * by enclosing them in a dotted box.
-  *
-  * @author   Alexander Shapiro
-  * 
-  */
-public class DragMultiselectUI extends TGAbstractDragUI implements TGPaintListener {
+/**
+ * DragMultiselectUI contains code for selecting a group on nodes by enclosing
+ * them in a dotted box.
+ * 
+ * @author Alexander Shapiro
+ * 
+ */
+public class DragMultiselectUI extends TGAbstractDragUI implements
+		TGPaintListener {
 
-    transient TGPoint2D mousePos=null;
-    transient TGPoint2D startPos = null;
+	transient TGPoint2D mousePos = null;
+	transient TGPoint2D startPos = null;
 
-    DragMultiselectUI( TGPanel tgp ) {
-        super(tgp);
-    }
+	DragMultiselectUI(TGPanel tgp) {
+		super(tgp);
+	}
 
-    public void preActivate() {
-        startPos = null;
-        mousePos = null;
-        tgPanel.addPaintListener(this);
-    }
+	@Override
+	public void preActivate() {
+		startPos = null;
+		mousePos = null;
+		tgPanel.addPaintListener(this);
+	}
 
-    public void preDeactivate() {
-        tgPanel.removePaintListener(this);
-        tgPanel.repaint();
-    };
+	@Override
+	public void preDeactivate() {
+		tgPanel.removePaintListener(this);
+		tgPanel.repaint();
+	}
 
+	@Override
+	public void mousePressed(MouseEvent e) {
+		startPos = new TGPoint2D(e.getX(), e.getY());
+		mousePos = new TGPoint2D(startPos);
+	}
 
-    public void mousePressed(MouseEvent e) {
-        startPos = new TGPoint2D(e.getX(), e.getY());
-        mousePos = new TGPoint2D(startPos);
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
 
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		mousePos.setLocation(e.getX(), e.getY());
+		tgPanel.multiSelect(startPos, mousePos);
+		tgPanel.repaint();
+	}
 
-    public void mouseReleased(MouseEvent e) {}
+	public void paintFirst(Graphics g) {
+	}
 
-    public void mouseDragged(MouseEvent e) {
-        mousePos.setLocation(e.getX(), e.getY());
-        tgPanel.multiSelect(startPos,mousePos);
-        tgPanel.repaint();
-    }
+	public void paintAfterEdges(Graphics g) {
+	}
 
+	public void paintLast(Graphics g) {
 
+		if (mousePos == null) {
+			return;
+		}
 
-    public void paintFirst(Graphics g) {};
-    public void paintAfterEdges(Graphics g) {};
+		g.setColor(Color.black);
 
-    public void paintLast(Graphics g) {
+		int x, y, w, h;
 
-        if(mousePos==null) return;
+		if (startPos.x < mousePos.x) {
+			x = (int) startPos.x;
+			w = (int) (mousePos.x - startPos.x);
+		} else {
+			x = (int) mousePos.x;
+			w = (int) (startPos.x - mousePos.x);
+		}
 
-        g.setColor(Color.black);
+		if (startPos.y < mousePos.y) {
+			y = (int) startPos.y;
+			h = (int) (mousePos.y - startPos.y);
+		} else {
+			y = (int) mousePos.y;
+			h = (int) (startPos.y - mousePos.y);
+		}
 
-        int x,y,w,h;
+		// God, where are the line styles when you need them
+		for (int horiz = x; horiz < x + w; horiz += 2) {
+			g.drawLine(horiz, y, horiz, y); // Drawing lines because there is no
+			// way
+			g.drawLine(horiz, y + h, horiz, y + h); // to draw a single pixel.
+		}
+		for (int vert = y; vert < y + h; vert += 2) {
+			g.drawLine(x, vert, x, vert);
+			g.drawLine(x + w, vert, x + w, vert);
+		}
 
-        if (startPos.x<mousePos.x) {
-            x=(int) startPos.x;
-            w=(int) (mousePos.x-startPos.x);
-        }
-        else {
-            x=(int) mousePos.x;
-            w=(int) (startPos.x-mousePos.x);
-        }
-
-        if (startPos.y<mousePos.y) {
-            y=(int) startPos.y;
-            h=(int) (mousePos.y-startPos.y);
-        }
-        else {
-            y=(int) mousePos.y;
-            h=(int) (startPos.y-mousePos.y);
-        }
-
-        //God, where are the line styles when you need them
-        for(int horiz = x;horiz<x+w;horiz+=2){
-            g.drawLine(horiz,y,horiz,y);      //Drawing lines because there is no way
-            g.drawLine(horiz,y+h,horiz,y+h);  //to draw a single pixel.
-        }
-        for(int vert = y;vert<y+h;vert+=2){
-            g.drawLine(x,vert,x,vert);
-            g.drawLine(x+w,vert,x+w,vert);
-        }
-
-    }
+	}
 
 } // end

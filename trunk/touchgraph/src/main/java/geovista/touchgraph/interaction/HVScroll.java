@@ -49,6 +49,7 @@
 
 package geovista.touchgraph.interaction;
 
+import java.awt.Adjustable;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
@@ -104,13 +105,13 @@ public class HVScroll implements GraphListener {
         scrolling = false;
         adjustmentIsInternal = false;
 
-        horizontalSB = new DScrollbar(JScrollBar.HORIZONTAL, 0, 100, -1000, 1100);
+        horizontalSB = new DScrollbar(Adjustable.HORIZONTAL, 0, 100, -1000, 1100);
         horizontalSB.setBlockIncrement(100);
         horizontalSB.setUnitIncrement(20);
 
         horizontalSB.addAdjustmentListener(new horizAdjustmentListener());
 
-        verticalSB = new DScrollbar(JScrollBar.VERTICAL, 0, 100, -1000, 1100);
+        verticalSB = new DScrollbar(Adjustable.VERTICAL, 0, 100, -1000, 1100);
         verticalSB.setBlockIncrement(100);
         verticalSB.setUnitIncrement(20);
 
