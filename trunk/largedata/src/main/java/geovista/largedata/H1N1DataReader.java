@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,26 +26,22 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import com.vividsolutions.jts.algorithm.locate.IndexedPointInAreaLocator;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.prep.PreparedGeometry;
-import com.vividsolutions.jts.geom.prep.PreparedGeometryFactory;
-import com.vividsolutions.jts.index.quadtree.Quadtree;
-import com.vividsolutions.jts.index.strtree.STRtree;
 
 import geovista.common.data.DataSetForApps;
 import geovista.common.data.DescriptiveStatistics;
 import geovista.common.data.GeoDataSource;
 import geovista.common.data.SpatialWeights;
+import geovista.readers.csv.ExcelCSVParser;
 import geovista.readers.shapefile.ShapeFileDataReader;
 
-public class HerberiaDataReader implements GeoDataSource {
+@SuppressWarnings("unused")
+public class H1N1DataReader implements GeoDataSource {
 
-	final static Logger logger = Logger.getLogger(HerberiaDataReader.class
+	final static Logger logger = Logger.getLogger(H1N1DataReader.class
 			.getName());
 
 	ArrayList<Date> date = new ArrayList();
@@ -58,73 +55,40 @@ public class HerberiaDataReader implements GeoDataSource {
 	HashSet<String> species = new HashSet();
 	ArrayList<Coordinate> locations = new ArrayList();
 	Geometry[] theGeoms;
-	PreparedGeometry[] preparedGeoms;
+
 	Rectangle2D[] bounds;
-	IndexedPointInAreaLocator[] theIndexes;
-	Quadtree qTree;
-	STRtree strTree;
+
 	HashMap<Geometry, Integer> geomMap;
+	private static String resource_shapefile = "resources/countries.shp";
+	private static String resource_rhiza = "resources/h1n1_inc.csv";
 
-	public void readCAShapefile() {
-		FileInputStream shpStream = null;
-		try {
-			shpStream = new FileInputStream(
-					"C:\\data\\geovista_data\\herberia\\ca.shp");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void readWorldShapefile() {
+		logger.info("reading world shapefile");
+		InputStream shpStream = this.getClass().getResourceAsStream(
+				resource_shapefile);
 
-		theGeoms = ShapeFileDataReader.getGeoms(shpStream);
+		theGeoms = ShapeFileDataReader.getGeoms(shpStream, 1);
 		// theGeoms = ShapeFileDataReader.makeSimplerGeoms(theGeoms, 1);
 		Shape[] shapes = ShapeFileDataReader.geomsToShapes(theGeoms);
-		preparedGeoms = new PreparedGeometry[theGeoms.length];
+
 		bounds = new Rectangle2D[theGeoms.length];
 		for (int i = 0; i < theGeoms.length; i++) {
-			preparedGeoms[i] = PreparedGeometryFactory.prepare(theGeoms[i]);
+
 			bounds[i] = shapes[i].getBounds2D();
 		}
+
 		int nPolys = 0;
-		// GeometryFactory fact = new GeometryFactory();
-		strTree = new STRtree();
-		// for (Geometry geom : theGeoms) {
-		// DelaunayTriangulationBuilder dtb = new
-		// DelaunayTriangulationBuilder();
-		// dtb.setSites(geom);
-		// Geometry triangles = dtb.getTriangles(fact);
-		// int nGeoms = triangles.getNumGeometries();
-		// for (int i = 0; i < nGeoms; i++) {
-		// Geometry triangle = triangles.getGeometryN(i);
-		//
-		// strTree.insert(triangle.getEnvelope().getEnvelopeInternal(),
-		// triangle);
-		// }
-		// // MultiPolygon mp = (MultiPolygon) geom;
-		// // nPolys = mp.getNumGeometries();
-		// }
-
-		theIndexes = new IndexedPointInAreaLocator[nPolys];
-
-		qTree = new Quadtree();
 
 		geomMap = new HashMap<Geometry, Integer>();
 		for (int j = 0; j < theGeoms.length; j++) {
 			Geometry geom = theGeoms[j];
 			geomMap.put(geom, j);
 
-			// theIndexes[i] = new IndexedPointInAreaLocator(mp);
-			// i++;
-			logger.info("n polys = " + geom.getNumGeometries());
-			MultiPolygon mp = (MultiPolygon) geom;
-			for (int i = 0; i < mp.getNumGeometries(); i++) {
-				qTree.insert(geom.getGeometryN(i).getEnvelopeInternal(), geom);
-				strTree
-						.insert(geom.getGeometryN(i).getEnvelopeInternal(),
-								geom);
-
-			}
-
 		}
+		// Geometry[] geoms = new Geometry[theGeoms.length];
+		// for (int i=0;i)
+
+		// ShapeFileDataWriter.writeShapefile()
 
 	}
 
@@ -137,19 +101,46 @@ public class HerberiaDataReader implements GeoDataSource {
 		}
 	}
 
-	public void readHerberiaContents() {
+	private String extractRest(BufferedReader input) {
+		char quote = (char) 34;
+		StringBuilder builder = new StringBuilder();
+		try {
+			int val = input.read();
+			if (val == -1) {
+				return "";
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	public void readRhizaContents() {
 
 		try {
-			String fileName = "C:\\data\\geovista_data\\herberia\\herb_old.txt";
-			FileInputStream fis = new FileInputStream(fileName);
-			// use buffering, reading one line at a time
-			// FileReader always assumes default encoding is OK!
+			InputStream fis = this.getClass().getResourceAsStream(
+					resource_rhiza);
 			BufferedReader input = new BufferedReader(
 					new InputStreamReader(fis));
+			// input.readLine();
+			ExcelCSVParser parser = new ExcelCSVParser(fis);
+			String[][] vals = parser.getAllValues();
+
+			String[] firstLine = vals[1];
+			logger.info(Arrays.toString(firstLine));
+
+			int val = -1;
+			if (val == -1) {
+				return;
+			}
+
+			// use buffering, reading one line at a time
+			// FileReader always assumes default encoding is OK!
+
 			String line = "";
 			// DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			// Date currDate = new Date();
-			Pattern tabPattern = Pattern.compile("\t");
+			Pattern commaPattern = Pattern.compile(",");
 
 			long lineCount = 0;
 			long itemCount = 0;
@@ -159,34 +150,32 @@ public class HerberiaDataReader implements GeoDataSource {
 			HashSet<String> ganderSet = new HashSet();
 			int[] hits = new int[theGeoms.length];
 			int i = 0;
+			input.readLine();// skip header
 
 			while ((line = input.readLine()) != null) {
 				if (i < 10) {
 					System.out.print(line);
 				}
 				i++;
-				String[] lineContents = tabPattern.split(line);
+				String[] lineContents = commaPattern.split(line);
 				// Scanner sc = new Scanner(line).useDelimiter("\t");
 
 				itemCount = itemCount + lineContents.length;
 
-				if (lineContents.length >= 14) {
-					// logger.info(lineContents[12] + lineContents[13]);
-					String yString = lineContents[12];
-					String xString = lineContents[13];
-					double yCoord = isDouble(yString);
-					double xCoord = isDouble(xString);
-					if (Double.isNaN(xCoord) || Double.isNaN(yCoord)) {
-						continue;
-					}
-					geoItemCount++;
-
-					Coordinate coord = new Coordinate(xCoord, yCoord);
-
-					locations.add(coord);
-
-					// countHits(hits, coord);
+				// logger.info(lineContents[12] + lineContents[13]);
+				String yString = lineContents[12];
+				String xString = lineContents[13];
+				double yCoord = isDouble(yString);
+				double xCoord = isDouble(xString);
+				if (Double.isNaN(xCoord) || Double.isNaN(yCoord)) {
+					continue;
 				}
+				geoItemCount++;
+
+				Coordinate coord = new Coordinate(xCoord, yCoord);
+
+				locations.add(coord);
+
 				Integer lengthInt = Integer.valueOf(lineContents.length);
 				if (lengthHash.containsKey(lengthInt)) {
 					Long value = lengthHash.get(lengthInt);
@@ -243,17 +232,6 @@ public class HerberiaDataReader implements GeoDataSource {
 
 	private void countHits(int[] hits, Coordinate coord) {
 
-		// List possibles = strTree.query(new Envelope(coord));
-		//
-		// int nPossibles = possibles.size();
-		// for (int i = 0; i < nPossibles; i++) {
-		// Geometry geom = (Geometry) possibles.get(i);
-		// if (geom.contains(coordGeom)) {
-		// hits[0]++;
-		// }
-		// break;
-		// }
-
 		for (int i = 0; i < theGeoms.length; i++) {
 			Geometry theGeom = theGeoms[i];
 			Envelope evn = theGeom.getEnvelopeInternal();
@@ -268,48 +246,6 @@ public class HerberiaDataReader implements GeoDataSource {
 
 		}
 
-		// List geoms = strTree.query(new Envelope(coord));
-		// Iterator it = geoms.iterator();
-		// // logger.info(geoms.size() + "");
-		// while (it.hasNext()) {
-		// Geometry geom = (Geometry) it.next();
-		// int index = geomMap.get(geom);
-		// Rectangle2D bounds = this.bounds[index];
-		// if (coord.x > bounds.getMinX() && coord.x < bounds.getMaxX()) {
-		// if (coord.y > bounds.getMinY() && coord.y < bounds.getMaxY()) {
-		//
-		// Geometry coordGeom = GeometryFactory
-		// .createPointFromInternalCoord(coord, geom);
-		// if (geom.contains(coordGeom)) {
-		// hits[geomMap.get(geom)]++;
-		// }
-		// }
-		// }
-		// }
-
-		// for (int i = 0; i < theGeoms.length; i++) {
-		//
-		// PreparedGeometry prepGeom = preparedGeoms[i];
-		//		
-		// Rectangle2D bounds = this.bounds[i];
-		// if (coord.x > bounds.getMinX() && coord.x < bounds.getMaxX()) {
-		// if (coord.y > bounds.getMinY() && coord.y < bounds.getMaxY()) {
-		// Geometry geom = theGeoms[i];
-		// 
-		// if (prepGeom.containsProperly(coordGeom)) {
-		// hits[i]++;
-		// break;
-		// }
-		// }
-		// }
-		// // int answer = theIndexes[i].locate(coord);
-		// //
-		// // if (answer == Location.INTERIOR) {
-		// // hits[i]++;
-		// // break;
-		// // }
-		//
-		// }
 	}
 
 	public void countAllHits() {
@@ -454,7 +390,6 @@ public class HerberiaDataReader implements GeoDataSource {
 		return dataSet;
 	}
 
-	@SuppressWarnings("unused")
 	private void transformStdDev(DataSetForApps data) {
 		double[] rowData = new double[data.getNumberNumericAttributes()];
 
@@ -522,7 +457,7 @@ public class HerberiaDataReader implements GeoDataSource {
 
 	public DataSetForApps getDataForApps() {
 		readIDCodes();
-		readHerberiaContents();
+		readRhizaContents();
 
 		return makeDataSetForApps();
 
@@ -544,18 +479,18 @@ public class HerberiaDataReader implements GeoDataSource {
 
 	public static void main(String[] args) {
 
-		HerberiaDataReader reader = new HerberiaDataReader();
-		HerberiaDataReader.printMemory();
+		H1N1DataReader reader = new H1N1DataReader();
+		H1N1DataReader.printMemory();
 		// reader.readIsoCodes();
 		// reader.findCountryCodes();
 		// reader.readIDCodes();
-		reader.readCAShapefile();
-		reader.readHerberiaContents();
+		reader.readWorldShapefile();
+		reader.readRhizaContents();
 		// 
 		long startTime = System.nanoTime();
 		// reader.countAllHits();
 		long endTime = System.nanoTime();
-		HerberiaDataReader.printMemory();
+		H1N1DataReader.printMemory();
 		// logger.info("finding hits took " + (endTime - startTime) /
 		// 1000000000f);
 		// DataSetForApps dataSet = reader.makeDataSetForApps();
