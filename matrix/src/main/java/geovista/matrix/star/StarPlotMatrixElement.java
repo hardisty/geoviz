@@ -61,7 +61,7 @@ public class StarPlotMatrixElement extends StarPlotCanvas implements
 	// For axes of scatter plot.
 	// a noop for this class
 	public void setAxisOn(boolean axisOn) {
-	};
+	}
 
 	public void setSelectionColor(Color c) {
 		// xxx implement me

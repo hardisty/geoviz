@@ -213,7 +213,7 @@ public class VisualClassifierMultiVariables extends JPanel implements
 		this.classLabel = classLabel; // To do, need to generalize it to any
 		// training labels.
 		String[] classLabels = new String[nClasses];
-		;
+
 		if (setUpTrainingData == null) {
 			setUpTrainingData = new TrainingData();
 			setUpTrainingData.setNumberOfClasses(nClasses);
@@ -924,12 +924,12 @@ public class VisualClassifierMultiVariables extends JPanel implements
 			fireActionPerformed(VisualClassifierMultiVariables.COMMAND_COLORS_CHANGED);
 			// this.fireColorClassifierPerformed();
 		} /*
-			 * else if (command == this.COMMAND_CLASSES_CHANGED) {
-			 * this.colorPickerPanel.setNSwatches(nClasses); this.nClasses =
-			 * nClasses; this.makeColors();
-			 * this.fireActionPerformed(this.COMMAND_COLORS_CHANGED);
-			 * //this.fireColorClassifierPerformed(); }
-			 */
+		 * else if (command == this.COMMAND_CLASSES_CHANGED) {
+		 * this.colorPickerPanel.setNSwatches(nClasses); this.nClasses =
+		 * nClasses; this.makeColors();
+		 * this.fireActionPerformed(this.COMMAND_COLORS_CHANGED);
+		 * //this.fireColorClassifierPerformed(); }
+		 */
 		// need to pass this along, if we are a FoldupPanel
 		// super.actionPerformed(e);
 	}

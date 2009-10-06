@@ -504,11 +504,9 @@ public class FixedRowMatrix extends AbstractMatrix implements
 			indicesNew1 = element[i * plotNumber + newPos - 1]
 					.getElementPosition();
 			indicesLast1[0] = indicesNew1[0];
-			element[i * plotNumber + lastPos - 1]
-					.setDataIndices(indicesLast1);
+			element[i * plotNumber + lastPos - 1].setDataIndices(indicesLast1);
 			indicesNew1[0] = indicesRow;
-			element[i * plotNumber + newPos - 1]
-					.setDataIndices(indicesNew1);
+			element[i * plotNumber + newPos - 1].setDataIndices(indicesNew1);
 		}
 	}
 
@@ -695,7 +693,7 @@ public class FixedRowMatrix extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseExited(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -740,7 +738,7 @@ public class FixedRowMatrix extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseMoved(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -749,7 +747,7 @@ public class FixedRowMatrix extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseEntered(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -758,7 +756,7 @@ public class FixedRowMatrix extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseClicked(MouseEvent e) {
-			;
+
 		}
 	}
 

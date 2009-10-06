@@ -444,11 +444,9 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 			indicesNew1 = element[i * plotNumber + newPos - 1]
 					.getElementPosition();
 			indicesLast1[0] = indicesNew1[0];
-			element[i * plotNumber + lastPos - 1]
-					.setDataIndices(indicesLast1);
+			element[i * plotNumber + lastPos - 1].setDataIndices(indicesLast1);
 			indicesNew1[0] = indicesRow;
-			element[i * plotNumber + newPos - 1]
-					.setDataIndices(indicesNew1);
+			element[i * plotNumber + newPos - 1].setDataIndices(indicesNew1);
 		}
 	}
 
@@ -480,8 +478,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 			element[(lastPos - 1) * plotNumber + i]
 					.setDataIndices(indicesLast2);
 			indicesNew2[1] = indicesCol;
-			element[(newPos - 1) * plotNumber + i]
-					.setDataIndices(indicesNew2);
+			element[(newPos - 1) * plotNumber + i].setDataIndices(indicesNew2);
 		}
 	}
 
@@ -672,7 +669,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseExited(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -726,7 +723,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseMoved(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -735,7 +732,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseEntered(MouseEvent e) {
-			;
+
 		}
 
 		/**
@@ -744,7 +741,7 @@ public class UniformBivariateSmallMultiple extends AbstractMatrix implements
 		 * @param e
 		 */
 		public void mouseClicked(MouseEvent e) {
-			;
+
 		}
 	}
 
