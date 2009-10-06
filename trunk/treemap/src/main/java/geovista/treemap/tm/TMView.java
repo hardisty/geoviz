@@ -41,6 +41,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
 
@@ -101,7 +102,7 @@ public class TMView
         this.statusView = new TMStatusView();
         initView = statusView.getView();
         banner = new JLabel("Building geovista.matrix.treemap.tm view...");
-        banner.setHorizontalAlignment(JLabel.CENTER);
+        banner.setHorizontalAlignment(SwingConstants.CENTER);
         banner.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         add(banner, BorderLayout.NORTH);
         add(initView, BorderLayout.CENTER);

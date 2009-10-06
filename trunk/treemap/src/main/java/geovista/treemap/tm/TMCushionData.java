@@ -26,38 +26,38 @@
 
 package geovista.treemap.tm;
 
-
 /**
- * The TMCushionData implements the data computed at each node
- * for the cushion visualization
- *
+ * The TMCushionData implements the data computed at each node for the cushion
+ * visualization
+ * 
  * @author Christophe Bouthier [bouthier@loria.fr]
  * 
  */
 class TMCushionData {
 
-    double x2 = 0.0;
-    double x  = 0.0;
-    double y2 = 0.0;
-    double y  = 0.0;
-    double h  = 0.0;
+	double x2 = 0.0;
+	double x = 0.0;
+	double y2 = 0.0;
+	double y = 0.0;
+	double h = 0.0;
 
-    TMCushionData() {};
+	TMCushionData() {
+	}
 
-    TMCushionData(TMCushionData clone) {
-        if (clone != null) {
-            x2 = clone.x2;
-            x = clone.x;
-            y2 = clone.y2;
-            y = clone.y;
-            h = clone.h;
-        }
-    }
+	TMCushionData(TMCushionData clone) {
+		if (clone != null) {
+			x2 = clone.x2;
+			x = clone.x;
+			y2 = clone.y2;
+			y = clone.y;
+			h = clone.h;
+		}
+	}
 
-    public String toString() {
-        String s = "x2 = " + x2 + ", x = " + x + 
-                 "\n    y2 = " + y2 + ", y = " + y + "    h = " + h;
-        return s;
-    }
+	@Override
+	public String toString() {
+		String s = "x2 = " + x2 + ", x = " + x + "\n    y2 = " + y2 + ", y = "
+				+ y + "    h = " + h;
+		return s;
+	}
 }
-
