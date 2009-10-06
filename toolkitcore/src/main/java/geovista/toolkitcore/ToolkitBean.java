@@ -32,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 import geovista.common.jts.NullShape;
@@ -51,6 +52,7 @@ public class ToolkitBean implements ComponentListener, ShapeReporter {
 	private Object originalBean;
 	private transient JMenuItem removeMenuItem;
 	JInternalFrame internalFrame;
+	JPanel pinFrame;
 	EventListenerList listenerList;
 	String uniqueName;
 	String objectClass;
@@ -105,6 +107,8 @@ public class ToolkitBean implements ComponentListener, ShapeReporter {
 		newFrame.setVisible(true);
 
 		newFrame.setFrameIcon(ic);
+		// JRootPane pane = newFrame.getRootPane();
+		// pane.setWindowDecorationStyle(JRootPane.NONE);
 		Component newComp = null;
 		if (newInstance instanceof Component) {
 			newComp = (Component) newInstance;

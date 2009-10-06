@@ -30,6 +30,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 public class  SaveCommentedImageDialog extends JDialog{
 
@@ -37,12 +39,12 @@ public class  SaveCommentedImageDialog extends JDialog{
 		this.add(new JFileChooser());
 		JPanel textPan = new JPanel();
 		String s = "<html>Enter text <br>to be embedded<br>in image:</html>";
-		JLabel textLab = new JLabel(s, JLabel.RIGHT);
+		JLabel textLab = new JLabel(s, SwingConstants.RIGHT);
 		textPan.add(textLab);
 		
 		JScrollPane sPane = new JScrollPane();
-		sPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		sPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		sPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		sPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		JTextArea tArea = new JTextArea();
 		Font fon = new Font(tArea.getFont().getName(),Font.PLAIN,14);
 		tArea.setFont(fon);

@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -94,9 +95,9 @@ public class GeoVizHelp extends JInternalFrame {
 		// Creates Scrollpanes and adds Help and Table of Contents
 		JScrollPane helpScroll = new JScrollPane();
 		helpScroll
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		helpScroll
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		helpScroll.setViewportView(help);
 		helpScroll.getViewport();
 		helpScroll.setVisible(true);
@@ -104,9 +105,9 @@ public class GeoVizHelp extends JInternalFrame {
 
 		JScrollPane tocScroll = new JScrollPane();
 		tocScroll
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tocScroll
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		tocScroll.setViewportView(helpTOC);
 		tocScroll.getViewport();
 		tocScroll.setVisible(true);
