@@ -36,6 +36,7 @@ import org.jdesktop.jxlayer.plaf.AbstractLayerUI;
 import org.jdesktop.jxlayer.demo.util.LafMenu;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -50,7 +51,7 @@ public class FlashButtonDemo {
         JFrame frame = new JFrame("FlashButtonDemo");
         frame.setJMenuBar(LafMenu.createMenuBar());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new JLabel("Move mouse over the button", JLabel.CENTER),
+        frame.add(new JLabel("Move mouse over the button", SwingConstants.CENTER),
                 BorderLayout.SOUTH);
         
         JPanel panel = new JPanel(new GridBagLayout());

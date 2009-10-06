@@ -51,7 +51,7 @@ public class DebugRepaintingDemo extends JFrame {
         super("DebugLayerDemo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JTabbedPane tb = new JTabbedPane();
-        tb.setTabPlacement(JTabbedPane.BOTTOM);
+        tb.setTabPlacement(SwingConstants.BOTTOM);
         tb.addTab("Components", createButtonPanel());
         tb.addTab("Table", createTable());
         tb.addTab("Tree", new JTree());

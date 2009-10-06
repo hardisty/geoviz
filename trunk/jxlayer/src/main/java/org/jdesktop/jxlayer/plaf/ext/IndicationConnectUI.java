@@ -114,6 +114,7 @@ public class IndicationConnectUI<V extends JComponent> extends
 	/*
 	 * Will return null if empty list is handed in.
 	 */
+	@SuppressWarnings("unused")
 	private Point findClosestPoint(Point firstPoint, List<Point> otherPoints) {
 		Point closestPoint = null;
 		double minDist = Double.MAX_VALUE;
