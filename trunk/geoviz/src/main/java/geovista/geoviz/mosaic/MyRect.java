@@ -22,7 +22,7 @@ public class MyRect extends Rectangle {
 	private final boolean censored = false;
 	private final char dir;
 	private double obs = 1;
-	private final double hilite = 0;
+	double hilite = 0;
 	private final double exp;
 	private final double scale;
 	private double max;
@@ -30,7 +30,7 @@ public class MyRect extends Rectangle {
 	private final Color drawColor = Color.black;
 	private final Vector tileIds;
 	private Table tablep;
-	private final boolean flip = false;
+
 	private double[] Colors;
 
 	public MyRect(boolean full, char dir, String mode, int x, int y, int w,
@@ -205,8 +205,7 @@ public class MyRect extends Rectangle {
 								? w - 2 : (int) Math.min(width, (w * hilite))));
 				int dh = 1 + Math.min(h, height);
 
-				g.fillRect(flip ? x + w - dw : x + plusX, y
-						+ Math.max(0, h - height), dw, dh);
+				g.fillRect(x + plusX, y + Math.max(0, h - height), dw, dh);
 			} else if (dir == 'y') {
 				g.fillRect(x, y
 						+ Math.max(0, h - height)

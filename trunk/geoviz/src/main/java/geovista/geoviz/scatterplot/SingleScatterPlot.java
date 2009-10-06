@@ -238,7 +238,7 @@ public class SingleScatterPlot extends JPanel implements DataSetListener,
 			displayIndices[1] = index;
 			scatterPlot.setDataIndices(displayIndices);
 		} else if ((src == scatterPlot)
-				&& command.compareTo(ScatterPlot.COMMAND_POINT_SELECTED) == 0) {
+				&& command.compareTo(ScatterPlotBasic.COMMAND_POINT_SELECTED) == 0) {
 			selections = scatterPlot.getSelections();
 			int[] selObs = getSelectedObvs();
 			if (selObs.length == dataSet.getNumObservations()) {

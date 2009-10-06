@@ -129,13 +129,7 @@ public class GeoMap extends JPanel
 	// need
 	// to assign colors using other componenents instead of the visual
 	// classifier.
-	transient private boolean visualClassifierNeeded = true;
-
-	private GeoMap(boolean needVisualClassifier) {
-		super();
-		visualClassifierNeeded = needVisualClassifier;
-		init();
-	}
+	transient private final boolean visualClassifierNeeded = true;
 
 	public GeoMap() {
 		super();
@@ -210,6 +204,7 @@ public class GeoMap extends JPanel
 		// getColorSymbolClassification()));
 	}
 
+	@SuppressWarnings("unused")
 	private JPanel makeAnimationPanel() {
 		JPanel animationPanel = new JPanel();
 		Dimension prefSize = new Dimension(100, 50);
@@ -436,19 +431,6 @@ public class GeoMap extends JPanel
 
 	}
 
-	private boolean isVisualClassifierNeeded() {
-		return visualClassifierNeeded;
-	}
-
-	private void setVisualClassifierNeeded(boolean b) {
-		visualClassifierNeeded = b;
-		topContent.removeAll();
-		if (visualClassifierNeeded) {
-			topContent.add(legendPanel);
-		}
-		topContent.add(mapTools);
-	}
-
 	public void selectionChanged(SelectionEvent e) {
 		mapCan.selectionChanged(e);
 		// biViz.setSelections(e.getSelection());
@@ -520,13 +502,6 @@ public class GeoMap extends JPanel
 	 */
 	public void setTextures(TexturePaint[] textures) {
 		mapCan.setTextures(textures);
-	}
-
-	private void zoomFullExtent() {
-		mapCan.zoomFullExtent();// sometimes we need to do this...
-		// the map should figure out for itself when it need to redisplay, but
-		// it doesnt
-		// hence this method
 	}
 
 	public void variableSelectionChanged(VariableSelectionEvent e) {
@@ -640,20 +615,6 @@ public class GeoMap extends JPanel
 		}
 	}
 
-	/**
-	 * @param data
-	 * 
-	 *            This method is deprecated becuase it wants to create its very
-	 *            own pet DataSetForApps. This is no longer allowed, to allow
-	 *            for a mutable, common data set. Use of this method may lead to
-	 *            unexpected program behavoir. Please use setDataSet instead.
-	 */
-	@Deprecated
-	private void setData(Object[] data) {
-		setDataSet(new DataSetForApps(data));
-
-	}
-
 	@Override
 	public void setBackground(Color bg) {
 		if ((mapCan != null) && (bg != null)) {
@@ -721,13 +682,6 @@ public class GeoMap extends JPanel
 	public void removeSpatialExtentListener(SpatialExtentListener l) {
 		listenerList.remove(SpatialExtentListener.class, l);
 		mapCan.removeSpatialExtentListener(l);
-	}
-
-	private void setActiveLayerIdx(int idx) {
-		if (mapCan != null) {
-			mapCan.setActiveLayerIdx(idx);
-			// this.setDataSet(this.mapCan.get); //frank: commented out
-		}
 	}
 
 	public static void main(String[] args) {
@@ -825,7 +779,7 @@ public class GeoMap extends JPanel
 		// shpProj2.setProj(proj);
 		// shpProj2.setInputAuxiliaryData(stateData.getDataSet());
 
-		//shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
+		// shpToShape2.setInputDataSet(shpProj2.getOutputAuxiliarySpatialData());
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
 
 		// map2.setAuxiliarySpatialData(shpToShape2.getOutputDataSet());
@@ -868,18 +822,6 @@ public class GeoMap extends JPanel
 		// so, what do we do?
 		// add the new column to the picker, I suppose
 
-	}
-
-	private Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	private void setBackgroundColor(Color backgroundColor) {
-
-		setBackground(backgroundColor);
-		this.backgroundColor = backgroundColor;
-		mapCan.setBackground(backgroundColor);
-		this.repaint();
 	}
 
 	public SelectionEvent getSelectionEvent() {

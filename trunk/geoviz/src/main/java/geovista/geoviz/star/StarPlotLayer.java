@@ -45,7 +45,7 @@ public class StarPlotLayer implements DataSetListener, IndicationListener {
 
 	enum ScaleMethod {
 		Linear, Rank_Order, Log, Normalized
-	};
+	}
 
 	private ScaleMethod method;
 	public static final int MAX_N_VARS = 6;

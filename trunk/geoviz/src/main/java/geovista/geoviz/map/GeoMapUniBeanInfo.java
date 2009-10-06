@@ -8,7 +8,7 @@ import java.beans.SimpleBeanInfo;
 
 public class GeoMapUniBeanInfo extends SimpleBeanInfo {
 	static Class beanClass = GeoMapUni.class;
-	static String iconColor16x16Filename = "resources/map16.gif";;
+	static String iconColor16x16Filename = "resources/map16.gif";
 	static String iconColor32x32Filename = "resources/map32.gif";
 	static String iconMono16x16Filename;
 	static String iconMono32x32Filename;
