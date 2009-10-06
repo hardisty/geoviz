@@ -16,6 +16,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BoundedRangeModel;
 import javax.swing.JComponent;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.plaf.metal.MetalSliderUI;
@@ -166,7 +167,7 @@ class MultiSliderUI extends MetalSliderUI {
 				}
 			}
 
-			if (slider.getOrientation() == JSlider.HORIZONTAL) {
+			if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
 				int valuePosition = xPositionForValue(slider.getValueAt(i));
 				thumbRects[i].x = valuePosition - (thumbRects[i].width / 2);
 				thumbRects[i].y = trackRect.y;
@@ -292,10 +293,10 @@ class MultiSliderUI extends MetalSliderUI {
 						minmaxIndices[1] = i;
 					}
 					switch (slider.getOrientation()) {
-					case JSlider.VERTICAL:
+					case SwingConstants.VERTICAL:
 						offset = currentMouseY - thumbRects[i].y;
 						break;
-					case JSlider.HORIZONTAL:
+					case SwingConstants.HORIZONTAL:
 						offset = currentMouseX - thumbRects[i].x;
 						break;
 					}
@@ -327,7 +328,7 @@ class MultiSliderUI extends MetalSliderUI {
 			int direction = POSITIVE_SCROLL;
 
 			switch (slider.getOrientation()) {
-			case JSlider.VERTICAL:
+			case SwingConstants.VERTICAL:
 				if (thumbRect.isEmpty()) {
 					int scrollbarCenter = sbSize.height / 2;
 					if (!drawInverted()) {
@@ -348,7 +349,7 @@ class MultiSliderUI extends MetalSliderUI {
 					}
 				}
 				break;
-			case JSlider.HORIZONTAL:
+			case SwingConstants.HORIZONTAL:
 				if (thumbRect.isEmpty()) {
 					int scrollbarCenter = sbSize.width / 2;
 					if (!drawInverted()) {
@@ -389,14 +390,14 @@ class MultiSliderUI extends MetalSliderUI {
 			int halfThumbHeight = thumbRect.height / 2;
 
 			switch (slider.getOrientation()) {
-			case JSlider.VERTICAL:
+			case SwingConstants.VERTICAL:
 				_trackTop = (neighbours[1] == -1) ? trackRect.y
 						: thumbRects[neighbours[1]].y + halfThumbHeight;
 				_trackBottom = (neighbours[0] == -1) ? trackRect.y
 						+ (trackRect.height - 1) : thumbRects[neighbours[0]].y
 						+ halfThumbHeight;
 				break;
-			case JSlider.HORIZONTAL:
+			case SwingConstants.HORIZONTAL:
 				_trackLeft = (neighbours[0] == -1) ? trackRect.x
 						: thumbRects[neighbours[0]].x + halfThumbWidth;
 				_trackRight = (neighbours[1] == -1) ? trackRect.x
@@ -425,7 +426,7 @@ class MultiSliderUI extends MetalSliderUI {
 					continue;
 				}
 				switch (orientation) {
-				case JSlider.VERTICAL:
+				case SwingConstants.VERTICAL:
 					dy = thumbRects[i].y - y;
 					dyh = (thumbRects[i].y + thumbRects[i].height) - y;
 					if (dyh <= 0) {
@@ -441,7 +442,7 @@ class MultiSliderUI extends MetalSliderUI {
 						}
 					}
 					break;
-				case JSlider.HORIZONTAL:
+				case SwingConstants.HORIZONTAL:
 					dx = thumbRects[i].x - x;
 					dxw = (thumbRects[i].x + thumbRects[i].width) - x;
 					if (dxw <= 0) {
@@ -488,7 +489,7 @@ class MultiSliderUI extends MetalSliderUI {
 			}
 
 			switch (slider.getOrientation()) {
-			case JSlider.VERTICAL:
+			case SwingConstants.VERTICAL:
 				int halfThumbHeight = thumbRect.height / 2;
 				int thumbTop = e.getY() - offset;
 				if (bounded) {
@@ -527,7 +528,7 @@ class MultiSliderUI extends MetalSliderUI {
 				((MultiSlider) slider).setValueAt(currentIndex,
 						valueForYPosition(thumbMiddle));
 				break;
-			case JSlider.HORIZONTAL:
+			case SwingConstants.HORIZONTAL:
 				int halfThumbWidth = thumbRect.width / 2;
 				int thumbLeft = e.getX() - offset;
 				if (bounded) {

@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -46,7 +47,7 @@ public class RangeSlider extends JPanel implements ChangeListener, Serializable 
 	private static final int DEFAULT_SLIDER_MAXIMUM = 100;
 	private static final int DEFAULT_MAJOR_TICKS = 5;
 	private static final int DEFAULT_MINOR_TICKS = 1;
-	private static final int DEFAULT_ORIENTATION = MultiSlider.HORIZONTAL;
+	private static final int DEFAULT_ORIENTATION = SwingConstants.HORIZONTAL;
 	private static final int NUM_MAJOR_TICKS = 5;
 	private static final int NUM_MINOR_TICKS = 10;
 	private static final String DEFAULT_NAME = "RangeSlider";

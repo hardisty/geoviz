@@ -26,7 +26,7 @@ public class SelectionEvent extends EventObject {
 
 	public enum SelectionCoverage {
 		NONE, ALL, PARTIAL
-	};
+	}
 
 	/**
 	 * The constructor is the same as that for EventObject, except that the

@@ -95,15 +95,14 @@ public class ClassifierJenks implements DescribedClassifier {
 						mat1[rangeEnd][j] = dataId;
 						mat2[rangeEnd][j] = ssd + mat2[dataId - 1][j - 1];
 					}
-					;
+
 				}
-				;
+
 			}
-			;
+
 			mat1[rangeEnd][1] = 1;
 			mat2[rangeEnd][1] = ssd;
 		}
-		;
 
 		// logger.info("\nmat1:\n");
 		// for (int i=0; i< mat1.length; i++)
@@ -134,7 +133,7 @@ public class ClassifierJenks implements DescribedClassifier {
 			kbreaks[j - 2] = sorteddata[id];
 			k = (int) mat1[k][j] - 1;
 		}
-		;
+
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.finest("Jenk's Classification Breaks:");
 			for (int i = 0; i < numclass; i++) {

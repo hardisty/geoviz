@@ -29,10 +29,12 @@ public class MinimumSpanningTree {
 			cluster[j] = j + 1;
 		}
 		double totalWeight = 0;
-		ArrayList<MSTEdge> mst = null;
+		ArrayList<MSTEdge> mst = new ArrayList<MSTEdge>();
 		PriorityQue que = new PriorityQue(numVertices);
 		for (int i = 0; i < fromEdge.length; i++) {
-			que.insertItem(new MSTEdge(fromEdge[i], toEdge[i], weights[i]));
+			MSTEdge ed = new MSTEdge(fromEdge[i], toEdge[i], weights[i]);
+			que.insertItem(ed);
+
 		}
 
 		while (mst.size() < numVertices - 1) {

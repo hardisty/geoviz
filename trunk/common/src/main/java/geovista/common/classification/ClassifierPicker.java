@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
@@ -91,7 +92,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		// JLabel classesLabel = new JLabel("N Classes:");
-		classSlider = new JSlider(JSlider.HORIZONTAL, 2, 20, nClasses);
+		classSlider = new JSlider(SwingConstants.HORIZONTAL, 2, 20, nClasses);
 
 		// classSlider.setPreferredSize(new Dimension(100,30));
 		classSlider.addChangeListener(new SliderListener());
@@ -203,7 +204,7 @@ public class ClassifierPicker extends JPanel implements ActionListener,
 				comps[i] = getComponent(i);
 			}
 
-			classSlider.setOrientation(JSlider.HORIZONTAL);
+			classSlider.setOrientation(SwingConstants.HORIZONTAL);
 			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 			for (int i = 0; i < getComponentCount(); i++) {
