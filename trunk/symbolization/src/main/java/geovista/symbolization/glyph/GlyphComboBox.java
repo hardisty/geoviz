@@ -24,6 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /*
  * ComboBoxDemo.java uses these additional files: images/Bird.gif images/Cat.gif
@@ -50,7 +51,7 @@ public class GlyphComboBox extends JPanel implements ActionListener {
 		// Set up the picture.
 		picture = new GlyphLabel();
 		picture.setFont(picture.getFont().deriveFont(Font.ITALIC));
-		picture.setHorizontalAlignment(JLabel.CENTER);
+		picture.setHorizontalAlignment(SwingConstants.CENTER);
 		int nSides = glyphSides[glyphList.getSelectedIndex()];
 		updateLabel(glyphStrings[glyphList.getSelectedIndex()], nSides);
 		picture.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));

@@ -84,6 +84,7 @@ public class ColorRampPicker extends JPanel implements ComponentListener {
 			} else {
 				if (i < len - 1) {
 					boolean anch = anchored[i];
+
 					Color c = colors[i];
 					panSet[i] = new ColorRampSwatch(this, anch, false);
 					panSet[i].setSwatchColor(c);
