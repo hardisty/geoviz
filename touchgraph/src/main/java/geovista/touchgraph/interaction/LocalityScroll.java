@@ -49,6 +49,7 @@
 
 package geovista.touchgraph.interaction;
 
+import java.awt.Adjustable;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -71,7 +72,7 @@ public class LocalityScroll implements GraphListener {
 
     public LocalityScroll(TGPanel tgp) {
         tgPanel=tgp;
-        localitySB = new JScrollBar(JScrollBar.HORIZONTAL, 2, 1, 0, 6);
+        localitySB = new JScrollBar(Adjustable.HORIZONTAL, 2, 1, 0, 6);
         localitySB.setBlockIncrement(1);
         localitySB.setUnitIncrement(1);
         localitySB.addAdjustmentListener(new localityAdjustmentListener());
