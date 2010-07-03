@@ -16,7 +16,7 @@
     </repository>
       <repository>
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>geovista</id>
       <name>geovista-repo</name>
