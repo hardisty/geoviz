@@ -55,6 +55,8 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import ncg.statistics.DiscriminantAnalysisGUI;
+
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.ext.IndicationConnectUI;
 
@@ -1197,6 +1199,7 @@ public class GeoVizToolkit extends JFrame implements ActionListener,
 				" ~~~~~ Spatial Analysis and Clustering ~~~~~ "));
 		addToolToMenu(MoranMap.class);
 		addToolToMenu(Proclude.class);
+		addToolToMenu(DiscriminantAnalysisGUI.class);
 		menuAddTool.addSeparator();
 
 		menuAddTool.add(new JLabel(" ~~~~~ Collaboration and Text ~~~~~ "));

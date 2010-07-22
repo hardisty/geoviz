@@ -44,6 +44,7 @@
     <module>satscan</module> 
     <module>jxlayer</module> 
     <module>toolkitcore</module>
+    <module>statistics</module>
 
   </modules>
     <reporting>
