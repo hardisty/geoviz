@@ -41,7 +41,7 @@ public void addSelectionListener(SelectionListener l) {
 public void removeSelectionListener(SelectionListener l) {
 		logger.finest("mapCan, removing a selection listener");
 		listenerList.remove(SelectionListener.class, l);
-	}
+}
 }}}
 
 Presumably you will want to notify the listeners of a new selection at some point. To do this, you can use a method like this:
