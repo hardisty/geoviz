@@ -7,6 +7,16 @@ To add a component to the c
 
 = Details =
 
+*Receiving selections*. 
+
+{{{
+	public void selectionChanged(SelectionEvent e) {
+		int[] selEvents = e.getSelection();
+		//do something with selected events
+
+	}
+}}}
+
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
