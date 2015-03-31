@@ -144,6 +144,7 @@ public class DataSetForApps {
     public DataSetForApps subSet(int[] ids) {
 	Object[] newObjArray = new Object[this.getDataObjectOriginal().length];
 	String[] varNames = (String[]) this.getDataObjectOriginal()[0];
+	newObjArray[0] = varNames;
 
 	for (int i = 1; i < varNames.length + 1; i++) {
 	    Object oldArray = this.getDataObjectOriginal()[i];
@@ -714,10 +715,10 @@ public class DataSetForApps {
 	    String[] stringData = (String[]) dataNumeric;
 	    stringVal = stringData[obs];
 	} else {
-
-	    throw new IllegalArgumentException(
-		    "Unable to parse values in column " + arrayIndex
-			    + " as a string");
+	    return "";// XXX not sure....
+	    // throw new IllegalArgumentException(
+	    // "Unable to parse values in column " + arrayIndex
+	    // + " as a string");
 	}
 	return stringVal;
     }
