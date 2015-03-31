@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="animation/src/main/java"/>
 	<classpathentry kind="src" path="animation/src/main/resources"/>
+	<classpathentry kind="src" path="cartogram/src/main/java"/>
+	<classpathentry kind="src" path="cartogram/src/main/resources"/>
+	<classpathentry kind="src" path="collaboration/src/main/resources"/>
+	<classpathentry kind="src" path="colorbrewer/src/main/java"/>
+	<classpathentry kind="src" path="collaboration/src/main/java"/>
+	<classpathentry kind="src" path="colorbrewer/src/main/resources"/>
+	<classpathentry kind="src" path="common/src/main/java"/>
+	<classpathentry kind="src" path="common/src/main/resources"/>
+	<classpathentry kind="src" path="coordination/src/main/java"/>
+	<classpathentry kind="src" path="coordination/src/main/resources"/>
+	<classpathentry kind="src" path="geoviz/src/main/java"/>
+	<classpathentry kind="src" path="geoviz/src/main/resources"/>
+	<classpathentry kind="src" path="image_blur/src/main/java"/>
+	<classpathentry kind="src" path="jxlayer/src/main/java"/>
+	<classpathentry kind="src" path="largedata/src/main/java"/>
+	<classpathentry kind="src" path="largedata/src/main/resources"/>
+	<classpathentry kind="src" path="matrix/src/main/resources"/>
 	<classpathentry kind="src" path="network/src/main/java"/>
+	<classpathentry kind="src" path="matrix/src/main/java"/>
+	<classpathentry kind="src" path="projection/src/main/java"/>
+	<classpathentry kind="src" path="projection/src/main/resources"/>
 	<classpathentry kind="src" path="statistics/src/main/resources"/>
 	<classpathentry kind="src" path="statistics/src/main/java"/>
-	<classpathentry kind="src" path="jxlayer/src/main/java"/>
-	<classpathentry kind="src" path="coordination/src/main/resources"/>
-	<classpathentry kind="src" path="colorbrewer/src/main/resources"/>
-	<classpathentry kind="src" path="toolkitcore/src/main/java"/>
-	<classpathentry kind="src" path="matrix/src/main/java"/>
-	<classpathentry kind="src" path="common/src/main/java"/>
-	<classpathentry kind="src" path="sound/src/main/java"/>
-	<classpathentry kind="src" path="collaboration/src/main/resources"/>
-	<classpathentry kind="src" path="matrix/src/main/resources"/>
-	<classpathentry kind="src" path="coordination/src/main/java"/>
-	<classpathentry kind="src" path="image_blur/src/main/java"/>
-	<classpathentry kind="src" path="projection/src/main/java"/>
-	<classpathentry kind="src" path="largedata/src/main/resources"/>
-	<classpathentry kind="src" path="readers/src/main/resources"/>
-	<classpathentry kind="src" path="projection/src/main/resources"/>
-	<classpathentry kind="src" path="geoviz/src/main/resources"/>
 	<classpathentry kind="src" path="satscan/src/main/resources"/>
 	<classpathentry kind="src" path="satscan/src/main/java"/>
+	<classpathentry kind="src" path="sound/src/main/java"/>
 	<classpathentry kind="src" path="sound/src/main/resources"/>
 	<classpathentry kind="src" path="symbolization/src/main/resources"/>
+	<classpathentry kind="src" path="toolkitcore/src/main/java"/>
+	<classpathentry kind="src" path="readers/src/main/resources"/>
 	<classpathentry kind="src" path="readers/src/main/java"/>
 	<classpathentry kind="src" path="treemap/src/main/java"/>
 	<classpathentry kind="src" path="touchgraph/src/main/java"/>
 	<classpathentry kind="src" path="toolkitcore/src/main/resources"/>
-	<classpathentry kind="src" path="collaboration/src/main/java"/>
 	<classpathentry kind="src" path="texture/src/main/java"/>
-	<classpathentry kind="src" path="common/src/main/resources"/>
 	<classpathentry kind="src" path="symbolization/src/main/java"/>
 	<classpathentry kind="src" path="texture/src/main/resources"/>
-	<classpathentry kind="src" path="geoviz/src/main/java"/>
-	<classpathentry kind="src" path="colorbrewer/src/main/java"/>
 	<classpathentry kind="src" path="touchgraph/src/main/resources"/>
-	<classpathentry kind="src" path="largedata/src/main/java"/>
-	<classpathentry kind="src" path="cartogram/src/main/java"/>
-	<classpathentry kind="src" path="cartogram/src/main/resources"/>
-	<classpathentry kind="src" path="animation/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
 	<classpathentry kind="lib" path="lib/gam-1.1-SNAPSHOT.jar"/>
